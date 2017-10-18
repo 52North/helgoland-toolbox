@@ -76,31 +76,6 @@
                         </ul>
                     </li>
             
-                    <li class="chapter">
-                        <div class="simple menu-toggler" data-toggle="collapse"
-                                data-target="#xs-components-links"
-                            >
-                            <span class="fa fa-cogs"></span>
-                            <span>Components</span>
-                            <span class="fa fa-angle-down"></span>
-                        </div>
-                        <ul class="links collapse "
-                                id="xs-components-links"
-                            >
-                                <li class="link">
-                                    <a href="./components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./components/PermalinkNewWindowComponent.html" >PermalinkNewWindowComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="./components/PermalinkToClipboardComponent.html" >PermalinkToClipboardComponent</a>
-                                </li>
-                        </ul>
-                    </li>
             
             
                     <li class="chapter">
@@ -433,31 +408,6 @@
                                </ul>
                            </li>
                    
-                           <li class="chapter">
-                               <div class="simple menu-toggler" data-toggle="collapse"
-                                       data-target="#components-links"
-                   >
-                                   <span class="fa fa-cogs"></span>
-                                   <span>Components</span>
-                                   <span class="fa fa-angle-down"></span>
-                               </div>
-                               <ul class="links collapse "
-                                       id="components-links"
-                   >
-                                       <li class="link">
-                                           <a href="./components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./components/PermalinkNewWindowComponent.html" >PermalinkNewWindowComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="./components/PermalinkToClipboardComponent.html" >PermalinkToClipboardComponent</a>
-                                       </li>
-                               </ul>
-                           </li>
                    
                    
                            <li class="chapter">
@@ -731,11 +681,14 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="-helgoland-toolbox-tools-for-a-sensor-observation-service-based-client"><code>helgoland-toolbox</code> - tools for a sensor observation service based client</h1>
+<h1 id="helgoland-toolbox">helgoland-toolbox</h1>
+<blockquote>
+<p>tools for a sensor observation service based client</p>
+</blockquote>
 <!-- [![Build Status](https://travis-ci.org/trekhleb/angular-library-seed.svg?branch=master)](https://travis-ci.org/trekhleb/angular-library-seed)
 [![codecov](https://codecov.io/gh/trekhleb/angular-library-seed/branch/master/graph/badge.svg)](https://codecov.io/gh/trekhleb/angular-library-seed)
 [![npm version](https://badge.fury.io/js/angular-library-seed.svg)](https://badge.fury.io/js/angular-library-seed) -->
-<p>This project contains <a href="https://angular.io/">Angular</a> based Modules, Components, Provider to build a sensor observation service based client. </p>
+<p>This project contains <a href="https://angular.io/">Angular</a> based Modules, Components, Injectables to build a sensor observation service based client. </p>
 <!-- # Quick Start
 
 ```bash
@@ -778,27 +731,27 @@ angular-library-seed
   ├─ webpack-umd.config.ts        * Webpack configuration for building UMD bundle
   └─ yarn.lock                    * Yarn lock file that locks dependency versions
 ``` -->
-<h1 id="getting-started">Getting Started</h1>
-<h2 id="dependencies">Dependencies</h2>
-<h4 id="node-npm">Node/NPM</h4>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="dependencies">Dependencies</h3>
+<h5 id="node-npm">Node/NPM</h5>
 <p>Install latest Node and NPM following the <a href="https://nodejs.org/en/download/">instructions</a>. Make sure you have Node version ≥ 7.0 and NPM ≥ 4.</p>
 <ul>
 <li><code>brew install node</code> for Mac.</li>
 </ul>
-<h4 id="yarn">Yarn</h4>
+<h5 id="yarn">Yarn</h5>
 <p><a href="https://yarnpkg.com/en/">Yarn package manager</a> is optional but highly recommended. If you prefer to work with <code>npm</code> directly you may ignore this step.</p>
 <p>Yarn installs library dependencies faster and also locks theirs versions. It has <a href="https://yarnpkg.com/en/">more advantages</a> but these two are already pretty attractive. </p>
 <p>Install Yarn by following the <a href="https://yarnpkg.com/en/docs/install">instructions</a>.</p>
 <ul>
 <li><code>brew install yarn</code> for Mac.</li>
 </ul>
-<h2 id="installing">Installing</h2>
+<h3 id="installing">Installing</h3>
 <ul>
 <li><code>fork</code> this repository.</li>
 <li><code>clone</code> your fork to your local environment.</li>
 <li><code>yarn install</code> to install required dependencies (or <code>npm i</code>).</li>
 </ul>
-<h2 id="build-the-library">Build the library</h2>
+<h3 id="build-the-library">Build the library</h3>
 <ul>
 <li><code>yarn build</code> for building the library once (both ESM and AOT versions).</li>
 <li><code>yarn build:watch</code> for building the library (both ESM and AOT versions) and watch for file changes.</li>
@@ -810,41 +763,41 @@ angular-library-seed
 <li><code>yarn build:umd</code> - for building UMD bundle only.</li>
 <li><code>yarn build:umd:watch</code> - the same as previous command but in watch-mode.</li>
 </ul>
-<h2 id="other-commands">Other commands</h2>
-<h4 id="lint-the-code">Lint the code</h4>
+<h3 id="other-commands">Other commands</h3>
+<h5 id="lint-the-code">Lint the code</h5>
 <ul>
 <li><code>yarn lint</code> for performing static code analysis.</li>
 </ul>
-<h4 id="test-the-library">Test the library</h4>
+<h5 id="test-the-library">Test the library</h5>
 <ul>
 <li><code>yarn test</code> for running all your <code>*.spec.ts</code> tests once. Generated code coverage report may be found in <code>coverage</code> folder.</li>
 <li><code>yarn test:watch</code> for running all you <code>*.spec.ts</code> and watch for file changes.</li>
 </ul>
-<h4 id="generate-documentation">Generate documentation</h4>
+<h5 id="generate-documentation">Generate documentation</h5>
 <ul>
 <li><code>yarn docs</code> for generating documentation locally.</li>
 <li><code>yarn gh-pages</code> for generating documentation and uploading it to GitHub Pages. <a href="https://trekhleb.github.io/angular-library-seed/">Documentation example</a>.</li>
 </ul>
-<h4 id="explore-the-bundle">Explore the bundle</h4>
+<h5 id="explore-the-bundle">Explore the bundle</h5>
 <ul>
 <li><code>yarn explorer</code> to find out where all your code in bundle is coming from.</li>
 </ul>
-<h4 id="bump-library-version">Bump library version</h4>
+<h5 id="bump-library-version">Bump library version</h5>
 <ul>
 <li><code>npm version patch</code> to increase library version. <a href="https://docs.npmjs.com/cli/version">More on bumping</a>.</li>
 </ul>
 <p><code>preversion</code> script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing.</p>
-<h4 id="publish-library-to-npm">Publish library to NPM</h4>
+<h5 id="publish-library-to-npm">Publish library to NPM</h5>
 <ul>
 <li><code>npm publish</code> to publish your library sources on <a href="https://www.npmjs.com/">npmjs.com</a>. Once the library is published it will be <a href="https://www.npmjs.com/package/angular-library-seed">available for usage</a> in npm packages.</li>
 </ul>
 <p><code>prepublishOnly</code> script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing.</p>
-<h4 id="cleaning">Cleaning</h4>
+<h5 id="cleaning">Cleaning</h5>
 <ul>
 <li><code>yarn clean:tmp</code> command will clean up all temporary files like <code>docs</code>, <code>dist</code>, <code>coverage</code> etc.</li>
 <li><code>yarn clean:all</code> command will clean up all temporary files along with <code>node_modules</code> folder. </li>
 </ul>
-<h1 id="library-development-workflow">Library development workflow</h1>
+<h2 id="library-development-workflow">Library development workflow</h2>
 <p>In order to debug your library in browser you need to have Angular project that will consume your library, build the application and display it. For your convenience all of that should happen automatically in background so once you change library source code you should instantly see the changes in browser.</p>
 <p>There are several ways to go here:</p>
 <ul>
@@ -864,7 +817,7 @@ To do so you need to:
 As a result once you change library source code it will be automatically re-compiled and in turn your JIT demo-project will be automatically re-built and you will be able to see that changes in your browser instantly.
 
 For more details about demo projects, their folder structure and npm commands please take a look at [demo projects README](https://github.com/trekhleb/angular-library-seed/tree/master/demo). -->
-<h3 id="using-yarn-link-">Using <code>yarn link</code></h3>
+<h4 id="using-yarn-link-">Using <code>yarn link</code></h4>
 <p>In you library root folder:</p>
 <pre class="line-numbers"><code class="language-bash"># Create symbolic link
 yarn link
