@@ -1,10 +1,12 @@
-# `helgoland-toolbox` - tools for a sensor observation service based client
+# helgoland-toolbox
+
+> tools for a sensor observation service based client
 
 <!-- [![Build Status](https://travis-ci.org/trekhleb/angular-library-seed.svg?branch=master)](https://travis-ci.org/trekhleb/angular-library-seed)
 [![codecov](https://codecov.io/gh/trekhleb/angular-library-seed/branch/master/graph/badge.svg)](https://codecov.io/gh/trekhleb/angular-library-seed)
 [![npm version](https://badge.fury.io/js/angular-library-seed.svg)](https://badge.fury.io/js/angular-library-seed) -->
 
-This project contains [Angular](https://angular.io/) based Modules, Components, Provider to build a sensor observation service based client. 
+This project contains [Angular](https://angular.io/) based Modules, Components, Injectables to build a sensor observation service based client. 
 
 <!-- # Quick Start
 
@@ -50,16 +52,16 @@ angular-library-seed
   └─ yarn.lock                    * Yarn lock file that locks dependency versions
 ``` -->
 
-# Getting Started
+## Getting Started
 
-## Dependencies
+### Dependencies
 
-#### Node/NPM
+##### Node/NPM
 Install latest Node and NPM following the [instructions](https://nodejs.org/en/download/). Make sure you have Node version ≥ 7.0 and NPM ≥ 4.
 
 - `brew install node` for Mac.
 
-#### Yarn
+##### Yarn
 [Yarn package manager](https://yarnpkg.com/en/) is optional but highly recommended. If you prefer to work with `npm` directly you may ignore this step.
 
 Yarn installs library dependencies faster and also locks theirs versions. It has [more advantages](https://yarnpkg.com/en/) but these two are already pretty attractive. 
@@ -68,12 +70,12 @@ Install Yarn by following the [instructions](https://yarnpkg.com/en/docs/install
 
 - `brew install yarn` for Mac.
 
-## Installing
+### Installing
 - `fork` this repository.
 - `clone` your fork to your local environment.
 - `yarn install` to install required dependencies (or `npm i`).
 
-## Build the library
+### Build the library
 - `yarn build` for building the library once (both ESM and AOT versions).
 - `yarn build:watch` for building the library (both ESM and AOT versions) and watch for file changes.
 
@@ -83,37 +85,37 @@ You may also build UMD bundle and ESM files separately:
 - `yarn build:umd` - for building UMD bundle only.
 - `yarn build:umd:watch` - the same as previous command but in watch-mode.
 
-## Other commands
+### Other commands
 
-#### Lint the code
+##### Lint the code
 - `yarn lint` for performing static code analysis.
 
-#### Test the library
+##### Test the library
 - `yarn test` for running all your `*.spec.ts` tests once. Generated code coverage report may be found in `coverage` folder.
 - `yarn test:watch` for running all you `*.spec.ts` and watch for file changes.
 
-#### Generate documentation
+##### Generate documentation
 - `yarn docs` for generating documentation locally.
 - `yarn gh-pages` for generating documentation and uploading it to GitHub Pages. [Documentation example](https://trekhleb.github.io/angular-library-seed/).
 
-#### Explore the bundle
+##### Explore the bundle
 - `yarn explorer` to find out where all your code in bundle is coming from.
 
-#### Bump library version
+##### Bump library version
 - `npm version patch` to increase library version. [More on bumping](https://docs.npmjs.com/cli/version).
 
 `preversion` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing.
 
-#### Publish library to NPM
+##### Publish library to NPM
 - `npm publish` to publish your library sources on [npmjs.com](https://www.npmjs.com/). Once the library is published it will be [available for usage](https://www.npmjs.com/package/angular-library-seed) in npm packages.
 
 `prepublishOnly` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing.
 
-#### Cleaning
+##### Cleaning
 - `yarn clean:tmp` command will clean up all temporary files like `docs`, `dist`, `coverage` etc.
 - `yarn clean:all` command will clean up all temporary files along with `node_modules` folder. 
 
-# Library development workflow
+## Library development workflow
 
 In order to debug your library in browser you need to have Angular project that will consume your library, build the application and display it. For your convenience all of that should happen automatically in background so once you change library source code you should instantly see the changes in browser.
 
@@ -135,7 +137,7 @@ As a result once you change library source code it will be automatically re-comp
 
 For more details about demo projects, their folder structure and npm commands please take a look at [demo projects README](https://github.com/trekhleb/angular-library-seed/tree/master/demo). -->
 
-### Using `yarn link`
+#### Using `yarn link`
 
 In you library root folder:
 
