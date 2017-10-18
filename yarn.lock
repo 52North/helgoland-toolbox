@@ -28,7 +28,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^4.4.5":
+"@angular/forms@^4.0.0":
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-4.4.5.tgz#e9552086232aab2ce1d08ef198b62204ea13c43b"
   dependencies:

@@ -49,12 +49,14 @@
     "test:watch": "karma start --auto-watch --no-single-run",
     "tslint": "tslint"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@angular/common": "^4.0.0",
     "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.4.5",
+    "@angular/forms": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
-    "class-transformer": "^0.1.8"
+    "class-transformer": "^0.1.8",
+    "moment": "^2.19.1",
+    "rxjs": "^5.3.1"
   },
   "devDependencies": {
     "@angular/common": "^4.0.0",
