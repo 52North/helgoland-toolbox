@@ -91,7 +91,7 @@
                                 id="xs-components-links"
                             >
                                 <li class="link">
-                                    <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
+                                    <a href="../components/PermalinkButtonComponent.html"  data-type="entity-link" class="active" >PermalinkButtonComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
@@ -202,7 +202,7 @@
                                     <a href="../classes/Timeseries.html" >Timeseries</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/TimeseriesCollection.html"  data-type="entity-link" class="active" >TimeseriesCollection</a>
+                                    <a href="../classes/TimeseriesCollection.html" >TimeseriesCollection</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/Timespan.html" >Timespan</a>
@@ -451,7 +451,7 @@
                                        id="components-links"
                    >
                                        <li class="link">
-                                           <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
+                                           <a href="../components/PermalinkButtonComponent.html"  data-type="entity-link" class="active" >PermalinkButtonComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
@@ -562,7 +562,7 @@
                                            <a href="../classes/Timeseries.html" >Timeseries</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/TimeseriesCollection.html"  data-type="entity-link" class="active" >TimeseriesCollection</a>
+                                           <a href="../classes/TimeseriesCollection.html" >TimeseriesCollection</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/Timespan.html" >Timespan</a>
@@ -734,19 +734,15 @@
                    
                    </nav>
                </div>
-               <div class="content class">
+               <div class="content component">
                    <div class="content-data">
 
 
 
 
-
-
-
-
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li>TimeseriesCollection</li>
+  <li>Components</li>
+  <li>PermalinkButtonComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -754,20 +750,34 @@
         <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
     </li>
 
-
     <li>
         <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
+
+    <li>
+        <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+    </li>
+    <li>
+        <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="info">
-        <p class="comment">
-            <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>src/model/api/station.ts</code>
-        </p>
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/permalink/permalink-button/permalink-button.component.ts</code>
+</p>
+
+
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
 
 
 
@@ -776,48 +786,362 @@
 
 
 
-            <section>
-                <h3 id="inputs">Indexable</h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-permalink-button</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>permalink-button.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./permalink-button.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+        <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <span class="modifier">Public</span> <a href="#modal">modal</a>
+                            </li>
+                            <li>
+                                <span class="modifier">Public</span> <a href="#permalinkUrl">permalinkUrl</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <span class="modifier">Public</span> <a href="#permalink">permalink</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#generatedUrlFunction">generatedUrlFunction</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h3 id="constructor">Constructor</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>constructor(modalService: NgbModal)</code>
+                        </td>
+                    </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>[key: string]:    <code><a href="../classes/ParameterConstellation.html" target="_self" >ParameterConstellation</a></code>
-            </code>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/permalink/permalink-button/permalink-button.component.ts:17</a></div>
                                 </td>
                             </tr>
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/model/api/station.ts:14</a></div>
-                                        </td>
-                                    </tr>
-                        </tbody>
-                    </table>
-            </section>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div>
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>modalService</td>
+                                                      <td>
+                                                                <code>NgbModal</code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
-    </div>
+    <section>
+        <h3 id="inputs">Inputs</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <a name="generatedUrlFunction"></a>
+                            <code>generatedUrlFunction</code>
+                        </td>
+                        <td class="col-md-10">
+                              <p>
+                                <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                              </p>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/permalink/permalink-button/permalink-button.component.ts:15</a></div>
+                                </td>
+                            </tr>
+                </tbody>
+            </table>
+    </section>
+
+
+
+
+    <section>
+        
+            <h3 id="methods">
+                Methods
+            </h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="permalink"></a>
+                            <span class="name"><b><span class="modifier">Public</span> permalink</b><a href="#permalink"><span class="fa fa-link"></span></a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>permalink()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/permalink/permalink-button/permalink-button.component.ts:23</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
+
+    <section>
+        
+            <h3 id="inputs">
+                Properties
+            </h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="modal"></a>
+                            <span class="name"><b><span class="modifier">Public</span> modal</b><a href="#modal"><span class="fa fa-link"></span></a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span><code>modal:     <code>TemplateRef&lt;any&gt;</code>
+    </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Type : </i>    <code>TemplateRef&lt;any&gt;</code>
+    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Decorators : </i><code>ViewChild</code>
+                            </td>
+                        </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/permalink/permalink-button/permalink-button.component.ts:12</a></div>
+                                </td>
+                            </tr>
+    
+    
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="permalinkUrl"></a>
+                            <span class="name"><b><span class="modifier">Public</span> permalinkUrl</b><a href="#permalinkUrl"><span class="fa fa-link"></span></a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span><code>permalinkUrl:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+    </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+    
+                            </td>
+                        </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/permalink/permalink-button/permalink-button.component.ts:17</a></div>
+                                </td>
+                            </tr>
+    
+    
+                </tbody>
+            </table>
+    </section>
+</div>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { ParameterConstellation } from &#x27;./dataset/parameterConstellation&#x27;;
-import { Timeseries } from &#x27;./dataset/timeseries&#x27;;
-import { Parameter } from &#x27;./parameter&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Component, Input, TemplateRef, ViewChild } from &#x27;@angular/core&#x27;;
+import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 
-export class Station {
-    public geometry: GeoJSON.Point;
-    public properties: StationProperties;
-}
+@Component({
+  selector: &#x27;n52-permalink-button&#x27;,
+  templateUrl: &#x27;./permalink-button.component.html&#x27;,
+  styleUrls: [&#x27;./permalink-button.component.scss&#x27;]
+})
+export class PermalinkButtonComponent {
 
-export class StationProperties extends Parameter {
-    public timeseries: TimeseriesCollection | Timeseries;
-}
+  @ViewChild(&#x27;permalinkModal&#x27;)
+  public modal: TemplateRef&lt;any&gt;;
 
-export class TimeseriesCollection {
-    [key: string]: ParameterConstellation;
+  @Input()
+  public generatedUrlFunction: () &#x3D;&gt; string;
+
+  public permalinkUrl: string;
+
+  constructor(
+    private modalService: NgbModal
+  ) { }
+
+  public permalink() {
+    console.log(&#x27;clicked&#x27;);
+    this.permalinkUrl &#x3D; this.generatedUrlFunction();
+    this.modalService.open(this.modal);
+  }
+
 }
 </code></pre>
     </div>
+
+    <div class="tab-pane fade" id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ng-template #permalinkModal let-c&#x3D;&quot;close&quot; let-d&#x3D;&quot;dismiss&quot;&gt;
+    &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+        &lt;h4 class&#x3D;&quot;modal-title&quot;&gt;Erstelle Permalink&lt;/h4&gt;
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;close&quot; aria-label&#x3D;&quot;Close&quot; (click)&#x3D;&quot;d()&quot;&gt;
+              &lt;span aria-hidden&#x3D;&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+          &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+        &lt;div class&#x3D;&quot;permalink-button&quot;&gt;
+            &lt;n52-permalink-in-mail [url]&#x3D;&quot;permalinkUrl&quot; (onTriggered)&#x3D;&quot;c()&quot;&gt;&lt;/n52-permalink-in-mail&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;permalink-button&quot;&gt;
+            &lt;n52-permalink-new-window [url]&#x3D;&quot;permalinkUrl&quot; (onTriggered)&#x3D;&quot;c()&quot;&gt;&lt;/n52-permalink-new-window&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;permalink-button&quot;&gt;
+            &lt;n52-permalink-to-clipboard [url]&#x3D;&quot;permalinkUrl&quot; (onTriggered)&#x3D;&quot;c()&quot;&gt;&lt;/n52-permalink-to-clipboard&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;span class&#x3D;&quot;fa fa-link permalink&quot; (click)&#x3D;&quot;permalink()&quot;&gt;&lt;/span&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade" id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ng-template #permalinkModal let-c="close" let-d="dismiss">    <div class="modal-header">        <h4 class="modal-title">Erstelle Permalink</h4>        <button type="button" class="close" aria-label="Close" (click)="d()">              <span aria-hidden="true">&times;</span>          </button>    </div>    <div class="modal-body">        <div class="permalink-button">            <n52-permalink-in-mail [url]="permalinkUrl" (onTriggered)="c()"></n52-permalink-in-mail>        </div>        <div class="permalink-button">            <n52-permalink-new-window [url]="permalinkUrl" (onTriggered)="c()"></n52-permalink-new-window>        </div>        <div class="permalink-button">            <n52-permalink-to-clipboard [url]="permalinkUrl" (onTriggered)="c()"></n52-permalink-to-clipboard>        </div>    </div></ng-template><span class="fa fa-link permalink" (click)="permalink()"></span></div>'
+    var COMPONENTS = [{'name': 'PermalinkButtonComponent', 'selector': 'n52-permalink-button'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PermalinkButtonComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
 
 
 
