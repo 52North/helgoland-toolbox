@@ -49,19 +49,23 @@
     "test:watch": "karma start --auto-watch --no-single-run",
     "tslint": "tslint"
   },
-  "dependencies": {},
   "peerDependencies": {
     "@angular/common": "^4.0.0",
-    "@angular/core": "^4.0.0"
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.4.5",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
+    "class-transformer": "^0.1.8"
   },
   "devDependencies": {
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.4.5",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@compodoc/compodoc": "^1.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@types/flot": "^0.0.30",
     "@types/geojson": "^1.0.5",
     "@types/jasmine": "^2.5.47",
