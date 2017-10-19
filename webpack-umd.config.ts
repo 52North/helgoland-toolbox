@@ -64,6 +64,11 @@ export default {
       {
         test: /\.html$/,
         use: 'raw-loader'
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        use: 'file-loader'
       }
     ]
   },
