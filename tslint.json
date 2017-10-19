@@ -6,7 +6,7 @@
     "directive-class-suffix": true,
     "interface-name": false,
     "invoke-injectable": true,
-    "max-line-length": [true, 120],
+    "max-line-length": [true, 125],
     "no-access-missing-member": false,
     "no-attribute-parameter-decorator": true,
     "no-console": [true, "time", "timeEnd", "trace"],
