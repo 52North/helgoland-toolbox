@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const gulpCopy = require('gulp-copy');
 const sass = require('node-sass');
 const inlineTemplates = require('gulp-inline-ng2-template');
 const exec = require('child_process').exec;
@@ -17,6 +18,11 @@ const INLINE_TEMPLATES = {
     styleProcessor: compileSass
   }
 };
+
+gulp.task('copy-js', () => {
+  gulp.src(['./src/**/*.js'], {base: './src/'})
+    .pipe(gulp.dest('./dist'))
+});
 
 /**
  * Inline external HTML and SCSS templates into Angular component files.
