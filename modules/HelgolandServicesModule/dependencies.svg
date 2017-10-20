@@ -21,11 +21,11 @@
 <polygon fill="#fb8072" stroke="transparent" points="645.5,-10 645.5,-30 665.5,-30 665.5,-10 645.5,-10"/>
 <text text-anchor="start" x="669.2258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
-<title>cluster_HelgolandToolboxModule</title>
+<title>cluster_HelgolandServicesModule</title>
 <polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-195 967,-195 967,-70 8,-70"/>
 </g>
 <g id="clust6" class="cluster">
-<title>cluster_HelgolandToolboxModule_providers</title>
+<title>cluster_HelgolandServicesModule_providers</title>
 <polygon fill="none" stroke="#000000" points="16,-78 16,-130 959,-130 959,-78 16,-78"/>
 </g>
 <!-- ApiInterface -->
@@ -34,15 +34,15 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="891" cy="-104" rx="59.6473" ry="18"/>
 <text text-anchor="middle" x="891" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ApiInterface</text>
 </g>
-<!-- HelgolandToolboxModule -->
+<!-- HelgolandServicesModule -->
 <g id="node8" class="node">
-<title>HelgolandToolboxModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="515.8103,-187 512.8103,-191 491.8103,-191 488.8103,-187 350.1897,-187 350.1897,-151 515.8103,-151 515.8103,-187"/>
-<text text-anchor="middle" x="433" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandToolboxModule</text>
+<title>HelgolandServicesModule</title>
+<polygon fill="#8dd3c7" stroke="#000000" points="515.7893,-187 512.7893,-191 491.7893,-191 488.7893,-187 350.2107,-187 350.2107,-151 515.7893,-151 515.7893,-187"/>
+<text text-anchor="middle" x="433" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandServicesModule</text>
 </g>
-<!-- ApiInterface&#45;&gt;HelgolandToolboxModule -->
+<!-- ApiInterface&#45;&gt;HelgolandServicesModule -->
 <g id="edge1" class="edge">
-<title>ApiInterface&#45;&gt;HelgolandToolboxModule</title>
+<title>ApiInterface&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M891,-122.2843C891,-143.3211 891,-175 891,-175 891,-175 525.6751,-175 525.6751,-175"/>
 <polygon fill="#000000" stroke="#000000" points="525.6751,-171.5001 515.6751,-175 525.6751,-178.5001 525.6751,-171.5001"/>
 </g>
@@ -52,9 +52,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="753" cy="-104" rx="60.2769" ry="18"/>
 <text text-anchor="middle" x="753" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ApiMapping</text>
 </g>
-<!-- ApiMapping&#45;&gt;HelgolandToolboxModule -->
+<!-- ApiMapping&#45;&gt;HelgolandServicesModule -->
 <g id="edge2" class="edge">
-<title>ApiMapping&#45;&gt;HelgolandToolboxModule</title>
+<title>ApiMapping&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M753,-122.0225C753,-139.3734 753,-163 753,-163 753,-163 525.8241,-163 525.8241,-163"/>
 <polygon fill="#000000" stroke="#000000" points="525.8241,-159.5001 515.8241,-163 525.8241,-166.5001 525.8241,-159.5001"/>
 </g>
@@ -64,9 +64,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="594" cy="-104" rx="80.4151" ry="18"/>
 <text text-anchor="middle" x="594" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">InternalIdHandler</text>
 </g>
-<!-- InternalIdHandler&#45;&gt;HelgolandToolboxModule -->
+<!-- InternalIdHandler&#45;&gt;HelgolandServicesModule -->
 <g id="edge3" class="edge">
-<title>InternalIdHandler&#45;&gt;HelgolandToolboxModule</title>
+<title>InternalIdHandler&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M513.549,-104C508.0639,-104 504.6557,-104 504.6557,-104 504.6557,-104 504.6557,-140.8939 504.6557,-140.8939"/>
 <polygon fill="#000000" stroke="#000000" points="501.1558,-140.8938 504.6557,-150.8939 508.1558,-140.8939 501.1558,-140.8938"/>
 </g>
@@ -76,9 +76,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="433" cy="-104" rx="62.5373" ry="18"/>
 <text text-anchor="middle" x="433" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">LocalStorage</text>
 </g>
-<!-- LocalStorage&#45;&gt;HelgolandToolboxModule -->
+<!-- LocalStorage&#45;&gt;HelgolandServicesModule -->
 <g id="edge4" class="edge">
-<title>LocalStorage&#45;&gt;HelgolandToolboxModule</title>
+<title>LocalStorage&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M433,-122.1061C433,-122.1061 433,-140.991 433,-140.991"/>
 <polygon fill="#000000" stroke="#000000" points="429.5001,-140.9909 433,-150.991 436.5001,-140.991 429.5001,-140.9909"/>
 </g>
@@ -88,9 +88,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="321" cy="-104" rx="31.3371" ry="18"/>
 <text text-anchor="middle" x="321" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">Time</text>
 </g>
-<!-- Time&#45;&gt;HelgolandToolboxModule -->
+<!-- Time&#45;&gt;HelgolandServicesModule -->
 <g id="edge5" class="edge">
-<title>Time&#45;&gt;HelgolandToolboxModule</title>
+<title>Time&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M352.4728,-104C357.6948,-104 361.4499,-104 361.4499,-104 361.4499,-104 361.4499,-140.8939 361.4499,-140.8939"/>
 <polygon fill="#000000" stroke="#000000" points="357.95,-140.8938 361.4499,-150.8939 364.95,-140.8939 357.95,-140.8938"/>
 </g>
@@ -100,9 +100,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="219" cy="-104" rx="52.7295" ry="18"/>
 <text text-anchor="middle" x="219" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">MapCache</text>
 </g>
-<!-- MapCache&#45;&gt;HelgolandToolboxModule -->
+<!-- MapCache&#45;&gt;HelgolandServicesModule -->
 <g id="edge6" class="edge">
-<title>MapCache&#45;&gt;HelgolandToolboxModule</title>
+<title>MapCache&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M219,-122.0225C219,-139.3734 219,-163 219,-163 219,-163 340.262,-163 340.262,-163"/>
 <polygon fill="#000000" stroke="#000000" points="340.262,-166.5001 350.262,-163 340.262,-159.5001 340.262,-166.5001"/>
 </g>
@@ -112,9 +112,9 @@
 <ellipse fill="#fdb462" stroke="#000000" cx="86" cy="-104" rx="61.975" ry="18"/>
 <text text-anchor="middle" x="86" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ColorService</text>
 </g>
-<!-- ColorService&#45;&gt;HelgolandToolboxModule -->
+<!-- ColorService&#45;&gt;HelgolandServicesModule -->
 <g id="edge7" class="edge">
-<title>ColorService&#45;&gt;HelgolandToolboxModule</title>
+<title>ColorService&#45;&gt;HelgolandServicesModule</title>
 <path fill="none" stroke="#000000" d="M86,-122.2843C86,-143.3211 86,-175 86,-175 86,-175 340.3257,-175 340.3257,-175"/>
 <polygon fill="#000000" stroke="#000000" points="340.3257,-178.5001 350.3257,-175 340.3257,-171.5001 340.3257,-178.5001"/>
 </g>
