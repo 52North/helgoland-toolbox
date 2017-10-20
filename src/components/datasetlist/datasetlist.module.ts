@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { HelgolandServicesModule } from './../../services/services.module';
 import { HelgolandDepictionModule } from './../depiction/depiction.module';
 import { HelgolandMapViewModule } from './../map/view/view.module';
 import { HelgolandModificationModule } from './../modification/modification.module';
@@ -17,7 +18,8 @@ const COMPONENTS = [
     CommonModule,
     HelgolandModificationModule,
     HelgolandDepictionModule,
-    HelgolandMapViewModule
+    HelgolandMapViewModule,
+    HelgolandServicesModule
   ],
   declarations: [
     COMPONENTS

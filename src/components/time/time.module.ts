@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { HelgolandServicesModule } from './../../services/services.module';
 import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector/predefined-timespan-selector.component';
 import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
 import { TimeRangeSliderSelectorComponent } from './time-range-slider-selector/time-range-slider-selector.component';
@@ -22,7 +23,8 @@ const COMPONENTS = [
     CommonModule,
     FormsModule,
     NgbDatepickerModule,
-    NgbTimepickerModule
+    NgbTimepickerModule,
+    HelgolandServicesModule
   ],
   declarations: [
     COMPONENTS

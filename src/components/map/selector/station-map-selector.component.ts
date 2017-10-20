@@ -31,7 +31,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         if (this.markerClusterGroup) { this.map.removeLayer(this.markerClusterGroup); }
         this.apiInterface.getStations(this.serviceUrl, this.filter)
             .subscribe((res) => {
-                this.markerClusterGroup = L.featureGroup();
+                this.markerClusterGroup = L.markerClusterGroup({ animate: true });
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
                         const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]], {

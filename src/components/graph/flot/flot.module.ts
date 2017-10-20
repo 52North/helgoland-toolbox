@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { HelgolandServicesModule } from './../../../services/services.module';
 import {
     FlotOverviewTimeseriesGraphComponent,
 } from './flot-overview-timeseries-graph/flot-overview-timeseries-graph.component';
@@ -12,6 +13,7 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [
+    HelgolandServicesModule
   ],
   declarations: [
     COMPONENTS

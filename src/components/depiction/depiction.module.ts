@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,6 +13,7 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     NgbModalModule
   ],
   declarations: [

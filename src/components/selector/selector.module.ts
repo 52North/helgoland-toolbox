@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { HelgolandServicesModule } from './../../services/services.module';
 import { HelgolandDepictionModule } from './../depiction/depiction.module';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector/dataset-by-station-selector.component';
 import { ListSelectorComponent } from './list-selector/list-selector.component';
@@ -27,6 +28,7 @@ const COMPONENTS = [
     imports: [
         CommonModule,
         HelgolandDepictionModule,
+        HelgolandServicesModule,
         NgbAccordionModule
     ],
     declarations: [
