@@ -1,14 +1,10 @@
-@import '../../../variables';
-
 :host {
     .datetimepicker {
         text-align: center;
     }
-
     ngb-timepicker {
         display: inline-block;
     }
-
     .invalid-notice {
         text-align: center;
         color: red;

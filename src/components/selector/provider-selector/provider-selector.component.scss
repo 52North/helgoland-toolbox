@@ -1,7 +1,5 @@
-@import "../../../variables";
 :host {
     .provider-list {
-        color: $text-color;
         .provider-item {
             padding: 5px;
             &+.add-provider,
@@ -10,24 +8,7 @@
             }
             &:hover {
                 cursor: pointer;
-                background-color: $hover-background-color;
-                color: $hover-color;
             }
-            &.selected {
-                background-color: $selection-background-color;
-                color: $selection-color;
-            }
-            .delete-user-added {
-                float: right;
-            }
-        }
-        .add-provider {
-            &+.provider-item {
-                margin-top: 5px;
-            }
-        }
-        .input-group {
-            margin-bottom: 10px;
         }
     }
 }
