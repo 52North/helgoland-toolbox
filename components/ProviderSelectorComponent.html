@@ -1477,7 +1477,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/components/selector/provider-selector/provider-selector.component.ts:70</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/components/selector/provider-selector/provider-selector.component.ts:72</a></div>
                                 </td>
                             </tr>
     
@@ -1539,7 +1539,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/components/selector/provider-selector/provider-selector.component.ts:75</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/components/selector/provider-selector/provider-selector.component.ts:77</a></div>
                                 </td>
                             </tr>
     
@@ -1695,6 +1695,8 @@ export class ProviderSelectorComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
+        if (!this.filter) { this.filter &#x3D; {}; }
+        if (!this.providerBlacklist) { this.providerBlacklist &#x3D; []; }
         const list &#x3D; this.providerList;
         this.loadingCount &#x3D; list.length;
         this.providers &#x3D; [];

@@ -1132,7 +1132,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/model/api/dataset/dataset.ts</code>
+            <code>src/model/api/dataset.ts</code>
         </p>
 
 
@@ -1224,7 +1224,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/model/api/dataset/dataset.ts:18</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/model/api/dataset.ts:38</a></div>
                                         </td>
                                     </tr>
             
@@ -1253,7 +1253,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/model/api/dataset/dataset.ts:16</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/model/api/dataset.ts:36</a></div>
                                         </td>
                                     </tr>
             
@@ -1282,7 +1282,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/model/api/dataset/dataset.ts:15</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/model/api/dataset.ts:35</a></div>
                                         </td>
                                     </tr>
             
@@ -1311,7 +1311,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/model/api/dataset/dataset.ts:17</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/model/api/dataset.ts:37</a></div>
                                         </td>
                                     </tr>
             
@@ -1340,7 +1340,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/model/api/dataset/dataset.ts:19</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/model/api/dataset.ts:39</a></div>
                                         </td>
                                     </tr>
             
@@ -1369,7 +1369,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/model/api/dataset/dataset.ts:20</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/model/api/dataset.ts:40</a></div>
                                         </td>
                                     </tr>
             
@@ -1398,7 +1398,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/model/api/dataset/dataset.ts:14</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/model/api/dataset.ts:34</a></div>
                                         </td>
                                     </tr>
             
@@ -1427,7 +1427,7 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/model/api/dataset/dataset.ts:13</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/model/api/dataset.ts:33</a></div>
                                         </td>
                                     </tr>
             
@@ -1439,12 +1439,32 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { Parameter } from &#x27;./../parameter&#x27;;
-import { DatasetTypes } from &#x27;./datasetTypes&#x27;;
-import { FirstLastValue } from &#x27;./firstLastValue&#x27;;
-import { IDataset } from &#x27;./idataset&#x27;;
-import { ParameterConstellation } from &#x27;./parameterConstellation&#x27;;
-import { PlatformTypes } from &#x27;./platformTypes&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Parameter } from &#x27;./parameter&#x27;;
+import { Station } from &#x27;./station&#x27;;
+import { DatasetTypes, PlatformTypes } from &#x27;./enums&#x27;;
+
+export interface IDataset extends Parameter {
+    url: string;
+    uom: string;
+    internalId: string;
+    firstValue: FirstLastValue;
+    lastValue: FirstLastValue;
+    parameters: ParameterConstellation;
+}
+
+export class ParameterConstellation {
+    public service: Parameter;
+    public offering: Parameter;
+    public feature: Parameter;
+    public procedure: Parameter;
+    public phenomenon: Parameter;
+    public category: Parameter;
+}
+
+export class FirstLastValue {
+    public timestamp: number;
+    public value: number;
+}
 
 export class DatasetParameterConstellation extends ParameterConstellation {
     public platform: PlatformParameter;
@@ -1459,6 +1479,17 @@ export class Dataset extends Parameter implements IDataset {
     public datasetType: DatasetTypes;
     public parameters: DatasetParameterConstellation;
     public seriesParameters?: DatasetParameterConstellation;
+}
+
+export class Timeseries extends Parameter implements IDataset {
+    public url: string;
+    public uom: string;
+    public internalId: string;
+    public firstValue: FirstLastValue;
+    public lastValue: FirstLastValue;
+    public station: Station;
+    public parameters: ParameterConstellation;
+    public hasData &#x3D; false;
 }
 
 export class PlatformParameter extends Parameter {

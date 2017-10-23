@@ -1133,7 +1133,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/components/graph/dataset-graph.component.ts</code>
+            <code>src/model/internal/graph/graph-highlight.ts</code>
         </p>
 
 
@@ -1194,7 +1194,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">src/components/graph/dataset-graph.component.ts:145</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="3" class="link-to-prism">src/model/internal/graph/graph-highlight.ts:3</a></div>
                                         </td>
                                     </tr>
 
@@ -1227,7 +1227,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">src/components/graph/dataset-graph.component.ts:144</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="2" class="link-to-prism">src/model/internal/graph/graph-highlight.ts:2</a></div>
                                         </td>
                                     </tr>
 
@@ -1238,149 +1238,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import {
-    DoCheck,
-    EventEmitter,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnChanges,
-    Output,
-    SimpleChanges,
-} from &#x27;@angular/core&#x27;;
-
-import { ResizableComponent, TimeInterval } from &#x27;../../model/internal&#x27;;
-import { DatasetOptions } from &#x27;./../../model/api/dataset/options&#x27;;
-import { Timespan } from &#x27;./../../model/internal/timeInterval&#x27;;
-import { ApiInterface } from &#x27;./../../services/api-interface/api-interface.service&#x27;;
-import { InternalIdHandler } from &#x27;./../../services/api-interface/internal-id-handler.service&#x27;;
-import { Time } from &#x27;./../../services/time/time.service&#x27;;
-
-const equal &#x3D; require(&#x27;deep-equal&#x27;);
-
-export abstract class DatasetGraphComponent&lt;T extends DatasetOptions | DatasetOptions[], U&gt;
-    extends ResizableComponent implements OnChanges, DoCheck {
-
-    @Input()
-    public datasetIds: string[] &#x3D; [];
-
-    @Input()
-    public selectedDatasetIds: string[] &#x3D; [];
-
-    @Input()
-    public timeInterval: TimeInterval;
-
-    @Input()
-    public datasetOptions: Map&lt;string, T&gt;;
-    public oldDatasetOptions: Map&lt;string, T&gt;;
-
-    @Input()
-    public graphOptions: U;
-
-    @Output()
-    public onDatasetSelected: EventEmitter&lt;string[]&gt; &#x3D; new EventEmitter();
-
-    @Output()
-    public onTimespanChanged: EventEmitter&lt;Timespan&gt; &#x3D; new EventEmitter();
-
-    @Output()
-    public onMessageThrown: EventEmitter&lt;GraphMessage&gt; &#x3D; new EventEmitter();
-
-    protected timespan: Timespan;
-
-    private datasetIdsDiffer: IterableDiffer&lt;string&gt;;
-    private selectedDatasetIdsDiffer: IterableDiffer&lt;string&gt;;
-    private oldGraphOptions: U;
-
-    constructor(
-        protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
-        protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
-    ) {
-        super();
-        this.datasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
-        this.selectedDatasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.timeInterval &amp;&amp; this.timeInterval) {
-            this.timespan &#x3D; this.timeSrvc.createTimespanOfInterval(this.timeInterval);
-            this.timeIntervalChanges();
-        }
-    }
-
-    public ngDoCheck(): void {
-        const datasetIdsChanges &#x3D; this.datasetIdsDiffer.diff(this.datasetIds);
-        if (datasetIdsChanges) {
-            datasetIdsChanges.forEachAddedItem((addedItem) &#x3D;&gt; {
-                this.addDatasetByInternalId(addedItem.item);
-            });
-            datasetIdsChanges.forEachRemovedItem((removedItem) &#x3D;&gt; {
-                this.removeDataset(removedItem.item);
-            });
-        }
-
-        const selectedDatasetIdsChanges &#x3D; this.selectedDatasetIdsDiffer.diff(this.selectedDatasetIds);
-        if (selectedDatasetIdsChanges) {
-            selectedDatasetIdsChanges.forEachAddedItem((addedItem) &#x3D;&gt; {
-                this.setSelectedId(addedItem.item);
-            });
-            selectedDatasetIdsChanges.forEachRemovedItem((removedItem) &#x3D;&gt; {
-                this.removeSelectedId(removedItem.item);
-            });
-        }
-
-        if (!equal(this.oldGraphOptions, this.graphOptions)) {
-            this.oldGraphOptions &#x3D; JSON.parse(JSON.stringify(this.graphOptions));
-            const options &#x3D; JSON.parse(JSON.stringify(this.graphOptions));
-            this.graphOptionsChanged(options);
-        }
-
-        if (this.datasetOptions) {
-            const firstChange &#x3D; this.oldDatasetOptions &#x3D;&#x3D;&#x3D; undefined;
-            if (firstChange) { this.oldDatasetOptions &#x3D; new Map(); }
-            this.datasetOptions.forEach((value, key) &#x3D;&gt; {
-                if (!equal(value, this.oldDatasetOptions.get(key))) {
-                    this.oldDatasetOptions.set(key, JSON.parse(JSON.stringify(this.datasetOptions.get(key))));
-                    this.datasetOptionsChanged(key, value, firstChange);
-                }
-            });
-        }
-    }
-
-    protected addDatasetByInternalId(internalId: string) {
-        const internalIdObj &#x3D; this.datasetIdResolver.resolveInternalId(internalId);
-        this.addDataset(internalIdObj.id, internalIdObj.url);
-    }
-
-    protected abstract timeIntervalChanges(): void;
-
-    protected abstract addDataset(id: string, url: string): void;
-
-    protected abstract removeDataset(internalId: string): void;
-
-    protected abstract setSelectedId(internalId: string): void;
-
-    protected abstract removeSelectedId(internalId: string): void;
-
-    protected abstract graphOptionsChanged(options: U): void;
-
-    protected abstract datasetOptionsChanged(internalId: string, options: T, firstChange: boolean): void;
-
-}
-
-export interface GraphMessage {
-    type: GraphMessageType;
-    message: string;
-}
-
-export enum GraphMessageType {
-    ERROR,
-    INFO
-}
-
-export interface GraphHighlight {
+        <pre class="line-numbers"><code class="language-typescript">export interface GraphHighlight {
     internalId: string;
     dataIndex: number;
 }
