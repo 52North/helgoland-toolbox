@@ -26,8 +26,31 @@ const config = {
             options: {
               configFileName: path.resolve(__dirname, 'tsconfig.json')
             }
+          },
+          {
+            loader: 'angular2-template-loader'
           }
         ]
+      },
+
+      {
+        test: /\.css$/,
+        use: ['to-string-loader', 'css-loader']
+      },
+
+      {
+        test: /\.scss$/,
+        use: ['to-string-loader', 'css-loader', 'sass-loader']
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        use: 'file-loader'
+      },
+
+      {
+        test: /\.html$/,
+        use: 'raw-loader'
       }
     ]
   },
@@ -60,6 +83,13 @@ const config = {
       {}
     ),
 
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery',
+      'window.jQuery': 'jquery'
+    }),
+
     /*
      * Plugin: CommonsChunkPlugin
      * Description: Shares common code between the pages.
@@ -87,7 +117,7 @@ const config = {
   ],
 
   devServer: {
-    port: 8000,
+    port: 4200,
     historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,

@@ -1,0 +1,14 @@
+<div style="border: 1px solid grey">
+    <h1>ProviderList:</h1>
+    <n52-provider-selector [providerList]="['http://www.fluggs.de/sos2/api/v1/']" [supportStations]="true"></n52-provider-selector>
+</div>
+
+<div style="border: 1px solid grey">
+    <h1>FlotGraph:</h1>
+    <div style="height: 500px; width: 500px;">
+        <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"></n52-flot-timeseries-graph>
+    </div>
+    <div style="height: 500px; width: 500px;">
+        <n52-flot-timeseries-graph [datasetIds]="datasetIdsOne" [datasetOptions]="datasetOptionsOne" [timeInterval]="timespan" [graphOptions]="diagramOptions"></n52-flot-timeseries-graph>
+    </div>
+</div>

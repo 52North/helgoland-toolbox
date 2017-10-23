@@ -44,7 +44,7 @@ const config = {
      */
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src', 'index.ejs'),
-      title: 'Angular Library Starter',
+      title: 'helgoland-toolbox demo',
       inject: 'body'
     }),
 
@@ -59,6 +59,13 @@ const config = {
       path.resolve(__dirname, 'src'),
       {}
     ),
+
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery',
+      'window.jQuery': 'jquery'
+    }),
 
     /*
      * Plugin: CommonsChunkPlugin
