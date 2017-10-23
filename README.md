@@ -2,9 +2,10 @@
 
 > tools for a sensor observation service based client
 
+[![npm version](https://badge.fury.io/js/helgoland-toolbox.svg)](https://badge.fury.io/js/helgoland-toolbox)
+
 <!-- [![Build Status](https://travis-ci.org/trekhleb/angular-library-seed.svg?branch=master)](https://travis-ci.org/trekhleb/angular-library-seed)
-[![codecov](https://codecov.io/gh/trekhleb/angular-library-seed/branch/master/graph/badge.svg)](https://codecov.io/gh/trekhleb/angular-library-seed)
-[![npm version](https://badge.fury.io/js/angular-library-seed.svg)](https://badge.fury.io/js/angular-library-seed) -->
+[![codecov](https://codecov.io/gh/trekhleb/angular-library-seed/branch/master/graph/badge.svg)](https://codecov.io/gh/trekhleb/angular-library-seed) -->
 
 This project contains [Angular](https://angular.io/) based Modules, Components, Injectables to build a sensor observation service based client. 
 
