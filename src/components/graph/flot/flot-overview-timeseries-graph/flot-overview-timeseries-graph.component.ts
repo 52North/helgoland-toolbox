@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
-import { TimeInterval } from '../../../../model/internal';
-import { DatasetOptions } from './../../../../model/api/dataset/options';
-import { Timespan } from './../../../../model/internal/timeInterval';
+import { DatasetOptions } from './../../../../model/internal/options';
+import { TimeInterval, Timespan } from './../../../../model/internal/timeInterval';
 import { Time } from './../../../../services/time/time.service';
 
 @Component({

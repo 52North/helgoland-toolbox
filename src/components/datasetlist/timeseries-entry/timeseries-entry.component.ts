@@ -10,13 +10,10 @@ import {
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TimeInterval } from '../../../model/internal';
+import { TimeInterval } from '../../../model/internal/timeInterval';
 import { ListEntryComponent } from '../list-entry.component';
-import { Dataset } from './../../../model/api/dataset/dataset';
-import { FirstLastValue } from './../../../model/api/dataset/firstLastValue';
-import { IDataset } from './../../../model/api/dataset/idataset';
-import { DatasetOptions } from './../../../model/api/dataset/options';
-import { Timeseries } from './../../../model/api/dataset/timeseries';
+import { Dataset, FirstLastValue, IDataset, Timeseries } from './../../../model/api/dataset';
+import { DatasetOptions } from './../../../model/internal/options';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../services/time/time.service';

@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewEnc
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ListEntryComponent } from '../list-entry.component';
-import { Dataset } from './../../../model/api/dataset/dataset';
-import { TimedDatasetOptions } from './../../../model/api/dataset/options';
+import { Dataset } from './../../../model/api/dataset';
+import { TimedDatasetOptions } from './../../../model/internal/options';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 

@@ -1,10 +1,15 @@
+import 'Flot/jquery.flot.js';
+import 'Flot/jquery.flot.time.js';
+import './jquery.flot.navigate.js';
+import './jquery.flot.selection.js';
+import './jquery.flot.touch.js';
+
 import { AfterViewInit, Component, ElementRef, IterableDiffers, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
-import { IDataset } from './../../../../model/api/dataset/idataset';
-import { DatasetOptions } from './../../../../model/api/dataset/options';
-import { Timeseries } from './../../../../model/api/dataset/timeseries';
+import { IDataset, Timeseries } from './../../../../model/api/dataset';
+import { DatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
@@ -12,10 +17,6 @@ import { Time } from './../../../../services/time/time.service';
 import { DataSeries } from './../model/dataSeries';
 import { Plot } from './../model/plot';
 import { PlotOptions } from './../model/plotOptions';
-
-require('./jquery.flot.navigate.js');
-require('./jquery.flot.selection.js');
-require('./jquery.flot.touch.js');
 
 declare var $: any;
 

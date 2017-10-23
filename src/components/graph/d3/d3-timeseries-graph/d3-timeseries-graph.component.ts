@@ -17,8 +17,8 @@ import * as moment from 'moment';
 
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { LocatedTimeValueEntry } from './../../../../model/api/data';
-import { IDataset } from './../../../../model/api/dataset/idataset';
-import { DatasetOptions } from './../../../../model/api/dataset/options';
+import { IDataset } from './../../../../model/api/dataset';
+import { DatasetOptions } from './../../../../model/internal/options';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../../services/time/time.service';

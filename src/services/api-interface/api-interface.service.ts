@@ -1,16 +1,3 @@
-import { Dataset } from './../../model/api/dataset/dataset';
-import { Platform } from './../../model/api/platform';
-import { Procedure } from './../../model/api/procedure';
-import { Feature } from './../../model/api/feature';
-import { Offering } from './../../model/api/offering';
-import { Phenomenon } from './../../model/api/phenomenon';
-import { Category } from './../../model/api/category';
-import { Timespan } from './../../model/internal/timeInterval';
-import { Timeseries } from './../../model/api/dataset/timeseries';
-import { Station } from './../../model/api/station';
-import { Service } from './../../model/api/service';
-import { Data } from './../../model/api/data';
-import { ParameterFilter, DataParameterFilter } from './../../model/api/parameterFilter';
 import 'rxjs/add/operator/map';
 
 import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
@@ -19,6 +6,18 @@ import { deserialize, deserializeArray } from 'class-transformer';
 import * as moment from 'moment';
 import { Observable, Observer } from 'rxjs/Rx';
 
+import { Category } from './../../model/api/category';
+import { Data } from './../../model/api/data';
+import { Dataset, Timeseries } from './../../model/api/dataset';
+import { Feature } from './../../model/api/feature';
+import { Offering } from './../../model/api/offering';
+import { DataParameterFilter, ParameterFilter } from './../../model/api/parameterFilter';
+import { Phenomenon } from './../../model/api/phenomenon';
+import { Platform } from './../../model/api/platform';
+import { Procedure } from './../../model/api/procedure';
+import { Service } from './../../model/api/service';
+import { Station } from './../../model/api/station';
+import { Timespan } from './../../model/internal/timeInterval';
 import { ApiV2 } from './interfaces/api-v2.interface';
 import { InternalIdHandler } from './internal-id-handler.service';
 

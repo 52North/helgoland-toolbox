@@ -25,6 +25,6 @@
     "use-output-property-decorator": true,
     "use-pipe-transform-interface": true,
     "variable-name": [true, "allow-leading-underscore", "ban-keywords", "check-format"],
-    "max-classes-per-file": [true, 5]
+    "max-classes-per-file": [true, 10]
   }
 }

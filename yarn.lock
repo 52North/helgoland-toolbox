@@ -410,6 +410,10 @@
     "@types/tapable" "*"
     "@types/uglify-js" "*"
 
+"Flot@github:flot/flot":
+  version "0.8.3"
+  resolved "https://codeload.github.com/flot/flot/tar.gz/958e5fd43c6dff4bab3e1fd5cb6109df5c1e8003"
+
 "JSV@>= 4.0.x":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/JSV/-/JSV-4.0.2.tgz#d077f6825571f82132f9dffaed587b4029feff57"

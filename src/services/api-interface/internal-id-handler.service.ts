@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 
-import { IDataset } from './../../model/api/dataset/idataset';
+import { IDataset } from './../../model/api/dataset';
 
 const INTERNAL_ID_SEPERATOR = '__';
 

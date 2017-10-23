@@ -9,9 +9,10 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
-import { ResizableComponent, TimeInterval } from '../../model/internal';
-import { DatasetOptions } from './../../model/api/dataset/options';
-import { Timespan } from './../../model/internal/timeInterval';
+import { GraphMessage } from '../../model/internal/graph/graph-message';
+import { ResizableComponent } from '../../model/internal/ResizableComponent';
+import { DatasetOptions } from './../../model/internal/options';
+import { TimeInterval, Timespan } from './../../model/internal/timeInterval';
 import { ApiInterface } from './../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../services/time/time.service';
@@ -128,19 +129,4 @@ export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOp
 
     protected abstract datasetOptionsChanged(internalId: string, options: T, firstChange: boolean): void;
 
-}
-
-export interface GraphMessage {
-    type: GraphMessageType;
-    message: string;
-}
-
-export enum GraphMessageType {
-    ERROR,
-    INFO
-}
-
-export interface GraphHighlight {
-    internalId: string;
-    dataIndex: number;
 }

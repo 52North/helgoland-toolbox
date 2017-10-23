@@ -41,6 +41,8 @@ export class ProviderSelectorComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
+        if (!this.filter) { this.filter = {}; }
+        if (!this.providerBlacklist) { this.providerBlacklist = []; }
         const list = this.providerList;
         this.loadingCount = list.length;
         this.providers = [];

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Category } from './../../../model/api/category';
 import { Data } from './../../../model/api/data';
-import { Timeseries } from './../../../model/api/dataset/timeseries';
+import { Timeseries } from './../../../model/api/dataset';
 import { Feature } from './../../../model/api/feature';
 import { Offering } from './../../../model/api/offering';
 import { DataParameterFilter, ParameterFilter } from './../../../model/api/parameterFilter';

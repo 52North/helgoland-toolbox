@@ -13,7 +13,7 @@ import {
 import * as L from 'leaflet';
 
 import { LocatedProfileDataEntry } from './../../../model/api/data';
-import { IDataset } from './../../../model/api/dataset/idataset';
+import { IDataset } from './../../../model/api/dataset';
 import { Timespan } from './../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { MapCache } from './../../../services/map/map.service';

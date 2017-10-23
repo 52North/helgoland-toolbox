@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-import { IDataset } from './../../../model/api/dataset/idataset';
+import { IDataset } from './../../../model/api/dataset';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { FilteredProvider } from './../../../model/internal/provider';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';

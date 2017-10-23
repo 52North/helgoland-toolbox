@@ -4,10 +4,11 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Ou
 import * as d3 from 'd3';
 import * as Plotly from 'plotly.js/lib/core';
 
-import { ProfileDataEntry } from '../../../../model/api';
-import { DatasetGraphComponent, GraphHighlight } from '../../dataset-graph.component';
-import { IDataset } from './../../../../model/api/dataset/idataset';
-import { TimedDatasetOptions } from './../../../../model/api/dataset/options';
+import { DatasetGraphComponent } from '../../dataset-graph.component';
+import { IDataset } from './../../../../model/api/dataset';
+import { ProfileDataEntry } from './../../../../model/api/data';
+import { GraphHighlight } from './../../../../model/internal/graph/graph-highlight';
+import { TimedDatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';

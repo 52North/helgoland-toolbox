@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-import { PlatformTypes } from '../../../model/api/dataset/platformTypes';
-import { Dataset } from './../../../model/api/dataset/dataset';
-import { IDataset } from './../../../model/api/dataset/idataset';
-import { DatasetOptions } from './../../../model/api/dataset/options';
+import { Dataset, IDataset } from './../../../model/api/dataset';
+import { PlatformTypes } from './../../../model/api/enums';
+import { DatasetOptions } from './../../../model/internal/options';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { ColorService } from './../../../services/color/color.service';
 
