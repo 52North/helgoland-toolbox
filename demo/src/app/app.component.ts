@@ -1,5 +1,6 @@
-import { ApiInterface, Timespan, PlotOptions, DatasetOptions } from '../../lib';
 import { Component } from '@angular/core';
+
+import { DatasetOptions, PlotOptions, Timespan, TimedDatasetOptions } from '../../lib';
 
 @Component({
     selector: 'my-app',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+    public profileDatasetIds = ['http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity-profile_12'];
+    public profileDatasetOptions: Map<string, TimedDatasetOptions[]> = new Map();
+
     public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
     public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
@@ -83,6 +88,10 @@ export class AppComponent {
         });
         this.datasetIdsOne.forEach((entry) => {
             this.datasetOptionsOne.set(entry, new DatasetOptions(entry, '#FF0000'));
+        });
+
+        this.profileDatasetIds.forEach((entry) => {
+            this.profileDatasetOptions.set(entry, [new TimedDatasetOptions(entry, '#00FF00', 1491178657000)]);
         });
     }
 }

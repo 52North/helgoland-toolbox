@@ -1,23 +1,15 @@
 {
-  "name": "angular-library-seed-demo",
-  "description": "AOT/JIT/UMD build demo of angular library seed",
-  "license": "MIT",
+  "name": "helgoland-toolbox-demo",
+  "description": "Test of some components in the helgoland-toolbox",
+  "license": "Apache-2.0",
   "scripts": {
-    "build": "npm run build:aot && npm run build:jit",
-    "build:aot": "npm run build:aot:compile && npm run build:aot:bundle",
-    "build:aot:bundle": "webpack --config esm/webpack-aot.config.js --bail",
-    "build:aot:compile": "node_modules/.bin/ngc -p esm/tsconfig-aot.json",
-    "build:jit": "webpack --config esm/webpack.config.js --bail",
+    "build": "webpack --config src/webpack.config.js --bail",
     "clean:all": "npm run clean:tmp && rimraf node_modules",
-    "clean:tmp": "npm run clean:esm:aot && npm run clean:esm:jit && rimraf esm/dist",
-    "clean:esm:aot": "npm run clean:esm:tmp && rimraf esm/dist/aot",
-    "clean:esm:jit": "npm run clean:esm:tmp && rimraf esm/dist/jit",
-    "clean:esm:tmp": "rimraf esm/lib esm/node_modules esm/src/app/*.ngfactory.ts esm/src/app/*.ngsummary.json",
-    "copy-lib": "copyfiles --up 2 \"../dist/**/*\" esm/lib",
-    "prebuild:aot": "npm run clean:esm:aot && npm run copy-lib",
-    "prebuild:jit": "npm run clean:esm:jit && npm run copy-lib",
-    "prestart": "npm run clean:esm:jit && npm run copy-lib",
-    "start": "concurrently --raw \"gulp copy-lib:watch\" \"webpack-dev-server --watch --config esm/webpack.config.js\""
+    "clean:tmp": "rimraf lib src/app/*.ngfactory.ts src/app/*.ngsummary.json",
+    "copy-lib": "copyfiles --up 2 \"../dist/**/*\" lib",
+    "prebuild": "npm run clean:tmp && npm run copy-lib",
+    "prestart": "npm run clean:tmp && npm run copy-lib",
+    "start": "concurrently --raw \"gulp copy-lib:watch\" \"webpack-dev-server --watch --config src/webpack.config.js\""
   },
   "dependencies": {
     "@angular/common": "^4.0.0",

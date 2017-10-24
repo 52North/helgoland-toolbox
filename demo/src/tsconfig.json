@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": true,
-    "declaration": false,
     "sourceMap": true,
     "inlineSources": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +15,6 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "./src/**/*.ts"
   ]
 }

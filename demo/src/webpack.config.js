@@ -6,14 +6,14 @@ const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const config = {
   devtool: 'source-map',
   entry: {
-    polyfills: path.resolve(__dirname, 'src', 'polyfills.browser.ts'),
-    main: path.resolve(__dirname, 'src', 'main-aot.ts')
+    polyfills: path.resolve(__dirname, 'polyfills.browser.ts'),
+    main: path.resolve(__dirname, 'main-jit.ts')
   },
   resolve: {
     extensions: ['.js', '.ts']
   },
   output: {
-    path: path.resolve(__dirname, 'dist', 'aot'),
+    path: path.resolve(__dirname, 'dist', 'jit'),
     filename: '[name].js'
   },
   module: {
@@ -26,8 +26,31 @@ const config = {
             options: {
               configFileName: path.resolve(__dirname, 'tsconfig.json')
             }
+          },
+          {
+            loader: 'angular2-template-loader'
           }
         ]
+      },
+
+      {
+        test: /\.css$/,
+        use: ['to-string-loader', 'css-loader']
+      },
+
+      {
+        test: /\.scss$/,
+        use: ['to-string-loader', 'css-loader', 'sass-loader']
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        use: 'file-loader'
+      },
+
+      {
+        test: /\.html$/,
+        use: 'raw-loader'
       }
     ]
   },
@@ -43,8 +66,8 @@ const config = {
      * See: https://github.com/ampedandwired/html-webpack-plugin
      */
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src', 'index.ejs'),
-      title: 'helgoland-toolbox demo',
+      template: path.resolve(__dirname, 'index.ejs'),
+      title: 'Angular Library Starter',
       inject: 'body'
     }),
 
@@ -60,12 +83,12 @@ const config = {
       {}
     ),
 
-    new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
-      jquery: 'jquery',
-      'window.jQuery': 'jquery'
-    }),
+    // new webpack.ProvidePlugin({
+    //   jQuery: 'jquery',
+    //   $: 'jquery',
+    //   jquery: 'jquery',
+    //   'window.jQuery': 'jquery'
+    // }),
 
     /*
      * Plugin: CommonsChunkPlugin
@@ -91,7 +114,16 @@ const config = {
     new CommonsChunkPlugin({
       name: ['polyfills', 'vendor'].reverse()
     }),
-  ]
+  ],
+
+  devServer: {
+    port: 4200,
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  },
 };
 
 module.exports = config;
