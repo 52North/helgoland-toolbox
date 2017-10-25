@@ -1,0 +1,10 @@
+<div>
+    <div style="height: 500px; width: 500px;">
+        <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
+            (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
+    </div>
+    <div style="height: 500px; width: 500px;">
+        <n52-flot-timeseries-graph [datasetIds]="datasetIdsOne" [datasetOptions]="datasetOptionsOne" [timeInterval]="timespan" [graphOptions]="diagramOptions"
+            (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
+    </div>
+</div>
