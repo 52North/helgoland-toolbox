@@ -18,6 +18,7 @@ import { Timespan } from './../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { MapCache } from './../../../services/map/map.service';
 import { MapSelectorComponent } from './map-selector.component';
+import { TrajectoryResult } from './model/trajectory-result';
 
 @Component({
     selector: 'n52-profile-trajectory-map-selector',
@@ -129,9 +130,4 @@ export class ProfileTrajectoryMapSelectorComponent
         });
         return geojson;
     }
-}
-
-export interface TrajectoryResult {
-    dataset: IDataset;
-    data: LocatedProfileDataEntry;
 }

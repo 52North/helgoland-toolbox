@@ -5,6 +5,7 @@ import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { FilteredProvider } from './../../../model/internal/provider';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { ApiMapping, ApiVersion } from './../../../services/api-interface/api-mapping.service';
+import { ListSelectorParameter } from './../model/list-selector-parameter';
 import { FilteredParameter } from './../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorService } from './list-selector.service';
 
@@ -121,12 +122,4 @@ export class ListSelectorComponent implements OnChanges {
         }
         return match;
     }
-}
-
-export interface ListSelectorParameter {
-    header: string;
-    type: string;
-    isDisabled?: boolean;
-    headerAddition?: string;
-    filterList?: any;
 }
