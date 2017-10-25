@@ -1133,7 +1133,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/components/map/selector/trajectory-map-selector.component.ts</code>
+            <code>src/components/map/selector/model/trajectory-result.ts</code>
         </p>
 
 
@@ -1194,7 +1194,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/components/map/selector/trajectory-map-selector.component.ts:136</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/components/map/selector/model/trajectory-result.ts:6</a></div>
                                         </td>
                                     </tr>
 
@@ -1227,7 +1227,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/components/map/selector/trajectory-map-selector.component.ts:135</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/components/map/selector/model/trajectory-result.ts:5</a></div>
                                         </td>
                                     </tr>
 
@@ -1238,138 +1238,8 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import &#x27;leaflet.markercluster&#x27;;
-
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-} from &#x27;@angular/core&#x27;;
-import * as L from &#x27;leaflet&#x27;;
-
-import { LocatedProfileDataEntry } from &#x27;./../../../model/api/data&#x27;;
-import { IDataset } from &#x27;./../../../model/api/dataset&#x27;;
-import { Timespan } from &#x27;./../../../model/internal/timeInterval&#x27;;
-import { ApiInterface } from &#x27;./../../../services/api-interface/api-interface.service&#x27;;
-import { MapCache } from &#x27;./../../../services/map/map.service&#x27;;
-import { MapSelectorComponent } from &#x27;./map-selector.component&#x27;;
-
-@Component({
-    selector: &#x27;n52-profile-trajectory-map-selector&#x27;,
-    templateUrl: &#x27;./map-selector.component.html&#x27;,
-    styleUrls: [&#x27;./map-selector.component.scss&#x27;]
-})
-export class ProfileTrajectoryMapSelectorComponent
-    extends MapSelectorComponent&lt;TrajectoryResult&gt;
-    implements OnChanges, AfterViewInit {
-
-    @Input()
-    public selectedTimespan: Timespan;
-
-    @Output()
-    public onTimeListDetermined: EventEmitter&lt;number[]&gt; &#x3D; new EventEmitter();
-
-    private layer: L.FeatureGroup;
-    private data: LocatedProfileDataEntry[];
-    private dataset: IDataset;
-
-    private defaultStyle: L.PathOptions &#x3D; {
-        color: &#x27;red&#x27;,
-        weight: 5,
-        opacity: 0.65
-    };
-
-    private highlightStyle: L.PathOptions &#x3D; {
-        color: &#x27;blue&#x27;,
-        weight: 7,
-        opacity: 1
-    };
-
-    constructor(
-        private apiInterface: ApiInterface,
-        protected mapCache: MapCache,
-        protected cd: ChangeDetectorRef
-    ) {
-        super(mapCache, cd);
-    }
-
-    public ngOnChanges(changes: SimpleChanges) {
-        super.ngOnChanges(changes);
-        if (changes.selectedTimespan &amp;&amp; this.selectedTimespan) {
-            this.clearMap();
-            this.initLayer();
-            this.data.forEach((entry) &#x3D;&gt; {
-                if (this.selectedTimespan.from &lt;&#x3D; entry.timestamp &amp;&amp; entry.timestamp &lt;&#x3D; this.selectedTimespan.to) {
-                    this.layer.addLayer(this.createGeoJson(entry, this.dataset));
-                }
-            });
-            this.layer.addTo(this.map);
-        }
-    }
-
-    protected drawGeometries() {
-        this.noResultsFound &#x3D; false;
-        this.loading &#x3D; true;
-        this.apiInterface.getDatasets(this.serviceUrl, this.filter).subscribe((datasets) &#x3D;&gt; {
-            datasets.forEach((dataset) &#x3D;&gt; {
-                this.dataset &#x3D; dataset;
-                const timespan &#x3D; new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
-                this.apiInterface.getData&lt;LocatedProfileDataEntry&gt;(dataset.id, this.serviceUrl, timespan)
-                    .subscribe((data) &#x3D;&gt; {
-                        if (data.values instanceof Array) {
-                            this.initLayer();
-                            this.data &#x3D; [];
-                            const timelist: number[] &#x3D; [];
-                            data.values.forEach((entry) &#x3D;&gt; {
-                                this.data.push(entry);
-                                const geojson &#x3D; this.createGeoJson(entry, dataset);
-                                timelist.push(entry.timestamp);
-                                this.layer.addLayer(geojson);
-                            });
-                            this.onTimeListDetermined.emit(timelist);
-                            this.layer.addTo(this.map);
-                            this.map.fitBounds(this.layer.getBounds());
-                        }
-                        this.loading &#x3D; false;
-                    });
-            });
-        });
-    }
-
-    private initLayer() {
-        this.layer &#x3D; L.markerClusterGroup({ animate: false });
-    }
-
-    private clearMap() {
-        if (this.layer) {
-            this.map.removeLayer(this.layer);
-        }
-    }
-
-    private createGeoJson(profileDataEntry: LocatedProfileDataEntry, dataset: IDataset): L.GeoJSON {
-        const geojson &#x3D; new L.GeoJSON(profileDataEntry.geometry);
-        geojson.setStyle(() &#x3D;&gt; this.defaultStyle);
-        geojson.on(&#x27;click&#x27;, () &#x3D;&gt; {
-            this.onSelected.emit({
-                dataset,
-                data: profileDataEntry
-            });
-        });
-        geojson.on(&#x27;mouseover&#x27;, () &#x3D;&gt; {
-            geojson.setStyle(() &#x3D;&gt; this.highlightStyle);
-            geojson.bringToFront();
-        });
-        geojson.on(&#x27;mouseout&#x27;, () &#x3D;&gt; {
-            geojson.setStyle(() &#x3D;&gt; this.defaultStyle);
-        });
-        return geojson;
-    }
-}
+        <pre class="line-numbers"><code class="language-typescript">import { LocatedProfileDataEntry } from &#x27;./../../../../model/api/data&#x27;;
+import { IDataset } from &#x27;./../../../../model/api/dataset&#x27;;
 
 export interface TrajectoryResult {
     dataset: IDataset;

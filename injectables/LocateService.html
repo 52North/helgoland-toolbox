@@ -1171,7 +1171,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/components/map/control/locate/locate.service.ts:20</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/components/map/control/locate/locate.service.ts:10</a></div>
                                         </td>
                                     </tr>
             
@@ -1230,7 +1230,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/components/map/control/locate/locate.service.ts:26</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/components/map/control/locate/locate.service.ts:16</a></div>
                                         </td>
                                     </tr>
             
@@ -1292,7 +1292,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/components/map/control/locate/locate.service.ts:41</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/components/map/control/locate/locate.service.ts:29</a></div>
                                         </td>
                                     </tr>
             
@@ -1350,16 +1350,6 @@ import { MapCache } from &#x27;./../../../../services/map/map.service&#x27;;
 const LOCATION_FOUND_EVENT &#x3D; &#x27;locationfound&#x27;;
 const LOCATED_MARKER_ID &#x3D; &#x27;located&#x27;;
 
-const icon &#x3D; L.icon({
-    iconUrl: require(&#x27;leaflet/dist/images/marker-icon.png&#x27;),
-    iconRetinaUrl: require(&#x27;leaflet/dist/images/marker-icon-2x.png&#x27;),
-    shadowUrl: require(&#x27;leaflet/dist/images/marker-shadow.png&#x27;),
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
 @Injectable()
 export class LocateService {
 
@@ -1371,9 +1361,7 @@ export class LocateService {
         const map &#x3D; this.mapCache.getMap(id);
         map.on(LOCATION_FOUND_EVENT, (evt: L.LocationEvent) &#x3D;&gt; {
             this.removeMarker(map);
-            const marker &#x3D; L.marker(evt.latlng, {
-                icon
-            }).addTo(map);
+            const marker &#x3D; L.marker(evt.latlng).addTo(map);
             marker.options.title &#x3D; LOCATED_MARKER_ID;
         });
         map.locate({

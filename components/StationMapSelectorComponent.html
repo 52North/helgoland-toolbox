@@ -1362,9 +1362,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
                 this.markerClusterGroup &#x3D; L.markerClusterGroup({ animate: true });
                 if (res instanceof Array &amp;&amp; res.length &gt; 0) {
                     res.forEach((entry) &#x3D;&gt; {
-                        const marker &#x3D; L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]], {
-                            icon: this.icon
-                        });
+                        const marker &#x3D; L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
                         marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
                             this.onSelected.emit(entry);
                         });

@@ -1133,7 +1133,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/components/selector/list-selector/list-selector.component.ts</code>
+            <code>src/components/selector/model/list-selector-parameter.ts</code>
         </p>
 
 
@@ -1203,7 +1203,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/components/selector/list-selector/list-selector.component.ts:131</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/components/selector/model/list-selector-parameter.ts:6</a></div>
                                         </td>
                                     </tr>
 
@@ -1236,7 +1236,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/components/selector/list-selector/list-selector.component.ts:127</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="2" class="link-to-prism">src/components/selector/model/list-selector-parameter.ts:2</a></div>
                                         </td>
                                     </tr>
 
@@ -1269,7 +1269,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/components/selector/list-selector/list-selector.component.ts:130</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/components/selector/model/list-selector-parameter.ts:5</a></div>
                                         </td>
                                     </tr>
 
@@ -1302,7 +1302,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/components/selector/list-selector/list-selector.component.ts:129</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="4" class="link-to-prism">src/components/selector/model/list-selector-parameter.ts:4</a></div>
                                         </td>
                                     </tr>
 
@@ -1335,7 +1335,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/components/selector/list-selector/list-selector.component.ts:128</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="3" class="link-to-prism">src/components/selector/model/list-selector-parameter.ts:3</a></div>
                                         </td>
                                     </tr>
 
@@ -1346,132 +1346,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
-
-import { IDataset } from &#x27;./../../../model/api/dataset&#x27;;
-import { ParameterFilter } from &#x27;./../../../model/api/parameterFilter&#x27;;
-import { FilteredProvider } from &#x27;./../../../model/internal/provider&#x27;;
-import { ApiInterface } from &#x27;./../../../services/api-interface/api-interface.service&#x27;;
-import { ApiMapping, ApiVersion } from &#x27;./../../../services/api-interface/api-mapping.service&#x27;;
-import { FilteredParameter } from &#x27;./../multi-service-filter-selector/multi-service-filter-selector.component&#x27;;
-import { ListSelectorService } from &#x27;./list-selector.service&#x27;;
-
-/**
- * Component to select an item out of a list of provider with a given filter combination.
- */
-@Component({
-    selector: &#x27;n52-list-selector&#x27;,
-    templateUrl: &#x27;./list-selector.component.html&#x27;,
-    styleUrls: [&#x27;./list-selector.component.scss&#x27;]
-})
-export class ListSelectorComponent implements OnChanges {
-
-    @Input()
-    public parameters: ListSelectorParameter[];
-
-    @Input()
-    public filter: ParameterFilter;
-
-    @Input()
-    public providerList: FilteredProvider[];
-
-    @Input()
-    public selectorId: string;
-
-    @Output()
-    public onDatasetSelection: EventEmitter&lt;IDataset[]&gt; &#x3D; new EventEmitter&lt;IDataset[]&gt;();
-
-    public activePanel: string;
-
-    constructor(
-        private listSelectorService: ListSelectorService,
-        private apiInterface: ApiInterface,
-        private apiMapping: ApiMapping
-    ) { }
-
-    public ngOnChanges(changes: SimpleChanges) {
-        if (changes.providerList &amp;&amp; changes.providerList.currentValue) {
-            if (this.selectorId &amp;&amp; this.listSelectorService.cache.has(this.selectorId)
-                &amp;&amp; this.isEqual(this.providerList, this.listSelectorService.providerList)) {
-                this.parameters &#x3D; this.listSelectorService.cache.get(this.selectorId);
-                const idx &#x3D; this.parameters.findIndex((entry) &#x3D;&gt; {
-                    return entry.isDisabled;
-                }) - 1;
-                this.activePanel &#x3D; this.selectorId + &#x27;-&#x27; + idx;
-            } else {
-                if (this.selectorId) {
-                    this.listSelectorService.cache.set(this.selectorId, this.parameters);
-                }
-                // create filterlist for first parameter entry
-                this.parameters[0].filterList &#x3D; this.providerList.map((entry) &#x3D;&gt; {
-                    entry.filter &#x3D; this.filter;
-                    return entry;
-                });
-                this.listSelectorService.providerList &#x3D; this.providerList;
-                // open first tab
-                this.activePanel &#x3D; this.selectorId + &#x27;-0&#x27;;
-                this.parameters[0].isDisabled &#x3D; false;
-                // disable parameterList
-                for (let i &#x3D; 1; i &lt; this.parameters.length; i++) {
-                    this.parameters[i].isDisabled &#x3D; true;
-                }
-            }
-        }
-    }
-
-    public itemSelected(item: FilteredParameter, index: number) {
-        if (index &lt; this.parameters.length - 1) {
-            this.parameters[index].headerAddition &#x3D; item.label;
-            this.activePanel &#x3D; this.selectorId + &#x27;-&#x27; + (index + 1);
-            this.parameters[index + 1].isDisabled &#x3D; false;
-            this.parameters[index + 1].filterList &#x3D; item.filterList.map((entry) &#x3D;&gt; {
-                entry.filter[this.parameters[index].type] &#x3D; entry.itemId;
-                return entry;
-            });
-            for (let i &#x3D; index + 2; i &lt; this.parameters.length; i++) {
-                this.parameters[i].isDisabled &#x3D; true;
-            }
-            for (let j &#x3D; index + 1; j &lt; this.parameters.length; j++) {
-                this.parameters[j].headerAddition &#x3D; &#x27;&#x27;;
-            }
-        } else {
-            item.filterList.forEach((entry) &#x3D;&gt; {
-                entry.filter[this.parameters[index].type] &#x3D; entry.itemId;
-                this.openDataset(entry.url, entry.filter);
-            });
-        }
-    }
-
-    private openDataset(url: string, params: ParameterFilter) {
-        this.apiMapping.getApiVersion(url).subscribe((apiVersionId) &#x3D;&gt; {
-            if (apiVersionId &#x3D;&#x3D;&#x3D; ApiVersion.V2) {
-                this.apiInterface.getDatasets(url, params).subscribe((result) &#x3D;&gt; this.onDatasetSelection.emit(result));
-            } else if (apiVersionId &#x3D;&#x3D;&#x3D; ApiVersion.V1) {
-                this.apiInterface.getTimeseries(url, params).subscribe(
-                    (result) &#x3D;&gt; this.onDatasetSelection.emit(result)
-                );
-            }
-        });
-    }
-
-    private isEqual(listOne: FilteredProvider[], listTwo: FilteredProvider[]): boolean {
-        let match &#x3D; true;
-        if (listOne.length &#x3D;&#x3D;&#x3D; listTwo.length) {
-            listOne.forEach((entryOne) &#x3D;&gt; {
-                const found &#x3D; listTwo.find((entryTwo) &#x3D;&gt; {
-                    if (entryOne.id &#x3D;&#x3D;&#x3D; entryTwo.id &amp;&amp; entryOne.url &#x3D;&#x3D;&#x3D; entryTwo.url) { return true; }
-                    return false;
-                });
-                if (!found) { match &#x3D; false; }
-            });
-        } else {
-            match &#x3D; false;
-        }
-        return match;
-    }
-}
-
-export interface ListSelectorParameter {
+        <pre class="line-numbers"><code class="language-typescript">export interface ListSelectorParameter {
     header: string;
     type: string;
     isDisabled?: boolean;

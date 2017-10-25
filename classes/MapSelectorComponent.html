@@ -1159,9 +1159,6 @@
                             <td class="col-md-4">
                                 <ul class="index-list">
                                     <li>
-                                        <span class="modifier">Protected</span> <a href="#icon">icon</a>
-                                    </li>
-                                    <li>
                                         <span class="modifier">Public</span> <a href="#loading">loading</a>
                                     </li>
                                     <li>
@@ -1208,7 +1205,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/components/map/selector/map-selector.component.ts:39</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/components/map/selector/map-selector.component.ts:29</a></div>
                                         </td>
                                     </tr>
             
@@ -1276,7 +1273,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/components/map/selector/map-selector.component.ts:64</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/components/map/selector/map-selector.component.ts:54</a></div>
                                         </td>
                                     </tr>
             
@@ -1309,7 +1306,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/components/map/selector/map-selector.component.ts:46</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/components/map/selector/map-selector.component.ts:36</a></div>
                                         </td>
                                     </tr>
             
@@ -1342,7 +1339,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/components/map/selector/map-selector.component.ts:58</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/components/map/selector/map-selector.component.ts:48</a></div>
                                         </td>
                                     </tr>
             
@@ -1394,29 +1391,6 @@
                     <h3 id="inputs">
                         Properties
                     </h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <a name="icon"></a>
-                                    <span class="name"><b><span class="modifier">Protected</span> icon</b><a href="#icon"><span class="fa fa-link"></span></a></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-lock"></span><code>icon:     <code></code>
-            </code>
-                                </td>
-                            </tr>
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/components/map/selector/map-selector.component.ts:31</a></div>
-                                        </td>
-                                    </tr>
-            
-            
-                        </tbody>
-                    </table>
                     <table class="table table-sm table-bordered">
                         <tbody>
                             <tr>
@@ -1532,16 +1506,6 @@ export abstract class MapSelectorComponent&lt;T&gt; implements OnChanges, AfterV
     public loading: boolean;
     public noResultsFound: boolean;
     protected map: L.Map;
-
-    protected icon &#x3D; L.icon({
-        iconUrl: require(&#x27;leaflet/dist/images/marker-icon.png&#x27;),
-        iconRetinaUrl: require(&#x27;leaflet/dist/images/marker-icon-2x.png&#x27;),
-        shadowUrl: require(&#x27;leaflet/dist/images/marker-shadow.png&#x27;),
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
 
     constructor(
         protected mapCache: MapCache,
