@@ -28,16 +28,6 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     public noResultsFound: boolean;
     protected map: L.Map;
 
-    protected icon = L.icon({
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
-
     constructor(
         protected mapCache: MapCache,
         protected cd: ChangeDetectorRef

@@ -34,9 +34,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
                 this.markerClusterGroup = L.markerClusterGroup({ animate: true });
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
-                        const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]], {
-                            icon: this.icon
-                        });
+                        const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
                         marker.on('click', () => {
                             this.onSelected.emit(entry);
                         });

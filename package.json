@@ -28,7 +28,7 @@
     "build": "npm run build:esm && npm run build:umd && gulp copy-js",
     "build:esm": "gulp inline-templates && npm run ngcompile",
     "build:esm:watch": "gulp build:esm:watch",
-    "build:umd": "webpack --config webpack-umd.config.ts",
+    "build:umd": "webpack --config webpack-umd.config.ts && gulp copy-js",
     "build:umd:watch": "npm run build:umd -- --watch",
     "build:watch": "concurrently --raw \"npm run build:umd:watch\" \"npm run build:esm:watch\"",
     "ci": "npm run lint && npm run docs && npm run build",
