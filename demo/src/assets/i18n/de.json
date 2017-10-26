@@ -1,0 +1,13 @@
+{
+	"listSelection": {
+		"loading": ""
+	},
+	"provider-selector": {
+		"datasets": "Datensätze",
+		"phenomena": "Phänomene",
+		"platforms": "Platformen",
+		"service-url": "Service-Url",
+		"stations": "Stationen",
+		"timeseries": "Zeitreihen"
+	}
+}

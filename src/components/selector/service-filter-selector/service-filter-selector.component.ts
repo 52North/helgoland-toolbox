@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
+import { LanguageChangNotifier } from '../../locale/language-changer';
 import { Parameter } from './../../../model/api/parameter';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
@@ -11,7 +13,7 @@ import { ApiInterface } from './../../../services/api-interface/api-interface.se
     selector: 'n52-service-filter-selector',
     templateUrl: './service-filter-selector.component.html'
 })
-export class ServiceFilterSelectorComponent implements OnChanges {
+export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
     public endpoint: string;
@@ -32,51 +34,52 @@ export class ServiceFilterSelectorComponent implements OnChanges {
     public items: Parameter[];
 
     constructor(
+        protected translate: TranslateService,
         private apiInterface: ApiInterface
-    ) { }
+    ) {
+        super(translate);
+    }
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.endpoint) {
-            this.loading = true;
-            switch (this.endpoint) {
-                case 'offering':
-                    this.apiInterface.getOfferings(this.serviceUrl, this.filter).subscribe(
-                        (res) => this.setItems(res),
-                        (error) => this.errorOnLoading
-                    );
-                    break;
-                case 'phenomenon':
-                    this.apiInterface.getPhenomena(this.serviceUrl, this.filter).subscribe(
-                        (res) => this.setItems(res),
-                        (error) => this.errorOnLoading
-                    );
-                    break;
-                case 'procedure':
-                    this.apiInterface.getProcedures(this.serviceUrl, this.filter).subscribe(
-                        (res) => this.setItems(res),
-                        (error) => this.errorOnLoading
-                    );
-                    break;
-                case 'category':
-                    this.apiInterface.getCategories(this.serviceUrl, this.filter).subscribe(
-                        (res) => this.setItems(res),
-                        (error) => this.errorOnLoading
-                    );
-                    break;
-                case 'feature':
-                    this.apiInterface.getFeatures(this.serviceUrl, this.filter).subscribe(
-                        (res) => this.setItems(res),
-                        (error) => this.errorOnLoading
-                    );
-                    break;
-                default:
-                    console.error('Wrong endpoint: ' + this.endpoint);
-            }
+            this.loadItems();
         }
     }
 
     public onSelectItem(item: Parameter): void {
         this.onItemSelected.emit(item);
+    }
+
+    protected languageChanged() {
+        this.loadItems();
+    }
+
+    private loadItems() {
+        this.loading = true;
+        switch (this.endpoint) {
+            case 'offering':
+                this.apiInterface.getOfferings(this.serviceUrl, this.filter)
+                    .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
+                break;
+            case 'phenomenon':
+                this.apiInterface.getPhenomena(this.serviceUrl, this.filter)
+                    .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
+                break;
+            case 'procedure':
+                this.apiInterface.getProcedures(this.serviceUrl, this.filter)
+                    .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
+                break;
+            case 'category':
+                this.apiInterface.getCategories(this.serviceUrl, this.filter)
+                    .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
+                break;
+            case 'feature':
+                this.apiInterface.getFeatures(this.serviceUrl, this.filter)
+                    .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
+                break;
+            default:
+                console.error('Wrong endpoint: ' + this.endpoint);
+        }
     }
 
     private errorOnLoading(): void {

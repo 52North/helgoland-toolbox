@@ -2,6 +2,7 @@ import 'rxjs/add/operator/map';
 
 import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
 import * as moment from 'moment';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -45,7 +46,8 @@ export class ApiInterface implements ApiV2 {
 
     constructor(
         private http: HttpClient,
-        private internalDatasetId: InternalIdHandler
+        private internalDatasetId: InternalIdHandler,
+        private translate: TranslateService
     ) { }
 
     public getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
@@ -221,20 +223,24 @@ export class ApiInterface implements ApiV2 {
     }
 
     private requestApi<T>(url: string, params: ParameterFilter = {}): Observable<T> {
+        return this.http.get<T>(url, { params: this.prepareParams(params) });
+    }
+
+    private prepareParams(params: ParameterFilter): HttpParams {
+        if (this.translate && this.translate.currentLang) {
+            params.locale = this.translate.currentLang;
+        }
         let httpParams = new HttpParams({
             encoder: new UriParameterCoder()
         });
         Object.getOwnPropertyNames(params)
             .forEach((key) => httpParams = httpParams.set(key, params[key]));
-        return this.http.get<T>(url, { params: httpParams });
+        return httpParams;
     }
 
     private requestApiTexted(url: string, params: ParameterFilter = {}): Observable<string> {
-        let httpParams = new HttpParams();
-        Object.getOwnPropertyNames(params)
-            .forEach((key) => httpParams = httpParams.set(key, params[key]));
         return this.http.get(url, {
-            params: httpParams,
+            params: this.prepareParams(params),
             responseType: 'text'
         });
     }

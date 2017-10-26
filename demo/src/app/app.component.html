@@ -1,10 +1,12 @@
 <mat-sidenav-container class="example-sidenav-fab-container">
     <mat-sidenav #sidenav mode="side" opened="true">
+        <n52-lang-selector [languageList]="languageList"></n52-lang-selector>
         <mat-nav-list>
             <a mat-list-item routerLink="/provider-selector" routerLinkActive="active">Provider Selector</a>
             <a mat-list-item routerLink="/map-selector" routerLinkActive="active">Map Selector</a>
             <a mat-list-item routerLink="/plotly-graph" routerLinkActive="active">Plotly Graph</a>
             <a mat-list-item routerLink="/flot-graph" routerLinkActive="active">Flot Graph</a>
+            <a mat-list-item routerLink="/service-filter-selector" routerLinkActive="active">Service Filter Selector</a>
         </mat-nav-list>
     </mat-sidenav>
     <div class="example-scrolling-content">

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
+import { LanguageChangNotifier } from '../../locale/language-changer';
 import { Parameter } from './../../../model/api/parameter';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { Filter } from './../../../model/internal/filter';
@@ -13,7 +15,7 @@ import { ApiInterface } from './../../../services/api-interface/api-interface.se
     selector: 'n52-multi-service-filter-selector',
     templateUrl: './multi-service-filter-selector.component.html'
 })
-export class MultiServiceFilterSelectorComponent implements OnChanges {
+export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
     public endpoint: string;
@@ -28,10 +30,25 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
     public items: FilteredParameter[];
 
     constructor(
-        private apiInterface: ApiInterface
-    ) { }
+        private apiInterface: ApiInterface,
+        protected translate: TranslateService
+    ) {
+        super(translate);
+    }
 
     public ngOnChanges(changes: SimpleChanges) {
+        this.loadItems();
+    }
+
+    public onSelectItem(item: FilteredParameter): void {
+        this.onItemSelected.emit(item);
+    }
+
+    protected languageChanged(): void {
+        this.loadItems();
+    }
+
+    private loadItems() {
         this.items = [];
         this.filterList.forEach((entry) => {
             this.loading++;
@@ -87,10 +104,6 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
         });
     }
 
-    public onSelectItem(item: FilteredParameter): void {
-        this.onItemSelected.emit(item);
-    }
-
     private errorOnLoading(): void {
         this.loading--;
     }
@@ -115,6 +128,7 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
             }
         });
     }
+
 }
 
 export interface FilteredParameter extends Parameter {

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 const config = {
@@ -82,6 +83,10 @@ const config = {
       path.resolve(__dirname, 'src'),
       {}
     ),
+
+    new CopyWebpackPlugin([
+      { from: 'src/assets', to: 'assets' }
+    ]),
 
     // new webpack.ProvidePlugin({
     //   jQuery: 'jquery',

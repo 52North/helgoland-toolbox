@@ -4,6 +4,7 @@ export interface ParameterFilter {
     valueTypes?: string;
     platformTypes?: string;
     expanded?: boolean;
+    lang?: string;
     [key: string]: any;
 }
 

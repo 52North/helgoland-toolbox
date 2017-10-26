@@ -1,21 +1,32 @@
+import { LocalSelectorComponent } from './components/locale/locale-selector';
 export { HelgolandControlModule } from './components/control/control.module';
+
 export { HelgolandDatasetlistModule } from './components/datasetlist/datasetlist.module';
+
 export { HelgolandDepictionModule } from './components/depiction/depiction.module';
+
 export { HelgolandFlotGraphModule } from './components/graph/flot/flot.module';
 export { PlotOptions } from './components/graph/flot/model/plotOptions';
 export { HelgolandPlotlyGraphModule } from './components/graph/plotly/plotly.module';
 export { HelgolandD3GraphModule } from './components/graph/d3/d3.module';
 export { D3AxisType, D3GraphOptions, D3SelectionRange }
     from './components/graph/d3/d3-timeseries-graph/d3-timeseries-graph.component';
+
 export { HelgolandMapSelectorModule } from './components/map/selector/selector.module';
 export { TrajectoryResult } from './components/map/selector/model/trajectory-result';
 export { HelgolandMapViewModule } from './components/map/view/view.module';
 export { HelgolandMapControlModule } from './components/map/control/control.module';
+
 export { HelgolandPermalinkModule } from './components/permalink/permalink.module';
 export { PermalinkService } from './components/permalink/services/permalink.service';
+
 export { HelgolandSelectorModule } from './components/selector/selector.module';
 export { ListSelectorParameter } from './components/selector/model/list-selector-parameter';
+
 export { HelgolandTimeModule } from './components/time/time.module';
+
+export { Language } from './components/locale/model/language';
+export { LocalSelectorComponent } from './components/locale/locale-selector';
 
 export { Dataset, IDataset } from './model/api/dataset';
 export { PlatformTypes, ValueTypes } from './model/api/enums';
