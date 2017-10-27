@@ -280,7 +280,13 @@
                                     <a href="../classes/HttpCache.html" >HttpCache</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -471,6 +477,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/Language.html" >Language</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/Layout.html" >Layout</a>
@@ -823,7 +832,13 @@
                                            <a href="../classes/HttpCache.html" >HttpCache</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -1016,6 +1031,9 @@
                                            <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/Language.html" >Language</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/Layout.html" >Layout</a>
                                        </li>
                                        <li class="link">
@@ -1197,7 +1215,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/components/selector/multi-service-filter-selector/multi-service-filter-selector.component.ts:121</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/components/selector/multi-service-filter-selector/multi-service-filter-selector.component.ts:135</a></div>
                                         </td>
                                     </tr>
 
@@ -1209,7 +1227,9 @@
 
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
+import { LanguageChangNotifier } from &#x27;../../locale/language-changer&#x27;;
 import { Parameter } from &#x27;./../../../model/api/parameter&#x27;;
 import { ParameterFilter } from &#x27;./../../../model/api/parameterFilter&#x27;;
 import { Filter } from &#x27;./../../../model/internal/filter&#x27;;
@@ -1223,7 +1243,7 @@ import { ApiInterface } from &#x27;./../../../services/api-interface/api-interfa
     selector: &#x27;n52-multi-service-filter-selector&#x27;,
     templateUrl: &#x27;./multi-service-filter-selector.component.html&#x27;
 })
-export class MultiServiceFilterSelectorComponent implements OnChanges {
+export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
     public endpoint: string;
@@ -1238,10 +1258,25 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
     public items: FilteredParameter[];
 
     constructor(
-        private apiInterface: ApiInterface
-    ) { }
+        private apiInterface: ApiInterface,
+        protected translate: TranslateService
+    ) {
+        super(translate);
+    }
 
     public ngOnChanges(changes: SimpleChanges) {
+        this.loadItems();
+    }
+
+    public onSelectItem(item: FilteredParameter): void {
+        this.onItemSelected.emit(item);
+    }
+
+    protected languageChanged(): void {
+        this.loadItems();
+    }
+
+    private loadItems() {
         this.items &#x3D; [];
         this.filterList.forEach((entry) &#x3D;&gt; {
             this.loading++;
@@ -1297,10 +1332,6 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
         });
     }
 
-    public onSelectItem(item: FilteredParameter): void {
-        this.onItemSelected.emit(item);
-    }
-
     private errorOnLoading(): void {
         this.loading--;
     }
@@ -1325,6 +1356,7 @@ export class MultiServiceFilterSelectorComponent implements OnChanges {
             }
         });
     }
+
 }
 
 export interface FilteredParameter extends Parameter {

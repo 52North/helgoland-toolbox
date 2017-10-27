@@ -280,7 +280,13 @@
                                     <a href="../classes/HttpCache.html" >HttpCache</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -471,6 +477,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/Language.html" >Language</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/Layout.html" >Layout</a>
@@ -823,7 +832,13 @@
                                            <a href="../classes/HttpCache.html" >HttpCache</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -1016,6 +1031,9 @@
                                            <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/Language.html" >Language</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/Layout.html" >Layout</a>
                                        </li>
                                        <li class="link">
@@ -1144,6 +1162,12 @@
 
     </p>
 
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+            <code><a href="../interfaces/Language.html" target="_self" >LanguageChangNotifier</a></code>
+    </p>
 
     <p class="comment">
         <h3>Implements</h3>
@@ -1217,6 +1241,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <span class="modifier">Protected</span> <a href="#languageChanged">languageChanged</a>
+                            </li>
+                            <li>
                                 <span class="modifier">Public</span> <a href="#onSelectItem">onSelectItem</a>
                             </li>
                         </ul>
@@ -1269,12 +1296,12 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <code>constructor(apiInterface: <a href="../injectables/ApiInterface.html">ApiInterface</a>)</code>
+                            <code>constructor(translate: <a href="../classes/Service.html">TranslateService</a>, apiInterface: <a href="../injectables/ApiInterface.html">ApiInterface</a>)</code>
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:34</a></div>
                                 </td>
                             </tr>
     
@@ -1292,6 +1319,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                    <tr>
+                                                      <td>translate</td>
+                                                      <td>
+                                                                <code><a href="../classes/Service.html" target="_self" >TranslateService</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
                                                     <tr>
                                                       <td>apiInterface</td>
                                                       <td>
@@ -1328,7 +1364,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:19</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1349,7 +1385,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:23</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:25</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1370,7 +1406,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:28</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1391,7 +1427,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:22</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1414,7 +1450,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:31</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1428,6 +1464,39 @@
             <h3 id="methods">
                 Methods
             </h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="languageChanged"></a>
+                            <span class="name"><b><span class="modifier">Protected</span> languageChanged</b><a href="#languageChanged"><span class="fa fa-link"></span></a></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-lock"></span>
+                            <code>languageChanged()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:53</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table class="table table-sm table-bordered">
                 <tbody>
                     <tr>
@@ -1446,7 +1515,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:49</a></div>
                                 </td>
                             </tr>
     
@@ -1519,7 +1588,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:34</a></div>
                                 </td>
                             </tr>
     
@@ -1548,7 +1617,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/components/selector/service-filter-selector/service-filter-selector.component.ts:33</a></div>
                                 </td>
                             </tr>
     
@@ -1561,7 +1630,9 @@
 
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
+import { LanguageChangNotifier } from &#x27;../../locale/language-changer&#x27;;
 import { Parameter } from &#x27;./../../../model/api/parameter&#x27;;
 import { ParameterFilter } from &#x27;./../../../model/api/parameterFilter&#x27;;
 import { ApiInterface } from &#x27;./../../../services/api-interface/api-interface.service&#x27;;
@@ -1573,7 +1644,7 @@ import { ApiInterface } from &#x27;./../../../services/api-interface/api-interfa
     selector: &#x27;n52-service-filter-selector&#x27;,
     templateUrl: &#x27;./service-filter-selector.component.html&#x27;
 })
-export class ServiceFilterSelectorComponent implements OnChanges {
+export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
     public endpoint: string;
@@ -1594,51 +1665,52 @@ export class ServiceFilterSelectorComponent implements OnChanges {
     public items: Parameter[];
 
     constructor(
+        protected translate: TranslateService,
         private apiInterface: ApiInterface
-    ) { }
+    ) {
+        super(translate);
+    }
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.endpoint) {
-            this.loading &#x3D; true;
-            switch (this.endpoint) {
-                case &#x27;offering&#x27;:
-                    this.apiInterface.getOfferings(this.serviceUrl, this.filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res),
-                        (error) &#x3D;&gt; this.errorOnLoading
-                    );
-                    break;
-                case &#x27;phenomenon&#x27;:
-                    this.apiInterface.getPhenomena(this.serviceUrl, this.filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res),
-                        (error) &#x3D;&gt; this.errorOnLoading
-                    );
-                    break;
-                case &#x27;procedure&#x27;:
-                    this.apiInterface.getProcedures(this.serviceUrl, this.filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res),
-                        (error) &#x3D;&gt; this.errorOnLoading
-                    );
-                    break;
-                case &#x27;category&#x27;:
-                    this.apiInterface.getCategories(this.serviceUrl, this.filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res),
-                        (error) &#x3D;&gt; this.errorOnLoading
-                    );
-                    break;
-                case &#x27;feature&#x27;:
-                    this.apiInterface.getFeatures(this.serviceUrl, this.filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res),
-                        (error) &#x3D;&gt; this.errorOnLoading
-                    );
-                    break;
-                default:
-                    console.error(&#x27;Wrong endpoint: &#x27; + this.endpoint);
-            }
+            this.loadItems();
         }
     }
 
     public onSelectItem(item: Parameter): void {
         this.onItemSelected.emit(item);
+    }
+
+    protected languageChanged() {
+        this.loadItems();
+    }
+
+    private loadItems() {
+        this.loading &#x3D; true;
+        switch (this.endpoint) {
+            case &#x27;offering&#x27;:
+                this.apiInterface.getOfferings(this.serviceUrl, this.filter)
+                    .subscribe((res) &#x3D;&gt; this.setItems(res), (error) &#x3D;&gt; this.errorOnLoading);
+                break;
+            case &#x27;phenomenon&#x27;:
+                this.apiInterface.getPhenomena(this.serviceUrl, this.filter)
+                    .subscribe((res) &#x3D;&gt; this.setItems(res), (error) &#x3D;&gt; this.errorOnLoading);
+                break;
+            case &#x27;procedure&#x27;:
+                this.apiInterface.getProcedures(this.serviceUrl, this.filter)
+                    .subscribe((res) &#x3D;&gt; this.setItems(res), (error) &#x3D;&gt; this.errorOnLoading);
+                break;
+            case &#x27;category&#x27;:
+                this.apiInterface.getCategories(this.serviceUrl, this.filter)
+                    .subscribe((res) &#x3D;&gt; this.setItems(res), (error) &#x3D;&gt; this.errorOnLoading);
+                break;
+            case &#x27;feature&#x27;:
+                this.apiInterface.getFeatures(this.serviceUrl, this.filter)
+                    .subscribe((res) &#x3D;&gt; this.setItems(res), (error) &#x3D;&gt; this.errorOnLoading);
+                break;
+            default:
+                console.error(&#x27;Wrong endpoint: &#x27; + this.endpoint);
+        }
     }
 
     private errorOnLoading(): void {

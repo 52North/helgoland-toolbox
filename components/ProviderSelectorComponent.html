@@ -280,7 +280,13 @@
                                     <a href="../classes/HttpCache.html" >HttpCache</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -471,6 +477,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/Language.html" >Language</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/Layout.html" >Layout</a>
@@ -823,7 +832,13 @@
                                            <a href="../classes/HttpCache.html" >HttpCache</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/LanguageChangNotifier.html" >LanguageChangNotifier</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/ListEntryComponent.html" >ListEntryComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/LocalSelectorComponent.html" >LocalSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/MapSelectorComponent.html" >MapSelectorComponent</a>
@@ -1014,6 +1029,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/InternalDatasetId.html" >InternalDatasetId</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/Language.html" >Language</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/Layout.html" >Layout</a>
@@ -1737,41 +1755,24 @@ export class ProviderSelectorComponent implements OnInit {
 
     <div class="tab-pane fade" id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;loadingCount &gt; 0&quot;&gt;
-    &lt;span i18n&#x3D;&quot;@@requestingServices&quot;&gt;Requesting {{loadingCount}} services...&lt;/span&gt;
+    &lt;span&gt;Requesting {{loadingCount}} services...&lt;/span&gt;
 &lt;/div&gt;
 &lt;div class&#x3D;&quot;provider-list&quot;&gt;
     &lt;div class&#x3D;&quot;provider-item&quot; *ngFor&#x3D;&quot;let provider of providers&quot; (click)&#x3D;&quot;selectProvider(provider)&quot; [ngClass]&#x3D;&quot;{&#x27;selected&#x27;: isSelected(provider)}&quot;&gt;
         &lt;div&gt;{{provider.label}}&lt;/div&gt;
-        &lt;div class&#x3D;&quot;small&quot;&gt;{{provider.type}},
-            {{provider.version}}&lt;/div&gt;
-        &lt;div class&#x3D;&quot;small&quot;&gt;{{provider.url}}&lt;/div&gt;
-        &lt;div class&#x3D;&quot;small&quot; *ngIf&#x3D;&quot;provider.serviceUrl&quot;&gt;
-            &lt;span i18n&#x3D;&quot;@@providerList.serviceUrl&quot;&gt;Service-URL&lt;/span&gt;:
-            &lt;span&gt;{{provider.serviceUrl}}&lt;/span&gt;
+        &lt;div class&#x3D;&quot;small&quot;&gt;{{provider.type}}, {{provider.version}}
         &lt;/div&gt;
+        &lt;div class&#x3D;&quot;small&quot;&gt;{{provider.url}}&lt;/div&gt;
+        &lt;div class&#x3D;&quot;small&quot; *ngIf&#x3D;&quot;provider.serviceUrl&quot;&gt;{{&#x27;provider-selector.service-url&#x27; | translate}}: {{provider.serviceUrl}}&lt;/div&gt;
         &lt;div class&#x3D;&quot;small&quot;&gt;
-            &lt;span *ngIf&#x3D;&quot;provider.quantities.stations&quot;&gt;
-              &lt;span i18n&#x3D;&quot;@@providerList.stations&quot;&gt;Stations&lt;/span&gt;:
-              &lt;span&gt;{{provider.quantities.stations}}&lt;/span&gt;
-            &lt;/span&gt;
-            &lt;span *ngIf&#x3D;&quot;provider.quantities.platforms&quot;&gt;
-              &lt;span i18n&#x3D;&quot;@@providerList.platforms&quot;&gt;Platforms&lt;/span&gt;:
-              &lt;span&gt;{{provider.quantities.platforms}}&lt;/span&gt;
-            &lt;/span&gt;
-            &lt;span *ngIf&#x3D;&quot;provider.quantities.timeseries&quot;&gt;
-              &lt;span i18n&#x3D;&quot;@@providerList.timeseries&quot;&gt;Timeseries&lt;/span&gt;:
-              &lt;span&gt;{{provider.quantities.timeseries}}&lt;/span&gt;
-            &lt;/span&gt;
-            &lt;span *ngIf&#x3D;&quot;provider.quantities.datasets&quot;&gt;
-              &lt;span i18n&#x3D;&quot;@@providerList.datasets&quot;&gt;Datasets&lt;/span&gt;:
-              &lt;span&gt;{{provider.quantities.datasets}}&lt;/span&gt;
-            &lt;/span&gt;
-            &lt;span i18n&#x3D;&quot;@@providerList.phenomena&quot;&gt;Phenomena&lt;/span&gt;:
-            &lt;span&gt;{{provider.quantities.phenomena}}&lt;/span&gt;
+            &lt;span *ngIf&#x3D;&quot;provider.quantities.stations&quot;&gt;{{&#x27;provider-selector.stations&#x27; | translate}}: {{provider.quantities.stations}}&lt;/span&gt;
+            &lt;span *ngIf&#x3D;&quot;provider.quantities.platforms&quot;&gt;{{&#x27;provider-selector.platforms&#x27; | translate}}: {{provider.quantities.platforms}}&lt;/span&gt;
+            &lt;span *ngIf&#x3D;&quot;provider.quantities.timeseries&quot;&gt;{{&#x27;provider-selector.timeseries&#x27; | translate}}: {{provider.quantities.timeseries}}&lt;/span&gt;
+            &lt;span *ngIf&#x3D;&quot;provider.quantities.datasets&quot;&gt;{{&#x27;provider-selector.datasets&#x27; | translate}}: {{provider.quantities.datasets}}&lt;/span&gt;
+            &lt;span&gt;{{&#x27;provider-selector.phenomena&#x27; | translate}}: {{provider.quantities.phenomena}}&lt;/span&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade" id="tree">
@@ -1797,7 +1798,7 @@ export class ProviderSelectorComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div *ngIf="loadingCount > 0">    <span i18n="@@requestingServices">Requesting {{loadingCount}} services...</span></div><div class="provider-list">    <div class="provider-item" *ngFor="let provider of providers" (click)="selectProvider(provider)" [ngClass]="{\'selected\': isSelected(provider)}">        <div>{{provider.label}}</div>        <div class="small">{{provider.type}},            {{provider.version}}</div>        <div class="small">{{provider.url}}</div>        <div class="small" *ngIf="provider.serviceUrl">            <span i18n="@@providerList.serviceUrl">Service-URL</span>:            <span>{{provider.serviceUrl}}</span>        </div>        <div class="small">            <span *ngIf="provider.quantities.stations">              <span i18n="@@providerList.stations">Stations</span>:              <span>{{provider.quantities.stations}}</span>            </span>            <span *ngIf="provider.quantities.platforms">              <span i18n="@@providerList.platforms">Platforms</span>:              <span>{{provider.quantities.platforms}}</span>            </span>            <span *ngIf="provider.quantities.timeseries">              <span i18n="@@providerList.timeseries">Timeseries</span>:              <span>{{provider.quantities.timeseries}}</span>            </span>            <span *ngIf="provider.quantities.datasets">              <span i18n="@@providerList.datasets">Datasets</span>:              <span>{{provider.quantities.datasets}}</span>            </span>            <span i18n="@@providerList.phenomena">Phenomena</span>:            <span>{{provider.quantities.phenomena}}</span>        </div>    </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="loadingCount > 0">    <span>Requesting {{loadingCount}} services...</span></div><div class="provider-list">    <div class="provider-item" *ngFor="let provider of providers" (click)="selectProvider(provider)" [ngClass]="{\'selected\': isSelected(provider)}">        <div>{{provider.label}}</div>        <div class="small">{{provider.type}}, {{provider.version}}        </div>        <div class="small">{{provider.url}}</div>        <div class="small" *ngIf="provider.serviceUrl">{{\'provider-selector.service-url\' | translate}}: {{provider.serviceUrl}}</div>        <div class="small">            <span *ngIf="provider.quantities.stations">{{\'provider-selector.stations\' | translate}}: {{provider.quantities.stations}}</span>            <span *ngIf="provider.quantities.platforms">{{\'provider-selector.platforms\' | translate}}: {{provider.quantities.platforms}}</span>            <span *ngIf="provider.quantities.timeseries">{{\'provider-selector.timeseries\' | translate}}: {{provider.quantities.timeseries}}</span>            <span *ngIf="provider.quantities.datasets">{{\'provider-selector.datasets\' | translate}}: {{provider.quantities.datasets}}</span>            <span>{{\'provider-selector.phenomena\' | translate}}: {{provider.quantities.phenomena}}</span>        </div>    </div></div></div>'
     var COMPONENTS = [{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'FlotOverviewTimeseriesGraphComponent', 'selector': 'n52-flot-overview-timeseries-graph'},{'name': 'FlotTimeseriesGraphComponent', 'selector': 'n52-flot-timeseries-graph'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MultiPhenomenonListComponent', 'selector': 'n52-multi-phenomenon-list'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkButtonComponent', 'selector': 'n52-permalink-button'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'ProviderSelectorComponent', 'selector': 'n52-provider-selector'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderSelectorComponent', 'selector': 'n52-time-range-slider-selector'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimeseriesStyleSelectorComponent', 'selector': 'n52-timeseries-style-selector'},{'name': 'TimespanSelectorComponent', 'selector': 'n52-timespan-selector'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ProviderSelectorComponent'};
