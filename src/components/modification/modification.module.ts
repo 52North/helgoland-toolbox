@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 
-import { TimeseriesStyleSelectorComponent } from './timeseries-style-selector/timeseries-style-selector.component';
+import { ColorSelectorComponent } from './color-selector/color-selector.component';
 
 const COMPONENTS = [
-  TimeseriesStyleSelectorComponent
+  ColorSelectorComponent
 ];
 
 @NgModule({

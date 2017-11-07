@@ -1,19 +1,3 @@
-<ng-template #modalTimeseriesStyleSelector let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Timeseries style</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <n52-timeseries-style-selector [timeseriesColor]="datasetOptions.color" (onColorChange)="tempColor = $event"></n52-timeseries-style-selector>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-light" (click)="updateColor(); c();">Ok</button>
-        <button type="button" class="btn btn-light" (click)="c();">Cancel</button>
-    </div>
-</ng-template>
-
 <ng-template #modalGeometryViewer let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Station location</h4>
@@ -63,7 +47,7 @@
         <div class="legendicons">
             <span class="fa" [ngClass]="{'fa-eye-slash': datasetOptions.visible, 'fa-eye': !datasetOptions.visible}" (click)="toggleVisibility(); $event.stopPropagation();"></span>
             <span class="fa fa-map-marker" (click)="open(modalGeometryViewer, 'geometryViewerModal'); $event.stopPropagation();"></span>
-            <span class="fa fa-pencil" (click)="open(modalTimeseriesStyleSelector); $event.stopPropagation();" [ngStyle]="{color: datasetOptions.color}"></span>
+            <span class="fa fa-pencil" (click)="editDatasetOptions(datasetOptions); $event.stopPropagation();" [ngStyle]="{color: datasetOptions.color}"></span>
             <span class="fa fa-info" (click)="toggleInformation(); $event.stopPropagation();"></span>
             <span class="fa fa-times" (click)="removeDataset(); $event.stopPropagation();"></span>
         </div>

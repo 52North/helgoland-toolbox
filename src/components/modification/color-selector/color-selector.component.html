@@ -1,0 +1,5 @@
+<div class="colorpicker">
+  <span [(colorPicker)]="color" [cpDialogDisplay]="'inline'" [cpToggle]="true" [cpCancelButton]="true" [cpCancelButtonText]="'Reset'"
+    [cpPresetColors]="colorList" [cpPresetLabel]="'Presets:'" (colorPickerChange)="this.onColorChange.emit($event)">
+  </span>
+</div>

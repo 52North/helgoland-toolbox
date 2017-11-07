@@ -26,9 +26,11 @@
     "@ngx-translate/core": "^8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
     "Flot": "github:flot/flot",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "leaflet": "^1.2.0",
-    "leaflet.markercluster": "^1.1.0"
+    "leaflet.markercluster": "^1.1.0",
+    "ngx-color-picker": "^4.4.0"
   },
   "devDependencies": {
     "@angular/compiler": "^4.0.0",

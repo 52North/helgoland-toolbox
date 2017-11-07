@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     styleUrls: ['./plotly-graph.component.css']
 })
 export class PlotlyGraphComponent {
-    
+
     public profileDatasetIds = ['http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity-profile_12'];
     public profileDatasetOptions: Map<string, TimedDatasetOptions[]> = new Map();
 

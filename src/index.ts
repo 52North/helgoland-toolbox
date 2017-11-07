@@ -17,6 +17,8 @@ export { TrajectoryResult } from './components/map/selector/model/trajectory-res
 export { HelgolandMapViewModule } from './components/map/view/view.module';
 export { HelgolandMapControlModule } from './components/map/control/control.module';
 
+export { HelgolandModificationModule } from './components/modification/modification.module';
+
 export { HelgolandPermalinkModule } from './components/permalink/permalink.module';
 export { PermalinkService } from './components/permalink/services/permalink.service';
 

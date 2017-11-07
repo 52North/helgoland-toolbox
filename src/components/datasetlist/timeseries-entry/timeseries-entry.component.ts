@@ -36,6 +36,9 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
     @Output()
+    public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+
+    @Output()
     public onSelectDate: EventEmitter<Date> = new EventEmitter();
 
     public platformLabel: string;
@@ -87,9 +90,8 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         this.modalService.open(content, { size: 'lg', windowClass: className });
     }
 
-    public updateColor() {
-        this.datasetOptions.color = this.tempColor;
-        this.onUpdateOptions.emit(this.datasetOptions);
+    public editDatasetOptions(options: DatasetOptions) {
+        this.onEditOptions.emit(options);
     }
 
     protected loadDataset(id: string, url: string) {

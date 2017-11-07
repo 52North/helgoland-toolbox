@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 import { Dataset } from './../../../model/api/dataset';
@@ -15,17 +14,17 @@ import { InternalIdHandler } from './../../../services/api-interface/internal-id
 })
 export class ProfileEntryComponent extends ListEntryComponent {
 
-    @ViewChild('modalTimeseriesStyleSelector')
-    public modalTimeseriesStyleSelector: TemplateRef<any>;
-
     @Input()
-    public datasetOptions: TimedDatasetOptions;
+    public datasetOptions: TimedDatasetOptions[];
 
     @Output()
-    public onUpdateOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+    public onUpdateOptions: EventEmitter<TimedDatasetOptions[]> = new EventEmitter();
 
     @Output()
     public onDeleteDatasetOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+
+    @Output()
+    public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
     public dataset: Dataset;
 
@@ -33,7 +32,6 @@ export class ProfileEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        private modalService: NgbModal,
         private api: ApiInterface,
         protected internalIdHandler: InternalIdHandler
     ) {
@@ -44,14 +42,8 @@ export class ProfileEntryComponent extends ListEntryComponent {
         this.onDeleteDatasetOptions.emit(options);
     }
 
-    public editColor(options: TimedDatasetOptions) {
-        this.modalService.open(this.modalTimeseriesStyleSelector);
-        this.editableOptions = options;
-    }
-
-    public updateColor() {
-        this.editableOptions.color = this.tempColor;
-        this.onUpdateOptions.emit(this.datasetOptions);
+    public editDatasetOptions(options: TimedDatasetOptions) {
+        this.onEditOptions.emit(options);
     }
 
     public toggleVisibility(options: TimedDatasetOptions) {
