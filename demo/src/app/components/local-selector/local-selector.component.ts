@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { LocalSelectorComponent } from '../../../../lib';
+import { LocalSelectorComponent } from '../../../../../src';
 
 @Component({
     selector: 'n52-lang-selector',

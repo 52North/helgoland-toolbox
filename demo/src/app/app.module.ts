@@ -1,7 +1,6 @@
-import { StyleModificationComponent } from './pages/profile-entry/style-modification/style-modification.component';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
-import { MatDialogModule, MatListModule, MatRadioModule, MatSidenavModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatListModule, MatRadioModule, MatSidenavModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,13 +17,14 @@ import {
     HelgolandSelectorModule,
     HelgolandServicesModule,
     Settings,
-} from '../../lib';
+} from '../../../src';
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
+import { StyleModificationComponent } from './pages/profile-entry/style-modification/style-modification.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Language } from '../../lib';
+import { Language } from '../../../src';
 
 @Component({
     selector: 'my-app',

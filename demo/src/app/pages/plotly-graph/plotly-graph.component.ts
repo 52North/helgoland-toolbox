@@ -1,5 +1,6 @@
-import { TimedDatasetOptions } from '../../../../lib';
 import { Component } from '@angular/core';
+
+import { TimedDatasetOptions } from './../../../../../src/model/internal/options';
 
 @Component({
     selector: 'my-app',

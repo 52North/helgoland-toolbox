@@ -1,7 +1,8 @@
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+
+import { TimedDatasetOptions } from './../../../../../src/model/internal/options';
 import { StyleModificationComponent } from './style-modification/style-modification.component';
-import { TimedDatasetOptions } from '../../../../lib';
-import { Component, ViewChild, TemplateRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'my-app',

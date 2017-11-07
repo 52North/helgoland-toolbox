@@ -1,6 +1,0 @@
-dist
-lib
-src/**/*.ngfactory.ts
-src/**/*.ngsummary.json
-node_modules
-umd/lib

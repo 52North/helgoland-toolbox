@@ -1,5 +1,8 @@
-import { TimedDatasetOptions, Timespan, PlotOptions, DatasetOptions } from '../../../../lib';
 import { Component } from '@angular/core';
+
+import { PlotOptions } from '../../../../../src/components/graph/flot/model';
+import { DatasetOptions } from './../../../../../src/model/internal/options';
+import { Timespan } from './../../../../../src/model/internal/timeInterval';
 
 @Component({
     selector: 'my-app',
