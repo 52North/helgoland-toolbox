@@ -2,6 +2,15 @@
 	"listSelection": {
 		"loading": ""
 	},
+	"profiles": {
+		"legend": {
+			"delete-subentry": "Entferne dieses Profil",
+			"edit-style": "Verändere das Aussehen dieses Profils",
+			"go-to-combi-view": "Zeige in der kombinierten Ansicht",
+			"show-geometry": "Zeige Profil-Geometry",
+			"visibility": "Zeige/Verstecke das Profil"
+		}
+	},
 	"provider-selector": {
 		"datasets": "Datensätze",
 		"phenomena": "Phänomene",

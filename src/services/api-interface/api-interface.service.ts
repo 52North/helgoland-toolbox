@@ -188,7 +188,7 @@ export class ApiInterface implements ApiV2 {
     }
 
     public getPlatform(id: string, apiUrl: string, params?: ParameterFilter): Observable<Platform> {
-        const url = this.createRequestUrl(apiUrl, 'platforms');
+        const url = this.createRequestUrl(apiUrl, 'platforms', id);
         return this.requestApi<Platform>(url, params);
     }
 

@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { LocatedProfileDataEntry } from '../../../index';
 import { ListEntryComponent } from '../list-entry.component';
 import { Dataset } from './../../../model/api/dataset';
+import { PlatformTypes } from './../../../model/api/enums';
 import { TimedDatasetOptions } from './../../../model/internal/options';
+import { Timespan } from './../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 
 @Component({
     selector: 'n52-profile-entry',
     templateUrl: './profile-entry.component.html',
-    styleUrls: ['./profile-entry.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./profile-entry.component.scss']
 })
 export class ProfileEntryComponent extends ListEntryComponent {
 
@@ -25,6 +27,12 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
     @Output()
     public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+
+    @Output()
+    public onOpenInCombiView: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+
+    @Output()
+    public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
     public dataset: Dataset;
 
@@ -49,6 +57,33 @@ export class ProfileEntryComponent extends ListEntryComponent {
     public toggleVisibility(options: TimedDatasetOptions) {
         options.visible = !options.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
+    }
+
+    public isMobile() {
+        if (this.dataset) {
+            return this.dataset.platformType === PlatformTypes.mobileInsitu;
+        }
+        return false;
+    }
+
+    public openInCombiView(option: TimedDatasetOptions) {
+        this.onOpenInCombiView.emit(option);
+    }
+
+    public showGeometry(option: TimedDatasetOptions) {
+        const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+        if (this.isMobile()) {
+            const timespan = new Timespan(option.timestamp);
+            this.api.getData<LocatedProfileDataEntry>(internalId.id, internalId.url, timespan).subscribe((result) => {
+                if (result.values.length === 1) {
+                    this.onShowGeometry.emit(result.values[0].geometry);
+                }
+            });
+        } else {
+            this.api.getPlatform(this.dataset.parameters.platform.id, internalId.url).subscribe((platform) => {
+                this.onShowGeometry.emit(platform.geometry);
+            });
+        }
     }
 
     protected loadDataset(id: string, url: string) {

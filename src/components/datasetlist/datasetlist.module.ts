@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { HelgolandServicesModule } from './../../services/services.module';
 import { HelgolandDepictionModule } from './../depiction/depiction.module';
@@ -16,6 +17,7 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
+    TranslateModule,
     HelgolandModificationModule,
     HelgolandDepictionModule,
     HelgolandMapViewModule,

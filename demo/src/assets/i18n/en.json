@@ -2,6 +2,15 @@
 	"listSelection": {
 		"loading": ""
 	},
+	"profiles": {
+		"legend": {
+			"delete-subentry": "Remove this profile",
+			"edit-style": "Edit the style of this profile",
+			"go-to-combi-view": "Show in the combined view",
+			"show-geometry": "Show profile geometry",
+			"visibility": "Show/Hide this profile"
+		}
+	},
 	"provider-selector": {
 		"datasets": "Datasets",
 		"phenomena": "Phenomena",

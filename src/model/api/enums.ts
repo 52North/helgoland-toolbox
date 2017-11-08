@@ -1,6 +1,7 @@
 export enum PlatformTypes {
     stationary = 'stationary',
-    mobile = 'mobile'
+    mobile = 'mobile',
+    mobileInsitu = 'mobile_insitu'
 }
 
 export enum ValueTypes {

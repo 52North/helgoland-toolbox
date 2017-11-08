@@ -36,6 +36,7 @@ export class Dataset extends Parameter implements IDataset {
     public firstValue: FirstLastValue;
     public lastValue: FirstLastValue;
     public datasetType: DatasetTypes;
+    public platformType: PlatformTypes;
     public parameters: DatasetParameterConstellation;
     public seriesParameters?: DatasetParameterConstellation;
 }

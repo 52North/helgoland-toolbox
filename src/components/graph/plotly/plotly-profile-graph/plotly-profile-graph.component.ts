@@ -93,7 +93,7 @@ export class PlotlyProfileGraphComponent
             const options = this.datasetOptions.get(dataset.internalId);
             options.forEach((option) => {
                 if (option.timestamp) {
-                    const timespan = new Timespan(option.timestamp, option.timestamp);
+                    const timespan = new Timespan(option.timestamp);
                     this.api.getData<ProfileDataEntry>(id, url, timespan).subscribe((data) => {
                         if (data.values.length === 1) {
                             if (this.rawData.has(dataset.internalId)) {

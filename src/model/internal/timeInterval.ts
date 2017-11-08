@@ -8,11 +8,16 @@ export class Timespan extends TimeInterval {
 
     public to: number;
 
-    constructor(from: number, to: number) {
+    constructor(from: number, to?: number) {
         super();
         this.from = from;
-        this.to = to;
+        if (to) {
+            this.to = to;
+        } else {
+            this.to = from;
+        }
     }
+
 }
 
 export class BufferedTime extends TimeInterval {

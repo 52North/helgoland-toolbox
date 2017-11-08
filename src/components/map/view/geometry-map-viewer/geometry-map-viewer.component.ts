@@ -12,13 +12,13 @@ export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
     public mapId: string;
 
     @Input()
-    public highlight: GeoJSON.GeometryObject;
+    public highlight: GeoJSON.GeoJsonObject;
 
     @Input()
-    public geometry: GeoJSON.GeometryObject;
+    public geometry: GeoJSON.GeoJsonObject;
 
     @Input()
-    public zoomTo: GeoJSON.GeometryObject;
+    public zoomTo: GeoJSON.GeoJsonObject;
 
     @Input()
     public maxMapZoom: number;
