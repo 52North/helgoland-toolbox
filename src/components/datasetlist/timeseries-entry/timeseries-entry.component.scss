@@ -10,7 +10,7 @@ n52-timeseries-entry {
         padding: 5px;
         border-radius: 5px;
         margin-bottom: 5px;
-        .small {
+        .small-label {
             font-size: 90%;
             word-break: break-all;
         }
@@ -21,6 +21,9 @@ n52-timeseries-entry {
         }
         .legendItemheader {
             cursor: pointer;
+            &.highlight {
+                font-weight: bold;
+            }
         }
         .legendicons {
             span {

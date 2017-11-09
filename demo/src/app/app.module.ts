@@ -8,16 +8,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-    Config,
-    HelgolandDatasetlistModule,
-    HelgolandFlotGraphModule,
-    HelgolandMapSelectorModule,
-    HelgolandModificationModule,
-    HelgolandPlotlyGraphModule,
-    HelgolandSelectorModule,
-    HelgolandServicesModule,
-    HttpCache,
-    Settings,
+  Config,
+  HelgolandDatasetlistModule,
+  HelgolandFlotGraphModule,
+  HelgolandMapSelectorModule,
+  HelgolandModificationModule,
+  HelgolandPlotlyGraphModule,
+  HelgolandSelectorModule,
+  HelgolandServicesModule,
+  HttpCache,
+  Settings,
 } from '../../../src';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { LocalHttpCache } from './../../../src/services/api-interface/caching/local-cache';
@@ -40,6 +40,7 @@ const appRoutes: Routes = [
   { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },
   { path: 'profile-entry', component: ProfileEntryComponent },
   { path: 'graph-legend', component: GraphLegendComponent },
+  { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {

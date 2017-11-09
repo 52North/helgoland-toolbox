@@ -10,6 +10,9 @@ export abstract class ListEntryComponent implements OnInit {
     @Input()
     public selected: boolean;
 
+    @Input()
+    public highlight: boolean;
+
     @Output()
     public onDeleteDataset: EventEmitter<boolean> = new EventEmitter();
 

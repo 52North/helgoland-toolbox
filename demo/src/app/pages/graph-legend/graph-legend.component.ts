@@ -84,6 +84,8 @@ export class GraphLegendComponent {
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
 
+    public highlightId: string;
+
     constructor(
         private color: ColorService
     ) {
@@ -102,5 +104,9 @@ export class GraphLegendComponent {
 
     public showGeometry(geometry: GeoJSON.GeoJsonObject) {
         console.log('show geometry: ' + JSON.stringify(geometry));
+    }
+
+    public highlight(id: string) {
+        this.highlightId = id;
     }
 }

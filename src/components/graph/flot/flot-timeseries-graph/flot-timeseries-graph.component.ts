@@ -4,7 +4,16 @@ import './jquery.flot.navigate.js';
 import './jquery.flot.selection.js';
 import './jquery.flot.touch.js';
 
-import { AfterViewInit, Component, ElementRef, IterableDiffers, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    IterableDiffers,
+    Output,
+    ViewChild,
+    ViewEncapsulation,
+} from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
 import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper.service';
@@ -32,7 +41,11 @@ export class FlotTimeseriesGraphComponent
     extends DatasetGraphComponent<DatasetOptions, PlotOptions>
     implements AfterViewInit {
 
-    @ViewChild('flot') public flotElem: ElementRef;
+    @Output()
+    public onHighlight: EventEmitter<string> = new EventEmitter();
+
+    @ViewChild('flot')
+    public flotElem: ElementRef;
 
     private plotarea: any;
 
@@ -41,6 +54,8 @@ export class FlotTimeseriesGraphComponent
     private plotOptions: PlotOptions;
 
     private datasetMap: Map<string, IDataset> = new Map();
+
+    private lastHightlight: string;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -74,6 +89,18 @@ export class FlotTimeseriesGraphComponent
         $(this.plotarea).bind('plotselected', (evt: any, ranges: any) => {
             this.changeTime(ranges.xaxis.from, ranges.xaxis.to);
         });
+
+        $(this.plotarea).bind('plothover', (evt: any, pos: any, item: any) => {
+            if (item) {
+                this.onHighlight.emit(item.series.internalId);
+                this.showTooltip(evt, pos, item);
+            } else {
+                this.onHighlight.emit('');
+                this.hideTooltip();
+            }
+        });
+
+        this.createTooltip();
 
         this.plotGraph();
     }
@@ -181,7 +208,7 @@ export class FlotTimeseriesGraphComponent
                 let axePos;
                 const axe = this.plotOptions.yaxes.find((yaxisEntry, idx) => {
                     axePos = idx + 1;
-                    return yaxisEntry.uom === label;
+                    return yaxisEntry.label === label;
                 });
                 if (axe) {
                     if (axe.internalIds.indexOf(dataset.internalId) < 0) {
@@ -190,7 +217,8 @@ export class FlotTimeseriesGraphComponent
                     }
                 } else {
                     this.plotOptions.yaxes.push({
-                        uom: label,
+                        uom: dataset.uom,
+                        label,
                         tsColors: [styles.color],
                         internalIds: [dataset.internalId],
                         min: null
@@ -300,7 +328,7 @@ export class FlotTimeseriesGraphComponent
                             this.plotGraph();
                         });
                     const yaxisLabel = $('<div class="axisLabel yaxisLabel" style=left:'
-                        + box.left + 'px;></div>').text(axis.options.uom)
+                        + box.left + 'px;></div>').text(axis.options.label)
                         .appendTo(plot.getPlaceholder())
                         .data('axis.n', axis.n);
                     if (axis.options.tsColors) {
@@ -374,5 +402,38 @@ export class FlotTimeseriesGraphComponent
                 });
             }
         }
+    }
+
+    private createTooltip() {
+        if ($('#tooltip').length === 0) {
+            $('<div id="tooltip"></div>').appendTo('body');
+        }
+    }
+
+    private showTooltip(event: any, pos: any, item: any) {
+        $('#tooltip').empty();
+        $('#tooltip').append('<div>' + item.datapoint[1].toFixed(2) + ' ' + item.series.yaxis.options.uom + '</div>');
+        $('#tooltip').append('<div>' + item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + '</div>');
+        const tooltip = $('#tooltip').show();
+        const halfwidth = (event.target.clientWidth) / 2;
+        if (halfwidth >= item.pageX - event.target.getBoundingClientRect().left) {
+            tooltip.css({
+                position: 'absolute',
+                top: item.pageY + 5,
+                left: item.pageX + 5,
+                right: 'auto'
+            });
+        } else {
+            tooltip.css({
+                position: 'absolute',
+                top: item.pageY + 5,
+                right: ($(window).width() - item.pageX),
+                left: 'auto'
+            });
+        }
+    }
+
+    private hideTooltip() {
+        $('#tooltip').hide();
     }
 }
