@@ -49,7 +49,7 @@
     "test:watch": "karma start --auto-watch --no-single-run",
     "tslint": "tslint",
     "i18n-extract": "ngx-translate-extract --input ./src -o ./demo/src/assets/i18n/*.json --clean --sort --format namespaced-json",    
-    "demo": "webpack-dev-server --port 9090 --config webpack.demo.js --inline --progress"
+    "demo": "webpack-dev-server --port 4200 --config webpack.demo.js --inline --progress"
   },
   "dependencies": {
     "@angular/common": "^4.4.5",

@@ -1,14 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewEncapsulation,
-} from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 import { TimeInterval } from '../../../model/internal/timeInterval';
 import { ListEntryComponent } from '../list-entry.component';
@@ -41,6 +31,9 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     @Output()
     public onSelectDate: EventEmitter<Date> = new EventEmitter();
 
+    @Output()
+    public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
+
     public platformLabel: string;
     public phenomenonLabel: string;
     public procedureLabel: string;
@@ -55,7 +48,6 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     protected dataset: IDataset;
 
     constructor(
-        private modalService: NgbModal,
         private api: ApiInterface,
         private timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler
@@ -86,12 +78,19 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         this.onUpdateOptions.emit(this.datasetOptions);
     }
 
-    public open(content: TemplateRef<any>, className: string = '') {
-        this.modalService.open(content, { size: 'lg', windowClass: className });
-    }
-
     public editDatasetOptions(options: DatasetOptions) {
         this.onEditOptions.emit(options);
+    }
+
+    public showGeometry() {
+        if (this.dataset instanceof Timeseries) {
+            this.onShowGeometry.emit(this.dataset.station.geometry);
+        }
+        if (this.dataset instanceof Dataset) {
+            this.api.getPlatform(this.dataset.parameters.platform.id, this.dataset.url).subscribe((platform) => {
+                this.onShowGeometry.emit(platform.geometry);
+            });
+        }
     }
 
     protected loadDataset(id: string, url: string) {

@@ -21,6 +21,7 @@ import {
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
+import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
   { path: 'plotly-graph', component: PlotlyGraphComponent },
   { path: 'flot-graph', component: FlotGraphComponent },
   { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },
-  { path: 'profile-entry', component: ProfileEntryComponent }
+  { path: 'profile-entry', component: ProfileEntryComponent },
+  { path: 'graph-legend', component: GraphLegendComponent },
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -90,7 +92,8 @@ export class SettingsService extends Settings {
     FlotGraphComponent,
     ServiceFilterSelectorDemoPageComponent,
     ProfileEntryComponent,
-    StyleModificationComponent
+    StyleModificationComponent,
+    GraphLegendComponent
   ],
   providers: [
     {

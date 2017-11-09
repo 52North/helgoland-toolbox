@@ -252,7 +252,8 @@ export class ApiInterface implements ApiV2 {
         return requestUrl;
     }
 
-    private prepareDataset(dataset: Dataset, apiUrl: string) {
+    private prepareDataset(datasetObj: Dataset, apiUrl: string) {
+        const dataset = deserialize<Dataset>(Dataset, JSON.stringify(datasetObj));
         dataset.url = apiUrl;
         this.internalDatasetId.generateInternalId(dataset);
         if (dataset.seriesParameters) {

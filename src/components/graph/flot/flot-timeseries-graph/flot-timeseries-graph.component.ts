@@ -8,7 +8,7 @@ import { AfterViewInit, Component, ElementRef, IterableDiffers, ViewChild, ViewE
 
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
-import { IDataset, Timeseries } from './../../../../model/api/dataset';
+import { IDataset, Timeseries, Dataset } from './../../../../model/api/dataset';
 import { DatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
@@ -38,7 +38,7 @@ export class FlotTimeseriesGraphComponent
 
     private plotOptions: PlotOptions;
 
-    private timeseriesMap: Map<string, Timeseries> = new Map();
+    private datasetMap: Map<string, IDataset> = new Map();
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -98,25 +98,31 @@ export class FlotTimeseriesGraphComponent
     }
 
     protected timeIntervalChanges() {
-        this.timeseriesMap.forEach((timeseries) => {
-            this.loadTsData(timeseries);
+        this.datasetMap.forEach((dataset) => {
+            this.loadData(dataset);
         });
     }
 
     protected removeDataset(internalId: string) {
-        this.timeseriesMap.delete(internalId);
+        this.datasetMap.delete(internalId);
         this.removePreparedData(internalId);
         this.plotGraph();
     }
 
     protected addDataset(internalId: string, url: string): void {
-        this.api.getSingleTimeseries(internalId, url)
-            .subscribe((timeseries: Timeseries) => this.addTimeseries(timeseries));
+        this.api.getSingleTimeseries(internalId, url).subscribe(
+            (timeseries) => this.addLoadedDataset(timeseries),
+            (error) => {
+                this.api.getDataset(internalId, url).subscribe(
+                    (dataset) => this.addLoadedDataset(dataset)
+                );
+            }
+        );
     }
 
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
-        if (this.timeseriesMap.has(internalId)) {
-            this.loadTsData(this.timeseriesMap.get(internalId));
+        if (this.datasetMap.has(internalId)) {
+            this.loadData(this.datasetMap.get(internalId));
         }
     }
 
@@ -164,31 +170,31 @@ export class FlotTimeseriesGraphComponent
         }
     }
 
-    private prepareData(timeseries: Timeseries, data: Data<[number, number]>) {
-        const dataIdx = this.preparedData.findIndex((e) => e.internalId === timeseries.internalId);
-        const styles = this.datasetOptions.get(timeseries.internalId);
-        const label = this.createAxisLabel(timeseries);
+    private prepareData(dataset: IDataset, data: Data<[number, number]>) {
+        const dataIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+        const styles = this.datasetOptions.get(dataset.internalId);
+        const label = this.createAxisLabel(dataset);
         let axePos;
         const axe = this.plotOptions.yaxes.find((yaxisEntry, idx) => {
             axePos = idx + 1;
             return yaxisEntry.uom === label;
         });
         if (axe) {
-            if (axe.internalIds.indexOf(timeseries.internalId) < 0) {
-                axe.internalIds.push(timeseries.internalId);
+            if (axe.internalIds.indexOf(dataset.internalId) < 0) {
+                axe.internalIds.push(dataset.internalId);
                 axe.tsColors.push(styles.color);
             }
         } else {
             this.plotOptions.yaxes.push({
-                uom: timeseries.parameters.phenomenon.label + ' [' + timeseries.uom + ']',
+                uom: dataset.parameters.phenomenon.label + ' [' + dataset.uom + ']',
                 tsColors: [styles.color],
-                internalIds: [timeseries.internalId],
+                internalIds: [dataset.internalId],
                 min: null
             });
             axePos = this.plotOptions.yaxes.length;
         }
         const dataEntry = {
-            internalId: timeseries.internalId,
+            internalId: dataset.internalId,
             color: styles.color,
             data: styles.visible ? data.values : [],
             points: {
@@ -332,24 +338,35 @@ export class FlotTimeseriesGraphComponent
         }
     }
 
-    private addTimeseries(timeseries: Timeseries) {
-        this.timeseriesMap.set(timeseries.internalId, timeseries);
-        this.loadTsData(timeseries);
+    private addLoadedDataset(dataset: IDataset) {
+        this.datasetMap.set(dataset.internalId, dataset);
+        this.loadData(dataset);
     }
 
-    private loadTsData(timeseries: Timeseries) {
+    private loadData(dataset: IDataset) {
         if (this.timespan && this.plotOptions) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
-            const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-            this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, buffer,
-                {
+            const datasetOptions = this.datasetOptions.get(dataset.internalId);
+            if (dataset instanceof Timeseries) {
+                this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+                    {
+                        format: 'flot',
+                        generalize: datasetOptions.generalize
+                    })
+                    .subscribe((result) => {
+                        this.prepareData(dataset, result);
+                        this.plotGraph();
+                    });
+            }
+            if (dataset instanceof Dataset) {
+                this.api.getData<[number, number]>(dataset.id, dataset.url, buffer, {
                     format: 'flot',
                     generalize: datasetOptions.generalize
-                })
-                .subscribe((result) => {
-                    this.prepareData(timeseries, result);
+                }).subscribe((result) => {
+                    this.prepareData(dataset, result);
                     this.plotGraph();
                 });
+            }
         }
     }
 
