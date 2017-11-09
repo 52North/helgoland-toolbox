@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule, MatListModule, MatRadioModule, MatSidenavModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,8 +16,11 @@ import {
     HelgolandPlotlyGraphModule,
     HelgolandSelectorModule,
     HelgolandServicesModule,
+    HttpCache,
     Settings,
 } from '../../../src';
+import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
+import { LocalHttpCache } from './../../../src/services/api-interface/caching/local-cache';
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
@@ -50,9 +53,11 @@ export class SettingsService extends Settings {
 
   constructor() {
     super();
-    this.config = new Config();
+    this.config = {
+      solveLabels: true,
+      proxyUrl: 'https://cors-anywhere.herokuapp.com/'
+    };
   }
-
 }
 
 @NgModule({
@@ -99,6 +104,14 @@ export class SettingsService extends Settings {
     {
       provide: Settings,
       useClass: SettingsService
+    }, {
+      provide: HttpCache,
+      useClass: LocalHttpCache
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CachingInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

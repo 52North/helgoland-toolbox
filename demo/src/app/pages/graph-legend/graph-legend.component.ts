@@ -16,7 +16,7 @@ export class GraphLegendComponent {
         'http://www.fluggs.de/sos2/api/v1/__63',
         'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__quantity_106'
     ];
-    public timespan = new Timespan(1505983962980 - 100000000, 1505983962980);
+    public timespan = new Timespan(1505990000000 - 20000000, 1505990000000);
     public diagramOptions: PlotOptions = {
         crosshair: {
             mode: 'x'

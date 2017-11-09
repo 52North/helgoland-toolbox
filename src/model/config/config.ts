@@ -1,12 +1,12 @@
 import { Timespan } from './../internal/timeInterval';
 
 export class Config {
-    public restApiUrls: string[];
-    public providerBlackList: BlacklistedService[];
-    public solveLabels: boolean;
-    public proxyUrl: string;
-    public timespanPresets: TimespanPreset[];
-    public colorList: string[];
+    public restApiUrls?: string[];
+    public providerBlackList?: BlacklistedService[];
+    public solveLabels?: boolean;
+    public proxyUrl?: string;
+    public timespanPresets?: TimespanPreset[];
+    public colorList?: string[];
 }
 
 export class BlacklistedService {

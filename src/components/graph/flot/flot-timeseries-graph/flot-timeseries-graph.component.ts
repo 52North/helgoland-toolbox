@@ -5,10 +5,12 @@ import './jquery.flot.selection.js';
 import './jquery.flot.touch.js';
 
 import { AfterViewInit, Component, ElementRef, IterableDiffers, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Observable, Observer } from 'rxjs/Rx';
 
+import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper.service';
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
-import { IDataset, Timeseries, Dataset } from './../../../../model/api/dataset';
+import { Dataset, IDataset, Timeseries } from './../../../../model/api/dataset';
 import { DatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
@@ -44,7 +46,8 @@ export class FlotTimeseriesGraphComponent
         protected iterableDiffers: IterableDiffers,
         protected api: ApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        private labelMapper: LabelMapperService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc);
     }
@@ -170,48 +173,52 @@ export class FlotTimeseriesGraphComponent
         }
     }
 
-    private prepareData(dataset: IDataset, data: Data<[number, number]>) {
-        const dataIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-        const styles = this.datasetOptions.get(dataset.internalId);
-        const label = this.createAxisLabel(dataset);
-        let axePos;
-        const axe = this.plotOptions.yaxes.find((yaxisEntry, idx) => {
-            axePos = idx + 1;
-            return yaxisEntry.uom === label;
-        });
-        if (axe) {
-            if (axe.internalIds.indexOf(dataset.internalId) < 0) {
-                axe.internalIds.push(dataset.internalId);
-                axe.tsColors.push(styles.color);
-            }
-        } else {
-            this.plotOptions.yaxes.push({
-                uom: dataset.parameters.phenomenon.label + ' [' + dataset.uom + ']',
-                tsColors: [styles.color],
-                internalIds: [dataset.internalId],
-                min: null
+    private prepareData(dataset: IDataset, data: Data<[number, number]>): Observable<boolean> {
+        return Observable.create((observer: Observer<boolean>) => {
+            const dataIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+            const styles = this.datasetOptions.get(dataset.internalId);
+            this.createAxisLabel(dataset).subscribe((label) => {
+                let axePos;
+                const axe = this.plotOptions.yaxes.find((yaxisEntry, idx) => {
+                    axePos = idx + 1;
+                    return yaxisEntry.uom === label;
+                });
+                if (axe) {
+                    if (axe.internalIds.indexOf(dataset.internalId) < 0) {
+                        axe.internalIds.push(dataset.internalId);
+                        axe.tsColors.push(styles.color);
+                    }
+                } else {
+                    this.plotOptions.yaxes.push({
+                        uom: label,
+                        tsColors: [styles.color],
+                        internalIds: [dataset.internalId],
+                        min: null
+                    });
+                    axePos = this.plotOptions.yaxes.length;
+                }
+                const dataEntry = {
+                    internalId: dataset.internalId,
+                    color: styles.color,
+                    data: styles.visible ? data.values : [],
+                    points: {
+                        fillColor: styles.color
+                    },
+                    lines: {
+                        lineWidth: 1
+                    },
+                    bars: {
+                        lineWidth: 1
+                    }
+                };
+                if (dataIdx >= 0) {
+                    this.preparedData[dataIdx] = dataEntry;
+                } else {
+                    this.preparedData.push(dataEntry);
+                }
+                observer.next(true);
             });
-            axePos = this.plotOptions.yaxes.length;
-        }
-        const dataEntry = {
-            internalId: dataset.internalId,
-            color: styles.color,
-            data: styles.visible ? data.values : [],
-            points: {
-                fillColor: styles.color
-            },
-            lines: {
-                lineWidth: 1
-            },
-            bars: {
-                lineWidth: 1
-            }
-        };
-        if (dataIdx >= 0) {
-            this.preparedData[dataIdx] = dataEntry;
-        } else {
-            this.preparedData.push(dataEntry);
-        }
+        });
     }
 
     private prepareAxisPos() {
@@ -225,8 +232,9 @@ export class FlotTimeseriesGraphComponent
         });
     }
 
-    private createAxisLabel(dataset: IDataset): string {
-        return dataset.parameters.phenomenon.label + ' [' + dataset.uom + ']';
+    private createAxisLabel(dataset: IDataset): Observable<string> {
+        return this.labelMapper.getMappedLabel(dataset.parameters.phenomenon.label)
+            .map((label) => label + ' [' + dataset.uom + ']');
     }
 
     private setSelection(plot: Plot, options: PlotOptions) {
@@ -354,8 +362,7 @@ export class FlotTimeseriesGraphComponent
                         generalize: datasetOptions.generalize
                     })
                     .subscribe((result) => {
-                        this.prepareData(dataset, result);
-                        this.plotGraph();
+                        this.prepareData(dataset, result).subscribe(() => this.plotGraph());
                     });
             }
             if (dataset instanceof Dataset) {
@@ -363,11 +370,9 @@ export class FlotTimeseriesGraphComponent
                     format: 'flot',
                     generalize: datasetOptions.generalize
                 }).subscribe((result) => {
-                    this.prepareData(dataset, result);
-                    this.plotGraph();
+                    this.prepareData(dataset, result).subscribe(() => this.plotGraph());
                 });
             }
         }
     }
-
 }

@@ -1,3 +1,4 @@
+import { Map } from 'rxjs/util/Map';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -8,6 +9,8 @@ declare var $: any;
 
 @Injectable()
 export class LabelMapperService {
+
+    private cache: Map<string, string> = new Map();
 
     constructor(
         private httpClient: HttpClient,
@@ -21,16 +24,25 @@ export class LabelMapperService {
             } else {
                 const url = this.findUrl(label);
                 if (url) {
-                    const labelUrl = this.settings.config.proxyUrl ? this.settings.config.proxyUrl + url : url;
-                    this.httpClient.get(labelUrl, {responseType: 'text'}).subscribe((res) => {
-                        try {
-                            const xml = $.parseXML(res);
-                            label = label.replace(url, $(xml).find('prefLabel').text());
-                        } catch (error) {
-                            // currently do nothing and use old label
-                        }
-                        this.confirmLabel(observer, label);
-                    }, (error) => this.confirmLabel(observer, label));
+                    if (this.cache.has(url)) {
+                        this.confirmLabel(observer, this.cache.get(url));
+                    } else {
+                        const labelUrl = this.settings.config.proxyUrl ? this.settings.config.proxyUrl + url : url;
+                        this.httpClient.get(labelUrl, { responseType: 'text' }).subscribe((res) => {
+                            try {
+                                const xml = $.parseXML(res);
+                                label = label.replace(url, $(xml).find('prefLabel').text());
+                            } catch (error) {
+                                // currently do nothing and use old label
+                            }
+                            this.cache.set(url, label);
+                            this.confirmLabel(observer, label);
+                        }, (error) => {
+                            const resolvedLabel = label.substring(label.lastIndexOf('/') + 1, label.length);
+                            this.cache.set(url, resolvedLabel);
+                            this.confirmLabel(observer, resolvedLabel);
+                        });
+                    }
                 } else {
                     this.confirmLabel(observer, label);
                 }
