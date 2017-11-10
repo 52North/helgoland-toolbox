@@ -8,16 +8,17 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-  Config,
-  HelgolandDatasetlistModule,
-  HelgolandFlotGraphModule,
-  HelgolandMapSelectorModule,
-  HelgolandModificationModule,
-  HelgolandPlotlyGraphModule,
-  HelgolandSelectorModule,
-  HelgolandServicesModule,
-  HttpCache,
-  Settings,
+    Config,
+    HelgolandDatasetlistModule,
+    HelgolandFlotGraphModule,
+    HelgolandMapSelectorModule,
+    HelgolandModificationModule,
+    HelgolandPlotlyGraphModule,
+    HelgolandSelectorModule,
+    HelgolandServicesModule,
+    HttpCache,
+    HelgolandTimeModule,
+    Settings,
 } from '../../../src';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { LocalHttpCache } from './../../../src/services/api-interface/caching/local-cache';
@@ -31,6 +32,7 @@ import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.compo
 import { StyleModificationComponent } from './pages/profile-entry/style-modification/style-modification.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
+import { TimeComponent } from './pages/time/time.component';
 
 const appRoutes: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
   { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },
   { path: 'profile-entry', component: ProfileEntryComponent },
   { path: 'graph-legend', component: GraphLegendComponent },
+  { path: 'time', component: TimeComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -84,7 +87,8 @@ export class SettingsService extends Settings {
     HelgolandPlotlyGraphModule,
     HelgolandMapSelectorModule,
     HelgolandDatasetlistModule,
-    HelgolandModificationModule
+    HelgolandModificationModule,
+    HelgolandTimeModule
   ],
   entryComponents: [
     StyleModificationComponent
@@ -99,7 +103,8 @@ export class SettingsService extends Settings {
     ServiceFilterSelectorDemoPageComponent,
     ProfileEntryComponent,
     StyleModificationComponent,
-    GraphLegendComponent
+    GraphLegendComponent,
+    TimeComponent
   ],
   providers: [
     {

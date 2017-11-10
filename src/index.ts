@@ -1,4 +1,3 @@
-import { LocalSelectorComponent } from './components/locale/locale-selector';
 export { HelgolandControlModule } from './components/control/control.module';
 
 export { HelgolandDatasetlistModule } from './components/datasetlist/datasetlist.module';
@@ -52,6 +51,7 @@ export { GraphMessage } from './model/internal/graph/graph-message';
 export { Filter } from './model/internal/filter';
 export { Provider } from './model/internal/provider';
 export { Timespan } from './model/internal/timeInterval';
+export { IdCache } from './model/internal/id-cache';
 
 export { HelgolandServicesModule } from './services/services.module';
 

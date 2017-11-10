@@ -1,3 +1,4 @@
+import { IdCache } from '../../../model/internal/id-cache';
 import { Map } from 'rxjs/util/Map';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -10,7 +11,7 @@ declare var $: any;
 @Injectable()
 export class LabelMapperService {
 
-    private cache: Map<string, string> = new Map();
+    private cache: IdCache<string> = new IdCache();
 
     constructor(
         private httpClient: HttpClient,

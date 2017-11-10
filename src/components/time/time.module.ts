@@ -7,6 +7,7 @@ import { HelgolandServicesModule } from './../../services/services.module';
 import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector/predefined-timespan-selector.component';
 import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
 import { TimeRangeSliderSelectorComponent } from './time-range-slider-selector/time-range-slider-selector.component';
+import { TimeRangeSliderSelectorCache } from './time-range-slider-selector/time-range-slider-selector.service';
 import { TimespanSelectorComponent } from './timespan-selector/timespan-selector.component';
 import { TimespanShiftSelectorComponent } from './timespan-shift-selector/timespan-shift-selector.component';
 
@@ -27,12 +28,13 @@ const COMPONENTS = [
     HelgolandServicesModule
   ],
   declarations: [
-    COMPONENTS
+    COMPONENTS,
   ],
   exports: [
     COMPONENTS
   ],
   providers: [
+    TimeRangeSliderSelectorCache
   ]
 })
 export class HelgolandTimeModule {
