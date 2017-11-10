@@ -1,9 +1,6 @@
 <h1 mat-dialog-title>Style options</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <!-- {{colorList | json}} -->
-    <n52-color-selector [color]="option.color" [colorList]="colorList" (onColorChange)="tempColor = $event"></n52-color-selector>
-  </mat-form-field>
+  <n52-color-selector [color]="option.color" [colorList]="colorList" (onColorChange)="tempColor = $event"></n52-color-selector>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onOk()" tabindex="2">Ok</button>
