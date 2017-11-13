@@ -12,27 +12,30 @@ import {
     HelgolandDatasetlistModule,
     HelgolandFlotGraphModule,
     HelgolandMapSelectorModule,
+    HelgolandMapViewModule,
     HelgolandModificationModule,
     HelgolandPlotlyGraphModule,
     HelgolandSelectorModule,
     HelgolandServicesModule,
-    HttpCache,
     HelgolandTimeModule,
+    HttpCache,
     Settings,
 } from '../../../src';
+import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { LocalHttpCache } from './../../../src/services/api-interface/caching/local-cache';
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
+import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
-import { StyleModificationComponent } from './pages/profile-entry/style-modification/style-modification.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { TimeComponent } from './pages/time/time.component';
+import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 
 const appRoutes: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
@@ -43,6 +46,7 @@ const appRoutes: Routes = [
   { path: 'profile-entry', component: ProfileEntryComponent },
   { path: 'graph-legend', component: GraphLegendComponent },
   { path: 'time', component: TimeComponent },
+  { path: 'trajectory', component: TrajectoryComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -86,9 +90,11 @@ export class SettingsService extends Settings {
     HelgolandFlotGraphModule,
     HelgolandPlotlyGraphModule,
     HelgolandMapSelectorModule,
+    HelgolandMapViewModule,
     HelgolandDatasetlistModule,
     HelgolandModificationModule,
-    HelgolandTimeModule
+    HelgolandTimeModule,
+    HelgolandD3GraphModule
   ],
   entryComponents: [
     StyleModificationComponent
@@ -104,7 +110,8 @@ export class SettingsService extends Settings {
     ProfileEntryComponent,
     StyleModificationComponent,
     GraphLegendComponent,
-    TimeComponent
+    TimeComponent,
+    TrajectoryComponent
   ],
   providers: [
     {

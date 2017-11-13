@@ -8,10 +8,12 @@ import { HelgolandMapViewModule } from './../map/view/view.module';
 import { HelgolandModificationModule } from './../modification/modification.module';
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
 import { TimeseriesEntryComponent } from './timeseries-entry/timeseries-entry.component';
+import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
-  ProfileEntryComponent
+  ProfileEntryComponent,
+  TrajectoryEntryComponent
 ];
 
 @NgModule({

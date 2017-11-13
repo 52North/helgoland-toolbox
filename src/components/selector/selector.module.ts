@@ -8,7 +8,6 @@ import { HelgolandDepictionModule } from './../depiction/depiction.module';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector/dataset-by-station-selector.component';
 import { ListSelectorComponent } from './list-selector/list-selector.component';
 import { ListSelectorService } from './list-selector/list-selector.service';
-import { MultiPhenomenonListComponent } from './multi-phenomenon-list/multi-phenomenon-list.component';
 import {
     MultiServiceFilterSelectorComponent,
 } from './multi-service-filter-selector/multi-service-filter-selector.component';
@@ -21,8 +20,7 @@ const COMPONENTS = [
     DatasetByStationSelectorComponent,
     ListSelectorComponent,
     MultiServiceFilterSelectorComponent,
-    ServiceFilterSelectorComponent,
-    MultiPhenomenonListComponent
+    ServiceFilterSelectorComponent
 ];
 
 @NgModule({

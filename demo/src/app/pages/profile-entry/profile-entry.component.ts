@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
+import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 import { TimedDatasetOptions } from './../../../../../src/model/internal/options';
-import { StyleModificationComponent } from './style-modification/style-modification.component';
 
 @Component({
     selector: 'my-app',

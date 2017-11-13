@@ -2,7 +2,6 @@
 <div mat-dialog-content>
   <n52-color-selector [color]="option.color" [colorList]="colorList" (onColorChange)="tempColor = $event"></n52-color-selector>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onOk()" tabindex="2">Ok</button>
-  <button mat-button (click)="onNo()" tabindex="-1">No Thanks</button>
+<div mat-dialog-actions style="float: right;">
+  <button mat-button (click)="onOk()">Ok</button>
 </div>

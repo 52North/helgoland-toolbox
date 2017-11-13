@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { TimedDatasetOptions } from './../../../../../../src/model/internal/options';
+import { TimedDatasetOptions } from '../../../../../src/model/internal/options';
 
 @Component({
     selector: 'my-app',
@@ -16,7 +16,8 @@ export class StyleModificationComponent {
 
     constructor(
         public dialogRef: MatDialogRef<StyleModificationComponent>,
-        @Inject(MAT_DIALOG_DATA) public option: TimedDatasetOptions
+        @Inject(MAT_DIALOG_DATA)
+        public option: TimedDatasetOptions
     ) {
         this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
     }

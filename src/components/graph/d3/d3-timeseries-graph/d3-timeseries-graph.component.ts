@@ -155,9 +155,6 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.height = this.calculateHeight();
-        this.width = this.calculateWidth();
-
         this.lineFun = d3.line<DataEntry>()
             .x(this.calcXValue)
             .y(this.calcYValue)
@@ -206,17 +203,19 @@ export class D3TimeseriesGraphComponent
     }
 
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean): void {
-        // if (this.datasetMap.has(internalId)) { }
+        if (!firstChange && this.datasetMap.has(internalId)) {
+            this.loadData(this.datasetMap.get(internalId).dataset);
+        }
     }
 
     protected onResize(): void {
-        this.height = this.calculateHeight();
-        this.width = this.calculateWidth();
         this.drawLineGraph();
     }
 
     private loadData(dataset: IDataset) {
-        if (this.timespan && this.datasetOptions.has(dataset.internalId)) {
+        if (this.timespan &&
+            this.datasetOptions.has(dataset.internalId) &&
+            this.datasetOptions.get(dataset.internalId).visible) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option = this.datasetOptions.get(dataset.internalId);
             this.api.getData<LocatedTimeValueEntry>(dataset.id, dataset.url, buffer,
@@ -229,6 +228,8 @@ export class D3TimeseriesGraphComponent
                     this.processDataForId(dataset.internalId);
                     this.drawLineGraph();
                 });
+        } else {
+            this.drawLineGraph();
         }
     }
 
@@ -238,30 +239,36 @@ export class D3TimeseriesGraphComponent
     }
 
     private processDataForId(internalId: string) {
-        const datasetEntry = this.datasetMap.get(internalId);
-        const firstEntry = this.baseValues.length === 0;
-        let previous: DataEntry = null;
-        datasetEntry.data.forEach((elem, idx) => {
-            if (firstEntry) {
-                const entry = this.createDataEntry(internalId, elem, previous, idx);
-                if (this.selection) {
-                    if (idx >= this.selection.from && idx <= this.selection.to) {
+        if (this.datasetOptions.get(internalId).visible) {
+            const datasetEntry = this.datasetMap.get(internalId);
+            const firstEntry = this.baseValues.length === 0;
+            let previous: DataEntry = null;
+            datasetEntry.data.forEach((elem, idx) => {
+                if (firstEntry) {
+                    const entry = this.createDataEntry(internalId, elem, previous, idx);
+                    if (this.selection) {
+                        if (idx >= this.selection.from && idx <= this.selection.to) {
+                            this.baseValues.push(entry);
+                        }
+                    } else {
                         this.baseValues.push(entry);
                     }
+                    previous = entry;
                 } else {
-                    this.baseValues.push(entry);
-                }
-                previous = entry;
-            } else {
-                if (this.selection) {
-                    if (idx >= this.selection.from && idx <= this.selection.to) {
-                        this.baseValues[idx - this.selection.from][internalId] = elem.value;
+                    if (this.selection) {
+                        if (idx >= this.selection.from && idx <= this.selection.to) {
+                            if (this.baseValues[idx - this.selection.from]) {
+                                this.baseValues[idx - this.selection.from][internalId] = elem.value;
+                            }
+                        }
+                    } else {
+                        if (this.baseValues[idx]) {
+                            this.baseValues[idx][internalId] = elem.value;
+                        }
                     }
-                } else {
-                    this.baseValues[idx][internalId] = elem.value;
                 }
-            }
-        });
+            });
+        }
     }
 
     private createDataEntry(
@@ -360,6 +367,9 @@ export class D3TimeseriesGraphComponent
             return;
         }
 
+        this.height = this.calculateHeight();
+        this.width = this.calculateWidth();
+
         this.graph.selectAll('*').remove();
 
         this.bufferSum = 0;
@@ -367,7 +377,7 @@ export class D3TimeseriesGraphComponent
         this.yScaleBase = null;
 
         this.datasetMap.forEach((datasetEntry, id) => {
-            if (this.datasetOptions.has(id) && datasetEntry.data) {
+            if (this.datasetOptions.has(id) && datasetEntry.data && this.datasetOptions.get(id).visible) {
                 datasetEntry.drawOptions = {
                     uom: datasetEntry.dataset.uom,
                     id: datasetEntry.dataset.internalId,
@@ -385,6 +395,10 @@ export class D3TimeseriesGraphComponent
             }
         });
 
+        if (!this.yScaleBase) {
+            return;
+        }
+
         // draw right axis as border
         this.graph.append('svg:g')
             .attr('class', 'y axis')
@@ -394,7 +408,7 @@ export class D3TimeseriesGraphComponent
         this.drawXAxis(this.bufferSum);
 
         this.datasetMap.forEach((entry, id) => {
-            if (this.datasetOptions.has(id) && entry.data) {
+            if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data) {
                 this.drawGraph(entry.yScale, entry.drawOptions);
             }
         });
@@ -423,7 +437,7 @@ export class D3TimeseriesGraphComponent
             .style('stroke-width', '1px');
 
         this.datasetMap.forEach((entry, id) => {
-            if (this.datasetOptions.has(id) && entry.data) {
+            if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data) {
                 entry.focusLabelRect = this.focusG.append('svg:rect')
                     .style('fill', 'white')
                     .style('stroke', 'none')
@@ -546,17 +560,21 @@ export class D3TimeseriesGraphComponent
 
     private showLabelValues(item: DataEntry, onLeftSide: boolean) {
         this.datasetMap.forEach((entry, id) => {
-            entry.focusLabel.text(item[id] + (entry.dataset.uom ? entry.dataset.uom : ''));
-            const entryX = onLeftSide ?
-                item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
-            entry.focusLabel
-                .attr('x', entryX)
-                .attr('y', entry.yScale(item[id]) + this.getDimensions(entry.focusLabel.node()).h - 3);
-            entry.focusLabelRect
-                .attr('x', entryX)
-                .attr('y', entry.yScale(item[id]))
-                .attr('width', this.getDimensions(entry.focusLabel.node()).w)
-                .attr('height', this.getDimensions(entry.focusLabel.node()).h);
+            if (this.datasetOptions.get(id).visible) {
+                if (entry.focusLabel) {
+                    entry.focusLabel.text(item[id] + (entry.dataset.uom ? entry.dataset.uom : ''));
+                    const entryX = onLeftSide ?
+                        item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
+                    entry.focusLabel
+                        .attr('x', entryX)
+                        .attr('y', entry.yScale(item[id]) + this.getDimensions(entry.focusLabel.node()).h - 3);
+                    entry.focusLabelRect
+                        .attr('x', entryX)
+                        .attr('y', entry.yScale(item[id]))
+                        .attr('width', this.getDimensions(entry.focusLabel.node()).w)
+                        .attr('height', this.getDimensions(entry.focusLabel.node()).h);
+                }
+            }
         });
     }
 
