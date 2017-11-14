@@ -13,9 +13,4 @@ export class PermalinkToClipboardComponent {
   @Output()
   public onTriggered: EventEmitter<void> = new EventEmitter<void>();
 
-  public toClipboard() {
-    window.prompt('', this.url);
-    this.onTriggered.emit();
-  }
-
 }

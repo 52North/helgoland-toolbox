@@ -4,6 +4,7 @@ import { MatButtonModule, MatDialogModule, MatListModule, MatRadioModule, MatSid
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -22,6 +23,7 @@ import {
     Settings,
 } from '../../../src';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
+import { HelgolandPermalinkModule } from '../../../src/components/permalink/permalink.module';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { LocalHttpCache } from './../../../src/services/api-interface/caching/local-cache';
 import { AppComponent } from './app.component';
@@ -30,6 +32,7 @@ import { StyleModificationComponent } from './components/style-modification/styl
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
+import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
@@ -47,6 +50,7 @@ const appRoutes: Routes = [
   { path: 'graph-legend', component: GraphLegendComponent },
   { path: 'time', component: TimeComponent },
   { path: 'trajectory', component: TrajectoryComponent },
+  { path: 'permalink', component: PermalinkComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -85,6 +89,7 @@ export class SettingsService extends Settings {
         deps: [HttpClient]
       }
     }),
+    NgbModule.forRoot(),
     HelgolandServicesModule,
     HelgolandSelectorModule,
     HelgolandFlotGraphModule,
@@ -94,7 +99,8 @@ export class SettingsService extends Settings {
     HelgolandDatasetlistModule,
     HelgolandModificationModule,
     HelgolandTimeModule,
-    HelgolandD3GraphModule
+    HelgolandD3GraphModule,
+    HelgolandPermalinkModule
   ],
   entryComponents: [
     StyleModificationComponent
@@ -111,7 +117,8 @@ export class SettingsService extends Settings {
     StyleModificationComponent,
     GraphLegendComponent,
     TimeComponent,
-    TrajectoryComponent
+    TrajectoryComponent,
+    PermalinkComponent
   ],
   providers: [
     {

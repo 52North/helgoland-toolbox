@@ -21,7 +21,6 @@ export class PermalinkButtonComponent {
   ) { }
 
   public permalink() {
-    console.log('clicked');
     this.permalinkUrl = this.generatedUrlFunction();
     this.modalService.open(this.modal);
   }

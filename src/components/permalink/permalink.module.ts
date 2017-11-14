@@ -6,6 +6,8 @@ import { PermalinkInMailComponent } from './permalink-in-mail/permalink-in-mail.
 import { PermalinkNewWindowComponent } from './permalink-new-window/permalink-new-window.component';
 import { PermalinkToClipboardComponent } from './permalink-to-clipboard/permalink-to-clipboard.component';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 const COMPONENTS = [
   PermalinkButtonComponent,
   PermalinkInMailComponent,
@@ -15,7 +17,8 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [
-    NgbModalModule
+    NgbModalModule,
+    ClipboardModule
   ],
   declarations: [
     COMPONENTS
@@ -24,5 +27,4 @@ const COMPONENTS = [
     COMPONENTS
   ]
 })
-export class HelgolandPermalinkModule {
-}
+export class HelgolandPermalinkModule { }

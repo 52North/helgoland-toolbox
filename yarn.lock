@@ -6276,9 +6276,19 @@ nextafter@^1.0.0:
   dependencies:
     double-bits "^1.1.0"
 
+ngx-clipboard@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-8.1.1.tgz#574390a6dd48aa1a58350a14b1a0d764204495f5"
+  dependencies:
+    ngx-window-token "0.0.4"
+
 ngx-color-picker@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ngx-color-picker/-/ngx-color-picker-5.0.1.tgz#2d1fb70b205e29ededd6c4ba685b6e2aa0999c56"
+
+ngx-window-token@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/ngx-window-token/-/ngx-window-token-0.0.4.tgz#47e7aaa465411c4ab5f7ba17601bc593c956c736"
 
 no-case@^2.2.0:
   version "2.3.2"
