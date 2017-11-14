@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { HelgolandServicesModule } from './../../../services/services.module';
-import { D3TimeseriesGraphComponent } from './d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3TrajectoryGraphComponent } from './d3-trajectory-graph/d3-trajectory-graph.component';
 
 const COMPONENTS = [
-  D3TimeseriesGraphComponent
+  D3TrajectoryGraphComponent
 ];
 
 @NgModule({

@@ -9,7 +9,7 @@ export { PlotOptions } from './components/graph/flot/model/plotOptions';
 export { HelgolandPlotlyGraphModule } from './components/graph/plotly/plotly.module';
 export { HelgolandD3GraphModule } from './components/graph/d3/d3.module';
 export { D3AxisType, D3GraphOptions, D3SelectionRange }
-    from './components/graph/d3/d3-timeseries-graph/d3-timeseries-graph.component';
+    from './components/graph/d3/d3-trajectory-graph/d3-trajectory-graph.component';
 
 export { HelgolandMapSelectorModule } from './components/map/selector/selector.module';
 export { TrajectoryResult } from './components/map/selector/model/trajectory-result';

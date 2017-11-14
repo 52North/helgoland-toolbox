@@ -67,12 +67,12 @@ export class D3SelectionRange {
 }
 
 @Component({
-    selector: 'n52-d3-timeseries-graph',
-    templateUrl: './d3-timeseries-graph.component.html',
-    styleUrls: ['./d3-timeseries-graph.component.scss'],
+    selector: 'n52-d3-trajectory-graph',
+    templateUrl: './d3-trajectory-graph.component.html',
+    styleUrls: ['./d3-trajectory-graph.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class D3TimeseriesGraphComponent
+export class D3TrajectoryGraphComponent
     extends DatasetGraphComponent<DatasetOptions, D3GraphOptions>
     implements AfterViewInit, OnChanges {
 

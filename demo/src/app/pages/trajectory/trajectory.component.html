@@ -5,9 +5,9 @@
   </div>
   <div class="container">
     <div class="chart">
-      <n52-d3-timeseries-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options" [graphOptions]="graphOptions"
+      <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options" [graphOptions]="graphOptions"
         [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)" (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
-        (onHoverHighlight)="onChartHighlightChanged($event)"></n52-d3-timeseries-graph>
+        (onHoverHighlight)="onChartHighlightChanged($event)"></n52-d3-trajectory-graph>
     </div>
     <div class="legend" style="padding: 10px;">
       <div *ngFor="let id of datasetIds">
