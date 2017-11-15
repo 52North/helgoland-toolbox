@@ -13,14 +13,16 @@ import { ColorService } from './../../../../../src/services/color/color.service'
 export class GraphLegendComponent {
 
     public datasetIds = [
-        'http://www.fluggs.de/sos2/api/v1/__63',
+        'http://www.fluggs.de/sos2/api/v1/__26',
+        'http://www.fluggs.de/sos2/api/v1/__51',
         'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__quantity_106'
     ];
-    public timespan = new Timespan(1505990000000 - 20000000, 1505990000000);
+    public timespan;
     public diagramOptions: PlotOptions = {
         crosshair: {
             mode: 'x'
         },
+        showReferenceValues: true,
         grid: {
             autoHighlight: true,
             hoverable: true
@@ -81,6 +83,48 @@ export class GraphLegendComponent {
         }
     };
 
+    public overviewOptions: PlotOptions = {
+        series: {
+            // downsample: {
+            //   threshold: 0
+            // },
+            points: {
+                show: false,
+                radius: 1
+            },
+            lines: {
+                show: true,
+                fill: false
+            },
+            shadowSize: 1
+        },
+        selection: {
+            mode: 'overview',
+            color: '#718296',
+            shape: 'butt',
+            minSize: 30
+        },
+        grid: {
+            hoverable: false,
+            autoHighlight: false
+        },
+        xaxis: {
+            mode: 'time',
+            timezone: 'browser',
+            // monthNames: monthNamesTranslaterServ.getMonthNames()
+        },
+        yaxis: {
+            show: false
+        },
+        legend: {
+            show: false
+        },
+        touch: {
+            pan: '',
+            scale: ''
+        }
+    };
+
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
 
@@ -90,8 +134,14 @@ export class GraphLegendComponent {
         private color: ColorService
     ) {
         this.datasetIds.forEach((entry) => {
-            this.datasetOptions.set(entry, new DatasetOptions(entry, this.color.getColor()));
+            const option = new DatasetOptions(entry, this.color.getColor());
+            option.generalize = true;
+            this.datasetOptions.set(entry, option);
         });
+
+        const end = 1491200000000;
+        const diff = 4000000000;
+        this.timespan = new Timespan(end - diff, end);
     }
 
     public timespanChanged(timespan: Timespan) {

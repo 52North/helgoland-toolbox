@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 import { TimeInterval } from '../../../model/internal/timeInterval';
+import { ColorService } from '../../../services/color/color.service';
 import { ListEntryComponent } from '../list-entry.component';
-import { Dataset, FirstLastValue, IDataset, Timeseries } from './../../../model/api/dataset';
+import { Dataset, FirstLastValue, IDataset, ReferenceValue, Timeseries } from './../../../model/api/dataset';
 import { DatasetOptions } from './../../../model/internal/options';
 import { ApiInterface } from './../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
@@ -44,13 +45,15 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public informationVisible = false;
     public tempColor: string;
     public hasData = true;
+    public referenceValues: ReferenceValue[];
 
     protected dataset: IDataset;
 
     constructor(
         private api: ApiInterface,
         private timeSrvc: Time,
-        protected internalIdHandler: InternalIdHandler
+        protected internalIdHandler: InternalIdHandler,
+        private color: ColorService
     ) {
         super(internalIdHandler);
     }
@@ -76,6 +79,17 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public toggleVisibility() {
         this.datasetOptions.visible = !this.datasetOptions.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
+    }
+
+    public toggleReferenceValue(refValue: ReferenceValue) {
+        const idx = this.datasetOptions.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
+        if (idx > -1) {
+            refValue.visible = false;
+            this.datasetOptions.showReferenceValues.splice(idx, 1);
+        } else {
+            refValue.visible = true;
+            this.datasetOptions.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
+        }
     }
 
     public editDatasetOptions(options: DatasetOptions) {
@@ -117,6 +131,12 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         this.firstValue = this.dataset.firstValue;
         this.lastValue = this.dataset.lastValue;
         this.uom = this.dataset.uom;
+        if (this.dataset.referenceValues) {
+            this.dataset.referenceValues.forEach((e) => {
+                e.visible = false;
+                e.color = this.color.getColor();
+            });
+        }
         this.checkDataInTimespan();
     }
 

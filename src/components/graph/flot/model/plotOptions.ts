@@ -1,6 +1,7 @@
 import { AxesOptions } from './axesOptions';
 
 export interface PlotOptions extends jquery.flot.plotOptions {
+    showReferenceValues?: boolean;
     yaxes?: AxesOptions[];
     xaxis?: AxesOptions;
     yaxis?: AxesOptions;

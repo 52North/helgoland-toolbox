@@ -8,6 +8,7 @@ export interface IDataset extends Parameter {
     internalId: string;
     firstValue: FirstLastValue;
     lastValue: FirstLastValue;
+    referenceValues: ReferenceValue[];
     parameters: ParameterConstellation;
 }
 
@@ -25,6 +26,14 @@ export class FirstLastValue {
     public value: number;
 }
 
+export class ReferenceValue {
+    public referenceValueId: string;
+    public label: string;
+    public lastValue: FirstLastValue;
+    public color?: string;
+    public visible?: boolean;
+}
+
 export class DatasetParameterConstellation extends ParameterConstellation {
     public platform: PlatformParameter;
 }
@@ -35,6 +44,7 @@ export class Dataset extends Parameter implements IDataset {
     public internalId: string;
     public firstValue: FirstLastValue;
     public lastValue: FirstLastValue;
+    public referenceValues: ReferenceValue[];
     public datasetType: DatasetTypes;
     public platformType: PlatformTypes;
     public parameters: DatasetParameterConstellation;
@@ -47,6 +57,7 @@ export class Timeseries extends Parameter implements IDataset {
     public internalId: string;
     public firstValue: FirstLastValue;
     public lastValue: FirstLastValue;
+    public referenceValues: ReferenceValue[];
     public station: Station;
     public parameters: ParameterConstellation;
     public hasData = false;

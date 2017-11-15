@@ -5,11 +5,17 @@ export class DatasetOptions {
     public loading?: boolean;
     public separateYAxe?= false;
     public generalize?= false;
+    public showReferenceValues: ReferenceValueOption[] = [];
 
     constructor(internalId: string, color: string) {
         this.internalId = internalId;
         this.color = color;
     }
+}
+
+export class ReferenceValueOption {
+    public id: string;
+    public color: string;
 }
 
 export class TimedDatasetOptions extends DatasetOptions {

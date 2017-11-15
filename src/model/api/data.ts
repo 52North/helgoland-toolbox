@@ -3,6 +3,11 @@ export interface IDataEntry { }
 
 export interface Data<T extends IDataEntry> {
     values: T[];
+    referenceValues: ReferenceValues<T>;
+}
+
+export class ReferenceValues<T extends IDataEntry> {
+    [key: string]: T[];
 }
 
 export interface TimeValueEntry extends IDataEntry {

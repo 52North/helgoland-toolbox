@@ -45,8 +45,13 @@ n52-timeseries-entry {
                 color: red;
             }
         }
-        .additionalLegendEntry:hover {
-            cursor: pointer;
+        .additionalLegendEntry {
+            &:hover {
+                cursor: pointer;
+            }
+            &.selected {
+                font-weight: bolder;
+            }
         }
         .refEntry.selected {
             border-style: solid;

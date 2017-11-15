@@ -119,7 +119,10 @@ export class ApiInterface implements ApiV2 {
     ): Observable<Data<T>> {
         const url = this.createRequestUrl(apiUrl, 'timeseries', id) + '/getData';
         params.timespan = this.createRequestTimespan(timespan);
-        return this.requestApi<Data<T>>(url, params);
+        return this.requestApi<Data<T>>(url, params).map((res: any) => {
+            if (params.expanded) { res = res[id]; }
+            return res;
+        });
     }
 
     public getCategories(apiUrl: string, params?: ParameterFilter): Observable<Category[]> {

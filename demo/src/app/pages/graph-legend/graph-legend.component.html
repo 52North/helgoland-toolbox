@@ -1,11 +1,15 @@
 <div>
-  <div style="height: 500px; width: 500px;">
+  <div style="height: 500px;">
     <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
       (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"></n52-flot-timeseries-graph>
   </div>
+  <div style="height: 100px;">
+    <n52-flot-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
+      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"></n52-flot-overview-timeseries-graph>
+  </div>
   <div *ngFor="let id of datasetIds">
-    <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId" [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan"
-      (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)" (onSelectDate)="jumpToDate($event)"
+    <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId" [datasetOptions]="datasetOptions.get(id)"
+      [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)" (onSelectDate)="jumpToDate($event)"
       (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"></n52-timeseries-entry>
   </div>
 </div>

@@ -20,7 +20,7 @@ import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
 import { Dataset, IDataset, Timeseries } from './../../../../model/api/dataset';
-import { DatasetOptions } from './../../../../model/internal/options';
+import { DatasetOptions, ReferenceValueOption } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
@@ -244,9 +244,32 @@ export class FlotTimeseriesGraphComponent
                 } else {
                     this.preparedData.push(dataEntry);
                 }
+                this.addReferenceValueData(dataset.internalId, styles, data);
                 observer.next(true);
             });
         });
+    }
+
+    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<[number, number]>) {
+        this.preparedData = this.preparedData.filter((entry) => {
+            return !entry.internalId.startsWith('ref' + internalId);
+        });
+        if (this.graphOptions.showReferenceValues) {
+            styles.showReferenceValues.forEach((refValue) => {
+                const refDataEntry = {
+                    internalId: 'ref' + internalId + refValue.id,
+                    color: refValue.color,
+                    data: data.referenceValues[refValue.id],
+                    points: {
+                        fillColor: refValue.color
+                    },
+                    lines: {
+                        lineWidth: 1
+                    },
+                };
+                this.preparedData.push(refDataEntry);
+            });
+        }
     }
 
     private prepareAxisPos() {
@@ -387,6 +410,7 @@ export class FlotTimeseriesGraphComponent
                 this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                     {
                         format: 'flot',
+                        expanded: true,
                         generalize: datasetOptions.generalize
                     })
                     .subscribe((result) => {
@@ -396,6 +420,7 @@ export class FlotTimeseriesGraphComponent
             if (dataset instanceof Dataset) {
                 this.api.getData<[number, number]>(dataset.id, dataset.url, buffer, {
                     format: 'flot',
+                    expanded: true,
                     generalize: datasetOptions.generalize
                 }).subscribe((result) => {
                     this.prepareData(dataset, result).subscribe(() => this.plotGraph());
