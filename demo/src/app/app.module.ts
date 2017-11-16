@@ -20,6 +20,7 @@ import {
     HelgolandServicesModule,
     HelgolandTimeModule,
     HttpCache,
+    OnGoingHttpCache,
     Settings,
 } from '../../../src';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
@@ -132,7 +133,8 @@ export class SettingsService extends Settings {
       provide: HTTP_INTERCEPTORS,
       useClass: CachingInterceptor,
       multi: true
-    }
+    },
+    OnGoingHttpCache
   ],
   bootstrap: [AppComponent]
 })
