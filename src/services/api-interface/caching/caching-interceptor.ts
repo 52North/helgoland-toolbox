@@ -24,7 +24,7 @@ export abstract class OnGoingHttpCache {
 
     public abstract observe(req: HttpRequest<any>): Observable<HttpEvent<any>>;
 
-    public abstract clear(req: HttpRequest<any>);
+    public abstract clear(req: HttpRequest<any>): void;
 
 }
 

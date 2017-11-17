@@ -59,6 +59,5 @@ export class FlotOverviewTimeseriesGraphComponent implements OnInit, OnChanges {
             from: timespan.from,
             to: timespan.to
         };
-        this.datasetOptions.forEach((e) => e.generalize = true);
     }
 }

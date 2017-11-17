@@ -20,14 +20,14 @@ import {
     HelgolandServicesModule,
     HelgolandTimeModule,
     HttpCache,
+    LocalOngoingHttpCache,
+    OnGoingHttpCache,
     Settings,
 } from '../../../src';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
 import { HelgolandPermalinkModule } from '../../../src/components/permalink/permalink.module';
-import { OnGoingHttpCache } from '../../../src/services/api-interface';
 import { ApiInterface } from '../../../src/services/api-interface/api-interface';
 import { LocalHttpCache } from '../../../src/services/api-interface/caching/local-http-cache';
-import { LocalOngoingHttpCache } from '../../../src/services/api-interface/caching/local-ongoing-http-cache';
 import { GetDataApiInterface } from '../../../src/services/api-interface/getData-api-interface.service';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { AppComponent } from './app.component';

@@ -411,7 +411,7 @@ export class FlotTimeseriesGraphComponent
                     {
                         format: 'flot',
                         expanded: this.plotOptions.showReferenceValues === true,
-                        generalize: datasetOptions.generalize
+                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                     })
                     .subscribe((result) => {
                         this.prepareData(dataset, result).subscribe(() => this.plotGraph());
@@ -421,7 +421,7 @@ export class FlotTimeseriesGraphComponent
                 this.api.getData<[number, number]>(dataset.id, dataset.url, buffer, {
                     format: 'flot',
                     expanded: this.plotOptions.showReferenceValues === true,
-                    generalize: datasetOptions.generalize
+                    generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 }).subscribe((result) => {
                     this.prepareData(dataset, result).subscribe(() => this.plotGraph());
                 });

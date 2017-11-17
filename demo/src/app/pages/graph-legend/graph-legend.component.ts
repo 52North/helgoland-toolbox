@@ -122,7 +122,8 @@ export class GraphLegendComponent {
         touch: {
             pan: '',
             scale: ''
-        }
+        },
+        generalizeAllways: true
     };
 
     public datasetOptions: Map<string, DatasetOptions> = new Map();
