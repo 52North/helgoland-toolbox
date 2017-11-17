@@ -4,7 +4,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnChanges } from '@angular
 import * as L from 'leaflet';
 
 import { Station } from './../../../model/api/station';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { MapCache } from './../../../services/map/map.service';
 import { MapSelectorComponent } from './map-selector.component';
 

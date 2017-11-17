@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Timeseries } from './../../../model/api/dataset';
 import { Station } from './../../../model/api/station';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 
 export class ExtendedTimeseries extends Timeseries {
     public selected: boolean;

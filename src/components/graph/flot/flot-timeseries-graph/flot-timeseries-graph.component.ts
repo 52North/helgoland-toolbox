@@ -22,7 +22,7 @@ import { Data } from './../../../../model/api/data';
 import { Dataset, IDataset, Timeseries } from './../../../../model/api/dataset';
 import { DatasetOptions, ReferenceValueOption } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
-import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../../services/time/time.service';
 import { DataSeries } from './../model/dataSeries';
@@ -410,7 +410,7 @@ export class FlotTimeseriesGraphComponent
                 this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                     {
                         format: 'flot',
-                        expanded: true,
+                        expanded: this.plotOptions.showReferenceValues === true,
                         generalize: datasetOptions.generalize
                     })
                     .subscribe((result) => {
@@ -420,7 +420,7 @@ export class FlotTimeseriesGraphComponent
             if (dataset instanceof Dataset) {
                 this.api.getData<[number, number]>(dataset.id, dataset.url, buffer, {
                     format: 'flot',
-                    expanded: true,
+                    expanded: this.plotOptions.showReferenceValues === true,
                     generalize: datasetOptions.generalize
                 }).subscribe((result) => {
                     this.prepareData(dataset, result).subscribe(() => this.plotGraph());

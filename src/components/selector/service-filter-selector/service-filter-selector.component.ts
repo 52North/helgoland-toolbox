@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageChangNotifier } from '../../locale/language-changer';
 import { Parameter } from './../../../model/api/parameter';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.

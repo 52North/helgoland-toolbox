@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/map';
 
-import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
@@ -19,36 +19,19 @@ import { Procedure } from './../../model/api/procedure';
 import { Service } from './../../model/api/service';
 import { Station } from './../../model/api/station';
 import { Timespan } from './../../model/internal/timeInterval';
-import { ApiV2 } from './interfaces/api-v2.interface';
+import { ApiInterface } from './api-interface';
 import { InternalIdHandler } from './internal-id-handler.service';
 
-export class UriParameterCoder implements HttpParameterCodec {
-
-    public encodeKey(key: string): string {
-        return encodeURIComponent(key);
-    }
-
-    public encodeValue(value: string): string {
-        return encodeURIComponent(value);
-    }
-
-    public decodeKey(key: string): string {
-        return key;
-    }
-
-    public decodeValue(value: string): string {
-        return value;
-    }
-}
-
 @Injectable()
-export class ApiInterface implements ApiV2 {
+export class SimpleApiInterface extends ApiInterface {
 
     constructor(
-        private http: HttpClient,
-        private internalDatasetId: InternalIdHandler,
-        private translate: TranslateService
-    ) { }
+        protected http: HttpClient,
+        protected internalDatasetId: InternalIdHandler,
+        protected translate: TranslateService
+    ) {
+        super(http, translate);
+    }
 
     public getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
         const url = this.createRequestUrl(apiUrl, 'services');
@@ -221,24 +204,8 @@ export class ApiInterface implements ApiV2 {
     //     throw new Error('Not implemented');
     // }
 
-    private createRequestTimespan(timespan: Timespan): string {
+    protected createRequestTimespan(timespan: Timespan): string {
         return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
-    }
-
-    private requestApi<T>(url: string, params: ParameterFilter = {}): Observable<T> {
-        return this.http.get<T>(url, { params: this.prepareParams(params) });
-    }
-
-    private prepareParams(params: ParameterFilter): HttpParams {
-        if (this.translate && this.translate.currentLang) {
-            params.locale = this.translate.currentLang;
-        }
-        let httpParams = new HttpParams({
-            encoder: new UriParameterCoder()
-        });
-        Object.getOwnPropertyNames(params)
-            .forEach((key) => httpParams = httpParams.set(key, params[key]));
-        return httpParams;
     }
 
     private requestApiTexted(url: string, params: ParameterFilter = {}): Observable<string> {
@@ -246,13 +213,6 @@ export class ApiInterface implements ApiV2 {
             params: this.prepareParams(params),
             responseType: 'text'
         });
-    }
-
-    private createRequestUrl(apiUrl: string, endpoint: string, id?: string) {
-        // TODO Check whether apiUrl ends with slash
-        let requestUrl = apiUrl + endpoint;
-        if (id) { requestUrl += '/' + id; }
-        return requestUrl;
     }
 
     private prepareDataset(datasetObj: Dataset, apiUrl: string) {

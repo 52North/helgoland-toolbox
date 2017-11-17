@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ListEntryComponent } from '../list-entry.component';
 import { Dataset } from './../../../model/api/dataset';
 import { DatasetOptions } from './../../../model/internal/options';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 
 @Component({

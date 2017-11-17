@@ -140,7 +140,7 @@ export class GraphLegendComponent {
         });
 
         const end = 1491200000000;
-        const diff = 4000000000;
+        const diff = 23000000000;
         this.timespan = new Timespan(end - diff, end);
     }
 

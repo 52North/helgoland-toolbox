@@ -55,7 +55,7 @@ export { IdCache } from './model/internal/id-cache';
 
 export { HelgolandServicesModule } from './services/services.module';
 
-export { ApiInterface } from './services/api-interface/api-interface.service';
+export { ApiInterface } from './services/api-interface/api-interface';
 export { CachingInterceptor, HttpCache, OnGoingHttpCache } from './services/api-interface/caching/caching-interceptor';
 export { ColorService } from './services/color/color.service';
 export { DatasetService } from './services/dataset/dataset.service';

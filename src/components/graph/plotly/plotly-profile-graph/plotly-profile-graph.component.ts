@@ -10,7 +10,7 @@ import { ProfileDataEntry } from './../../../../model/api/data';
 import { GraphHighlight } from './../../../../model/internal/graph/graph-highlight';
 import { TimedDatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
-import { ApiInterface } from './../../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../../services/time/time.service';
 

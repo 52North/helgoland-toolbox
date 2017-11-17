@@ -6,7 +6,7 @@ import { Dataset } from './../../../model/api/dataset';
 import { PlatformTypes } from './../../../model/api/enums';
 import { TimedDatasetOptions } from './../../../model/internal/options';
 import { Timespan } from './../../../model/internal/timeInterval';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 
 @Component({

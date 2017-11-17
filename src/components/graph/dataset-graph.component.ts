@@ -13,7 +13,7 @@ import { GraphMessage } from '../../model/internal/graph/graph-message';
 import { ResizableComponent } from '../../model/internal/ResizableComponent';
 import { DatasetOptions } from './../../model/internal/options';
 import { TimeInterval, Timespan } from './../../model/internal/timeInterval';
-import { ApiInterface } from './../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../services/time/time.service';
 

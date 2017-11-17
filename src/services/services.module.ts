@@ -1,7 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
-import { ApiInterface } from './api-interface/api-interface.service';
 import { ApiMapping } from './api-interface/api-mapping.service';
 import { InternalIdHandler } from './api-interface/internal-id-handler.service';
 import { ColorService } from './color/color.service';
@@ -14,7 +13,6 @@ import { Time } from './time/time.service';
         HttpClientModule
     ],
     providers: [
-        ApiInterface,
         ApiMapping,
         InternalIdHandler,
         LocalStorage,

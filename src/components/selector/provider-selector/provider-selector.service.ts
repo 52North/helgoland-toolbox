@@ -4,7 +4,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { Service } from './../../../model/api/service';
 import { BlacklistedService } from './../../../model/config/config';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 
 @Injectable()
 export class ProviderSelectorService {

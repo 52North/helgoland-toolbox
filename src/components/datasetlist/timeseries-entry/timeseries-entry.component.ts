@@ -5,7 +5,7 @@ import { ColorService } from '../../../services/color/color.service';
 import { ListEntryComponent } from '../list-entry.component';
 import { Dataset, FirstLastValue, IDataset, ReferenceValue, Timeseries } from './../../../model/api/dataset';
 import { DatasetOptions } from './../../../model/internal/options';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../services/time/time.service';
 

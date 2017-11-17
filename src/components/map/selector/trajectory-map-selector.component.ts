@@ -15,7 +15,7 @@ import * as L from 'leaflet';
 import { LocatedProfileDataEntry } from './../../../model/api/data';
 import { IDataset } from './../../../model/api/dataset';
 import { Timespan } from './../../../model/internal/timeInterval';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { MapCache } from './../../../services/map/map.service';
 import { MapSelectorComponent } from './map-selector.component';
 import { TrajectoryResult } from './model/trajectory-result';

@@ -6,7 +6,7 @@ import { Parameter } from './../../../model/api/parameter';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { Filter } from './../../../model/internal/filter';
 import { FilteredProvider } from './../../../model/internal/provider';
-import { ApiInterface } from './../../../services/api-interface/api-interface.service';
+import { ApiInterface } from './../../../services/api-interface/api-interface';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
