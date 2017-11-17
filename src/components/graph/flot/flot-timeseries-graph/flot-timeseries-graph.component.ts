@@ -57,6 +57,8 @@ export class FlotTimeseriesGraphComponent
 
     private lastHightlight: string;
 
+    private loadingCounter: number = 0;
+
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected api: ApiInterface,
@@ -403,6 +405,8 @@ export class FlotTimeseriesGraphComponent
     }
 
     private loadData(dataset: IDataset) {
+        if (this.loadingCounter === 0) { this.onLoading.emit(true); }
+        this.loadingCounter++;
         if (this.timespan && this.plotOptions) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const datasetOptions = this.datasetOptions.get(dataset.internalId);
@@ -412,21 +416,36 @@ export class FlotTimeseriesGraphComponent
                         format: 'flot',
                         expanded: this.plotOptions.showReferenceValues === true,
                         generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                    })
-                    .subscribe((result) => {
-                        this.prepareData(dataset, result).subscribe(() => this.plotGraph());
-                    });
+                    }
+                ).subscribe(
+                    (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
+                    (error) => this.onError(error),
+                    () => this.onCompleteLoadingData(dataset)
+                    );
             }
             if (dataset instanceof Dataset) {
-                this.api.getData<[number, number]>(dataset.id, dataset.url, buffer, {
-                    format: 'flot',
-                    expanded: this.plotOptions.showReferenceValues === true,
-                    generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                }).subscribe((result) => {
-                    this.prepareData(dataset, result).subscribe(() => this.plotGraph());
-                });
+                this.api.getData<[number, number]>(dataset.id, dataset.url, buffer,
+                    {
+                        format: 'flot',
+                        expanded: this.plotOptions.showReferenceValues === true,
+                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                    }
+                ).subscribe(
+                    (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
+                    (error) => this.onError(error),
+                    () => this.onCompleteLoadingData(dataset)
+                    );
             }
         }
+    }
+
+    private onError(error: any) {
+        console.error(error);
+    }
+
+    private onCompleteLoadingData(dataset: IDataset) {
+        this.loadingCounter--;
+        if (this.loadingCounter === 0) { this.onLoading.emit(false); }
     }
 
     private createTooltip() {

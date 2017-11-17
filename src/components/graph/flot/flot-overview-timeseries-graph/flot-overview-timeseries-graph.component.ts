@@ -29,6 +29,9 @@ export class FlotOverviewTimeseriesGraphComponent implements OnInit, OnChanges {
     @Output()
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
+    @Output()
+    public onLoading: EventEmitter<boolean> = new EventEmitter();
+
     public overviewTimespan: Timespan;
     private init = false;
 

@@ -47,6 +47,9 @@ export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOp
     @Output()
     public onMessageThrown: EventEmitter<GraphMessage> = new EventEmitter();
 
+    @Output()
+    public onLoading: EventEmitter<boolean> = new EventEmitter();
+
     protected timespan: Timespan;
 
     private datasetIdsDiffer: IterableDiffer<string>;

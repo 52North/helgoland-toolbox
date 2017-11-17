@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 import { PlotOptions } from '../../../../../src/components/graph/flot/model';
 import { DatasetOptions } from './../../../../../src/model/internal/options';
@@ -131,8 +131,11 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
+    public overviewLoading: boolean;
+
     constructor(
-        private color: ColorService
+        private color: ColorService,
+        private cdr: ChangeDetectorRef
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
@@ -159,5 +162,10 @@ export class GraphLegendComponent {
 
     public highlight(id: string) {
         this.highlightId = id;
+    }
+
+    public onOverviewLoading(loading: boolean) {
+        this.overviewLoading = loading;
+        this.cdr.detectChanges();
     }
 }

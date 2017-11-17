@@ -1,11 +1,17 @@
 <div>
   <div style="height: 500px;">
     <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
-      (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"></n52-flot-timeseries-graph>
+      (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)" (onLoading)="graphLoading = $event"></n52-flot-timeseries-graph>
+  </div>
+  <div>
+    Loading Graph: {{graphLoading}}
   </div>
   <div style="height: 100px;">
     <n52-flot-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
-      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"></n52-flot-overview-timeseries-graph>
+      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onLoading)="onOverviewLoading($event)"></n52-flot-overview-timeseries-graph>
+  </div>
+  <div>
+    Loading Overview: {{overviewLoading}}
   </div>
   <div>
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
