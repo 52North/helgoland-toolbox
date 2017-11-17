@@ -16,27 +16,16 @@ export abstract class HttpCache {
     public abstract put(req: HttpRequest<any>, resp: HttpResponse<any>): void;
 }
 
-export class OnGoingHttpCache {
+export abstract class OnGoingHttpCache {
 
-    private cache: { [key: string]: { request: Observable<HttpEvent<any>> } } = {};
+    public abstract has(req: HttpRequest<any>): boolean;
 
-    public has(req: HttpRequest<any>): boolean {
-        return this.cache[req.urlWithParams] !== undefined;
-    }
+    public abstract set(req: HttpRequest<any>, request: Observable<HttpEvent<any>>): void;
 
-    public set(req: HttpRequest<any>, request: Observable<HttpEvent<any>>): void {
-        this.cache[req.urlWithParams] = {
-            request
-        };
-    }
+    public abstract observe(req: HttpRequest<any>): Observable<HttpEvent<any>>;
 
-    public observe(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-        return this.cache[req.urlWithParams].request;
-    }
+    public abstract clear(req: HttpRequest<any>);
 
-    public clear(req: HttpRequest<any>) {
-        delete this.cache[req.urlWithParams];
-    }
 }
 
 @Injectable()

@@ -60,7 +60,7 @@ export { CachingInterceptor, HttpCache, OnGoingHttpCache } from './services/api-
 export { ColorService } from './services/color/color.service';
 export { DatasetService } from './services/dataset/dataset.service';
 export { InternalIdHandler } from './services/api-interface/internal-id-handler.service';
-export { LocalHttpCache } from './services/api-interface/caching/local-cache';
+export { LocalHttpCache } from './services/api-interface/caching/local-http-cache';
 export { LocalStorage } from './services/local-storage/local-storage.service';
 export { Settings } from './services/settings/settings';
 export { Time } from './services/time/time.service';

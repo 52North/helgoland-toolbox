@@ -19,8 +19,3 @@ export class LocalHttpCache extends HttpCache {
         this.cache[req.urlWithParams] = resp;
     }
 }
-
-export let localHttpCacheProvider = {
-    provide: HttpCache,
-    useClass: LocalHttpCache
-};
