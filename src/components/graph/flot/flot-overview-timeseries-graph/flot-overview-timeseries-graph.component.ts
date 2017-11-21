@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 
 import { DatasetOptions } from './../../../../model/internal/options';
 import { TimeInterval, Timespan } from './../../../../model/internal/timeInterval';
@@ -9,7 +18,7 @@ import { Time } from './../../../../services/time/time.service';
     templateUrl: './flot-overview-timeseries-graph.component.html',
     styleUrls: ['./flot-overview-timeseries-graph.component.scss']
 })
-export class FlotOverviewTimeseriesGraphComponent implements OnInit, OnChanges {
+export class FlotOverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit {
 
     @Input()
     public datasetIds: string[];
@@ -36,13 +45,15 @@ export class FlotOverviewTimeseriesGraphComponent implements OnInit, OnChanges {
     private init = false;
 
     constructor(
-        private timeSrvc: Time
+        private timeSrvc: Time,
+        private cd: ChangeDetectorRef
     ) { }
 
-    public ngOnInit() {
+    public ngAfterViewInit(): void {
         this.rangefactor = this.rangefactor || 1;
         this.calculateOverviewRange();
         this.init = true;
+        this.cd.detectChanges();
     }
 
     public ngOnChanges(changes: SimpleChanges) {

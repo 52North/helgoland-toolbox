@@ -8,3 +8,9 @@
   overflow: auto;
   height: 100%;
 }
+
+mat-nav-list {
+  a.active {
+    background-color: red;
+  }
+}

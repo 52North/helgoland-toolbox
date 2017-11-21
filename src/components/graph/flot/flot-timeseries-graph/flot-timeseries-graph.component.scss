@@ -19,9 +19,9 @@ n52-flot-timeseries-graph {
         -webkit-transform: rotate(-90deg);
         z-index: -9999;
         padding-bottom: 8px;
-        &.selected {
-            font-weight: bold;
-        }
+        // &.selected {
+        //     font-weight: bold;
+        // }
     }
     .labelColorMarker {
         font-size: 150%;

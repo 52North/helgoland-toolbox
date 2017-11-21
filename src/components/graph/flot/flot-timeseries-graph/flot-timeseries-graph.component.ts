@@ -167,7 +167,7 @@ export class FlotTimeseriesGraphComponent
     }
 
     private plotGraph() {
-        if (this.preparedData && this.preparedData.length !== 0 && this.plotOptions) {
+        if (this.preparedData && this.plotarea && this.preparedData.length !== 0 && this.plotOptions) {
             this.prepareAxisPos();
             this.plotOptions.xaxis.min = this.timespan.from;
             this.plotOptions.xaxis.max = this.timespan.to;
@@ -176,7 +176,9 @@ export class FlotTimeseriesGraphComponent
             this.createYAxis(plotObj);
             this.setSelection(plotObj, this.plotOptions);
         } else {
-            $(this.plotarea).empty();
+            if (this.plotarea) {
+                $(this.plotarea).empty();
+            }
         }
     }
 
@@ -407,9 +409,9 @@ export class FlotTimeseriesGraphComponent
     }
 
     private loadData(dataset: IDataset) {
-        if (this.loadingCounter === 0) { this.onLoading.emit(true); }
-        this.loadingCounter++;
         if (this.timespan && this.plotOptions) {
+            if (this.loadingCounter === 0) { this.onLoading.emit(true); }
+            this.loadingCounter++;
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const datasetOptions = this.datasetOptions.get(dataset.internalId);
             if (dataset instanceof Timeseries) {
@@ -420,7 +422,9 @@ export class FlotTimeseriesGraphComponent
                         generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                     }
                 ).subscribe(
-                    (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
+                    (result) => this.prepareData(dataset, result).subscribe(() => {
+                        this.plotGraph();
+                    }),
                     (error) => this.onError(error),
                     () => this.onCompleteLoadingData(dataset)
                     );
