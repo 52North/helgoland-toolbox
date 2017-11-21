@@ -43,6 +43,7 @@ import { ProviderSelectorComponent } from './pages/provider-selector/provider-se
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
 
 const appRoutes: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
   { path: 'time', component: TimeComponent },
   { path: 'trajectory', component: TrajectoryComponent },
   { path: 'permalink', component: PermalinkComponent },
+  { path: 'favorite', component: FavoriteComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -122,7 +124,8 @@ export class SettingsService extends Settings {
     GraphLegendComponent,
     TimeComponent,
     TrajectoryComponent,
-    PermalinkComponent
+    PermalinkComponent,
+    FavoriteComponent
   ],
   providers: [
     {

@@ -6282,9 +6282,9 @@ ngx-clipboard@^8.1.1:
   dependencies:
     ngx-window-token "0.0.4"
 
-ngx-color-picker@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-color-picker/-/ngx-color-picker-5.0.1.tgz#2d1fb70b205e29ededd6c4ba685b6e2aa0999c56"
+ngx-color-picker@^4.5.0:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/ngx-color-picker/-/ngx-color-picker-4.5.1.tgz#5a9907b274c9cea770b7c5f71cf73e08a5382e66"
 
 ngx-window-token@0.0.4:
   version "0.0.4"

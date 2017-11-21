@@ -29,6 +29,8 @@ export { HelgolandTimeModule } from './components/time/time.module';
 export { Language } from './components/locale/model/language';
 export { LocalSelectorComponent } from './components/locale/locale-selector';
 
+export * from './components/favorite';
+
 export { Dataset, IDataset } from './model/api/dataset';
 export { PlatformTypes, ValueTypes } from './model/api/enums';
 export { DatasetOptions, TimedDatasetOptions } from './model/internal/options';

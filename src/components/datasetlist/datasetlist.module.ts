@@ -9,6 +9,7 @@ import { HelgolandModificationModule } from './../modification/modification.modu
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
 import { TimeseriesEntryComponent } from './timeseries-entry/timeseries-entry.component';
 import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
+import { HelgolandFavoriteModule } from '../favorite/favorite.module';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
@@ -23,7 +24,8 @@ const COMPONENTS = [
     HelgolandModificationModule,
     HelgolandDepictionModule,
     HelgolandMapViewModule,
-    HelgolandServicesModule
+    HelgolandServicesModule,
+    HelgolandFavoriteModule
   ],
   declarations: [
     COMPONENTS

@@ -352,17 +352,19 @@ export class FlotTimeseriesGraphComponent
                             }
                             this.plotGraph();
                         });
-                    const yaxisLabel = $('<div class="axisLabel yaxisLabel" style=left:'
-                        + box.left + 'px;></div>').text(axis.options.label)
-                        .appendTo(plot.getPlaceholder())
-                        .data('axis.n', axis.n);
-                    if (axis.options.tsColors) {
-                        $.each(axis.options.tsColors, (idx: number, color: string) => {
-                            $('<span>').html('&nbsp;&#x25CF;').css('color', color)
-                                .addClass('labelColorMarker').appendTo(yaxisLabel);
-                        });
+                    if (!axis.options.hideLabel) {
+                        const yaxisLabel = $('<div class="axisLabel yaxisLabel" style=left:'
+                            + box.left + 'px;></div>').text(axis.options.label)
+                            .appendTo(plot.getPlaceholder())
+                            .data('axis.n', axis.n);
+                        if (axis.options.tsColors) {
+                            $.each(axis.options.tsColors, (idx: number, color: string) => {
+                                $('<span>').html('&nbsp;&#x25CF;').css('color', color)
+                                    .addClass('labelColorMarker').appendTo(yaxisLabel);
+                            });
+                        }
+                        yaxisLabel.css('margin-left', -4 + (yaxisLabel.height() - yaxisLabel.width()) / 2);
                     }
-                    yaxisLabel.css('margin-left', -4 + (yaxisLabel.height() - yaxisLabel.width()) / 2);
                 }
             });
 

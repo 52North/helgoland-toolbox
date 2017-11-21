@@ -47,7 +47,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public hasData = true;
     public referenceValues: ReferenceValue[];
 
-    protected dataset: IDataset;
+    public dataset: IDataset;
 
     constructor(
         private api: ApiInterface,

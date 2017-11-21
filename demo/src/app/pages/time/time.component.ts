@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { Timespan } from '../../../../../src/index';
+import { ApiInterface } from '../../../../../src/services/api-interface/index';
+
 @Component({
     selector: 'time',
     templateUrl: './time.component.html',
@@ -20,5 +23,26 @@ export class TimeComponent {
         2400000000000,
         2500000000000
     ];
+
+    constructor(
+        private api: ApiInterface
+    ) {
+        const timespan = new Timespan(1463600000000, 1495800000000);
+        this.api.getTsData<[number, number]>('26', 'http://www.fluggs.de/sos2/api/v1/', timespan, {
+            format: 'flot',
+            expanded: true,
+            generalize: true
+        }).subscribe((res) => console.log(res));
+        this.api.getTsData<[number, number]>('26', 'http://www.fluggs.de/sos2/api/v1/', timespan, {
+            format: 'flot',
+            expanded: true,
+            generalize: true
+        }).subscribe((res) => console.log(res));
+        this.api.getTsData<[number, number]>('26', 'http://www.fluggs.de/sos2/api/v1/', timespan, {
+            format: 'flot',
+            expanded: true,
+            generalize: true
+        }).subscribe((res) => console.log(res));
+    }
 
 }

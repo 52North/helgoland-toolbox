@@ -1,0 +1,20 @@
+<div *ngFor="let favorite of favorites">
+  <div (click)="favorite.show = !favorite.show">
+    <span>ID: </span>
+    <span>{{favorite.id}}</span>
+  </div>
+  <div (click)="changeLabelName(favorite); $event.stopPropagation();">
+    <span>Label: </span>
+    <span>{{favorite.label}}</span>
+  </div>
+  <hr>
+  <div style="height: 300px;">
+    <n52-flot-timeseries-graph [datasetIds]="[favorite.favorite.internalId]" [datasetOptions]="favorite.option" [graphOptions]="diagramOptions"
+      [timeInterval]="favorite.timespan" (onTimespanChanged)="timeChanged($event)"
+      (onLoading)="favorite.loading = $event"></n52-flot-timeseries-graph>
+  </div>
+  <pre *ngIf="favorite.show">
+    {{favorite | json}}
+  </pre>
+  <hr>
+</div>
