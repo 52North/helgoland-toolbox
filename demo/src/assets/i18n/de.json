@@ -1,4 +1,10 @@
 {
+	"favorite": {
+		"notifier": {
+			"add-favorite": "Füge Favoriten hinzu",
+			"remove-favorite": "Entferne Favoriten"
+		}
+	},
 	"listSelection": {
 		"loading": ""
 	},

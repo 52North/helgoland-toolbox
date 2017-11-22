@@ -6,6 +6,7 @@ import { InternalIdHandler } from './api-interface/internal-id-handler.service';
 import { ColorService } from './color/color.service';
 import { LocalStorage } from './local-storage/local-storage.service';
 import { MapCache } from './map/map.service';
+import { NotifierService } from './notifier/notifier.service';
 import { Time } from './time/time.service';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { Time } from './time/time.service';
         LocalStorage,
         Time,
         MapCache,
-        ColorService
+        ColorService,
+        NotifierService
     ],
     declarations: [
     ],

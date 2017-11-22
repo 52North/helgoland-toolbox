@@ -67,3 +67,4 @@ export { LocalHttpCache } from './services/api-interface/caching/local-http-cach
 export { LocalStorage } from './services/local-storage/local-storage.service';
 export { Settings } from './services/settings/settings';
 export { Time } from './services/time/time.service';
+export { NotifierService } from './services/notifier/notifier.service';

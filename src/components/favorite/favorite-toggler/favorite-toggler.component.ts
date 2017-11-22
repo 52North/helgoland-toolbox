@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NotifierService } from '../../../services/notifier/notifier.service';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output } from '@angular/core';
 
 import { IDataset } from '../../..';
 import { FavoriteService } from '../service/favorite.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'n52-favorite-toggler',
@@ -15,7 +17,9 @@ export class FavoriteTogglerComponent implements OnChanges {
     public isFavorite: boolean;
 
     constructor(
-        private favSrvc: FavoriteService
+        private favSrvc: FavoriteService,
+        private notifier: NotifierService,
+        private translate: TranslateService
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -28,9 +32,15 @@ export class FavoriteTogglerComponent implements OnChanges {
         if (this.isFavorite) {
             this.isFavorite = false;
             this.favSrvc.removeFavorite(this.dataset.internalId);
+            this.translate.get('favorite.notifier.remove-favorite').subscribe((translation) => {
+                this.notifier.notify(translation + ': ' + this.dataset.label);
+            });
         } else {
             this.isFavorite = true;
             this.favSrvc.addFavorite(this.dataset);
+            this.translate.get('favorite.notifier.add-favorite').subscribe((translation) => {
+                this.notifier.notify(translation + ': ' + this.dataset.label);
+            });
         }
     }
 }
