@@ -4,6 +4,7 @@ export class DatasetOptions {
     public visible = true;
     public loading?: boolean;
     public separateYAxe?= false;
+    public zeroBasedYAxe?= false;
     public generalize?= false;
     public showReferenceValues: ReferenceValueOption[] = [];
 

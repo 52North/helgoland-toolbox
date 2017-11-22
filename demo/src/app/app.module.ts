@@ -1,6 +1,14 @@
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatListModule, MatRadioModule, MatSidenavModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import {
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatListModule,
+    MatRadioModule,
+    MatSidenavModule,
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,6 +41,7 @@ import { CachingInterceptor } from './../../../src/services/api-interface/cachin
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
@@ -43,7 +52,6 @@ import { ProviderSelectorComponent } from './pages/provider-selector/provider-se
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
-import { FavoriteComponent } from './pages/favorite/favorite.component';
 
 const appRoutes: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
@@ -83,9 +91,11 @@ export class SettingsService extends Settings {
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatSidenavModule,
     MatListModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatButtonModule,
     TranslateModule.forRoot({

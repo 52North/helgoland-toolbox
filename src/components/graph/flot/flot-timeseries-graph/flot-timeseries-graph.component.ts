@@ -219,13 +219,14 @@ export class FlotTimeseriesGraphComponent
                         axe.internalIds.push(dataset.internalId);
                         axe.tsColors.push(styles.color);
                     }
+                    axe.min = styles.zeroBasedYAxe ? 0 : null;
                 } else {
                     this.plotOptions.yaxes.push({
                         uom: dataset.uom,
                         label,
                         tsColors: [styles.color],
                         internalIds: [dataset.internalId],
-                        min: null
+                        min: styles.zeroBasedYAxe ? 0 : null
                     });
                     axePos = this.plotOptions.yaxes.length;
                 }

@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { PlotOptions } from '../../../../../src/components/graph/flot/model';
+import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 import { DatasetOptions } from './../../../../../src/model/internal/options';
 import { Timespan } from './../../../../../src/model/internal/timeInterval';
 import { ColorService } from './../../../../../src/services/color/color.service';
@@ -135,7 +137,8 @@ export class GraphLegendComponent {
 
     constructor(
         private color: ColorService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private dialog: MatDialog
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
@@ -144,7 +147,7 @@ export class GraphLegendComponent {
         });
 
         const end = 1491200000000;
-        const diff = 23000000000;
+        const diff = 2000000000;
         this.timespan = new Timespan(end - diff, end);
     }
 
@@ -168,4 +171,11 @@ export class GraphLegendComponent {
         this.overviewLoading = loading;
         this.cdr.detectChanges();
     }
+
+    public editOption(option: DatasetOptions) {
+        this.dialog.open(StyleModificationComponent, {
+            data: option
+        });
+    }
+
 }
