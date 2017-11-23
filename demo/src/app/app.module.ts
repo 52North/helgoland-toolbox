@@ -32,6 +32,7 @@ import {
     OnGoingHttpCache,
     Settings,
 } from '../../../src';
+import { JsonFavoriteExporterService } from '../../../src/components/favorite/service/json-favorite-exporter.service';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
 import { HelgolandPermalinkModule } from '../../../src/components/permalink/permalink.module';
 import { ApiInterface } from '../../../src/services/api-interface/api-interface';
@@ -138,6 +139,7 @@ export class SettingsService extends Settings {
     FavoriteComponent
   ],
   providers: [
+    JsonFavoriteExporterService,
     {
       provide: Settings,
       useClass: SettingsService

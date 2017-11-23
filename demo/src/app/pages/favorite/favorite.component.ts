@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { FavoriteService, SingleFavorite } from '../../../../../src';
+import { JsonFavoriteExporterService } from '../../../../../src/components/favorite/service/json-favorite-exporter.service';
 import { PlotOptions } from '../../../../../src/components/graph/flot/model';
 import { DatasetOptions } from './../../../../../src/model/internal/options';
 import { Timespan } from './../../../../../src/model/internal/timeInterval';
-import { ColorService } from './../../../../../src/services/color/color.service';
-import { SingleFavorite, FavoriteService } from '../../../../../src';
 
 @Component({
     selector: 'my-app',
@@ -67,10 +67,30 @@ export class FavoriteComponent {
     };
 
     constructor(
-        private favoriteSrvc: FavoriteService
+        private favoriteSrvc: FavoriteService,
+        private jsonExport: JsonFavoriteExporterService
     ) {
+        this.loadFavorites();
+    }
+
+    public changeLabelName(favorite: SingleFavorite) {
+        const newLabel = favorite.label + 'Test';
+        this.favoriteSrvc.changeLabel(favorite, newLabel);
+    }
+
+    public import(event: Event) {
+        this.jsonExport.importFavorites(event).subscribe(() => {
+            this.loadFavorites();
+        });
+    }
+
+    public export() {
+        this.jsonExport.exportFavorites();
+    }
+
+    private loadFavorites() {
         this.favorites = [];
-        favoriteSrvc.getFavorites().forEach((entry) => {
+        this.favoriteSrvc.getFavorites().forEach((entry) => {
             const option = new DatasetOptions(entry.favorite.internalId, '#FF0000');
             option.generalize = true;
             const timespan = new Timespan(entry.favorite.lastValue.timestamp - 10000000, entry.favorite.lastValue.timestamp);
@@ -83,12 +103,6 @@ export class FavoriteComponent {
             });
         });
     }
-
-    public changeLabelName(favorite: SingleFavorite) {
-        const newLabel = favorite.label + 'Test';
-        this.favoriteSrvc.changeLabel(favorite, newLabel);
-    }
-
 }
 
 interface ExtendedSingleFavorite extends SingleFavorite {
