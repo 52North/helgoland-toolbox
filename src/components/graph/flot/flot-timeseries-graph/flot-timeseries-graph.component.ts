@@ -51,7 +51,33 @@ export class FlotTimeseriesGraphComponent
 
     private preparedData: DataSeries[] = Array();
 
-    private plotOptions: PlotOptions;
+    private plotOptions: PlotOptions = {
+        grid: {
+            autoHighlight: true,
+            hoverable: true
+        },
+        series: {
+            lines: {
+                fill: false,
+                show: true
+            },
+            points: {
+                fill: true,
+                radius: 2,
+                show: false
+            },
+            shadowSize: 1
+        },
+        selection: {
+            mode: null
+        },
+        xaxis: {
+            mode: 'time',
+            timezone: 'browser',
+        },
+        yaxes: [],
+        showReferenceValues: false
+    };
 
     private datasetMap: Map<string, IDataset> = new Map();
 
@@ -108,7 +134,7 @@ export class FlotTimeseriesGraphComponent
     }
 
     protected graphOptionsChanged(options: PlotOptions) {
-        this.plotOptions = options;
+        Object.assign(this.plotOptions, options);
         this.plotOptions.yaxes = [];
         this.timeIntervalChanges();
     }
@@ -259,7 +285,7 @@ export class FlotTimeseriesGraphComponent
         this.preparedData = this.preparedData.filter((entry) => {
             return !entry.internalId.startsWith('ref' + internalId);
         });
-        if (this.graphOptions.showReferenceValues) {
+        if (this.plotOptions.showReferenceValues) {
             styles.showReferenceValues.forEach((refValue) => {
                 const refDataEntry = {
                     internalId: 'ref' + internalId + refValue.id,

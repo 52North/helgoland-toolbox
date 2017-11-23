@@ -15,57 +15,6 @@ export class FavoriteComponent {
 
     public favorites: ExtendedSingleFavorite[];
 
-    public diagramOptions: PlotOptions = {
-        crosshair: {
-            mode: 'x'
-        },
-        showReferenceValues: true,
-        grid: {
-            autoHighlight: true,
-            hoverable: true
-        },
-        legend: {
-            show: false
-        },
-        selection: {
-            mode: null
-        },
-        series: {
-            lines: {
-                fill: false,
-                show: true
-            },
-            points: {
-                fill: true,
-                radius: 2,
-                show: false
-            },
-            shadowSize: 1
-        },
-        touch: {
-            delayTouchEnded: 200,
-            pan: 'x',
-            scale: ''
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-            // monthNames: monthNamesTranslaterServ.getMonthNames()
-            //            timeformat: '%Y/%m/%d',
-            // use these the following two lines to have small ticks at the bottom ob the diagram
-            //            tickLength: 5,
-            //            tickColor: '#000'
-        },
-        yaxis: {
-            additionalWidth: 17,
-            labelWidth: 50,
-            hideLabel: true,
-            min: null,
-            panRange: false,
-            show: true,
-        }
-    };
-
     constructor(
         private favoriteSrvc: FavoriteService,
         private jsonExport: JsonFavoriteExporterService

@@ -9,9 +9,8 @@
   </div>
   <hr>
   <div style="height: 300px;">
-    <n52-flot-timeseries-graph [datasetIds]="[favorite.favorite.internalId]" [datasetOptions]="favorite.option" [graphOptions]="diagramOptions"
-      [timeInterval]="favorite.timespan" (onTimespanChanged)="timeChanged($event)"
-      (onLoading)="favorite.loading = $event"></n52-flot-timeseries-graph>
+    <n52-flot-timeseries-graph [datasetIds]="[favorite.favorite.internalId]" [datasetOptions]="favorite.option" [timeInterval]="favorite.timespan"
+      (onTimespanChanged)="timeChanged($event)" (onLoading)="favorite.loading = $event"></n52-flot-timeseries-graph>
   </div>
   <pre *ngIf="favorite.show">
     {{favorite | json}}
