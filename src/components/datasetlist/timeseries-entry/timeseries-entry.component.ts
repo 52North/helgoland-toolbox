@@ -90,10 +90,11 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
             refValue.visible = true;
             this.datasetOptions.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
         }
+        this.onUpdateOptions.emit(this.datasetOptions);
     }
 
-    public editDatasetOptions(options: DatasetOptions) {
-        this.onEditOptions.emit(options);
+    public editDatasetOptions() {
+        this.onEditOptions.emit(this.datasetOptions);
     }
 
     public showGeometry() {

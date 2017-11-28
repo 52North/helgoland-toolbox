@@ -16,15 +16,11 @@ export class TimespanShiftSelectorComponent {
     @Output()
     public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
-    @ViewChild('modalTimespanSelector')
-    public modalTemplate: TemplateRef<any>;
-
-    public tempTimespan: Timespan;
-    public tempTimespanIsValid: boolean;
+    @Output()
+    public onOpenTimeSettings: EventEmitter<void> = new EventEmitter();
 
     constructor(
-        private timeSrvc: Time,
-        private modalService: NgbModal
+        private timeSrvc: Time
     ) { }
 
     public back() {
@@ -36,22 +32,6 @@ export class TimespanShiftSelectorComponent {
     }
 
     public open() {
-        this.tempTimespan = new Timespan(this.timespan.from, this.timespan.to);
-        this.modalService.open(this.modalTemplate, {size: 'lg'});
+        this.onOpenTimeSettings.emit();
     }
-
-    public noteChangedTimespan(newValue: Timespan) {
-        this.tempTimespan = newValue;
-        this.tempTimespanIsValid = true;
-    }
-
-    public noteInvalidTimespan(newValue: Timespan) {
-        this.tempTimespanIsValid = false;
-    }
-
-    public applyNewTimespan() {
-        this.timespan = this.tempTimespan;
-        this.onTimespanChange.emit(this.timespan);
-    }
-
 }
