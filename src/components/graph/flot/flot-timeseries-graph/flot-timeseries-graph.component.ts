@@ -20,7 +20,7 @@ import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
 import { Dataset, IDataset, Timeseries } from './../../../../model/api/dataset';
-import { DatasetOptions, ReferenceValueOption } from './../../../../model/internal/options';
+import { DatasetOptions } from './../../../../model/internal/options';
 import { Timespan } from './../../../../model/internal/timeInterval';
 import { ApiInterface } from './../../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
@@ -436,11 +436,11 @@ export class FlotTimeseriesGraphComponent
     }
 
     private loadData(dataset: IDataset) {
-        if (this.timespan && this.plotOptions) {
+        const datasetOptions = this.datasetOptions.get(dataset.internalId);
+        if (this.timespan && this.plotOptions && datasetOptions.visible) {
             if (this.loadingCounter === 0) { this.onLoading.emit(true); }
             this.loadingCounter++;
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
-            const datasetOptions = this.datasetOptions.get(dataset.internalId);
             if (dataset instanceof Timeseries) {
                 this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                     {
@@ -469,6 +469,9 @@ export class FlotTimeseriesGraphComponent
                     () => this.onCompleteLoadingData(dataset)
                     );
             }
+        } else if (!datasetOptions.visible) {
+            this.removePreparedData(dataset.internalId);
+            this.plotGraph();
         }
     }
 

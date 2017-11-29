@@ -167,6 +167,16 @@ export class GraphLegendComponent {
         this.highlightId = id;
     }
 
+    public deleteTimeseries(id: string) {
+        const idx = this.datasetIds.findIndex((entry) => entry === id);
+        this.datasetIds.splice(idx, 1);
+        this.datasetOptions.delete(id);
+    }
+
+    public updateOptions(option: DatasetOptions) {
+        console.log('updateOptions' + JSON.stringify(option));
+    }
+
     public onOverviewLoading(loading: boolean) {
         this.overviewLoading = loading;
         this.cdr.detectChanges();
