@@ -1,5 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Injectable,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation,
+} from '@angular/core';
 
+import { IdCache } from '../../../model/internal/id-cache';
 import { TimeInterval } from '../../../model/internal/timeInterval';
 import { ColorService } from '../../../services/color/color.service';
 import { ListEntryComponent } from '../list-entry.component';
@@ -8,6 +18,9 @@ import { DatasetOptions } from './../../../model/internal/options';
 import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { InternalIdHandler } from './../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../services/time/time.service';
+
+@Injectable()
+export class ReferenceValueColorCache extends IdCache<{ color: string, visible: boolean }> { }
 
 @Component({
     selector: 'n52-timeseries-entry',
@@ -53,7 +66,8 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         private api: ApiInterface,
         private timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
-        private color: ColorService
+        private color: ColorService,
+        private refValCache: ReferenceValueColorCache
     ) {
         super(internalIdHandler);
     }
@@ -83,6 +97,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
 
     public toggleReferenceValue(refValue: ReferenceValue) {
         const idx = this.datasetOptions.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
+        const refValId = this.createRefValId(refValue.referenceValueId);
         if (idx > -1) {
             refValue.visible = false;
             this.datasetOptions.showReferenceValues.splice(idx, 1);
@@ -90,6 +105,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
             refValue.visible = true;
             this.datasetOptions.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
         }
+        this.refValCache.get(refValId).visible = refValue.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
     }
 
@@ -134,11 +150,29 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         this.uom = this.dataset.uom;
         if (this.dataset.referenceValues) {
             this.dataset.referenceValues.forEach((e) => {
-                e.visible = false;
-                e.color = this.color.getColor();
+                const refValId = this.createRefValId(e.referenceValueId);
+                const refValOption = this.datasetOptions.showReferenceValues.find((o) => o.id === e.referenceValueId);
+                if (refValOption) {
+                    this.refValCache.set(refValId, {
+                        color: refValOption.color,
+                        visible: true
+                    });
+                }
+                if (!this.refValCache.has(refValId)) {
+                    this.refValCache.set(refValId, {
+                        color: this.color.getColor(),
+                        visible: false
+                    });
+                }
+                e.color = this.refValCache.get(refValId).color;
+                e.visible = this.refValCache.get(refValId).visible;
             });
         }
         this.checkDataInTimespan();
+    }
+
+    private createRefValId(refId: string) {
+        return this.dataset.url + refId;
     }
 
     private checkDataInTimespan() {
