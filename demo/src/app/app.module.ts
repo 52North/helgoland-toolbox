@@ -17,7 +17,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-    Config,
     HelgolandDatasetlistModule,
     HelgolandFlotGraphModule,
     HelgolandMapSelectorModule,
@@ -31,6 +30,7 @@ import {
     LocalOngoingHttpCache,
     OnGoingHttpCache,
     Settings,
+    SettingsService,
 } from '../../../src';
 import { JsonFavoriteExporterService } from '../../../src/components/favorite/service/json-favorite-exporter.service';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
@@ -38,6 +38,7 @@ import { HelgolandPermalinkModule } from '../../../src/components/permalink/perm
 import { ApiInterface } from '../../../src/services/api-interface/api-interface';
 import { LocalHttpCache } from '../../../src/services/api-interface/caching/local-http-cache';
 import { GetDataApiInterface } from '../../../src/services/api-interface/getData-api-interface.service';
+import { settingsPromise } from '../main';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { AppComponent } from './app.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
@@ -74,16 +75,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @Injectable()
-export class SettingsService extends Settings {
-
-  public config: Config;
+export class ExtendedSettingsService extends SettingsService<Settings> {
 
   constructor() {
     super();
-    this.config = {
-      solveLabels: true,
-      proxyUrl: 'https://cors-anywhere.herokuapp.com/'
-    };
+    settingsPromise.then((result) => {
+      this.setSettings(result);
+    });
   }
 }
 
@@ -141,8 +139,8 @@ export class SettingsService extends Settings {
   providers: [
     JsonFavoriteExporterService,
     {
-      provide: Settings,
-      useClass: SettingsService
+      provide: SettingsService,
+      useClass: ExtendedSettingsService
     }, {
       provide: HttpCache,
       useClass: LocalHttpCache

@@ -1,10 +1,10 @@
-import { IdCache } from '../../../model/internal/id-cache';
-import { Map } from 'rxjs/util/Map';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
-import { Settings } from '../../../services/settings/settings';
+import { IdCache } from '../../../model/internal/id-cache';
+import { Settings } from '../../../model/settings/settings';
+import { SettingsService } from '../../../services/settings/settings.service';
 
 declare var $: any;
 
@@ -15,12 +15,12 @@ export class LabelMapperService {
 
     constructor(
         private httpClient: HttpClient,
-        private settings: Settings
+        private settingsSrvc: SettingsService<Settings>
     ) { }
 
     public getMappedLabel(label: string): Observable<string> {
         return new Observable<string>((observer: Observer<string>) => {
-            if (!this.settings.config.solveLabels) {
+            if (!this.settingsSrvc.getSettings().solveLabels) {
                 this.confirmLabel(observer, label);
             } else {
                 const url = this.findUrl(label);
@@ -28,7 +28,8 @@ export class LabelMapperService {
                     if (this.cache.has(url)) {
                         this.confirmLabel(observer, this.cache.get(url));
                     } else {
-                        const labelUrl = this.settings.config.proxyUrl ? this.settings.config.proxyUrl + url : url;
+                        const labelUrl =
+                            this.settingsSrvc.getSettings().proxyUrl ? this.settingsSrvc.getSettings().proxyUrl + url : url;
                         this.httpClient.get(labelUrl, { responseType: 'text' }).subscribe((res) => {
                             try {
                                 const xml = $.parseXML(res);

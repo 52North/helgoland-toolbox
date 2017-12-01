@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
-import { Settings } from '../../../services/settings/settings';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'n52-color-selector',

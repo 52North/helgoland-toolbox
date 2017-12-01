@@ -44,7 +44,7 @@ export { Service } from './model/api/service';
 export { ParameterFilter } from './model/api/parameterFilter';
 export { Data, IDataEntry, LocatedTimeValueEntry, LocatedProfileDataEntry, ProfileDataEntry } from './model/api/data';
 
-export { BlacklistedService, Config } from './model/config/config';
+export { BlacklistedService, Settings } from './model/settings/settings';
 
 export { GraphHighlight } from './model/internal/graph/graph-highlight';
 export { GraphMessageType } from './model/internal/graph/graph-message-type';
@@ -65,6 +65,6 @@ export { DatasetService } from './services/dataset/dataset.service';
 export { InternalIdHandler } from './services/api-interface/internal-id-handler.service';
 export { LocalHttpCache } from './services/api-interface/caching/local-http-cache';
 export { LocalStorage } from './services/local-storage/local-storage.service';
-export { Settings } from './services/settings/settings';
+export { SettingsService } from './services/settings/settings.service';
 export { Time } from './services/time/time.service';
 export { NotifierService } from './services/notifier/notifier.service';

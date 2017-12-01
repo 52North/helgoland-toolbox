@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { Settings } from '../../../services/settings/settings';
-import { ParsedTimespanPreset, TimespanPreset } from './../../../model/config/config';
+import { SettingsService } from '../../../services/settings/settings.service';
 import { Timespan } from './../../../model/internal/timeInterval';
+import { ParsedTimespanPreset, Settings, TimespanPreset } from './../../../model/settings/settings';
 
 @Component({
     selector: 'n52-predefined-timespan-selector',
@@ -20,10 +20,10 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
 
     public parsedTimespanPresets: ParsedTimespanPreset[];
 
-    constructor(private settingSrvc: Settings) { }
+    constructor(private settingSrvc: SettingsService<Settings>) { }
 
     public ngOnInit() {
-        this.parsedTimespanPresets = this.settingSrvc.config.timespanPresets
+        this.parsedTimespanPresets = this.settingSrvc.getSettings().timespanPresets
             .filter((e) => this.isSafeTimespanPreset(e))
             .map((e) => ({
                 name: e.name,

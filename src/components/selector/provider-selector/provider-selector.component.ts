@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { Service } from './../../../model/api/service';
-import { BlacklistedService } from './../../../model/config/config';
+import { BlacklistedService } from './../../../model/settings/settings';
 import { ProviderSelectorService } from './provider-selector.service';
 
 /**

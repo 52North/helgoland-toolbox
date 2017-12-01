@@ -1,6 +1,6 @@
 import { Timespan } from './../internal/timeInterval';
 
-export class Config {
+export class Settings {
     public restApiUrls?: string[];
     public providerBlackList?: BlacklistedService[];
     public solveLabels?: boolean;
