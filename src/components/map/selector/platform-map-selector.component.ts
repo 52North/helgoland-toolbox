@@ -3,6 +3,8 @@ import 'leaflet.markercluster';
 import { AfterViewInit, ChangeDetectorRef, Component, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
 
+import { HasLoadableContent } from '../../../model/mixins/has-loadable-content';
+import { Mixin } from '../../../model/mixins/Mixin.decorator';
 import { Platform } from './../../../model/api/platform';
 import { ApiInterface } from './../../../services/api-interface/api-interface';
 import { MapCache } from './../../../services/map/map.service';
@@ -13,6 +15,7 @@ import { MapSelectorComponent } from './map-selector.component';
     templateUrl: './map-selector.component.html',
     styleUrls: ['./map-selector.component.scss']
 })
+@Mixin([HasLoadableContent])
 export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform> implements OnChanges, AfterViewInit {
 
     private markerClusterGroup: L.FeatureGroup;
@@ -27,7 +30,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
 
     protected drawGeometries() {
         this.noResultsFound = false;
-        this.loading = true;
+        this.isContentLoading(true);
         if (this.markerClusterGroup) { this.map.removeLayer(this.markerClusterGroup); }
         this.apiInterface.getPlatforms(this.serviceUrl, this.filter)
             .subscribe((res) => {
@@ -46,7 +49,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
                     this.noResultsFound = true;
                 }
                 this.map.invalidateSize();
-                this.loading = false;
+                this.isContentLoading(false);
             });
     }
 }

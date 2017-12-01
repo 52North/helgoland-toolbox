@@ -9,6 +9,8 @@ import {
     SimpleChanges,
 } from '@angular/core';
 
+import { HasLoadableContent } from '../../../../model/mixins/has-loadable-content';
+import { Mixin } from '../../../../model/mixins/Mixin.decorator';
 import { DatasetOptions } from './../../../../model/internal/options';
 import { TimeInterval, Timespan } from './../../../../model/internal/timeInterval';
 import { Time } from './../../../../services/time/time.service';
@@ -18,7 +20,8 @@ import { Time } from './../../../../services/time/time.service';
     templateUrl: './flot-overview-timeseries-graph.component.html',
     styleUrls: ['./flot-overview-timeseries-graph.component.scss']
 })
-export class FlotOverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit {
+@Mixin([HasLoadableContent])
+export class FlotOverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, HasLoadableContent {
 
     @Input()
     public datasetIds: string[];
@@ -41,7 +44,13 @@ export class FlotOverviewTimeseriesGraphComponent implements OnChanges, AfterVie
     @Output()
     public onLoading: EventEmitter<boolean> = new EventEmitter();
 
+    @Output()
+    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
+    public isContentLoading: (loading: boolean) => void;
+
     public overviewTimespan: Timespan;
+
     private init = false;
 
     constructor(

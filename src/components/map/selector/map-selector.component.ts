@@ -1,10 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 
+import { HasLoadableContent } from '../../../model/mixins/has-loadable-content';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { MapCache } from './../../../services/map/map.service';
 
-export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewInit {
+export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewInit, HasLoadableContent {
 
     @Input()
     public mapId: string;
@@ -24,7 +25,11 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
 
-    public loading: boolean;
+    @Output()
+    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
+    public isContentLoading: (loading: boolean) => void;
+
     public noResultsFound: boolean;
     protected map: L.Map;
 

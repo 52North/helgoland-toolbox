@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 
+import { HasLoadableContent } from '../../../model/mixins/has-loadable-content';
+import { Mixin } from '../../../model/mixins/Mixin.decorator';
 import { LocatedProfileDataEntry } from './../../../model/api/data';
 import { IDataset } from './../../../model/api/dataset';
 import { Timespan } from './../../../model/internal/timeInterval';
@@ -25,6 +27,7 @@ import { TrajectoryResult } from './model/trajectory-result';
     templateUrl: './map-selector.component.html',
     styleUrls: ['./map-selector.component.scss']
 })
+@Mixin([HasLoadableContent])
 export class ProfileTrajectoryMapSelectorComponent
     extends MapSelectorComponent<TrajectoryResult>
     implements OnChanges, AfterViewInit {
@@ -75,7 +78,7 @@ export class ProfileTrajectoryMapSelectorComponent
 
     protected drawGeometries() {
         this.noResultsFound = false;
-        this.loading = true;
+        this.isContentLoading(true);
         this.apiInterface.getDatasets(this.serviceUrl, this.filter).subscribe((datasets) => {
             datasets.forEach((dataset) => {
                 this.dataset = dataset;
@@ -96,7 +99,7 @@ export class ProfileTrajectoryMapSelectorComponent
                             this.layer.addTo(this.map);
                             this.map.fitBounds(this.layer.getBounds());
                         }
-                        this.loading = false;
+                        this.isContentLoading(false);
                     });
             });
         });

@@ -11,6 +11,7 @@ import {
 
 import { GraphMessage } from '../../model/internal/graph/graph-message';
 import { ResizableComponent } from '../../model/internal/ResizableComponent';
+import { HasLoadableContent } from '../../model/mixins/has-loadable-content';
 import { DatasetOptions } from './../../model/internal/options';
 import { TimeInterval, Timespan } from './../../model/internal/timeInterval';
 import { ApiInterface } from './../../services/api-interface/api-interface';
@@ -20,7 +21,7 @@ import { Time } from './../../services/time/time.service';
 const equal = require('deep-equal');
 
 export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOptions[], U>
-    extends ResizableComponent implements OnChanges, DoCheck {
+    extends ResizableComponent implements OnChanges, DoCheck, HasLoadableContent {
 
     @Input()
     public datasetIds: string[] = [];
@@ -48,7 +49,9 @@ export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOp
     public onMessageThrown: EventEmitter<GraphMessage> = new EventEmitter();
 
     @Output()
-    public onLoading: EventEmitter<boolean> = new EventEmitter();
+    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
+    public isContentLoading: (loading: boolean) => void;
 
     protected timespan: Timespan;
 

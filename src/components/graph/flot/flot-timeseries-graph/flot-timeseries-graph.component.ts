@@ -16,6 +16,8 @@ import {
 } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
+import { HasLoadableContent } from '../../../../model/mixins/has-loadable-content';
+import { Mixin } from '../../../../model/mixins/Mixin.decorator';
 import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper.service';
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
@@ -37,6 +39,7 @@ declare var $: any;
     styleUrls: ['./flot-timeseries-graph.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
+@Mixin([HasLoadableContent])
 export class FlotTimeseriesGraphComponent
     extends DatasetGraphComponent<DatasetOptions, PlotOptions>
     implements AfterViewInit {
@@ -438,7 +441,7 @@ export class FlotTimeseriesGraphComponent
     private loadData(dataset: IDataset) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
         if (this.timespan && this.plotOptions && datasetOptions.visible) {
-            if (this.loadingCounter === 0) { this.onLoading.emit(true); }
+            if (this.loadingCounter === 0) { this.isContentLoading(true); }
             this.loadingCounter++;
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             if (dataset instanceof Timeseries) {
@@ -481,7 +484,7 @@ export class FlotTimeseriesGraphComponent
 
     private onCompleteLoadingData(dataset: IDataset) {
         this.loadingCounter--;
-        if (this.loadingCounter === 0) { this.onLoading.emit(false); }
+        if (this.loadingCounter === 0) { this.isContentLoading(false); }
     }
 
     private createTooltip() {
