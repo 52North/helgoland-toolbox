@@ -22,8 +22,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs; all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
-  private preparedData: Array<DatasetTableData> = Array();  
-  private preparedTimeserieses: Array<Timeseries> = Array();
+  public preparedData: Array<DatasetTableData> = Array();
+  public preparedTimeserieses: Array<Timeseries> = Array();
   private timeseriesMap: Map<string, Timeseries> = new Map();
 
   ngOnInit() {
