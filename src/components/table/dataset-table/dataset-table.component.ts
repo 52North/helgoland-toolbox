@@ -22,13 +22,9 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs; all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
-  private preparedData: Array<DatasetTableData> = Array();  
-  private preparedTimeserieses: Array<Timeseries> = Array();
+  private preparedData: DatasetTableData[] = Array();
+  private preparedTimeserieses: Timeseries[] = Array();
   private timeseriesMap: Map<string, Timeseries> = new Map();
-
-  ngOnInit() {
-    console.log(this.datasetIds);
-  }
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -39,27 +35,36 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     super(iterableDiffers, api, datasetIdResolver, timeSrvc);
   }
 
+  public ngOnInit() {
+    console.log(this.datasetIds);
+  }
+
   /* called when user clicks on table headers */
-  sort(event: any) {
-    let by = event.target.dataset.columnId; // can be 'datetime' or an integer indicating the index of the column in the values array
-    let direction = event.target.classList.contains('sorted-asc') ? 'desc' : 'asc';
-    let directionNumber = (direction == 'asc' ? 1 : -1);
+  public sort(event: any) {
+    const by = event.target.dataset.columnId; // can be 'datetime' or an integer indicating the index of the column in the values array
+    const direction = event.target.classList.contains('sorted-asc') ? 'desc' : 'asc';
+    const directionNumber = (direction === 'asc' ? 1 : -1);
 
     // set CSS classes
-    Array.from(event.target.parentElement.children).forEach((child:any) => child.classList = '');
-    event.target.classList.toggle('sorted-asc', direction=='asc');
-    event.target.classList.toggle('sorted-desc', direction=='desc');
+    Array.from(event.target.parentElement.children).forEach((child: any) => child.classList = '');
+    event.target.classList.toggle('sorted-asc', direction === 'asc');
+    event.target.classList.toggle('sorted-desc', direction === 'desc');
 
     // define correct callback function for sort method
-    var sortCallback;
-    if(by=='datetime') {
+    let sortCallback;
+    if (by === 'datetime') {
       sortCallback = (e1: any, e2: any) => directionNumber * (e1.datetime - e2.datetime);
     } else {
-      var index = parseInt(by);
+      const index = parseInt(by, 10);
       // basically the same as above, but take care of 'undefined' values
-      sortCallback = (e1: any, e2: any) => (e1.values[index]==undefined ? 1 : (e2.values[index]==undefined ? -1 : (directionNumber * (e1.values[index] - e2.values[index]))));
+      sortCallback = (e1: any, e2: any) =>
+        (e1.values[index] === undefined ? 1 :
+          (e2.values[index] === undefined ? -1 :
+            (directionNumber * (e1.values[index] - e2.values[index]))
+          )
+        );
     }
-    
+
     // do the sort
     this.preparedData = this.preparedData.sort(sortCallback);
   }
@@ -101,7 +106,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   protected addDataset(internalId: string, url: string): void {
     this.api.getSingleTimeseries(internalId, url)
-        .subscribe((timeseries: Timeseries) => this.addTimeseries(timeseries));
+      .subscribe((timeseries: Timeseries) => this.addTimeseries(timeseries));
   }
 
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
@@ -111,7 +116,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   }
 
   protected onResize(): void {
-      /*this.plotGraph();*/
+    /*this.plotGraph();*/
   }
 
   private addTimeseries(timeseries: Timeseries) {
@@ -122,56 +127,56 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   private loadTsData(timeseries: Timeseries) {
     if (this.timespan) {
       const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
-      //const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, buffer, {format: 'flot', /*generalize: datasetOptions.generalize*/})
-      .subscribe(result => {
-        // bring result into Array<DatasetTableData> format and pass to prepareData
-        this.prepareData(timeseries, result.values.map((e)=>({datetime: e[0], values: [e[1]]})));
-      });
+      // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
+      this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, buffer, { format: 'flot' })
+        .subscribe((result) => {
+          // bring result into Array<DatasetTableData> format and pass to prepareData
+          this.prepareData(timeseries, result.values.map((e) => ({ datetime: e[0], values: [e[1]] })));
+        });
     }
   }
 
-  private prepareData(timeseries: Timeseries, newdata: Array<DatasetTableData>) {
+  private prepareData(timeseries: Timeseries, newdata: DatasetTableData[]) {
     // this doesn't guarantee order:
     // this.timeseriesarray = Array.from(this.timeseriesMap.values());
     // so use array instead:
     this.preparedTimeserieses.push(timeseries);
-    
+
     // `newdata` is expected in exactly the same format `preparedData` would look like if there's only 1 timeseries
 
     // `timeseries` is first timeseries added -> no other `preparedData` to merge with -> `preparedData` can be set to `newdata` (as per above)
-    if(this.preparedData.length == 0) {
+    if (this.preparedData.length === 0) {
       this.preparedData = newdata;
 
-    // `timeseries` is not the first timeseries added -> we have to merge `newdata` into the existing `preparedData`
+      // `timeseries` is not the first timeseries added -> we have to merge `newdata` into the existing `preparedData`
     } else {
-      var i=0;  // loop variable for `preparedData`
-      var j=0;  // loop variable for `newdata`
-      
+      let i = 0;  // loop variable for `preparedData`
+      let j = 0;  // loop variable for `newdata`
+
       // go through all data points in `newdata`
-      while(j<newdata.length) {
+      while (j < newdata.length) {
 
         // timestamps match
-        if(this.preparedData[i] && this.preparedData[i].datetime == newdata[j].datetime) {
+        if (this.preparedData[i] && this.preparedData[i].datetime == newdata[j].datetime) {
           // easiest case - just add `newdata`'s value to the existing `values` array in `preparedData`
           this.preparedData[i].values.push(newdata[j].values[0]);
           // increment both
           i++;
           j++;
-        
-        // `newdata` is ahead of `preparedData`
-        } else if(this.preparedData[i] && this.preparedData[i].datetime < newdata[j].datetime) {
+
+          // `newdata` is ahead of `preparedData`
+        } else if (this.preparedData[i] && this.preparedData[i].datetime < newdata[j].datetime) {
           // there is no information in `newdata` for `preparedData`'s current timestamp -> add `undefined` to `preparedData`
           this.preparedData[i].values.push(undefined);
           // give preparedData the chance to catch up with newdata
           i++;
-        
-        // `preparedData` is ahead of `newdata`
+
+          // `preparedData` is ahead of `newdata`
         } else {
           // there was no information in any of the previous timeserieses' `newdata`s for the current `newdata`'s current timestamp -> create new, empty timestamp in `preparedData`
-          this.preparedData.splice(i, 0, {datetime: newdata[j].datetime, values: []});
+          this.preparedData.splice(i, 0, { datetime: newdata[j].datetime, values: [] });
           // fill previous timeserieses' slots in the `values` array with `undefined`
-          this.preparedData[i].values = Array(this.preparedTimeserieses.length-1).fill(undefined);
+          this.preparedData[i].values = Array(this.preparedTimeserieses.length - 1).fill(undefined);
           // add `newdata`'s value to the now existing `values` array in `preparedData` (exactly like in the "timestamps match" case)
           this.preparedData[i].values.push(newdata[j].values[0]);
           // give newdata the chance to catch up with preparedData
@@ -182,7 +187,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
       }
 
       // take care of elements in `preparedData` that are later than the last element of `newdata`
-      while(i<this.preparedData.length) {
+      while (i < this.preparedData.length) {
         this.preparedData[i].values.push(undefined);
         i++;
       }
