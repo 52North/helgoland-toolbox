@@ -1,0 +1,99 @@
+:host {
+  flex: 1;
+
+  /* 1. Fixed table header */
+
+  /* 1a. Solution using flexbox */
+  table {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  thead, tbody {
+    flex: 1;
+  }
+
+  thead {
+    /* adjust for scrollbar width (the scrollbar is actually 16px wide - NO IDEA why 34px does the trick...) */
+    /* EDIT: seams to be not necessary for other examples... Play with this if the table looks weird */
+    /* border-right: 34px solid darkgray; */
+  }
+
+  tbody {
+    overflow-y: auto; /* scrollbar */
+    display: block;
+    height: 100%;
+  }
+
+  thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  /* 1b. Different solution, requires fixed widths for columns */
+  /*table {
+    table-layout: fixed;
+  }
+  table thead tr {
+    display: block;
+    position: relative;
+  }
+  table th, table td {
+    width: 200px;
+  }
+  table tbody {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }*/
+
+
+  /* 2. Other table styles */
+
+  tr {
+    /* thin horizontal lines between rows */
+    border-bottom: 1px solid gray;
+
+    /* zebra stripes */
+    &:nth-child(2n) {
+      background-color: #eee;
+    }
+  }
+
+  th {
+    /* darken table head */
+    background-color: darkgray;
+    cursor: pointer;
+
+    /* highlight sorted column */
+    &.sorted-asc, &.sorted-desc {
+      background-color: #555;
+      color: white;
+    }
+
+    /* Display "up" and "down" triangles accordingly */
+    &.sorted-asc:after {
+      content: "\25B4"; /* up triangle */
+      float: right;
+    }
+    
+    &.sorted-desc:after {
+      content: "\25BE"; /* down triangle */
+      float: right;
+    }
+  }
+
+  td {
+    /* prevents datetime from wrapping in small windows or when there's many columns */
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 5px 10px;
+  }
+}

@@ -24,6 +24,8 @@ export { PermalinkService } from './components/permalink/services/permalink.serv
 export { HelgolandSelectorModule } from './components/selector/selector.module';
 export { ListSelectorParameter } from './components/selector/model/list-selector-parameter';
 
+export { HelgolandTableModule } from './components/table/table.module';
+
 export { HelgolandTimeModule } from './components/time/time.module';
 
 export { Language } from './components/locale/model/language';

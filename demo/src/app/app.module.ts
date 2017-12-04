@@ -25,6 +25,7 @@ import {
     HelgolandPlotlyGraphModule,
     HelgolandSelectorModule,
     HelgolandServicesModule,
+    HelgolandTableModule,
     HelgolandTimeModule,
     HttpCache,
     LocalOngoingHttpCache,
@@ -48,6 +49,7 @@ import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
+import { TableComponent } from './pages/table/table.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
@@ -66,6 +68,7 @@ const appRoutes: Routes = [
   { path: 'time', component: TimeComponent },
   { path: 'trajectory', component: TrajectoryComponent },
   { path: 'permalink', component: PermalinkComponent },
+  { path: 'table', component: TableComponent },
   { path: 'favorite', component: FavoriteComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
@@ -115,7 +118,8 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     HelgolandModificationModule,
     HelgolandTimeModule,
     HelgolandD3GraphModule,
-    HelgolandPermalinkModule
+    HelgolandPermalinkModule,
+    HelgolandTableModule
   ],
   entryComponents: [
     StyleModificationComponent
@@ -134,6 +138,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     TimeComponent,
     TrajectoryComponent,
     PermalinkComponent,
+    TableComponent,
     FavoriteComponent
   ],
   providers: [
