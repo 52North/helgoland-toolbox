@@ -22,8 +22,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs; all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
-  private preparedData: DatasetTableData[] = Array();
-  private preparedTimeserieses: Timeseries[] = Array();
+  public preparedData: DatasetTableData[] = Array();
+  public preparedTimeserieses: Timeseries[] = Array();
   private timeseriesMap: Map<string, Timeseries> = new Map();
 
   constructor(
