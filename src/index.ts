@@ -31,6 +31,8 @@ export { HelgolandTimeModule } from './components/time/time.module';
 export { Language } from './components/locale/model/language';
 export { LocalSelectorComponent } from './components/locale/locale-selector';
 
+export * from './components/time';
+
 export * from './components/favorite';
 
 export { Dataset, IDataset } from './model/api/dataset';
@@ -69,4 +71,5 @@ export { LocalHttpCache } from './services/api-interface/caching/local-http-cach
 export { LocalStorage } from './services/local-storage/local-storage.service';
 export { SettingsService } from './services/settings/settings.service';
 export { Time } from './services/time/time.service';
+export { DefinedTimespanService, DefinedTimespan } from './services/time/defined-timespan.service';
 export { NotifierService } from './services/notifier/notifier.service';

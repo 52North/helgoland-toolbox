@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import * as moment from 'moment';
 
+import { Timespan } from '../../../../../src/model/internal/timeInterval';
 import { NotifierService } from '../../../../../src/services/notifier/notifier.service';
 
 @Component({
@@ -26,6 +28,12 @@ export class TimeComponent {
     constructor(
         private notifier: NotifierService
     ) { }
+
+    public customTimespanFunc(): Timespan {
+        const from = moment().subtract(6, 'days').startOf('day').unix() * 1000;
+        const to = moment().endOf('day').unix() * 1000;
+        return new Timespan(from, to);
+    }
 
     public notify() {
         this.notifier.notify('test');

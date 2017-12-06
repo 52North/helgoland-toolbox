@@ -8,6 +8,7 @@ import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selec
 import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
 import { TimeRangeSliderSelectorComponent } from './time-range-slider-selector/time-range-slider-selector.component';
 import { TimeRangeSliderSelectorCache } from './time-range-slider-selector/time-range-slider-selector.service';
+import { TimespanButtonComponent } from './timespan-button/timespan-button.component';
 import { TimespanSelectorComponent } from './timespan-selector/timespan-selector.component';
 import { TimespanShiftSelectorComponent } from './timespan-shift-selector/timespan-shift-selector.component';
 
@@ -16,7 +17,8 @@ const COMPONENTS = [
   TimeListSelectorComponent,
   TimeRangeSliderSelectorComponent,
   TimespanSelectorComponent,
-  TimespanShiftSelectorComponent
+  TimespanShiftSelectorComponent,
+  TimespanButtonComponent
 ];
 
 @NgModule({

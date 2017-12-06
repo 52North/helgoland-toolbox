@@ -6320,7 +6320,7 @@ nextafter@^1.0.0:
   dependencies:
     double-bits "^1.1.0"
 
-ngx-clipboard@^8.1.1:
+ngx-clipboard@8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-8.1.1.tgz#574390a6dd48aa1a58350a14b1a0d764204495f5"
   dependencies:
