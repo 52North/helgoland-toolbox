@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "0.0.1-alpha.16",
+  "version": "0.0.1-alpha.17",
   "description": "Helgoland toolbox",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
@@ -52,7 +52,6 @@
     "demo": "webpack-dev-server --port 4200 --config webpack.demo.js --inline --progress"
   },
   "dependencies": {
-
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@ngx-translate/core": "^8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
