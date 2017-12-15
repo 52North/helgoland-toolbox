@@ -19,7 +19,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   /*
     The component extends DatasetGraphComponent, but implements only parts of that components inputs and outputs.
     Implemented: datasetIds and timeInterval inputs; no outputs
-    Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs; all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
+    Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs;
+    all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
   public preparedData: DatasetTableData[] = Array();
@@ -46,7 +47,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   /* called when user clicks on table headers */
   public sort(event: any) {
-    const by = event.target.dataset.columnId; // can be 'datetime' or an integer indicating the index of the column in the values array
+    // can be 'datetime' or an integer indicating the index of the column in the values array
+    const by = event.target.dataset.columnId;
     const direction = event.target.classList.contains('sorted-asc') ? 'desc' : 'asc';
     const directionNumber = (direction === 'asc' ? 1 : -1);
 
@@ -181,7 +183,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
     // `newdata` is expected in exactly the same format `preparedData` would look like if there's only 1 timeseries
 
-    // `timeseries` is first timeseries added -> no other `preparedData` to merge with -> `preparedData` can be set to `newdata` (as per above)
+    // `timeseries` is first timeseries added -> no other `preparedData` to merge with -> `preparedData` can be set
+    // to `newdata` (as per above)
     if (this.preparedData.length === 0) {
       this.preparedData = newdata;
 
@@ -194,7 +197,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
       while (j < newdata.length) {
 
         // timestamps match
-        if (this.preparedData[i] && this.preparedData[i].datetime == newdata[j].datetime) {
+        if (this.preparedData[i] && this.preparedData[i].datetime === newdata[j].datetime) {
           // easiest case - just add `newdata`'s value to the existing `values` array in `preparedData`
           this.preparedData[i].values.push(newdata[j].values[0]);
           // increment both
@@ -210,11 +213,13 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
           // `preparedData` is ahead of `newdata`
         } else {
-          // there was no information in any of the previous timeserieses' `newdata`s for the current `newdata`'s current timestamp -> create new, empty timestamp in `preparedData`
+          // there was no information in any of the previous timeserieses' `newdata`s for the current `newdata`'s current
+          // timestamp -> create new, empty timestamp in `preparedData`
           this.preparedData.splice(i, 0, { datetime: newdata[j].datetime, values: [] });
           // fill previous timeserieses' slots in the `values` array with `undefined`
           this.preparedData[i].values = Array(this.preparedTimeserieses.length - 1).fill(undefined);
-          // add `newdata`'s value to the now existing `values` array in `preparedData` (exactly like in the "timestamps match" case)
+          // add `newdata`'s value to the now existing `values` array in `preparedData`
+          // (exactly like in the "timestamps match" case)
           this.preparedData[i].values.push(newdata[j].values[0]);
           // give newdata the chance to catch up with preparedData
           j++;

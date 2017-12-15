@@ -18,8 +18,8 @@
     ],
     "types": [
       "flot",
-      "leaflet",
       "geojson",
+      "leaflet",
       "jasmine",
       "karma",
       "node",
