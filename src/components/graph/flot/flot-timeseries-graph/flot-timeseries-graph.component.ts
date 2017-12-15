@@ -440,41 +440,43 @@ export class FlotTimeseriesGraphComponent
 
     private loadData(dataset: IDataset) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
-        if (this.timespan && this.plotOptions && datasetOptions.visible) {
-            if (this.loadingCounter === 0) { this.isContentLoading(true); }
-            this.loadingCounter++;
-            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
-            if (dataset instanceof Timeseries) {
-                this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
-                    {
-                        format: 'flot',
-                        expanded: this.plotOptions.showReferenceValues === true,
-                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                    }
-                ).subscribe(
-                    (result) => this.prepareData(dataset, result).subscribe(() => {
-                        this.plotGraph();
-                    }),
-                    (error) => this.onError(error),
-                    () => this.onCompleteLoadingData(dataset)
-                    );
+        if (datasetOptions) {
+            if (this.timespan && this.plotOptions && datasetOptions.visible) {
+                if (this.loadingCounter === 0) { this.isContentLoading(true); }
+                this.loadingCounter++;
+                const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
+                if (dataset instanceof Timeseries) {
+                    this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+                        {
+                            format: 'flot',
+                            expanded: this.plotOptions.showReferenceValues === true,
+                            generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                        }
+                    ).subscribe(
+                        (result) => this.prepareData(dataset, result).subscribe(() => {
+                            this.plotGraph();
+                        }),
+                        (error) => this.onError(error),
+                        () => this.onCompleteLoadingData(dataset)
+                        );
+                }
+                if (dataset instanceof Dataset) {
+                    this.api.getData<[number, number]>(dataset.id, dataset.url, buffer,
+                        {
+                            format: 'flot',
+                            expanded: this.plotOptions.showReferenceValues === true,
+                            generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                        }
+                    ).subscribe(
+                        (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
+                        (error) => this.onError(error),
+                        () => this.onCompleteLoadingData(dataset)
+                        );
+                }
+            } else if (!datasetOptions.visible) {
+                this.removePreparedData(dataset.internalId);
+                this.plotGraph();
             }
-            if (dataset instanceof Dataset) {
-                this.api.getData<[number, number]>(dataset.id, dataset.url, buffer,
-                    {
-                        format: 'flot',
-                        expanded: this.plotOptions.showReferenceValues === true,
-                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                    }
-                ).subscribe(
-                    (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
-                    (error) => this.onError(error),
-                    () => this.onCompleteLoadingData(dataset)
-                    );
-            }
-        } else if (!datasetOptions.visible) {
-            this.removePreparedData(dataset.internalId);
-            this.plotGraph();
         }
     }
 
