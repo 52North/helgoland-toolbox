@@ -101,15 +101,33 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   }
 
   protected timeIntervalChanges() {
-    /*this.timeseriesMap.forEach(timeseries => {
-        this.loadTsData(timeseries);
-    });*/
+    // the easiest method: delete everything and build preparedData from scratch.
+    // but we have to preserve which timeserieses to re-add! -> copy the map to temp
+    // (doing removal and adding in the same forEach produces an infinite loop)
+    const temp = new Map(this.timeseriesMap);
+    this.timeseriesMap.forEach((timeseries) => {
+      this.removeDataset(timeseries.internalId);
+    });
+    temp.forEach((timeseries) => {
+      this.addTimeseries(timeseries);
+    });
   }
 
   protected removeDataset(internalId: string) {
-    /*this.timeseriesMap.delete(internalId);
-    this.removePreparedData(internalId);
-    this.plotGraph();*/
+    // fairly tested
+    const index = this.getIndexFromInternalId(internalId);
+
+    this.preparedData.forEach((e) => e.values.splice(index, 1));
+    this.preparedData = this.preparedData.filter((e) => e.values.reduce((a, c) => a || c, undefined) !== undefined);
+
+    this.preparedColors.splice(index, 1);
+    this.preparedTimeserieses.splice(index, 1);
+
+    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    rules.splice(index, 1);
+    this.additionalStylesheet.innerHTML = rules.join('\r\n');
+
+    this.timeseriesMap.delete(internalId);
   }
 
   protected addDataset(internalId: string, url: string): void {
