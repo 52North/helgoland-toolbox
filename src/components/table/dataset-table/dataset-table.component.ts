@@ -81,7 +81,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     // no point in implementing this method in a non-graphing component
   }
 
-  protected getIndexFromInternalId(internalId) {
+  protected getIndexFromInternalId(internalId: string) {
     // helper method
     return this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
   }
@@ -140,7 +140,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
     if (this.timeseriesMap.has(internalId)) {
       const index = this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
-      this.preparedColors[index] = options[0].color;
+      this.preparedColors[index] = options.color;
       // TODO-CF: Page isn't refreshed instantly, but only after the next sort (or possible other actions as well)
     }
   }
@@ -173,7 +173,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     this.preparedTimeserieses.push(timeseries);
 
     const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-    this.preparedColors.push(datasetOptions[0].color);
+    this.preparedColors.push(datasetOptions.color);
 
     this.additionalStylesheet.innerHTML += '\r\n';
     if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {

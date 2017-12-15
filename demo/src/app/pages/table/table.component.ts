@@ -23,13 +23,13 @@ export class TableComponent {
         new Date('2017-10-25T01:49:59.000Z').getTime()
     );
 
-    public datasetOptions: Map<string, DatasetOptions[]> = new Map();
+    public datasetOptions: Map<string, DatasetOptions> = new Map();
 
     constructor() {
         let i = 0;
         const colors = ['firebrick', 'yellow', 'darkgreen', 'lightblue'];
         this.datasetIds.forEach((entry) => {
-            this.datasetOptions.set(entry, [new DatasetOptions(entry, colors[i++])]);
+            this.datasetOptions.set(entry, new DatasetOptions(entry, colors[i++]));
             if (i % 2 === 0) {
                 this.selectedDatasetIds.push(entry);
             }
