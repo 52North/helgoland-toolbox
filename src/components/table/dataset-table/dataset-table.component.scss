@@ -1,7 +1,7 @@
 :host {
   flex: 1;
 
-  /* Start fixed table header */
+  /* Start fixed table header: http://jsfiddle.net/yeAhU/261/ */
   tbody, thead tr {
     display: table;
     table-layout: fixed;
@@ -10,20 +10,19 @@
 
   table {
     display: block;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 1px;
   }
 
   thead {
     display:block;
     position: sticky;
     top: 0;
+    border-spacing: 0;
   }
   /* End fixed table header */
 
   tr {
-    /* thin horizontal lines between rows */
-    border-bottom: 1px solid gray;
-
     /* zebra stripes */
     &:nth-child(2n) {
       background-color: #eee;
@@ -34,6 +33,15 @@
     /* darken table head */
     background-color: darkgray;
     cursor: pointer;
+    border-bottom-width: 7px;
+    border-bottom-style: solid;
+
+    &:first-child {
+      border-bottom-color: darkgray;
+      &.sorted-asc, &.sorted-desc {
+        border-bottom-color: #555;
+      }
+    }
 
     /* highlight sorted column */
     &.sorted-asc, &.sorted-desc {
@@ -56,6 +64,9 @@
   td {
     /* prevents datetime from wrapping in small windows or when there's many columns */
     white-space: nowrap;
+
+    /* thin horizontal lines between rows */
+    border-bottom: 1px solid gray;
   }
 
   th, td {

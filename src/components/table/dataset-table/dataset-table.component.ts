@@ -24,7 +24,10 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   public preparedData: DatasetTableData[] = Array();
   public preparedTimeserieses: Timeseries[] = Array();
+  public preparedColors: string[] = Array();
+
   private timeseriesMap: Map<string, Timeseries> = new Map();
+  private additionalStylesheet: HTMLElement;
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -37,6 +40,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   public ngOnInit() {
     console.log(this.datasetIds);
+    this.additionalStylesheet = document.createElement('style');
+    document.body.appendChild(this.additionalStylesheet);
   }
 
   /* called when user clicks on table headers */
@@ -69,27 +74,30 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     this.preparedData = this.preparedData.sort(sortCallback);
   }
 
-  // TODO-CF: Blind copy&paste from abstract parent class to make it compile
   protected graphOptionsChanged(options: PlotOptions) {
-    /*this.plotOptions = options;
-    this.plotOptions.yaxes = [];
-    this.timeIntervalChanges();*/
+    // only included because it's required by abstract parent class (wouldn't compile without)
+    // no point in implementing this method in a non-graphing component
+  }
+
+  protected getIndexFromInternalId(internalId) {
+    // helper method
+    return this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
   }
 
   protected setSelectedId(internalId: string) {
-    /*const tsData = this.preparedData.find(e => e.internalId === internalId);
-    tsData.selected = true;
-    tsData.lines.lineWidth = 5;
-    tsData.bars.lineWidth = 5;
-    this.plotGraph();*/
+    // quite fairly tested
+    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    const index = this.getIndexFromInternalId(internalId);
+    rules[index] = 'td:nth-child(' + (index + 2) + ') {font-weight: bold}';
+    this.additionalStylesheet.innerHTML = rules.join('\r\n');
   }
 
   protected removeSelectedId(internalId: string) {
-    /*const tsData = this.preparedData.find(e => e.internalId === internalId);
-    tsData.selected = false;
-    tsData.lines.lineWidth = 1;
-    tsData.bars.lineWidth = 1;
-    this.plotGraph();*/
+    // fairly tested
+    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    const index = this.getIndexFromInternalId(internalId);
+    rules[index] = '';
+    this.additionalStylesheet.innerHTML = rules.join('\r\n');
   }
 
   protected timeIntervalChanges() {
@@ -110,13 +118,15 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   }
 
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
-    /*if (this.timeseriesMap.has(internalId)) {
-        this.loadTsData(this.timeseriesMap.get(internalId));
-    }*/
+    if (this.timeseriesMap.has(internalId)) {
+      const index = this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
+      this.preparedColors[index] = options[0].color;
+      // TODO-CF: Page isn't refreshed instantly, but only after the next sort (or possible other actions as well)
+    }
   }
 
   protected onResize(): void {
-    /*this.plotGraph();*/
+    // TODO-CF: needed???? probably not
   }
 
   private addTimeseries(timeseries: Timeseries) {
@@ -141,6 +151,15 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     // this.timeseriesarray = Array.from(this.timeseriesMap.values());
     // so use array instead:
     this.preparedTimeserieses.push(timeseries);
+
+    const datasetOptions = this.datasetOptions.get(timeseries.internalId);
+    this.preparedColors.push(datasetOptions[0].color);
+
+    this.additionalStylesheet.innerHTML += '\r\n';
+    if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {
+      this.setSelectedId(timeseries.internalId);
+      console.log(this.additionalStylesheet);
+    }
 
     // `newdata` is expected in exactly the same format `preparedData` would look like if there's only 1 timeseries
 
