@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import * as L from 'leaflet';
+
+import { MapOptions } from '../../../../../src/components/map/model/map-options';
 
 @Component({
     selector: 'my-app',
@@ -7,13 +10,45 @@ import { Component } from '@angular/core';
 })
 export class MapSelectorComponent {
 
-    public providerUrl = 'http://www.fluggs.de/sos2/api/v1/';
+    public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+
+    public mapOptions: MapOptions;
+
+    constructor() {
+
+        const baseMaps = new Map();
+
+        const overlayMaps = new Map();
+        overlayMaps.set('pm10_24hmean_1x1', L.tileLayer.wms('http://geo.irceline.be/wms', {
+            layers: 'pm10_24hmean_1x1',
+            transparent: true,
+            format: 'image/png',
+            time: '2017-12-18T12:00:00.000Z',
+            opacity: 0.7,
+            visibility: true,
+            pane: 'tilePane',
+            zIndex: -9998,
+            projection: 'EPSG:4326',
+            units: 'm'
+        }));
+
+        this.mapOptions = {
+            baseMaps,
+            overlayMaps,
+            layerControlOptions: {
+                position: 'bottomleft'
+            },
+            zoomOptions: {
+                position: 'topleft'
+            }
+        };
+    }
 
     public switchProvider() {
-        if (this.providerUrl === 'http://www.fluggs.de/sos2/api/v1/') {
+        if (this.providerUrl === 'http://geo.irceline.be/sos/api/v1/') {
             this.providerUrl = 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/';
         } else {
-            this.providerUrl = 'http://www.fluggs.de/sos2/api/v1/';
+            this.providerUrl = 'http://geo.irceline.be/sos/api/v1/';
         }
     }
 }
