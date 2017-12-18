@@ -11,11 +11,6 @@ export { HelgolandD3GraphModule } from './components/graph/d3/d3.module';
 export { D3AxisType, D3GraphOptions, D3SelectionRange }
     from './components/graph/d3/d3-trajectory-graph/d3-trajectory-graph.component';
 
-export { HelgolandMapSelectorModule } from './components/map/selector/selector.module';
-export { TrajectoryResult } from './components/map/selector/model/trajectory-result';
-export { HelgolandMapViewModule } from './components/map/view/view.module';
-export { HelgolandMapControlModule } from './components/map/control/control.module';
-
 export { HelgolandModificationModule } from './components/modification/modification.module';
 
 export { HelgolandPermalinkModule } from './components/permalink/permalink.module';
@@ -31,9 +26,7 @@ export { HelgolandTimeModule } from './components/time/time.module';
 export { Language } from './components/locale/model/language';
 export { LocalSelectorComponent } from './components/locale/locale-selector';
 
-export * from './components/time';
-
-export * from './components/favorite';
+export * from './components';
 
 export { Dataset, IDataset } from './model/api/dataset';
 export { PlatformTypes, ValueTypes } from './model/api/enums';

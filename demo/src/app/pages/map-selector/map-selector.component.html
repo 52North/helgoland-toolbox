@@ -1,8 +1,9 @@
 <div>
   <div style="height: 500px;">
-    <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter"
-      (onSelected)="onStationSelected($event)" [cluster]="true" (onContentLoading)="loading = $event"></n52-station-map-selector>
+    <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" (onSelected)="onStationSelected($event)"
+      [cluster]="true" (onContentLoading)="loading = $event"></n52-station-map-selector>
   </div>
-  <div>{{loading}}</div>
+  <div>Is loading: {{loading}}</div>
+  <n52-geosearch-control [mapId]="'timeseries'"></n52-geosearch-control>
   <button (click)="switchProvider();">Switch Provider</button>
 </div>
