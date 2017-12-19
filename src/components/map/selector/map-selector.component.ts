@@ -46,9 +46,11 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
 
         if (!this.mapOptions.baseMaps || this.mapOptions.baseMaps.size === 0) {
             this.mapOptions.baseMaps = new Map();
-            this.mapOptions.baseMaps.set('BaseLayer', L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }));
+            this.mapOptions.baseMaps.set(
+                { name: 'BaseLayer', visible: true },
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }));
         }
 
         if (!this.mapOptions.overlayMaps) {
@@ -65,14 +67,14 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
         // add base maps to map
         const base: L.Control.LayersObject = {};
         this.mapOptions.baseMaps.forEach((layer, key) => {
-            base[key] = layer;
-            layer.addTo(this.map);
+            base[key.name] = layer;
+            if (key.visible) { layer.addTo(this.map); }
         });
         // add overlay maps to map
         const overlays: L.Control.LayersObject = {};
         this.mapOptions.overlayMaps.forEach((layer, key) => {
-            overlays[key] = layer;
-            layer.addTo(this.map);
+            overlays[key.name] = layer;
+            if (key.visible) { layer.addTo(this.map); }
         });
 
         if (this.mapOptions.layerControlOptions

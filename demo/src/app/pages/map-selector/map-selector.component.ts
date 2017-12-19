@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
 
-import { MapOptions } from '../../../../../src/components/map/model/map-options';
+import { LayerOptions, MapOptions } from '../../../../../src/components/map/model/map-options';
 
 @Component({
     selector: 'my-app',
@@ -16,21 +16,22 @@ export class MapSelectorComponent {
 
     constructor() {
 
-        const baseMaps = new Map();
+        const baseMaps = new Map<LayerOptions, L.Layer>();
 
-        const overlayMaps = new Map();
-        overlayMaps.set('pm10_24hmean_1x1', L.tileLayer.wms('http://geo.irceline.be/wms', {
-            layers: 'pm10_24hmean_1x1',
-            transparent: true,
-            format: 'image/png',
-            time: '2017-12-18T12:00:00.000Z',
-            opacity: 0.7,
-            visibility: true,
-            pane: 'tilePane',
-            zIndex: -9998,
-            projection: 'EPSG:4326',
-            units: 'm'
-        }));
+        const overlayMaps = new Map<LayerOptions, L.Layer>();
+        overlayMaps.set(
+            { name: 'pm10_24hmean_1x1', visible: false },
+            L.tileLayer.wms('http://geo.irceline.be/wms', {
+                layers: 'pm10_24hmean_1x1',
+                transparent: true,
+                format: 'image/png',
+                time: '2017-12-18T12:00:00.000Z',
+                opacity: 0.7,
+                pane: 'tilePane',
+                zIndex: -9998,
+                projection: 'EPSG:4326',
+                units: 'm'
+            }));
 
         this.mapOptions = {
             baseMaps,
