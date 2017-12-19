@@ -5,6 +5,7 @@
   </div>
   <div>Is loading: {{loading}}</div>
   <n52-geosearch-control [mapId]="'timeseries'"></n52-geosearch-control>
+  <n52-extent-control mapId="timeseries" [extent]="mapOptions.fitBounds"></n52-extent-control>
   <n52-locate-control mapId="timeseries"></n52-locate-control>
   <button (click)="switchProvider();">Switch Provider</button>
 </div>

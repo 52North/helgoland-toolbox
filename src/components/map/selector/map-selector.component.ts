@@ -59,6 +59,9 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
         this.map = L.map(this.mapId, {
             zoomControl: false
         });
+        if (this.mapOptions.fitBounds) {
+            this.map.fitBounds(this.mapOptions.fitBounds);
+        }
         // add base maps to map
         const base: L.Control.LayersObject = {};
         this.mapOptions.baseMaps.forEach((layer, key) => {
@@ -91,6 +94,12 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     public ngOnChanges(changes: SimpleChanges) {
         if ((changes.serviceUrl || changes.filter) && this.map) {
             this.drawGeometries();
+        }
+    }
+
+    protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
+        if (!this.mapOptions || !this.mapOptions.avoidZoomToSelection) {
+            this.map.fitBounds(bounds);
         }
     }
 

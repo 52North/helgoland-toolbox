@@ -1,3 +1,4 @@
+export { ExtentControlComponent } from './control/extent/extent.component';
 export { GeosearchControlComponent } from './control/geosearch/geosearch.component';
 export { LocateControlComponent } from './control/locate/locate.component';
 export { LocateService } from './control/locate/locate.service';

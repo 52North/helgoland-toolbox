@@ -40,7 +40,9 @@ export class MapSelectorComponent {
             },
             zoomOptions: {
                 position: 'topleft'
-            }
+            },
+            fitBounds: [[49.5, 3.27], [51.5, 5.67]],
+            avoidZoomToSelection: false
         };
     }
 

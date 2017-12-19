@@ -5,4 +5,6 @@ export interface MapOptions {
     overlayMaps?: Map<string, L.Layer>;
     layerControlOptions?: L.Control.LayersOptions;
     zoomOptions?: L.Control.ZoomOptions;
+    fitBounds?: L.LatLngBoundsExpression;
+    avoidZoomToSelection?: boolean;
 }
