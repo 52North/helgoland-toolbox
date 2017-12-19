@@ -7,6 +7,7 @@ export class Settings {
     public proxyUrl?: string;
     public timespanPresets?: TimespanPreset[];
     public colorList?: string[];
+    public languages?: [{ label: string, code: string }];
 }
 
 export class BlacklistedService {

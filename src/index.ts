@@ -52,17 +52,4 @@ export { Provider } from './model/internal/provider';
 export { Timespan } from './model/internal/timeInterval';
 export { IdCache } from './model/internal/id-cache';
 
-export { HelgolandServicesModule } from './services/services.module';
-
-export {
-    CachingInterceptor, HttpCache, OnGoingHttpCache, ApiInterface, LocalOngoingHttpCache, GetDataApiInterface
-} from './services/api-interface';
-export { ColorService } from './services/color/color.service';
-export { DatasetService } from './services/dataset/dataset.service';
-export { InternalIdHandler } from './services/api-interface/internal-id-handler.service';
-export { LocalHttpCache } from './services/api-interface/caching/local-http-cache';
-export { LocalStorage } from './services/local-storage/local-storage.service';
-export { SettingsService } from './services/settings/settings.service';
-export { Time } from './services/time/time.service';
-export { DefinedTimespanService, DefinedTimespan } from './services/time/defined-timespan.service';
-export { NotifierService } from './services/notifier/notifier.service';
+export * from './services';
