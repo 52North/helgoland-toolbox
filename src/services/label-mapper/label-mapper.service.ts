@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
-import { IdCache } from '../../../model/internal/id-cache';
-import { Settings } from '../../../model/settings/settings';
-import { SettingsService } from '../../../services/settings/settings.service';
+import { IdCache } from '../../model/internal/id-cache';
+import { Settings } from '../../model/settings/settings';
+import { SettingsService } from '../settings/settings.service';
 
 declare var $: any;
 

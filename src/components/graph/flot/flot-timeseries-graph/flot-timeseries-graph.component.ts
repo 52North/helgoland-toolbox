@@ -18,7 +18,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 
 import { HasLoadableContent } from '../../../../model/mixins/has-loadable-content';
 import { Mixin } from '../../../../model/mixins/Mixin.decorator';
-import { LabelMapperService } from '../../../depiction/label-mapper/label-mapper.service';
+import { LabelMapperService } from '../../../../services/label-mapper/label-mapper.service';
 import { DatasetGraphComponent } from '../../dataset-graph.component';
 import { Data } from './../../../../model/api/data';
 import { Dataset, IDataset, Timeseries } from './../../../../model/api/dataset';
