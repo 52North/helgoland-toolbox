@@ -172,8 +172,14 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
     // so use array instead:
     this.preparedTimeserieses.push(timeseries);
 
-    const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-    this.preparedColors.push(datasetOptions.color);
+    // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
+    if (this.datasetOptions) {
+      const datasetOptions = this.datasetOptions.get(timeseries.internalId);
+      this.preparedColors.push(datasetOptions.color);
+    } else {
+      // when no color is specified: make border transparent so the header's background color is used for the color band, too
+      this.preparedColors.push('rgba(0,0,0,0)');
+    }
 
     this.additionalStylesheet.innerHTML += '\r\n';
     if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {
