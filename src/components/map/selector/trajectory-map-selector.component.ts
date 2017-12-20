@@ -97,7 +97,7 @@ export class ProfileTrajectoryMapSelectorComponent
                             });
                             this.onTimeListDetermined.emit(timelist);
                             this.layer.addTo(this.map);
-                            this.map.fitBounds(this.layer.getBounds());
+                            this.zoomToMarkerBounds(this.layer.getBounds());
                         }
                         this.isContentLoading(false);
                     });

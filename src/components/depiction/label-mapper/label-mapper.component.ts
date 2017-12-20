@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { LabelMapperService } from './label-mapper.service';
+import { LabelMapperService } from '../../../services/label-mapper/label-mapper.service';
 
 @Component({
     selector: 'n52-label-mapper',

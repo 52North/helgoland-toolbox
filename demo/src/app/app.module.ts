@@ -2,12 +2,12 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-    MatButtonModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatListModule,
-    MatRadioModule,
-    MatSidenavModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatListModule,
+  MatRadioModule,
+  MatSidenavModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,28 +17,31 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-    HelgolandDatasetlistModule,
-    HelgolandFlotGraphModule,
-    HelgolandMapSelectorModule,
-    HelgolandMapViewModule,
-    HelgolandModificationModule,
-    HelgolandPlotlyGraphModule,
-    HelgolandSelectorModule,
-    HelgolandServicesModule,
-    HelgolandTableModule,
-    HelgolandTimeModule,
-    HttpCache,
-    LocalOngoingHttpCache,
-    OnGoingHttpCache,
-    Settings,
-    SettingsService,
+  HelgolandDatasetlistModule,
+  HelgolandFlotGraphModule,
+  HelgolandMapSelectorModule,
+  HelgolandMapViewModule,
+  HelgolandModificationModule,
+  HelgolandPlotlyGraphModule,
+  HelgolandSelectorModule,
+  HelgolandServicesModule,
+  HelgolandTableModule,
+  HelgolandTimeModule,
+  HttpCache,
+  LocalOngoingHttpCache,
+  OnGoingHttpCache,
+  Settings,
+  SettingsService,
 } from '../../../src';
 import { JsonFavoriteExporterService } from '../../../src/components/favorite/service/json-favorite-exporter.service';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
+import { HelgolandMapControlModule } from '../../../src/components/map/control/control.module';
 import { HelgolandPermalinkModule } from '../../../src/components/permalink/permalink.module';
 import { ApiInterface } from '../../../src/services/api-interface/api-interface';
 import { LocalHttpCache } from '../../../src/services/api-interface/caching/local-http-cache';
 import { GetDataApiInterface } from '../../../src/services/api-interface/getData-api-interface.service';
+import { GeoSearch } from '../../../src/services/geosearch/geosearch';
+import { NominatimGeoSearchService } from '../../../src/services/geosearch/nominatim';
 import { settingsPromise } from '../main';
 import { CachingInterceptor } from './../../../src/services/api-interface/caching/caching-interceptor';
 import { AppComponent } from './app.component';
@@ -49,11 +52,11 @@ import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
-import { TableComponent } from './pages/table/table.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
+import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 
@@ -112,6 +115,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     HelgolandSelectorModule,
     HelgolandFlotGraphModule,
     HelgolandPlotlyGraphModule,
+    HelgolandMapControlModule,
     HelgolandMapSelectorModule,
     HelgolandMapViewModule,
     HelgolandDatasetlistModule,
@@ -162,6 +166,10 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     {
       provide: ApiInterface,
       useClass: GetDataApiInterface
+    },
+    {
+      provide: GeoSearch,
+      useClass: NominatimGeoSearchService
     }
   ],
   bootstrap: [AppComponent]

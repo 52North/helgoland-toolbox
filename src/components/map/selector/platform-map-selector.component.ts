@@ -44,7 +44,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
                         this.markerClusterGroup.addLayer(marker);
                     });
                     this.markerClusterGroup.addTo(this.map);
-                    this.map.fitBounds(this.markerClusterGroup.getBounds());
+                    this.zoomToMarkerBounds(this.markerClusterGroup.getBounds());
                 } else {
                     this.noResultsFound = true;
                 }
