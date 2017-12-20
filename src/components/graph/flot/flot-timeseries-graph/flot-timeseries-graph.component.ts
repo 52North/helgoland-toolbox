@@ -247,6 +247,8 @@ export class FlotTimeseriesGraphComponent
                     if (axe.internalIds.indexOf(dataset.internalId) < 0) {
                         axe.internalIds.push(dataset.internalId);
                         axe.tsColors.push(styles.color);
+                    } else {
+                        axe.tsColors[axe.internalIds.indexOf(dataset.internalId)] = styles.color;
                     }
                     axe.min = styles.zeroBasedYAxe ? 0 : null;
                 } else {
