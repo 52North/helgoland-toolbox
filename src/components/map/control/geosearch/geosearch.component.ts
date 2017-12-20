@@ -30,16 +30,23 @@ export class GeosearchControlComponent {
         this.removeOldGeometry();
         if (this.searchTerm) {
             this.loading = true;
-            this.geosearch.searchTerm(this.searchTerm).subscribe((result) => {
-                this.result = result;
-                this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
-                if (result.bounds) {
-                    this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
-                } else {
-                    this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
-                }
-                this.loading = false;
-            });
+            this.geosearch.searchTerm(this.searchTerm).subscribe(
+                (result) => {
+                    if (!result) {
+                        this.searchTerm = '';
+                        return;
+                    }
+                    this.result = result;
+                    this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
+                    if (result.bounds) {
+                        this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
+                    } else {
+                        this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
+                    }
+                },
+                (error) => this.searchTerm = 'error occurred',
+                () => { this.loading = false; }
+            );
         }
     }
 
