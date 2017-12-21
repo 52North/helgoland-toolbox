@@ -20,9 +20,6 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     @Input()
     public mapOptions: MapOptions;
 
-    @Input()
-    public cluster: boolean;
-
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
 
@@ -94,7 +91,7 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if ((changes.serviceUrl || changes.filter) && this.map) {
+        if ((changes.serviceUrl || changes.filter || changes.cluster) && this.map) {
             this.drawGeometries();
         }
     }

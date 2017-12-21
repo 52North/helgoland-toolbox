@@ -11,8 +11,8 @@ import { LayerOptions, MapOptions } from '../../../../../src/components/map/mode
 export class MapSelectorComponent {
 
     public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
-
     public mapOptions: MapOptions;
+    public cluster = true;
 
     constructor() {
 
