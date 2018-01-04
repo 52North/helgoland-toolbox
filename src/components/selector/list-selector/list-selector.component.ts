@@ -37,9 +37,9 @@ export class ListSelectorComponent implements OnChanges {
     public activePanel: string;
 
     constructor(
-        private listSelectorService: ListSelectorService,
-        private apiInterface: ApiInterface,
-        private apiMapping: ApiMapping
+        protected listSelectorService: ListSelectorService,
+        protected apiInterface: ApiInterface,
+        protected apiMapping: ApiMapping
     ) { }
 
     public ngOnChanges(changes: SimpleChanges) {

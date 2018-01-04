@@ -2,12 +2,12 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-    MatButtonModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatListModule,
-    MatRadioModule,
-    MatSidenavModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatListModule,
+  MatRadioModule,
+  MatSidenavModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,21 +16,21 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-    HelgolandDatasetlistModule,
-    HelgolandFlotGraphModule,
-    HelgolandMapSelectorModule,
-    HelgolandMapViewModule,
-    HelgolandModificationModule,
-    HelgolandPlotlyGraphModule,
-    HelgolandSelectorModule,
-    HelgolandServicesModule,
-    HelgolandTableModule,
-    HelgolandTimeModule,
-    HttpCache,
-    LocalOngoingHttpCache,
-    OnGoingHttpCache,
-    Settings,
-    SettingsService,
+  HelgolandDatasetlistModule,
+  HelgolandFlotGraphModule,
+  HelgolandMapSelectorModule,
+  HelgolandMapViewModule,
+  HelgolandModificationModule,
+  HelgolandPlotlyGraphModule,
+  HelgolandSelectorModule,
+  HelgolandServicesModule,
+  HelgolandTableModule,
+  HelgolandTimeModule,
+  HttpCache,
+  LocalOngoingHttpCache,
+  OnGoingHttpCache,
+  Settings,
+  SettingsService,
 } from '../../../src';
 import { JsonFavoriteExporterService } from '../../../src/components/favorite/service/json-favorite-exporter.service';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
@@ -49,6 +49,7 @@ import { StyleModificationComponent } from './components/style-modification/styl
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
+import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
   { path: 'permalink', component: PermalinkComponent },
   { path: 'table', component: TableComponent },
   { path: 'favorite', component: FavoriteComponent },
+  { path: 'list-selection', component: ListSelectionComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -141,7 +143,8 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     TrajectoryComponent,
     PermalinkComponent,
     TableComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    ListSelectionComponent
   ],
   providers: [
     JsonFavoriteExporterService,
