@@ -156,10 +156,6 @@
     fs-extra "^4.0.1"
     viz.js "^1.8.0"
 
-"@ng-bootstrap/ng-bootstrap@^1.0.0-beta.5":
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0-beta.5.tgz#da2b9066b3701a284cac5a16168a77def947b4ab"
-
 "@ngtools/webpack@1.9.3":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.9.3.tgz#353e27e6f21ab35467d17b67e3096dfc5d9bf80c"

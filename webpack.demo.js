@@ -77,11 +77,9 @@ module.exports = function makeWebpackConfig() {
    * This handles most of the magic responsible for converting modules
    */
   config.module = {
-    rules: [
-      {
+    rules: [{
         test: /\.ts$/,
-        use: [
-          {
+        use: [{
             loader: 'awesome-typescript-loader',
             options: {
               configFileName: 'tsconfig.json'
@@ -94,7 +92,10 @@ module.exports = function makeWebpackConfig() {
       },
 
       // copy those assets to output
-      { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, use: 'file-loader?name=fonts/[name].[hash].[ext]?' },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        use: 'file-loader?name=fonts/[name].[hash].[ext]?'
+      },
 
       {
         test: /\.css$/,
@@ -106,9 +107,15 @@ module.exports = function makeWebpackConfig() {
         use: ['to-string-loader', 'css-loader', 'sass-loader']
       },
 
-      { test: /\.html$/, use: 'raw-loader' },
+      {
+        test: /\.html$/,
+        use: 'raw-loader'
+      },
 
-      { test: /\.md$/, use: 'html-loader!markdown-loader' }
+      {
+        test: /\.md$/,
+        use: 'html-loader!markdown-loader'
+      }
     ],
     noParse: [/.+zone\.js\/dist\/.+/]
   };
@@ -141,11 +148,22 @@ module.exports = function makeWebpackConfig() {
       names: ['vendor', 'polyfills', 'inline']
     }),
 
-    new CopyWebpackPlugin([
-      { from: 'demo/src/assets', to: 'assets' },
-      { from: 'demo/src/styles.css', to: 'styles.css' },
-      { from: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css', to: 'indigo-pink.css' },
-      { from: 'node_modules/font-awesome/css/font-awesome.css', to: 'font-awesome.css' }
+    new CopyWebpackPlugin([{
+        from: 'demo/src/assets',
+        to: 'assets'
+      },
+      {
+        from: 'demo/src/styles.css',
+        to: 'styles.css'
+      },
+      {
+        from: 'node_modules/@angular/material/prebuilt-themes/indigo-pink.css',
+        to: 'indigo-pink.css'
+      },
+      {
+        from: 'node_modules/font-awesome/css/font-awesome.css',
+        to: 'font-awesome.css'
+      }
     ]),
 
     // Inject script and link tags into html files
@@ -158,7 +176,10 @@ module.exports = function makeWebpackConfig() {
     // Extract css files
     // Reference: https://github.com/webpack/extract-text-webpack-plugin
     // Disabled when in test mode or not in build mode
-    new ExtractTextPlugin({ filename: 'css/[name].[hash].css', disable: !isProd }),
+    new ExtractTextPlugin({
+      filename: 'css/[name].[hash].css',
+      disable: !isProd
+    }),
 
     new webpack.LoaderOptionsPlugin({
       // add debug messages
@@ -179,8 +200,7 @@ module.exports = function makeWebpackConfig() {
     // Workaround to remove Webpack warning in system_js_ng_module_factory_loader.js
     // See https://github.com/angular/angular/issues/11580
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)@angular/,
-      root('demo', 'src', 'app')
+      /\@angular(\\|\/)core(\\|\/)esm5/, root('demo', 'src', 'app')
     )
   ];
 

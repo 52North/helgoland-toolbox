@@ -52,7 +52,6 @@
     "demo": "webpack-dev-server --port 4200 --config webpack.demo.js --inline --progress"
   },
   "dependencies": {
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@ngx-translate/core": "^9.0.2",
     "@ngx-translate/http-loader": "^2.0.0",
     "@types/flot": "0.0.31",
@@ -87,7 +86,6 @@
     "@angular/router": "^5.1.2",
     "@biesbjerg/ngx-translate-extract": "2.3.4",
     "@compodoc/compodoc": "^1.0.1",
-    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@ngtools/webpack": "1.9.3",
     "@types/bootstrap-slider": "^9.9.0",
     "@types/d3": "^4.11.1",

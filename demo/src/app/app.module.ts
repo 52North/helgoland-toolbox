@@ -2,36 +2,35 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatDialogModule,
-  MatListModule,
-  MatRadioModule,
-  MatSidenavModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatListModule,
+    MatRadioModule,
+    MatSidenavModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
-  HelgolandDatasetlistModule,
-  HelgolandFlotGraphModule,
-  HelgolandMapSelectorModule,
-  HelgolandMapViewModule,
-  HelgolandModificationModule,
-  HelgolandPlotlyGraphModule,
-  HelgolandSelectorModule,
-  HelgolandServicesModule,
-  HelgolandTableModule,
-  HelgolandTimeModule,
-  HttpCache,
-  LocalOngoingHttpCache,
-  OnGoingHttpCache,
-  Settings,
-  SettingsService,
+    HelgolandDatasetlistModule,
+    HelgolandFlotGraphModule,
+    HelgolandMapSelectorModule,
+    HelgolandMapViewModule,
+    HelgolandModificationModule,
+    HelgolandPlotlyGraphModule,
+    HelgolandSelectorModule,
+    HelgolandServicesModule,
+    HelgolandTableModule,
+    HelgolandTimeModule,
+    HttpCache,
+    LocalOngoingHttpCache,
+    OnGoingHttpCache,
+    Settings,
+    SettingsService,
 } from '../../../src';
 import { JsonFavoriteExporterService } from '../../../src/components/favorite/service/json-favorite-exporter.service';
 import { HelgolandD3GraphModule } from '../../../src/components/graph/d3/d3.module';
@@ -110,7 +109,6 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
         deps: [HttpClient]
       }
     }),
-    NgbModule.forRoot(),
     HelgolandServicesModule,
     HelgolandSelectorModule,
     HelgolandFlotGraphModule,
