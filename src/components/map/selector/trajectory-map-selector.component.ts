@@ -117,7 +117,7 @@ export class ProfileTrajectoryMapSelectorComponent
 
     private createGeoJson(profileDataEntry: LocatedProfileDataEntry, dataset: IDataset): L.GeoJSON {
         const geojson = new L.GeoJSON(profileDataEntry.geometry);
-        geojson.setStyle(() => this.defaultStyle);
+        geojson.setStyle(this.defaultStyle);
         geojson.on('click', () => {
             this.onSelected.emit({
                 dataset,
@@ -125,11 +125,11 @@ export class ProfileTrajectoryMapSelectorComponent
             });
         });
         geojson.on('mouseover', () => {
-            geojson.setStyle(() => this.highlightStyle);
+            geojson.setStyle(this.highlightStyle);
             geojson.bringToFront();
         });
         geojson.on('mouseout', () => {
-            geojson.setStyle(() => this.defaultStyle);
+            geojson.setStyle(this.defaultStyle);
         });
         return geojson;
     }
