@@ -1,11 +1,12 @@
 <div>
   <div style="height: 500px;">
-    <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" [mapOptions]="mapOptions"
-      (onSelected)="onStationSelected($event)" [cluster]="cluster" (onContentLoading)="loading = $event"></n52-station-map-selector>
+    <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
+      [fitBounds]="fitBounds" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
+      [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster" (onContentLoading)="loading = $event"></n52-station-map-selector>
   </div>
   <div>Is loading: {{loading}}</div>
   <n52-geosearch-control [mapId]="'timeseries'"></n52-geosearch-control>
-  <n52-extent-control mapId="timeseries" [extent]="mapOptions.fitBounds"></n52-extent-control>
+  <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
   <n52-locate-control mapId="timeseries"></n52-locate-control>
   <div>
     <button (click)="cluster = !cluster;">Toggle cluster</button>
@@ -13,5 +14,13 @@
   </div>
   <div>
     <button (click)="switchProvider();">Switch Provider</button>
+  </div>
+  <div>
+    <button (click)="addOverlayMapLayer();">Add Map Layer</button>
+    <button (click)="removeOverlayMapLayer();">Remove Map Layer</button>
+  </div>
+  <div>
+    <button (click)="showZoomControlsLeft();">Show Zoom Controls Left</button>
+    <button (click)="showZoomControlsRight();">Show Zoom Controls Right</button>
   </div>
 </div>

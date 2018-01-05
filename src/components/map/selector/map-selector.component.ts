@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, EventEmitter, Input, OnChanges, Outpu
 import * as L from 'leaflet';
 
 import { HasLoadableContent } from '../../../model/mixins/has-loadable-content';
-import { MapOptions } from '../model/map-options';
+import { LayerOptions } from '../index';
 import { ParameterFilter } from './../../../model/api/parameterFilter';
 import { MapCache } from './../../../services/map/map.service';
 
@@ -18,7 +18,22 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     public filter: ParameterFilter;
 
     @Input()
-    public mapOptions: MapOptions;
+    public fitBounds: L.LatLngBoundsExpression;
+
+    @Input()
+    public zoomControlOptions: L.Control.ZoomOptions;
+
+    @Input()
+    public avoidZoomToSelection: boolean;
+
+    @Input()
+    public baseMaps: Map<LayerOptions, L.Layer>;
+
+    @Input()
+    public overlayMaps: Map<LayerOptions, L.Layer>;
+
+    @Input()
+    public layerControlOptions: L.Control.LayersOptions;
 
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
@@ -30,6 +45,10 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
 
     public noResultsFound: boolean;
     protected map: L.Map;
+    protected oldBaseLayer: L.Control.LayersObject = {};
+    protected oldOverlayLayer: L.Control.LayersObject = {};
+    protected layerControl: L.Control.Layers;
+    protected zoomControl: L.Control.Zoom;
 
     constructor(
         protected mapCache: MapCache,
@@ -37,51 +56,19 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     ) { }
 
     public ngAfterViewInit() {
-        if (!this.mapOptions) {
-            this.mapOptions = {};
-        }
-
-        if (!this.mapOptions.baseMaps || this.mapOptions.baseMaps.size === 0) {
-            this.mapOptions.baseMaps = new Map();
-            this.mapOptions.baseMaps.set(
-                { name: 'BaseLayer', visible: true },
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                }));
-        }
-
-        if (!this.mapOptions.overlayMaps) {
-            this.mapOptions.overlayMaps = new Map();
-        }
 
         // create map
         this.map = L.map(this.mapId, {
             zoomControl: false
         });
-        if (this.mapOptions.fitBounds) {
-            this.map.fitBounds(this.mapOptions.fitBounds);
+        if (this.fitBounds) {
+            this.map.fitBounds(this.fitBounds);
         }
         // add base maps to map
-        const base: L.Control.LayersObject = {};
-        this.mapOptions.baseMaps.forEach((layer, key) => {
-            base[key.name] = layer;
-            if (key.visible) { layer.addTo(this.map); }
-        });
-        // add overlay maps to map
-        const overlays: L.Control.LayersObject = {};
-        this.mapOptions.overlayMaps.forEach((layer, key) => {
-            overlays[key.name] = layer;
-            if (key.visible) { layer.addTo(this.map); }
-        });
+        this.addBaseMapsToMap();
+        this.addOverlayMapsToMap();
 
-        if (this.mapOptions.layerControlOptions
-            && (this.mapOptions.baseMaps.size > 1 || this.mapOptions.overlayMaps.size > 0)) {
-            L.control.layers(base, overlays, this.mapOptions.layerControlOptions).addTo(this.map);
-        }
-
-        if (this.mapOptions.zoomOptions) {
-            L.control.zoom(this.mapOptions.zoomOptions).addTo(this.map);
-        }
+        this.updateZoomControl();
 
         this.mapCache.setMap(this.mapId, this.map);
         setTimeout(() => {
@@ -91,16 +78,94 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if ((changes.serviceUrl || changes.filter || changes.cluster) && this.map) {
-            this.drawGeometries();
-        }
-    }
-
-    protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
-        if (!this.mapOptions || !this.mapOptions.avoidZoomToSelection) {
-            this.map.fitBounds(bounds);
+        if (this.map) {
+            if (changes.serviceUrl || changes.filter || changes.cluster) {
+                this.drawGeometries();
+            }
+            if (changes.baseMaps) {
+                this.addBaseMapsToMap();
+            }
+            if (changes.overlayMaps) {
+                this.addOverlayMapsToMap();
+            }
+            if (changes.zoomControlOptions) {
+                this.updateZoomControl();
+            }
         }
     }
 
     protected abstract drawGeometries(): void;
+
+    protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
+        if (!this.avoidZoomToSelection) {
+            this.map.fitBounds(bounds);
+        }
+    }
+
+    private addBaseMapsToMap() {
+        if (!this.baseMaps || this.baseMaps.size === 0) {
+            this.baseMaps = new Map();
+            this.baseMaps.set(
+                { name: 'BaseLayer', visible: true },
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                })
+            );
+        }
+        for (const key in this.oldBaseLayer) {
+            if (this.oldBaseLayer.hasOwnProperty(key)) {
+                const layer = this.oldBaseLayer[key];
+                this.map.removeLayer(layer);
+            }
+        }
+        this.oldBaseLayer = {};
+        this.baseMaps.forEach((layer, key) => {
+            this.oldBaseLayer[key.name] = layer;
+            if (key.visible) {
+                layer.addTo(this.map);
+            }
+        });
+        this.updateLayerControl();
+    }
+
+    private addOverlayMapsToMap() {
+        if (!this.overlayMaps) {
+            this.overlayMaps = new Map();
+        }
+        for (const key in this.oldOverlayLayer) {
+            if (this.oldOverlayLayer.hasOwnProperty(key)) {
+                const layer = this.oldOverlayLayer[key];
+                this.map.removeLayer(layer);
+            }
+        }
+        this.oldOverlayLayer = {};
+        if (this.overlayMaps) {
+            this.overlayMaps.forEach((layer, key) => {
+                this.oldOverlayLayer[key.name] = layer;
+                if (key.visible) {
+                    layer.addTo(this.map);
+                }
+            });
+        }
+        this.updateLayerControl();
+    }
+
+    private updateZoomControl() {
+        if (this.zoomControl) { this.map.removeControl(this.zoomControl); }
+        if (this.zoomControlOptions) {
+            this.zoomControl = L.control.zoom(this.zoomControlOptions).addTo(this.map);
+        }
+    }
+
+    private updateLayerControl() {
+        if (this.layerControl) {
+            this.map.removeControl(this.layerControl);
+        }
+        if (this.layerControlOptions
+            && (this.baseMaps.size > 1 || this.overlayMaps.size > 0)) {
+            this.layerControl =
+                L.control.layers(this.oldBaseLayer, this.oldOverlayLayer, this.layerControlOptions).addTo(this.map);
+        }
+    }
+
 }
