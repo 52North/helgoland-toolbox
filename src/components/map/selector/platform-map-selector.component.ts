@@ -1,6 +1,6 @@
 import 'leaflet.markercluster';
 
-import { AfterViewInit, ChangeDetectorRef, Component, OnChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
 
 import { HasLoadableContent } from '../../../model/mixins/has-loadable-content';
@@ -18,7 +18,10 @@ import { MapSelectorComponent } from './map-selector.component';
 @Mixin([HasLoadableContent])
 export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform> implements OnChanges, AfterViewInit {
 
-    private markerClusterGroup: L.FeatureGroup;
+    @Input()
+    public cluster: boolean;
+
+    private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
         private apiInterface: ApiInterface,
@@ -31,20 +34,24 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
     protected drawGeometries() {
         this.noResultsFound = false;
         this.isContentLoading(true);
-        if (this.markerClusterGroup) { this.map.removeLayer(this.markerClusterGroup); }
+        if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         this.apiInterface.getPlatforms(this.serviceUrl, this.filter)
             .subscribe((res) => {
-                this.markerClusterGroup = L.markerClusterGroup({ animate: true });
+                if (this.cluster) {
+                    this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
+                } else {
+                    this.markerFeatureGroup = L.featureGroup();
+                }
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
                         const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
                         marker.on('click', () => {
                             this.onSelected.emit(entry);
                         });
-                        this.markerClusterGroup.addLayer(marker);
+                        this.markerFeatureGroup.addLayer(marker);
                     });
-                    this.markerClusterGroup.addTo(this.map);
-                    this.zoomToMarkerBounds(this.markerClusterGroup.getBounds());
+                    this.markerFeatureGroup.addTo(this.map);
+                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
                 } else {
                     this.noResultsFound = true;
                 }

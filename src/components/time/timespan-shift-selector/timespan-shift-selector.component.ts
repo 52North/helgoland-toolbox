@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Timespan } from './../../../model/internal/timeInterval';
 import { Time } from './../../../services/time/time.service';

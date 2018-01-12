@@ -1,5 +1,4 @@
-import { HttpRequest } from '@angular/common/http';
-import { HttpEvent } from '@angular/common/http/src/response';
+import { HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 

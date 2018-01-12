@@ -80,7 +80,7 @@ export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
                 return L.circleMarker(latlng, this.highlightStyle);
             }
         });
-        this.highlightGeometry.setStyle(() => this.highlightStyle);
+        this.highlightGeometry.setStyle(this.highlightStyle);
         this.highlightGeometry.addTo(this.map);
     }
 
@@ -92,7 +92,7 @@ export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
                 }
             });
 
-            geojson.setStyle(() => this.defaultStyle);
+            geojson.setStyle(this.defaultStyle);
             geojson.addTo(this.map);
 
             this.map.fitBounds(geojson.getBounds());

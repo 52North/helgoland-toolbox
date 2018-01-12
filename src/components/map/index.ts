@@ -5,7 +5,7 @@ export { LocateService } from './control/locate/locate.service';
 export { ZoomControlComponent } from './control/zoom/zoom.component';
 export { HelgolandMapControlModule } from './control/control.module';
 
-export { MapOptions, LayerOptions } from './model/map-options';
+export { LayerOptions } from './model/map-options';
 
 export { MapSelectorComponent } from './selector/map-selector.component';
 export { PlatformMapSelectorComponent } from './selector/platform-map-selector.component';

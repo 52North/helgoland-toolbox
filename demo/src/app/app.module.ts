@@ -12,7 +12,6 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -50,6 +49,7 @@ import { StyleModificationComponent } from './components/style-modification/styl
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
+import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
@@ -73,6 +73,7 @@ const appRoutes: Routes = [
   { path: 'permalink', component: PermalinkComponent },
   { path: 'table', component: TableComponent },
   { path: 'favorite', component: FavoriteComponent },
+  { path: 'list-selection', component: ListSelectionComponent },
   { path: '**', redirectTo: '/map-selector', pathMatch: 'full' }
 ];
 
@@ -110,7 +111,6 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
         deps: [HttpClient]
       }
     }),
-    NgbModule.forRoot(),
     HelgolandServicesModule,
     HelgolandSelectorModule,
     HelgolandFlotGraphModule,
@@ -143,7 +143,8 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     TrajectoryComponent,
     PermalinkComponent,
     TableComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    ListSelectionComponent
   ],
   providers: [
     JsonFavoriteExporterService,

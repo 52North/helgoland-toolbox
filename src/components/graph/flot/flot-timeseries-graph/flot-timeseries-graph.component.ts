@@ -196,7 +196,11 @@ export class FlotTimeseriesGraphComponent
     }
 
     private plotGraph() {
-        if (this.preparedData && this.plotarea && this.preparedData.length !== 0 && this.plotOptions) {
+        if (this.preparedData
+            && this.plotarea
+            && this.preparedData.length !== 0
+            && this.plotOptions
+            && this.plotarea.clientHeight > 0) {
             this.prepareAxisPos();
             this.plotOptions.xaxis.min = this.timespan.from;
             this.plotOptions.xaxis.max = this.timespan.to;

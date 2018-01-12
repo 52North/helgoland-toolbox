@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { HelgolandServicesModule } from './../../services/services.module';
@@ -28,7 +27,6 @@ const COMPONENTS = [
         CommonModule,
         HelgolandDepictionModule,
         HelgolandServicesModule,
-        NgbAccordionModule,
         TranslateModule
     ],
     declarations: [
