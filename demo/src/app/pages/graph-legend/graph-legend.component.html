@@ -1,6 +1,6 @@
 <div>
   <div style="height: 500px;">
-    <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
+    <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
       (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)" (onContentLoading)="graphLoading = $event"></n52-flot-timeseries-graph>
   </div>
   <div>

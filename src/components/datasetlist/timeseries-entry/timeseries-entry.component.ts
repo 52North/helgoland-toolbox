@@ -91,6 +91,10 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     }
 
     public toggleVisibility() {
+        if (this.selected == true) {
+            // splice from selectedIds
+            this.toggleSelection();
+        }
         this.datasetOptions.visible = !this.datasetOptions.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
     }
