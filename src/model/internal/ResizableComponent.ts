@@ -3,7 +3,7 @@ import { HostListener } from '@angular/core';
 export abstract class ResizableComponent {
 
     @HostListener('window:resize', ['$event'])
-    protected onWindowResize() {
+    public onWindowResize(event: Event) {
         this.onResize();
     }
 

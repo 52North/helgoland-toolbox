@@ -93,7 +93,7 @@ export class FlotTimeseriesGraphComponent
         protected api: ApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        private labelMapper: LabelMapperService
+        protected labelMapper: LabelMapperService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc);
     }
