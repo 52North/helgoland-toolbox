@@ -29,6 +29,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   private timeseriesMap: Map<string, Timeseries> = new Map();
   private additionalStylesheet: HTMLElement;
+  private results: Map<string, Data<[number, number]>> = new Map();
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -160,8 +161,29 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
       this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, buffer, { format: 'flot' })
         .subscribe((result) => {
-          // bring result into Array<DatasetTableData> format and pass to prepareData
-          this.prepareData(timeseries, result.values.map((e) => ({ datetime: e[0], values: [e[1]] })));
+          this.results.set(timeseries.internalId, result);
+
+          // synchronized part
+          // makes sure that tsdata is prepared in the order it was requested
+
+          // method: do not start prepareData if there are tsdata requests that have started but not yet finished
+
+          // e.g. if there's 4 ts, they can be prepared in 1 batch of 1234 or 4 batches of 1,2,3,4 or 2 batches of
+          // 12,34 but not as 2 batches of 13,24 because at the time #1 and #3 are finished but not #2, tsMap.size
+          // would already be 3 but results.size only 2 -> waiting for #2 enforced. Additionally, preparedTs.length
+          // is taken into account to allow multiple batches (otherwise, if e.g. #1 finishes first and gets prepared
+          // immediately because of 1=1, the others would never get prepared due to results.size not being able to
+          // catch up with tsMap.size)
+          if (this.results.size === this.timeseriesMap.size - this.preparedTimeserieses.length) {
+            this.timeseriesMap.forEach((ts) => {
+              if (this.results.has(ts.internalId)) {
+                const res = this.results.get(ts.internalId);
+                this.results.delete(ts.internalId);
+                // bring result into Array<DatasetTableData> format and pass to prepareData
+                this.prepareData(ts, res.values.map((e) => ({ datetime: e[0], values: [e[1]] })));
+              }
+            });
+          }
         });
     }
   }
