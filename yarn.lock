@@ -170,8 +170,8 @@
     webpack-sources "^1.1.0"
 
 "@ngx-translate/core@^9.0.2":
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.0.2.tgz#d4cab861e3ea8ea14a6df5dcd744dfeb29fb15e2"
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-9.1.0.tgz#95b2fe85036d11a74196cbaff0adbbcb87f40018"
 
 "@ngx-translate/http-loader@^2.0.0":
   version "2.0.1"
@@ -377,9 +377,13 @@
   dependencies:
     "@types/jquery" "*"
 
-"@types/geojson@*", "@types/geojson@^1.0.5":
+"@types/geojson@*":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
+
+"@types/geojson@^7946.0.0":
+  version "7946.0.0"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.0.tgz#e8bc74e8183d966455f82023f0c72e1072a952d0"
 
 "@types/jasmine@^2.5.47":
   version "2.8.4"
@@ -1954,13 +1958,17 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2, commander@2.12.2, commander@2.12.x, commander@^2.12.1, commander@^2.9.0, commander@~2.12.1:
-  version "2.12.2"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
+commander@2, commander@~2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
 
 commander@2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
+
+commander@2.12.2, commander@2.12.x, commander@^2.12.1, commander@^2.9.0, commander@~2.12.1:
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
 commander@2.6.0:
   version "2.6.0"
@@ -2029,7 +2037,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@^1.5.0, concat-stream@^1.5.2, concat-stream@~1.6.0:
+concat-stream@^1.5.0, concat-stream@^1.5.2, concat-stream@^1.6.0, concat-stream@~1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -2959,9 +2967,18 @@ duplexer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
 
-duplexify@^3.1.2, duplexify@^3.4.2, duplexify@^3.4.5:
+duplexify@^3.1.2, duplexify@^3.4.2:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.5.1.tgz#4e1516be68838bc90a49994f0b39a6e5960befcd"
+  dependencies:
+    end-of-stream "^1.0.0"
+    inherits "^2.0.1"
+    readable-stream "^2.0.0"
+    stream-shift "^1.0.0"
+
+duplexify@^3.4.5, duplexify@^3.5.1:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.5.3.tgz#8b5818800df92fd0125b27ab896491912858243e"
   dependencies:
     end-of-stream "^1.0.0"
     inherits "^2.0.1"
@@ -3035,7 +3052,13 @@ encoding@0.1.12:
   dependencies:
     iconv-lite "~0.4.13"
 
-end-of-stream@^1.0.0, end-of-stream@^1.1.0:
+end-of-stream@^1.0.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.1.tgz#ed29634d19baba463b6ce6b80a37213eab71ec43"
+  dependencies:
+    once "^1.4.0"
+
+end-of-stream@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.0.tgz#7a90d833efda6cfa6eac0f4949dbb0fad3a63206"
   dependencies:
@@ -3826,7 +3849,13 @@ fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
 
-from2@^2.1.0, from2@^2.3.0:
+from2-string@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/from2-string/-/from2-string-1.1.0.tgz#18282b27d08a267cb3030cd2b8b4b0f212af752a"
+  dependencies:
+    from2 "^2.0.3"
+
+from2@^2.0.3, from2@^2.1.0, from2@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/from2/-/from2-2.3.0.tgz#8bfb5502bde4a4d36cfdeea007fcca21d7e382af"
   dependencies:
@@ -4175,9 +4204,9 @@ gl-mesh3d@^1.3.0:
     simplicial-complex-contour "^1.0.0"
     typedarray-pool "^1.1.0"
 
-gl-plot2d@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/gl-plot2d/-/gl-plot2d-1.2.0.tgz#99eead246d2f6473cc9a4bc08617fb6427ab622d"
+gl-plot2d@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/gl-plot2d/-/gl-plot2d-1.3.0.tgz#fbf2a72b8d6e255c260714ffdfb5d345fb6e0696"
   dependencies:
     binary-search-bounds "^2.0.3"
     gl-buffer "^2.1.2"
@@ -6600,6 +6629,17 @@ mimic-fn@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.1.0.tgz#e667783d92e89dbd342818b5230b9d62a672ad18"
 
+minify-stream@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/minify-stream/-/minify-stream-1.1.0.tgz#3ca3d226e0e53b98c8aa4d45e7aefc11fb925bbe"
+  dependencies:
+    concat-stream "^1.6.0"
+    convert-source-map "^1.5.0"
+    duplexify "^3.5.1"
+    from2-string "^1.1.0"
+    uglify-es "^3.1.2"
+    xtend "^4.0.1"
+
 minimalistic-assert@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.0.tgz#702be2dda6b37f4836bcb3f5db56641b64a1d3d3"
@@ -6698,7 +6738,7 @@ module-deps@^4.0.8:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
-moment@^2.19.1:
+moment@^2.20.1:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
@@ -6907,9 +6947,9 @@ nextafter@^1.0.0:
   dependencies:
     double-bits "^1.1.0"
 
-ngx-clipboard@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-9.0.0.tgz#a56e4a3d0488a491898ee5209980b81ddad8b659"
+ngx-clipboard@9.1.2:
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-9.1.2.tgz#a9f547f66e550df0da857c699246fe253c0526fa"
   dependencies:
     ngx-window-token "0.0.4"
 
@@ -7675,8 +7715,8 @@ planar-graph-to-polyline@^1.0.0:
     uniq "^1.0.0"
 
 plotly.js@^1.31.1:
-  version "1.31.2"
-  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.31.2.tgz#1b4100bc60957fe7589ce72cfccd4ee499dfaedb"
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/plotly.js/-/plotly.js-1.32.0.tgz#52cf2c1274e13c00814f7f0a12662f6dccd48528"
   dependencies:
     "3d-view" "^2.0.0"
     "@plotly/d3-sankey" "^0.5.0"
@@ -7698,7 +7738,7 @@ plotly.js@^1.31.1:
     gl-line3d "^1.1.0"
     gl-mat4 "^1.1.2"
     gl-mesh3d "^1.3.0"
-    gl-plot2d "^1.2.0"
+    gl-plot2d "^1.3.0"
     gl-plot3d "^1.5.4"
     gl-pointcloud2d "^1.0.0"
     gl-scatter2d "^1.3.2"
@@ -7711,6 +7751,7 @@ plotly.js@^1.31.1:
     has-hover "^1.0.1"
     mapbox-gl "^0.22.0"
     matrix-camera-controller "^2.1.3"
+    minify-stream "^1.1.0"
     mouse-change "^1.4.0"
     mouse-event-offset "^3.0.2"
     mouse-wheel "^1.0.2"
@@ -7718,6 +7759,7 @@ plotly.js@^1.31.1:
     ndarray-fill "^1.0.2"
     ndarray-homography "^1.0.0"
     ndarray-ops "^1.2.2"
+    polybooljs "^1.2.0"
     regl "^1.3.0"
     right-now "^1.0.0"
     robust-orientation "^1.1.3"
@@ -7755,6 +7797,10 @@ point-in-big-polygon@^2.0.0:
     interval-tree-1d "^1.0.1"
     robust-orientation "^1.1.3"
     slab-decomposition "^1.0.1"
+
+polybooljs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/polybooljs/-/polybooljs-1.2.0.tgz#b4390c2e079d4c262d3b2504c6288d95ba7a4758"
 
 polytope-closest-point@^1.0.0:
   version "1.0.0"
@@ -8485,8 +8531,8 @@ regjsparser@^0.1.4:
     jsesc "~0.5.0"
 
 regl@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/regl/-/regl-1.3.0.tgz#ccde82eff8a8a068a559581ceacbef1afea78ebd"
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/regl/-/regl-1.3.1.tgz#2995e63a7984c520ef2da0f6f1027f7051338140"
 
 relateurl@0.2.x:
   version "0.2.7"
@@ -10170,6 +10216,13 @@ typescript@^2.3.2, typescript@^2.4.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
+uglify-es@^3.1.2:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.3.7.tgz#d1249af668666aba7cb1163e277455be9eb393cf"
+  dependencies:
+    commander "~2.13.0"
+    source-map "~0.6.1"
+
 uglify-js@3.3.x:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.3.4.tgz#d8ebb76f201a3798ac2f0b6519642fcca4a99834"
@@ -10753,7 +10806,7 @@ xregexp@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-2.0.0.tgz#52a63e56ca0b84a7f3a5f3d61872f126ad7a5943"
 
-"xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@~4.0.1:
+"xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
