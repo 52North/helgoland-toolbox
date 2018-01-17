@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "0.0.1-alpha.21",
+  "version": "0.0.1-alpha.22",
   "description": "Helgoland toolbox",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
