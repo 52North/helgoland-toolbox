@@ -7,6 +7,8 @@ import { DatasetOptions } from './../../../../../src/model/internal/options';
 import { Timespan } from './../../../../../src/model/internal/timeInterval';
 import { ColorService } from './../../../../../src/services/color/color.service';
 
+// import { TimespanShiftSelectorComponent } from '../../../../../src/components/time/timespan-shift-selector/timespan-shift-selector.component';
+
 @Component({
     selector: 'my-app',
     templateUrl: './graph-legend.component.html',
@@ -173,6 +175,10 @@ export class GraphLegendComponent {
         const idx = this.datasetIds.findIndex((entry) => entry === id);
         this.datasetIds.splice(idx, 1);
         this.datasetOptions.delete(id);
+    }
+
+    public changeYAxesVisibility() {
+        this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
     }
 
     public updateOptions(option: DatasetOptions) {

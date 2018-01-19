@@ -14,7 +14,7 @@
     Loading Overview: {{overviewLoading}}
   </div>
   <div>
-    <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
+    <n52-timespan-shift-selector [timespan]="timespan" (onChangeYAxesVisibility)="changeYAxesVisibility($event)" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
   </div>
   <div *ngFor="let id of datasetIds">
     <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId" [datasetOptions]="datasetOptions.get(id)"
