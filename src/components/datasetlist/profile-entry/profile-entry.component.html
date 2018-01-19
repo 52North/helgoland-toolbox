@@ -18,7 +18,7 @@
   <div *ngFor="let item of datasetOptions">
     <div>
       <span [ngStyle]="{'color': item.color}">{{item.timestamp | date: 'dd.MM.yy HH:mm'}}</span>
-      <span class="fa" [ngClass]="{'fa-eye-slash': item.visible, 'fa-eye': !datasetOptions.visible}" (click)="toggleVisibility(item); $event.stopPropagation();"
+      <span class="fa" [ngClass]="{'fa-eye-slash': item.visible, 'fa-eye': !item.visible}" (click)="toggleVisibility(item); $event.stopPropagation();"
         title="{{'profiles.legend.visibility' | translate}}"></span>
       <span class="fa fa-pencil" (click)="editDatasetOptions(item); $event.stopPropagation();" [ngStyle]="{color: item.color}"
         title="{{'profiles.legend.edit-style' | translate}}"></span>
