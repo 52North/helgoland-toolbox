@@ -7,6 +7,8 @@ import { DatasetOptions } from './../../../../../src/model/internal/options';
 import { Timespan } from './../../../../../src/model/internal/timeInterval';
 import { ColorService } from './../../../../../src/services/color/color.service';
 
+// import { TimespanShiftSelectorComponent } from '../../../../../src/components/time/timespan-shift-selector/timespan-shift-selector.component';
+
 @Component({
     selector: 'my-app',
     templateUrl: './graph-legend.component.html',
