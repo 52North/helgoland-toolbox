@@ -240,6 +240,7 @@ export class FlotTimeseriesGraphComponent
     private prepareData(dataset: IDataset, data: Data<[number, number]>): Observable<boolean> {
         return Observable.create((observer: Observer<boolean>) => {
             const dataIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+            const selectedIndex = this.selectedDatasetIds.indexOf(dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
             this.createAxisLabel(dataset).subscribe((label) => {
                 let axePos;
@@ -279,6 +280,10 @@ export class FlotTimeseriesGraphComponent
                         lineWidth: 1
                     }
                 };
+                if (selectedIndex >= 0) {
+                    dataEntry.lines.lineWidth = 5;
+                    dataEntry.bars.lineWidth = 5;
+                }
                 if (dataIdx >= 0) {
                     this.preparedData[dataIdx] = dataEntry;
                 } else {
