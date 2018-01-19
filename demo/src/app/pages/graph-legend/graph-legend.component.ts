@@ -175,6 +175,10 @@ export class GraphLegendComponent {
         this.datasetOptions.delete(id);
     }
 
+    public changeYAxesVisibility() {
+        this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
+    }
+
     public updateOptions(option: DatasetOptions) {
         console.log('updateOptions' + JSON.stringify(option));
     }
