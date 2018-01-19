@@ -133,6 +133,8 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
+    public selectedIds: Array<string> = new Array();
+
     public overviewLoading: boolean;
 
     constructor(
@@ -173,6 +175,10 @@ export class GraphLegendComponent {
         this.datasetOptions.delete(id);
     }
 
+    public changeYAxesVisibility() {
+        this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
+    }
+
     public updateOptions(option: DatasetOptions) {
         console.log('updateOptions' + JSON.stringify(option));
     }
@@ -186,6 +192,14 @@ export class GraphLegendComponent {
         this.dialog.open(StyleModificationComponent, {
             data: option
         });
+    }
+
+    public selectTimeseries(selected: boolean, id: string) {
+        if (selected) {
+            this.selectedIds.push(id);
+        } else {
+            this.selectedIds.splice(this.selectedIds.findIndex(entry => entry === id), 1);
+        }
     }
 
 }
