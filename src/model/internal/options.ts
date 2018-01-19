@@ -3,9 +3,9 @@ export class DatasetOptions {
     public color: string;
     public visible = true;
     public loading?: boolean;
-    public separateYAxe?= false;
-    public zeroBasedYAxe?= false;
-    public generalize?= false;
+    public separateYAxe ?= false;
+    public zeroBasedYAxe ?= false;
+    public generalize ?= false;
     public showReferenceValues: ReferenceValueOption[] = [];
 
     constructor(internalId: string, color: string) {

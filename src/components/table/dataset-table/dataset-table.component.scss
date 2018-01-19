@@ -1,5 +1,7 @@
 :host {
   flex: 1;
+  overflow-y: scroll;  /* make table scrollable */
+  overflow-x: hidden;  /* suppress horizontal scrollbar */
 
   /* Start fixed table header: http://jsfiddle.net/yeAhU/261/ */
   tbody, thead tr {
@@ -35,6 +37,11 @@
     cursor: pointer;
     border-bottom-width: 7px;
     border-bottom-style: solid;
+
+    /* if word doesn't fit on whole line, breaks the word after any character without inserting a hyphen or anything else */
+    overflow-wrap: break-word;
+    /* if word doesn't fit on the rest of the current line, breaks the word where the browser's algorithm thinks it's approriate and renders a hyphen */
+    /*hyphens: auto;*/
 
     &:first-child {
       border-bottom-color: darkgray;
