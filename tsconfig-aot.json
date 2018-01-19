@@ -16,7 +16,7 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "rootDir": "./tmp/src-inlined",
-    "typeRoots" : [
+    "typeRoots": [
       "./node_modules/@types"
     ],
     "lib": [
@@ -28,6 +28,7 @@
     "./tmp/src-inlined/index.ts"
   ],
   "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false,
     "genDir": "dist",
     "debug": false,
     "skipTemplateCodegen": true,
