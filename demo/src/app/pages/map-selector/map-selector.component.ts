@@ -77,6 +77,10 @@ export class MapSelectorComponent {
         }
     }
 
+    public zoomToOtherExtend() {
+        this.fitBounds = [[39.5, 3.27], [41.5, 5.67]];
+    }
+
     public onStationSelected(station: Station) {
         console.log('Clicked station: ' + station.properties.label);
     }

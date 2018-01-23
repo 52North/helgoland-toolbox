@@ -7,6 +7,9 @@
   <div>Is loading: {{loadingStations}}</div>
   <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
   <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
+  <div>
+    <button (click)="zoomToOtherExtend()">Zoom to other extend</button>
+  </div>
   <n52-locate-control mapId="timeseries"></n52-locate-control>
   <div>
     <button (click)="cluster = !cluster;">Toggle cluster</button>

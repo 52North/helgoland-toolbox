@@ -91,6 +91,9 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
             if (changes.zoomControlOptions) {
                 this.updateZoomControl();
             }
+            if (changes.fitBounds) {
+                this.map.fitBounds(this.fitBounds);
+            }
         }
     }
 
