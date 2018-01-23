@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import * as L from 'leaflet';
 
+import { GeoSearchOptions } from '../../../..';
 import { GeoSearch, GeoSearchResult } from '../../../../services/geosearch/geosearch';
 import { MapCache } from './../../../../services/map/map.service';
 
@@ -12,6 +13,9 @@ export class GeosearchControlComponent {
 
     @Input()
     public mapId: string;
+
+    @Input()
+    public options: GeoSearchOptions;
 
     public result: GeoSearchResult;
 
@@ -30,7 +34,7 @@ export class GeosearchControlComponent {
         this.removeOldGeometry();
         if (this.searchTerm) {
             this.loading = true;
-            this.geosearch.searchTerm(this.searchTerm).subscribe(
+            this.geosearch.searchTerm(this.searchTerm, this.options).subscribe(
                 (result) => {
                     if (!result) {
                         this.searchTerm = '';
