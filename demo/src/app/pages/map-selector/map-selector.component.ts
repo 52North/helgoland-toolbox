@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
 
-import { LayerOptions } from '../../../../../src/components/map/model/map-options';
+import { GeoSearchOptions, LayerOptions, ParameterFilter } from '../../../../../src';
+import { Station } from '../../../../../src/model/api/station';
 
 @Component({
     selector: 'my-app',
@@ -19,6 +20,10 @@ export class MapSelectorComponent {
     public overlayMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public cluster = true;
+    public loadingStations: boolean;
+    public stationFilter: ParameterFilter;
+
+    public searchOptions: GeoSearchOptions = { countrycodes: [] };
 
     public addOverlayMapLayer() {
         this.overlayMaps = new Map<LayerOptions, L.Layer>();
@@ -70,5 +75,9 @@ export class MapSelectorComponent {
         } else {
             this.providerUrl = 'http://geo.irceline.be/sos/api/v1/';
         }
+    }
+
+    public onStationSelected(station: Station) {
+        console.log('Clicked station: ' + station.properties.label);
     }
 }
