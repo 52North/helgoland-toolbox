@@ -9,7 +9,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 
 import { Category } from './../../model/api/category';
 import { Data } from './../../model/api/data';
-import { Dataset, Timeseries } from './../../model/api/dataset';
+import { Dataset, Timeseries, TimeseriesExtras } from './../../model/api/dataset';
 import { Feature } from './../../model/api/feature';
 import { Offering } from './../../model/api/offering';
 import { DataParameterFilter, ParameterFilter } from './../../model/api/parameterFilter';
@@ -92,6 +92,11 @@ export class SimpleApiInterface extends ApiInterface {
             this.internalDatasetId.generateInternalId(timeseries);
             return timeseries;
         });
+    }
+
+    public getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras> {
+        const url = this.createRequestUrl(apiUrl, 'timeseries', id);
+        return this.requestApi<TimeseriesExtras>(url + '/extras');
     }
 
     public getTsData<T>(
