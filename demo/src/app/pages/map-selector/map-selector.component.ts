@@ -14,6 +14,7 @@ export class MapSelectorComponent {
     public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
 
     public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
+    public fitBounds2: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
     public avoidZoomToSelection = true;
     public baseMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
