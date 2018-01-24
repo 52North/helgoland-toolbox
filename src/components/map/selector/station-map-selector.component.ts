@@ -64,7 +64,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         };
         this.apiInterface.getTimeseries(this.serviceUrl, tempFilter).subscribe((timeseries: Timeseries[]) => {
             this.markerFeatureGroup = L.featureGroup();
-            const obsList = [];
+            const obsList: Array<Observable<TimeseriesExtras>> = [];
             timeseries.forEach((ts: Timeseries) => {
                 const obs = this.apiInterface.getTimeseriesExtras(ts.id, this.serviceUrl);
                 obsList.push(obs);
