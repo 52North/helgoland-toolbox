@@ -3,9 +3,9 @@
     <div style="width: 500px; padding: 5px;">
       <div style="height: 500px;">
         <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
-          [fitBounds]="fitBounds" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
-          [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster" [statusIntervals]="statusIntervals"
-          (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+          [mapOptions]="mapOptions" [fitBounds]="fitBounds" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps"
+          [overlayMaps]="overlayMaps" [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)"
+          [cluster]="cluster" [statusIntervals]="statusIntervals" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
       </div>
       <div>Is loading: {{loadingStations}}</div>
       <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>

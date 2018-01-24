@@ -26,6 +26,7 @@ export class MapSelectorComponent {
         phenomenon: '8'
     };
     public statusIntervals: boolean = false;
+    public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
 
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
 

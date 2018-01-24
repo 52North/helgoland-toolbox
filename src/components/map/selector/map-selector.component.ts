@@ -35,6 +35,9 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     @Input()
     public layerControlOptions: L.Control.LayersOptions;
 
+    @Input()
+    public mapOptions: L.MapOptions;
+
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
 
@@ -57,10 +60,11 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
 
     public ngAfterViewInit() {
 
+        if (!this.mapOptions) { this.mapOptions = { zoomControl: false }; }
+
         // create map
-        this.map = L.map(this.mapId, {
-            zoomControl: false
-        });
+        this.map = L.map(this.mapId, this.mapOptions);
+
         if (this.fitBounds) {
             this.map.fitBounds(this.fitBounds);
         }
