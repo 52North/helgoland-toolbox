@@ -4,13 +4,17 @@
       <div style="height: 500px;">
         <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
           [fitBounds]="fitBounds" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
-          [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+          [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster" [statusIntervals]="statusIntervals"
+          (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
       </div>
       <div>Is loading: {{loadingStations}}</div>
       <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
       <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
     </div>
-    <div style="width: 300px; padding: 5px;">
+    <div style="width: 200px;">
+      <n52-service-filter-selector [serviceUrl]="providerUrl" endpoint="phenomenon" (onItemSelected)="onSelectPhenomenon($event)"></n52-service-filter-selector>
+    </div>
+    <!-- <div style="width: 300px; padding: 5px;">
       <div style="height: 500px;">
         <n52-station-map-selector mapId="timeseries2" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
           [fitBounds]="fitBounds2" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
@@ -18,7 +22,7 @@
       </div>
       <n52-geosearch-control mapId="timeseries2" [options]="searchOptions"></n52-geosearch-control>
       <n52-extent-control mapId="timeseries2" [extent]="fitBounds2"></n52-extent-control>
-    </div>
+    </div> -->
   </div>
   <div>
     <div>
@@ -28,6 +32,10 @@
     <div>
       <button (click)="cluster = !cluster;">Toggle cluster</button>
       <span *ngIf="cluster">clustering active</span>
+    </div>
+    <div>
+      <button (click)="statusIntervals = !statusIntervals;">Toggle statusIntervals</button>
+      <span *ngIf="statusIntervals">statusIntervals active</span>
     </div>
     <div>
       <button (click)="switchProvider();">Switch Provider</button>

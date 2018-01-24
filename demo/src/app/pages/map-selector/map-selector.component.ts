@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as L from 'leaflet';
 
-import { GeoSearchOptions, LayerOptions, ParameterFilter } from '../../../../../src';
+import { GeoSearchOptions, LayerOptions, ParameterFilter, Phenomenon } from '../../../../../src';
 import { Station } from '../../../../../src/model/api/station';
 
 @Component({
@@ -16,13 +16,16 @@ export class MapSelectorComponent {
     public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
     public fitBounds2: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
-    public avoidZoomToSelection = true;
+    public avoidZoomToSelection = false;
     public baseMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
     public overlayMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
-    public cluster = true;
+    public cluster = false;
     public loadingStations: boolean;
-    public stationFilter: ParameterFilter;
+    public stationFilter: ParameterFilter = {
+        phenomenon: '8'
+    };
+    public statusIntervals: boolean = false;
 
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
 
@@ -84,5 +87,12 @@ export class MapSelectorComponent {
 
     public onStationSelected(station: Station) {
         console.log('Clicked station: ' + station.properties.label);
+    }
+
+    public onSelectPhenomenon(phenomenon: Phenomenon) {
+        console.log('Select: ' + phenomenon.label + ' with ID: ' + phenomenon.id);
+        this.stationFilter = {
+            phenomenon: phenomenon.id
+        };
     }
 }
