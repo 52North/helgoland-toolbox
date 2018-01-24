@@ -63,6 +63,18 @@ export class Timeseries extends Parameter implements IDataset {
     public hasData = false;
 }
 
+export interface TimeseriesExtras {
+    license?: string;
+    statusIntervals?: StatusInterval[];
+}
+
+export interface StatusInterval {
+    lower: string;
+    upper: string;
+    name: string;
+    color: string;
+}
+
 export class PlatformParameter extends Parameter {
     public platformType: PlatformTypes;
 }
