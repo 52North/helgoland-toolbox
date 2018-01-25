@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { selector } from 'rxjs/operator/publish';
-import { ListSelectorParameter, Provider } from '../../../../../src/index';
+
+import { IDataset, ListSelectorParameter, Provider } from '../../../../../src';
 
 @Component({
     selector: 'list-selection',
@@ -25,12 +26,15 @@ export class ListSelectionComponent {
 
     public selectedProviderList: Provider[] = [];
 
-    constructor(
-    ) {
+    constructor() {
         this.selectedProviderList.push({
             id: '1',
             url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/'
         });
+    }
+
+    public onDatasetSelected(datasets: IDataset[]) {
+        datasets.forEach((dataset) => console.log('Select Dataset: ' + dataset.label + ' with ID: ' + dataset.id));
     }
 
 }
