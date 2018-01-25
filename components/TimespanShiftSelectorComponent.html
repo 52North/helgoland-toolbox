@@ -178,9 +178,6 @@
                                     <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                </li>
-                                <li class="link">
                                     <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                 </li>
                                 <li class="link">
@@ -227,9 +224,6 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanShiftSelectorComponent.html"  data-type="entity-link" class="active" >TimespanShiftSelectorComponent</a>
@@ -553,6 +547,9 @@
                                     <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                 </li>
                                 <li class="link">
@@ -595,9 +592,6 @@
                                     <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                 </li>
                                 <li class="link">
@@ -631,7 +625,13 @@
                                     <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -840,9 +840,6 @@
                                            <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                        </li>
                                        <li class="link">
@@ -889,9 +886,6 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanShiftSelectorComponent.html"  data-type="entity-link" class="active" >TimespanShiftSelectorComponent</a>
@@ -1215,6 +1209,9 @@
                                            <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                        </li>
                                        <li class="link">
@@ -1257,9 +1254,6 @@
                                            <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                        </li>
                                        <li class="link">
@@ -1293,7 +1287,13 @@
                                            <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -1430,6 +1430,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#changeYAxesVisibility">changeYAxesVisibility</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#forward">forward</a>
                             </li>
                             <li>
@@ -1462,6 +1466,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#onChangeYAxesVisibility">onChangeYAxesVisibility</a>
+                            </li>
+                            <li>
                                 <a href="#onOpenTimeSettings">onOpenTimeSettings</a>
                             </li>
                             <li>
@@ -1485,7 +1492,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:22</a></div>
                                 </td>
                             </tr>
     
@@ -1539,7 +1546,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:13</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1548,6 +1555,25 @@
 
     <section>
         <h3 id="outputs">Outputs</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <a name="onChangeYAxesVisibility"></a>
+                            <code>onChangeYAxesVisibility</code>
+                        </td>
+                        <td class="col-md-10">
+                            <em><code>$event</code> type:</em>    <code>EventEmitter&lt;void&gt;</code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:16</a></div>
+                                </td>
+                            </tr>
+                </tbody>
+            </table>
             <table class="table table-sm table-bordered">
                 <tbody>
                     <tr>
@@ -1562,7 +1588,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:22</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1581,7 +1607,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:19</a></div>
                                 </td>
                             </tr>
                 </tbody>
@@ -1619,7 +1645,46 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:32</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="changeYAxesVisibility"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Public</span>
+                                changeYAxesVisibility
+                                </b>
+                                <a href="#changeYAxesVisibility"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>changeYAxesVisibility()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:28</a></div>
                                 </td>
                             </tr>
     
@@ -1658,7 +1723,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:36</a></div>
                                 </td>
                             </tr>
     
@@ -1697,7 +1762,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/components/time/timespan-shift-selector/timespan-shift-selector.component.ts:40</a></div>
                                 </td>
                             </tr>
     
@@ -1719,8 +1784,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from &#x27;@angular/core&#x27;;
-import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
 
 import { Timespan } from &#x27;./../../../model/internal/timeInterval&#x27;;
 import { Time } from &#x27;./../../../services/time/time.service&#x27;;
@@ -1735,6 +1799,9 @@ export class TimespanShiftSelectorComponent {
     public timespan: Timespan;
 
     @Output()
+    public onChangeYAxesVisibility: EventEmitter&lt;void&gt; &#x3D; new EventEmitter();
+
+    @Output()
     public onTimespanChange: EventEmitter&lt;Timespan&gt; &#x3D; new EventEmitter&lt;Timespan&gt;();
 
     @Output()
@@ -1743,6 +1810,10 @@ export class TimespanShiftSelectorComponent {
     constructor(
         private timeSrvc: Time
     ) { }
+
+    public changeYAxesVisibility() {
+        this.onChangeYAxesVisibility.emit();
+    }
 
     public back() {
         this.onTimespanChange.emit(this.timeSrvc.stepBack(this.timespan));
@@ -1761,6 +1832,9 @@ export class TimespanShiftSelectorComponent {
 
     <div class="tab-pane fade" id="c-templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;btn-group&quot;&gt;
+    &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-light&quot; (click)&#x3D;&quot;changeYAxesVisibility()&quot;&gt;
+        &lt;span class&#x3D;&quot;fa fa-bar-chart&quot;&gt;&lt;/span&gt;
+    &lt;/button&gt;
     &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-light&quot; (click)&#x3D;&quot;back()&quot;&gt;
         &lt;span class&#x3D;&quot;fa fa-arrow-left&quot;&gt;&lt;/span&gt;
     &lt;/button&gt;
@@ -1797,8 +1871,8 @@ export class TimespanShiftSelectorComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="btn-group">    <button type="button" class="btn btn-light" (click)="back()">        <span class="fa fa-arrow-left"></span>    </button>    <button type="button" class="btn btn-light" (click)="open()">        {{timespan.from | date : \'y-MM-dd HH:mm:ss\'}} &nbsp;&ndash;&nbsp; {{timespan.to | date : \'y-MM-dd HH:mm:ss\'}}    </button>    <button type="button" class="btn btn-light" (click)="forward()">        <span class="fa fa-arrow-right"></span>    </button></div></div>'
-    var COMPONENTS = [{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FlotOverviewTimeseriesGraphComponent', 'selector': 'n52-flot-overview-timeseries-graph'},{'name': 'FlotTimeseriesGraphComponent', 'selector': 'n52-flot-timeseries-graph'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkButtonComponent', 'selector': 'n52-permalink-button'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'ProviderSelectorComponent', 'selector': 'n52-provider-selector'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderSelectorComponent', 'selector': 'n52-time-range-slider-selector'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanSelectorComponent', 'selector': 'n52-timespan-selector'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+        var COMPONENT_TEMPLATE = '<div><div class="btn-group">    <button type="button" class="btn btn-light" (click)="changeYAxesVisibility()">        <span class="fa fa-bar-chart"></span>    </button>    <button type="button" class="btn btn-light" (click)="back()">        <span class="fa fa-arrow-left"></span>    </button>    <button type="button" class="btn btn-light" (click)="open()">        {{timespan.from | date : \'y-MM-dd HH:mm:ss\'}} &nbsp;&ndash;&nbsp; {{timespan.to | date : \'y-MM-dd HH:mm:ss\'}}    </button>    <button type="button" class="btn btn-light" (click)="forward()">        <span class="fa fa-arrow-right"></span>    </button></div></div>'
+    var COMPONENTS = [{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FlotOverviewTimeseriesGraphComponent', 'selector': 'n52-flot-overview-timeseries-graph'},{'name': 'FlotTimeseriesGraphComponent', 'selector': 'n52-flot-timeseries-graph'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'ProviderSelectorComponent', 'selector': 'n52-provider-selector'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderSelectorComponent', 'selector': 'n52-time-range-slider-selector'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TimespanShiftSelectorComponent'};
 </script>

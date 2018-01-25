@@ -178,9 +178,6 @@
                                     <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                </li>
-                                <li class="link">
                                     <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                 </li>
                                 <li class="link">
@@ -227,9 +224,6 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -553,6 +547,9 @@
                                     <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                 </li>
                                 <li class="link">
@@ -595,9 +592,6 @@
                                     <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                 </li>
                                 <li class="link">
@@ -631,7 +625,13 @@
                                     <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -840,9 +840,6 @@
                                            <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                        </li>
                                        <li class="link">
@@ -889,9 +886,6 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -1215,6 +1209,9 @@
                                            <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                        </li>
                                        <li class="link">
@@ -1257,9 +1254,6 @@
                                            <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                        </li>
                                        <li class="link">
@@ -1293,7 +1287,13 @@
                                            <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -1443,7 +1443,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#markerClusterGroup">markerClusterGroup</a>
+                                <a href="#markerFeatureGroup">markerFeatureGroup</a>
                             </li>
                         </ul>
                     </td>
@@ -1457,8 +1457,53 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createColoredMarker">createColoredMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createDefaultColoredMarker">createDefaultColoredMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createDefaultMarker">createDefaultMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createStationMarkers">createStationMarkers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createValuedMarkers">createValuedMarkers</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#drawGeometries">drawGeometries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getMatchingInterval">getMatchingInterval</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnChanges">ngOnChanges</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cluster">cluster</a>
+                            </li>
+                            <li>
+                                <a href="#statusIntervals">statusIntervals</a>
                             </li>
                         </ul>
                     </td>
@@ -1478,7 +1523,7 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:30</a></div>
                                 </td>
                             </tr>
     
@@ -1532,6 +1577,51 @@
             </table>
     </section>
 
+    <section>
+        <h3 id="inputs">Inputs</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <a name="cluster"></a>
+                            <code>cluster</code>
+                        </td>
+                        <td class="col-md-10">
+                              <p>
+                                <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                              </p>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:25</a></div>
+                                </td>
+                            </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <a name="statusIntervals"></a>
+                            <code>statusIntervals</code>
+                        </td>
+                        <td class="col-md-10">
+                              <p>
+                                <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                              </p>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:28</a></div>
+                                </td>
+                            </tr>
+                </tbody>
+            </table>
+    </section>
 
 
 
@@ -1541,6 +1631,297 @@
             <h3 id="methods">
                 Methods
             </h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="createColoredMarker"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                createColoredMarker
+                                </b>
+                                <a href="#createColoredMarker"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>createColoredMarker(station: <a href="../classes/Station.html">Station</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:97</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>station</td>
+                                                      <td>
+                                                              <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>color</td>
+                                                      <td>
+                                                              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="createDefaultColoredMarker"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                createDefaultColoredMarker
+                                </b>
+                                <a href="#createDefaultColoredMarker"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>createDefaultColoredMarker(station: <a href="../classes/Station.html">Station</a>)</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:111</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>station</td>
+                                                      <td>
+                                                              <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="createDefaultMarker"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                createDefaultMarker
+                                </b>
+                                <a href="#createDefaultMarker"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>createDefaultMarker(entry: <a href="../classes/Station.html">Station</a>)</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:158</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>entry</td>
+                                                      <td>
+                                                              <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="createStationMarkers"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                createStationMarkers
+                                </b>
+                                <a href="#createStationMarkers"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>createStationMarkers()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:135</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="createValuedMarkers"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                createValuedMarkers
+                                </b>
+                                <a href="#createValuedMarkers"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>createValuedMarkers()</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:60</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table class="table table-sm table-bordered">
                 <tbody>
                     <tr>
@@ -1565,7 +1946,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:49</a></div>
                                 </td>
                             </tr>
     
@@ -1576,6 +1957,151 @@
                                     <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
     
                                 </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="getMatchingInterval"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Private</span>
+                                getMatchingInterval
+                                </b>
+                                <a href="#getMatchingInterval"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>getMatchingInterval(lastValue: <a href="../classes/FirstLastValue.html">FirstLastValue</a>, statusIntervals: <a href="../interfaces/StatusInterval.html">StatusInterval[]</a>)</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:125</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>lastValue</td>
+                                                      <td>
+                                                              <code><a href="../classes/FirstLastValue.html" target="_self" >FirstLastValue</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>statusIntervals</td>
+                                                      <td>
+                                                              <code><a href="../interfaces/StatusInterval.html" target="_self" >StatusInterval[]</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="../interfaces/StatusInterval.html" target="_self" >StatusInterval</a></code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <a name="ngOnChanges"></a>
+                            <span class="name">
+                                <b>
+                                    <span class="modifier">Public</span>
+                                ngOnChanges
+                                </b>
+                                <a href="#ngOnChanges"><span class="fa fa-link"></span></a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <span class="modifier-icon fa fa-reset"></span>
+                            <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                        </td>
+                    </tr>
+    
+    
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:40</a></div>
+                                </td>
+                            </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Type</td>
+                                                    <td>Optional</td>
+                                                    <td>Description</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                      <td>changes</td>
+                                                      <td>
+                                                              <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                                      </td>
+                                                      <td>
+                                                      </td>
+                                                      <td></td>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+    
+                                </div>
+                                    <div class="io-description">
+                                        
+                                    </div>
                         </td>
                     </tr>
                 </tbody>
@@ -1591,19 +2117,19 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <a name="markerClusterGroup"></a>
+                            <a name="markerFeatureGroup"></a>
                             <span class="name">
                                 <b>
                                     <span class="modifier">Private</span>
-                                markerClusterGroup
+                                markerFeatureGroup
                                 </b>
-                                <a href="#markerClusterGroup"><span class="fa fa-link"></span></a>
+                                <a href="#markerFeatureGroup"><span class="fa fa-link"></span></a>
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <span class="modifier-icon fa fa-reset"></span><code>markerClusterGroup:     <code><a href="../classes/Feature.html" target="_self" >L.FeatureGroup</a></code>
+                            <span class="modifier-icon fa fa-reset"></span><code>markerFeatureGroup:     <code><a href="../classes/Feature.html" target="_self" >L.FeatureGroup</a></code>
     </code>
                         </td>
                     </tr>
@@ -1615,7 +2141,7 @@
                         </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/components/map/selector/station-map-selector.component.ts:30</a></div>
                                 </td>
                             </tr>
     
@@ -1630,9 +2156,12 @@
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers"><code class="language-typescript">import &#x27;leaflet.markercluster&#x27;;
 
-import { AfterViewInit, ChangeDetectorRef, Component, OnChanges } from &#x27;@angular/core&#x27;;
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from &#x27;@angular/core&#x27;;
 import * as L from &#x27;leaflet&#x27;;
+import { Observable } from &#x27;rxjs/Observable&#x27;;
 
+import { ParameterFilter } from &#x27;../../..&#x27;;
+import { FirstLastValue, StatusInterval, Timeseries, TimeseriesExtras } from &#x27;../../../model/api/dataset&#x27;;
 import { HasLoadableContent } from &#x27;../../../model/mixins/has-loadable-content&#x27;;
 import { Mixin } from &#x27;../../../model/mixins/Mixin.decorator&#x27;;
 import { Station } from &#x27;./../../../model/api/station&#x27;;
@@ -1648,7 +2177,13 @@ import { MapSelectorComponent } from &#x27;./map-selector.component&#x27;;
 @Mixin([HasLoadableContent])
 export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station&gt; implements OnChanges, AfterViewInit {
 
-    private markerClusterGroup: L.FeatureGroup;
+    @Input()
+    public cluster: boolean;
+
+    @Input()
+    public statusIntervals: boolean;
+
+    private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
         private apiInterface: ApiInterface,
@@ -1658,29 +2193,128 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
         super(mapCache, cd);
     }
 
+    public ngOnChanges(changes: SimpleChanges) {
+        super.ngOnChanges(changes);
+        if (this.map) {
+            if (changes.statusIntervals) {
+                this.drawGeometries();
+            }
+        }
+    }
+
     protected drawGeometries() {
         this.noResultsFound &#x3D; false;
         this.isContentLoading(true);
-        if (this.markerClusterGroup) { this.map.removeLayer(this.markerClusterGroup); }
+        if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+        if (this.statusIntervals &amp;&amp; this.filter &amp;&amp; this.filter.phenomenon) {
+            this.createValuedMarkers();
+        } else {
+            this.createStationMarkers();
+        }
+    }
+
+    private createValuedMarkers() {
+        const tempFilter: ParameterFilter &#x3D; {
+            phenomenon: this.filter.phenomenon,
+            expanded: true
+        };
+        this.apiInterface.getTimeseries(this.serviceUrl, tempFilter).subscribe((timeseries: Timeseries[]) &#x3D;&gt; {
+            this.markerFeatureGroup &#x3D; L.featureGroup();
+            const obsList: Array&lt;Observable&lt;TimeseriesExtras&gt;&gt; &#x3D; [];
+            timeseries.forEach((ts: Timeseries) &#x3D;&gt; {
+                const obs &#x3D; this.apiInterface.getTimeseriesExtras(ts.id, this.serviceUrl);
+                obsList.push(obs);
+                obs.subscribe((extras: TimeseriesExtras) &#x3D;&gt; {
+                    let marker;
+                    if (extras.statusIntervals) {
+                        const interval &#x3D; this.getMatchingInterval(ts.lastValue, extras.statusIntervals);
+                        if (interval) {
+                            marker &#x3D; this.createColoredMarker(ts.station, interval.color);
+                        } else {
+                            marker &#x3D; this.createDefaultColoredMarker(ts.station);
+                        }
+                    } else {
+                        marker &#x3D; this.createDefaultColoredMarker(ts.station);
+                    }
+                    this.markerFeatureGroup.addLayer(marker);
+                });
+            });
+
+            Observable.forkJoin(obsList).subscribe(() &#x3D;&gt; {
+                this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
+                this.map.invalidateSize();
+                this.isContentLoading(false);
+            });
+
+            this.markerFeatureGroup.addTo(this.map);
+        });
+    }
+
+    private createColoredMarker(station: Station, color: string) {
+        const marker &#x3D; L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
+            color: &#x27;#000&#x27;,
+            fillColor: color,
+            fillOpacity: 0.8,
+            radius: 10,
+            weight: 2
+        });
+        marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
+            this.onSelected.emit(station);
+        });
+        return marker;
+    }
+
+    private createDefaultColoredMarker(station: Station) {
+        const marker &#x3D; L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
+            color: &#x27;#000&#x27;,
+            fillColor: &#x27;#000&#x27;,
+            fillOpacity: 0.8,
+            radius: 5,
+            weight: 2
+        });
+        marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
+            this.onSelected.emit(station);
+        });
+        return marker;
+    }
+
+    private getMatchingInterval(lastValue: FirstLastValue, statusIntervals: StatusInterval[]): StatusInterval {
+        if (lastValue &amp;&amp; statusIntervals) {
+            return statusIntervals.find((interval) &#x3D;&gt; {
+                const upper &#x3D; interval.upper ? parseFloat(interval.upper) : Number.MAX_VALUE;
+                const lower &#x3D; interval.lower ? parseFloat(interval.lower) : Number.MIN_VALUE;
+                if (lower &lt; lastValue.value &amp;&amp; lastValue.value &lt; upper) { return true; }
+            });
+        }
+    }
+
+    private createStationMarkers() {
         this.apiInterface.getStations(this.serviceUrl, this.filter)
             .subscribe((res) &#x3D;&gt; {
-                this.markerClusterGroup &#x3D; L.markerClusterGroup({ animate: true });
+                if (this.cluster) {
+                    this.markerFeatureGroup &#x3D; L.markerClusterGroup({ animate: true });
+                } else {
+                    this.markerFeatureGroup &#x3D; L.featureGroup();
+                }
                 if (res instanceof Array &amp;&amp; res.length &gt; 0) {
                     res.forEach((entry) &#x3D;&gt; {
-                        const marker &#x3D; L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
-                        marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
-                            this.onSelected.emit(entry);
-                        });
-                        this.markerClusterGroup.addLayer(marker);
+                        const marker &#x3D; this.createDefaultMarker(entry);
+                        this.markerFeatureGroup.addLayer(marker);
                     });
-                    this.markerClusterGroup.addTo(this.map);
-                    this.zoomToMarkerBounds(this.markerClusterGroup.getBounds());
+                    this.markerFeatureGroup.addTo(this.map);
+                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
                 } else {
                     this.noResultsFound &#x3D; true;
                 }
                 this.map.invalidateSize();
                 this.isContentLoading(false);
             });
+    }
+
+    private createDefaultMarker(entry: Station) {
+        const marker &#x3D; L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
+        marker.on(&#x27;click&#x27;, () &#x3D;&gt; this.onSelected.emit(entry));
+        return marker;
     }
 }
 </code></pre>
@@ -1719,7 +2353,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="map-wrapper" style="height: 100%;">    <div [attr.id]="mapId" class="map-viewer"></div>    <div class="map-notifier" *ngIf="noResultsFound">        <div>No results found</div>    </div></div></div>'
-    var COMPONENTS = [{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FlotOverviewTimeseriesGraphComponent', 'selector': 'n52-flot-overview-timeseries-graph'},{'name': 'FlotTimeseriesGraphComponent', 'selector': 'n52-flot-timeseries-graph'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkButtonComponent', 'selector': 'n52-permalink-button'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'ProviderSelectorComponent', 'selector': 'n52-provider-selector'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderSelectorComponent', 'selector': 'n52-time-range-slider-selector'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanSelectorComponent', 'selector': 'n52-timespan-selector'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var COMPONENTS = [{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FlotOverviewTimeseriesGraphComponent', 'selector': 'n52-flot-overview-timeseries-graph'},{'name': 'FlotTimeseriesGraphComponent', 'selector': 'n52-flot-timeseries-graph'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'ProviderSelectorComponent', 'selector': 'n52-provider-selector'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderSelectorComponent', 'selector': 'n52-time-range-slider-selector'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'StationMapSelectorComponent'};
 </script>

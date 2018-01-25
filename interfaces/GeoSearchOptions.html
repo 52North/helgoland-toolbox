@@ -178,9 +178,6 @@
                                     <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                </li>
-                                <li class="link">
                                     <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                 </li>
                                 <li class="link">
@@ -227,9 +224,6 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -553,6 +547,9 @@
                                     <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/GeoSearchOptions.html"  data-type="entity-link" class="active" >GeoSearchOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                 </li>
                                 <li class="link">
@@ -595,9 +592,6 @@
                                     <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/MapOptions.html"  data-type="entity-link" class="active" >MapOptions</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                 </li>
                                 <li class="link">
@@ -631,7 +625,13 @@
                                     <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -840,9 +840,6 @@
                                            <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                        </li>
                                        <li class="link">
@@ -889,9 +886,6 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -1215,6 +1209,9 @@
                                            <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/GeoSearchOptions.html"  data-type="entity-link" class="active" >GeoSearchOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                        </li>
                                        <li class="link">
@@ -1257,9 +1254,6 @@
                                            <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/MapOptions.html"  data-type="entity-link" class="active" >MapOptions</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                        </li>
                                        <li class="link">
@@ -1293,7 +1287,13 @@
                                            <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -1352,7 +1352,7 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>MapOptions</li>
+  <li>GeoSearchOptions</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -1372,7 +1372,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/components/map/model/map-options.ts</code>
+            <code>src/services/geosearch/geosearch.ts</code>
         </p>
 
 
@@ -1390,22 +1390,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#avoidZoomToSelection">avoidZoomToSelection</a>
-                                </li>
-                                <li>
-                                        <a href="#baseMaps">baseMaps</a>
-                                </li>
-                                <li>
-                                        <a href="#fitBounds">fitBounds</a>
-                                </li>
-                                <li>
-                                        <a href="#layerControlOptions">layerControlOptions</a>
-                                </li>
-                                <li>
-                                        <a href="#overlayMaps">overlayMaps</a>
-                                </li>
-                                <li>
-                                        <a href="#zoomOptions">zoomOptions</a>
+                                        <a href="#countrycodes">countrycodes</a>
                                 </li>
                             </ul>
                         </td>
@@ -1422,13 +1407,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="avoidZoomToSelection"></a>
-                                        <span class="name"><b>avoidZoomToSelection</b><a href="#avoidZoomToSelection"><span class="fa fa-link"></span></a></span>
+                                        <a name="countrycodes"></a>
+                                        <span class="name"><b>countrycodes</b><a href="#countrycodes"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>avoidZoomToSelection:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                        <code>countrycodes:     <code>string[]</code>
 </code>
                                     </td>
                                 </tr>
@@ -1436,7 +1421,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            <i>Type : </i>    <code>string[]</code>
 
                                         </td>
                                     </tr>
@@ -1445,172 +1430,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/components/map/model/map-options.ts:14</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="baseMaps"></a>
-                                        <span class="name"><b>baseMaps</b><a href="#baseMaps"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>baseMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;LayerOptions | L.Layer&gt;</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;LayerOptions | L.Layer&gt;</a></code>
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/components/map/model/map-options.ts:9</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="fitBounds"></a>
-                                        <span class="name"><b>fitBounds</b><a href="#fitBounds"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>fitBounds:     <code>L.LatLngBoundsExpression</code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code>L.LatLngBoundsExpression</code>
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/components/map/model/map-options.ts:13</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="layerControlOptions"></a>
-                                        <span class="name"><b>layerControlOptions</b><a href="#layerControlOptions"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>layerControlOptions:     <code>L.Control.LayersOptions</code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code>L.Control.LayersOptions</code>
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/components/map/model/map-options.ts:11</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="overlayMaps"></a>
-                                        <span class="name"><b>overlayMaps</b><a href="#overlayMaps"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>overlayMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;LayerOptions | L.Layer&gt;</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;LayerOptions | L.Layer&gt;</a></code>
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/components/map/model/map-options.ts:10</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="zoomOptions"></a>
-                                        <span class="name"><b>zoomOptions</b><a href="#zoomOptions"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>zoomOptions:     <code>L.Control.ZoomOptions</code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code>L.Control.ZoomOptions</code>
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/components/map/model/map-options.ts:12</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/services/geosearch/geosearch.ts:11</a></div>
                                         </td>
                                     </tr>
 
@@ -1621,20 +1441,23 @@
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers"><code class="language-typescript">import * as L from &#x27;leaflet&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { LatLngBoundsLiteral } from &#x27;leaflet&#x27;;
+import { Observable } from &#x27;rxjs/Rx&#x27;;
 
-export interface LayerOptions {
+export interface GeoSearchResult {
     name: string;
-    visible: boolean;
+    geometry: GeoJSON.GeoJsonObject;
+    bounds?: LatLngBoundsLiteral;
 }
 
-export interface MapOptions {
-    baseMaps?: Map&lt;LayerOptions, L.Layer&gt;;
-    overlayMaps?: Map&lt;LayerOptions, L.Layer&gt;;
-    layerControlOptions?: L.Control.LayersOptions;
-    zoomOptions?: L.Control.ZoomOptions;
-    fitBounds?: L.LatLngBoundsExpression;
-    avoidZoomToSelection?: boolean;
+export interface GeoSearchOptions {
+    countrycodes?: string[];
+}
+
+export abstract class GeoSearch {
+
+    public abstract searchTerm(term: string, options?: GeoSearchOptions): Observable&lt;GeoSearchResult&gt;;
+
 }
 </code></pre>
     </div>

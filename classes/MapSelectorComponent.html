@@ -178,9 +178,6 @@
                                     <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                </li>
-                                <li class="link">
                                     <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                 </li>
                                 <li class="link">
@@ -227,9 +224,6 @@
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -553,6 +547,9 @@
                                     <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                 </li>
                                 <li class="link">
@@ -595,9 +592,6 @@
                                     <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                 </li>
                                 <li class="link">
@@ -631,7 +625,13 @@
                                     <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -840,9 +840,6 @@
                                            <a href="../components/MultiServiceFilterSelectorComponent.html" >MultiServiceFilterSelectorComponent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../components/PermalinkButtonComponent.html" >PermalinkButtonComponent</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../components/PermalinkInMailComponent.html" >PermalinkInMailComponent</a>
                                        </li>
                                        <li class="link">
@@ -889,9 +886,6 @@
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanButtonComponent.html" >TimespanButtonComponent</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../components/TimespanSelectorComponent.html" >TimespanSelectorComponent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../components/TimespanShiftSelectorComponent.html" >TimespanShiftSelectorComponent</a>
@@ -1215,6 +1209,9 @@
                                            <a href="../interfaces/FilteredProvider.html" >FilteredProvider</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/GeoSearchOptions.html" >GeoSearchOptions</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/GeoSearchResult.html" >GeoSearchResult</a>
                                        </li>
                                        <li class="link">
@@ -1257,9 +1254,6 @@
                                            <a href="../interfaces/LocatedTimeValueEntry.html" >LocatedTimeValueEntry</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/MapOptions.html" >MapOptions</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/NominatimResult.html" >NominatimResult</a>
                                        </li>
                                        <li class="link">
@@ -1293,7 +1287,13 @@
                                            <a href="../interfaces/SingleFavorite.html" >SingleFavorite</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../interfaces/StatusInterval.html" >StatusInterval</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/TimeValueEntry.html" >TimeValueEntry</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TimeseriesExtras.html" >TimeseriesExtras</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/TrajectoryResult.html" >TrajectoryResult</a>
@@ -1404,11 +1404,27 @@
                                     </li>
                                     <li>
                                             <span class="modifier">Protected</span>
+                                        <a href="#layerControl">layerControl</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Protected</span>
                                         <a href="#map">map</a>
                                     </li>
                                     <li>
                                             <span class="modifier">Public</span>
                                         <a href="#noResultsFound">noResultsFound</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Protected</span>
+                                        <a href="#oldBaseLayer">oldBaseLayer</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Protected</span>
+                                        <a href="#oldOverlayLayer">oldOverlayLayer</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Protected</span>
+                                        <a href="#zoomControl">zoomControl</a>
                                     </li>
                                 </ul>
                             </td>
@@ -1422,6 +1438,14 @@
                             <td class="col-md-4">
                                 <ul class="index-list">
                                     <li>
+                                            <span class="modifier">Private</span>
+                                        <a href="#addBaseMapsToMap">addBaseMapsToMap</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Private</span>
+                                        <a href="#addOverlayMapsToMap">addOverlayMapsToMap</a>
+                                    </li>
+                                    <li>
                                             <span class="modifier"></span>
                                             <span class="modifier">Protected</span>
                                         <a href="#drawGeometries">drawGeometries</a>
@@ -1433,6 +1457,14 @@
                                     <li>
                                             <span class="modifier">Public</span>
                                         <a href="#ngOnChanges">ngOnChanges</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Private</span>
+                                        <a href="#updateLayerControl">updateLayerControl</a>
+                                    </li>
+                                    <li>
+                                            <span class="modifier">Private</span>
+                                        <a href="#updateZoomControl">updateZoomControl</a>
                                     </li>
                                     <li>
                                             <span class="modifier">Protected</span>
@@ -1456,7 +1488,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/components/map/selector/map-selector.component.ts:35</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/components/map/selector/map-selector.component.ts:82</a></div>
                                         </td>
                                     </tr>
             
@@ -1510,6 +1542,84 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <a name="addBaseMapsToMap"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Private</span>
+                                        addBaseMapsToMap
+                                        </b>
+                                        <a href="#addBaseMapsToMap"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>addBaseMapsToMap()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/components/map/selector/map-selector.component.ts:154</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="addOverlayMapsToMap"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Private</span>
+                                        addOverlayMapsToMap
+                                        </b>
+                                        <a href="#addOverlayMapsToMap"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>addOverlayMapsToMap()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="180" class="link-to-prism">src/components/map/selector/map-selector.component.ts:180</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <a name="drawGeometries"></a>
                                     <span class="name">
                                         <b>
@@ -1531,12 +1641,14 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">src/components/map/selector/map-selector.component.ts:108</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/components/map/selector/map-selector.component.ts:139</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Draws the geometries</p>
+            </div>
             
                                         <div class="io-description">
                                             <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -1570,7 +1682,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/components/map/selector/map-selector.component.ts:42</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/components/map/selector/map-selector.component.ts:89</a></div>
                                         </td>
                                     </tr>
             
@@ -1609,7 +1721,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">src/components/map/selector/map-selector.component.ts:96</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/components/map/selector/map-selector.component.ts:112</a></div>
                                         </td>
                                     </tr>
             
@@ -1657,6 +1769,84 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <a name="updateLayerControl"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Private</span>
+                                        updateLayerControl
+                                        </b>
+                                        <a href="#updateLayerControl"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>updateLayerControl()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">src/components/map/selector/map-selector.component.ts:209</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="updateZoomControl"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Private</span>
+                                        updateZoomControl
+                                        </b>
+                                        <a href="#updateZoomControl"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>updateZoomControl()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="202" class="link-to-prism">src/components/map/selector/map-selector.component.ts:202</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <a name="zoomToMarkerBounds"></a>
                                     <span class="name">
                                         <b>
@@ -1677,12 +1867,14 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/components/map/selector/map-selector.component.ts:102</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="148" class="link-to-prism">src/components/map/selector/map-selector.component.ts:148</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Zooms to the given bounds</p>
+            </div>
             
                                         <div class="io-description">
                                                 <b>Parameters :</b>
@@ -1703,7 +1895,8 @@
                                                               </td>
                                                               <td>
                                                               </td>
-                                                              <td></td>
+                                                              <td><p>where to zoom</p>
+            </td>
                                                             </tr>
                                                     </tbody>
                                                 </table>
@@ -1757,7 +1950,42 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/components/map/selector/map-selector.component.ts:32</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/components/map/selector/map-selector.component.ts:66</a></div>
+                                        </td>
+                                    </tr>
+            
+            
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="layerControl"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Protected</span>
+                                        layerControl
+                                        </b>
+                                        <a href="#layerControl"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-reset"></span><code>layerControl:     <code>L.Control.Layers</code>
+            </code>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Type : </i>    <code>L.Control.Layers</code>
+            
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/components/map/selector/map-selector.component.ts:81</a></div>
                                         </td>
                                     </tr>
             
@@ -1792,10 +2020,16 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/components/map/selector/map-selector.component.ts:35</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/components/map/selector/map-selector.component.ts:77</a></div>
                                         </td>
                                     </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The map object.</p>
+            </div>
+                                </td>
+                            </tr>
             
                         </tbody>
                     </table>
@@ -1827,7 +2061,122 @@
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/components/map/selector/map-selector.component.ts:34</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/components/map/selector/map-selector.component.ts:68</a></div>
+                                        </td>
+                                    </tr>
+            
+            
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="oldBaseLayer"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Protected</span>
+                                        oldBaseLayer
+                                        </b>
+                                        <a href="#oldBaseLayer"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-reset"></span><code>oldBaseLayer:     <code>L.Control.LayersObject</code>
+            </code>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Type : </i>    <code>L.Control.LayersObject</code>
+            
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Default value : </i><code>{}</code>
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/components/map/selector/map-selector.component.ts:79</a></div>
+                                        </td>
+                                    </tr>
+            
+            
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="oldOverlayLayer"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Protected</span>
+                                        oldOverlayLayer
+                                        </b>
+                                        <a href="#oldOverlayLayer"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-reset"></span><code>oldOverlayLayer:     <code>L.Control.LayersObject</code>
+            </code>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Type : </i>    <code>L.Control.LayersObject</code>
+            
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Default value : </i><code>{}</code>
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/components/map/selector/map-selector.component.ts:80</a></div>
+                                        </td>
+                                    </tr>
+            
+            
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="zoomControl"></a>
+                                    <span class="name">
+                                        <b>
+                                            <span class="modifier">Protected</span>
+                                        zoomControl
+                                        </b>
+                                        <a href="#zoomControl"><span class="fa fa-link"></span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <span class="modifier-icon fa fa-reset"></span><code>zoomControl:     <code>L.Control.Zoom</code>
+            </code>
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <i>Type : </i>    <code>L.Control.Zoom</code>
+            
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/components/map/selector/map-selector.component.ts:82</a></div>
                                         </td>
                                     </tr>
             
@@ -1844,26 +2193,60 @@
 import * as L from &#x27;leaflet&#x27;;
 
 import { HasLoadableContent } from &#x27;../../../model/mixins/has-loadable-content&#x27;;
-import { MapOptions } from &#x27;../model/map-options&#x27;;
+import { LayerOptions } from &#x27;../index&#x27;;
 import { ParameterFilter } from &#x27;./../../../model/api/parameterFilter&#x27;;
 import { MapCache } from &#x27;./../../../services/map/map.service&#x27;;
 
 export abstract class MapSelectorComponent&lt;T&gt; implements OnChanges, AfterViewInit, HasLoadableContent {
 
+    /**
+     * @input A map with the given ID is created inside this component. This ID can be used outside of the component the
+     * work with the map.
+     *
+     * @type {string}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public mapId: string;
 
+    /**
+     * @input The serviceUrl, where the selection should be loaded.
+     *
+     * @type {string}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public serviceUrl: string;
 
+    /**
+     * @input The filter which should be used, while fetching the selection.
+     *
+     * @type {ParameterFilter}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public filter: ParameterFilter;
 
     @Input()
-    public mapOptions: MapOptions;
+    public fitBounds: L.LatLngBoundsExpression;
 
     @Input()
-    public cluster: boolean;
+    public zoomControlOptions: L.Control.ZoomOptions;
+
+    @Input()
+    public avoidZoomToSelection: boolean;
+
+    @Input()
+    public baseMaps: Map&lt;LayerOptions, L.Layer&gt;;
+
+    @Input()
+    public overlayMaps: Map&lt;LayerOptions, L.Layer&gt;;
+
+    @Input()
+    public layerControlOptions: L.Control.LayersOptions;
+
+    @Input()
+    public mapOptions: L.MapOptions;
 
     @Output()
     public onSelected: EventEmitter&lt;T&gt; &#x3D; new EventEmitter&lt;T&gt;();
@@ -1874,7 +2257,20 @@ export abstract class MapSelectorComponent&lt;T&gt; implements OnChanges, AfterV
     public isContentLoading: (loading: boolean) &#x3D;&gt; void;
 
     public noResultsFound: boolean;
+
+    /**
+     * The map object.
+     *
+     * @protected
+     * @type {L.Map}
+     * @memberof MapSelectorComponent
+     */
     protected map: L.Map;
+
+    protected oldBaseLayer: L.Control.LayersObject &#x3D; {};
+    protected oldOverlayLayer: L.Control.LayersObject &#x3D; {};
+    protected layerControl: L.Control.Layers;
+    protected zoomControl: L.Control.Zoom;
 
     constructor(
         protected mapCache: MapCache,
@@ -1882,51 +2278,20 @@ export abstract class MapSelectorComponent&lt;T&gt; implements OnChanges, AfterV
     ) { }
 
     public ngAfterViewInit() {
-        if (!this.mapOptions) {
-            this.mapOptions &#x3D; {};
-        }
 
-        if (!this.mapOptions.baseMaps || this.mapOptions.baseMaps.size &#x3D;&#x3D;&#x3D; 0) {
-            this.mapOptions.baseMaps &#x3D; new Map();
-            this.mapOptions.baseMaps.set(
-                { name: &#x27;BaseLayer&#x27;, visible: true },
-                L.tileLayer(&#x27;http://{s}.tile.osm.org/{z}/{x}/{y}.png&#x27;, {
-                    attribution: &#x27;&amp;copy; &lt;a href&#x3D;&quot;http://osm.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt; contributors&#x27;
-                }));
-        }
-
-        if (!this.mapOptions.overlayMaps) {
-            this.mapOptions.overlayMaps &#x3D; new Map();
-        }
+        if (!this.mapOptions) { this.mapOptions &#x3D; { zoomControl: false }; }
 
         // create map
-        this.map &#x3D; L.map(this.mapId, {
-            zoomControl: false
-        });
-        if (this.mapOptions.fitBounds) {
-            this.map.fitBounds(this.mapOptions.fitBounds);
+        this.map &#x3D; L.map(this.mapId, this.mapOptions);
+
+        if (this.fitBounds) {
+            this.map.fitBounds(this.fitBounds);
         }
         // add base maps to map
-        const base: L.Control.LayersObject &#x3D; {};
-        this.mapOptions.baseMaps.forEach((layer, key) &#x3D;&gt; {
-            base[key.name] &#x3D; layer;
-            if (key.visible) { layer.addTo(this.map); }
-        });
-        // add overlay maps to map
-        const overlays: L.Control.LayersObject &#x3D; {};
-        this.mapOptions.overlayMaps.forEach((layer, key) &#x3D;&gt; {
-            overlays[key.name] &#x3D; layer;
-            if (key.visible) { layer.addTo(this.map); }
-        });
+        this.addBaseMapsToMap();
+        this.addOverlayMapsToMap();
 
-        if (this.mapOptions.layerControlOptions
-            &amp;&amp; (this.mapOptions.baseMaps.size &gt; 1 || this.mapOptions.overlayMaps.size &gt; 0)) {
-            L.control.layers(base, overlays, this.mapOptions.layerControlOptions).addTo(this.map);
-        }
-
-        if (this.mapOptions.zoomOptions) {
-            L.control.zoom(this.mapOptions.zoomOptions).addTo(this.map);
-        }
+        this.updateZoomControl();
 
         this.mapCache.setMap(this.mapId, this.map);
         setTimeout(() &#x3D;&gt; {
@@ -1936,18 +2301,113 @@ export abstract class MapSelectorComponent&lt;T&gt; implements OnChanges, AfterV
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if ((changes.serviceUrl || changes.filter) &amp;&amp; this.map) {
-            this.drawGeometries();
+        if (this.map) {
+            if (changes.serviceUrl || changes.filter || changes.cluster) {
+                this.drawGeometries();
+            }
+            if (changes.baseMaps) {
+                this.addBaseMapsToMap();
+            }
+            if (changes.overlayMaps) {
+                this.addOverlayMapsToMap();
+            }
+            if (changes.zoomControlOptions) {
+                this.updateZoomControl();
+            }
+            if (changes.fitBounds) {
+                this.map.fitBounds(this.fitBounds);
+            }
         }
     }
 
+    /**
+     * Draws the geometries
+     *
+     * @protected
+     * @abstract
+     * @memberof MapSelectorComponent
+     */
+    protected abstract drawGeometries(): void;
+
+    /**
+     * Zooms to the given bounds
+     *
+     * @protected
+     * @param {L.LatLngBoundsExpression} bounds where to zoom
+     * @memberof MapSelectorComponent
+     */
     protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
-        if (!this.mapOptions || !this.mapOptions.avoidZoomToSelection) {
+        if (!this.avoidZoomToSelection) {
             this.map.fitBounds(bounds);
         }
     }
 
-    protected abstract drawGeometries(): void;
+    private addBaseMapsToMap() {
+        if (!this.baseMaps || this.baseMaps.size &#x3D;&#x3D;&#x3D; 0) {
+            this.baseMaps &#x3D; new Map();
+            this.baseMaps.set(
+                { name: &#x27;BaseLayer&#x27;, visible: true },
+                L.tileLayer(&#x27;http://{s}.tile.osm.org/{z}/{x}/{y}.png&#x27;, {
+                    attribution: &#x27;&amp;copy; &lt;a href&#x3D;&quot;http://osm.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt; contributors&#x27;
+                })
+            );
+        }
+        for (const key in this.oldBaseLayer) {
+            if (this.oldBaseLayer.hasOwnProperty(key)) {
+                const layer &#x3D; this.oldBaseLayer[key];
+                this.map.removeLayer(layer);
+            }
+        }
+        this.oldBaseLayer &#x3D; {};
+        this.baseMaps.forEach((layer, key) &#x3D;&gt; {
+            this.oldBaseLayer[key.name] &#x3D; layer;
+            if (key.visible) {
+                layer.addTo(this.map);
+            }
+        });
+        this.updateLayerControl();
+    }
+
+    private addOverlayMapsToMap() {
+        if (!this.overlayMaps) {
+            this.overlayMaps &#x3D; new Map();
+        }
+        for (const key in this.oldOverlayLayer) {
+            if (this.oldOverlayLayer.hasOwnProperty(key)) {
+                const layer &#x3D; this.oldOverlayLayer[key];
+                this.map.removeLayer(layer);
+            }
+        }
+        this.oldOverlayLayer &#x3D; {};
+        if (this.overlayMaps) {
+            this.overlayMaps.forEach((layer, key) &#x3D;&gt; {
+                this.oldOverlayLayer[key.name] &#x3D; layer;
+                if (key.visible) {
+                    layer.addTo(this.map);
+                }
+            });
+        }
+        this.updateLayerControl();
+    }
+
+    private updateZoomControl() {
+        if (this.zoomControl) { this.map.removeControl(this.zoomControl); }
+        if (this.zoomControlOptions) {
+            this.zoomControl &#x3D; L.control.zoom(this.zoomControlOptions).addTo(this.map);
+        }
+    }
+
+    private updateLayerControl() {
+        if (this.layerControl) {
+            this.map.removeControl(this.layerControl);
+        }
+        if (this.layerControlOptions
+            &amp;&amp; (this.baseMaps.size &gt; 1 || this.overlayMaps.size &gt; 0)) {
+            this.layerControl &#x3D;
+                L.control.layers(this.oldBaseLayer, this.oldOverlayLayer, this.layerControlOptions).addTo(this.map);
+        }
+    }
+
 }
 </code></pre>
     </div>
