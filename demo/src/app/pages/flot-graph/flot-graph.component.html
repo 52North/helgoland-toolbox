@@ -7,4 +7,7 @@
         <n52-flot-timeseries-graph [datasetIds]="datasetIdsOne" [datasetOptions]="datasetOptionsOne" [timeInterval]="timespan" [graphOptions]="diagramOptions"
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
     </div>
+    <div style="height: 500px;">
+        <n52-d3-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" (onTimespanChanged)="timespanChanged($event)"></n52-d3-flot-timeseries-graph>
+    </div>
 </div>

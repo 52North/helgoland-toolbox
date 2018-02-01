@@ -376,6 +376,7 @@ export class D3TrajectoryGraphComponent
 
         this.yScaleBase = null;
 
+        // draw graph line
         this.datasetMap.forEach((datasetEntry, id) => {
             if (this.datasetOptions.has(id) && datasetEntry.data && this.datasetOptions.get(id).visible) {
                 datasetEntry.drawOptions = {
@@ -407,6 +408,7 @@ export class D3TrajectoryGraphComponent
 
         this.drawXAxis(this.bufferSum);
 
+        // draw graph line
         this.datasetMap.forEach((entry, id) => {
             if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data) {
                 this.drawGraph(entry.yScale, entry.drawOptions);
@@ -426,6 +428,7 @@ export class D3TrajectoryGraphComponent
             .on('mousemove.drag', this.dragHandler)
             .on('mouseup.drag', this.dragEndHandler);
 
+        // line inside graph
         this.focusG = this.graph.append('g');
         this.highlightFocus = this.focusG.append('svg:line')
             .attr('class', 'mouse-focus-line')
@@ -436,6 +439,7 @@ export class D3TrajectoryGraphComponent
             .style('stroke', 'black')
             .style('stroke-width', '1px');
 
+        // label inside graph
         this.datasetMap.forEach((entry, id) => {
             if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data) {
                 entry.focusLabelRect = this.focusG.append('svg:rect')
