@@ -42,8 +42,12 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   public ngOnInit() {
     console.log(this.datasetIds);
-    this.additionalStylesheet = document.createElement('style');
-    document.body.appendChild(this.additionalStylesheet);
+    this.additionalStylesheet = document.getElementById('selectedIdsStylesheet');
+    if (!this.additionalStylesheet) {
+      this.additionalStylesheet = document.createElement('style');
+      this.additionalStylesheet.id = 'selectedIdsStylesheet';
+      document.body.appendChild(this.additionalStylesheet);
+    }
   }
 
   /* called when user clicks on table headers */
@@ -157,9 +161,8 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   private loadTsData(timeseries: Timeseries) {
     if (this.timespan) {
-      const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, buffer, { format: 'flot' })
+      this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, this.timespan, { format: 'flot' })
         .subscribe((result) => {
           this.results.set(timeseries.internalId, result);
 
@@ -213,8 +216,23 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
     // `timeseries` is first timeseries added -> no other `preparedData` to merge with -> `preparedData` can be set
     // to `newdata` (as per above)
-    if (this.preparedData.length === 0) {
-      this.preparedData = newdata;
+    // special case: datasets without data. These have to be taken care of when the first proper data is added.
+    if (this.preparedData.length === 0 || this.preparedData[0] === undefined) {
+      if (newdata.length === 0) {
+        // remember "dataset without data" for later
+        this.preparedData.push(undefined);
+      } else {
+        // remember how many "datasets without data" preceeded this
+        const countOfPreceedingDatasetsWithoutData = this.preparedData.length;
+        // set newdata as preparedData (as per above)
+        this.preparedData = newdata;
+        // fix preparedData structure to take care of preceeding "datasets without data"
+        if (countOfPreceedingDatasetsWithoutData > 0) {
+          this.preparedData.forEach((e) =>
+            e.values = Array(countOfPreceedingDatasetsWithoutData).fill(undefined).concat([e.values[0]])
+          );
+        }
+      }
 
       // `timeseries` is not the first timeseries added -> we have to merge `newdata` into the existing `preparedData`
     } else {

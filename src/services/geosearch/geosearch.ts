@@ -7,8 +7,12 @@ export interface GeoSearchResult {
     bounds?: LatLngBoundsLiteral;
 }
 
+export interface GeoSearchOptions {
+    countrycodes?: string[];
+}
+
 export abstract class GeoSearch {
 
-    public abstract searchTerm(term: string): Observable<GeoSearchResult>;
+    public abstract searchTerm(term: string, options?: GeoSearchOptions): Observable<GeoSearchResult>;
 
 }
