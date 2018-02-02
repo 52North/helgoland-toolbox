@@ -8,12 +8,31 @@ import { MapCache } from './../../../services/map/map.service';
 
 export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewInit, HasLoadableContent {
 
+    /**
+     * @input A map with the given ID is created inside this component. This ID can be used outside of the component the
+     * work with the map.
+     *
+     * @type {string}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public mapId: string;
 
+    /**
+     * @input The serviceUrl, where the selection should be loaded.
+     *
+     * @type {string}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public serviceUrl: string;
 
+    /**
+     * @input The filter which should be used, while fetching the selection.
+     *
+     * @type {ParameterFilter}
+     * @memberof MapSelectorComponent
+     */
     @Input()
     public filter: ParameterFilter;
 
@@ -35,6 +54,9 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     @Input()
     public layerControlOptions: L.Control.LayersOptions;
 
+    @Input()
+    public mapOptions: L.MapOptions;
+
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
 
@@ -44,7 +66,16 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
     public isContentLoading: (loading: boolean) => void;
 
     public noResultsFound: boolean;
+
+    /**
+     * The map object.
+     *
+     * @protected
+     * @type {L.Map}
+     * @memberof MapSelectorComponent
+     */
     protected map: L.Map;
+
     protected oldBaseLayer: L.Control.LayersObject = {};
     protected oldOverlayLayer: L.Control.LayersObject = {};
     protected layerControl: L.Control.Layers;
@@ -57,10 +88,11 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
 
     public ngAfterViewInit() {
 
+        if (!this.mapOptions) { this.mapOptions = { zoomControl: false }; }
+
         // create map
-        this.map = L.map(this.mapId, {
-            zoomControl: false
-        });
+        this.map = L.map(this.mapId, this.mapOptions);
+
         if (this.fitBounds) {
             this.map.fitBounds(this.fitBounds);
         }
@@ -91,11 +123,28 @@ export abstract class MapSelectorComponent<T> implements OnChanges, AfterViewIni
             if (changes.zoomControlOptions) {
                 this.updateZoomControl();
             }
+            if (changes.fitBounds) {
+                this.map.fitBounds(this.fitBounds);
+            }
         }
     }
 
+    /**
+     * Draws the geometries
+     *
+     * @protected
+     * @abstract
+     * @memberof MapSelectorComponent
+     */
     protected abstract drawGeometries(): void;
 
+    /**
+     * Zooms to the given bounds
+     *
+     * @protected
+     * @param {L.LatLngBoundsExpression} bounds where to zoom
+     * @memberof MapSelectorComponent
+     */
     protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
         if (!this.avoidZoomToSelection) {
             this.map.fitBounds(bounds);

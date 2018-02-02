@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Category } from './../../model/api/category';
 import { Data } from './../../model/api/data';
-import { Dataset, Timeseries } from './../../model/api/dataset';
+import { Dataset, Timeseries, TimeseriesExtras } from './../../model/api/dataset';
 import { Feature } from './../../model/api/feature';
 import { Offering } from './../../model/api/offering';
 import { DataParameterFilter, ParameterFilter } from './../../model/api/parameterFilter';
@@ -54,6 +54,7 @@ export abstract class ApiInterface implements ApiV2 {
     public abstract getStation(id: string, apiUrl: string, params?: ParameterFilter): Observable<Station>;
     public abstract getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]>;
     public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter): Observable<Timeseries>;
+    public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
     public abstract getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter)
         : Observable<Data<T>>;
     public abstract getCategories(apiUrl: string, params?: ParameterFilter): Observable<Category[]>;

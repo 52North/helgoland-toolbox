@@ -11,6 +11,8 @@ import { NotifierService } from '../../../../../src/services/notifier/notifier.s
 })
 export class TimeComponent {
 
+    public selectedTimespan: Timespan;
+
     public timelist = [
         1500000000000,
         1600000000000,
