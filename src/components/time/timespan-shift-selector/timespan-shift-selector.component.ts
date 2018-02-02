@@ -13,9 +13,6 @@ export class TimespanShiftSelectorComponent {
     public timespan: Timespan;
 
     @Output()
-    public onChangeYAxesVisibility: EventEmitter<void> = new EventEmitter();
-
-    @Output()
     public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
     @Output()
@@ -24,10 +21,6 @@ export class TimespanShiftSelectorComponent {
     constructor(
         private timeSrvc: Time
     ) { }
-
-    public changeYAxesVisibility() {
-        this.onChangeYAxesVisibility.emit();
-    }
 
     public back() {
         this.onTimespanChange.emit(this.timeSrvc.stepBack(this.timespan));
