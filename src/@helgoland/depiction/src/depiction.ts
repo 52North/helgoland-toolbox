@@ -1,0 +1,1 @@
+export { DepictionModule } from './module'; 

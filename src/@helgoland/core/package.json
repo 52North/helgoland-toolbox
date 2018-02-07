@@ -1,0 +1,15 @@
+{
+  "version": "1.0.1",
+  "description": "Core Library",
+  "keywords": ["corp", "core", "core-plus"],
+  "dependencies": {
+    "@ngx-translate/core": "^9.1.1",
+    "@types/geojson": "^7946.0.1",
+    "class-transformer": "^0.1.9",
+    "moment": "^2.20.1"
+  },
+  "libConfig": {
+    "entry": "core",
+    "libExtensions": []
+  }
+}

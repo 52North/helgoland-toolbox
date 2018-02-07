@@ -1,0 +1,11 @@
+{
+  "version": "1.0.1",
+  "description": "Depiction Library",
+  "keywords": ["label-mapper", "dataset-entry"],
+  "libConfig": {
+    "entry": "depiction",
+    "libExtensions": [{
+      "name": "label-mapper"
+    }]
+  }
+}
