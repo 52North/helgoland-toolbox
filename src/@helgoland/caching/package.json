@@ -1,0 +1,8 @@
+{
+  "version": "v0.0.1-alpha.2",
+  "description": "Caching Library",
+  "keywords": [ "caching" ],
+  "libConfig": {
+    "entry": "caching"
+  }
+}
