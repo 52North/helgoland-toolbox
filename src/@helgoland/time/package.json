@@ -1,0 +1,8 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland time library",
+  "keywords": [],
+  "libConfig": {
+    "entry": "time"
+  }
+}

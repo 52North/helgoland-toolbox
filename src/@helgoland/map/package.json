@@ -1,0 +1,22 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland map library",
+  "keywords": [],
+  "dependencies": {
+    "@types/leaflet": "^1.2.5",
+    "leaflet": "^1.3.1"
+  },
+  "libConfig": {
+    "entry": "map",
+    "libExtensions": [{
+        "name": "control"
+      },
+      {
+        "name": "selector"
+      },
+      {
+        "name": "view"
+      }
+    ]
+  }
+}

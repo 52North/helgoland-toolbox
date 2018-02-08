@@ -6,6 +6,8 @@
     "entry": "depiction",
     "libExtensions": [{
       "name": "label-mapper"
+    },{
+      "name": "datasetlist"
     }]
   }
 }
