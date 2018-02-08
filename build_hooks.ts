@@ -2,6 +2,10 @@ const globals = {
   'tslib': 'tslib',
 
   '@helgoland/core': 'helgoland.core',
+  '@helgoland/time': 'helgoland.time',
+  '@helgoland/map': 'helgoland.map',
+  '@helgoland/favorite': 'helgoland.favorite',
+  '@helgoland/map/selector': 'helgoland.map.selector',
   '@helgoland/depiction': 'helgoland.depiction',
   '@helgoland/depiction/label-mapper': 'helgoland.core.label-mapper',
 
@@ -32,7 +36,14 @@ const globals = {
   'rxjs/add/operator/map': 'Rx.Observable.prototype',
   'rxjs/observable/of': 'Rx.Observable',
 
+  'jquery': 'jquery',
+  'leaflet': 'L',
+  'leaflet.markercluster': 'L.markercluster',
+  'ngx-clipboard': 'ngxClipboard',
+  'ngx-color-picker': 'ngxColorPicker',
+  'bootstrap-slider': 'bootstrap-slider',
   'moment': 'moment',
+  'd3': 'd3',
   '@ngx-translate/core': '@ngx-translate/core',
   'class-transformer': 'class-transformer'
 };

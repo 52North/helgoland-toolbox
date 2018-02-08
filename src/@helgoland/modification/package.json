@@ -1,0 +1,11 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland modification library",
+  "keywords": [],
+  "dependencies": {
+    "ngx-color-picker": "^5.3.1"
+  },
+  "libConfig": {
+    "entry": "modification"
+  }
+}

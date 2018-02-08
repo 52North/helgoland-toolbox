@@ -2,6 +2,9 @@
 /* This file is for setting global styles  */
 @import 'variables';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~leaflet/dist/leaflet.css';
+@import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
+@import '~font-awesome/css/font-awesome.css';
 
 nav {
   margin-top: 16px;

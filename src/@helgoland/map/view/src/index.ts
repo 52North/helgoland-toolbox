@@ -1,0 +1,1 @@
+export { MapViewModule } from './module';

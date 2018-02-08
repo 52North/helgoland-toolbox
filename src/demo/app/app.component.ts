@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
+import { Language } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
-
-// import { Language } from '../../../src';
 
 @Component({
     selector: 'app',
@@ -10,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
 
-    // public languageList: Language[];
+    public languageList: Language[];
 
     constructor(
         translate: TranslateService
@@ -18,15 +17,15 @@ export class AppComponent {
         translate.setDefaultLang('en');
         translate.use('en');
 
-        // this.languageList = [
-        //     {
-        //         label: 'Deutsch',
-        //         code: 'de'
-        //     },
-        //     {
-        //         label: 'English',
-        //         code: 'en'
-        //     }
-        // ];
+        this.languageList = [
+            {
+                label: 'Deutsch',
+                code: 'de'
+            },
+            {
+                label: 'English',
+                code: 'en'
+            }
+        ];
     }
 }

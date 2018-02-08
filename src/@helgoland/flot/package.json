@@ -1,0 +1,13 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland Flot library",
+  "keywords": [],
+  "dependencies": {
+    "Flot": "github:flot/flot",
+    "jquery": "^3.2.1"
+  },
+  "libConfig": {
+    "entry": "flot",
+    "libExtensions": []
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland favorite library",
+  "keywords": [],
+  "libConfig": {
+    "entry": "favorite"
+  }
+}

@@ -15,7 +15,7 @@ import { DatasetOptions } from '../model/internal/options';
 import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { HasLoadableContent } from '../model/mixins/has-loadable-content';
-import { Time } from '../time';
+import { Time } from '../time/index';
 import { GraphMessage } from './graph-message';
 
 const equal = require('deep-equal');

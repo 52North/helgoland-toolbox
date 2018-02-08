@@ -3,37 +3,145 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": true,
-    "sourceMap": true,
-    "declaration": false,
-    "noImplicitAny": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "es2015",
       "dom"
     ],
-    "typeRoots" : [
-      "./node_modules/@types"
+    "typeRoots": [
+      "node_modules/@types"
     ],
     "types": [
-      "flot",
       "geojson",
-      "leaflet",
+      "hammerjs",
       "jasmine",
-      "karma",
       "node",
+      "source-map",
+      "uglify-js",
       "webpack",
-      "webpack-env"
-    ]
+      "jquery",
+      "flot"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@helgoland/core": [
+        "@helgoland/core/src/core.ts"
+      ],
+      "@helgoland/core/src/*": [
+        "@helgoland/core/src/*"
+      ],
+      "@helgoland/caching": [
+        "@helgoland/caching/src/caching.ts"
+      ],
+      "@helgoland/caching/src/*": [
+        "@helgoland/caching/src/*"
+      ],
+      "@helgoland/depiction": [
+        "@helgoland/depiction/src/depiction.ts"
+      ],
+      "@helgoland/depiction/label-mapper": [
+        "@helgoland/depiction/label-mapper/src/index.ts"
+      ],
+      "@helgoland/depiction/label-mapper/src/*": [
+        "@helgoland/depiction/label-mapper/src/*"
+      ],
+      "@helgoland/depiction/datasetlist": [
+        "@helgoland/depiction/datasetlist/src/index.ts"
+      ],
+      "@helgoland/depiction/datasetlist/src/*": [
+        "@helgoland/depiction/datasetlist/src/*"
+      ],
+      "@helgoland/depiction/src/*": [
+        "@helgoland/depiction/src/*"
+      ],
+      "@helgoland/favorite": [
+        "@helgoland/favorite/src/favorite.ts"
+      ],
+      "@helgoland/favorite/src/*": [
+        "@helgoland/favorite/src/*"
+      ],
+      "@helgoland/flot": [
+        "@helgoland/flot/src/flot.ts"
+      ],
+      "@helgoland/flot/src/*": [
+        "@helgoland/flot/src/*"
+      ],
+      "@helgoland/map": [
+        "@helgoland/map/src/map.ts"
+      ],
+      "@helgoland/map/control": [
+        "@helgoland/map/control/src/index.ts"
+      ],
+      "@helgoland/map/control/src/*": [
+        "@helgoland/map/control/src/*"
+      ],
+      "@helgoland/map/selector": [
+        "@helgoland/map/selector/src/index.ts"
+      ],
+      "@helgoland/map/selector/src/*": [
+        "@helgoland/map/selector/src/*"
+      ],
+      "@helgoland/map/view": [
+        "@helgoland/map/view/src/index.ts"
+      ],
+      "@helgoland/map/view/src/*": [
+        "@helgoland/map/view/src/*"
+      ],
+      "@helgoland/map/src/*": [
+        "@helgoland/map/src/*"
+      ],
+      "@helgoland/permalink": [
+        "@helgoland/permalink/src/permalink.ts"
+      ],
+      "@helgoland/permalink/src/*": [
+        "@helgoland/permalink/src/*"
+      ],
+      "@helgoland/plotly": [
+        "@helgoland/plotly/src/plotly.ts"
+      ],
+      "@helgoland/plotly/src/*": [
+        "@helgoland/plotly/src/*"
+      ],
+      "@helgoland/selector": [
+        "@helgoland/selector/src/selector.ts"
+      ],
+      "@helgoland/selector/src/*": [
+        "@helgoland/selector/src/*"
+      ],
+      "@helgoland/time": [
+        "@helgoland/time/src/time.ts"
+      ],
+      "@helgoland/time/src/*": [
+        "@helgoland/time/src/*"
+      ],
+      "@helgoland/modification": [
+        "@helgoland/modification/src/modification.ts"
+      ],
+      "@helgoland/modification/src/*": [
+        "@helgoland/modification/src/*"
+      ],
+      "@helgoland/d3": [
+        "@helgoland/d3/src/d3.ts"
+      ],
+      "@helgoland/d3/src/*": [
+        "@helgoland/d3/src/*"
+      ]
+    }
   },
-  "include": [
-    "src/**/*.ts",
-    "demo/**/*.ts"
-  ],
   "exclude": [
-    "src/**/*.spec.ts",
+    "examples/**/*.ts",
+    "scripts/**/*.ts",
     "node_modules",
-    "dist"
-  ]
+    "dist",
+    "dist_package",
+    "e2e",
+    "src/**/*.spec.ts"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }

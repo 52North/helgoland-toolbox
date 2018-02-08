@@ -2,11 +2,12 @@ import * as Path from 'path';
 import { ScriptTarget, ModuleKind } from 'typescript';
 import * as del from 'del';
 import * as glob from 'glob';
+import * as fs from 'fs-extra';
 import { runCli } from 'ngc-webpack';
 const mv = require('mv');
 const sorcery = require('sorcery');
 
-import { cleanOnNext } from '../util';
+import { cleanOnNext, root } from '../util';
 import * as util from '../util';
 
 function remapSourceMap(sourceFile: string, options: any = {}): Promise<void> {
@@ -35,6 +36,12 @@ export class Gulpfile {
 
         const p = util.root(util.currentPackage().tsConfigObj.compilerOptions.outDir);
         const copyInst = util.getCopyInstruction(util.currentPackage());
+
+        if (util.currentPackage().dir === '@helgoland/flot') {
+          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.navigate.js'), copyInst.to + '/jquery.flot.navigate.js');
+          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.selection.js'), copyInst.to + '/jquery.flot.selection.js');
+          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.touch.js'), copyInst.to + '/jquery.flot.touch.js');
+        }
 
         return new Promise((resolve, reject) => {
           mv(copyInst.from, copyInst.toSrc, { mkdirp: true }, (err?) => {

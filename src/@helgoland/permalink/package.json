@@ -1,0 +1,11 @@
+{
+  "version": "1.0.1",
+  "description": "Helgoland permalink library",
+  "keywords": [],
+  "dependencies": {
+    "ngx-clipboard": "^9.1.3"
+  },
+  "libConfig": {
+    "entry": "permalink"
+  }
+}
