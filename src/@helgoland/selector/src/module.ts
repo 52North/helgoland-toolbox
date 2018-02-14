@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
-import { LabelMapperModule } from '@helgoland/depiction/label-mapper';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction/label-mapper';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector/dataset-by-station-selector.component';
@@ -25,8 +25,8 @@ import { ServiceFilterSelectorComponent } from './service-filter-selector/servic
   imports: [
     CommonModule,
     TranslateModule,
-    LabelMapperModule,
-    CoreModule
+    HelgolandLabelMapperModule,
+    HelgolandCoreModule
   ],
   exports: [
     ProviderSelectorComponent,
@@ -40,4 +40,4 @@ import { ServiceFilterSelectorComponent } from './service-filter-selector/servic
     ListSelectorService
   ]
 })
-export class SelectorModule { }
+export class HelgolandSelectorModule { }

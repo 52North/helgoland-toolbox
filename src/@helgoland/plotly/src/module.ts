@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { PlotlyProfileGraphComponent } from './plotly';
 
@@ -8,11 +8,11 @@ import { PlotlyProfileGraphComponent } from './plotly';
     PlotlyProfileGraphComponent
   ],
   imports: [
-    CoreModule
+    HelgolandCoreModule
   ],
   exports: [
     PlotlyProfileGraphComponent
   ],
   providers: []
 })
-export class PlotlyModule { }
+export class HelgolandPlotlyModule { }

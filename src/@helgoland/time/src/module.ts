@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CoreModule } from '@helgoland/core';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector/predefined-timespan-selector.component';
 import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
@@ -25,7 +25,7 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     FormsModule,
-    CoreModule
+    HelgolandCoreModule
   ],
   exports: [
     COMPONENTS
@@ -34,4 +34,4 @@ const COMPONENTS = [
     TimeRangeSliderSelectorCache
   ]
 })
-export class TimeModule { }
+export class HelgolandTimeModule { }

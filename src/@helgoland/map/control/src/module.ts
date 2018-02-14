@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CoreModule } from '@helgoland/core';
-import { MapModule } from '@helgoland/map';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandMapModule } from '@helgoland/map';
 
 import { ExtentControlComponent } from './extent/extent.component';
 import { GeosearchControlComponent } from './geosearch/geosearch.component';
@@ -24,8 +24,8 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     FormsModule,
-    CoreModule,
-    MapModule
+    HelgolandCoreModule,
+    HelgolandMapModule
   ],
   exports: [
     COMPONENTS
@@ -34,4 +34,4 @@ const COMPONENTS = [
     LocateService
   ]
 })
-export class MapControlModule { }
+export class HelgolandMapControlModule { }

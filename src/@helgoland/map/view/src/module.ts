@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MapModule } from '@helgoland/map';
+import { HelgolandMapModule } from '@helgoland/map';
 
 import { GeometryMapViewerComponent } from './geometry-map-viewer/geometry-map-viewer.component';
 
@@ -8,7 +8,7 @@ import { GeometryMapViewerComponent } from './geometry-map-viewer/geometry-map-v
         GeometryMapViewerComponent
     ],
     imports: [
-        MapModule
+        HelgolandMapModule
     ],
     exports: [
         GeometryMapViewerComponent
@@ -16,4 +16,4 @@ import { GeometryMapViewerComponent } from './geometry-map-viewer/geometry-map-v
     providers: [
     ]
 })
-export class MapViewModule { }
+export class HelgolandMapViewModule { }

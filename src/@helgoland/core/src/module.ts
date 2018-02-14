@@ -25,4 +25,4 @@ import { Time } from './time/time.service';
     ColorService
   ]
 })
-export class CoreModule { }
+export class HelgolandCoreModule { }

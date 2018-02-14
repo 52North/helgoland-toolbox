@@ -18,4 +18,4 @@ import { LabelMapperService } from './label-mapper.service';
         LabelMapperService
     ]
 })
-export class LabelMapperModule { }
+export class HelgolandLabelMapperModule { }

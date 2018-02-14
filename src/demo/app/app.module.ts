@@ -15,19 +15,19 @@ import {
   LocalOngoingHttpCache,
   OnGoingHttpCache,
 } from '@helgoland/caching/src/caching';
-import { ApiInterface, CoreModule, GetDataApiInterface, Settings, SettingsService } from '@helgoland/core';
-import { D3Module } from '@helgoland/d3';
+import { ApiInterface, HelgolandCoreModule, GetDataApiInterface, Settings, SettingsService } from '@helgoland/core';
+import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist/src';
 import { FavoriteModule } from '@helgoland/favorite/src/module';
 import { FlotModule } from '@helgoland/flot/src/flot';
 import { GeoSearch, NominatimGeoSearchService } from '@helgoland/map';
-import { MapControlModule } from '@helgoland/map/control';
-import { MapSelectorModule } from '@helgoland/map/selector';
-import { MapViewModule } from '@helgoland/map/view';
-import { ModificationModule } from '@helgoland/modification/src/module';
-import { PermalinkModule } from '@helgoland/permalink/src/module';
-import { SelectorModule } from '@helgoland/selector';
-import { TimeModule } from '@helgoland/time/src/module';
+import { HelgolandMapControlModule } from '@helgoland/map/control';
+import { HelgolandMapSelectorModule } from '@helgoland/map/selector';
+import { HelgolandMapViewModule } from '@helgoland/map/view';
+import { HelgolandModificationModule } from '@helgoland/modification/src/module';
+import { HelgolandPermalinkModule } from '@helgoland/permalink/src/module';
+import { HelgolandSelectorModule } from '@helgoland/selector';
+import { HelgolandTimeModule } from '@helgoland/time/src/module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GraphLegendComponent } from 'demo/app/pages/graph-legend/graph-legend.component';
@@ -134,18 +134,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCheckboxModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    SelectorModule,
+    HelgolandSelectorModule,
     FlotModule,
-    CoreModule,
-    TimeModule,
+    HelgolandCoreModule,
+    HelgolandTimeModule,
     FavoriteModule,
-    PermalinkModule,
-    MapSelectorModule,
-    MapControlModule,
-    MapViewModule,
-    ModificationModule,
+    HelgolandPermalinkModule,
+    HelgolandMapSelectorModule,
+    HelgolandMapControlModule,
+    HelgolandMapViewModule,
+    HelgolandModificationModule,
     HelgolandDatasetlistModule,
-    D3Module
+    HelgolandD3Module
     // PlotlyModule
   ],
   entryComponents: [

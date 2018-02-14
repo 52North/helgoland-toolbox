@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
-import { MapModule } from '@helgoland/map';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandMapModule } from '@helgoland/map';
 
 import { PlatformMapSelectorComponent } from './platform-map-selector/platform-map-selector.component';
 import { StationMapSelectorComponent } from './station-map-selector/station-map-selector.component';
@@ -19,8 +19,8 @@ const COMPONENTS = [
     ],
     imports: [
         CommonModule,
-        CoreModule,
-        MapModule
+        HelgolandCoreModule,
+        HelgolandMapModule
     ],
     exports: [
         COMPONENTS
@@ -28,4 +28,4 @@ const COMPONENTS = [
     providers: [
     ]
 })
-export class MapSelectorModule { }
+export class HelgolandMapSelectorModule { }

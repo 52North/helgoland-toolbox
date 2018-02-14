@@ -1,4 +1,4 @@
-export { SelectorModule } from './module';
+export { HelgolandSelectorModule } from './module';
 export {
     DatasetByStationSelectorComponent, ExtendedTimeseries
 } from './dataset-by-station-selector/dataset-by-station-selector.component';

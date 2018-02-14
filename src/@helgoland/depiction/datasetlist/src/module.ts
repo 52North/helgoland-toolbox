@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
-import { LabelMapperModule } from '@helgoland/depiction/label-mapper';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction/label-mapper';
 import { FavoriteModule } from '@helgoland/favorite';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -19,8 +19,8 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     TranslateModule,
-    CoreModule,
-    LabelMapperModule,
+    HelgolandCoreModule,
+    HelgolandLabelMapperModule,
     FavoriteModule
   ],
   declarations: [

@@ -1,4 +1,4 @@
-export { MapSelectorModule } from './module';
+export { HelgolandMapSelectorModule } from './module';
 export { MapSelectorComponent } from './map-selector.component';
 export { TrajectoryResult } from './model/trajectory-result';
 export { PlatformMapSelectorComponent } from './platform-map-selector/platform-map-selector.component';

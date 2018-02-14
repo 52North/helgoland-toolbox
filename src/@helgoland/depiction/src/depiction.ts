@@ -1,1 +1,1 @@
-export { DepictionModule } from './module'; 
+export { HelgolandDepictionModule } from './module';

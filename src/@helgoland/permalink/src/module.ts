@@ -24,4 +24,4 @@ const COMPONENTS = [
   providers: [
   ]
 })
-export class PermalinkModule { }
+export class HelgolandPermalinkModule { }

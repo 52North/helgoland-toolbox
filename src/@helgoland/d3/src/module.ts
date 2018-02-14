@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { D3TrajectoryGraphComponent } from './d3-trajectory-graph/d3-trajectory-graph.component';
 
@@ -8,11 +8,11 @@ import { D3TrajectoryGraphComponent } from './d3-trajectory-graph/d3-trajectory-
     D3TrajectoryGraphComponent
   ],
   imports: [
-    CoreModule
+    HelgolandCoreModule
   ],
   exports: [
     D3TrajectoryGraphComponent
   ],
   providers: []
 })
-export class D3Module { }
+export class HelgolandD3Module { }

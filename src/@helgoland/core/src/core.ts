@@ -1,4 +1,4 @@
-export { CoreModule } from './module';
+export { HelgolandCoreModule } from './module';
 
 export * from './api-interface/index';
 export * from './graph/index';

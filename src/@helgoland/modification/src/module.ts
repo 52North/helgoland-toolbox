@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@helgoland/core';
+import { HelgolandCoreModule } from '@helgoland/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AxesOptionsComponent } from './axes-options/axes-options.component';
@@ -11,7 +11,7 @@ import { ColorSelectorComponent } from './color-selector/color-selector.componen
     AxesOptionsComponent
   ],
   imports: [
-    CoreModule,
+    HelgolandCoreModule,
     ColorPickerModule
   ],
   exports: [
@@ -21,4 +21,4 @@ import { ColorSelectorComponent } from './color-selector/color-selector.componen
   providers: [
   ]
 })
-export class ModificationModule { }
+export class HelgolandModificationModule { }
