@@ -24,4 +24,4 @@ const COMPONENTS = [
     JsonFavoriteExporterService
   ]
 })
-export class FavoriteModule { }
+export class HelgolandFavoriteModule { }

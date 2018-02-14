@@ -42,13 +42,13 @@
         "@helgoland/depiction/src/depiction.ts"
       ],
       "@helgoland/depiction/label-mapper": [
-        "@helgoland/depiction/label-mapper/src/index.ts"
+        "@helgoland/depiction/label-mapper/src/label-mapper"
       ],
       "@helgoland/depiction/label-mapper/src/*": [
         "@helgoland/depiction/label-mapper/src/*"
       ],
       "@helgoland/depiction/datasetlist": [
-        "@helgoland/depiction/datasetlist/src/index.ts"
+        "@helgoland/depiction/datasetlist/src/datasetlist"
       ],
       "@helgoland/depiction/datasetlist/src/*": [
         "@helgoland/depiction/datasetlist/src/*"
@@ -72,19 +72,19 @@
         "@helgoland/map/src/map.ts"
       ],
       "@helgoland/map/control": [
-        "@helgoland/map/control/src/index.ts"
+        "@helgoland/map/control/src/control"
       ],
       "@helgoland/map/control/src/*": [
         "@helgoland/map/control/src/*"
       ],
       "@helgoland/map/selector": [
-        "@helgoland/map/selector/src/index.ts"
+        "@helgoland/map/selector/src/selector"
       ],
       "@helgoland/map/selector/src/*": [
         "@helgoland/map/selector/src/*"
       ],
       "@helgoland/map/view": [
-        "@helgoland/map/view/src/index.ts"
+        "@helgoland/map/view/src/view"
       ],
       "@helgoland/map/view/src/*": [
         "@helgoland/map/view/src/*"

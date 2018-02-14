@@ -17,4 +17,4 @@ import { FlotTimeseriesGraphComponent } from './flot-timeseries-graph/flot-times
   ],
   providers: []
 })
-export class FlotModule { }
+export class HelgolandFlotModule { }
