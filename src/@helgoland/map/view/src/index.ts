@@ -1,1 +1,1 @@
-export { MapViewModule } from './module';
+export { HelgolandMapViewModule } from './module';

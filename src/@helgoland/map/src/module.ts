@@ -18,4 +18,4 @@ const COMPONENTS = [
     MapCache
   ]
 })
-export class MapModule { }
+export class HelgolandMapModule { }

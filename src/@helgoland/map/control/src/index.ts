@@ -1,4 +1,4 @@
-export { MapControlModule } from './module';
+export { HelgolandMapControlModule } from './module';
 export { ExtentControlComponent } from './extent/extent.component';
 export { GeosearchControlComponent } from './geosearch/geosearch.component';
 export { LocateControlComponent } from './locate/locate.component';
