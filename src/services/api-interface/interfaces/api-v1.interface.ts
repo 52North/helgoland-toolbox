@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Category } from './../../../model/api/category';
 import { Data } from './../../../model/api/data';
-import { Timeseries } from './../../../model/api/dataset';
+import { Timeseries, TimeseriesExtras } from './../../../model/api/dataset';
 import { Feature } from './../../../model/api/feature';
 import { Offering } from './../../../model/api/offering';
 import { DataParameterFilter, ParameterFilter } from './../../../model/api/parameterFilter';
@@ -27,6 +27,7 @@ export interface ApiV1 {
 
     getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]>;
     getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter): Observable<Timeseries>;
+    getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
 
     getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter): Observable<Data<T>>;
 

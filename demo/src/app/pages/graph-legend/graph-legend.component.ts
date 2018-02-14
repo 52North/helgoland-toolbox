@@ -133,9 +133,10 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
-    public selectedIds: Array<string> = new Array();
+    public selectedIds: string[] = [];
 
     public overviewLoading: boolean;
+    public graphLoading: boolean;
 
     constructor(
         private color: ColorService,
@@ -198,7 +199,7 @@ export class GraphLegendComponent {
         if (selected) {
             this.selectedIds.push(id);
         } else {
-            this.selectedIds.splice(this.selectedIds.findIndex(entry => entry === id), 1);
+            this.selectedIds.splice(this.selectedIds.findIndex((entry) => entry === id), 1);
         }
     }
 

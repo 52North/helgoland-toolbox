@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { GeoSearch, GeoSearchResult } from './geosearch';
+import { GeoSearch, GeoSearchOptions, GeoSearchResult } from './geosearch';
 
 interface NominatimResult {
     display_name: string;
@@ -19,12 +19,13 @@ export class NominatimGeoSearchService implements GeoSearch {
         private httpClient: HttpClient
     ) { }
 
-    public searchTerm(term: string): Observable<GeoSearchResult> {
+    public searchTerm(term: string, options?: GeoSearchOptions): Observable<GeoSearchResult> {
         let params = new HttpParams();
         params = params.set('limit', '1');
         params = params.set('polygon_geojson', '1');
         params = params.set('q', term);
         params = params.set('format', 'json');
+        if (options && options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
         return this.httpClient.get(
             'http://nominatim.openstreetmap.org/search',
             { params }
