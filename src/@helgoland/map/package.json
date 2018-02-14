@@ -9,13 +9,16 @@
   "libConfig": {
     "entry": "map",
     "libExtensions": [{
-        "name": "control"
+        "name": "control",
+        "entry": "control"
       },
       {
-        "name": "selector"
+        "name": "selector",
+        "entry": "selector"
       },
       {
-        "name": "view"
+        "name": "view",
+        "entry": "view"
       }
     ]
   }

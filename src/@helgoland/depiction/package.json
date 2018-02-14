@@ -5,9 +5,11 @@
   "libConfig": {
     "entry": "depiction",
     "libExtensions": [{
-      "name": "label-mapper"
+      "name": "label-mapper",
+      "entry": "label-mapper"
     },{
-      "name": "datasetlist"
+      "name": "datasetlist",
+      "entry": "datasetlist"
     }]
   }
 }

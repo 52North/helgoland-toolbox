@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction/label-mapper';
-import { FavoriteModule } from '@helgoland/favorite';
+import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
@@ -21,7 +21,7 @@ const COMPONENTS = [
     TranslateModule,
     HelgolandCoreModule,
     HelgolandLabelMapperModule,
-    FavoriteModule
+    HelgolandFavoriteModule
   ],
   declarations: [
     COMPONENTS
