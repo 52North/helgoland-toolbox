@@ -8,7 +8,7 @@
               Zeit
             </th>
             <th
-              *ngFor="let series of this.preparedTimeserieses; let i = index"
+              *ngFor="let series of this.timeseriesArray; let i = index"
               (click)="sort($event)"
               [attr.data-column-id]="i"
               [ngStyle]="{ 'border-color': preparedColors[i] }">
