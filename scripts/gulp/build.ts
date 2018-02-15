@@ -1,18 +1,19 @@
-import * as Path from 'path';
-import { ScriptTarget, ModuleKind } from 'typescript';
 import * as del from 'del';
-import * as glob from 'glob';
 import * as fs from 'fs-extra';
+import * as glob from 'glob';
 import { runCli } from 'ngc-webpack';
+import * as Path from 'path';
+import { ModuleKind, ScriptTarget } from 'typescript';
+
+import { cleanOnNext } from '../util';
+import * as util from '../util';
+
 const mv = require('mv');
 const sorcery = require('sorcery');
 
-import { cleanOnNext, root } from '../util';
-import * as util from '../util';
-
 function remapSourceMap(sourceFile: string, options: any = {}): Promise<void> {
   return sorcery.load(sourceFile)
-    .then(chain => {
+    .then((chain) => {
       if (!chain) {
         throw new Error('Failed to load sourceMap chain for ' + sourceFile);
       }
@@ -24,12 +25,12 @@ function remapSourceMap(sourceFile: string, options: any = {}): Promise<void> {
 export class Gulpfile {
 
   @util.GulpClass.Task('!build:webpack')
-  buildWebpack() {
+  public buildWebpack() {
     const pkgMeta = util.currentPackage();
     const config = util.resolveWebpackConfig(util.root(util.FS_REF.WEBPACK_CONFIG), pkgMeta);
 
     return runCli(config, ['-p', pkgMeta.tsConfig], { p: pkgMeta.tsConfig, _: [] })
-      .then(parsedDiagnostics => {
+      .then((parsedDiagnostics) => {
         if (parsedDiagnostics.error) {
           throw parsedDiagnostics.error;
         }
@@ -38,18 +39,26 @@ export class Gulpfile {
         const copyInst = util.getCopyInstruction(util.currentPackage());
 
         if (util.currentPackage().dir === '@helgoland/flot') {
-          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.navigate.js'), copyInst.to + '/jquery.flot.navigate.js');
-          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.selection.js'), copyInst.to + '/jquery.flot.selection.js');
-          fs.copySync(util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'flot-timeseries-graph', 'jquery.flot.touch.js'), copyInst.to + '/jquery.flot.touch.js');
+          fs.copySync(
+            util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'jquery.flot.navigate.js'),
+            copyInst.from + '/jquery.flot.navigate.js'
+          );
+          fs.copySync(
+            util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'jquery.flot.selection.js'),
+            copyInst.from + '/jquery.flot.selection.js'
+          );
+          fs.copySync(
+            util.root(util.FS_REF.SRC_CONTAINER, util.currentPackage().dir, 'src', 'jquery.flot.touch.js'),
+            copyInst.from + '/jquery.flot.touch.js'
+          );
         }
 
         return new Promise((resolve, reject) => {
           mv(copyInst.from, copyInst.toSrc, { mkdirp: true }, (err?) => {
-            cleanOnNext(...glob.sync(`${copyInst.toSrc}/**/!(*.d.ts|*.metadata.json)`, {
+            cleanOnNext(...glob.sync(`${copyInst.toSrc}/**/!(jquery.*.js|*.d.ts|*.metadata.json)`, {
               absolute: true,
               nodir: true
             }));
-
             if (err) {
               reject(err);
             } else {
@@ -61,7 +70,7 @@ export class Gulpfile {
   }
 
   @util.GulpClass.Task('!build:rollup:fesm')
-  buildRollupFesm() {
+  public buildRollupFesm() {
     const meta = util.currentPackage();
     const copyInst = util.getCopyInstruction(meta);
 
@@ -85,7 +94,7 @@ export class Gulpfile {
   }
 
   @util.GulpClass.Task('!build:fesm:es5')
-  buildFesmEs5() {
+  public buildFesmEs5() {
     const meta = util.currentPackage();
     const copyInst = util.getCopyInstruction(meta);
     const dest = Path.join(copyInst.toBundle, `${meta.umd}.es5.js`);
@@ -105,7 +114,7 @@ export class Gulpfile {
   }
 
   @util.GulpClass.Task('!build:rollup:umd') // or use provided callback instead
-  buildRollupUmd() {
+  public buildRollupUmd() {
     const meta = util.currentPackage();
     const copyInst = util.getCopyInstruction(meta);
 
@@ -132,13 +141,13 @@ export class Gulpfile {
   }
 
   @util.GulpClass.Task('!minifyAndGzip')
-  minifyAndGzip(done) {
+  public minifyAndGzip(done) {
     try {
       const meta = util.currentPackage();
       const copyInst = util.getCopyInstruction(meta);
 
       util.minifyAndGzip(copyInst.toBundle, `${meta.umd}.umd`);
-      done()
+      done();
     } catch (err) {
       done(err);
     }
