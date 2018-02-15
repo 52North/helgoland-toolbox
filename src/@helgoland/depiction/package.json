@@ -13,6 +13,10 @@
         "entry": "label-mapper"
       },
       {
+        "name": "dataset-table",
+        "entry": "dataset-table"
+      },
+      {
         "name": "datasetlist",
         "entry": "datasetlist"
       }

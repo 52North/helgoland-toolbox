@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Timespan } from './../../../../../src/model/internal/timeInterval';
-import { DatasetOptions } from './../../../../../src/model/internal/options';
+import { DatasetOptions, Timespan } from '@helgoland/core';
 
 @Component({
     selector: 'my-app',
