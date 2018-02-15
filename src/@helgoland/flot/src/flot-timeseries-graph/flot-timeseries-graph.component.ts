@@ -1,8 +1,8 @@
 import 'Flot/jquery.flot.js';
 import 'Flot/jquery.flot.time.js';
-// import './jquery.flot.navigate.js';
-// import './jquery.flot.selection.js';
-// import './jquery.flot.touch.js';
+import '../jquery.flot.navigate.js';
+import '../jquery.flot.selection.js';
+import '../jquery.flot.touch.js';
 
 import {
     AfterViewInit,
