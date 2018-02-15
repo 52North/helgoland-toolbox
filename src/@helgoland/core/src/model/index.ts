@@ -29,6 +29,7 @@ export { DatasetTypes, PlatformTypes, ValueTypes } from './api/enums';
 
 export { Provider, FilteredProvider } from './internal/provider';
 export { Filter } from './internal/filter';
+export { DatasetTableData } from './internal/dataset-table-data';
 export { Timespan, TimeInterval, BufferedTime } from './internal/timeInterval';
 export { DatasetOptions, ReferenceValueOption, TimedDatasetOptions } from './internal/options';
 export { IdCache } from './internal/id-cache';

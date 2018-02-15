@@ -47,6 +47,12 @@
       "@helgoland/depiction/label-mapper/src/*": [
         "@helgoland/depiction/label-mapper/src/*"
       ],
+      "@helgoland/depiction/dataset-table": [
+        "@helgoland/depiction/dataset-table/src/dataset-table"
+      ],
+      "@helgoland/depiction/dataset-table/src/*": [
+        "@helgoland/depiction/dataset-table/src/*"
+      ],
       "@helgoland/depiction/datasetlist": [
         "@helgoland/depiction/datasetlist/src/datasetlist"
       ],

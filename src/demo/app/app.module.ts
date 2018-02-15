@@ -18,6 +18,7 @@ import {
 import { ApiInterface, HelgolandCoreModule, GetDataApiInterface, Settings, SettingsService } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist';
+import { HelgolandDatasetTableModule } from '@helgoland/depiction/dataset-table';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandFlotModule } from '@helgoland/flot';
 import { GeoSearch, NominatimGeoSearchService } from '@helgoland/map';
@@ -50,6 +51,7 @@ import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { TimeComponent } from './pages/time/time.component';
+import { TableComponent } from './pages/table/table.component';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
@@ -107,6 +109,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListSelectionComponent,
     FlotGraphComponent,
     // PlotlyGraphComponent,
+    TableComponent,
     TimeComponent,
     FavoriteComponent,
     PermalinkComponent,
@@ -145,7 +148,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandMapViewModule,
     HelgolandModificationModule,
     HelgolandDatasetlistModule,
-    HelgolandD3Module
+    HelgolandD3Module,
+    HelgolandDatasetTableModule
     // PlotlyModule
   ],
   entryComponents: [

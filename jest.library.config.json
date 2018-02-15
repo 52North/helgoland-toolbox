@@ -34,6 +34,8 @@
     "^@helgoland/depiction/src/(.*)": "<rootDir>/src/@helgoland/depiction/src/$1",
     "^@helgoland/depiction/label-mapper$": "<rootDir>/src/@helgoland/depiction/label-mapper/src/label-mapper",
     "^@helgoland/depiction/label-mapper/src/(.*)": "<rootDir>/src/@helgoland/depiction/label-mapper/src/$1",
+    "^@helgoland/depiction/dataset-table$": "<rootDir>/src/@helgoland/depiction/dataset-table/src/dataset-table",
+    "^@helgoland/depiction/dataset-table/src/(.*)": "<rootDir>/src/@helgoland/depiction/dataset-table/src/$1",
     "^@helgoland/depiction/datasetlist$": "<rootDir>/src/@helgoland/depiction/datasetlist/src/datasetlist",
     "^@helgoland/depiction/datasetlist/src/(.*)": "<rootDir>/src/@helgoland/depiction/datasetlist/src/$1",
     "^@helgoland/favorite$": "<rootDir>/src/@helgoland/favorite/src/favorite.ts",
