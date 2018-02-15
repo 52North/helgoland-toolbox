@@ -26,16 +26,13 @@ import { ApiInterface } from './../../../../services/api-interface/api-interface
 import { InternalIdHandler } from './../../../../services/api-interface/internal-id-handler.service';
 import { Time } from './../../../../services/time/time.service';
 
-interface DataEntry extends LocatedTimeValueEntry {
-    dist: number;
-    tick: number;
-    x: number;
-    y: number;
-    xDiagCoord?: number;
-    latlng: L.LatLng;
+interface DataEntry {
     [id: string]: any;
-    // internalId: any;
-    // xDiagCoord?: number;
+    xDiagMin?: number;
+    xDiagMax?: number;
+    yDiagMin?: number;
+    yDiagMax?: number;
+    xDiagCoord?: number;
 }
 
 @Component({
@@ -59,6 +56,10 @@ export class D3FlotTimeseriesGraphComponent
 
     private rawSvg: any;
     private graph: any;
+    private xDomainRange: any; // x domain range
+    private yDomainRange: any; // y domain range
+    private xDomainMin: any; // y domain range
+    private xDomainMax: any; // y domain range
     private height: number;
     private width: number;
     private margin = {
@@ -68,7 +69,7 @@ export class D3FlotTimeseriesGraphComponent
         left: 40
     };
     private maxLabelwidth = 0;
-    private lineTs: d3.Line<DataEntry>
+    // private lineTs: d3.Line<DataEntry>
     private xScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
@@ -77,6 +78,13 @@ export class D3FlotTimeseriesGraphComponent
     private focuslabelTime: any;
     private focuslabelY: any;
     private bufferSum = 0;
+
+    private dragging: boolean;
+    private dragStart: [number, number];
+    private dragCurrent: [number, number];
+    private dragRect: any;
+    private dragRectG: any;
+    // private diagramValueData = Array(); // : DataEntry[] = [];
 
     private plotOptions: PlotOptions = {
         grid: {
@@ -117,7 +125,6 @@ export class D3FlotTimeseriesGraphComponent
 
     public ngAfterViewInit(): void {
 
-
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
@@ -126,21 +133,6 @@ export class D3FlotTimeseriesGraphComponent
         this.graph = this.rawSvg
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
-
-        this.lineTs = d3.line<DataEntry>()
-        .x(function(d) {
-            console.log(d[0]);
-            const xDiagCoord = this.xScaleBase(d[0]);
-            d.xdiagCoord = xDiagCoord;
-            console.log(xDiagCoord);
-            return xDiagCoord;
-        })
-        .y(function(d) {
-            console.log(d[1]);
-            this.yScaleBase(d[1]);
-            return d[1];
-        });
-
     }
 
     protected addDataset(id: string, url: string): void {
@@ -169,6 +161,7 @@ export class D3FlotTimeseriesGraphComponent
         this.plotGraph();
     }
 
+    // load data of dataset
     private loadDataset(dataset: IDataset) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
 
@@ -183,7 +176,7 @@ export class D3FlotTimeseriesGraphComponent
                 }
             ).subscribe(
                 (result) => this.prepareTsData(dataset, result).subscribe(() => {
-                    this.plotGraph();
+                    // this.plotGraph();
                 }),
                 (error) => this.onError(error),
                 () => console.log("loadDataset() - complete data loaded") // this.onCompleteLoadingData(dataset)
@@ -191,13 +184,11 @@ export class D3FlotTimeseriesGraphComponent
         }
     }
 
+    // add dataset to preparedData
     private prepareTsData(dataset: IDataset, data: Data<[number, number]>): Observable<boolean> {
         return Observable.create((observer: Observer<boolean>) => {
 
-            console.log(dataset);
-
             const styles = this.datasetOptions.get(dataset.internalId);
-            console.log(styles);
 
             const dataEntry = {
                 internalId: dataset.internalId,
@@ -213,12 +204,13 @@ export class D3FlotTimeseriesGraphComponent
                     lineWidth: 1
                 }
             };
-            console.log(dataEntry);
-
             this.preparedData.push(dataEntry);
-            console.log(this.preparedData);
 
-            this.plotGraph();
+            // wait till all datasets are loaded
+            if (this.preparedData.length == this.datasetIds.length) {
+                this.plotGraph();
+            }
+
         });
     }
     
@@ -230,42 +222,111 @@ export class D3FlotTimeseriesGraphComponent
         return this.rawSvg.node().clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
-    private plotGraph() {
-        console.log("plotGraph()");
+    // get time range for x axis
+    private getxDomain() {
+        if (this.xDomainRange != undefined) {
+            var min = this.xDomainMin;
+            var max = this.xDomainMax;
+        } else {
+            var min = this.preparedData[0].data[0][0];
+            var max = this.preparedData[0].data[this.preparedData[0].data.length-1][0];
+            
+            this.preparedData.forEach((entry) => {
+                if (min >= entry.data[0][0]) { min = entry.data[0][0]; }
+                if (max <= entry.data[entry.data.length-1][0]) { max = entry.data[entry.data.length-1][0]; }
+            })
+        }
 
+
+        return [ min, max ];
+    }
+
+    // get value range for y axis
+    private getyDomain() {
+        var min = this.preparedData[0].data[0][1];
+        var max = this.preparedData[0].data[1][1];
+
+        this.preparedData.forEach((entry) => {
+            // get min and max value of data
+            const range = d3.extent<DataEntry, number>(entry.data, (datum, index, array) => {
+                return datum[1]; // [0] = timestamp -- [1] = value 
+            });
+            if (min >= range[0]) { min = range[0]; }
+            if (max <= range[1]) { max = range[1]; }
+        })
+
+        return [ min, max ];
+    }
+
+    private plotGraph() {
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
-
-        var data = this.preparedData[0].data;
+        this.xDomainRange = this.getxDomain();
+        this.yDomainRange = this.getyDomain();
 
         // #####################################################
+
+        this.drawXaxis();
+        this.drawYaxis();
+
+        // #####################################################
+        // inside line and mouse events
+        this.background = this.graph.append('svg:rect')
+            .attr('width', this.width - this.bufferSum)
+            .attr('height', this.height)
+            .attr('fill', 'none')
+            .attr('stroke', 'none')
+            .attr('pointer-events', 'all')
+            .attr('transform', 'translate(' + this.bufferSum + ', 0)')
+            .on('mousemove.focus', this.mousemoveHandler)
+            .on('mouseout.focus', this.mouseoutHandler)
+            .on('mousedown.drag', this.dragStartHandler)
+            .on('mousemove.drag', this.dragHandler)
+            .on('mouseup.drag', this.dragEndHandler);
+
+        // line inside graph
+        this.focusG = this.graph.append('g');
+        this.highlightFocus = this.focusG.append('svg:line')
+            .attr('class', 'mouse-focus-line')
+            .attr('x2', '0')
+            .attr('y2', '0')
+            .attr('x1', '0')
+            .attr('y1', '0')
+            .style('stroke', 'black')
+            .style('stroke-width', '1px');
+
+        this.preparedData.forEach((entry) => {  // forEachStart
+            this.drawGraphLine(entry);
+        }) // forEachEnd
+
+    }
+
+    private drawXaxis() {
         var bufferXrange = 0;
-
-        // range for x axis scale
-        var varxScaleBase = d3.scaleLinear()    // this.xScaleBase = d3.scaleLinear()
-            .domain( [ data[0][0] , data[data.length-1][0] ] )
-            .range( [bufferXrange , this.width] );
-
-        this.xScaleBase = varxScaleBase;
         
-        const xAxisGen = d3.axisBottom(varxScaleBase).ticks(5);
+        // range for x axis scale
+        this.xScaleBase = d3.scaleLinear()    // this.xScaleBase = d3.scaleLinear()
+        .domain( [ this.xDomainRange[0] , this.xDomainRange[1] ] ) // .domain( [ data[0][0] , data[data.length-1][0] ] )
+        .range( [bufferXrange , this.width] );
+        
+        const xAxisGen = d3.axisBottom(this.xScaleBase).ticks(5);
         
         xAxisGen.tickFormat((d) => {
             return d3.timeFormat('%d.%m.%Y %H:%M:%S')(new Date(d.valueOf()));
         });
-
+        
         // draw x axis
         this.graph.append('svg:g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(xAxisGen);
-
+        
         // draw the x grid lines
         this.graph.append('svg:g')
             .attr('class', 'grid')
             .attr('transform', 'translate(0,' + this.height + ')')
-            .call(d3.axisBottom(varxScaleBase)
+            .call(d3.axisBottom(this.xScaleBase)
                 .ticks(10)
                 .tickSize(-this.height)
                 .tickFormat(() => '')
@@ -274,7 +335,7 @@ export class D3FlotTimeseriesGraphComponent
         // draw upper axis as border
         this.graph.append('svg:g')
             .attr('class', 'x axis')
-            .call(d3.axisTop(varxScaleBase).ticks(0).tickSize(0));
+            .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
 
         // text label for the x axis
         this.graph.append('text')
@@ -282,21 +343,16 @@ export class D3FlotTimeseriesGraphComponent
             .attr('y', this.height + this.margin.bottom - 5)
             .style('text-anchor', 'middle')
             .text('time');
+    }
 
-        // #####################################################
-        // range for y axis scale
-        const range = d3.extent<DataEntry, number>(data, (datum, index, array) => {
-            return datum[1]; // here with ID
-        });
-            
-        const rangeOffset = (range[1] - range[0]) * 0.10;
-        var varyScaleBase = d3.scaleLinear()
-            .domain([range[0] - rangeOffset, range[1] + rangeOffset])
+    private drawYaxis() {
+        // range for y axis scale                
+        const rangeOffset = (this.yDomainRange[1] - this.yDomainRange[0]) * 0.10;
+        this.yScaleBase = d3.scaleLinear()
+            .domain([ this.yDomainRange[0] - rangeOffset, this.yDomainRange[1] + rangeOffset]) // .domain([range[0] - rangeOffset, range[1] + rangeOffset])
             .range([this.height, 0]);
 
-        this.yScaleBase = varyScaleBase;
-
-        var yAxisGen = d3.axisLeft(varyScaleBase).ticks(5);
+        var yAxisGen = d3.axisLeft(this.yScaleBase).ticks(5);
 
         // draw y axis
         const axis = this.graph.append('svg:g')
@@ -321,12 +377,19 @@ export class D3FlotTimeseriesGraphComponent
         if (this.datasetIds.length === 1) {
             this.graph.append('svg:g')
                 .attr('class', 'grid')
-                .call(d3.axisLeft(varyScaleBase)
+                .call(d3.axisLeft(this.yScaleBase)
                     .ticks(5)
                     .tickSize(-this.width)
                     .tickFormat(() => '')
                 );
         }
+    }
+
+    private drawGraphLine(entry: DataEntry) {
+        var data = entry.data;
+
+        var XscaleBase = this.xScaleBase;
+        var YscaleBase = this.yScaleBase;
 
         // #####################################################
         // draw grah line
@@ -335,117 +398,182 @@ export class D3FlotTimeseriesGraphComponent
             .datum(data)
             .attr('class', 'line')
             .attr('fill', 'none')
-            .attr('stroke', this.preparedData[0].color) // green
+            .attr('stroke', entry.color) // green
             .attr('stroke-width', 2)
             .attr("d", d3.line<DataEntry>()
             .x(function(d) {
-                const xDiagCoord = varxScaleBase(d[0]);
+                d.timestamp = d[0];
+                const xDiagCoord = XscaleBase(d[0]);
                 d.xDiagCoord = xDiagCoord;
                 return xDiagCoord;
             })
             .y(function(d) {
-                return varyScaleBase(d[1]); //yScale(d[options.id]);
+                const yDiagCoord = YscaleBase(d[1]);
+                d.yDiagCoord = yDiagCoord;
+                return yDiagCoord; //yScale(d[options.id]);
             })
             .curve(d3.curveLinear));
 
-        console.log(this.preparedData);
-        
-        // #####################################################
-        // inside line and mouse events
-        this.background = this.graph.append('svg:rect')
-            .attr('width', this.width - this.bufferSum)
-            .attr('height', this.height)
-            .attr('fill', 'none')
-            .attr('stroke', 'none')
-            .attr('pointer-events', 'all')
-            .attr('transform', 'translate(' + this.bufferSum + ', 0)')
-            .on('mousemove.focus', this.mousemoveHandler)
-            .on('mouseout.focus', this.mouseoutHandler);
-            // .on('mousedown.drag', this.dragStartHandler)
-            // .on('mousemove.drag', this.dragHandler)
-            // .on('mouseup.drag', this.dragEndHandler);
-
-        // line inside graph
-        this.focusG = this.graph.append('g');
-        this.highlightFocus = this.focusG.append('svg:line')
-            .attr('class', 'mouse-focus-line')
-            .attr('x2', '0')
-            .attr('y2', '0')
-            .attr('x1', '0')
-            .attr('y1', '0')
-            .style('stroke', 'black')
-            .style('stroke-width', '1px');
-
         // label inside graph
-        this.preparedData[0].focusLabelRect = this.focusG.append('svg:rect')
+        entry.focusLabelRect = this.focusG.append('svg:rect')
             .style('fill', 'white')
             .style('stroke', 'none')
             .style('pointer-events', 'none');
-        this.preparedData[0].focusLabel = this.focusG.append('svg:text').attr('class', 'mouse-focus-label-x')
+        entry.focusLabel = this.focusG.append('svg:text').attr('class', 'mouse-focus-label-x')
             .style('pointer-events', 'none')
-            .style('fill', this.preparedData[0].color)
+            .style('fill', entry.color)
             .style('font-weight', 'lighter');
 
         this.focuslabelTime = this.focusG.append('svg:text')
             .style('pointer-events', 'none')
             .attr('class', 'mouse-focus-label-x');
-        this.focuslabelY = this.focusG.append('svg:text')
-            .style('pointer-events', 'none')
-            .attr('class', 'mouse-focus-label-y');
+        // this.focuslabelY = this.focusG.append('svg:text')
+        //     .style('pointer-events', 'none')
+        //     .style('fill', 'green')
+        //     .attr('class', 'mouse-focus-label-y');
 
     }
 
 
     private mousemoveHandler = () => {
         const coords = d3.mouse(this.background.node());
-        const idx = this.getItemForX(coords[0] + this.bufferSum, this.preparedData[0].data);
-        this.showDiagramIndicator(idx);
-        this.onHoverHighlight.emit(this.preparedData[0].data[idx][0]);
+        this.preparedData.forEach((entry) => {
+            const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
+            this.showDiagramIndicator(entry, idx);
+            this.onHoverHighlight.emit(entry.data[idx][0]);
+        })
     }
 
     private mouseoutHandler = () => {
         this.hideDiagramIndicator();
     }
 
-    // private dragStartHandler = () => {
-    //     this.dragging = false;
-    //     this.dragStart = d3.mouse(this.background.node());
-    // }
+    private dragStartHandler = () => {
+        this.dragging = false;
+        this.dragStart = d3.mouse(this.background.node());
+    }
 
-    // private dragHandler = () => {
-    //     this.dragging = true;
-    //     this.drawDragRectangle();
-    // }
+    private dragHandler = () => {
+        this.dragging = true;
+        this.drawDragRectangle();
+    }
 
-    // private dragEndHandler = () => {
-    //     if (!this.dragStart || !this.dragging) {
-    //         this.onSelectionChangedFinished.emit({ from: 0, to: this.dataLength });
-    //     } else {
-    //         const from = this.getItemForX(this.dragStart[0] + this.bufferSum, this.baseValues);
-    //         const to = this.getItemForX(this.dragCurrent[0] + this.bufferSum, this.baseValues);
-    //         this.onSelectionChangedFinished.emit(this.prepareRange(this.baseValues[from].tick, this.baseValues[to].tick));
-    //     }
-    //     this.dragStart = null;
-    //     this.dragging = false;
-    //     this.resetDrag();
-    // }
+    private dragEndHandler = () => {
+        if (!this.dragStart || !this.dragging) {
+            // back to origin range (from - to)
+            this.xDomainRange = undefined;
+            this.plotGraph();
+        } else {
+            if (this.dragStart[0] <= this.dragCurrent[0]) {
+                this.setxDomain(this.dragStart, this.dragCurrent);
+            } else {
+                this.setxDomain(this.dragCurrent, this.dragStart);
+            }
+            this.plotGraph();
+        }
+        this.dragStart = null;
+        this.dragging = false;
+        this.resetDrag();
+    }
+
+    private setxDomain(dragStart, dragEnd) {
+        var domMinArr = [];
+        var domMaxArr = [];
+
+        this.preparedData.forEach((entry) => {
+            domMinArr.push(entry.data.find((elem, index, array) => {
+                if (elem.xDiagCoord >= dragStart[0]) {
+                    return array[index];
+                }
+            }))
+            domMaxArr.push(entry.data.find((elem, index, array) => {
+                if (elem.xDiagCoord >= dragEnd[0]) {
+                    return array[index-1]
+                } 
+            }))
+        })
+
+        var domMin;
+        var domMax;
+        var tmp;
+        var lowest = Number.POSITIVE_INFINITY;
+        var highest = Number.NEGATIVE_INFINITY;
+
+        for (var i=0; i<=domMinArr.length-1; i++) {
+            tmp = domMinArr[i].xDiagCoord;
+            if (tmp < lowest) {
+                lowest = tmp;
+                domMin = domMinArr[i].timestamp;
+            }
+        }
+        for (var j=0; j<=domMaxArr.length-1; j++) {
+            tmp = domMaxArr[j].xDiagCoord;
+            if (tmp > highest) {
+                highest = tmp;
+                domMax = domMaxArr[j].timestamp;
+            }
+        }
+
+        this.xDomainMin = domMin;
+        this.xDomainMax = domMax;
+    }
+
+    private drawDragRectangle() {
+        if (!this.dragStart) { return; }
+        this.dragCurrent = d3.mouse(this.background.node());
+
+        const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
+        const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);
+
+        if (!this.dragRect && !this.dragRectG) {
+
+            this.dragRectG = this.graph.append('g');
+
+            this.dragRect = this.dragRectG.append('rect')
+                .attr('width', x2 - x1)
+                .attr('height', this.height)
+                .attr('x', x1 + this.bufferSum)
+                .attr('class', 'mouse-drag')
+                .style('pointer-events', 'none');
+        } else {
+            this.dragRect.attr('width', x2 - x1)
+                .attr('x', x1 + this.bufferSum);
+        }
+    }
+
+    private prepareRange(from: number, to: number) { //: D3SelectionRange {
+        if (from <= to) {
+            return { from, to };
+        }
+        return { from: to, to: from };
+    }
+
+    private resetDrag() {
+        if (this.dragRectG) {
+            this.dragRectG.remove();
+            this.dragRectG = null;
+            this.dragRect = null;
+        }
+    }
 
     private getItemForX(x: number, data: DataEntry[]) {
         const index = this.xScaleBase.invert(x);
         const bisectDate = d3.bisector((d: DataEntry) => {
             return d[0]
         }).left;
-        return bisectDate(this.preparedData[0].data, index);
+        return bisectDate(data, index);
     }
 
     private hideDiagramIndicator() {
         this.focusG.style('visibility', 'hidden');
     }
 
-    private showDiagramIndicator = (idx: number) => {
-        const item = this.preparedData[0].data[idx];
+    private showDiagramIndicator = (entry, idx: number) => {
+        const item = entry.data[idx];
+        // create line where mouse is
         this.focusG.style('visibility', 'visible');
-        this.highlightFocus.attr('x1', item.xDiagCoord)
+        this.highlightFocus
+            .attr('x1', item.xDiagCoord)
             .attr('y1', 0)
             .attr('x2', item.xDiagCoord)
             .attr('y2', this.height)
@@ -454,28 +582,30 @@ export class D3FlotTimeseriesGraphComponent
         let onLeftSide = false;
         if ((this.background.node().getBBox().width + this.bufferSum) / 2 > item.xDiagCoord) { onLeftSide = true; }
 
-        this.showLabelValues(item, onLeftSide);
+        this.showLabelValues(entry, item, onLeftSide);
         this.showTimeIndicatorLabel(item, onLeftSide);
     }
 
-    private showLabelValues(item: DataEntry, onLeftSide: boolean) {
-        var entry = this.preparedData[0];
+    private showLabelValues(entry, item: DataEntry, onLeftSide: boolean) {
+        // var entry = this.preparedData[0]; // this.baseValues --> item[internalId]
         var id = 1;
-                if (entry.focusLabel) {
-                    entry.focusLabel.text(item[id] + 'cm'); // cm --> (entry.dataset.uom ? entry.dataset.uom : '')
-                    const entryX = onLeftSide ?
-                        item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
-                    entry.focusLabel
-                        .attr('x', entryX)
-                        .attr('y', this.calculateHeight() - 5)
-                        // .attr('y', entry.yScale(item[id]) + this.getDimensions(entry.focusLabel.node()).h - 3); // TODO: entry.yScale(item[id])
-                    entry.focusLabelRect
-                        .attr('x', entryX)
-                        // .attr('y', entry.yScale(item[id]))
-                        .attr('y', this.calculateHeight() - 20)
-                        .attr('width', this.getDimensions(entry.focusLabel.node()).w)
-                        .attr('height', this.getDimensions(entry.focusLabel.node()).h);
-                }
+            if (entry.focusLabel) {
+                entry.focusLabel.text(item[id] + 'cm'); // cm --> (entry.dataset.uom ? entry.dataset.uom : '')
+                const entryX = onLeftSide ?
+                    item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
+                entry.focusLabel
+                    .attr('x', entryX)
+                    .attr('y', item.yDiagCoord)
+                    // .attr('y', this.calculateHeight() - 5)
+                    // .attr('y', entry.yScale(item[id]) + this.getDimensions(entry.focusLabel.node()).h - 3); // TODO: entry.yScale(item[id])
+                entry.focusLabelRect
+                    .attr('x', entryX)
+                    // .attr('y', entry.yScale(item[id]))
+                    .attr('y', item.yDiagCoord -18)
+                    // .attr('y', this.calculateHeight() - 20)
+                    .attr('width', this.getDimensions(entry.focusLabel.node()).w)
+                    .attr('height', this.getDimensions(entry.focusLabel.node()).h);
+            }
     }
 
     private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean) {

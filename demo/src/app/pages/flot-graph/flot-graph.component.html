@@ -1,13 +1,15 @@
 <div>
-    <div style="height: 500px; width: 500px;">
+    <!-- <div style="height: 500px; width: 500px;">
         <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
-    </div>
-    <div style="height: 500px; width: 500px;">
+    </div> -->
+    <!-- <div style="height: 500px; width: 500px;">
         <n52-flot-timeseries-graph [datasetIds]="datasetIdsOne" [datasetOptions]="datasetOptionsOne" [timeInterval]="timespan" [graphOptions]="diagramOptions"
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
-    </div>
+    </div> -->
     <div style="height: 500px;">
-        <n52-d3-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"></n52-d3-flot-timeseries-graph>
+        <n52-d3-flot-timeseries-graph [datasetIds]="datasetIdsMultiple" [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"></n52-d3-flot-timeseries-graph>
     </div>
 </div>
+
+<!-- [datasetIdsMultiple]="datasetIdsMultiple" -->
