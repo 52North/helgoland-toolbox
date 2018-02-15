@@ -25,3 +25,6 @@ dist_package
 docs
 tmp
 src_old/
+
+#pack packages
+*.tgz

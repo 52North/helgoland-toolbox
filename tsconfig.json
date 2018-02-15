@@ -131,8 +131,6 @@
     }
   },
   "exclude": [
-    "examples/**/*.ts",
-    "scripts/**/*.ts",
     "node_modules",
     "dist",
     "dist_package",

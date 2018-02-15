@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction/label-mapper';
 
 import {
   FlotOverviewTimeseriesGraphComponent,
@@ -10,7 +11,9 @@ import { FlotTimeseriesGraphComponent } from './flot-timeseries-graph/flot-times
     FlotTimeseriesGraphComponent,
     FlotOverviewTimeseriesGraphComponent
   ],
-  imports: [],
+  imports: [
+    HelgolandLabelMapperModule
+  ],
   exports: [
     FlotTimeseriesGraphComponent,
     FlotOverviewTimeseriesGraphComponent
