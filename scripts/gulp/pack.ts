@@ -1,6 +1,8 @@
 import * as util from '../util';
 
 let exec = require('child_process').exec;
+let spawnSync = require('child_process').spawnSync;
+let spawn = require('child_process').spawn;
 
 function filterPackageSelection(packages) {
   const idx = process.argv.indexOf('--select');
@@ -30,13 +32,22 @@ export class Gulpfile {
     this.packages = filterPackageSelection(util.libConfig.packages.slice())
       .map((pkgName) => util.buildPackageMetadata(pkgName));
 
-    if (this.packages.length === 0) {
-      return Promise.reject(new Error('Invalid configuration, no packages found.'));
-    }
-
     this.packages.forEach((p) => {
       util.log('pack ' + p.dirName);
       exec('npm pack ' + util.FS_REF.PKG_DIST + '/' + p.dir);
+    });
+  }
+
+  @util.GulpClass.Task({ name: '!publish', dependencies: [] })
+  public publish() {
+    this.packages = filterPackageSelection(util.libConfig.packages.slice())
+      .map((pkgName) => util.buildPackageMetadata(pkgName));
+
+    spawnSync('npm addUser', [], { stdio: 'inherit', shell: true });
+
+    this.packages.forEach((p) => {
+      util.log('publish ' + p.dirName);
+      spawn('npm', ['publish', '--access public', util.FS_REF.PKG_DIST + '/' + p.dir], { stdio: 'inherit', shell: true });
     });
   }
 }

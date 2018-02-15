@@ -1,11 +1,17 @@
 {
-  "version": "0.0.1-alpha.25",
+  "version": "0.0.1-alpha.27",
   "description": "Core Library",
-  "keywords": ["corp", "core", "core-plus"],
+  "keywords": [
+    "corp",
+    "core",
+    "core-plus"
+  ],
   "dependencies": {
     "@ngx-translate/core": "^9.1.1",
+    "@types/deep-equal": "^0.0.30",
     "@types/geojson": "^7946.0.1",
     "class-transformer": "^0.1.9",
+    "deep-equal": "^1.0.1",
     "moment": "^2.20.1"
   },
   "libConfig": {

@@ -5,6 +5,7 @@ import { PackageMetadata, GlobalLibConfig } from './types';
 export const PKG_METADATA_CACHE: { [dirName: string]: PackageMetadata } = {};
 
 export const libConfig: GlobalLibConfig = jsonfile.readFileSync(root('package.json')).libConfig;
+export const libVersion: GlobalLibConfig = jsonfile.readFileSync(root('package.json')).version;
 
 if (libConfig.scope && libConfig.scope.substr(0, 1) !== '@') {
   libConfig.scope = '@' + libConfig.scope;
