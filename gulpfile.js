@@ -10,3 +10,4 @@ require('require-dir')(path.join(__dirname, 'scripts', 'gulp'));
 
 gulp.task('build', ['!compile']);
 gulp.task('pack', ['!pack']);
+gulp.task('publish', ['!publish']);

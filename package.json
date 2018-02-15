@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "0.0.1-alpha.25",
+  "version": "0.0.1-alpha.27",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -55,6 +55,8 @@
     "lib:test:watch": "npm run jest -- --config jest.library.config.json --watch",
     "lib:start:sim": "gulp build && npm run server:dev -- --env.sim",
     "lib:sync": "gulp misc:syncConfig",
+    "lib:bumpVersions": "gulp release:bumpVersions",
+    "lib:publish": "gulp publish",
     "lint": "npm run tslint \"src/**/*.ts\"",
     "node": "node",
     "postinstall": "npm run webdriver:update",

@@ -16,15 +16,23 @@ export class Gulpfile {
     name: 'release:detect',
     desc: 'Detects which library requires a new version based on the last commit version checkpoint'
   })
-  releaseDetect() {
+  public releaseDetect() {
     detect();
+  }
+
+  @util.GulpClass.Task({
+    name: 'release:bumpVersions',
+    desc: ''
+  })
+  public bumpVersions() {
+    util.adjustVersions();
   }
 
   @util.GulpClass.Task({
     name: 'release:commit',
     desc: 'Save the git commit hash for every library. This task should run after a release to mark the last checkpoint then use "release:detect" to find out which library requires a new release.'
   })
-  releaseCommit() {
+  public releaseCommit() {
     detect();
     util.commitVersionBump();
   }

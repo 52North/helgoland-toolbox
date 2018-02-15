@@ -1,15 +1,21 @@
 {
-  "version": "0.0.1-alpha.25",
+  "version": "0.0.1-alpha.27",
   "description": "Depiction Library",
-  "keywords": ["label-mapper", "dataset-entry"],
+  "keywords": [
+    "label-mapper",
+    "dataset-entry"
+  ],
   "libConfig": {
     "entry": "depiction",
-    "libExtensions": [{
-      "name": "label-mapper",
-      "entry": "label-mapper"
-    },{
-      "name": "datasetlist",
-      "entry": "datasetlist"
-    }]
+    "libExtensions": [
+      {
+        "name": "label-mapper",
+        "entry": "label-mapper"
+      },
+      {
+        "name": "datasetlist",
+        "entry": "datasetlist"
+      }
+    ]
   }
 }

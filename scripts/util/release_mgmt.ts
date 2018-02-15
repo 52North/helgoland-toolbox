@@ -3,7 +3,7 @@ import { execSync as spawn } from 'child_process';
 
 import { CommitVersion } from './types';
 import { root, FS_REF } from './fs';
-import { libConfig } from './state';
+import { libConfig, libVersion } from './state';
 
 import { getPackageRoot } from './util';
 
@@ -22,6 +22,15 @@ export function createLibVersionMap(): { [pkgName: string]: CommitVersion } {
       };
       return versionCache;
     }, {});
+}
+
+export function adjustVersions() {
+  console.log('Bump all libs to new version: ' + libVersion);
+  libConfig.packages.forEach((p) => {
+    const packageJson = fs.readJsonSync(getPackageRoot(p, 'package.json'));
+    packageJson.version = libVersion;
+    fs.writeJsonSync(getPackageRoot(p, 'package.json'), packageJson);
+  });
 }
 
 export function detectVersionBump(): { [pkgName: string]: CommitVersion } {
