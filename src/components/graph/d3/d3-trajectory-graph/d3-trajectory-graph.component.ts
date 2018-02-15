@@ -235,17 +235,23 @@ export class D3TrajectoryGraphComponent
 
     private processAllData() {
         this.baseValues = [];
+        console.log(this.datasetIds);
         this.datasetIds.forEach((id) => this.processDataForId(id));
+        console.log(this.datasetIds);
+        console.log(this.baseValues);
     }
 
     private processDataForId(internalId: string) {
         if (this.datasetOptions.get(internalId).visible) {
+            console.log(this.datasetMap);
             const datasetEntry = this.datasetMap.get(internalId);
+            console.log(datasetEntry);
             const firstEntry = this.baseValues.length === 0;
             let previous: DataEntry = null;
             datasetEntry.data.forEach((elem, idx) => {
                 if (firstEntry) {
                     const entry = this.createDataEntry(internalId, elem, previous, idx);
+                    console.log(this.selection);
                     if (this.selection) {
                         if (idx >= this.selection.from && idx <= this.selection.to) {
                             this.baseValues.push(entry);
@@ -255,6 +261,7 @@ export class D3TrajectoryGraphComponent
                     }
                     previous = entry;
                 } else {
+                    console.log(this.selection);
                     if (this.selection) {
                         if (idx >= this.selection.from && idx <= this.selection.to) {
                             if (this.baseValues[idx - this.selection.from]) {
