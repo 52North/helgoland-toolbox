@@ -1,5 +1,3 @@
-import 'plotly.js/dist/plotly-basic';
-
 import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from '@angular/core';
 import {
     ApiInterface,
@@ -13,9 +11,8 @@ import {
     Timespan,
 } from '@helgoland/core';
 import * as d3 from 'd3';
-import * as Plotly from 'plotly.js';
 
-// import * as Plotly from 'plotly.js/lib/core';
+declare var Plotly: any;
 
 interface RawData {
     dataset: IDataset;
@@ -63,7 +60,7 @@ export class PlotlyProfileGraphComponent
         hovermode: 'closest'
     };
 
-    private settings: Partial<Plotly.Config> = {
+    private settings: Partial<any> = {
         displayModeBar: false,
         modeBarButtonsToRemove: [
             'sendDataToCloud',
@@ -333,11 +330,11 @@ export class PlotlyProfileGraphComponent
     }
 }
 
-interface ScatterData extends Partial<Plotly.ScatterData> {
+interface ScatterData extends Partial<any> {
     id: string;
     timestamp: number;
 }
 
-interface Layout extends Partial<Plotly.Layout> {
+interface Layout extends Partial<any> {
     [key: string]: any;
 }

@@ -15,10 +15,10 @@ import {
   LocalOngoingHttpCache,
   OnGoingHttpCache,
 } from '@helgoland/caching/src/caching';
-import { ApiInterface, HelgolandCoreModule, GetDataApiInterface, Settings, SettingsService } from '@helgoland/core';
+import { ApiInterface, GetDataApiInterface, HelgolandCoreModule, Settings, SettingsService } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist';
 import { HelgolandDatasetTableModule } from '@helgoland/depiction/dataset-table';
+import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandFlotModule } from '@helgoland/flot';
 import { GeoSearch, NominatimGeoSearchService } from '@helgoland/map';
@@ -27,6 +27,7 @@ import { HelgolandMapSelectorModule } from '@helgoland/map/selector';
 import { HelgolandMapViewModule } from '@helgoland/map/view';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
+import { HelgolandPlotlyModule } from '@helgoland/plotly';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { HelgolandTimeModule } from '@helgoland/time';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -48,10 +49,11 @@ import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
+import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
-import { TimeComponent } from './pages/time/time.component';
 import { TableComponent } from './pages/table/table.component';
+import { TimeComponent } from './pages/time/time.component';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
@@ -108,7 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProviderSelectorComponent,
     ListSelectionComponent,
     FlotGraphComponent,
-    // PlotlyGraphComponent,
+    PlotlyGraphComponent,
     TableComponent,
     TimeComponent,
     FavoriteComponent,
@@ -149,8 +151,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandModificationModule,
     HelgolandDatasetlistModule,
     HelgolandD3Module,
-    HelgolandDatasetTableModule
-    // PlotlyModule
+    HelgolandDatasetTableModule,
+    HelgolandPlotlyModule
   ],
   entryComponents: [
     StyleModificationComponent
