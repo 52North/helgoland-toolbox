@@ -1,8 +1,8 @@
 {
   "version": "0.0.1-alpha.29",
-  "description": "Helgoland favorite library",
+  "description": "Helgoland control library",
   "keywords": [],
   "libConfig": {
-    "entry": "favorite"
+    "entry": "control"
   }
 }

@@ -38,6 +38,12 @@
       "@helgoland/caching/src/*": [
         "@helgoland/caching/src/*"
       ],
+      "@helgoland/control": [
+        "@helgoland/control/src/control.ts"
+      ],
+      "@helgoland/control/src/*": [
+        "@helgoland/control/src/*"
+      ],
       "@helgoland/depiction": [
         "@helgoland/depiction/src/depiction.ts"
       ],

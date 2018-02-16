@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "0.0.1-alpha.28",
+  "version": "0.0.1-alpha.29",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -244,6 +244,7 @@
     "packages": [
       "core",
       "caching",
+      "control",
       "depiction",
       "favorite",
       "flot",

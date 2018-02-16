@@ -30,6 +30,8 @@
     "^@helgoland/core/src/(.*)": "<rootDir>/src/@helgoland/core/src/$1",
     "^@helgoland/caching$": "<rootDir>/src/@helgoland/caching/src/caching.ts",
     "^@helgoland/caching/src/(.*)": "<rootDir>/src/@helgoland/caching/src/$1",
+    "^@helgoland/control$": "<rootDir>/src/@helgoland/control/src/control.ts",
+    "^@helgoland/control/src/(.*)": "<rootDir>/src/@helgoland/control/src/$1",
     "^@helgoland/depiction$": "<rootDir>/src/@helgoland/depiction/src/depiction.ts",
     "^@helgoland/depiction/src/(.*)": "<rootDir>/src/@helgoland/depiction/src/$1",
     "^@helgoland/depiction/label-mapper$": "<rootDir>/src/@helgoland/depiction/label-mapper/src/label-mapper",
