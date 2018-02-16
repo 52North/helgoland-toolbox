@@ -25,6 +25,10 @@ export { Service, ServiceQuantities } from './api/service'
 export { Station, StationProperties, TimeseriesCollection } from './api/station'
 export { Platform } from './api/platform';
 export { Phenomenon } from './api/phenomenon';
+export { Procedure } from './api/procedure';
+export { Offering } from './api/offering';
+export { Feature } from './api/feature';
+export { Category } from './api/category';
 export { DatasetTypes, PlatformTypes, ValueTypes } from './api/enums';
 
 export { Provider, FilteredProvider } from './internal/provider';
