@@ -1,4 +1,7 @@
 import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Rx';
+
 import { Category } from '../model/api/category';
 import { Data } from '../model/api/data';
 import { Dataset, Timeseries, TimeseriesExtras } from '../model/api/dataset';
@@ -11,9 +14,6 @@ import { Procedure } from '../model/api/procedure';
 import { Service } from '../model/api/service';
 import { Station } from '../model/api/station';
 import { Timespan } from '../model/internal/timeInterval';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/Rx';
-
 import { ApiV2 } from './interfaces/api-v2.interface';
 
 export class UriParameterCoder implements HttpParameterCodec {
@@ -46,8 +46,9 @@ export abstract class ApiInterface implements ApiV2 {
     public abstract getPlatform(id: string, apiUrl: string, params?: ParameterFilter): Observable<Platform>;
     public abstract getDatasets(apiUrl: string, params?: ParameterFilter): Observable<Dataset[]>;
     public abstract getDataset(id: string, apiUrl: string, params?: ParameterFilter): Observable<Dataset>;
-    public abstract getData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter)
-        : Observable<Data<T>>;
+    public abstract getData<T>(
+        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter
+    ): Observable<Data<T>>;
     public abstract getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]>;
     public abstract getService(id: string, apiUrl: string, params?: ParameterFilter): Observable<Service>;
     public abstract getStations(apiUrl: string, params?: ParameterFilter): Observable<Station[]>;
@@ -55,8 +56,9 @@ export abstract class ApiInterface implements ApiV2 {
     public abstract getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]>;
     public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter): Observable<Timeseries>;
     public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
-    public abstract getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter)
-        : Observable<Data<T>>;
+    public abstract getTsData<T>(
+        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter
+    ): Observable<Data<T>>;
     public abstract getCategories(apiUrl: string, params?: ParameterFilter): Observable<Category[]>;
     public abstract getCategory(id: string, apiUrl: string, params?: ParameterFilter): Observable<Category>;
     public abstract getPhenomena(apiUrl: string, params?: ParameterFilter): Observable<Phenomenon[]>;

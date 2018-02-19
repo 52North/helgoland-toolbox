@@ -7,7 +7,6 @@ describe('App', () => {
     await browser.get('/');
   });
 
-
   it('should have <my-lib>', async () => {
     const subject = await element(by.css('my-lib')).isPresent();
     expect(subject).toEqual(true);
@@ -18,6 +17,5 @@ describe('App', () => {
     const result  = 'Angular Library Starter';
     expect(subject).toEqual(result);
   });
-
 
 });

@@ -38,7 +38,4 @@ import 'zone.js/dist/zone';
 
 if ('production' === ENV) {
   // Production
-
-} else {
-
 }
