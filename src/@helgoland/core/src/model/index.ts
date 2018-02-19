@@ -41,4 +41,6 @@ export { IdCache } from './internal/id-cache';
 export { Mixin } from './mixins/Mixin.decorator';
 export { HasLoadableContent } from './mixins/has-loadable-content';
 
-export { BlacklistedService, ParsedTimespanPreset, Settings, TimespanMomentTemplate, TimespanPreset } from './settings/settings'
+export {
+    BlacklistedService, ParsedTimespanPreset, Settings, TimespanMomentTemplate, TimespanPreset
+} from './settings/settings';
