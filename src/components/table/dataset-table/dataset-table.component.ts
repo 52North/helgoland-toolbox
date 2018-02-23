@@ -18,18 +18,15 @@ import { DatasetTableData } from '../../../model/internal/dataset-table-data';
 export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions, PlotOptions> implements OnInit {
   /*
     The component extends DatasetGraphComponent, but implements only parts of that components inputs and outputs.
-    Implemented: datasetIds and timeInterval inputs; no outputs
-    Not implemented: selectedDatasetIds, datasetOptions, graphOptions inputs;
-    all outputs (pmDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
+    Implemented: datasetIds, timeInterval, selectedDatasetIds and datasetOptions inputs; no outputs
+    Not implemented: graphOptions input; all outputs (onDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
   public preparedData: DatasetTableData[] = Array();
-  public preparedTimeserieses: Timeseries[] = Array();
   public preparedColors: string[] = Array();
 
-  private timeseriesMap: Map<string, Timeseries> = new Map();
+  private timeseriesArray: Timeseries[] = new Array();
   private additionalStylesheet: HTMLElement;
-  private results: Map<string, Data<[number, number]>> = new Map();
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -88,7 +85,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   protected getIndexFromInternalId(internalId: string) {
     // helper method
-    return this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
+    return this.datasetIds.indexOf(internalId);
   }
 
   protected setSelectedId(internalId: string) {
@@ -109,42 +106,39 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   protected timeIntervalChanges() {
     // the easiest method: delete everything and build preparedData from scratch.
-    // but we have to preserve which timeserieses to re-add! -> copy the map to temp
-    // (doing removal and adding in the same forEach produces an infinite loop)
-    const temp = new Map(this.timeseriesMap);
-    this.timeseriesMap.forEach((timeseries) => {
-      this.removeDataset(timeseries.internalId);
-    });
-    temp.forEach((timeseries) => {
-      this.addTimeseries(timeseries);
-    });
+    this.preparedData = [];
+    this.timeseriesArray.forEach((timeseries) => this.loadTsData(timeseries));
   }
 
   protected removeDataset(internalId: string) {
     // fairly tested
     const index = this.getIndexFromInternalId(internalId);
 
+    // remove entries of this dataset in each datetime's `values` arrays
     this.preparedData.forEach((e) => e.values.splice(index, 1));
+    // if a datetime became completely empty (i.e. there's only `undefined`s in the `values` array, delete this datetime)
     this.preparedData = this.preparedData.filter((e) => e.values.reduce((a, c) => a || c, undefined) !== undefined);
 
     this.preparedColors.splice(index, 1);
-    this.preparedTimeserieses.splice(index, 1);
 
     const rules = this.additionalStylesheet.innerHTML.split('\r\n');
     rules.splice(index, 1);
     this.additionalStylesheet.innerHTML = rules.join('\r\n');
 
-    this.timeseriesMap.delete(internalId);
+    this.timeseriesArray.splice(index, 1);
   }
 
   protected addDataset(internalId: string, url: string): void {
+    this.timeseriesArray.length += 1;  // create new empty slot
+    this.preparedColors.push('darkgrey');
+    this.additionalStylesheet.innerHTML += '\r\n';
     this.api.getSingleTimeseries(internalId, url)
       .subscribe((timeseries: Timeseries) => this.addTimeseries(timeseries));
   }
 
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
-    if (this.timeseriesMap.has(internalId)) {
-      const index = this.preparedTimeserieses.findIndex((e) => e.internalId === internalId);
+    if (this.timeseriesArray.some((e) => e !== undefined && e.internalId === internalId)) {
+      const index = this.getIndexFromInternalId(internalId);
       this.preparedColors[index] = options.color;
       // TODO-CF: Page isn't refreshed instantly, but only after the next sort (or possible other actions as well)
     }
@@ -155,7 +149,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
   }
 
   private addTimeseries(timeseries: Timeseries) {
-    this.timeseriesMap.set(timeseries.internalId, timeseries);
+    this.timeseriesArray[this.getIndexFromInternalId(timeseries.internalId)] = timeseries;
     this.loadTsData(timeseries);
   }
 
@@ -164,77 +158,44 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
       this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, this.timespan, { format: 'flot' })
         .subscribe((result) => {
-          this.results.set(timeseries.internalId, result);
-
-          // synchronized part
-          // makes sure that tsdata is prepared in the order it was requested
-
-          // method: do not start prepareData if there are tsdata requests that have started but not yet finished
-
-          // e.g. if there's 4 ts, they can be prepared in 1 batch of 1234 or 4 batches of 1,2,3,4 or 2 batches of
-          // 12,34 but not as 2 batches of 13,24 because at the time #1 and #3 are finished but not #2, tsMap.size
-          // would already be 3 but results.size only 2 -> waiting for #2 enforced. Additionally, preparedTs.length
-          // is taken into account to allow multiple batches (otherwise, if e.g. #1 finishes first and gets prepared
-          // immediately because of 1=1, the others would never get prepared due to results.size not being able to
-          // catch up with tsMap.size)
-          if (this.results.size === this.timeseriesMap.size - this.preparedTimeserieses.length) {
-            this.timeseriesMap.forEach((ts) => {
-              if (this.results.has(ts.internalId)) {
-                const res = this.results.get(ts.internalId);
-                this.results.delete(ts.internalId);
-                // bring result into Array<DatasetTableData> format and pass to prepareData
-                this.prepareData(ts, res.values.map((e) => ({ datetime: e[0], values: [e[1]] })));
-              }
-            });
-          }
+          // bring result into Array<DatasetTableData> format and pass to prepareData
+          // convention for layout of newdata argument: see 3-line-comment in prepareData function
+          const index = this.getIndexFromInternalId(timeseries.internalId);
+          this.prepareData(timeseries, result.values.map((e) => {
+            const a = new Array(this.datasetIds.length).fill(undefined);
+            a[index] = e[1];
+            return { datetime: e[0], values: a };
+          }));
         });
     }
   }
 
   private prepareData(timeseries: Timeseries, newdata: DatasetTableData[]) {
-    // this doesn't guarantee order:
-    // this.timeseriesarray = Array.from(this.timeseriesMap.values());
-    // so use array instead:
-    this.preparedTimeserieses.push(timeseries);
+    const index = this.getIndexFromInternalId(timeseries.internalId);
 
     // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
     if (this.datasetOptions) {
       const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.preparedColors.push(datasetOptions.color);
+      this.preparedColors[index] = datasetOptions.color;
     } else {
       // when no color is specified: make border transparent so the header's background color is used for the color band, too
-      this.preparedColors.push('rgba(0,0,0,0)');
+      this.preparedColors[index] = 'rgba(0,0,0,0)';
     }
 
-    this.additionalStylesheet.innerHTML += '\r\n';
     if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {
       this.setSelectedId(timeseries.internalId);
-      console.log(this.additionalStylesheet);
     }
 
-    // `newdata` is expected in exactly the same format `preparedData` would look like if there's only 1 timeseries
+    // `newdata` is expected in exactly the same format `preparedData` would look like if that timeseries was the only one
+    // to actually have data (i.e. `values` has the length of timeseriesArray, but all slots are `undefined`, except for
+    // the slot that corresponds to that timeseries)
 
-    // `timeseries` is first timeseries added -> no other `preparedData` to merge with -> `preparedData` can be set
-    // to `newdata` (as per above)
-    // special case: datasets without data. These have to be taken care of when the first proper data is added.
-    if (this.preparedData.length === 0 || this.preparedData[0] === undefined) {
-      if (newdata.length === 0) {
-        // remember "dataset without data" for later
-        this.preparedData.push(undefined);
-      } else {
-        // remember how many "datasets without data" preceeded this
-        const countOfPreceedingDatasetsWithoutData = this.preparedData.length;
-        // set newdata as preparedData (as per above)
-        this.preparedData = newdata;
-        // fix preparedData structure to take care of preceeding "datasets without data"
-        if (countOfPreceedingDatasetsWithoutData > 0) {
-          this.preparedData.forEach((e) =>
-            e.values = Array(countOfPreceedingDatasetsWithoutData).fill(undefined).concat([e.values[0]])
-          );
-        }
-      }
+    // `timeseries` is first timeseries added -> no other `preparedData` to merge with
+    if (this.preparedData.length === 0) {
+      // set newdata as preparedData (as per above)
+      this.preparedData = newdata;
 
-      // `timeseries` is not the first timeseries added -> we have to merge `newdata` into the existing `preparedData`
+    // `timeseries` is not the first timeseries added -> we have to merge `newdata` into the existing `preparedData`
     } else {
       let i = 0;  // loop variable for `preparedData`
       let j = 0;  // loop variable for `newdata`
@@ -244,40 +205,27 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
         // timestamps match
         if (this.preparedData[i] && this.preparedData[i].datetime === newdata[j].datetime) {
-          // easiest case - just add `newdata`'s value to the existing `values` array in `preparedData`
-          this.preparedData[i].values.push(newdata[j].values[0]);
+          // just add `newdata`'s value to the existing `values` array in `preparedData`
+          this.preparedData[i].values[index] = newdata[j].values[index];
           // increment both
           i++;
           j++;
 
           // `newdata` is ahead of `preparedData`
         } else if (this.preparedData[i] && this.preparedData[i].datetime < newdata[j].datetime) {
-          // there is no information in `newdata` for `preparedData`'s current timestamp -> add `undefined` to `preparedData`
-          this.preparedData[i].values.push(undefined);
+          // do nothing because there's already an undefined there
           // give preparedData the chance to catch up with newdata
           i++;
 
           // `preparedData` is ahead of `newdata`
         } else {
-          // there was no information in any of the previous timeserieses' `newdata`s for the current `newdata`'s current
-          // timestamp -> create new, empty timestamp in `preparedData`
-          this.preparedData.splice(i, 0, { datetime: newdata[j].datetime, values: [] });
-          // fill previous timeserieses' slots in the `values` array with `undefined`
-          this.preparedData[i].values = Array(this.preparedTimeserieses.length - 1).fill(undefined);
-          // add `newdata`'s value to the now existing `values` array in `preparedData`
-          // (exactly like in the "timestamps match" case)
-          this.preparedData[i].values.push(newdata[j].values[0]);
+          // the current `newdata` is the first dataset that has this datetime -> add it to the preparedData array
+          this.preparedData.splice(i, 0, newdata[j]);
           // give newdata the chance to catch up with preparedData
           j++;
           // but preparedData is 1 longer now, too
           i++;
         }
-      }
-
-      // take care of elements in `preparedData` that are later than the last element of `newdata`
-      while (i < this.preparedData.length) {
-        this.preparedData[i].values.push(undefined);
-        i++;
       }
     }
   }
