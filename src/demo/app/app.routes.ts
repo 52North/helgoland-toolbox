@@ -5,6 +5,7 @@ import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
+import { MapViewComponent } from './pages/map-view/map-view.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
@@ -17,6 +18,7 @@ import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 export const ROUTES: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
   { path: 'map-selector', component: MapSelectorComponent },
+  { path: 'map-view', component: MapViewComponent },
   { path: 'plotly-graph', component: PlotlyGraphComponent },
   { path: 'flot-graph', component: FlotGraphComponent },
   { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },

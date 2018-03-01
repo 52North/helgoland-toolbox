@@ -1,6 +1,6 @@
 import 'leaflet.markercluster';
 
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, KeyValueDiffers } from '@angular/core';
 import { ApiInterface, HasLoadableContent, Mixin, Platform } from '@helgoland/core';
 import { MapCache } from '@helgoland/map';
 import L from 'leaflet';
@@ -23,9 +23,10 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
     constructor(
         private apiInterface: ApiInterface,
         protected mapCache: MapCache,
-        protected cd: ChangeDetectorRef
+        protected cd: ChangeDetectorRef,
+        protected differs: KeyValueDiffers
     ) {
-        super(mapCache, cd);
+        super(mapCache, differs, cd);
     }
 
     protected drawGeometries() {
