@@ -1,4 +1,5 @@
 export interface LayerOptions {
-    name: string;
+    label: string;
     visible: boolean;
+    layer: L.Layer;
 }

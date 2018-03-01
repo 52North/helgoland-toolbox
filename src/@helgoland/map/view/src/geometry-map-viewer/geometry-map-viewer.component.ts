@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, KeyValueDiffers } from '@angular/core';
+import { CachedMapComponent, MapCache } from '@helgoland/map';
 import L from 'leaflet';
 
 @Component({
@@ -6,10 +7,7 @@ import L from 'leaflet';
     templateUrl: './geometry-map-viewer.component.html',
     styleUrls: ['./geometry-map-viewer.component.scss']
 })
-export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
-
-    @Input()
-    public mapId: string;
+export class GeometryMapViewerComponent extends CachedMapComponent implements AfterViewInit, OnChanges {
 
     @Input()
     public highlight: GeoJSON.GeoJsonObject;
@@ -23,7 +21,6 @@ export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
     @Input()
     public maxMapZoom: number;
 
-    private map: L.Map;
     private highlightGeometry: L.GeoJSON;
 
     private defaultStyle: L.PathOptions = {
@@ -38,21 +35,20 @@ export class GeometryMapViewerComponent implements AfterViewInit, OnChanges {
         opacity: 1
     };
 
+    constructor(
+        protected mapCache: MapCache,
+        protected differs: KeyValueDiffers
+    ) {
+        super(mapCache, differs);
+    }
+
     public ngAfterViewInit() {
-        this.map = L.map(this.mapId, {
-            maxZoom: this.maxMapZoom || 10
-        }).setView([0, 0], 0);
-
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
-
+        this.createMap();
         this.drawGeometry();
-
-        window.setTimeout(() => this.map.invalidateSize(), 10);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
+        super.ngOnChanges(changes);
         if (this.map) {
             if (changes.highlight && changes.highlight.currentValue) {
                 this.showHighlight();

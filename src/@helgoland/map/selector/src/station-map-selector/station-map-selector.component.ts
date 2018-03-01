@@ -1,7 +1,7 @@
 import 'leaflet.markercluster';
 import 'rxjs/add/observable/forkJoin';
 
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, KeyValueDiffers } from '@angular/core';
 import {
     ApiInterface,
     FirstLastValue,
@@ -38,9 +38,10 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     constructor(
         private apiInterface: ApiInterface,
         protected mapCache: MapCache,
+        protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
-        super(mapCache, cd);
+        super(mapCache, differs, cd);
     }
 
     public ngOnChanges(changes: SimpleChanges) {

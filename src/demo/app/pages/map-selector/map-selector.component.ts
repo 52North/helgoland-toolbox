@@ -27,8 +27,8 @@ export class MapSelectorComponent {
     public fitBounds2: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
     public avoidZoomToSelection = false;
-    public baseMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
-    public overlayMaps: Map<LayerOptions, L.Layer> = new Map<LayerOptions, L.Layer>();
+    public baseMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
+    public overlayMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public cluster = false;
     public loadingStations: boolean;
@@ -41,39 +41,46 @@ export class MapSelectorComponent {
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
 
     public addOverlayMapLayer() {
-        this.overlayMaps = new Map<LayerOptions, L.Layer>();
-        this.overlayMaps.set({ name: 'pm10_24hmean_1x1', visible: true },
-            L.tileLayer.wms('http://geo.irceline.be/rio/wms', {
-                layers: 'pm10_hmean_1x1',
-                transparent: true,
-                format: 'image/png',
-                time: '2018-01-05T11:00:00.000Z',
-                opacity: 0.7,
-                tiled: true,
-                visibility: true,
-                pane: 'tilePane',
-                zIndex: -9998,
-                projection: 'EPSG:4326',
-                units: 'm'
-            }));
-        this.overlayMaps.set(
-            { name: 'realtime:o3_station_max', visible: true },
-            L.tileLayer.wms('http://geo.irceline.be/wms', {
-                layers: 'realtime:o3_station_max',
-                transparent: true,
-                format: 'image/png',
-                time: '2018-01-05T11:00:00.000Z',
-                visibility: false,
-                pane: 'tilePane',
-                zIndex: -9997,
-                projection: 'EPSG:4326',
-                units: 'm'
-            })
+        this.overlayMaps = new Map<string, LayerOptions>();
+        this.overlayMaps.set('pm10_24hmean_1x1',
+            {
+                label: 'pm10_24hmean_1x1',
+                visible: true,
+                layer: L.tileLayer.wms('http://geo.irceline.be/rio/wms', {
+                    layers: 'pm10_hmean_1x1',
+                    transparent: true,
+                    format: 'image/png',
+                    time: '2018-01-05T11:00:00.000Z',
+                    opacity: 0.7,
+                    tiled: true,
+                    visibility: true,
+                    pane: 'tilePane',
+                    zIndex: -9998,
+                    projection: 'EPSG:4326',
+                    units: 'm'
+                })
+            });
+        this.overlayMaps.set('realtime:o3_station_max',
+            {
+                label: 'realtime:o3_station_max',
+                visible: true,
+                layer: L.tileLayer.wms('http://geo.irceline.be/wms', {
+                    layers: 'realtime:o3_station_max',
+                    transparent: true,
+                    format: 'image/png',
+                    time: '2018-01-05T11:00:00.000Z',
+                    visibility: false,
+                    pane: 'tilePane',
+                    zIndex: -9997,
+                    projection: 'EPSG:4326',
+                    units: 'm'
+                })
+            }
         );
     }
 
     public removeOverlayMapLayer() {
-        this.overlayMaps = new Map<LayerOptions, L.Layer>();
+        this.overlayMaps = new Map<string, LayerOptions>();
     }
 
     public showZoomControlsRight() {

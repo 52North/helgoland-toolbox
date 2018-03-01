@@ -34,6 +34,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GraphLegendComponent } from 'demo/app/pages/graph-legend/graph-legend.component';
 import { MapSelectorComponent } from 'demo/app/pages/map-selector/map-selector.component';
+import { MapViewComponent } from 'demo/app/pages/map-view/map-view.component';
 import { ProfileEntryComponent } from 'demo/app/pages/profile-entry/profile-entry.component';
 import { TrajectoryComponent } from 'demo/app/pages/trajectory/trajectory.component';
 import { settingsPromise } from 'demo/main.browser';
@@ -117,6 +118,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PermalinkComponent,
     ServiceFilterSelectorDemoPageComponent,
     MapSelectorComponent,
+    MapViewComponent,
     ProfileEntryComponent,
     GraphLegendComponent,
     TrajectoryComponent

@@ -9,6 +9,7 @@ import {
     OnChanges,
     Output,
     SimpleChanges,
+    KeyValueDiffers,
 } from '@angular/core';
 import { ApiInterface, HasLoadableContent, IDataset, LocatedProfileDataEntry, Mixin, Timespan } from '@helgoland/core';
 import { MapCache } from '@helgoland/map';
@@ -52,9 +53,10 @@ export class ProfileTrajectoryMapSelectorComponent
     constructor(
         private apiInterface: ApiInterface,
         protected mapCache: MapCache,
+        protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
-        super(mapCache, cd);
+        super(mapCache, differs, cd);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
