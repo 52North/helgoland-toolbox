@@ -9,6 +9,7 @@ import { TimeRangeSliderSelectorComponent } from './time-range-slider-selector/t
 import { TimeRangeSliderSelectorCache } from './time-range-slider-selector/time-range-slider-selector.service';
 import { TimespanButtonComponent } from './timespan-button/timespan-button.component';
 import { TimespanShiftSelectorComponent } from './timespan-shift-selector/timespan-shift-selector.component';
+import { HelgolandPipesModule } from '../../pipes/pipes.module';
 
 const COMPONENTS = [
   PredefinedTimespanSelectorComponent,
@@ -22,7 +23,8 @@ const COMPONENTS = [
   imports: [
     CommonModule,
     FormsModule,
-    HelgolandServicesModule
+    HelgolandServicesModule,
+    HelgolandPipesModule
   ],
   declarations: [
     COMPONENTS,

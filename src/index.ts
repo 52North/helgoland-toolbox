@@ -53,3 +53,4 @@ export { Timespan } from './model/internal/timeInterval';
 export { IdCache } from './model/internal/id-cache';
 
 export * from './services';
+export * from './pipes';

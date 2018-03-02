@@ -59,6 +59,7 @@ import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-s
 import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
+import { HelgolandPipesModule } from '../../../src/pipes/pipes.module';
 
 const appRoutes: Routes = [
   { path: 'provider-selector', component: ProviderSelectorComponent },
@@ -112,6 +113,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
       }
     }),
     HelgolandServicesModule,
+    HelgolandPipesModule,
     HelgolandSelectorModule,
     HelgolandFlotGraphModule,
     HelgolandPlotlyGraphModule,
