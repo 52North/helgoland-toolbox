@@ -1,4 +1,4 @@
-<table>
+<table *ngIf="ready">
     <thead>
         <tr>
             <th
@@ -21,5 +21,5 @@
             <td>{{row.datetime | date: 'short'}}</td>
             <td *ngFor="let value of row.values">{{value}}</td>
         </tr>
-</tbody>
+    </tbody>
 </table>

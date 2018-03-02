@@ -24,6 +24,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
 
   public preparedData: DatasetTableData[] = Array();
   public preparedColors: string[] = Array();
+  public ready = false;
 
   private timeseriesArray: Timeseries[] = new Array();
   private additionalStylesheet: HTMLElement;
@@ -228,5 +229,7 @@ export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions,
         }
       }
     }
+
+    this.ready = this.timeseriesArray.every((e) => e !== undefined);
   }
 }
