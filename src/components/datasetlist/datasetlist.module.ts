@@ -10,6 +10,7 @@ import { HelgolandModificationModule } from './../modification/modification.modu
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
 import { ReferenceValueColorCache, TimeseriesEntryComponent } from './timeseries-entry/timeseries-entry.component';
 import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
+import { HelgolandPipesModule } from '../../pipes/pipes.module';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
@@ -25,7 +26,8 @@ const COMPONENTS = [
     HelgolandDepictionModule,
     HelgolandMapViewModule,
     HelgolandServicesModule,
-    HelgolandFavoriteModule
+    HelgolandFavoriteModule,
+    HelgolandPipesModule
   ],
   declarations: [
     COMPONENTS
