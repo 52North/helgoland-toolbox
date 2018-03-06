@@ -4,12 +4,7 @@ import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
 import { PlotOptions } from '@helgoland/flot';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
-
-// import { PlotOptions } from '../../../../../src/components/graph/flot/model';
-// import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
-// import { DatasetOptions } from './../../../../../src/model/internal/options';
-// import { Timespan } from './../../../../../src/model/internal/timeInterval';
-// import { ColorService } from './../../../../../src/services/color/color.service';
+import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 
 @Component({
     selector: 'my-app',
@@ -167,7 +162,9 @@ export class GraphLegendComponent {
     }
 
     public showGeometry(geometry: GeoJSON.GeoJsonObject) {
-        console.log('show geometry: ' + JSON.stringify(geometry));
+        this.dialog.open(GeometryViewComponent, {
+            data: geometry
+        });
     }
 
     public highlight(id: string) {
