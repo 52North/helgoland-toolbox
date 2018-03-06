@@ -10,3 +10,4 @@ export * from './settings/index';
 export * from './time/index';
 export * from './color/color.service';
 export * from './dataset/dataset.service';
+export * from './pipes/index';

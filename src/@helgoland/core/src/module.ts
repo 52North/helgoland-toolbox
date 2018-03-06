@@ -8,13 +8,18 @@ import { LocalStorage } from './local-storage/local-storage.service';
 import { NotifierService } from './notifier/notifier.service';
 import { DefinedTimespanService } from './time/defined-timespan.service';
 import { Time } from './time/time.service';
-
+import { DateProxyPipe } from './pipes/dateproxy/dateproxy.pipe';
+ 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DateProxyPipe
+  ],
   imports: [
     HttpClientModule
   ],
-  exports: [],
+  exports: [
+    DateProxyPipe
+  ],
   providers: [
     InternalIdHandler,
     ApiMapping,
