@@ -1,4 +1,4 @@
-<table>
+<table *ngIf="ready">
   <thead>
     <tr>
       <th (click)="sort($event)" [attr.data-column-id]="'datetime'" class="sorted-asc">

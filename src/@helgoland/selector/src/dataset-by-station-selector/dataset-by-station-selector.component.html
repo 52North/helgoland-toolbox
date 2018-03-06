@@ -11,7 +11,7 @@
         <div class="additionalInfo" *ngIf="timeseries.lastValue">
             <span>{{timeseries.lastValue.value}}</span>
             <span>{{timeseries.uom}}</span>
-            <span>({{timeseries.lastValue.timestamp| date: 'dd.MM.yy HH:mm'}})</span>
+            <span>({{timeseries.lastValue.timestamp| date: 'short'}})</span>
         </div>
     </div>
 </div>
