@@ -4,7 +4,14 @@ import '../styles/styles.scss';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatCheckboxModule, MatDialogModule, MatListModule, MatRadioModule, MatSidenavModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatListModule,
+  MatRadioModule,
+  MatSidenavModule,
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
@@ -44,6 +51,7 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { ROUTES } from './app.routes';
 import { AppState } from './app.service';
+import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
@@ -121,7 +129,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapViewComponent,
     ProfileEntryComponent,
     GraphLegendComponent,
-    TrajectoryComponent
+    TrajectoryComponent,
+    GeometryViewComponent
   ],
   imports: [
     BrowserModule,
@@ -138,6 +147,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatListModule,
     MatRadioModule,
+    MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
     BrowserAnimationsModule,
@@ -157,7 +167,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandPlotlyModule
   ],
   entryComponents: [
-    StyleModificationComponent
+    StyleModificationComponent,
+    GeometryViewComponent
   ],
   providers: [
     environment.ENV_PROVIDERS,
@@ -165,3 +176,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   ]
 })
 export class AppModule { }
+

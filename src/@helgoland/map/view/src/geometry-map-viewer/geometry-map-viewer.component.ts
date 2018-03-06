@@ -18,9 +18,6 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     @Input()
     public zoomTo: GeoJSON.GeoJsonObject;
 
-    @Input()
-    public maxMapZoom: number;
-
     private highlightGeometry: L.GeoJSON;
 
     private defaultStyle: L.PathOptions = {
