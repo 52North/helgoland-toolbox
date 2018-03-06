@@ -97,12 +97,12 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         if (!this.mapOptions || this.zoomControlOptions) { this.mapOptions = { zoomControl: false }; }
         this.map = L.map(this.mapId, this.mapOptions);
         this.mapCache.setMap(this.mapId, this.map);
-        if (this.baseMaps.size > 0) {
+        if (this.baseMaps && this.baseMaps.size > 0) {
             this.baseMaps.forEach((entry, key) => this.addBaseMap(key, entry));
         } else {
             this.addBaseMap();
         }
-        this.overlayMaps.forEach((entry, key) => this.addOverlayMap(key, entry));
+        if (this.overlayMaps) { this.overlayMaps.forEach((entry, key) => this.addOverlayMap(key, entry)); }
         this.updateZoomControl();
         this.updateLayerControl();
         if (this.fitBounds) {
