@@ -36,7 +36,7 @@ export class Time {
 
     public overlaps(timeInterval: TimeInterval, from: number, to: number): boolean {
         const timespan = this.createTimespanOfInterval(timeInterval);
-        if (timespan.from >= from && timespan.from <= to || timespan.to >= from && timespan.to <= to) {
+        if (timespan.from <= to && timespan.to >= from) {
             return true;
         }
         return false;
