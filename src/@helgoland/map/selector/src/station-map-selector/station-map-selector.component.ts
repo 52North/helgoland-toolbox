@@ -150,7 +150,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
                         const marker = this.createDefaultMarker(entry);
-                        this.markerFeatureGroup.addLayer(marker);
+                        if (marker) { this.markerFeatureGroup.addLayer(marker); }
                     });
                     this.markerFeatureGroup.addTo(this.map);
                     this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
@@ -163,8 +163,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createDefaultMarker(entry: Station) {
-        const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
-        marker.on('click', () => this.onSelected.emit(entry));
-        return marker;
+        if (entry.geometry) {
+            const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
+            marker.on('click', () => this.onSelected.emit(entry));
+            return marker;
+        } else {
+            console.error(entry.id + ' has no geometry');
+        }
     }
 }
