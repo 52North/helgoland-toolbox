@@ -2,6 +2,7 @@ import { ParameterConstellation, Timeseries } from './dataset';
 import { Parameter } from './parameter';
 
 export class Station {
+    public id: string;
     public geometry: GeoJSON.Point;
     public properties: StationProperties;
 }

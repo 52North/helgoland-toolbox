@@ -21,6 +21,6 @@
   <div *ngFor="let id of datasetIds">
     <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId" [datasetOptions]="datasetOptions.get(id)"
       [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
-      (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"></n52-timeseries-entry>
+      (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)" (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
   </div>
 </div>

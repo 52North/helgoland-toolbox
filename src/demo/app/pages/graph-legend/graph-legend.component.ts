@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
+import { ColorService, DatasetOptions, Timespan, Time } from '@helgoland/core';
 import { PlotOptions } from '@helgoland/flot';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
@@ -15,8 +15,9 @@ export class GraphLegendComponent {
 
     public datasetIds = [
         'http://www.fluggs.de/sos2/api/v1/__26',
-        'http://www.fluggs.de/sos2/api/v1/__51',
-        'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100'
+        // 'http://www.fluggs.de/sos2/api/v1/__51',
+        // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
+        'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public timespan;
     public diagramOptions: PlotOptions = {
@@ -49,7 +50,7 @@ export class GraphLegendComponent {
             points: {
                 fill: true,
                 radius: 2,
-                show: false
+                show: true
             },
             //            points : {
             //                 show: true
@@ -90,7 +91,7 @@ export class GraphLegendComponent {
             //   threshold: 0
             // },
             points: {
-                show: false,
+                show: true,
                 radius: 1
             },
             lines: {
@@ -140,7 +141,8 @@ export class GraphLegendComponent {
     constructor(
         private color: ColorService,
         private cdr: ChangeDetectorRef,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private time: Time
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
@@ -194,6 +196,10 @@ export class GraphLegendComponent {
         this.dialog.open(StyleModificationComponent, {
             data: option
         });
+    }
+
+    public dateChanged(date: Date) {
+        this.timespan = this.time.centerTimespan(this.timespan, date);
     }
 
     public selectTimeseries(selected: boolean, id: string) {
