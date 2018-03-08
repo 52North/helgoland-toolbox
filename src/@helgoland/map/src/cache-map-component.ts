@@ -158,7 +158,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
                 this.map.removeControl(this.layerControl);
             }
             if (this.layerControlOptions
-                && (this.baseMaps.size > 1 || this.overlayMaps.size > 0)) {
+                && (Object.keys(this.oldBaseLayer).length > 1 || Object.keys(this.oldOverlayLayer).length > 0)) {
                 this.layerControl =
                     L.control.layers(this.oldBaseLayer, this.oldOverlayLayer, this.layerControlOptions).addTo(this.map);
             }
