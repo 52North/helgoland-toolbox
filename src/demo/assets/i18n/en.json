@@ -17,7 +17,7 @@
       "visibility": "Show/Hide this profile"
     }
   },
-  "provider-selector": {
+  "service-selector": {
     "datasets": "Datasets",
     "phenomena": "Phenomena",
     "platforms": "Platforms",

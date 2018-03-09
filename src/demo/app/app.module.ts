@@ -59,8 +59,8 @@ import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
-import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
+import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
 import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 
@@ -116,7 +116,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     LocalSelectorImplComponent,
     StyleModificationComponent,
-    ProviderSelectorComponent,
+    ServiceSelectorComponent,
     ListSelectionComponent,
     FlotGraphComponent,
     PlotlyGraphComponent,
@@ -176,4 +176,3 @@ export function HttpLoaderFactory(http: HttpClient) {
   ]
 })
 export class AppModule { }
-

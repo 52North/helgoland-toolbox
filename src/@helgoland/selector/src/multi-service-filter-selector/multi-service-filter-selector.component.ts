@@ -24,7 +24,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public items: FilteredParameter[];
 
     constructor(
-        private apiInterface: ApiInterface,
+        protected apiInterface: ApiInterface,
         protected translate: TranslateService
     ) {
         super(translate);

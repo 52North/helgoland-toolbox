@@ -1,19 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Service } from '@helgoland/core';
-import { ParameterFilter } from '@helgoland/core';
-import { BlacklistedService } from '@helgoland/core';
+import { BlacklistedService, ParameterFilter, Service } from '@helgoland/core';
 
-import { ProviderSelectorService } from './provider-selector.service';
+import { ServiceSelectorService } from './service-selector.service';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
  */
 @Component({
-    selector: 'n52-provider-selector',
-    templateUrl: './provider-selector.component.html',
-    styleUrls: ['./provider-selector.component.scss']
+    selector: 'n52-service-selector',
+    templateUrl: './service-selector.component.html',
+    styleUrls: ['./service-selector.component.scss']
 })
-export class ProviderSelectorComponent implements OnInit {
+export class ServiceSelectorComponent implements OnInit {
 
     @Input()
     public providerList: string[];
@@ -25,19 +23,19 @@ export class ProviderSelectorComponent implements OnInit {
     public supportStations: boolean;
 
     @Input()
-    public selectedProvider: Service;
+    public selectedService: Service;
 
     @Input()
     public filter: ParameterFilter;
 
     @Output()
-    public onProviderSelected: EventEmitter<Service> = new EventEmitter<Service>();
+    public onServiceSelected: EventEmitter<Service> = new EventEmitter<Service>();
 
-    public providers: Service[];
+    public services: Service[];
     public loadingCount = 0;
 
     constructor(
-        private providerSelectorService: ProviderSelectorService
+        protected serviceSelectorService: ServiceSelectorService
     ) { }
 
     public ngOnInit() {
@@ -45,20 +43,20 @@ export class ProviderSelectorComponent implements OnInit {
         if (!this.providerBlacklist) { this.providerBlacklist = []; }
         const list = this.providerList;
         this.loadingCount = list.length;
-        this.providers = [];
+        this.services = [];
         list.forEach((url) => {
-            this.providerSelectorService.fetchProvidersOfAPI(url, this.providerBlacklist, this.filter)
+            this.serviceSelectorService.fetchServicesOfAPI(url, this.providerBlacklist, this.filter)
                 .subscribe((res) => {
                     this.loadingCount--;
                     if (res && res instanceof Array) {
                         res.forEach((entry) => {
                             if (entry.quantities.platforms > 0
                                 || this.supportStations && entry.quantities.stations > 0) {
-                                this.providers.push(entry);
+                                this.services.push(entry);
                             }
                         });
                     }
-                    this.providers.sort((a, b) => {
+                    this.services.sort((a, b) => {
                         if (a.label < b.label) { return -1; }
                         if (a.label > b.label) { return 1; }
                         return 0;
@@ -69,12 +67,12 @@ export class ProviderSelectorComponent implements OnInit {
         });
     }
 
-    public isSelected(provider: Service) {
-        if (!this.selectedProvider) { return false; }
-        return this.selectedProvider.id === provider.id && this.selectedProvider.providerUrl === provider.providerUrl;
+    public isSelected(service: Service) {
+        if (!this.selectedService) { return false; }
+        return this.selectedService.id === service.id && this.selectedService.apiUrl === service.apiUrl;
     }
 
-    public selectProvider(provider: Service) {
-        this.onProviderSelected.emit(provider);
+    public selectService(service: Service) {
+        this.onServiceSelected.emit(service);
     }
 }

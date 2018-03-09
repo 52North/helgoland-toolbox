@@ -1,6 +1,6 @@
 import { Identifiable } from './identifiable';
 
-export class Parameter implements Identifiable {
-    public id: string;
-    public label: string;
+export interface Parameter extends Identifiable {
+    id: string;
+    label: string;
 }

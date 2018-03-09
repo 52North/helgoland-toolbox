@@ -1,11 +1,21 @@
 import { Parameter } from './parameter';
 
-export class Service extends Parameter {
-    public providerUrl: string;
-    public quantities: ServiceQuantities;
+export interface Service extends Parameter {
+    type: string;
+    version: string;
+    apiUrl: string;
+    serviceUrl: string;
+    quantities: ServiceQuantities;
 }
 
 export interface ServiceQuantities {
-    platforms?: number;
+    categories?: number;
+    features?: number;
+    offerings?: number;
+    phenomena?: number;
+    procedures?: number;
     stations?: number;
+    timeseries?: number;
+    platforms?: number;
+    datasets?: number;
 }

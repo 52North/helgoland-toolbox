@@ -39,7 +39,7 @@ export class SimpleApiInterface extends ApiInterface {
         params.expanded = true;
         return this.requestApi<Service[]>(url, params)
             .map((result) => {
-                result.forEach((entry) => entry.providerUrl = apiUrl);
+                result.forEach((entry) => entry.apiUrl = apiUrl);
                 return result;
             });
     }
@@ -48,7 +48,7 @@ export class SimpleApiInterface extends ApiInterface {
         const url = this.createRequestUrl(apiUrl, 'services', id);
         return this.requestApi<Service>(url, params)
             .map((result) => {
-                result.providerUrl = apiUrl;
+                result.apiUrl = apiUrl;
                 return result;
             });
     }

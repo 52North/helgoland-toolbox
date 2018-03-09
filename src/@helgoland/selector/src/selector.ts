@@ -8,6 +8,6 @@ export {
     MultiServiceFilterSelectorComponent,
     FilteredParameter
 } from './multi-service-filter-selector/multi-service-filter-selector.component';
-export { ProviderSelectorComponent } from './provider-selector/provider-selector.component';
-export { ProviderSelectorService } from './provider-selector/provider-selector.service';
+export { ServiceSelectorComponent } from './service-selector/service-selector.component';
+export { ServiceSelectorService } from './service-selector/service-selector.service';
 export { ServiceFilterSelectorComponent } from './service-filter-selector/service-filter-selector.component';

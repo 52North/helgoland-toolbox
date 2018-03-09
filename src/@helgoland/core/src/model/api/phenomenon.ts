@@ -1,5 +1,5 @@
 import { Parameter } from './parameter';
 
-export class Phenomenon extends Parameter {
+export interface Phenomenon extends Parameter {
 
 }

@@ -9,14 +9,14 @@ import { MapViewComponent } from './pages/map-view/map-view.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
-import { ProviderSelectorComponent } from './pages/provider-selector/provider-selector.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
+import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
 
 export const ROUTES: Routes = [
-  { path: 'provider-selector', component: ProviderSelectorComponent },
+  { path: 'service-selector', component: ServiceSelectorComponent },
   { path: 'map-selector', component: MapSelectorComponent },
   { path: 'map-view', component: MapViewComponent },
   { path: 'plotly-graph', component: PlotlyGraphComponent },

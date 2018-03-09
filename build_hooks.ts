@@ -34,7 +34,9 @@ const globals = {
   'rxjs/operators/map': 'Rx.Observable.prototype',
   'rxjs/operators/switchMap': 'Rx.Observable.prototype',
   'rxjs/add/operator/map': 'Rx.Observable.prototype',
+  'rxjs/add/operator/share': 'Rx.Observable.prototype',
   'rxjs/add/observable/forkJoin': 'Rx.Observable.prototype',
+  'rxjs/add/observable/of': 'Rx.Observable.prototype',
   'rxjs/observable/of': 'Rx.Observable',
 
   'jquery': 'jquery',
