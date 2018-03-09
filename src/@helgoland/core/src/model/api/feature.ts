@@ -1,5 +1,5 @@
 import { Parameter } from './parameter';
 
-export class Feature extends Parameter {
+export interface Feature extends Parameter {
 
 }

@@ -1,5 +1,5 @@
 import { Parameter } from './parameter';
 
-export class Procedure extends Parameter {
+export interface Procedure extends Parameter {
 
 }

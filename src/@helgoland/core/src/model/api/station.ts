@@ -7,8 +7,8 @@ export class Station {
     public properties: StationProperties;
 }
 
-export class StationProperties extends Parameter {
-    public timeseries: TimeseriesCollection | Timeseries;
+export interface StationProperties extends Parameter {
+    timeseries: TimeseriesCollection | Timeseries;
 }
 
 export class TimeseriesCollection {

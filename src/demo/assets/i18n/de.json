@@ -17,7 +17,7 @@
       "visibility": "Zeige/Verstecke das Profil"
     }
   },
-  "provider-selector": {
+  "service-selector": {
     "datasets": "Datensätze",
     "phenomena": "Phänomene",
     "platforms": "Platformen",

@@ -1,9 +1,9 @@
 :host {
-    .provider-list {
-        .provider-item {
+    .service-list {
+        .service-item {
             padding: 5px;
-            &+.add-provider,
-            &+.provider-item {
+            &+.add-service,
+            &+.service-item {
                 margin-top: 10px;
             }
             &:hover {

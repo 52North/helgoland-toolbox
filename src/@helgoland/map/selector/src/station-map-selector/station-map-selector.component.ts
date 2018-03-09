@@ -1,7 +1,15 @@
 import 'leaflet.markercluster';
 import 'rxjs/add/observable/forkJoin';
 
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, KeyValueDiffers } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    KeyValueDiffers,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
 import {
     ApiInterface,
     FirstLastValue,

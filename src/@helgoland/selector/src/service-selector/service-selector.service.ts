@@ -7,27 +7,27 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
 @Injectable()
-export class ProviderSelectorService {
+export class ServiceSelectorService {
 
     constructor(
         private apiInterface: ApiInterface
     ) { }
 
-    public fetchProvidersOfAPI(
+    public fetchServicesOfAPI(
         url: string,
         blacklist: BlacklistedService[],
         filter: ParameterFilter
     ): Observable<Service[]> {
         return new Observable<Service[]>((observer: Observer<Service[]>) => {
             this.apiInterface.getServices(url, filter)
-                .subscribe((providers) => {
-                    if (providers && providers instanceof Array) {
-                        const usableProviders = providers.map((provider) => {
-                            if (!this.isServiceBlacklisted(provider.id, url, blacklist)) {
-                                return provider;
+                .subscribe((services) => {
+                    if (services && services instanceof Array) {
+                        const usableServices = services.map((service) => {
+                            if (!this.isServiceBlacklisted(service.id, url, blacklist)) {
+                                return service;
                             }
                         });
-                        observer.next(usableProviders);
+                        observer.next(usableServices);
                         observer.complete();
                     }
                 }, (error) => {

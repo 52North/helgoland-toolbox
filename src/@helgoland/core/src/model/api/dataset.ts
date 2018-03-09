@@ -38,7 +38,9 @@ export class DatasetParameterConstellation extends ParameterConstellation {
     public platform: PlatformParameter;
 }
 
-export class Dataset extends Parameter implements IDataset {
+export class Dataset implements IDataset {
+    public id: string;
+    public label: string;
     public url: string;
     public uom: string;
     public internalId: string;
@@ -51,7 +53,9 @@ export class Dataset extends Parameter implements IDataset {
     public seriesParameters?: DatasetParameterConstellation;
 }
 
-export class Timeseries extends Parameter implements IDataset {
+export class Timeseries implements IDataset {
+    public id: string;
+    public label: string;
     public url: string;
     public uom: string;
     public internalId: string;
@@ -75,6 +79,6 @@ export interface StatusInterval {
     color: string;
 }
 
-export class PlatformParameter extends Parameter {
-    public platformType: PlatformTypes;
+export interface PlatformParameter extends Parameter {
+    platformType: PlatformTypes;
 }

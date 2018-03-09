@@ -55,7 +55,10 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             visible: true,
             layer: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                 maxZoom: 17,
-                attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, ' +
+                    '<a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; ' +
+                    '<a href="https://opentopomap.org">OpenTopoMap</a> ' +
+                    '(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
             })
         });
 
@@ -75,7 +78,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
                     pointToLayer: (feature, latlng) => {
                         return L.circleMarker(latlng, this.pointStyle);
                     }
-                }).bindPopup((layer) => {
+                }).bindPopup((target) => {
                     return 'horst';
                 });
                 this.overlayMaps.set('hms_geojson', { label: 'hms_geojson', visible: true, layer });
@@ -86,7 +89,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             .subscribe((geojson) => {
                 const layer = L.geoJSON(geojson, {
                     style: (feature) => this.polygonStyle
-                }).bindPopup((layer) => {
+                }).bindPopup((target) => {
                     return 'horst';
                 });
                 this.overlayMaps.set('sc_geojson', { label: 'sc_geojson', visible: true, layer });

@@ -10,13 +10,13 @@ import { ListSelectorService } from './list-selector/list-selector.service';
 import {
   MultiServiceFilterSelectorComponent,
 } from './multi-service-filter-selector/multi-service-filter-selector.component';
-import { ProviderSelectorComponent } from './provider-selector/provider-selector.component';
-import { ProviderSelectorService } from './provider-selector/provider-selector.service';
 import { ServiceFilterSelectorComponent } from './service-filter-selector/service-filter-selector.component';
+import { ServiceSelectorComponent } from './service-selector/service-selector.component';
+import { ServiceSelectorService } from './service-selector/service-selector.service';
 
 @NgModule({
   declarations: [
-    ProviderSelectorComponent,
+    ServiceSelectorComponent,
     ServiceFilterSelectorComponent,
     DatasetByStationSelectorComponent,
     MultiServiceFilterSelectorComponent,
@@ -29,14 +29,14 @@ import { ServiceFilterSelectorComponent } from './service-filter-selector/servic
     HelgolandCoreModule
   ],
   exports: [
-    ProviderSelectorComponent,
+    ServiceSelectorComponent,
     ServiceFilterSelectorComponent,
     DatasetByStationSelectorComponent,
     MultiServiceFilterSelectorComponent,
     ListSelectorComponent
   ],
   providers: [
-    ProviderSelectorService,
+    ServiceSelectorService,
     ListSelectorService
   ]
 })
