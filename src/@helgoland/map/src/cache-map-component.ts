@@ -78,16 +78,16 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         if (this._differOverlayMaps) {
             const changes = this._differOverlayMaps.diff(this.overlayMaps);
             if (changes) {
-                changes.forEachAddedItem((e) => this.addOverlayMap(e.key, e.currentValue));
-                changes.forEachRemovedItem((e) => this.removeOverlayMap(e.key, e.currentValue));
+                changes.forEachAddedItem((e) => this.addOverlayMap(e.currentValue));
+                changes.forEachRemovedItem((e) => this.removeOverlayMap(e.currentValue));
                 this.updateLayerControl();
             }
         }
         if (this._differBaseMaps) {
             const changes = this._differBaseMaps.diff(this.baseMaps);
             if (changes) {
-                changes.forEachAddedItem((e) => this.addBaseMap(e.key, e.currentValue));
-                changes.forEachRemovedItem((e) => this.removeBaseMap(e.key, e.currentValue));
+                changes.forEachAddedItem((e) => this.addBaseMap(e.currentValue));
+                changes.forEachRemovedItem((e) => this.removeBaseMap(e.currentValue));
                 this.updateLayerControl();
             }
         }
@@ -98,11 +98,11 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         this.map = L.map(this.mapId, this.mapOptions);
         this.mapCache.setMap(this.mapId, this.map);
         if (this.baseMaps && this.baseMaps.size > 0) {
-            this.baseMaps.forEach((entry, key) => this.addBaseMap(key, entry));
+            this.baseMaps.forEach((entry, key) => this.addBaseMap(entry));
         } else {
             this.addBaseMap();
         }
-        if (this.overlayMaps) { this.overlayMaps.forEach((entry, key) => this.addOverlayMap(key, entry)); }
+        if (this.overlayMaps) { this.overlayMaps.forEach((entry, key) => this.addOverlayMap(entry)); }
         this.updateZoomControl();
         this.updateLayerControl();
         if (this.fitBounds) {
@@ -110,26 +110,25 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         }
     }
 
-    private addOverlayMap(layerid: string, layerOptions: LayerOptions) {
+    private addOverlayMap(layerOptions: LayerOptions) {
         if (this.map) {
-            if (!this.oldOverlayLayer.hasOwnProperty[layerid]) {
-                this.oldOverlayLayer[layerid] = layerOptions.layer;
+            if (!this.oldOverlayLayer.hasOwnProperty[layerOptions.label]) {
+                this.oldOverlayLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
             }
         }
     }
 
-    private removeOverlayMap(layerid: string, layerOptions: LayerOptions) {
-        if (this.oldOverlayLayer.hasOwnProperty(layerid)) {
-            this.map.removeLayer(this.oldOverlayLayer[layerid]);
-            delete this.oldOverlayLayer[layerid];
+    private removeOverlayMap(layerOptions: LayerOptions) {
+        if (this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
+            this.map.removeLayer(this.oldOverlayLayer[layerOptions.label]);
+            delete this.oldOverlayLayer[layerOptions.label];
         }
     }
 
-    private addBaseMap(layerid?: string, layerOptions?: LayerOptions) {
+    private addBaseMap(layerOptions?: LayerOptions) {
         if (this.map) {
             if (!this.baseMaps || this.baseMaps.size === 0) {
-                layerid = DEFAULT_BASE_LAYER_NAME;
                 layerOptions = {
                     label: DEFAULT_BASE_LAYER_NAME,
                     visible: true,
@@ -138,17 +137,17 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
                     })
                 };
             }
-            if (!this.oldBaseLayer.hasOwnProperty[layerid]) {
-                this.oldBaseLayer[layerid] = layerOptions.layer;
+            if (!this.oldBaseLayer.hasOwnProperty[layerOptions.label]) {
+                this.oldBaseLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
             }
         }
     }
 
-    private removeBaseMap(layerid: string, layerOptions: LayerOptions) {
-        if (this.oldBaseLayer.hasOwnProperty(layerid)) {
-            this.map.removeLayer(this.oldBaseLayer[layerid]);
-            delete this.oldBaseLayer[layerid];
+    private removeBaseMap(layerOptions: LayerOptions) {
+        if (this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+            this.map.removeLayer(this.oldBaseLayer[layerOptions.label]);
+            delete this.oldBaseLayer[layerOptions.label];
         }
     }
 

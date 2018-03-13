@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GeoSearchOptions, LayerOptions, MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerOptions, MapCache } from '@helgoland/map';
+import L, { circleMarker, LayerEvent } from 'leaflet';
 
 @Component({
     selector: 'my-app',
@@ -23,6 +23,12 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
     private scUrl = 'http://colabis.dev.52north.org/geocure/services/colabis-geoserver/features/'
         + '_d6bea91f_ac86_4990_a2d5_c603de92e22c/data';
+
+    private emissionsimulation = 'http://colabis.dev.52north.org/geocure/services/colabis-geoserver/'
+        + 'features/_9f064e17_799e_4261_8599_d3ee31b5392b/data';
+
+    private wsfUrl = 'http://colabis.dev.52north.org/geocure/services/colabis-geoserver/features/'
+        + '_53fbae20_e2fb_4fd1_b5d6_c798e11b96d1/data';
 
     private pointStyle: L.CircleMarkerOptions = {
         color: 'red',
@@ -71,29 +77,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             })
         });
 
-        this.httpClient
-            .get<GeoJSON.FeatureCollection<GeoJSON.GeometryObject>>(this.hmsUrl)
-            .subscribe((geojson) => {
-                const layer = L.geoJSON(geojson, {
-                    pointToLayer: (feature, latlng) => {
-                        return L.circleMarker(latlng, this.pointStyle);
-                    }
-                }).bindPopup((target) => {
-                    return 'horst';
-                });
-                this.overlayMaps.set('hms_geojson', { label: 'hms_geojson', visible: true, layer });
-            });
-
-        this.httpClient
-            .get<GeoJSON.FeatureCollection<GeoJSON.GeometryObject>>(this.scUrl)
-            .subscribe((geojson) => {
-                const layer = L.geoJSON(geojson, {
-                    style: (feature) => this.polygonStyle
-                }).bindPopup((target) => {
-                    return 'horst';
-                });
-                this.overlayMaps.set('sc_geojson', { label: 'sc_geojson', visible: true, layer });
-            });
+        this.addEmmissionSimulationGeoCureLayer();
+        this.addWsfGeoCureLayer();
     }
 
     public addOverlayMapLayer() {
@@ -181,4 +166,47 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         this.overlayMaps = new Map<string, LayerOptions>();
     }
 
+    private addEmmissionSimulationGeoCureLayer() {
+        const options: GeoCureGeoJSONOptions = {
+            url: this.emissionsimulation,
+            httpClient: this.httpClient,
+            showOnMinZoom: 15,
+            pointToLayer: (feature, latlng) => {
+                return circleMarker(latlng, this.pointStyle);
+            },
+        };
+        const layer = new GeoCureGeoJSON(options);
+        layer.on('click', (event: LayerEvent) => {
+            const properties = ((event.layer as L.GeoJSON)
+                .feature as GeoJSON.Feature<GeoJSON.GeometryObject, any>).properties;
+            console.log(properties);
+        });
+        this.overlayMaps.set('emission', {
+            label: 'Emission-Simulation',
+            visible: true,
+            layer
+        });
+    }
+
+    private addWsfGeoCureLayer() {
+        const options: GeoCureGeoJSONOptions = {
+            url: this.wsfUrl,
+            httpClient: this.httpClient,
+            showOnMinZoom: 10,
+            pointToLayer: (feature, latlng) => {
+                return circleMarker(latlng, this.pointStyle);
+            },
+        };
+        const layer = new GeoCureGeoJSON(options);
+        layer.on('click', (event: LayerEvent) => {
+            const properties = ((event.layer as L.GeoJSON)
+                .feature as GeoJSON.Feature<GeoJSON.GeometryObject, any>).properties;
+            console.log(properties);
+        });
+        this.overlayMaps.set('wsf', {
+            label: 'warning shape fine',
+            visible: true,
+            layer
+        });
+    }
 }
