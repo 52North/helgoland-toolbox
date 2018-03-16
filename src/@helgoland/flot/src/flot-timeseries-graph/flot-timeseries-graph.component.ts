@@ -21,6 +21,7 @@ import {
     DatasetGraphComponent,
     DatasetOptions,
     HasLoadableContent,
+    HttpRequestOptions,
     IDataset,
     InternalIdHandler,
     Mixin,
@@ -28,11 +29,11 @@ import {
     Timeseries,
     Timespan,
 } from '@helgoland/core';
+import { LabelMapperService } from '@helgoland/depiction/label-mapper';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
 import { DataSeries, Plot, PlotOptions } from '../flot';
-import { LabelMapperService } from '@helgoland/depiction/label-mapper';
 
 declare var $: any;
 
@@ -137,6 +138,13 @@ export class FlotTimeseriesGraphComponent
         this.createTooltip();
 
         this.plotGraph();
+    }
+
+    public reloadData(): void {
+        console.log('reload data at ' + new Date());
+        this.datasetMap.forEach((dataset) => {
+            this.loadData(dataset, true);
+        });
     }
 
     protected graphOptionsChanged(options: PlotOptions) {
@@ -452,20 +460,22 @@ export class FlotTimeseriesGraphComponent
         this.loadData(dataset);
     }
 
-    private loadData(dataset: IDataset) {
+    private loadData(dataset: IDataset, refresh?: boolean) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
         if (datasetOptions) {
             if (this.timespan && this.plotOptions && datasetOptions.visible) {
                 if (this.loadingCounter === 0) { this.isContentLoading(true); }
                 this.loadingCounter++;
                 const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
+                const options: HttpRequestOptions = {};
+                if (refresh) { options.forceUpdate = refresh; }
                 if (dataset instanceof Timeseries) {
                     this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                         {
                             format: 'flot',
                             expanded: this.plotOptions.showReferenceValues === true,
                             generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                        }
+                        }, options
                     ).subscribe(
                         (result) => this.prepareData(dataset, result).subscribe(() => {
                             this.plotGraph();
@@ -480,7 +490,7 @@ export class FlotTimeseriesGraphComponent
                             format: 'flot',
                             expanded: this.plotOptions.showReferenceValues === true,
                             generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                        }
+                        }, options
                     ).subscribe(
                         (result) => this.prepareData(dataset, result).subscribe(() => this.plotGraph()),
                         (error) => this.onError(error),

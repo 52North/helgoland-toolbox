@@ -13,3 +13,7 @@ export interface DataParameterFilter extends ParameterFilter {
     timespan?: string;
     generalize?: boolean;
 }
+
+export interface HttpRequestOptions {
+    forceUpdate?: boolean;
+}

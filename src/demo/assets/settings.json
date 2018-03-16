@@ -1,4 +1,5 @@
 {
     "solveLabels": true,
-    "proxyUrl": "https://cors-anywhere.herokuapp.com/"
+    "proxyUrl": "https://cors-anywhere.herokuapp.com/",
+    "refreshDataInterval": "10"
 }

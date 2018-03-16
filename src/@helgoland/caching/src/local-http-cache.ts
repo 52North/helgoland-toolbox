@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { HttpCache } from './caching-interceptor';
+import { HttpCache } from './model';
 
 @Injectable()
 export class LocalHttpCache extends HttpCache {

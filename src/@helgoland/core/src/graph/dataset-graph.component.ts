@@ -116,6 +116,8 @@ export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOp
         }
     }
 
+    public abstract reloadData(): void;
+
     protected addDatasetByInternalId(internalId: string) {
         const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);
         this.addDataset(internalIdObj.id, internalIdObj.url);

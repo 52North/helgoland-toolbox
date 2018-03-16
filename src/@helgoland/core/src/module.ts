@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { ApiMapping } from './api-interface/api-mapping.service';
+import { HttpService } from './api-interface/http.service';
 import { InternalIdHandler } from './api-interface/internal-id-handler.service';
 import { ColorService } from './color/color.service';
 import { LocalStorage } from './local-storage/local-storage.service';
@@ -27,7 +28,8 @@ import { Time } from './time/time.service';
     Time,
     LocalStorage,
     NotifierService,
-    ColorService
+    ColorService,
+    HttpService
   ]
 })
 export class HelgolandCoreModule { }

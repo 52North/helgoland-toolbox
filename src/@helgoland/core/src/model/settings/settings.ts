@@ -8,6 +8,7 @@ export class Settings {
     public timespanPresets?: TimespanPreset[];
     public colorList?: string[];
     public languages?: [{ label: string, code: string }];
+    public refreshDataInterval?: number;
 }
 
 export class BlacklistedService {

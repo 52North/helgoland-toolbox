@@ -171,6 +171,10 @@ export class D3TrajectoryGraphComponent
         this.drawLineGraph();
     }
 
+    public reloadData(): void {
+        console.log('reload data at ' + new Date());
+    }
+
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((entry) => {
             if (entry.dataset) {
