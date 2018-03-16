@@ -1,7 +1,7 @@
 import '../styles/headings.css';
 import '../styles/styles.scss';
 
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -15,13 +15,8 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import {
-  CachingInterceptor,
-  HttpCache,
-  LocalHttpCache,
-  LocalOngoingHttpCache,
-  OnGoingHttpCache,
-} from '@helgoland/caching/src/caching';
+import { HelgolandCachingModule } from '@helgoland/caching';
+import { HelgolandControlModule } from '@helgoland/control';
 import { ApiInterface, GetDataApiInterface, HelgolandCoreModule, Settings, SettingsService } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetTableModule } from '@helgoland/depiction/dataset-table';
@@ -44,9 +39,9 @@ import { MapSelectorComponent } from 'demo/app/pages/map-selector/map-selector.c
 import { MapViewComponent } from 'demo/app/pages/map-view/map-view.component';
 import { ProfileEntryComponent } from 'demo/app/pages/profile-entry/profile-entry.component';
 import { TrajectoryComponent } from 'demo/app/pages/trajectory/trajectory.component';
-import { settingsPromise } from 'demo/main.browser';
 import { environment } from 'environments/environment';
 
+import { settings } from '../main.browser';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { ROUTES } from './app.routes';
@@ -68,28 +63,13 @@ import { TimeComponent } from './pages/time/time.component';
 export class ExtendedSettingsService extends SettingsService<Settings> {
   constructor() {
     super();
-    settingsPromise.then((result) => {
-      this.setSettings(result);
-    });
+    this.setSettings(settings);
   }
 }
 
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
-  {
-    provide: HttpCache,
-    useClass: LocalHttpCache
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: CachingInterceptor,
-    multi: true
-  },
-  {
-    provide: OnGoingHttpCache,
-    useClass: LocalOngoingHttpCache
-  },
   {
     provide: ApiInterface,
     useClass: GetDataApiInterface
@@ -152,11 +132,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
+    HelgolandCachingModule,
     HelgolandFlotModule,
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandFavoriteModule,
     HelgolandPermalinkModule,
+    HelgolandControlModule,
     HelgolandMapSelectorModule,
     HelgolandMapControlModule,
     HelgolandMapViewModule,

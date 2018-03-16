@@ -2,13 +2,14 @@ import 'rxjs/operator/map';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Data } from '../model/api/data';
-import { DataParameterFilter } from '../model/api/parameterFilter';
-import { Timespan } from '../model/internal/timeInterval';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
+import { Data } from '../model/api/data';
+import { DataParameterFilter, HttpRequestOptions } from '../model/internal/http-requests';
+import { Timespan } from '../model/internal/timeInterval';
+import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 import { SimpleApiInterface } from './simple-api-interface.service';
 
@@ -19,17 +20,19 @@ export class GetDataApiInterface extends SimpleApiInterface {
 
     constructor(
         protected http: HttpClient,
+        protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
         protected translate: TranslateService
     ) {
-        super(http, internalDatasetId, translate);
+        super(http, httpservice, internalDatasetId, translate);
     }
 
     public getTsData<T>(
         id: string,
         apiUrl: string,
         timespan: Timespan,
-        params: DataParameterFilter = {}
+        params: DataParameterFilter = {},
+        options: HttpRequestOptions
     ): Observable<Data<T>> {
         if ((timespan.to - timespan.from) > this.maxTimeExtent) {
             const requests: Array<Observable<Data<T>>> = [];
@@ -37,7 +40,7 @@ export class GetDataApiInterface extends SimpleApiInterface {
             let end = moment(timespan.from).endOf('year');
             while (start.isBefore(moment(timespan.to))) {
                 const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
-                requests.push(super.getTsData<T>(id, apiUrl, chunkSpan, params));
+                requests.push(super.getTsData<T>(id, apiUrl, chunkSpan, params, options));
                 start = end.add(1, 'millisecond');
                 end = moment(start).endOf('year');
             }
@@ -56,7 +59,7 @@ export class GetDataApiInterface extends SimpleApiInterface {
                 });
             });
         } else {
-            return super.getTsData<T>(id, apiUrl, timespan, params);
+            return super.getTsData<T>(id, apiUrl, timespan, params, options);
         }
     }
 

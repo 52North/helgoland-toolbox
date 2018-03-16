@@ -85,6 +85,10 @@ export class PlotlyProfileGraphComponent
         this.drawChart();
     }
 
+    public reloadData(): void {
+        console.log('reload data at ' + new Date());
+    }
+
     // tslint:disable-next-line:no-empty
     protected timeIntervalChanges(): void { }
 

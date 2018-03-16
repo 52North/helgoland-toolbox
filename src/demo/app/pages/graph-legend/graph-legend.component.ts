@@ -210,4 +210,8 @@ export class GraphLegendComponent {
         }
     }
 
+    public refresh(triggered) {
+        console.log('refresh at ' + new Date());
+    }
+
 }

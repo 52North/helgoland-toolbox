@@ -2,25 +2,26 @@ import 'rxjs/add/operator/map';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category } from '../model/api/category';
-import { Data } from '../model/api/data';
-import { Dataset, Timeseries, TimeseriesExtras } from '../model/api/dataset';
-import { Feature } from '../model/api/feature';
-import { Offering } from '../model/api/offering';
-import { DataParameterFilter, ParameterFilter } from '../model/api/parameterFilter';
-import { Phenomenon } from '../model/api/phenomenon';
-import { Platform } from '../model/api/platform';
-import { Procedure } from '../model/api/procedure';
-import { Service } from '../model/api/service';
-import { Station } from '../model/api/station';
-import { Timespan } from '../model/internal/timeInterval';
 import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
+import { Category } from '../model/api/category';
+import { Data } from '../model/api/data';
+import { Dataset, Timeseries, TimeseriesExtras } from '../model/api/dataset';
+import { Feature } from '../model/api/feature';
+import { Offering } from '../model/api/offering';
+import { Phenomenon } from '../model/api/phenomenon';
+import { Platform } from '../model/api/platform';
+import { Procedure } from '../model/api/procedure';
+import { Service } from '../model/api/service';
+import { Station } from '../model/api/station';
+import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
+import { Timespan } from '../model/internal/timeInterval';
 import { ApiInterface } from './api-interface';
+import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 
 @Injectable()
@@ -28,39 +29,50 @@ export class SimpleApiInterface extends ApiInterface {
 
     constructor(
         protected http: HttpClient,
+        protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
         protected translate: TranslateService
     ) {
-        super(http, translate);
+        super(http, httpservice, translate);
     }
 
-    public getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
+    public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
         const url = this.createRequestUrl(apiUrl, 'services');
         params.expanded = true;
-        return this.requestApi<Service[]>(url, params)
+        return this.requestApi<Service[]>(url, params, options)
             .map((result) => {
                 result.forEach((entry) => entry.apiUrl = apiUrl);
                 return result;
             });
     }
 
-    public getService(id: string, apiUrl: string, params?: ParameterFilter): Observable<Service> {
+    public getService(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Service> {
         const url = this.createRequestUrl(apiUrl, 'services', id);
-        return this.requestApi<Service>(url, params)
+        return this.requestApi<Service>(url, params, options)
             .map((result) => {
                 result.apiUrl = apiUrl;
                 return result;
             });
     }
 
-    public getStations(apiUrl: string, params?: ParameterFilter): Observable<Station[]> {
+    public getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         const url = this.createRequestUrl(apiUrl, 'stations');
-        return this.requestApi<Station[]>(url, params);
+        return this.requestApi<Station[]>(url, params, options);
     }
 
-    public getStation(id: string, apiUrl: string, params?: ParameterFilter): Observable<Station> {
+    public getStation(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Station> {
         const url = this.createRequestUrl(apiUrl, 'stations', id);
-        return this.requestApi<Station>(url, params);
+        return this.requestApi<Station>(url, params, options);
     }
 
     public getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]> {
@@ -104,19 +116,20 @@ export class SimpleApiInterface extends ApiInterface {
         id: string,
         apiUrl: string,
         timespan: Timespan,
-        params: DataParameterFilter = {}
+        params: DataParameterFilter = {},
+        options: HttpRequestOptions
     ): Observable<Data<T>> {
         const url = this.createRequestUrl(apiUrl, 'timeseries', id) + '/getData';
         params.timespan = this.createRequestTimespan(timespan);
-        return this.requestApi<Data<T>>(url, params).map((res: any) => {
+        return this.requestApi<Data<T>>(url, params, options).map((res: any) => {
             if (params.expanded) { res = res[id]; }
             return res;
         });
     }
 
-    public getCategories(apiUrl: string, params?: ParameterFilter): Observable<Category[]> {
+    public getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
         const url = this.createRequestUrl(apiUrl, 'categories');
-        return this.requestApi<Category[]>(url, params);
+        return this.requestApi<Category[]>(url, params, options);
     }
 
     public getCategory(id: string, apiUrl: string, params?: ParameterFilter): Observable<Category> {
@@ -126,84 +139,107 @@ export class SimpleApiInterface extends ApiInterface {
         //     .map(this.extractData);
     }
 
-    public getPhenomena(apiUrl: string, params?: ParameterFilter): Observable<Phenomenon[]> {
+    public getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {
         const url = this.createRequestUrl(apiUrl, 'phenomena');
-        return this.requestApi<Phenomenon[]>(url, params);
+        return this.requestApi<Phenomenon[]>(url, params, options);
     }
 
     public getPhenomenon(
         id: string,
         apiUrl: string,
-        params?: ParameterFilter
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
     ): Observable<Phenomenon> {
         const url = this.createRequestUrl(apiUrl, 'phenomena', id);
-        return this.requestApi<Phenomenon>(url, params);
+        return this.requestApi<Phenomenon>(url, params, options);
     }
 
-    public getOfferings(apiUrl: string, params?: ParameterFilter): Observable<Offering[]> {
+    public getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]> {
         const url = this.createRequestUrl(apiUrl, 'offerings');
-        return this.requestApi<Offering[]>(url, params);
+        return this.requestApi<Offering[]>(url, params, options);
     }
 
-    public getOffering(id: string, apiUrl: string, params?: ParameterFilter): Observable<Offering> {
+    public getOffering(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Offering> {
         const url = this.createRequestUrl(apiUrl, 'offerings', id);
-        return this.requestApi<Offering>(url, params);
+        return this.requestApi<Offering>(url, params, options);
     }
 
-    public getFeatures(apiUrl: string, params?: ParameterFilter): Observable<Feature[]> {
+    public getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]> {
         const url = this.createRequestUrl(apiUrl, 'features');
-        return this.requestApi<Feature[]>(url, params);
+        return this.requestApi<Feature[]>(url, params, options);
     }
 
-    public getFeature(id: string, apiUrl: string, params?: ParameterFilter): Observable<Feature> {
+    public getFeature(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Feature> {
         const url = this.createRequestUrl(apiUrl, 'features', id);
-        return this.requestApi<Feature>(url, params);
+        return this.requestApi<Feature>(url, params, options);
     }
 
-    public getProcedures(apiUrl: string, params?: ParameterFilter): Observable<Procedure[]> {
+    public getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure[]> {
         const url = this.createRequestUrl(apiUrl, 'procedures');
-        return this.requestApi<Procedure[]>(url, params);
+        return this.requestApi<Procedure[]>(url, params, options);
     }
 
     public getProcedure(
         id: string,
         apiUrl: string,
-        params?: ParameterFilter
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
     ): Observable<Procedure> {
         const url = this.createRequestUrl(apiUrl, 'procedures', id);
-        return this.requestApi<Procedure>(url, params);
+        return this.requestApi<Procedure>(url, params, options);
     }
 
-    public getPlatforms(apiUrl: string, params?: ParameterFilter): Observable<Platform[]> {
+    public getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]> {
         const url = this.createRequestUrl(apiUrl, 'platforms');
-        return this.requestApi<Platform[]>(url, params);
+        return this.requestApi<Platform[]>(url, params, options);
     }
 
-    public getPlatform(id: string, apiUrl: string, params?: ParameterFilter): Observable<Platform> {
+    public getPlatform(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Platform> {
         const url = this.createRequestUrl(apiUrl, 'platforms', id);
-        return this.requestApi<Platform>(url, params);
+        return this.requestApi<Platform>(url, params, options);
     }
 
-    public getDatasets(apiUrl: string, params?: ParameterFilter): Observable<Dataset[]> {
+    public getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]> {
         const url = this.createRequestUrl(apiUrl, 'datasets');
-        return this.requestApi<Dataset[]>(url, params)
+        return this.requestApi<Dataset[]>(url, params, options)
             .map((list) => list.map((entry) => this.prepareDataset(entry, apiUrl)));
     }
 
-    public getDataset(id: string, apiUrl: string, params?: ParameterFilter): Observable<Dataset> {
+    public getDataset(
+        id: string,
+        apiUrl: string,
+        params?: ParameterFilter,
+        options?: HttpRequestOptions
+    ): Observable<Dataset> {
         const url = this.createRequestUrl(apiUrl, 'datasets', id);
-        return this.requestApi<Dataset>(url, params).map((res) => this.prepareDataset(res, apiUrl));
+        return this.requestApi<Dataset>(url, params, options).map((res) => this.prepareDataset(res, apiUrl));
     }
 
     public getData<T>(
         id: string,
         apiUrl: string,
         timespan: Timespan,
-        params: DataParameterFilter = {}
+        params: DataParameterFilter = {},
+        options: HttpRequestOptions
     ): Observable<Data<T>> {
         const url = this.createRequestUrl(apiUrl, 'datasets', id) + '/data';
         params.timespan = this.createRequestTimespan(timespan);
-        return this.requestApi<Data<T>>(url, params);
+        return this.requestApi<Data<T>>(url, params, options);
     }
 
     // public getGeometries(id: string, apiUrl: string, params?): Observable<> {

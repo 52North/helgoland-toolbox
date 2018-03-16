@@ -5,3 +5,10 @@ export { ApiMapping, ApiVersion } from './api-mapping.service';
 export { GetDataApiInterface } from './getData-api-interface.service';
 export { SimpleApiInterface } from './simple-api-interface.service';
 export { InternalDatasetId, InternalIdHandler } from './internal-id-handler.service';
+export {
+    HTTP_SERVICE_INTERCEPTORS,
+    HttpService,
+    HttpServiceInterceptor,
+    HttpServiceHandler,
+    HttpServiceMetadata
+} from './http.service';

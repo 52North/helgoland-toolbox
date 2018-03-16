@@ -20,7 +20,6 @@ export {
     TimeseriesExtras
 } from './api/dataset';
 export { Parameter } from './api/parameter';
-export { ParameterFilter, DataParameterFilter } from './api/parameterFilter'
 export { Service, ServiceQuantities } from './api/service'
 export { Station, StationProperties, TimeseriesCollection } from './api/station'
 export { Platform } from './api/platform';
@@ -31,6 +30,7 @@ export { Feature } from './api/feature';
 export { Category } from './api/category';
 export { DatasetTypes, PlatformTypes, ValueTypes } from './api/enums';
 
+export { DataParameterFilter, HttpRequestOptions, ParameterFilter } from './internal/http-requests'
 export { Provider, FilteredProvider } from './internal/provider';
 export { Filter } from './internal/filter';
 export { DatasetTableData } from './internal/dataset-table-data';

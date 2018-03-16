@@ -2,7 +2,7 @@
   <div style="height: 500px;">
     <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
       [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"
-      (onContentLoading)="graphLoading = $event"></n52-flot-timeseries-graph>
+      (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph>
   </div>
   <div>
     Loading Graph: {{graphLoading}}
@@ -17,6 +17,7 @@
   <div>
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility($event)"></n52-axes-options>
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
+    <n52-refresh-button (refreshing)="diagram.reloadData()"></n52-refresh-button>
   </div>
   <div *ngFor="let id of datasetIds">
     <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId" [datasetOptions]="datasetOptions.get(id)"

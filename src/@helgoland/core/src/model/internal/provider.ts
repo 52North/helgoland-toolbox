@@ -1,4 +1,4 @@
-import { ParameterFilter } from './../api/parameterFilter';
+import { ParameterFilter } from './../internal/http-requests';
 
 export interface Provider {
     id: string;
