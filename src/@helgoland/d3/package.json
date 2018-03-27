@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1-alpha.39",
+  "description": "Helgoland D3 library",
+  "keywords": [],
+  "dependencies": {
+    "d3": "^4.13.0"
+  },
+  "libConfig": {
+    "entry": "d3",
+    "libExtensions": []
+  }
+}

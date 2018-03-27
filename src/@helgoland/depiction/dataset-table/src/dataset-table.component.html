@@ -1,0 +1,18 @@
+<table *ngIf="ready">
+  <thead>
+    <tr>
+      <th (click)="sort($event)" [attr.data-column-id]="'datetime'" class="sorted-asc">
+        Zeit
+      </th>
+      <th *ngFor="let series of this.timeseriesArray; let i = index" (click)="sort($event)" [attr.data-column-id]="i" [ngStyle]="{ 'border-color': preparedColors[i] }">
+        {{series.label}} [{{series.uom}}]
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of this.preparedData">
+      <td>{{row.datetime | date: 'short'}}</td>
+      <td *ngFor="let value of row.values">{{value}}</td>
+    </tr>
+  </tbody>
+</table>

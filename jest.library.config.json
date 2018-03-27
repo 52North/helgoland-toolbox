@@ -1,0 +1,69 @@
+{
+  "setupTestFrameworkScriptFile": "<rootDir>/config/setup-jest.ts",
+  "globals": {
+    "__TS_CONFIG__": "tsconfig.spec.json",
+    "__TRANSFORM_HTML__": true
+  },
+  "transform": {
+    "^.+\\.(ts|js|html)$": "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
+  },
+  "testRegex": "src\\/(?!demo).+\\/.+\\.spec\\.ts$",
+  "moduleFileExtensions": [
+    "ts",
+    "js",
+    "html",
+    "json"
+  ],
+  "mapCoverage": true,
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "transformIgnorePatterns": [
+    "node_modules/(?!@ngrx)"
+  ],
+  "moduleNameMapper": {
+    "^@helgoland/core$": "<rootDir>/src/@helgoland/core/src/core.ts",
+    "^@helgoland/core/src/(.*)": "<rootDir>/src/@helgoland/core/src/$1",
+    "^@helgoland/caching$": "<rootDir>/src/@helgoland/caching/src/caching.ts",
+    "^@helgoland/caching/src/(.*)": "<rootDir>/src/@helgoland/caching/src/$1",
+    "^@helgoland/control$": "<rootDir>/src/@helgoland/control/src/control.ts",
+    "^@helgoland/control/src/(.*)": "<rootDir>/src/@helgoland/control/src/$1",
+    "^@helgoland/depiction$": "<rootDir>/src/@helgoland/depiction/src/depiction.ts",
+    "^@helgoland/depiction/src/(.*)": "<rootDir>/src/@helgoland/depiction/src/$1",
+    "^@helgoland/depiction/label-mapper$": "<rootDir>/src/@helgoland/depiction/label-mapper/src/label-mapper",
+    "^@helgoland/depiction/label-mapper/src/(.*)": "<rootDir>/src/@helgoland/depiction/label-mapper/src/$1",
+    "^@helgoland/depiction/dataset-table$": "<rootDir>/src/@helgoland/depiction/dataset-table/src/dataset-table",
+    "^@helgoland/depiction/dataset-table/src/(.*)": "<rootDir>/src/@helgoland/depiction/dataset-table/src/$1",
+    "^@helgoland/depiction/datasetlist$": "<rootDir>/src/@helgoland/depiction/datasetlist/src/datasetlist",
+    "^@helgoland/depiction/datasetlist/src/(.*)": "<rootDir>/src/@helgoland/depiction/datasetlist/src/$1",
+    "^@helgoland/favorite$": "<rootDir>/src/@helgoland/favorite/src/favorite.ts",
+    "^@helgoland/favorite/src/(.*)": "<rootDir>/src/@helgoland/favorite/src/$1",
+    "^@helgoland/flot$": "<rootDir>/src/@helgoland/flot/src/flot.ts",
+    "^@helgoland/flot/src/(.*)": "<rootDir>/src/@helgoland/flot/src/$1",
+    "^@helgoland/map$": "<rootDir>/src/@helgoland/map/src/map.ts",
+    "^@helgoland/map/src/(.*)": "<rootDir>/src/@helgoland/map/src/$1",
+    "^@helgoland/map/control$": "<rootDir>/src/@helgoland/map/control/src/control",
+    "^@helgoland/map/control/src/(.*)": "<rootDir>/src/@helgoland/map/control/src/$1",
+    "^@helgoland/map/selector$": "<rootDir>/src/@helgoland/map/selector/src/selector",
+    "^@helgoland/map/selector/src/(.*)": "<rootDir>/src/@helgoland/map/selector/src/$1",
+    "^@helgoland/map/view$": "<rootDir>/src/@helgoland/map/view/src/view",
+    "^@helgoland/map/view/src/(.*)": "<rootDir>/src/@helgoland/map/view/src/$1",
+    "^@helgoland/permalink$": "<rootDir>/src/@helgoland/permalink/src/permalink.ts",
+    "^@helgoland/permalink/src/(.*)": "<rootDir>/src/@helgoland/permalink/src/$1",
+    "^@helgoland/plotly$": "<rootDir>/src/@helgoland/plotly/src/plotly.ts",
+    "^@helgoland/plotly/src/(.*)": "<rootDir>/src/@helgoland/plotly/src/$1",
+    "^@helgoland/selector$": "<rootDir>/src/@helgoland/selector/src/selector.ts",
+    "^@helgoland/selector/src/(.*)": "<rootDir>/src/@helgoland/selector/src/$1",
+    "^@helgoland/time$": "<rootDir>/src/@helgoland/time/src/time.ts",
+    "^@helgoland/time/src/(.*)": "<rootDir>/src/@helgoland/time/src/$1",
+    "^@helgoland/modification$": "<rootDir>/src/@helgoland/modification/src/modification.ts",
+    "^@helgoland/modification/src/(.*)": "<rootDir>/src/@helgoland/modification/src/$1",
+    "^@helgoland/d3$": "<rootDir>/src/@helgoland/d3/src/d3.ts",
+    "^@helgoland/d3/src/(.*)": "<rootDir>/src/@helgoland/d3/src/$1",
+    "(.*)": "<rootDir>/src/$1"
+  }
+}
