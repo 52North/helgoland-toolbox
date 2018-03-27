@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>View geometry</h1>
+<div mat-dialog-content>
+  <div style="height: 500px; width: 500px;">
+    <n52-geometry-map-viewer [mapId]="'test'" [geometry]="geometry" [mapOptions]="mapOptions"></n52-geometry-map-viewer>
+  </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button mat-button (click)="onOk()">Ok</button>
+</div>

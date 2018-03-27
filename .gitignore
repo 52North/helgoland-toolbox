@@ -21,5 +21,10 @@ Desktop.ini
 # Temporary files
 coverage/
 dist
+dist_package
 docs
 tmp
+src_old/
+
+#pack packages
+*.tgz

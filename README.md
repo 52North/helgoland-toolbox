@@ -176,3 +176,10 @@ Now, once you update your library source code it will automatically be re-compil
   }
 }
 ```
+
+## Troubleshooting while using this library
+
+ - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
+ - don't forget to add styles of nested dependencies
+ - 
+
