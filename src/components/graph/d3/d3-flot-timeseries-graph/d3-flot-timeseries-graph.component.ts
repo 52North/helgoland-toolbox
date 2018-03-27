@@ -56,6 +56,7 @@ export class D3FlotTimeseriesGraphComponent
 
     private rawSvg: any;
     private graph: any;
+    private graphBody: any;
     private xAxisRange: any; // x domain range
     private xAxisRangePan: any; // x domain range
     private yAxisRange: any; // y domain range
@@ -161,10 +162,9 @@ export class D3FlotTimeseriesGraphComponent
     }
     protected graphOptionsChanged(options: PlotOptions): void {
         Object.assign(this.plotOptions, options);
-        console.log("options changed - this.xAxisRange");
-        console.log(this.xAxisRange);
-        this.plotGraph();
-        console.log(this.xAxisRange);
+        if (this.rawSvg) {
+            this.plotGraph();
+        }
     }
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean) {
     }
@@ -189,9 +189,7 @@ export class D3FlotTimeseriesGraphComponent
                 }
             ).subscribe(
                 (result) => {
-                    // this.yRanges = new Array(); // maybe instead of  line 142
                     this.prepareTsData(dataset, result).subscribe(() => {
-                    // this.plotGraph();
                 })},
                 (error) => this.onError(error),
                 () => console.log("loadDataset() - complete data loaded") // this.onCompleteLoadingData(dataset)
@@ -205,7 +203,7 @@ export class D3FlotTimeseriesGraphComponent
 
             const styles = this.datasetOptions.get(dataset.internalId);
 
-            // TODO: check for datasets with various uoms
+            // TODO: check for datasets with various uoms --- see all comments with #varUom
             // if (this.countPrepDatasets > 0) {
             //     dataset.uom = "mc";
             // }
@@ -230,7 +228,7 @@ export class D3FlotTimeseriesGraphComponent
             };
             this.preparedData.push(dataEntry);
 
-            this.countPrepDatasets++; // TODO: check for datasets with various uoms
+            this.countPrepDatasets++; // #varUom: check for datasets with various uoms
 
             this.xAxisRange = undefined;
 
@@ -274,12 +272,7 @@ export class D3FlotTimeseriesGraphComponent
                 }
                 this.yRanges.push(newRange);
             }
-
-            // wait till all datasets are loaded
-            // if (this.preparedData.length == this.datasetIds.length) {
             this.plotGraph();
-            // }
-
         });
     }
     
@@ -293,11 +286,6 @@ export class D3FlotTimeseriesGraphComponent
 
     // get time range for x axis
     private getxAxisRange() {
-
-        // if (this.xAxisRange === "zoomed") {
-        //     var min = this.xDomainMin;
-        //     var max = this.xDomainMax;
-        // } else {
             var min = this.preparedData[0].data[0][0];
             var max = this.preparedData[0].data[this.preparedData[0].data.length-1][0];
             
@@ -309,10 +297,6 @@ export class D3FlotTimeseriesGraphComponent
                 if (min >= range[0]) { min = range[0]; }
                 if (max <= range[1]) { max = range[1]; }
             })
-        // }
-        // if (this.xAxisRange === "start") {
-        //     return [max-10000000, max];
-        // }
         return [ min, max ];
     }
 
@@ -338,7 +322,6 @@ export class D3FlotTimeseriesGraphComponent
 
         // get range of x and y axis
         this.xAxisRange = this.xAxisRange != undefined ? this.xAxisRange : this.getxAxisRange();
-        // this.xAxisRange = this.xAxisRangePan === true ? this.xAxisRange : this.getxAxisRange();
 
         // #####################################################
 
@@ -436,7 +419,13 @@ export class D3FlotTimeseriesGraphComponent
         this.graph.append('svg:g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + this.height + ')')
-            .call(xAxisGen);
+            .call(xAxisGen)
+            .selectAll("text")	
+            .style("text-anchor", "middle");
+            // .attr("transform", function(d) {
+            //     return "rotate(-15)" 
+            //     });
+
         
         // draw the x grid lines
         this.graph.append('svg:g')
@@ -529,8 +518,21 @@ export class D3FlotTimeseriesGraphComponent
         var YscaleBase = getYaxisRange.yScale;
 
         // #####################################################
-        // draw grah line
+        // create body to clip graph
         this.graph
+            .append("svg:clipPath")
+            .attr("id", "clip")
+            .append("svg:rect")
+            .attr("x", this.bufferSum)
+            .attr("y", 0)
+            .attr("width", this.width - this.bufferSum)
+            .attr("height", this.height);
+
+        // draw grah line
+        this.graphBody = this.graph
+            .append("g")
+            .attr("clip-path", "url(#clip)");
+        this.graphBody
             .append("svg:path")
             .datum(data)
             .attr('class', 'line')
@@ -568,10 +570,8 @@ export class D3FlotTimeseriesGraphComponent
 
     // drag handling for move
     private panStartHandler = () => {
-        console.log(d3);
         this.draggingMove = false;
         this.dragMoveStart = d3.event.x;
-        // this.dragMoveStart = d3.mouse(this.background.node());
         this.dragMoveRange = this.xAxisRange;
     }
 
@@ -580,7 +580,6 @@ export class D3FlotTimeseriesGraphComponent
         this.xAxisRangePan = false;
         if (this.dragMoveStart && this.draggingMove) {
             let diff = -(d3.event.x - d3.event.subject.x);
-            // let diff = (this.dragMoveStart[0] - d3.mouse(this.background.node())[0]);
             let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
             let ratioTimestampDiagCoord = amountTimestamp/this.width;
             let newTimeMin = this.dragMoveRange[0]+(ratioTimestampDiagCoord*diff);
@@ -815,13 +814,9 @@ export class D3FlotTimeseriesGraphComponent
                 entry.focusLabel
                     .attr('x', entryX)
                     .attr('y', item.yDiagCoord)
-                    // .attr('y', this.calculateHeight() - 5)
-                    // .attr('y', entry.yScale(item[id]) + this.getDimensions(entry.focusLabel.node()).h - 3); // entry.yScale(item[id])
                 entry.focusLabelRect
                     .attr('x', entryX)
-                    // .attr('y', entry.yScale(item[id]))
                     .attr('y', item.yDiagCoord -18)
-                    // .attr('y', this.calculateHeight() - 20)
                     .attr('width', this.getDimensions(entry.focusLabel.node()).w)
                     .attr('height', this.getDimensions(entry.focusLabel.node()).h);
             }
