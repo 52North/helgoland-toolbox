@@ -46,13 +46,13 @@ export class D3FlotTimeseriesGraphComponent
     implements AfterViewInit {
 
     @Output()
-    public onHoverHighlight: EventEmitter<number> = new EventEmitter();
-    
+    public onHoverHighlight: EventEmitter<number> = new EventEmitter();    
 
     @ViewChild('d3flot')
     public d3Elem: ElementRef;
 
     private preparedData = Array(); // : DataSeries[]
+    private countPrepDatasets = 0;
 
     private rawSvg: any;
     private graph: any;
@@ -86,6 +86,7 @@ export class D3FlotTimeseriesGraphComponent
 
     private draggingMove: boolean;
     private dragMoveStart: [number, number];
+    private dragMoveStart02: [number, number];
     private dragMoveRange: [number, number];
 
     private dragRect: any;
@@ -159,6 +160,11 @@ export class D3FlotTimeseriesGraphComponent
     protected removeSelectedId(internalId: string): void {
     }
     protected graphOptionsChanged(options: PlotOptions): void {
+        Object.assign(this.plotOptions, options);
+        console.log("options changed - this.xAxisRange");
+        console.log(this.xAxisRange);
+        this.plotGraph();
+        console.log(this.xAxisRange);
     }
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean) {
     }
@@ -182,9 +188,11 @@ export class D3FlotTimeseriesGraphComponent
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 }
             ).subscribe(
-                (result) => this.prepareTsData(dataset, result).subscribe(() => {
+                (result) => {
+                    // this.yRanges = new Array(); // maybe instead of  line 142
+                    this.prepareTsData(dataset, result).subscribe(() => {
                     // this.plotGraph();
-                }),
+                })},
                 (error) => this.onError(error),
                 () => console.log("loadDataset() - complete data loaded") // this.onCompleteLoadingData(dataset)
             );
@@ -196,6 +204,11 @@ export class D3FlotTimeseriesGraphComponent
         return Observable.create((observer: Observer<boolean>) => {
 
             const styles = this.datasetOptions.get(dataset.internalId);
+
+            // TODO: check for datasets with various uoms
+            // if (this.countPrepDatasets > 0) {
+            //     dataset.uom = "mc";
+            // }
 
             const dataEntry = {
                 internalId: dataset.internalId,
@@ -217,7 +230,9 @@ export class D3FlotTimeseriesGraphComponent
             };
             this.preparedData.push(dataEntry);
 
-            this.xAxisRange = "start";
+            this.countPrepDatasets++; // TODO: check for datasets with various uoms
+
+            this.xAxisRange = undefined;
 
             let firstDataset = false;
             if (this.preparedData.length <= 1) {
@@ -242,6 +257,7 @@ export class D3FlotTimeseriesGraphComponent
                 }
                 this.yRanges.push(newRange);
             }
+            console.log(this.yRanges);
 
             let uomExists = false;
             for (var i=0; i<this.yRanges.length; i++) {
@@ -278,10 +294,10 @@ export class D3FlotTimeseriesGraphComponent
     // get time range for x axis
     private getxAxisRange() {
 
-        if (this.xAxisRange === "zoomed") {
-            var min = this.xDomainMin;
-            var max = this.xDomainMax;
-        } else {
+        // if (this.xAxisRange === "zoomed") {
+        //     var min = this.xDomainMin;
+        //     var max = this.xDomainMax;
+        // } else {
             var min = this.preparedData[0].data[0][0];
             var max = this.preparedData[0].data[this.preparedData[0].data.length-1][0];
             
@@ -293,10 +309,10 @@ export class D3FlotTimeseriesGraphComponent
                 if (min >= range[0]) { min = range[0]; }
                 if (max <= range[1]) { max = range[1]; }
             })
-        }
-        if (this.xAxisRange === "start") {
-            return [max-10000000, max];
-        }
+        // }
+        // if (this.xAxisRange === "start") {
+        //     return [max-10000000, max];
+        // }
         return [ min, max ];
     }
 
@@ -321,24 +337,23 @@ export class D3FlotTimeseriesGraphComponent
         this.yScaleBase = null;
 
         // get range of x and y axis
-        this.xAxisRange = this.xAxisRangePan === true ? this.xAxisRange : this.getxAxisRange();
+        this.xAxisRange = this.xAxisRange != undefined ? this.xAxisRange : this.getxAxisRange();
+        // this.xAxisRange = this.xAxisRangePan === true ? this.xAxisRange : this.getxAxisRange();
 
         // #####################################################
 
-        this.preparedData.forEach((entry) => {
-            entry.axisOptions.first = (this.yScaleBase === null);
-            entry.axisOptions.offset = this.bufferSum;
+        this.yRanges.forEach((entry) => {
+            entry.first = (this.yScaleBase === null);
+            entry.offset = this.bufferSum;
 
-            // TODO: filter this.yRanges by uom --> check for yScale
-            
-            const yAxisResult = this.drawYaxis(entry);
+            let yAxisResult = this.drawYaxis(entry);
             if (this.yScaleBase === null) {
                 this.yScaleBase = yAxisResult.yScale;
             } else {
                 this.bufferSum = yAxisResult.buffer;
             }
             entry.yScale = yAxisResult.yScale;
-        })
+        });
 
         if (!this.yScaleBase) {
             return;
@@ -361,17 +376,20 @@ export class D3FlotTimeseriesGraphComponent
             .attr('pointer-events', 'all')
             .attr('transform', 'translate(' + this.bufferSum + ', 0)')
             .on('mousemove.focus', this.mousemoveHandler)
-            .on('mouseout.focus', this.mouseoutHandler)
-            // TODO: uncomment for panning
-            .call(d3.drag()
-                .on('start', this.panStartHandler)
-                .on('drag', this.panMoveHandler)
-                .on('end', this.panEndHandler)
-            );
-            // TODO: uncomment for zooming
-            // .on('mousedown.drag', this.zoomStartHandler)
-            // .on('mousemove.drag', this.zoomHandler)
-            // .on('mouseup.drag', this.zoomEndHandler);
+            .on('mouseout.focus', this.mouseoutHandler);
+
+        if (this.plotOptions.togglePanZoom == false) {
+            this.background
+                .on('mousedown.drag', this.zoomStartHandler)
+                .on('mousemove.drag', this.zoomHandler)
+                .on('mouseup.drag', this.zoomEndHandler);
+        } else {
+            this.background
+                .call(d3.drag()
+                    .on('start', this.panStartHandler)
+                    .on('drag', this.panMoveHandler)
+                    .on('end', this.panEndHandler));
+        }
 
         // line inside graph
         this.focusG = this.graph.append('g');
@@ -443,8 +461,8 @@ export class D3FlotTimeseriesGraphComponent
             .text('time');
     }
 
-    private drawYaxis(entry: DataEntry): any {
-        const range = this.getyAxisRange(entry.axisOptions.uom);
+    private drawYaxis(entry): any {
+        const range = this.getyAxisRange(entry.uom);
         
         let yMin = range[0];
         let yMax = range[1];
@@ -467,17 +485,17 @@ export class D3FlotTimeseriesGraphComponent
             .attr('transform', 'rotate(-90)')
             .attr('dy', '1em')
             .style('text-anchor', 'middle')
-            .style('fill', entry.color)
-            .text(entry.axisOptions.uom);
+            .style('fill', 'black')
+            .text(entry.uom);
 
         const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
-        const buffer = entry.axisOptions.offset + (axisWidth < 30 ? 30 : axisWidth);
+        const buffer = entry.offset + (axisWidth < 30 ? 30 : axisWidth);
 
-        if (!entry.axisOptions.first) {
+        if (!entry.first) {
             axis.attr('transform', 'translate(' + buffer + ', 0)');
         }
 
-        const textOffset = !entry.axisOptions.first ? buffer : entry.axisOptions.offset;
+        const textOffset = !entry.first ? buffer : entry.offset;
         text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
             .attr('x', 0 - (this.height / 2));
 
@@ -501,8 +519,14 @@ export class D3FlotTimeseriesGraphComponent
     private drawGraphLine(entry: DataEntry) {
         var data = entry.data;
 
+        const getYaxisRange = this.yRanges.find((obj, index) => {
+            if (obj.uom == entry.axisOptions.uom) {
+                return obj.yScale;
+            } // uom does exist in this.yRanges
+        });
+
         var XscaleBase = this.xScaleBase;
-        var YscaleBase = entry.yScale; // this.yScaleBase;
+        var YscaleBase = getYaxisRange.yScale;
 
         // #####################################################
         // draw grah line
@@ -543,18 +567,20 @@ export class D3FlotTimeseriesGraphComponent
     }
 
     // drag handling for move
-    private panStartHandler = (d) => {
+    private panStartHandler = () => {
+        console.log(d3);
         this.draggingMove = false;
         this.dragMoveStart = d3.event.x;
+        // this.dragMoveStart = d3.mouse(this.background.node());
         this.dragMoveRange = this.xAxisRange;
     }
 
-    private panMoveHandler = (d) => {
+    private panMoveHandler = () => {
         this.draggingMove = true;
         this.xAxisRangePan = false;
         if (this.dragMoveStart && this.draggingMove) {
-
             let diff = -(d3.event.x - d3.event.subject.x);
+            // let diff = (this.dragMoveStart[0] - d3.mouse(this.background.node())[0]);
             let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
             let ratioTimestampDiagCoord = amountTimestamp/this.width;
             let newTimeMin = this.dragMoveRange[0]+(ratioTimestampDiagCoord*diff);
@@ -568,10 +594,10 @@ export class D3FlotTimeseriesGraphComponent
         }
     }
 
-    private panEndHandler = (d) => {
+    private panEndHandler = () => {
         if (!this.dragMoveStart || !this.draggingMove) {
             // back to origin range (from - to)
-            this.xAxisRange = "start";
+            this.xAxisRange = undefined;
             this.xAxisRangePan = false;
             this.plotGraph();
         }
@@ -606,6 +632,7 @@ export class D3FlotTimeseriesGraphComponent
                 xDomainRange = this.getxDomain(this.dragCurrent[0], this.dragStart[0]);
             }
             this.setxDomain(xDomainRange);
+            this.xAxisRange = [this.xDomainMin, this.xDomainMax];
             this.plotGraph();
         }
         this.dragStart = null;
@@ -617,7 +644,6 @@ export class D3FlotTimeseriesGraphComponent
     private setxDomain(xDomainRange: Array<number>) {
         this.xDomainMin = xDomainRange[0];
         this.xDomainMax = xDomainRange[1];
-        this.xAxisRange = "zoomed";
     }
 
     // return timestamp of provided diagram coord

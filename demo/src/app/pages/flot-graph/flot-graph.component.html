@@ -3,12 +3,14 @@
         <n52-flot-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan" [graphOptions]="diagramOptions"
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
     </div> -->
-    <div style="height: 500px; width: 500px;">
+    <!-- <div style="height: 500px; width: 500px;">
         <n52-flot-timeseries-graph [datasetIds]="datasetIdsOne" [datasetOptions]="datasetOptionsOne" [timeInterval]="timespan" [graphOptions]="diagramOptions"
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
-    </div>
+    </div> -->
+    <n52-drag-options (onTogglePanZoom)="togglePanZoom($event)"></n52-drag-options>
+    {{panZoom}}
     <div style="height: 500px;">
-        <n52-d3-flot-timeseries-graph [datasetIds]="datasetIdsMultiple" [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (panToggled)="panToggled"></n52-d3-flot-timeseries-graph>
+        <n52-d3-flot-timeseries-graph [datasetIds]="datasetIdsMultiple" [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" [graphOptions]="diagramOptionsD3"></n52-d3-flot-timeseries-graph>
     </div>
 </div>
 
