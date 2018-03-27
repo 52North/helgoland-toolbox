@@ -38,10 +38,33 @@ export class FlotGraphComponent {
             show: true,
         }
     };
+    public diagramOptionsD3: PlotOptions = {
+        crosshair: {
+            mode: 'x'
+        },
+        pan: {
+            frameRate: 10,
+            interactive: true
+        },
+        touch: {
+            delayTouchEnded: 200,
+            pan: 'x',
+            scale: ''
+        },
+        yaxis: {
+            additionalWidth: 17,
+            labelWidth: 50,
+            min: null,
+            panRange: false,
+            show: true,
+        },
+        togglePanZoom: false
+    };
 
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
     public datasetOptionsMultiple: Map<string, DatasetOptions> = new Map();
+    public panZoom: any = "zoom";
 
     constructor() {
         this.datasetIds.forEach((entry) => {
@@ -59,5 +82,10 @@ export class FlotGraphComponent {
 
     public timespanChanged(timespan: Timespan) {
         this.timespan = timespan;
+    }
+
+    public togglePanZoom() {
+        this.diagramOptionsD3.togglePanZoom = !this.diagramOptionsD3.togglePanZoom;
+        this.panZoom = this.diagramOptionsD3.togglePanZoom === true ? "pan" : "zoom";
     }
 }
