@@ -412,7 +412,8 @@ export class D3FlotTimeseriesGraphComponent
         const xAxisGen = d3.axisBottom(this.xScaleBase).ticks(5);
         
         xAxisGen.tickFormat((d) => {
-            return d3.timeFormat('%d.%m.%Y %H:%M:%S')(new Date(d.valueOf()));
+            // return d3.timeFormat('%d.%m.%Y %H:%M:%S')(new Date(d.valueOf()));
+            return d3.timeFormat('%H:%M:%S')(new Date(d.valueOf()));
         });
         
         // draw x axis
