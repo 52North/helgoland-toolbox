@@ -291,6 +291,7 @@ export class FlotTimeseriesGraphComponent
                         lineWidth: 1
                     }
                 };
+
                 if (selectedIndex >= 0) {
                     dataEntry.lines.lineWidth = 5;
                     dataEntry.bars.lineWidth = 5;
