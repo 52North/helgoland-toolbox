@@ -4,11 +4,13 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AxesOptionsComponent } from './axes-options/axes-options.component';
 import { ColorSelectorComponent } from './color-selector/color-selector.component';
+import { DragOptionsComponent } from './drag-options/drag-options.component';
 
 @NgModule({
   declarations: [
     ColorSelectorComponent,
-    AxesOptionsComponent
+    AxesOptionsComponent,
+    DragOptionsComponent
   ],
   imports: [
     HelgolandCoreModule,
@@ -16,7 +18,8 @@ import { ColorSelectorComponent } from './color-selector/color-selector.componen
   ],
   exports: [
     ColorSelectorComponent,
-    AxesOptionsComponent
+    AxesOptionsComponent,
+    DragOptionsComponent
   ],
   providers: [
   ]
