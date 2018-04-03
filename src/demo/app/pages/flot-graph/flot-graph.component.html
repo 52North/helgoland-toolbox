@@ -8,7 +8,7 @@
             (onTimespanChanged)="timespanChanged($event)"></n52-flot-timeseries-graph>
     </div> -->
     <div style="height: 500px;">
-        <n52-d3-timeseries-graph [datasetIds]="datasetIdsMultiple" [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" [graphOptions]="diagramOptionsD3"></n52-d3-timeseries-graph>
+        <n52-d3-timeseries-graph [datasetIds]="datasetIdsMultiple" [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onHighlightUom)="highlightUom($event)" [graphOptions]="diagramOptionsD3"></n52-d3-timeseries-graph>
     </div>
     <n52-drag-options (onTogglePanZoom)="togglePanZoom($event)"></n52-drag-options>
     {{panZoom}}

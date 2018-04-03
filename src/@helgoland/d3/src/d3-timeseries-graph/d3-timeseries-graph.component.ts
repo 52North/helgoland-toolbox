@@ -6,7 +6,7 @@ import  {
     IterableDiffers,
     Output,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from '@angular/core';
 import {
     ApiInterface,
@@ -19,6 +19,9 @@ import {
     Timeseries,
     Timespan,
 } from '@helgoland/core';
+import {
+    D3PlotOptions,
+} from '@helgoland/d3';
 // import {
 //     axisBottom,
 //     axisLeft,
@@ -36,7 +39,6 @@ import {
 import * as d3 from 'd3';
 import * as moment from 'moment';
 
-import { PlotOptions, } from '@helgoland/flot';
 import { Observable, Observer } from 'rxjs/Rx';
 
 interface DataEntry {
@@ -55,11 +57,12 @@ interface DataEntry {
     encapsulation: ViewEncapsulation.None
 })
 export class D3TimeseriesGraphComponent
-    extends DatasetGraphComponent<DatasetOptions, PlotOptions>
+    extends DatasetGraphComponent<DatasetOptions, D3PlotOptions>
     implements AfterViewInit {
 
     @Output()
-    public onHoverHighlight: EventEmitter<number> = new EventEmitter();    
+    // public onHoverHighlight: EventEmitter<number> = new EventEmitter();
+    public onHighlightUom: EventEmitter<D3PlotOptions> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -107,32 +110,11 @@ export class D3TimeseriesGraphComponent
     private dragRect: any;
     private dragRectG: any;
 
-    private plotOptions: PlotOptions = {
-        grid: {
-            autoHighlight: true,
-            hoverable: true
-        },
-        series: {
-            lines: {
-                fill: false,
-                show: true
-            },
-            points: {
-                fill: true,
-                radius: 2,
-                show: false
-            },
-            shadowSize: 1
-        },
-        selection: {
-            mode: null
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-        },
-        yaxes: [],
-        showReferenceValues: false
+    private lwHigh = 3; // lineWidth high
+    private lwLow = 1; // lineWidth low
+
+    private plotOptions: D3PlotOptions = {
+        // selected: []
     };
 
     private datasetMap: Map<string, IDataset> = new Map();
@@ -179,10 +161,20 @@ export class D3TimeseriesGraphComponent
     protected removeDataset(internalId: string): void {
     }
     protected setSelectedId(internalId: string): void {
+        const tsData = this.preparedData.find((e) => e.internalId === internalId);
+        tsData.selected = true;
+        tsData.lines.lineWidth = this.lwHigh;
+        // tsData.bars.lineWidth = this.lwHigh;
+        this.plotGraph();
     }
     protected removeSelectedId(internalId: string): void {
+        const tsData = this.preparedData.find((e) => e.internalId === internalId);
+        tsData.selected = false;
+        tsData.lines.lineWidth = this.lwLow;
+        // tsData.bars.lineWidth = this.lwLow;
+        this.plotGraph();
     }
-    protected graphOptionsChanged(options: PlotOptions): void {
+    protected graphOptionsChanged(options: D3PlotOptions): void {
         Object.assign(this.plotOptions, options);
         if (this.rawSvg) {
             this.plotGraph();
@@ -218,8 +210,8 @@ export class D3TimeseriesGraphComponent
             this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
-                    expanded: this.plotOptions.showReferenceValues === true,
-                    generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                    // expanded: this.plotOptions.showReferenceValues === true,
+                    // generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 }
             ).subscribe(
                 (result) => {
@@ -245,6 +237,7 @@ export class D3TimeseriesGraphComponent
             // if (datasetIdx === 1) {
             //     dataset.uom = "mc";
             // }
+            // end of check for datasets
 
             const dataEntry = {
                 internalId: dataset.internalId,
@@ -254,10 +247,10 @@ export class D3TimeseriesGraphComponent
                     fillColor: styles.color
                 },
                 lines: {
-                    lineWidth: 1
+                    lineWidth: (this.plotOptions.selected.includes(dataset.uom) ? this.lwHigh : this.lwLow)
                 },
                 bars: {
-                    lineWidth: 1
+                    lineWidth: (this.plotOptions.selected.includes(dataset.uom) ? this.lwHigh : this.lwLow)
                 },
                 axisOptions: {
                     uom: dataset.uom,
@@ -297,11 +290,21 @@ export class D3TimeseriesGraphComponent
                 }
             });
 
-            this.myRanges[dataEntry.axisOptions.uom] = [yMin[0], yMax[1]];
+            if (!this.myRanges[dataEntry.axisOptions.uom]) {
+                this.myRanges[dataEntry.axisOptions.uom] = {};
+            }
+            if (!this.myRanges[dataEntry.axisOptions.uom].ids) {
+                this.myRanges[dataEntry.axisOptions.uom].ids = [];
+            }
+
+            this.myRanges[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
+            if (!(this.myRanges[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
+                this.myRanges[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
+            }
             this.yRanges = new Array();
 
             for (let uom in this.myRanges) {
-                this.yRanges.push({"uom": uom, "range": this.myRanges[uom]});
+                this.yRanges.push({"uom": uom, "range": this.myRanges[uom].range, "ids": this.myRanges[uom].ids});
             }
             this.plotGraph();
         });
@@ -506,7 +509,10 @@ export class D3TimeseriesGraphComponent
             .attr('dy', '1em')
             .style('text-anchor', 'middle')
             .style('fill', 'black')
-            .text(entry.uom);
+            .text(entry.uom)
+            .on('mouseup', () => {
+                this.highlightLine(entry.ids, entry.uom);
+            });
 
         const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
         const buffer = entry.offset + (axisWidth < 30 ? 30 : axisWidth);
@@ -534,6 +540,18 @@ export class D3TimeseriesGraphComponent
             buffer,
             yScale
         }
+    }
+
+    private highlightLine (ids, uom) {
+        let selected = false;
+        if (this.plotOptions.selected.includes(uom)) {
+            selected = true;
+            this.plotOptions.selected.splice(this.plotOptions.selected.indexOf(uom), 1);
+        } else {
+            this.plotOptions.selected.push(uom);
+        }
+        ids.forEach((id) => (selected ? this.removeSelectedId(id) : this.setSelectedId(id)));
+        this.onHighlightUom.emit(this.plotOptions);
     }
 
     private drawGraphLine(entry: DataEntry) {
@@ -569,7 +587,7 @@ export class D3TimeseriesGraphComponent
             .attr('class', 'line')
             .attr('fill', 'none')
             .attr('stroke', entry.color) // green
-            .attr('stroke-width', 2)
+            .attr('stroke-width', entry.lines.lineWidth)
             .attr("d", d3.line<DataEntry>()
             .x(function(d) {
                 d.timestamp = d[0];
