@@ -4,3 +4,4 @@ export { D3TimeseriesGraphComponent } from './d3-timeseries-graph/d3-timeseries-
 export { D3GraphOptions } from './model/d3-graph-options';
 export { D3AxisType } from './model/d3-axis-type';
 export { D3SelectionRange } from './model/d3-selection-range';
+export { D3PlotOptions } from './model/d3-plot-options';

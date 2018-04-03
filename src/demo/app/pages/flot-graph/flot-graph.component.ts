@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Timespan, DatasetOptions } from '@helgoland/core';
 import { PlotOptions } from '@helgoland/flot/src/flot';
+import { D3PlotOptions } from '@helgoland/d3';
 
 @Component({
     selector: 'my-app',
@@ -38,26 +39,8 @@ export class FlotGraphComponent {
             show: true,
         }
     };
-    public diagramOptionsD3: PlotOptions = {
-        crosshair: {
-            mode: 'x'
-        },
-        pan: {
-            frameRate: 10,
-            interactive: true
-        },
-        touch: {
-            delayTouchEnded: 200,
-            pan: 'x',
-            scale: ''
-        },
-        yaxis: {
-            additionalWidth: 17,
-            labelWidth: 50,
-            min: null,
-            panRange: false,
-            show: true,
-        },
+    public diagramOptionsD3: D3PlotOptions = {
+        selected: [],
         togglePanZoom: false
     };
 
@@ -86,5 +69,9 @@ export class FlotGraphComponent {
     public togglePanZoom() {
         this.diagramOptionsD3.togglePanZoom = !this.diagramOptionsD3.togglePanZoom;
         this.panZoom = this.diagramOptionsD3.togglePanZoom === true ? "pan" : "zoom";
+    }
+
+    public highlightUom(plotOptions: D3PlotOptions) {
+        this.diagramOptionsD3.selected = plotOptions.selected;
     }
 }

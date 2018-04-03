@@ -30,5 +30,4 @@ export interface PlotOptions extends jquery.flot.plotOptions {
         frameRate: number,
         interactive: boolean
     };
-    togglePanZoom?: boolean;
 }
