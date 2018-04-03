@@ -4,18 +4,18 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewE
 import { Timespan } from '@helgoland/core';
 import jquery from 'jquery';
 
-import { TimeRangeSliderSelectorCache } from './time-range-slider-selector.service';
+import { TimeRangeSliderCache } from './time-range-slider.service';
 
 @Component({
-  selector: 'n52-time-range-slider-selector',
-  templateUrl: './time-range-slider-selector.component.html',
+  selector: 'n52-time-range-slider',
+  templateUrl: './time-range-slider.component.html',
   styleUrls: [
-    './time-range-slider-selector.component.scss',
+    './time-range-slider.component.scss',
     '../../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css'
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class TimeRangeSliderSelectorComponent implements OnChanges {
+export class TimeRangeSliderComponent implements OnChanges {
 
   @Input()
   public id: string = '';
@@ -32,7 +32,7 @@ export class TimeRangeSliderSelectorComponent implements OnChanges {
   public selectionEnd: number;
 
   constructor(
-    private cache: TimeRangeSliderSelectorCache
+    private cache: TimeRangeSliderCache
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {

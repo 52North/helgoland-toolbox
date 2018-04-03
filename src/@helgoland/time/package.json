@@ -1,8 +1,14 @@
 {
-  "version": "0.0.1-alpha.40",
+  "version": "0.0.1-alpha.41",
   "description": "Helgoland time library",
   "keywords": [],
   "libConfig": {
-    "entry": "time"
+    "entry": "time",
+    "libExtensions": [
+      {
+        "name": "time-range-slider",
+        "entry": "time-range-slider"
+      }
+    ]
   }
 }
