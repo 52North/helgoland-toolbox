@@ -300,26 +300,9 @@ export class D3FlotTimeseriesGraphComponent
             this.myRanges[dataEntry.axisOptions.uom] = [yMin[0], yMax[1]];
             this.yRanges = new Array();
 
-            Object.entries(this.myRanges).forEach((key, value) => {
-                this.yRanges.push({"uom": key[0], "range": key[1]});
-            });
-
-            // // set range for various uoms
-            // let uomExists = false;
-            // for (var i=0; i<this.yRanges.length; i++) {
-            //     if (this.yRanges[i].uom === dataEntry.axisOptions.uom) {
-            //         if (this.yRanges[i].range[0] >= min) { this.yRanges[i].range[0] = min; }
-            //         if (this.yRanges[i].range[1] <= max) { this.yRanges[i].range[1] = max; }
-            //         uomExists = true;
-            //     }
-            // }
-            // if (uomExists === false) {
-            //     let newRange = {
-            //         uom: dataEntry.axisOptions.uom,
-            //         range: [min, max]
-            //     }
-            //     this.yRanges.push(newRange);
-            // }
+            for (let uom in this.myRanges) {
+                this.yRanges.push({"uom": uom, "range": this.myRanges[uom]});
+            }
             this.plotGraph();
         });
     }
