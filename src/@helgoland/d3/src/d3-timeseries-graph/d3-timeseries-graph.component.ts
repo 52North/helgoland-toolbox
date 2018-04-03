@@ -49,19 +49,19 @@ interface DataEntry {
 }
 
 @Component({
-    selector: 'n52-d3-flot-timeseries-graph',
-    templateUrl: './d3-flot-timeseries-graph.component.html',
-    styleUrls: ['./d3-flot-timeseries-graph.component.scss'],
+    selector: 'n52-d3-timeseries-graph',
+    templateUrl: './d3-timeseries-graph.component.html',
+    styleUrls: ['./d3-timeseries-graph.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class D3FlotTimeseriesGraphComponent
+export class D3TimeseriesGraphComponent
     extends DatasetGraphComponent<DatasetOptions, PlotOptions>
     implements AfterViewInit {
 
     @Output()
     public onHoverHighlight: EventEmitter<number> = new EventEmitter();    
 
-    @ViewChild('d3flot')
+    @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
 
     private preparedData = Array(); // : DataSeries[]
