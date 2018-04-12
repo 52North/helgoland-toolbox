@@ -14,7 +14,7 @@ export class FlotGraphComponent {
     public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
     public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
     public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72'];
-    public colors = [ '#123456' , '#FF0000' ]; // ]; //
+    public colors = [ '#123456' , '#FF0000' ];
 
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
     public diagramOptions: PlotOptions = {
@@ -64,7 +64,7 @@ export class FlotGraphComponent {
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
     public datasetOptionsMultiple: Map<string, DatasetOptions> = new Map();
-    public panZoom: any = "zoom";
+    public panZoom: any = 'zoom';
 
     constructor() {
         this.datasetIds.forEach((entry) => {
@@ -86,6 +86,6 @@ export class FlotGraphComponent {
 
     public togglePanZoom() {
         this.diagramOptionsD3.togglePanZoom = !this.diagramOptionsD3.togglePanZoom;
-        this.panZoom = this.diagramOptionsD3.togglePanZoom === true ? "pan" : "zoom";
+        this.panZoom = this.diagramOptionsD3.togglePanZoom === true ? 'pan' : 'zoom';
     }
 }
