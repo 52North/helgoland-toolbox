@@ -476,10 +476,6 @@ export class D3TimeseriesGraphComponent
             .call(xAxisGen)
             .selectAll('text')
             .style('text-anchor', 'middle');
-            // TODO: ticks
-            // .attr('transform', function(d) {
-            //     return 'rotate(-15)'
-            //     });
 
         // draw the x grid lines
         this.graph.append('svg:g')
@@ -688,13 +684,6 @@ export class D3TimeseriesGraphComponent
     }
 
     private panEndHandler = () => {
-        // if (!this.dragMoveStart || !this.draggingMove) {
-        //     // back to origin range (from - to)
-        //     this.plotGraph();
-        // }
-        // if (this.dragMoveStart && this.draggingMove) {
-        //     this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-        // }
         this.plotGraph();
         this.dragMoveStart = null;
         this.draggingMove = false;
