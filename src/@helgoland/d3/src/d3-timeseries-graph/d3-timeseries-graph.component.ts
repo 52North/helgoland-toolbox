@@ -462,10 +462,11 @@ export class D3TimeseriesGraphComponent
             .domain( [ this.xAxisRange[0] , this.xAxisRange[1] ] )
             .range( [ bufferXrange , this.width ] );
 
-        const xAxisGen = d3.axisBottom(this.xScaleBase).ticks(5);
+        // const xAxisGen = d3.axisBottom(this.xScaleBase).ticks(5);
+        const xAxisGen = d3.axisBottom(this.xScaleBase)
+            .tickValues(d3.timeHours(this.xAxisRange[0], this.xAxisRange[1], 4));
 
         xAxisGen.tickFormat((d) => {
-            // return d3.timeFormat('%d.%m.%Y %H:%M:%S')(new Date(d.valueOf()));
             return d3.timeFormat('%H:%M:%S')(new Date(d.valueOf()));
         });
 
