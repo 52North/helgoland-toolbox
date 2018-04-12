@@ -32,6 +32,7 @@ import { HelgolandPermalinkModule } from '@helgoland/permalink';
 import { HelgolandPlotlyModule } from '@helgoland/plotly';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { HelgolandTimeModule } from '@helgoland/time';
+import { HelgolandTimeRangeSliderModule } from '@helgoland/time/time-range-slider';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GraphLegendComponent } from 'demo/app/pages/graph-legend/graph-legend.component';
@@ -144,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandMapViewModule,
     HelgolandModificationModule,
     HelgolandDatasetlistModule,
+    HelgolandTimeRangeSliderModule,
     HelgolandD3Module,
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule
