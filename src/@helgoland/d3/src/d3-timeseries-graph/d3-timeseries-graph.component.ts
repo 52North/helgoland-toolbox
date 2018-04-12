@@ -476,6 +476,7 @@ export class D3TimeseriesGraphComponent
             .call(xAxisGen)
             .selectAll('text')
             .style('text-anchor', 'middle');
+            // TODO: ticks
             // .attr('transform', function(d) {
             //     return 'rotate(-15)'
             //     });
@@ -605,7 +606,7 @@ export class D3TimeseriesGraphComponent
             .datum(data)
             .attr('class', 'line')
             .attr('fill', 'none')
-            .attr('stroke', entry.color) // green
+            .attr('stroke', entry.color)
             .attr('stroke-width', entry.lines.lineWidth)
             .attr('d', d3.line<DataEntry>()
             .x((d) => {
@@ -617,7 +618,7 @@ export class D3TimeseriesGraphComponent
             .y((d) => {
                 const yDiagCoord = yScaleBase(d[1]);
                 d.yDiagCoord = yDiagCoord;
-                return yDiagCoord; // yScale(d[options.id]);
+                return yDiagCoord;
             })
             .curve(d3.curveLinear));
     }
@@ -835,6 +836,8 @@ export class D3TimeseriesGraphComponent
 
     private hideDiagramIndicator() {
         this.focusG.style('visibility', 'hidden');
+        d3.selectAll('.focus-visibility')
+            .attr('visibility', 'hidden');
     }
 
     private showDiagramIndicator = (entry, idx: number) => {
@@ -851,9 +854,11 @@ export class D3TimeseriesGraphComponent
 
             // show label if data available for time
             entry.focusLabel
-                .attr('visibility', 'visible');
+                .attr('visibility', 'visible')
+                .attr('class', 'focus-visibility');
             entry.focusLabelRect
-                .attr('visibility', 'visible');
+                .attr('visibility', 'visible')
+                .attr('class', 'focus-visibility');
 
             let onLeftSide = false;
             if ((this.background.node().getBBox().width + this.bufferSum) / 2 > item.xDiagCoord) { onLeftSide = true; }
