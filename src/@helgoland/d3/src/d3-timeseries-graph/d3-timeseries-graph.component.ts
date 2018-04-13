@@ -61,8 +61,8 @@ export class D3TimeseriesGraphComponent
     implements AfterViewInit {
 
     @Output()
-    // public onHoverHighlight: EventEmitter<number> = new EventEmitter();
-    public onHighlightUom: EventEmitter<D3PlotOptions> = new EventEmitter();
+    // public onHighlightUom: EventEmitter<D3PlotOptions> = new EventEmitter();
+    public onHighlight: EventEmitter<string[]> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -76,8 +76,8 @@ export class D3TimeseriesGraphComponent
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     private yAxisRange: any; // y domain range
-    private yRanges: any; // y array of objects containing ranges for every uom
-    private myRanges: any; // y object containing ranges for each uom
+    private yRangesEachUom: any; // y array of objects containing ranges for every uom
+    private yRangesPre: any; // y object containing ranges for each uom
     private dataYranges: any; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
@@ -142,8 +142,8 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.yRanges = new Array();
-        this.myRanges = {};
+        this.yRangesEachUom = new Array();
+        this.yRangesPre = {};
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
         this.ypos = new Array();
@@ -155,10 +155,10 @@ export class D3TimeseriesGraphComponent
 
     protected addDataset(id: string, url: string): void {
         this.api.getSingleTimeseries(id, url).subscribe(
-            (timeseries) => this.loadAddedDataset(timeseries), // this.loadDataset(timeseries),
+            (timeseries) => this.loadAddedDataset(timeseries),
             (error) => {
                 this.api.getDataset(id, url).subscribe(
-                    (dataset) => this.loadAddedDataset(dataset), // this.loadDataset(dataset)
+                    (dataset) => this.loadAddedDataset(dataset),
                 );
             }
         );
@@ -170,14 +170,18 @@ export class D3TimeseriesGraphComponent
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         tsData.selected = true;
         tsData.lines.lineWidth = this.lwHigh;
-        // tsData.bars.lineWidth = this.lwHigh;
+        tsData.bars.lineWidth = this.lwHigh;
+        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) < 0) {
+            this.selectedDatasetIds.push(internalId);
+        }
         this.plotGraph();
     }
     protected removeSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         tsData.selected = false;
         tsData.lines.lineWidth = this.lwLow;
-        // tsData.bars.lineWidth = this.lwLow;
+        tsData.bars.lineWidth = this.lwLow;
+        this.selectedDatasetIds.splice(this.selectedDatasetIds.findIndex((entry) => entry === internalId), 1);
         this.plotGraph();
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
@@ -255,16 +259,17 @@ export class D3TimeseriesGraphComponent
                     fillColor: styles.color
                 },
                 lines: {
-                    lineWidth: (this.plotOptions.selected.includes(dataset.uom) ? this.lwHigh : this.lwLow)
+                    lineWidth: (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow)
                 },
                 bars: {
-                    lineWidth: (this.plotOptions.selected.includes(dataset.uom) ? this.lwHigh : this.lwLow)
+                    lineWidth: (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow)
                 },
                 axisOptions: {
                     uom: dataset.uom,
                     label: dataset.label
                 }
             };
+            // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
 
             if (datasetIdx >= 0) {
                 this.preparedData[datasetIdx] = dataEntry;
@@ -301,26 +306,26 @@ export class D3TimeseriesGraphComponent
                 }
             });
 
-            if (!this.myRanges[dataEntry.axisOptions.uom]) {
-                this.myRanges[dataEntry.axisOptions.uom] = {};
+            if (!this.yRangesPre[dataEntry.axisOptions.uom]) {
+                this.yRangesPre[dataEntry.axisOptions.uom] = {};
             }
-            if (!this.myRanges[dataEntry.axisOptions.uom].ids) {
-                this.myRanges[dataEntry.axisOptions.uom].ids = [];
+            if (!this.yRangesPre[dataEntry.axisOptions.uom].ids) {
+                this.yRangesPre[dataEntry.axisOptions.uom].ids = [];
             }
 
-            this.myRanges[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
-            if (!(this.myRanges[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
-                this.myRanges[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
+            this.yRangesPre[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
+            if (!(this.yRangesPre[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
+                this.yRangesPre[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
             }
-            this.yRanges = new Array();
+            this.yRangesEachUom = new Array();
 
-            console.log(this.myRanges); // TODO delete dataset --> delete range of dataset
-            for (let singleUom in this.myRanges) {
-                if (this.myRanges.hasOwnProperty(singleUom)) {
-                    this.yRanges.push({
+            console.log(this.yRangesPre); // TODO delete dataset --> delete range of dataset
+            for (let singleUom in this.yRangesPre) {
+                if (this.yRangesPre.hasOwnProperty(singleUom)) {
+                    this.yRangesEachUom.push({
                         uom: singleUom,
-                        range: this.myRanges[singleUom].range,
-                        ids: this.myRanges[singleUom].ids
+                        range: this.yRangesPre[singleUom].range,
+                        ids: this.yRangesPre[singleUom].ids
                     });
                 }
             }
@@ -355,9 +360,9 @@ export class D3TimeseriesGraphComponent
     // get value range for y axis for each uom of every dataset
     private getyAxisRange(uom) {
 
-        for (let i = 0; i <= this.yRanges.length; i++) {
-            if (this.yRanges[i].uom === uom) {
-                return this.yRanges[i].range;
+        for (let i = 0; i <= this.yRangesEachUom.length; i++) {
+            if (this.yRangesEachUom[i].uom === uom) {
+                return this.yRangesEachUom[i].range;
             }
         }
 
@@ -377,7 +382,7 @@ export class D3TimeseriesGraphComponent
 
         // #####################################################
 
-        this.yRanges.forEach((entry) => {
+        this.yRangesEachUom.forEach((entry) => {
             entry.first = (this.yScaleBase === null);
             entry.offset = this.bufferSum;
 
@@ -560,24 +565,18 @@ export class D3TimeseriesGraphComponent
     }
 
     private highlightLine (ids, uom) {
-        let selected = false;
-        if (this.plotOptions.selected.includes(uom)) {
-            selected = true;
-            this.plotOptions.selected.splice(this.plotOptions.selected.indexOf(uom), 1);
-        } else {
-            this.plotOptions.selected.push(uom);
-        }
-        ids.forEach((id) => (selected ? this.removeSelectedId(id) : this.setSelectedId(id)));
-        this.onHighlightUom.emit(this.plotOptions);
+        ids.forEach((id) => (this.selectedDatasetIds.indexOf(id) >= 0 ? this.removeSelectedId(id) : this.setSelectedId(id)));
+        this.onHighlight.emit(this.selectedDatasetIds);
+        this.plotGraph();
     }
 
     private drawGraphLine(entry: DataEntry) {
         let data = entry.data;
 
-        const getYaxisRange = this.yRanges.find((obj, index) => {
+        const getYaxisRange = this.yRangesEachUom.find((obj, index) => {
             if (obj.uom === entry.axisOptions.uom) {
                 return obj.yScale;
-            } // uom does exist in this.yRanges
+            } // uom does exist in this.yRangesEachUom
         });
 
         let xScaleBase = this.xScaleBase;
