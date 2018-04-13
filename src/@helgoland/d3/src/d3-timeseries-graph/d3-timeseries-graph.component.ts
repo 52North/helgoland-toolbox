@@ -462,9 +462,9 @@ export class D3TimeseriesGraphComponent
             .domain( [ this.xAxisRange[0] , this.xAxisRange[1] ] )
             .range( [ bufferXrange , this.width ] );
 
-        // const xAxisGen = d3.axisBottom(this.xScaleBase).ticks(5);
+        let hourlyRange = d3.timeHours(this.xAxisRange[0], this.xAxisRange[1], 4);
         const xAxisGen = d3.axisBottom(this.xScaleBase)
-            .tickValues(d3.timeHours(this.xAxisRange[0], this.xAxisRange[1], 4));
+            .tickValues(hourlyRange);
 
         xAxisGen.tickFormat((d) => {
             return d3.timeFormat('%H:%M:%S')(new Date(d.valueOf()));
@@ -483,7 +483,7 @@ export class D3TimeseriesGraphComponent
             .attr('class', 'grid')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(d3.axisBottom(this.xScaleBase)
-                .ticks(5)
+                .tickValues(hourlyRange)
                 .tickSize(-this.height)
                 .tickFormat(() => '')
             );
