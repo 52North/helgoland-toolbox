@@ -1,8 +1,12 @@
 <div>
   <div style="height: 500px;">
-    <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
+    <!-- <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
       [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"
-      (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph>
+      (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph> -->
+      <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" 
+      [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"  
+      (onHighlightUom)="highlightUom($event)"
+      (onContentLoading)="graphLoading = $event" #diagram></n52-d3-timeseries-graph>
   </div>
   <div>
     Loading Graph: {{graphLoading}}
