@@ -38,7 +38,9 @@ export class FlotGraphComponent {
         }
     };
     public diagramOptionsD3: D3PlotOptions = {
-        togglePanZoom: false
+        togglePanZoom: false,
+        showReferenceValues: false,
+        generalizeAllways: true
     };
 
     public selectedIds: string[] = [];
