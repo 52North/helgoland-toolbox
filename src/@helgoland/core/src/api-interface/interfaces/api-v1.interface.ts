@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 import { Category } from '../../model/api/category';
 import { Data } from '../../model/api/data';

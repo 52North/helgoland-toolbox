@@ -1,4 +1,5 @@
 import 'rxjs/operator/map';
+import 'rxjs/add/observable/forkJoin';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
