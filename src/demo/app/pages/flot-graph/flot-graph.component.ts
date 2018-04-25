@@ -12,10 +12,6 @@ export class FlotGraphComponent {
 
     public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
     public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
-    // public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63',
-    // 'http://www.fluggs.de/sos2/api/v1/__72',
-    // 'http://www.fluggs.de/sos2/api/v1/__63'];
-    // public colors = [ '#123456' , '#FF0000', '#654321' ];
     public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72'];
     public colors = [ '#123456' , '#FF0000' ];
 
@@ -42,9 +38,12 @@ export class FlotGraphComponent {
         }
     };
     public diagramOptionsD3: D3PlotOptions = {
-        selected: [],
-        togglePanZoom: false
+        togglePanZoom: false,
+        showReferenceValues: false,
+        generalizeAllways: true
     };
+
+    public selectedIds: string[] = [];
 
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
@@ -73,7 +72,7 @@ export class FlotGraphComponent {
         this.panZoom = this.diagramOptionsD3.togglePanZoom === true ? 'pan' : 'zoom';
     }
 
-    public highlightUom(plotOptions: D3PlotOptions) {
-        this.diagramOptionsD3.selected = plotOptions.selected;
+    public highlight(ids: string[]) {
+        this.selectedIds = ids;
     }
 }
