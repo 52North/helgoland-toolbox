@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { Timespan, DatasetOptions } from '@helgoland/core';
-import { PlotOptions } from '@helgoland/flot/src/flot';
+import { DatasetOptions, Timespan } from '@helgoland/core';
 import { D3PlotOptions } from '@helgoland/d3';
+import { PlotOptions } from '@helgoland/flot/src/flot';
 
 @Component({
     selector: 'my-app',
-    templateUrl: './flot-graph.component.html',
-    styleUrls: ['./flot-graph.component.css']
+    templateUrl: './timeseries-graph.component.html',
+    styleUrls: ['./timeseries-graph.component.css']
 })
-export class FlotGraphComponent {
+export class TimeseriesGraphComponent {
 
     public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
     public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
     public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72'];
-    public colors = [ '#123456' , '#FF0000' ];
+    public colors = ['#123456', '#FF0000'];
 
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
     public diagramOptions: PlotOptions = {

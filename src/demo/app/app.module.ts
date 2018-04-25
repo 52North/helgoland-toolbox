@@ -51,7 +51,7 @@ import { GeometryViewComponent } from './components/geometry-view/geometry-view.
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
-import { FlotGraphComponent } from './pages/flot-graph/flot-graph.component';
+import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
@@ -99,7 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StyleModificationComponent,
     ServiceSelectorComponent,
     ListSelectionComponent,
-    FlotGraphComponent,
+    TimeseriesGraphComponent,
     PlotlyGraphComponent,
     TableComponent,
     TimeComponent,

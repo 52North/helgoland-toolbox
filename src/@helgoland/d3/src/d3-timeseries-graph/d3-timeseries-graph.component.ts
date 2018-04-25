@@ -1,4 +1,4 @@
-import  {
+import {
     AfterViewInit,
     Component,
     ElementRef,
@@ -19,27 +19,11 @@ import {
     Timeseries,
     Timespan,
 } from '@helgoland/core';
-import {
-    D3PlotOptions,
-} from '@helgoland/d3';
-// import {
-//     axisBottom,
-//     axisLeft,
-//     axisTop,
-//     bisector,
-//     curveLinear,
-//     extent,
-//     line,
-//     mouse,
-//     ScaleLinear,
-//     scaleLinear,
-//     select,
-//     timeFormat,
-// } from 'd3';
+import { D3PlotOptions } from '@helgoland/d3';
 import * as d3 from 'd3';
-import * as moment from 'moment';
-
-import { Observable, Observer } from 'rxjs/Rx';
+import moment from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 
 interface DataEntry {
     [id: string]: any;
@@ -472,8 +456,8 @@ export class D3TimeseriesGraphComponent
     private drawXaxis(bufferXrange: number) {
         // range for x axis scale
         this.xScaleBase = d3.scaleLinear()
-            .domain( [ this.xAxisRange[0] , this.xAxisRange[1] ] )
-            .range( [ bufferXrange , this.width ] );
+            .domain([this.xAxisRange[0], this.xAxisRange[1]])
+            .range([bufferXrange, this.width]);
 
         let minRange = this.xAxisRange[0] + (14400000 - (this.xAxisRange[0] % 14400000));
         let minRangeGer = minRange + 7200000;
@@ -536,7 +520,7 @@ export class D3TimeseriesGraphComponent
         // range for y axis scale
         const rangeOffset = (yMax - yMin) * 0.10;
         const yScale = d3.scaleLinear()
-            .domain([ yMin - rangeOffset, yMax + rangeOffset])
+            .domain([yMin - rangeOffset, yMax + rangeOffset])
             .range([this.height, 0]);
 
         let yAxisGen = d3.axisLeft(yScale).ticks(5);
@@ -585,7 +569,7 @@ export class D3TimeseriesGraphComponent
         };
     }
 
-    private highlightLine (ids, uom) {
+    private highlightLine(ids, uom) {
         ids.forEach((id) => (this.selectedDatasetIds.indexOf(id) >= 0 ? this.removeSelectedId(id) : this.setSelectedId(id)));
         this.onHighlight.emit(this.selectedDatasetIds);
         this.plotGraph();
@@ -625,18 +609,18 @@ export class D3TimeseriesGraphComponent
             .attr('stroke', entry.color)
             .attr('stroke-width', entry.lines.lineWidth)
             .attr('d', d3.line<DataEntry>()
-            .x((d) => {
-                d.timestamp = d[0];
-                const xDiagCoord = xScaleBase(d[0]);
-                d.xDiagCoord = xDiagCoord;
-                return xDiagCoord;
-            })
-            .y((d) => {
-                const yDiagCoord = yScaleBase(d[1]);
-                d.yDiagCoord = yDiagCoord;
-                return yDiagCoord;
-            })
-            .curve(d3.curveLinear));
+                .x((d) => {
+                    d.timestamp = d[0];
+                    const xDiagCoord = xScaleBase(d[0]);
+                    d.xDiagCoord = xDiagCoord;
+                    return xDiagCoord;
+                })
+                .y((d) => {
+                    const yDiagCoord = yScaleBase(d[1]);
+                    d.yDiagCoord = yDiagCoord;
+                    return yDiagCoord;
+                })
+                .curve(d3.curveLinear));
     }
 
     private mousemoveHandler = () => {
@@ -651,7 +635,7 @@ export class D3TimeseriesGraphComponent
 
         // focus do not overlap each other
         if (this.ypos !== undefined) {
-            let yPos = this.ypos.sort ((a, b) => { return a.y - b.y; });
+            let yPos = this.ypos.sort((a, b) => { return a.y - b.y; });
             yPos.forEach((p, i) => {
                 if (i > 0) {
                     let last = yPos[i - 1].y;
@@ -659,7 +643,7 @@ export class D3TimeseriesGraphComponent
                     yPos[i].y += yPos[i].off;
                 }
             });
-            yPos.sort ((a, b) => { return a.idx - b.idx; });
+            yPos.sort((a, b) => { return a.idx - b.idx; });
 
             let c1 = 0;
             let c2 = 0;
@@ -672,7 +656,7 @@ export class D3TimeseriesGraphComponent
                     }
                     c2 += c1;
                     if (yPos[c2] && yPos[c2].off) {
-                        return 'translate (0,' + ( 3 + yPos[c2].off ) + ')';
+                        return 'translate (0,' + (3 + yPos[c2].off) + ')';
                     }
                 });
         }
@@ -699,7 +683,7 @@ export class D3TimeseriesGraphComponent
             let newTimeMax = this.dragMoveRange[1] + (ratioTimestampDiagCoord * diff);
 
             this.xAxisRangePan = [newTimeMin, newTimeMax];
-            this.timespan = {from: this.xAxisRangePan[0], to: this.xAxisRangePan[1]};
+            this.timespan = { from: this.xAxisRangePan[0], to: this.xAxisRangePan[1] };
             this.plotGraph();
 
         }
@@ -854,7 +838,7 @@ export class D3TimeseriesGraphComponent
 
     private showDiagramIndicator = (entry, idx: number, xCoordMouse: number, entryIdx: number) => {
         const item = entry.data[idx];
-        if (item !==  undefined) {
+        if (item !== undefined) {
             // create line where mouse is
             this.focusG.style('visibility', 'visible');
             // show label if data available for time
@@ -864,7 +848,7 @@ export class D3TimeseriesGraphComponent
             if ((this.background.node().getBBox().width + this.bufferSum) / 2 > item.xDiagCoord) { onLeftSide = true; }
 
             let labelBuffer = ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001)
-            * ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001);
+                * ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001);
 
             labelBuffer = Math.max(4, labelBuffer);
 
@@ -920,7 +904,7 @@ export class D3TimeseriesGraphComponent
                 .attr('width', this.getDimensions(entry.focusLabel.node()).w)
                 .attr('height', this.getDimensions(entry.focusLabel.node()).h);
 
-            this.ypos.push({ idx: this.idxOfPos ++, y: item.yDiagCoord, off: 0 });
+            this.ypos.push({ idx: this.idxOfPos++, y: item.yDiagCoord, off: 0 });
         }
     }
 
