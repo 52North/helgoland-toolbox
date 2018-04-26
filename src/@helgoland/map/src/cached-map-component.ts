@@ -78,16 +78,16 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         if (this._differOverlayMaps) {
             const changes = this._differOverlayMaps.diff(this.overlayMaps);
             if (changes) {
+                changes.forEachRemovedItem((e) => this.removeOverlayMap(e.previousValue));
                 changes.forEachAddedItem((e) => this.addOverlayMap(e.currentValue));
-                changes.forEachRemovedItem((e) => this.removeOverlayMap(e.currentValue));
                 this.updateLayerControl();
             }
         }
         if (this._differBaseMaps) {
             const changes = this._differBaseMaps.diff(this.baseMaps);
             if (changes) {
+                changes.forEachRemovedItem((e) => this.removeBaseMap(e.previousValue));
                 changes.forEachAddedItem((e) => this.addBaseMap(e.currentValue));
-                changes.forEachRemovedItem((e) => this.removeBaseMap(e.currentValue));
                 this.updateLayerControl();
             }
         }
