@@ -34,6 +34,10 @@ interface DataEntry {
     xDiagCoord?: number;
 }
 
+interface DataConst extends IDataset {
+    data?: Data<[number, number]>;
+}
+
 @Component({
     selector: 'n52-d3-timeseries-graph',
     templateUrl: './d3-timeseries-graph.component.html',
@@ -106,7 +110,7 @@ export class D3TimeseriesGraphComponent
         generalizeAllways: true
     };
 
-    private datasetMap: Map<string, IDataset> = new Map();
+    private datasetMap: Map<string, DataConst> = new Map();
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -128,11 +132,9 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.yRangesEachUom = new Array();
-        this.yRangesPre = {};
+        this.yRangesPre = new Array();
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
-        this.ypos = new Array();
     }
 
     public reloadData(): void {
@@ -150,7 +152,19 @@ export class D3TimeseriesGraphComponent
         );
     }
     protected removeDataset(internalId: string): void {
-        // not implemented yet
+        console.log('removed ' + internalId);
+        this.yRangesPre = new Array();
+        this.dataYranges = new Array();
+        this.xAxisRangeOrigin = new Array();
+
+        this.datasetMap.delete(internalId);
+        this.preparedData.splice(this.preparedData.findIndex((entry) => entry.internalId === internalId), 1);
+        let newPrepData = this.preparedData;
+        this.preparedData = new Array();
+        newPrepData.forEach((entry, idx) => {
+            this.preparedData.push(entry);
+            this.processData(entry, entry.internalId);
+        });
     }
     protected setSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
@@ -212,7 +226,8 @@ export class D3TimeseriesGraphComponent
                 }
             ).subscribe(
                 (result) => {
-                    this.prepareTsData(dataset, result).subscribe(() => {
+                    this.datasetMap.get(dataset.internalId).data = result;
+                    this.prepareTsData(dataset).subscribe(() => {
                         console.log('plotGraph ??? ');
                     });
                 },
@@ -222,11 +237,17 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    private processDataset(internalId) {
+        let idx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
+        this.processData(this.preparedData[idx], internalId);
+    }
+
     // add dataset to preparedData
-    private prepareTsData(dataset: IDataset, data: Data<[number, number]>): Observable<boolean> {
+    private prepareTsData(dataset: IDataset): Observable<boolean> { // , data: Data<[number, number]>
         return Observable.create((observer: Observer<boolean>) => {
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
+            const data = this.datasetMap.get(dataset.internalId).data;
 
             // TODO: check for datasets with various uoms --- see all comments with #varUom
             // if (this.preparedData.length === 1) {
@@ -263,66 +284,70 @@ export class D3TimeseriesGraphComponent
                 this.preparedData.push(dataEntry);
             }
 
-            // get min and max value of data
-            const range = d3.extent<DataEntry, number>(dataEntry.data, (datum, index, array) => {
-                return datum[1]; // datum[0] = timestamp -- datum[1] = value
-            });
-
-            let min = range[0];
-            let max = range[1];
-            if (min === max) {
-                min = min - (min * 0.1);
-                max = max + (max * 0.1);
-            }
-
-            const newDatasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-            this.dataYranges[newDatasetIdx] = { // TODO
-                uom: dataEntry.axisOptions.uom,
-                range: [min, max]
-            };
-
-            // min = yMin[0]
-            const yMin = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
-                if (datum !== undefined) {
-                    if (datum.uom === dataEntry.axisOptions.uom) {
-                        return datum.range[0]; // datum.range = [min, max]
-                    }
-                }
-            });
-            // max = yMax[1]
-            const yMax = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
-                if (datum !== undefined) {
-                    if (datum.uom === dataEntry.axisOptions.uom) {
-                        return datum.range[1];
-                    }
-                }
-            });
-
-            if (!this.yRangesPre[dataEntry.axisOptions.uom]) {
-                this.yRangesPre[dataEntry.axisOptions.uom] = {};
-            }
-            if (!this.yRangesPre[dataEntry.axisOptions.uom].ids) {
-                this.yRangesPre[dataEntry.axisOptions.uom].ids = [];
-            }
-
-            this.yRangesPre[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
-            if (!(this.yRangesPre[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
-                this.yRangesPre[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
-            }
-            this.yRangesEachUom = new Array();
-
-            console.log(this.yRangesPre); // TODO delete dataset --> delete range of dataset
-            for (let singleUom in this.yRangesPre) {
-                if (this.yRangesPre.hasOwnProperty(singleUom)) {
-                    this.yRangesEachUom.push({
-                        uom: singleUom,
-                        range: this.yRangesPre[singleUom].range,
-                        ids: this.yRangesPre[singleUom].ids
-                    });
-                }
-            }
+            this.processData(dataEntry, dataset.internalId);
             this.plotGraph();
         });
+    }
+
+    private processData(dataEntry, internalId) {
+        // get min and max value of data
+        const range = d3.extent<DataEntry, number>(dataEntry.data, (datum, index, array) => {
+            return datum[1]; // datum[0] = timestamp -- datum[1] = value
+        });
+
+        let min = range[0];
+        let max = range[1];
+        if (min === max) {
+            min = min - (min * 0.1);
+            max = max + (max * 0.1);
+        }
+
+        const newDatasetIdx = this.preparedData.findIndex((e) => e.internalId === internalId);
+        this.dataYranges[newDatasetIdx] = {
+            uom: dataEntry.axisOptions.uom,
+            range: [min, max]
+        };
+
+        // min = yMin[0]
+        const yMin = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
+            if (datum !== undefined) {
+                if (datum.uom === dataEntry.axisOptions.uom) {
+                    return datum.range[0]; // datum.range = [min, max]
+                }
+            }
+        });
+        // max = yMax[1]
+        const yMax = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
+            if (datum !== undefined) {
+                if (datum.uom === dataEntry.axisOptions.uom) {
+                    return datum.range[1];
+                }
+            }
+        });
+
+        if (!this.yRangesPre[dataEntry.axisOptions.uom]) {
+            this.yRangesPre[dataEntry.axisOptions.uom] = {};
+        }
+        if (!this.yRangesPre[dataEntry.axisOptions.uom].ids) {
+            this.yRangesPre[dataEntry.axisOptions.uom].ids = [];
+        }
+
+        this.yRangesPre[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
+        if (!(this.yRangesPre[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
+            this.yRangesPre[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
+        }
+        this.yRangesEachUom = new Array();
+
+        for (let singleUom in this.yRangesPre) {
+            if (this.yRangesPre.hasOwnProperty(singleUom)) {
+                this.yRangesEachUom.push({
+                    uom: singleUom,
+                    range: this.yRangesPre[singleUom].range,
+                    ids: this.yRangesPre[singleUom].ids
+                });
+            }
+        }
+        this.plotGraph();
     }
 
     private calculateHeight(): number {
@@ -453,31 +478,68 @@ export class D3TimeseriesGraphComponent
         });
     }
 
+    private timeTickValues(time: String, range: any, span: number) {
+        if (time === 'minly') {
+            return d3.timeMinutes(range, this.xAxisRange[1], span);
+        }
+        if (time === 'hourly') {
+            return d3.timeHours(range, this.xAxisRange[1], span);
+        }
+        if (time === 'daily') {
+            return d3.timeDay.range(range, this.xAxisRange[1], span);
+        }
+    }
+
     private drawXaxis(bufferXrange: number) {
         // range for x axis scale
         this.xScaleBase = d3.scaleLinear()
             .domain([this.xAxisRange[0], this.xAxisRange[1]])
             .range([bufferXrange, this.width]);
 
-        let minRange = this.xAxisRange[0] + (14400000 - (this.xAxisRange[0] % 14400000));
-        let minRangeGer = minRange + 7200000;
-        if ((minRange - 7200000) >= this.xAxisRange[0]) {
-            minRangeGer = minRange - 7200000;
+        // calculate range for about 7 ticks on x axis
+        let calcTicks = (((this.xAxisRange[1] - this.xAxisRange[0]) / 1000) / 7);
+        let hourly = Math.ceil(calcTicks / 3600);
+        let daily = Math.ceil(calcTicks / (3600 * 48));
+
+        if ((calcTicks / 3600) <= 0.6) {
+            hourly = 0.5;
         }
 
-        let hourlyValues = d3.timeHours(minRangeGer, this.xAxisRange[1], 4);
+        let tickSize = hourly;
+        let timeString = 'hourly';
+        let timeFormatString = '%H:%M:%S';
+
+        if (hourly > 11) {
+            timeFormatString = '%d %b %H:%M';
+        }
+
+        if (hourly > 47) {
+            timeFormatString = '%d %B';
+            tickSize = (Math.max(1, Math.round(hourly / 12))) * 12;
+        }
+
+        // calculate minimum range dependent on tickSize for UTC // 7200000 (e.g. tickSize = 4 --> every 4 hours)
+        let minRange = this.xAxisRange[0] + ((3600000 * tickSize) - (this.xAxisRange[0] % (3600000 * tickSize)));
+        // minimum range for UTC+2
+        let minRangeGer = minRange + 3600000 * (tickSize / 2);
+        if ((minRange - 3600000 * (tickSize / 2)) >= this.xAxisRange[0]) {
+            minRangeGer = minRange - 3600000 * (tickSize / 2);
+        }
+
+        // calculate tickvalues dependent on tickSize for UTC+2
         let xAxisGen;
-        if (hourlyValues.length > 7) {
+        if (tickSize >= 1) {
             xAxisGen = d3.axisBottom(this.xScaleBase)
-                .tickValues(d3.timeDay.range(this.xAxisRange[0], this.xAxisRange[1], 2))
+                .tickValues(this.timeTickValues(timeString, minRangeGer, tickSize))
                 .tickFormat((d) => {
-                    return d3.timeFormat('%d %B')(new Date(d.valueOf()));
+                    return d3.timeFormat(timeFormatString)(new Date(d.valueOf()));
                 });
         } else {
+            timeString = 'minly';
             xAxisGen = d3.axisBottom(this.xScaleBase)
-                .tickValues(hourlyValues)
+                .tickValues(this.timeTickValues(timeString, minRangeGer, 30))
                 .tickFormat((d) => {
-                    return d3.timeFormat('%H:%M:%S')(new Date(d.valueOf()));
+                    return d3.timeFormat(timeFormatString)(new Date(d.valueOf()));
                 });
         }
 
@@ -927,8 +989,6 @@ export class D3TimeseriesGraphComponent
                 .attr('y2', this.height)
                 .classed('hidden', false);
         }
-
-        // console.log(d3.selectAll('.mouse-focus-line')['_groups'][0][0].x1.animVal.value);
     }
 
     private getDimensions(el: any) {
