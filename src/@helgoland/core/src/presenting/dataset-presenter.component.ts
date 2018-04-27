@@ -8,6 +8,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
+import { PresenterMessage } from '@helgoland/core';
 
 import { ApiInterface } from '../api-interface/api-interface';
 import { InternalIdHandler } from '../api-interface/internal-id-handler.service';
@@ -16,11 +17,10 @@ import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { HasLoadableContent } from '../model/mixins/has-loadable-content';
 import { Time } from '../time/index';
-import { GraphMessage } from './graph-message';
 
 const equal = require('deep-equal');
 
-export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOptions[], U>
+export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U>
     extends ResizableComponent implements OnChanges, DoCheck, HasLoadableContent {
 
     @Input()
@@ -46,7 +46,7 @@ export abstract class DatasetGraphComponent<T extends DatasetOptions | DatasetOp
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
     @Output()
-    public onMessageThrown: EventEmitter<GraphMessage> = new EventEmitter();
+    public onMessageThrown: EventEmitter<PresenterMessage> = new EventEmitter();
 
     @Output()
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();

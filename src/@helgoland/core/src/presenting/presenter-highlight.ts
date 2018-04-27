@@ -1,4 +1,4 @@
-export interface GraphHighlight {
+export interface PresenterHighlight {
     internalId: string;
     dataIndex: number;
 }

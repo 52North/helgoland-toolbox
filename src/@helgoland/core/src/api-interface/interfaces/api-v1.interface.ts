@@ -1,16 +1,20 @@
+import {
+    Category,
+    Data,
+    DataParameterFilter,
+    Feature,
+    HttpRequestOptions,
+    Offering,
+    ParameterFilter,
+    Phenomenon,
+    Procedure,
+    Service,
+    Station,
+    Timeseries,
+    TimeseriesExtras,
+    Timespan,
+} from '@helgoland/core';
 import { Observable } from 'rxjs/Observable';
-
-import { Category } from '../../model/api/category';
-import { Data } from '../../model/api/data';
-import { Timeseries, TimeseriesExtras } from '../../model/api/dataset';
-import { Feature } from '../../model/api/feature';
-import { Offering } from '../../model/api/offering';
-import { Phenomenon } from '../../model/api/phenomenon';
-import { Procedure } from '../../model/api/procedure';
-import { Service } from '../../model/api/service';
-import { Station } from '../../model/api/station';
-import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../../model/internal/http-requests';
-import { Timespan } from '../../model/internal/timeInterval';
 
 export interface ApiV1 {
 

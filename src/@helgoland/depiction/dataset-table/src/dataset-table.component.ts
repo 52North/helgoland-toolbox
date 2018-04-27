@@ -1,7 +1,7 @@
 import { Component, IterableDiffers, OnInit } from '@angular/core';
 import {
   ApiInterface,
-  DatasetGraphComponent,
+  DatasetPresenterComponent,
   DatasetOptions,
   DatasetTableData,
   InternalIdHandler,
@@ -14,7 +14,7 @@ import {
   templateUrl: './dataset-table.component.html',
   styleUrls: ['./dataset-table.component.scss']
 })
-export class DatasetTableComponent extends DatasetGraphComponent<DatasetOptions, any> implements OnInit {
+export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOptions, any> implements OnInit {
   /*
     The component extends DatasetGraphComponent, but implements only parts of that components inputs and outputs.
     Implemented: datasetIds, timeInterval, selectedDatasetIds and datasetOptions inputs; no outputs

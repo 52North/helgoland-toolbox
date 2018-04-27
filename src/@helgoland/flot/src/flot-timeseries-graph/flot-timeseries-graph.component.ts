@@ -18,7 +18,7 @@ import {
     ApiInterface,
     Data,
     Dataset,
-    DatasetGraphComponent,
+    DatasetPresenterComponent,
     DatasetOptions,
     HasLoadableContent,
     HttpRequestOptions,
@@ -45,7 +45,7 @@ declare var $: any;
 })
 @Mixin([HasLoadableContent])
 export class FlotTimeseriesGraphComponent
-    extends DatasetGraphComponent<DatasetOptions, PlotOptions>
+    extends DatasetPresenterComponent<DatasetOptions, PlotOptions>
     implements AfterViewInit {
 
     @Output()

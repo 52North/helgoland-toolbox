@@ -1,7 +1,7 @@
 import 'rxjs/operator/map';
 
 import { Injectable } from '@angular/core';
-import { IDataset } from '../model/api/dataset';
+import { IDataset } from '@helgoland/core';
 
 const INTERNAL_ID_SEPERATOR = '__';
 

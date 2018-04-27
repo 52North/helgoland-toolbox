@@ -1,15 +1,13 @@
-import 'rxjs/operator/map';
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/operator/map';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Data, DataParameterFilter, HttpRequestOptions, Timespan } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
-import { Data } from '../model/api/data';
-import { DataParameterFilter, HttpRequestOptions } from '../model/internal/http-requests';
-import { Timespan } from '../model/internal/timeInterval';
 import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 import { SimpleApiInterface } from './simple-api-interface.service';
