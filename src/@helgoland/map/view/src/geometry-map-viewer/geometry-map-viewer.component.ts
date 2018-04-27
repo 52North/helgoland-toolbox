@@ -18,6 +18,9 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     @Input()
     public zoomTo: GeoJSON.GeoJsonObject;
 
+    @Input()
+    public avoidZoomToGeometry: boolean;
+
     private highlightGeometry: L.GeoJSON;
 
     private defaultStyle: L.PathOptions = {
@@ -42,6 +45,7 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     public ngAfterViewInit() {
         this.createMap();
         this.drawGeometry();
+        this.showHighlight();
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -88,7 +92,9 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
             geojson.setStyle(this.defaultStyle);
             geojson.addTo(this.map);
 
-            this.map.fitBounds(geojson.getBounds());
+            if (!this.avoidZoomToGeometry) {
+                this.map.fitBounds(geojson.getBounds());
+            }
         }
     }
 }
