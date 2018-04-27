@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import {
     ApiInterface,
-    DatasetGraphComponent,
+    DatasetPresenterComponent,
     DatasetOptions,
     IDataset,
     InternalIdHandler,
@@ -75,7 +75,7 @@ interface DrawOptions {
     encapsulation: ViewEncapsulation.None
 })
 export class D3TrajectoryGraphComponent
-    extends DatasetGraphComponent<DatasetOptions, D3GraphOptions>
+    extends DatasetPresenterComponent<DatasetOptions, D3GraphOptions>
     implements AfterViewInit, OnChanges {
 
     @Input()

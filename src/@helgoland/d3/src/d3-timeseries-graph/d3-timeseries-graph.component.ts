@@ -11,7 +11,7 @@ import {
 import {
     ApiInterface,
     Data,
-    DatasetGraphComponent,
+    DatasetPresenterComponent,
     DatasetOptions,
     IDataset,
     InternalIdHandler,
@@ -45,7 +45,7 @@ interface DataConst extends IDataset {
     encapsulation: ViewEncapsulation.None
 })
 export class D3TimeseriesGraphComponent
-    extends DatasetGraphComponent<DatasetOptions, D3PlotOptions>
+    extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
     implements AfterViewInit {
 
     @Output()

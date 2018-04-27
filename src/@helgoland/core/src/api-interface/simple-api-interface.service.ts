@@ -2,22 +2,26 @@ import 'rxjs/add/operator/map';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+    Category,
+    Data,
+    Dataset,
+    Feature,
+    Offering,
+    Phenomenon,
+    Platform,
+    Procedure,
+    Service,
+    Station,
+    Timeseries,
+    TimeseriesExtras,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-import { Category } from '../model/api/category';
-import { Data } from '../model/api/data';
-import { Dataset, Timeseries, TimeseriesExtras } from '../model/api/dataset';
-import { Feature } from '../model/api/feature';
-import { Offering } from '../model/api/offering';
-import { Phenomenon } from '../model/api/phenomenon';
-import { Platform } from '../model/api/platform';
-import { Procedure } from '../model/api/procedure';
-import { Service } from '../model/api/service';
-import { Station } from '../model/api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { ApiInterface } from './api-interface';

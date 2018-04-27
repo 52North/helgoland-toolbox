@@ -6,7 +6,7 @@ export {
     ProfileDataEntry,
     ReferenceValues,
     TimeValueEntry
-} from './api/data';
+} from './dataset-api/data';
 export {
     Dataset,
     DatasetParameterConstellation,
@@ -18,17 +18,17 @@ export {
     StatusInterval,
     Timeseries,
     TimeseriesExtras
-} from './api/dataset';
-export { Parameter } from './api/parameter';
-export { Service, ServiceQuantities } from './api/service'
-export { Station, StationProperties, TimeseriesCollection } from './api/station'
-export { Platform } from './api/platform';
-export { Phenomenon } from './api/phenomenon';
-export { Procedure } from './api/procedure';
-export { Offering } from './api/offering';
-export { Feature } from './api/feature';
-export { Category } from './api/category';
-export { DatasetTypes, PlatformTypes, ValueTypes } from './api/enums';
+} from './dataset-api/dataset';
+export { Parameter } from './dataset-api/parameter';
+export { Service, ServiceQuantities } from './dataset-api/service'
+export { Station, StationProperties, TimeseriesCollection } from './dataset-api/station'
+export { Platform } from './dataset-api/platform';
+export { Phenomenon } from './dataset-api/phenomenon';
+export { Procedure } from './dataset-api/procedure';
+export { Offering } from './dataset-api/offering';
+export { Feature } from './dataset-api/feature';
+export { Category } from './dataset-api/category';
+export { DatasetTypes, PlatformTypes, ValueTypes } from './dataset-api/enums';
 
 export { DataParameterFilter, HttpRequestOptions, ParameterFilter } from './internal/http-requests'
 export { Provider, FilteredProvider } from './internal/provider';

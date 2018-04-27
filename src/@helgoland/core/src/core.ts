@@ -1,7 +1,7 @@
 export { HelgolandCoreModule } from './module';
 
 export * from './api-interface/index';
-export * from './graph/index';
+export * from './presenting/index';
 export * from './language/index';
 export * from './local-storage/index';
 export * from './model/index';

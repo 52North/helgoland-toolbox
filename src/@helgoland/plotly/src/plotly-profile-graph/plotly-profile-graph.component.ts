@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from '@angular/core';
 import {
     ApiInterface,
-    DatasetGraphComponent,
-    GraphHighlight,
+    DatasetPresenterComponent,
+    PresenterHighlight,
     IDataset,
     InternalIdHandler,
     ProfileDataEntry,
@@ -31,11 +31,11 @@ const MARKER_SIZE = 6;
     styleUrls: ['./plotly-profile-graph.component.scss']
 })
 export class PlotlyProfileGraphComponent
-    extends DatasetGraphComponent<TimedDatasetOptions[], any>
+    extends DatasetPresenterComponent<TimedDatasetOptions[], any>
     implements AfterViewInit {
 
     @Output()
-    public onHighlight: EventEmitter<GraphHighlight> = new EventEmitter();
+    public onHighlight: EventEmitter<PresenterHighlight> = new EventEmitter();
 
     @ViewChild('plotly')
     public plotlyElem: ElementRef;
