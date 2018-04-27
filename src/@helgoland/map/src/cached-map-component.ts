@@ -107,6 +107,8 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
         this.updateLayerControl();
         if (this.fitBounds) {
             this.map.fitBounds(this.fitBounds);
+        } else {
+            this.map.setView([0, 0], 1);
         }
     }
 
