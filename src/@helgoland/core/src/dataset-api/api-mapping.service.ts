@@ -3,30 +3,30 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-export enum ApiVersion {
+export enum DatasetApiVersion {
     V1,
     V2
 }
 
 @Injectable()
-export class ApiMapping {
+export class DatasetApiMapping {
 
-    private cache: Map<string, ApiVersion> = new Map<string, ApiVersion>();
+    private cache: Map<string, DatasetApiVersion> = new Map<string, DatasetApiVersion>();
 
     constructor(
         private http: HttpClient
     ) { }
 
-    public getApiVersion(apiUrl: string): Observable<ApiVersion> {
-        return new Observable<ApiVersion>((observer: Observer<ApiVersion>) => {
+    public getApiVersion(apiUrl: string): Observable<DatasetApiVersion> {
+        return new Observable<DatasetApiVersion>((observer: Observer<DatasetApiVersion>) => {
             if (this.cache.has(apiUrl)) {
                 this.confirmVersion(observer, this.cache.get(apiUrl));
             } else {
                 this.http.get<any[]>(apiUrl).subscribe((result) => {
-                    let version = ApiVersion.V1;
+                    let version = DatasetApiVersion.V1;
                     result.forEach((entry) => {
                         if (entry.id === 'platforms') {
-                            version = ApiVersion.V2;
+                            version = DatasetApiVersion.V2;
                         }
                     });
                     this.cache.set(apiUrl, version);
@@ -36,7 +36,7 @@ export class ApiMapping {
         });
     }
 
-    private confirmVersion(observer: Observer<ApiVersion>, version: ApiVersion) {
+    private confirmVersion(observer: Observer<DatasetApiVersion>, version: DatasetApiVersion) {
         observer.next(version);
         observer.complete();
     }

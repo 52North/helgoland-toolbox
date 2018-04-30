@@ -11,7 +11,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     FirstLastValue,
     HasLoadableContent,
     Mixin,
@@ -44,7 +44,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
-        private apiInterface: ApiInterface,
+        private apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef

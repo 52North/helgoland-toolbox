@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     DatasetPresenterComponent,
     PresenterHighlight,
     IDataset,
@@ -73,7 +73,7 @@ export class PlotlyProfileGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
+        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time
     ) {

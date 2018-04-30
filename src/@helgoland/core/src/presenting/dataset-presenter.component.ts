@@ -8,16 +8,16 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { PresenterMessage } from '@helgoland/core';
+import { DatasetApiInterface, InternalIdHandler, PresenterMessage } from '@helgoland/core';
 
-import { ApiInterface } from '../api-interface/api-interface';
-import { InternalIdHandler } from '../api-interface/internal-id-handler.service';
 import { DatasetOptions } from '../model/internal/options';
 import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { HasLoadableContent } from '../model/mixins/has-loadable-content';
 import { Time } from '../time/index';
 
+// import { ApiInterface } from '../api-interface/api-interface';
+// import { InternalIdHandler } from '../api-interface/internal-id-handler.service';
 const equal = require('deep-equal');
 
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U>
@@ -61,7 +61,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
+        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time
     ) {

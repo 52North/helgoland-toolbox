@@ -6,12 +6,19 @@ import {
     Component,
     EventEmitter,
     Input,
+    KeyValueDiffers,
     OnChanges,
     Output,
     SimpleChanges,
-    KeyValueDiffers,
 } from '@angular/core';
-import { ApiInterface, HasLoadableContent, IDataset, LocatedProfileDataEntry, Mixin, Timespan } from '@helgoland/core';
+import {
+    DatasetApiInterface,
+    HasLoadableContent,
+    IDataset,
+    LocatedProfileDataEntry,
+    Mixin,
+    Timespan,
+} from '@helgoland/core';
 import { MapCache } from '@helgoland/map';
 import L from 'leaflet';
 
@@ -51,7 +58,7 @@ export class ProfileTrajectoryMapSelectorComponent
     };
 
     constructor(
-        private apiInterface: ApiInterface,
+        private apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef

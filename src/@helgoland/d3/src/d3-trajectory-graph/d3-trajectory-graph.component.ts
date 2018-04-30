@@ -12,7 +12,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     DatasetPresenterComponent,
     DatasetOptions,
     IDataset,
@@ -131,7 +131,7 @@ export class D3TrajectoryGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
+        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time
     ) {

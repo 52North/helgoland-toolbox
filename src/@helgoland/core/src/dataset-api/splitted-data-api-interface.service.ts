@@ -10,10 +10,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
-import { SimpleApiInterface } from './simple-api-interface.service';
+import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
 
 @Injectable()
-export class GetDataApiInterface extends SimpleApiInterface {
+export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
 
     private maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
 

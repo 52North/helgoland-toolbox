@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApiInterface, Dataset, DatasetOptions, InternalIdHandler } from '@helgoland/core';
+import { DatasetApiInterface, Dataset, DatasetOptions, InternalIdHandler } from '@helgoland/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 
@@ -23,7 +23,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        private api: ApiInterface,
+        private api: DatasetApiInterface,
         protected internalIdHandler: InternalIdHandler
     ) {
         super(internalIdHandler);

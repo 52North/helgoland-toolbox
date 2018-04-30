@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ApiInterface, Station, Timeseries } from '@helgoland/core';
+import { DatasetApiInterface, Station, Timeseries } from '@helgoland/core';
 
 export class ExtendedTimeseries extends Timeseries {
     public selected: boolean;
@@ -29,7 +29,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public counter: number;
 
     constructor(
-        private apiInterface: ApiInterface
+        private apiInterface: DatasetApiInterface
     ) { }
 
     public ngOnInit() {

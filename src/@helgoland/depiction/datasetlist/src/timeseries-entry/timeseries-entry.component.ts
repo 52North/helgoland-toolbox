@@ -9,7 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     ColorService,
     Dataset,
     DatasetOptions,
@@ -69,7 +69,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public dataset: IDataset;
 
     constructor(
-        private api: ApiInterface,
+        private api: DatasetApiInterface,
         private timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
         private color: ColorService,

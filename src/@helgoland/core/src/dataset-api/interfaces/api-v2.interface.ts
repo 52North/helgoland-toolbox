@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../../model/internal/http-requests';
 import { Timespan } from '../../model/internal/timeInterval';
-import { ApiV1 } from './api-v1.interface';
+import { DatasetApiV1 } from './api-v1.interface';
 
-export interface ApiV2 extends ApiV1 {
+export interface DatasetApiV2 extends DatasetApiV1 {
 
     getPlatforms(
         apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions

@@ -9,7 +9,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     Data,
     DatasetPresenterComponent,
     DatasetOptions,
@@ -114,7 +114,7 @@ export class D3TimeseriesGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
+        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time
     ) {

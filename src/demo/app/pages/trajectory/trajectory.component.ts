@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     ColorService,
     DatasetOptions,
     InternalIdHandler,
@@ -51,7 +51,7 @@ export class TrajectoryComponent implements OnInit {
         private color: ColorService,
         private dialog: MatDialog,
         private internalIdHandler: InternalIdHandler,
-        private api: ApiInterface
+        private api: DatasetApiInterface
     ) { }
 
     public ngOnInit(): void {

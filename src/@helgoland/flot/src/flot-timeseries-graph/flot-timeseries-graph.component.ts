@@ -15,7 +15,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     Data,
     Dataset,
     DatasetPresenterComponent,
@@ -94,7 +94,7 @@ export class FlotTimeseriesGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: ApiInterface,
+        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected labelMapper: LabelMapperService

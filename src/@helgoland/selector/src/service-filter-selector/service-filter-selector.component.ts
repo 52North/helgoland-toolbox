@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ApiInterface, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
+import { DatasetApiInterface, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -31,7 +31,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     constructor(
         protected translate: TranslateService,
-        private apiInterface: ApiInterface
+        private apiInterface: DatasetApiInterface
     ) {
         super(translate);
     }
