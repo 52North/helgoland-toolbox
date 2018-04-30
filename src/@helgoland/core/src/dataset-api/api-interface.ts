@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { HttpService, HttpServiceMetadata } from './http.service';
-import { ApiV2 } from './interfaces/api-v2.interface';
+import { DatasetApiV2 } from './interfaces/api-v2.interface';
 
 export class UriParameterCoder implements HttpParameterCodec {
 
@@ -40,7 +40,7 @@ export class UriParameterCoder implements HttpParameterCodec {
     }
 }
 
-export abstract class ApiInterface implements ApiV2 {
+export abstract class DatasetApiInterface implements DatasetApiV2 {
 
     constructor(
         protected http: HttpClient,

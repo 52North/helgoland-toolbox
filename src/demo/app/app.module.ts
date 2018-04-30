@@ -17,7 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import { HelgolandControlModule } from '@helgoland/control';
-import { ApiInterface, GetDataApiInterface, HelgolandCoreModule, Settings, SettingsService } from '@helgoland/core';
+import {
+  DatasetApiInterface,
+  HelgolandCoreModule,
+  Settings,
+  SettingsService,
+  SplittedDataDatasetApiInterface,
+} from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetTableModule } from '@helgoland/depiction/dataset-table';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist';
@@ -51,7 +57,6 @@ import { GeometryViewComponent } from './components/geometry-view/geometry-view.
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
-import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
@@ -59,6 +64,7 @@ import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-s
 import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
 import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
+import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
@@ -72,8 +78,8 @@ const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
   {
-    provide: ApiInterface,
-    useClass: GetDataApiInterface
+    provide: DatasetApiInterface,
+    useClass: SplittedDataDatasetApiInterface
   },
   {
     provide: SettingsService,

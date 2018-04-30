@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiInterface } from '@helgoland/core';
+import { DatasetApiInterface } from '@helgoland/core';
 import { Service } from '@helgoland/core';
 import { BlacklistedService } from '@helgoland/core';
 import { ParameterFilter } from '@helgoland/core';
@@ -10,7 +10,7 @@ import { Observer } from 'rxjs/Observer';
 export class ServiceSelectorService {
 
     constructor(
-        private apiInterface: ApiInterface
+        private apiInterface: DatasetApiInterface
     ) { }
 
     public fetchServicesOfAPI(

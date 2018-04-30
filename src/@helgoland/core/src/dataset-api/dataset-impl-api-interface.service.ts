@@ -24,12 +24,12 @@ import { Observer } from 'rxjs/Observer';
 
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
-import { ApiInterface } from './api-interface';
+import { DatasetApiInterface } from './api-interface';
 import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 
 @Injectable()
-export class SimpleApiInterface extends ApiInterface {
+export class DatasetImplApiInterface extends DatasetApiInterface {
 
     constructor(
         protected http: HttpClient,

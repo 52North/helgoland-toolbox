@@ -16,7 +16,7 @@ import {
 } from '@helgoland/core';
 import { Observable } from 'rxjs/Observable';
 
-export interface ApiV1 {
+export interface DatasetApiV1 {
 
     /**
      * Test

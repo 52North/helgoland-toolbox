@@ -1,7 +1,7 @@
 import 'leaflet.markercluster';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, KeyValueDiffers } from '@angular/core';
-import { ApiInterface, HasLoadableContent, Mixin, Platform } from '@helgoland/core';
+import { DatasetApiInterface, HasLoadableContent, Mixin, Platform } from '@helgoland/core';
 import { MapCache } from '@helgoland/map';
 import L from 'leaflet';
 
@@ -21,7 +21,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
-        private apiInterface: ApiInterface,
+        private apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected cd: ChangeDetectorRef,
         protected differs: KeyValueDiffers

@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ApiInterface, ApiMapping, ApiVersion, FilteredProvider, IDataset, ParameterFilter } from '@helgoland/core';
+import {
+    DatasetApiInterface,
+    DatasetApiMapping,
+    DatasetApiVersion,
+    FilteredProvider,
+    IDataset,
+    ParameterFilter,
+} from '@helgoland/core';
 
 import { FilteredParameter } from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorParameter, ListSelectorService } from './list-selector.service';
@@ -32,8 +39,8 @@ export class ListSelectorComponent implements OnChanges {
 
     constructor(
         protected listSelectorService: ListSelectorService,
-        protected apiInterface: ApiInterface,
-        protected apiMapping: ApiMapping
+        protected apiInterface: DatasetApiInterface,
+        protected apiMapping: DatasetApiMapping
     ) { }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -91,9 +98,9 @@ export class ListSelectorComponent implements OnChanges {
 
     private openDataset(url: string, params: ParameterFilter) {
         this.apiMapping.getApiVersion(url).subscribe((apiVersionId) => {
-            if (apiVersionId === ApiVersion.V2) {
+            if (apiVersionId === DatasetApiVersion.V2) {
                 this.apiInterface.getDatasets(url, params).subscribe((result) => this.onDatasetSelection.emit(result));
-            } else if (apiVersionId === ApiVersion.V1) {
+            } else if (apiVersionId === DatasetApiVersion.V1) {
                 this.apiInterface.getTimeseries(url, params).subscribe(
                     (result) => this.onDatasetSelection.emit(result)
                 );

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-    ApiInterface,
+    DatasetApiInterface,
     Dataset,
     InternalIdHandler,
     LocatedProfileDataEntry,
@@ -42,7 +42,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        private api: ApiInterface,
+        private api: DatasetApiInterface,
         protected internalIdHandler: InternalIdHandler
     ) {
         super(internalIdHandler);
