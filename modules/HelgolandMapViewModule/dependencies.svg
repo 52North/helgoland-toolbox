@@ -22,11 +22,15 @@
 <text text-anchor="start" x="429.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_HelgolandMapViewModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="128,-70 128,-268 368,-268 368,-70 128,-70"/>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="46,-70 46,-268 450,-268 450,-70 46,-70"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_HelgolandMapViewModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="138,-78 138,-130 358,-130 358,-78 138,-78"/>
+<polygon fill="none" stroke="#000000" points="222,-78 222,-130 442,-130 442,-78 222,-78"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_HelgolandMapViewModule_imports</title>
+<polygon fill="none" stroke="#000000" points="54,-78 54,-130 214,-130 214,-78 54,-78"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_HelgolandMapViewModule_exports</title>
@@ -35,8 +39,8 @@
 <!-- GeometryMapViewerComponent -->
 <g id="node1" class="node">
 <title>GeometryMapViewerComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="350.1629,-122 145.8371,-122 145.8371,-86 350.1629,-86 350.1629,-122"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GeometryMapViewerComponent</text>
+<polygon fill="#ffffb3" stroke="#000000" points="434.1629,-122 229.8371,-122 229.8371,-86 434.1629,-86 434.1629,-122"/>
+<text text-anchor="middle" x="332" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">GeometryMapViewerComponent</text>
 </g>
 <!-- HelgolandMapViewModule -->
 <g id="node2" class="node">
@@ -47,20 +51,32 @@
 <!-- GeometryMapViewerComponent&#45;&gt;HelgolandMapViewModule -->
 <g id="edge1" class="edge">
 <title>GeometryMapViewerComponent&#45;&gt;HelgolandMapViewModule</title>
-<path fill="none" stroke="#000000" d="M248,-122.1061C248,-122.1061 248,-140.991 248,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="244.5001,-140.9909 248,-150.991 251.5001,-140.991 244.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M282.4204,-122.1061C282.4204,-122.1061 282.4204,-140.991 282.4204,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="278.9205,-140.9909 282.4204,-150.991 285.9205,-140.991 278.9205,-140.9909"/>
 </g>
 <!-- GeometryMapViewerComponent  -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>GeometryMapViewerComponent </title>
 <polygon fill="#fb8072" stroke="#000000" points="351.6631,-252 144.3369,-252 144.3369,-216 351.6631,-216 351.6631,-252"/>
 <text text-anchor="middle" x="248" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">GeometryMapViewerComponent </text>
 </g>
 <!-- HelgolandMapViewModule&#45;&gt;GeometryMapViewerComponent  -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>HelgolandMapViewModule&#45;&gt;GeometryMapViewerComponent </title>
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M248,-187.1061C248,-187.1061 248,-205.991 248,-205.991"/>
 <polygon fill="#000000" stroke="#000000" points="244.5001,-205.9909 248,-215.991 251.5001,-205.991 244.5001,-205.9909"/>
+</g>
+<!-- HelgolandMapModule -->
+<g id="node3" class="node">
+<title>HelgolandMapModule</title>
+<polygon fill="#8dd3c7" stroke="#000000" points="205.5268,-122 202.5268,-126 181.5268,-126 178.5268,-122 62.4732,-122 62.4732,-86 205.5268,-86 205.5268,-122"/>
+<text text-anchor="middle" x="134" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandMapModule</text>
+</g>
+<!-- HelgolandMapModule&#45;&gt;HelgolandMapViewModule -->
+<g id="edge2" class="edge">
+<title>HelgolandMapModule&#45;&gt;HelgolandMapViewModule</title>
+<path fill="none" stroke="#000000" d="M183.4204,-122.1061C183.4204,-122.1061 183.4204,-140.991 183.4204,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="179.9205,-140.9909 183.4204,-150.991 186.9205,-140.991 179.9205,-140.9909"/>
 </g>
 </g>
 </svg>
