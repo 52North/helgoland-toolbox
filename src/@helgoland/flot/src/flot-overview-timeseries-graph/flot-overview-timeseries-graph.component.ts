@@ -9,6 +9,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
+import { AxesOptions } from '../flot';
 
 @Component({
     selector: 'n52-flot-overview-timeseries-graph',
