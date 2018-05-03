@@ -38,7 +38,7 @@
     "clean:dist": "npm run rimraf -- dist",
     "clean:install": "npm set progress=false && npm install",
     "clean": "npm cache clean --force && npm run rimraf -- node_modules doc coverage dist compiled dll",
-    "compodoc": "./node_modules/.bin/compodoc src/@helgoland -p tsconfig.package.json",
+    "compodoc": "./node_modules/.bin/compodoc src/@helgoland -p tsconfig.package.json --includes docs",
     "gh-pages": "rimraf documentation && npm run compodoc && gh-pages -d documentation",
     "docker": "docker",
     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/",

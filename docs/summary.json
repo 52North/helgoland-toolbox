@@ -1,0 +1,19 @@
+[{
+    "title": "Introduction",
+    "file": "introduction.md"
+  },
+  {
+    "title": "How Tos",
+    "file": "how-tos.md",
+    "children": [{
+      "title": "Integrate a D3 timeseries component",
+      "file": "how-tos/integrate-d3-component.md"
+    },{
+      "title": "Integrate a table component",
+      "file": "how-tos/integrate-table-component.md"
+    },{
+      "title": "Extend a timeseries entry component",
+      "file": "how-tos/extend-timeseries-entry-component.md"
+    }]
+  }
+]
