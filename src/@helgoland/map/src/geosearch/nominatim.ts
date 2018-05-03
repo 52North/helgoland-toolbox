@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from './geosearch';
+import { HttpService } from '@helgoland/core';
 
 interface NominatimResult {
     display_name: string;
@@ -18,7 +19,7 @@ interface NominatimResult {
 export class NominatimGeoSearchService implements GeoSearch {
 
     constructor(
-        private httpClient: HttpClient
+        private http: HttpService
     ) { }
 
     public searchTerm(term: string, options?: GeoSearchOptions): Observable<GeoSearchResult> {
@@ -28,7 +29,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('q', term);
         params = params.set('format', 'json');
         if (options && options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
-        return this.httpClient.get(
+        return this.http.client().get(
             'http://nominatim.openstreetmap.org/search',
             { params }
         ).map((resArray: NominatimResult[]) => {
