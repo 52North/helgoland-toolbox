@@ -43,18 +43,6 @@ export class GraphLegendComponent {
             // downsample: {
             //   threshold: 0
             // },
-            lines: {
-                fill: false,
-                show: true
-            },
-            points: {
-                fill: true,
-                radius: 2,
-                show: true
-            },
-            //            points : {
-            //                 show: true
-            //            },
             shadowSize: 1
         },
         touch: {
