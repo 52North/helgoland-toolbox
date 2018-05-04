@@ -45,28 +45,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 ```
 
-### Suggestions for error handling
-
-- `Cannot find namespace 'GeoJSON'` see below
-
-We have to adapt the `tsconfig.app.js` by manually adapting the configuration. Add to the types-array the type `geojson` which then should look like this:
-
-```json
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "module": "es2015",
-    "types": ["geojson"]
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
-}
-```
-
 Another step is to add the dependencies correctly to the `@NgModule`. As imports we will define the `TranslateModule` and the `HelgolandD3Module` and as providers we need to take the `DatasetApiInterface` with the `SplittedDataDatasetApiInterface` as `useClass`. To use the translation functions we will add a function called `HttpLoaderFactory` which is to be exported.
 You can compare your `app.module.ts` file with the following code below:
 
@@ -101,13 +79,37 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 ```
 
+### Suggestions for error handling
+
+- `Cannot find namespace 'GeoJSON'` see below
+
+We have to adapt the `tsconfig.app.js` by manually adapting the configuration. Add to the types-array the type `geojson` which then should look like this:
+
+```json
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": ["geojson"]
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}
+```
+
 ## Step 3: add code
 
 Now we will integrate the directive of the D3 component.
 Implement the directive of the graph by adding the following code to `app.component.html`. All fields are required to provide options, datasets and information to the `n52-d3-timeseries-graph`-directive:
 
-- Optional the stype can be adapted by adding stype options to the directive, for example adapt the size:  
-`<div style="height: 500px; width: 100%;">`
+- Optional the style can be adapted by adding style options to the directive, for example adapt the size:  
+```html
+<div style="height: 500px; width: 100%;"></div>
+```
 
 ```html
 <div>
@@ -148,5 +150,5 @@ public timespanChanged(timespan: Timespan) {
     this.timespan = timespan;
 }
 ```
-This code is implemented in the helgoland-toolbox github repository and can be viewew [here](https://github.com/52North/helgoland-toolbox/blob/master/src/demo/app/pages/timeseries-graph/timeseries-graph.component.ts).
+This code is implemented in the helgoland-toolbox github repository and can be viewed [here](https://github.com/52North/helgoland-toolbox/blob/master/src/demo/app/pages/timeseries-graph/timeseries-graph.component.ts).
 
