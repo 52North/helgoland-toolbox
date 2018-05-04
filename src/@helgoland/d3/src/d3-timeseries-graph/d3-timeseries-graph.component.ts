@@ -57,6 +57,13 @@ export class D3TimeseriesGraphComponent
 
     private preparedData = Array(); // : DataSeries[]
 
+    // set zoom limit --> can be adapted to needs
+    private config = {
+        time: {
+            zoomLimit: 10800000  // 3 hour ((3 * 3600) * 1000) limitation
+        }
+    };
+
     private rawSvg: any;
     private graph: any;
     private graphBody: any;
@@ -203,6 +210,9 @@ export class D3TimeseriesGraphComponent
     }
 
     private changeTime(from: number, to: number) {
+        if (to - from < this.config.time.zoomLimit) {
+            to = from + this.config.time.zoomLimit;
+        }
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
