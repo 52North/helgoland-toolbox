@@ -10,6 +10,7 @@ import {
   MatDialogModule,
   MatListModule,
   MatRadioModule,
+  MatSelectModule,
   MatSidenavModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
@@ -134,6 +135,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatListModule,
     MatRadioModule,
+    MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
