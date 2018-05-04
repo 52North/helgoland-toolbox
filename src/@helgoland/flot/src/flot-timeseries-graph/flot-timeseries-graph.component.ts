@@ -156,16 +156,18 @@ export class FlotTimeseriesGraphComponent
     protected setSelectedId(internalId: string) {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         tsData.selected = true;
-        tsData.lines.lineWidth = 5;
-        tsData.bars.lineWidth = 5;
+        tsData.points.radius *= 3;
+        tsData.lines.lineWidth *= 3;
+        tsData.bars.lineWidth *= 3;
         this.plotGraph();
     }
 
     protected removeSelectedId(internalId: string) {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         tsData.selected = false;
-        tsData.lines.lineWidth = 1;
-        tsData.bars.lineWidth = 1;
+        tsData.points.radius /= 3;
+        tsData.lines.lineWidth /= 3;
+        tsData.bars.lineWidth /= 3;
         this.plotGraph();
     }
 
@@ -277,15 +279,18 @@ export class FlotTimeseriesGraphComponent
                     });
                     axePos = this.plotOptions.yaxes.length;
                 }
-                const dataEntry = {
+                const dataEntry: DataSeries = {
                     internalId: dataset.internalId,
                     color: styles.color,
                     data: styles.visible ? data.values : [],
                     points: {
-                        fillColor: styles.color
+                        fillColor: styles.color,
+                        radius: styles.pointRadius,
+                        show: styles.pointRadius > 0 ? true : false
                     },
                     lines: {
-                        lineWidth: 1
+                        lineWidth: styles.lineWidth,
+                        show: styles.lineWidth > 0 ? true : false
                     },
                     bars: {
                         lineWidth: 1
@@ -293,8 +298,9 @@ export class FlotTimeseriesGraphComponent
                 };
 
                 if (selectedIndex >= 0) {
-                    dataEntry.lines.lineWidth = 5;
-                    dataEntry.bars.lineWidth = 5;
+                    dataEntry.points.radius *= 3;
+                    dataEntry.lines.lineWidth *= 3;
+                    dataEntry.bars.lineWidth *= 3;
                 }
                 if (dataIdx >= 0) {
                     this.preparedData[dataIdx] = dataEntry;
