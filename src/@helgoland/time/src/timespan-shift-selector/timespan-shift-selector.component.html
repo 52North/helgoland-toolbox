@@ -1,11 +1,7 @@
-<div class="btn-group">
-  <button type="button" class="btn btn-light" (click)="back()">
-      <span class="fa fa-arrow-left"></span>
+<div>
+  <button type="button" (click)="back()"> &lt; </button>
+  <button type="button" (click)="open()">
+    {{timespan.from | date : 'medium'}} &nbsp;&ndash;&nbsp; {{timespan.to | date : 'medium'}}
   </button>
-  <button type="button" class="btn btn-light" (click)="open()">
-      {{timespan.from | date : 'medium'}} &nbsp;&ndash;&nbsp; {{timespan.to | date : 'medium'}}
-  </button>
-  <button type="button" class="btn btn-light" (click)="forward()">
-      <span class="fa fa-arrow-right"></span>
-  </button>
+  <button type="button" (click)="forward()"> &gt; </button>
 </div>
