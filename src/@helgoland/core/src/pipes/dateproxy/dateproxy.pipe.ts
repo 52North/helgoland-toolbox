@@ -13,8 +13,13 @@ export class DateProxyPipe implements PipeTransform {
 
     public transform(value: any, pattern: string = 'mediumDate'): any {
         // simply forward to built-in pipe, but take into account the current language
-        const builtinDatePipe = new DatePipe(this.translate.currentLang);
-        return builtinDatePipe.transform(value, pattern);
+        const builtinDatePipe = new DatePipe(this.translate.currentLang || 'en');
+        try {
+            return builtinDatePipe.transform(value, pattern);
+        } catch (error) {
+            console.error(error);
+            return new DatePipe('en').transform(value, pattern);
+        }
     }
 
 }
