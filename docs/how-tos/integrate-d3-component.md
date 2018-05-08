@@ -4,18 +4,6 @@ In this tutorial a stepwise instruction will be given on how to integrate a D3 t
 
 First initialize an app as described in the prepare section [here](../how-tos.html) or integrate this component in an existing project.
 
-<!-- ## perp
-
-Following the instructions of the [angular quickstart guide](https://angular.io/guide/quickstart) a new ng-app will be created with its folder-structure.
-Open a terminal and change the working directory to the supposed location, where you want to create your ng-app with an integrated D3 timeseries component. In this tutorial the new ng-app will be named `helgoland-D3`.
-
-||Command|
-| ------------- |-------------|
-|Install angular-cli   |`npm install -g @angular/cli`|
-|Create ng-app         |`ng new helgoland-D3`|
-|Change into app-folder|`cd helgoland-D3`|
-|Start app             |`ng serve`| -->
-
 ## Step 1: import helgoland dependencies
 
 To start working with the helgoland D3 component a few dependencies are needed: [helgoland-d3](https://www.npmjs.com/package/@helgoland/d3) and [helgoland-core](https://www.npmjs.com/package/@helgoland/core) are necessary to provide the D3 timeseries component, in detail, to visualize the diagram containing the dataset graphs and to get accesss via the dataset API. For translations [ngx-translate](http://www.ngx-translate.com/) is used and the [ngx-translate-http-loader](https://www.npmjs.com/package/@ngx-translate/http-loader) will load the translations.
