@@ -12,7 +12,9 @@ export class GeoCureGeoJSON extends GeoJSON {
 
     public options: GeoCureGeoJSONOptions;
 
-    constructor(options?: GeoCureGeoJSONOptions) {
+    constructor(
+        options?: GeoCureGeoJSONOptions
+    ) {
         super();
         if (options) {
             this.options = options;

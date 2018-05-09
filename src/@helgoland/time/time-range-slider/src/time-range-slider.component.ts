@@ -32,7 +32,7 @@ export class TimeRangeSliderComponent implements OnChanges {
   public selectionEnd: number;
 
   constructor(
-    private cache: TimeRangeSliderCache
+    protected cache: TimeRangeSliderCache
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {

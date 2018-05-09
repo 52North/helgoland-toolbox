@@ -10,7 +10,10 @@ export class DatasetOptions {
     public pointRadius: number = 0;
     public lineWidth: number = 1;
 
-    constructor(internalId: string, color: string) {
+    constructor(
+        internalId: string,
+        color: string
+    ) {
         this.internalId = internalId;
         this.color = color;
     }
@@ -24,7 +27,11 @@ export class ReferenceValueOption {
 export class TimedDatasetOptions extends DatasetOptions {
     public timestamp: number;
 
-    constructor(internalId: string, color: string, timestamp: number) {
+    constructor(
+        internalId: string,
+        color: string,
+        timestamp: number
+    ) {
         super(internalId, color);
         this.timestamp = timestamp;
     }

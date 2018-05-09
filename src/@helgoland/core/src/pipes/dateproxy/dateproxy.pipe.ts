@@ -8,8 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DateProxyPipe implements PipeTransform {
 
-    constructor(private translate: TranslateService) {
-    }
+    constructor(
+        protected translate: TranslateService
+    ) { }
 
     public transform(value: any, pattern: string = 'mediumDate'): any {
         // simply forward to built-in pipe, but take into account the current language

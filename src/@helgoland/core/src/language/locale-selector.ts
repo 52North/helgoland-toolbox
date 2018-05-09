@@ -10,7 +10,9 @@ export abstract class LocalSelectorComponent implements OnChanges {
 
     public currentLang: Language;
 
-    constructor(public translate: TranslateService) { }
+    constructor(
+        protected translate: TranslateService
+    ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.languageList) {

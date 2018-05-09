@@ -11,7 +11,7 @@ export class ZoomControlComponent {
   public mapId: string;
 
   constructor(
-    private mapCache: MapCache
+    protected mapCache: MapCache
   ) { }
 
   public zoomIn() {

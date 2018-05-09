@@ -44,7 +44,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
-        private apiInterface: DatasetApiInterface,
+        protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef

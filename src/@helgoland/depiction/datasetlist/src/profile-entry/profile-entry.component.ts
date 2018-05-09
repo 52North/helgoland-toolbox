@@ -42,7 +42,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        private api: DatasetApiInterface,
+        protected api: DatasetApiInterface,
         protected internalIdHandler: InternalIdHandler
     ) {
         super(internalIdHandler);

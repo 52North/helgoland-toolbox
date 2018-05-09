@@ -69,11 +69,11 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public dataset: IDataset;
 
     constructor(
-        private api: DatasetApiInterface,
-        private timeSrvc: Time,
+        protected api: DatasetApiInterface,
+        protected timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
-        private color: ColorService,
-        private refValCache: ReferenceValueColorCache
+        protected color: ColorService,
+        protected refValCache: ReferenceValueColorCache
     ) {
         super(internalIdHandler);
     }

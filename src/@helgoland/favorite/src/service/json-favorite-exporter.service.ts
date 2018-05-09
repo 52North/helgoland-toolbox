@@ -8,7 +8,7 @@ import { FavoriteService, SingleFavorite } from './favorite.service';
 export class JsonFavoriteExporterService {
 
   constructor(
-    private favoriteSrvc: FavoriteService
+    protected favoriteSrvc: FavoriteService
   ) { }
 
   public exportFavorites() {
