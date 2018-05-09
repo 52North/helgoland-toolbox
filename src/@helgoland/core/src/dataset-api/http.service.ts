@@ -21,7 +21,7 @@ export class HttpService {
     private handler: HttpServiceHandler;
 
     constructor(
-        httpHandler: HttpHandler,
+        protected httpHandler: HttpHandler,
         @Optional() @Inject(HTTP_SERVICE_INTERCEPTORS) interceptors: HttpServiceInterceptor[] | null
     ) {
         let handler: HttpServiceHandler = {

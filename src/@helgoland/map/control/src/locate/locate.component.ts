@@ -15,7 +15,7 @@ export class LocateControlComponent {
     public isToggled = false;
 
     constructor(
-        private locateService: LocateService
+        protected locateService: LocateService
     ) { }
 
     public locateUser() {

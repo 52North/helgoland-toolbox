@@ -31,7 +31,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     constructor(
         protected translate: TranslateService,
-        private apiInterface: DatasetApiInterface
+        protected apiInterface: DatasetApiInterface
     ) {
         super(translate);
     }

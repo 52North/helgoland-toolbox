@@ -20,7 +20,7 @@ export class TimespanButtonComponent {
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 
   constructor(
-    private predefinedSrvc: DefinedTimespanService
+    protected predefinedSrvc: DefinedTimespanService
   ) { }
 
   public clicked() {

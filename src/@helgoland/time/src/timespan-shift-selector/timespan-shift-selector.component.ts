@@ -17,7 +17,7 @@ export class TimespanShiftSelectorComponent {
   public onOpenTimeSettings: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private timeSrvc: Time
+    protected timeSrvc: Time
   ) { }
 
   public back() {

@@ -15,9 +15,9 @@ export class FavoriteTogglerComponent implements OnChanges {
   public isFavorite: boolean;
 
   constructor(
-    private favSrvc: FavoriteService,
-    private notifier: NotifierService,
-    private translate: TranslateService
+    protected favSrvc: FavoriteService,
+    protected notifier: NotifierService,
+    protected translate: TranslateService
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {

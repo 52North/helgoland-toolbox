@@ -58,7 +58,7 @@ export class ProfileTrajectoryMapSelectorComponent
     };
 
     constructor(
-        private apiInterface: DatasetApiInterface,
+        protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
         protected cd: ChangeDetectorRef

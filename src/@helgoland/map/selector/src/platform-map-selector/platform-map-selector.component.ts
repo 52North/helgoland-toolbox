@@ -21,7 +21,7 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
-        private apiInterface: DatasetApiInterface,
+        protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected cd: ChangeDetectorRef,
         protected differs: KeyValueDiffers
