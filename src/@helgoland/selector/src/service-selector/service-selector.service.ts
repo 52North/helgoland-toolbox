@@ -10,7 +10,7 @@ import { Observer } from 'rxjs/Observer';
 export class ServiceSelectorService {
 
     constructor(
-        private apiInterface: DatasetApiInterface
+        protected apiInterface: DatasetApiInterface
     ) { }
 
     public fetchServicesOfAPI(

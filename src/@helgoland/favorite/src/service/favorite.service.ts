@@ -12,7 +12,7 @@ export class FavoriteService {
   private groupCounter: number = 0;
 
   constructor(
-    private localStorage: LocalStorage
+    protected localStorage: LocalStorage
   ) {
     this.loadFavorites();
   }

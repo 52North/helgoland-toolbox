@@ -12,8 +12,8 @@ export class LabelMapperService {
     private cache: IdCache<string> = new IdCache();
 
     constructor(
-        private httpClient: HttpClient,
-        private settingsSrvc: SettingsService<Settings>
+        protected httpClient: HttpClient,
+        protected settingsSrvc: SettingsService<Settings>
     ) { }
 
     public getMappedLabel(label: string): Observable<string> {

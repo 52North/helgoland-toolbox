@@ -19,7 +19,7 @@ interface NominatimResult {
 export class NominatimGeoSearchService implements GeoSearch {
 
     constructor(
-        private http: HttpService
+        protected http: HttpService
     ) { }
 
     public searchTerm(term: string, options?: GeoSearchOptions): Observable<GeoSearchResult> {

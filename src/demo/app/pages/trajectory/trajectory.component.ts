@@ -27,11 +27,12 @@ export class TrajectoryComponent implements OnInit {
     public highlightGeometry: GeoJsonObject;
 
     public datasetIds: string[] = [
-        'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125100',
-        'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125101',
-        'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125102',
-        'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125103',
-        'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125104'
+        'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity_1',
+        // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125100',
+        // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125101',
+        // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125102',
+        // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125103',
+        // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125104'
     ];
 
     public options: Map<string, DatasetOptions> = new Map();
@@ -44,7 +45,7 @@ export class TrajectoryComponent implements OnInit {
 
     public graphOptions: D3GraphOptions = {
         axisType: D3AxisType.Distance,
-        dotted: false
+        dotted: true
     };
 
     constructor(
@@ -58,7 +59,7 @@ export class TrajectoryComponent implements OnInit {
 
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
-            option.visible = false;
+            option.visible = true;
             this.options.set(entry, option);
         });
 

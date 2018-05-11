@@ -13,8 +13,8 @@ import {
 } from '@angular/core';
 import {
     DatasetApiInterface,
-    DatasetPresenterComponent,
     DatasetOptions,
+    DatasetPresenterComponent,
     IDataset,
     InternalIdHandler,
     LocatedTimeValueEntry,
@@ -36,7 +36,6 @@ import {
     select,
     timeFormat,
 } from 'd3';
-import L from 'leaflet';
 import moment from 'moment';
 
 import { D3AxisType, D3GraphOptions, D3SelectionRange } from '../d3';
@@ -47,7 +46,6 @@ interface DataEntry extends LocatedTimeValueEntry {
     x: number;
     y: number;
     xDiagCoord?: number;
-    latlng: L.LatLng;
     [id: string]: any;
 }
 
@@ -283,11 +281,14 @@ export class D3TrajectoryGraphComponent
         previous: DataEntry,
         index: number
     ): DataEntry {
-        const s = new L.LatLng(entry.geometry.coordinates[1], entry.geometry.coordinates[0]);
         let dist: number;
         if (previous) {
-            const e = new L.LatLng(previous.geometry.coordinates[1], previous.geometry.coordinates[0]);
-            const newdist = s.distanceTo(e);
+            const newdist = this.distanceBetween(
+                entry.geometry.coordinates[1],
+                entry.geometry.coordinates[0],
+                previous.geometry.coordinates[1],
+                previous.geometry.coordinates[0]
+            );
             dist = previous.dist + Math.round(newdist / 1000 * 100000) / 100000;
         } else {
             dist = 0;
@@ -300,9 +301,20 @@ export class D3TrajectoryGraphComponent
             [internalId]: entry.value,
             x: entry.geometry.coordinates[0],
             y: entry.geometry.coordinates[1],
-            latlng: s,
             geometry: entry.geometry
         };
+    }
+
+    private distanceBetween(latitude1, longitude1, latitude2, longitude2): number {
+        const R = 6371000;
+        const rad = Math.PI / 180;
+        const lat1 = latitude1 * rad;
+        const lat2 = latitude2 * rad;
+        const sinDLat = Math.sin((latitude2 - latitude1) * rad / 2);
+        const sinDLon = Math.sin((longitude2 - longitude1) * rad / 2);
+        const a = sinDLat * sinDLat + Math.cos(lat1) * Math.cos(lat2) * sinDLon * sinDLon;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
     }
 
     private calcYValue = (d: DataEntry) => {

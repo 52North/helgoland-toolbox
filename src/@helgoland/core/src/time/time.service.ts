@@ -10,7 +10,7 @@ import { BufferedTime, TimeInterval, Timespan } from '../model/internal/timeInte
 export class Time {
 
     constructor(
-        private localStorage: LocalStorage
+        protected localStorage: LocalStorage
     ) { }
 
     public centerTimespan(timespan: Timespan, date: Date): Timespan {

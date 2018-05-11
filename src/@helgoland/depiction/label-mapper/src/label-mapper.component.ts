@@ -16,7 +16,7 @@ export class LabelMapperComponent implements OnChanges {
     public loading = true;
 
     constructor(
-        private labelMapperSrvc: LabelMapperService
+        protected labelMapperSrvc: LabelMapperService
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {

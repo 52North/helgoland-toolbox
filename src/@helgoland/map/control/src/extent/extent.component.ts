@@ -14,7 +14,7 @@ export class ExtentControlComponent {
   public extent: L.LatLngBoundsExpression;
 
   constructor(
-    private mapCache: MapCache
+    protected mapCache: MapCache
   ) { }
 
   public zoomToExtent() {
