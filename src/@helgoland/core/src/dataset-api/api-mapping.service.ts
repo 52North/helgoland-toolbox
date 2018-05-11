@@ -14,7 +14,7 @@ export class DatasetApiMapping {
     private cache: Map<string, DatasetApiVersion> = new Map<string, DatasetApiVersion>();
 
     constructor(
-        private http: HttpClient
+        protected http: HttpClient
     ) { }
 
     public getApiVersion(apiUrl: string): Observable<DatasetApiVersion> {

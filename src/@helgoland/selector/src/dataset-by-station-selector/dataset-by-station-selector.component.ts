@@ -29,7 +29,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public counter: number;
 
     constructor(
-        private apiInterface: DatasetApiInterface
+        protected apiInterface: DatasetApiInterface
     ) { }
 
     public ngOnInit() {

@@ -50,8 +50,8 @@ export class FlotOverviewTimeseriesGraphComponent implements OnChanges, AfterVie
     private init = false;
 
     constructor(
-        private timeSrvc: Time,
-        private cd: ChangeDetectorRef
+        protected timeSrvc: Time,
+        protected cd: ChangeDetectorRef
     ) { }
 
     public ngAfterViewInit(): void {

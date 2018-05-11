@@ -18,8 +18,8 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
 
   private interval: NodeJS.Timer;
 
-  public constructor(
-    private settings: SettingsService<Settings>
+  constructor(
+    protected settings: SettingsService<Settings>
   ) {
     if (!this.refreshInterval) {
       this.refreshInterval = this.settings.getSettings().refreshDataInterval

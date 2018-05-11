@@ -17,7 +17,9 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
 
   public parsedTimespanPresets: ParsedTimespanPreset[];
 
-  constructor(private settingSrvc: SettingsService<Settings>) { }
+  constructor(
+    protected settingSrvc: SettingsService<Settings>
+  ) { }
 
   public ngOnInit() {
     this.parsedTimespanPresets = this.settingSrvc.getSettings().timespanPresets

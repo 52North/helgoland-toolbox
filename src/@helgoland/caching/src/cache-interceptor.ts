@@ -11,8 +11,8 @@ import { HttpCache, OnGoingHttpCache } from './model';
 @Injectable()
 export class CachingInterceptor implements HttpServiceInterceptor {
     constructor(
-        private cache: HttpCache,
-        private ongoingCache: OnGoingHttpCache
+        protected cache: HttpCache,
+        protected ongoingCache: OnGoingHttpCache
     ) { }
 
     public intercept(

@@ -23,8 +23,8 @@ export class GeosearchControlComponent {
     public loading: boolean;
 
     constructor(
-        private mapCache: MapCache,
-        private geosearch: GeoSearch
+        protected mapCache: MapCache,
+        protected geosearch: GeoSearch
     ) { }
 
     public triggerSearch() {

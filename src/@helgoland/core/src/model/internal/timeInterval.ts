@@ -8,7 +8,10 @@ export class Timespan extends TimeInterval {
 
     public to: number;
 
-    constructor(from: number, to?: number) {
+    constructor(
+        from: number,
+        to?: number
+    ) {
         super();
         this.from = from;
         if (to) {
@@ -24,7 +27,10 @@ export class BufferedTime extends TimeInterval {
     public timestamp: Date;
     public bufferInterval: number;
 
-    constructor(timestamp: Date, bufferInterval: number) {
+    constructor(
+        timestamp: Date,
+        bufferInterval: number
+    ) {
         super();
         this.timestamp = timestamp;
         this.bufferInterval = bufferInterval;

@@ -10,7 +10,7 @@ const LOCATED_MARKER_ID = 'located';
 export class LocateService {
 
   constructor(
-    private mapCache: MapCache
+    protected mapCache: MapCache
   ) { }
 
   public startLocate(id: string) {

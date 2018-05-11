@@ -5,7 +5,7 @@
         Zeit
       </th>
       <th *ngFor="let series of this.timeseriesArray; let i = index" (click)="sort($event)" [attr.data-column-id]="i" [ngStyle]="{ 'border-color': preparedColors[i] }">
-        {{series.label}} [{{series.uom}}]
+        {{series?.label}} [{{series?.uom}}]
       </th>
     </tr>
   </thead>
