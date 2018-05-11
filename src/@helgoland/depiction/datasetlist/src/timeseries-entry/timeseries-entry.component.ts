@@ -42,6 +42,9 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     @Input()
     public timeInterval: TimeInterval;
 
+    @Input()
+    public onSelectDatasetId: string;
+
     @Output()
     public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
@@ -79,6 +82,10 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     }
 
     public ngOnChanges(changes: SimpleChanges) {
+        if (changes.onSelectDatasetId && (changes.onSelectDatasetId.firstChange !== true)) {
+            this.toggleSelection();
+        }
+
         if (changes.timeInterval) {
             this.checkDataInTimespan();
         }

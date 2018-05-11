@@ -4,6 +4,7 @@ import {
     ElementRef,
     EventEmitter,
     IterableDiffers,
+    Input,
     Output,
     ViewChild,
     ViewEncapsulation,
@@ -48,9 +49,14 @@ export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
     implements AfterViewInit {
 
+    // @Input()
+    // public highlight: boolean;
+
     @Output()
-    // public onHighlightUom: EventEmitter<D3PlotOptions> = new EventEmitter();
-    public onHighlight: EventEmitter<string[]> = new EventEmitter();
+    public onSelectId: EventEmitter<string> = new EventEmitter();
+
+    @Output()
+    public offSelectId: EventEmitter<string> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -178,8 +184,11 @@ export class D3TimeseriesGraphComponent
         tsData.selected = true;
         tsData.lines.lineWidth = this.lwHigh;
         tsData.bars.lineWidth = this.lwHigh;
-        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) < 0) {
-            this.selectedDatasetIds.push(internalId);
+        console.log(this.selectedDatasetIds);
+        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) >= 0) {
+        //     this.selectedDatasetIds.push(internalId);
+            console.log('setSelectedId() ' + internalId);
+            this.onSelectId.emit(internalId);
         }
         this.plotGraph();
     }
@@ -188,7 +197,12 @@ export class D3TimeseriesGraphComponent
         tsData.selected = false;
         tsData.lines.lineWidth = this.lwLow;
         tsData.bars.lineWidth = this.lwLow;
-        this.selectedDatasetIds.splice(this.selectedDatasetIds.findIndex((entry) => entry === internalId), 1);
+        console.log(this.selectedDatasetIds);
+        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) < 0) {
+            // this.selectedDatasetIds.splice(index, 1);
+            console.log('removeSelectedId() ' + internalId);
+            this.offSelectId.emit(internalId);
+        }
         this.plotGraph();
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
@@ -263,6 +277,7 @@ export class D3TimeseriesGraphComponent
             // if (this.preparedData.length === 1) {
             //     dataset.uom = 'mc';
             // }
+            dataset.uom = 'mc';
             // if (datasetIdx === 1) {
             //     dataset.uom = 'mc';
             // }
@@ -642,8 +657,18 @@ export class D3TimeseriesGraphComponent
     }
 
     private highlightLine(ids, uom) {
-        ids.forEach((id) => (this.selectedDatasetIds.indexOf(id) >= 0 ? this.removeSelectedId(id) : this.setSelectedId(id)));
-        this.onHighlight.emit(this.selectedDatasetIds);
+        // for (let id of ids) {
+        //     if (this.selectedDatasetIds.indexOf(id) >= 0) {
+        //         this.removeSelectedId(id);
+        //     } else {
+        //         this.setSelectedId(id);
+        //     }
+        // }
+
+        ids.forEach((id) => {
+            (this.selectedDatasetIds.indexOf(id) < 0 ? this.removeSelectedId(id) : this.setSelectedId(id));
+        });
+
         this.plotGraph();
     }
 

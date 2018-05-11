@@ -121,6 +121,8 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
+    public onSelectDatasetIdnew = 'default';
+
     public selectedIds: string[] = [];
 
     public overviewLoading: boolean;
@@ -157,8 +159,15 @@ export class GraphLegendComponent {
         });
     }
 
-    public highlight(id: string) {
+    public highlight(selected: boolean, id: string) {
+        console.log('highlight() ' + selected + ' - ' + id);
         this.highlightId = id;
+    }
+
+    public setSelected(id: string) {
+        console.log(id);
+        console.log(this.onSelectDatasetIdnew);
+        this.onSelectDatasetIdnew = id;
     }
 
     public deleteTimeseries(id: string) {
@@ -191,6 +200,7 @@ export class GraphLegendComponent {
     }
 
     public selectTimeseries(selected: boolean, id: string) {
+        console.log('selectTimerseries() ' + selected + ' - ' + id);
         if (selected) {
             this.selectedIds.push(id);
         } else {
