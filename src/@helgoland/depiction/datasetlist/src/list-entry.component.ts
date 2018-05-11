@@ -1,4 +1,4 @@
-import { EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { InternalIdHandler } from '@helgoland/core';
 
 export abstract class ListEntryComponent implements OnInit {
@@ -32,6 +32,7 @@ export abstract class ListEntryComponent implements OnInit {
     }
 
     public toggleSelection() {
+        console.log('toggleSelection()');
         this.selected = !this.selected;
         this.onSelectDataset.emit(this.selected);
     }
