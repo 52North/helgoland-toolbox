@@ -122,7 +122,7 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
-
+        
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
@@ -351,11 +351,11 @@ export class D3TimeseriesGraphComponent
     }
 
     private calculateHeight(): number {
-        return this.rawSvg.node().clientHeight - this.margin.top - this.margin.bottom;
+        return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
     }
 
     private calculateWidth(): number {
-        return this.rawSvg.node().clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     // get time range for x axis
