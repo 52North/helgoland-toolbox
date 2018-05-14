@@ -122,7 +122,6 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
-        
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
