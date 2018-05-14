@@ -333,7 +333,7 @@ export class D3TimeseriesGraphComponent
         }
 
         this.yRangesPre[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
-        if (!(this.yRangesPre[dataEntry.axisOptions.uom].ids.includes(dataEntry.internalId))) {
+        if (this.yRangesPre[dataEntry.axisOptions.uom].ids.indexOf(dataEntry.internalId) === -1) {
             this.yRangesPre[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
         }
         this.yRangesEachUom = new Array();
