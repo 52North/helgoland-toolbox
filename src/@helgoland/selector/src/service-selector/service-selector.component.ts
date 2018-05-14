@@ -28,10 +28,14 @@ export class ServiceSelectorComponent implements OnInit {
     @Input()
     public filter: ParameterFilter;
 
+    @Input()
+    public showUnresolvableServices: boolean;
+
     @Output()
     public onServiceSelected: EventEmitter<Service> = new EventEmitter<Service>();
 
     public services: Service[];
+    public unResolvableServices: string[];
     public loadingCount = 0;
 
     constructor(
@@ -44,26 +48,30 @@ export class ServiceSelectorComponent implements OnInit {
         const list = this.providerList;
         this.loadingCount = list.length;
         this.services = [];
+        this.unResolvableServices = [];
         list.forEach((url) => {
             this.serviceSelectorService.fetchServicesOfAPI(url, this.providerBlacklist, this.filter)
-                .subscribe((res) => {
-                    this.loadingCount--;
-                    if (res && res instanceof Array) {
-                        res.forEach((entry) => {
-                            if (entry.quantities.platforms > 0
-                                || this.supportStations && entry.quantities.stations > 0) {
-                                this.services.push(entry);
-                            }
+                .subscribe(
+                    (res) => {
+                        this.loadingCount--;
+                        if (res && res instanceof Array) {
+                            res.forEach((entry) => {
+                                if (entry.quantities.platforms > 0
+                                    || this.supportStations && entry.quantities.stations > 0) {
+                                    this.services.push(entry);
+                                }
+                            });
+                        }
+                        this.services.sort((a, b) => {
+                            if (a.label < b.label) { return -1; }
+                            if (a.label > b.label) { return 1; }
+                            return 0;
                         });
-                    }
-                    this.services.sort((a, b) => {
-                        if (a.label < b.label) { return -1; }
-                        if (a.label > b.label) { return 1; }
-                        return 0;
+                    },
+                    (error) => {
+                        if (this.showUnresolvableServices) { this.unResolvableServices.push(url) };
+                        this.loadingCount--;
                     });
-                }, () => {
-                    this.loadingCount--;
-                });
         });
     }
 
