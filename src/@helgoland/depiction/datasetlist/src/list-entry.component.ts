@@ -32,9 +32,15 @@ export abstract class ListEntryComponent implements OnInit {
     }
 
     public toggleSelection() {
-        console.log('toggleSelection()');
         this.selected = !this.selected;
         this.onSelectDataset.emit(this.selected);
+    }
+
+    public toggleUomSelection(id, selected) {
+        if (this.datasetId === id) {
+            this.selected = selected;
+            this.onSelectDataset.emit(this.selected);
+        }
     }
 
     protected abstract loadDataset(id: string, url: string): void;
