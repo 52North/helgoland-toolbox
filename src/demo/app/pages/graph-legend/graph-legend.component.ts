@@ -121,7 +121,7 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
-    public onSelectDatasetIdnew = 'default';
+    public changedSelectedDatasets: any;
 
     public selectedIds: string[] = [];
 
@@ -160,14 +160,11 @@ export class GraphLegendComponent {
     }
 
     public highlight(selected: boolean, id: string) {
-        console.log('highlight() ' + selected + ' - ' + id);
         this.highlightId = id;
     }
 
-    public setSelected(id: string) {
-        console.log(id);
-        console.log(this.onSelectDatasetIdnew);
-        this.onSelectDatasetIdnew = id;
+    public setSelected(selectedIds: any) {
+        this.changedSelectedDatasets = selectedIds;
     }
 
     public deleteTimeseries(id: string) {
@@ -200,11 +197,14 @@ export class GraphLegendComponent {
     }
 
     public selectTimeseries(selected: boolean, id: string) {
-        console.log('selectTimerseries() ' + selected + ' - ' + id);
         if (selected) {
-            this.selectedIds.push(id);
+            if (this.selectedIds.indexOf(id) < 0) {
+                this.selectedIds.push(id);
+            }
         } else {
-            this.selectedIds.splice(this.selectedIds.findIndex((entry) => entry === id), 1);
+            if (this.selectedIds.indexOf(id) >= 0) {
+                this.selectedIds.splice(this.selectedIds.findIndex((entry) => entry === id), 1);
+            }
         }
     }
 

@@ -53,10 +53,7 @@ export class D3TimeseriesGraphComponent
     // public highlight: boolean;
 
     @Output()
-    public onSelectId: EventEmitter<string> = new EventEmitter();
-
-    @Output()
-    public offSelectId: EventEmitter<string> = new EventEmitter();
+    public onSelectId: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -115,6 +112,7 @@ export class D3TimeseriesGraphComponent
     private dragRect: any;
     private dragRectG: any;
 
+    private toHighlightDataset: any;
     private lwHigh = 3; // lineWidth high
     private lwLow = 1; // lineWidth low
 
@@ -181,27 +179,19 @@ export class D3TimeseriesGraphComponent
     }
     protected setSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
-        tsData.selected = true;
-        tsData.lines.lineWidth = this.lwHigh;
-        tsData.bars.lineWidth = this.lwHigh;
-        console.log(this.selectedDatasetIds);
-        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) >= 0) {
-        //     this.selectedDatasetIds.push(internalId);
-            console.log('setSelectedId() ' + internalId);
-            this.onSelectId.emit(internalId);
+        if (!tsData.selected) {
+            tsData.selected = true;
+            tsData.lines.lineWidth = this.lwHigh;
+            tsData.bars.lineWidth = this.lwHigh;
         }
         this.plotGraph();
     }
     protected removeSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
-        tsData.selected = false;
-        tsData.lines.lineWidth = this.lwLow;
-        tsData.bars.lineWidth = this.lwLow;
-        console.log(this.selectedDatasetIds);
-        if (this.selectedDatasetIds.findIndex((entry) => entry === internalId) < 0) {
-            // this.selectedDatasetIds.splice(index, 1);
-            console.log('removeSelectedId() ' + internalId);
-            this.offSelectId.emit(internalId);
+        if (tsData.selected) {
+            tsData.selected = false;
+            tsData.lines.lineWidth = this.lwLow;
+            tsData.bars.lineWidth = this.lwLow;
         }
         this.plotGraph();
     }
@@ -273,14 +263,10 @@ export class D3TimeseriesGraphComponent
             const styles = this.datasetOptions.get(dataset.internalId);
             const data = this.datasetMap.get(dataset.internalId).data;
 
-            // TODO: check for datasets with various uoms --- see all comments with #varUom
-            // if (this.preparedData.length === 1) {
-            //     dataset.uom = 'mc';
-            // }
-            dataset.uom = 'mc';
-            // if (datasetIdx === 1) {
-            //     dataset.uom = 'mc';
-            // }
+            // TODO: change uom for testing
+            if (this.preparedData.length > 0) {
+                dataset.uom = 'mc';
+            }
             // end of check for datasets
 
             const dataEntry = {
@@ -657,18 +643,44 @@ export class D3TimeseriesGraphComponent
     }
 
     private highlightLine(ids, uom) {
-        // for (let id of ids) {
-        //     if (this.selectedDatasetIds.indexOf(id) >= 0) {
-        //         this.removeSelectedId(id);
-        //     } else {
-        //         this.setSelectedId(id);
-        //     }
-        // }
-
-        ids.forEach((id) => {
-            (this.selectedDatasetIds.indexOf(id) < 0 ? this.removeSelectedId(id) : this.setSelectedId(id));
+        this.toHighlightDataset = [];
+        let changeFalse = [];
+        let changeTrue = [];
+        ids.forEach((ID) => {
+            if (this.selectedDatasetIds.indexOf(ID) >= 0) {
+                changeFalse.push({id: ID, change: false});
+            }
+            changeTrue.push({id: ID, change: true});
         });
 
+        let changeAll = true;
+        if (ids.length === changeFalse.length) {
+            this.toHighlightDataset = changeFalse;
+            changeAll = true;
+        } else {
+            this.toHighlightDataset = changeTrue;
+            changeAll = false;
+        }
+
+        this.changeSelectedIds(this.toHighlightDataset, changeAll);
+    }
+
+    private changeSelectedIds(toHighlight: any, change: boolean) {
+        if (change) {
+            this.toHighlightDataset.forEach((obj) => {
+                this.removeSelectedId(obj.id);
+                this.selectedDatasetIds.splice(this.selectedDatasetIds.findIndex((entry) => entry === obj.id), 1);
+            });
+        } else {
+            this.toHighlightDataset.forEach((obj) => {
+                if (this.selectedDatasetIds.indexOf(obj.id) < 0) {
+                    this.setSelectedId(obj.id);
+                    this.selectedDatasetIds.push(obj.id);
+                }
+            });
+        }
+
+        this.onSelectId.emit(this.toHighlightDataset);
         this.plotGraph();
     }
 
