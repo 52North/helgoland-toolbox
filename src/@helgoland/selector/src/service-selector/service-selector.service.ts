@@ -20,20 +20,22 @@ export class ServiceSelectorService {
     ): Observable<Service[]> {
         return new Observable<Service[]>((observer: Observer<Service[]>) => {
             this.apiInterface.getServices(url, filter)
-                .subscribe((services) => {
-                    if (services && services instanceof Array) {
-                        const usableServices = services.map((service) => {
-                            if (!this.isServiceBlacklisted(service.id, url, blacklist)) {
-                                return service;
-                            }
-                        });
-                        observer.next(usableServices);
+                .subscribe(
+                    (services) => {
+                        if (services && services instanceof Array) {
+                            const usableServices = services.map((service) => {
+                                if (!this.isServiceBlacklisted(service.id, url, blacklist)) {
+                                    return service;
+                                }
+                            });
+                            observer.next(usableServices);
+                            observer.complete();
+                        }
+                    },
+                    (error) => {
+                        observer.error(error);
                         observer.complete();
-                    }
-                }, (error) => {
-                    observer.error(error);
-                    observer.complete();
-                });
+                    });
         });
     }
 

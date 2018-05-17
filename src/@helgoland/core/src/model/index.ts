@@ -42,5 +42,5 @@ export { Mixin } from './mixins/Mixin.decorator';
 export { HasLoadableContent } from './mixins/has-loadable-content';
 
 export {
-    BlacklistedService, ParsedTimespanPreset, Settings, TimespanMomentTemplate, TimespanPreset
+    BlacklistedService, ParsedTimespanPreset, Settings, TimespanMomentTemplate, TimespanPreset, DatasetApi
 } from './settings/settings';
