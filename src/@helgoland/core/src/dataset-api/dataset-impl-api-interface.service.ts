@@ -42,7 +42,11 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
 
     public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
         const url = this.createRequestUrl(apiUrl, 'services');
-        params.expanded = true;
+        if (params) {
+            params.expanded = true;
+        } else {
+            params = { expanded: true };
+        }
         return this.requestApi<Service[]>(url, params, options)
             .map((result) => {
                 result.forEach((entry) => entry.apiUrl = apiUrl);

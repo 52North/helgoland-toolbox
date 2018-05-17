@@ -1,36 +1,41 @@
 import { Timespan } from './../internal/timeInterval';
 
-export class Settings {
-    public restApiUrls?: string[];
-    public providerBlackList?: BlacklistedService[];
-    public solveLabels?: boolean;
-    public proxyUrl?: string;
-    public timespanPresets?: TimespanPreset[];
-    public colorList?: string[];
-    public languages?: [{ label: string, code: string }];
-    public refreshDataInterval?: number;
+export interface Settings {
+    datasetApis?: DatasetApi[];
+    providerBlackList?: BlacklistedService[];
+    solveLabels?: boolean;
+    proxyUrl?: string;
+    timespanPresets?: TimespanPreset[];
+    colorList?: string[];
+    languages?: [{ label: string, code: string }];
+    refreshDataInterval?: number;
 }
 
-export class BlacklistedService {
-    public serviceId: string;
-    public apiUrl: string;
+export interface DatasetApi {
+    name: string;
+    url: string;
 }
 
-export class TimespanPreset {
-    public name: string;
-    public label: string;
-    public timespan: TimespanMomentTemplate;
-    public seperatorAfterThisItem?: boolean;
+export interface BlacklistedService {
+    serviceId: string;
+    apiUrl: string;
 }
 
-export class ParsedTimespanPreset {
-    public name: string;
-    public label: string;
-    public timespan: Timespan;
-    public seperatorAfterThisItem?: boolean;
+export interface TimespanPreset {
+    name: string;
+    label: string;
+    timespan: TimespanMomentTemplate;
+    seperatorAfterThisItem?: boolean;
 }
 
-export class TimespanMomentTemplate {
-    public to: string;
-    public from: string;
+export interface ParsedTimespanPreset {
+    name: string;
+    label: string;
+    timespan: Timespan;
+    seperatorAfterThisItem?: boolean;
+}
+
+export interface TimespanMomentTemplate {
+    to: string;
+    from: string;
 }
