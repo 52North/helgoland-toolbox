@@ -74,12 +74,10 @@ export class D3TimeseriesGraphComponent
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     private yAxisRange: any; // y domain range
-    private yRangesEachUom: any; // y array of objects containing ranges for every uom
-    private yRangesPre: any; // y object containing ranges for each uom
+    private yRangesEachUom: any; // y array of objects containing ranges for each uom
     private dataYranges: any; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
-    private xDomainMax: any; // y domain range
 
     private height: number;
     private width: number;
@@ -96,7 +94,6 @@ export class D3TimeseriesGraphComponent
     private focusG: any;
     private highlightFocus: any;
     private focuslabelTime: any;
-    private focuslabelY: any;
     private bufferSum: number;
     private labelTimestamp: any;
 
@@ -106,7 +103,6 @@ export class D3TimeseriesGraphComponent
 
     private draggingMove: boolean;
     private dragMoveStart: [number, number];
-    private dragMoveStart02: [number, number];
     private dragMoveRange: [number, number];
 
     private dragRect: any;
@@ -142,7 +138,6 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.yRangesPre = new Array();
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
     }
@@ -163,7 +158,6 @@ export class D3TimeseriesGraphComponent
     }
     protected removeDataset(internalId: string): void {
         console.log('removed ' + internalId);
-        this.yRangesPre = new Array();
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
 
@@ -201,7 +195,9 @@ export class D3TimeseriesGraphComponent
         }
     }
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean) {
-        // not implemented yet
+        if (!firstChange && this.datasetMap.has(internalId)) {
+            this.loadDataset(this.datasetMap.get(internalId));
+        }
     }
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((dataset) => {
@@ -263,10 +259,12 @@ export class D3TimeseriesGraphComponent
             const data = this.datasetMap.get(dataset.internalId).data;
 
             // TODO: change uom for testing
-            if (this.preparedData.length > 0) {
-                dataset.uom = 'mc';
-            }
+            // if (this.preparedData.length > 0) {
+                // dataset.uom = 'mc';
+            // }
             // end of check for datasets
+
+            let linewidth = (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow);
 
             const dataEntry = {
                 internalId: dataset.internalId,
@@ -276,15 +274,16 @@ export class D3TimeseriesGraphComponent
                     fillColor: styles.color
                 },
                 lines: {
-                    lineWidth: (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow)
+                    lineWidth: (styles.lineWidth !== this.lwLow) ? styles.lineWidth : linewidth
                 },
                 bars: {
-                    lineWidth: (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow)
+                    lineWidth: (styles.lineWidth !== this.lwLow) ? styles.lineWidth : linewidth
                 },
                 axisOptions: {
                     uom: dataset.uom,
                     label: dataset.label
-                }
+                },
+                visible: styles.visible
             };
             // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
 
@@ -313,50 +312,41 @@ export class D3TimeseriesGraphComponent
         }
 
         const newDatasetIdx = this.preparedData.findIndex((e) => e.internalId === internalId);
-        this.dataYranges[newDatasetIdx] = {
-            uom: dataEntry.axisOptions.uom,
-            range: [min, max]
-        };
 
-        // min = yMin[0]
-        const yMin = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
-            if (datum !== undefined) {
-                if (datum.uom === dataEntry.axisOptions.uom) {
-                    return datum.range[0]; // datum.range = [min, max]
+        // set range, uom and id for each dataset
+        if (dataEntry.visible) {
+            this.dataYranges[newDatasetIdx] = {
+                uom: dataEntry.axisOptions.uom,
+                range: [min, max],
+                id: internalId
+            };
+        } else {
+            this.dataYranges[newDatasetIdx] = null;
+        }
+
+        // set range and array of IDs for each uom to generate y-axis later on
+        this.yRangesEachUom = [];
+        this.dataYranges.forEach((obj) => {
+            if (obj !== null) {
+                let idx = this.yRangesEachUom.findIndex((e) => e.uom === obj.uom);
+                let yrangeObj = {
+                    uom: obj.uom,
+                    range: obj.range,
+                    ids: [obj.id]
+                };
+                if (idx >= 0) {
+                    if (this.yRangesEachUom[idx].range[0] > obj.range[0]) {
+                        this.yRangesEachUom[idx].range[0] = obj.range[0];
+                    }
+                    if (this.yRangesEachUom[idx].range[1] < obj.range[1]) {
+                        this.yRangesEachUom[idx].range[1] = obj.range[1];
+                    }
+                    this.yRangesEachUom[idx].ids.push(obj.id);
+                } else {
+                    this.yRangesEachUom.push(yrangeObj);
                 }
             }
         });
-        // max = yMax[1]
-        const yMax = d3.extent<DataEntry, number>(this.dataYranges, (datum, index, array) => {
-            if (datum !== undefined) {
-                if (datum.uom === dataEntry.axisOptions.uom) {
-                    return datum.range[1];
-                }
-            }
-        });
-
-        if (!this.yRangesPre[dataEntry.axisOptions.uom]) {
-            this.yRangesPre[dataEntry.axisOptions.uom] = {};
-        }
-        if (!this.yRangesPre[dataEntry.axisOptions.uom].ids) {
-            this.yRangesPre[dataEntry.axisOptions.uom].ids = [];
-        }
-
-        this.yRangesPre[dataEntry.axisOptions.uom].range = [yMin[0], yMax[1]];
-        if (this.yRangesPre[dataEntry.axisOptions.uom].ids.indexOf(dataEntry.internalId) === -1) {
-            this.yRangesPre[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
-        }
-        this.yRangesEachUom = new Array();
-
-        for (let singleUom in this.yRangesPre) {
-            if (this.yRangesPre.hasOwnProperty(singleUom)) {
-                this.yRangesEachUom.push({
-                    uom: singleUom,
-                    range: this.yRangesPre[singleUom].range,
-                    ids: this.yRangesPre[singleUom].ids
-                });
-            }
-        }
         this.plotGraph();
     }
 
@@ -692,43 +682,45 @@ export class D3TimeseriesGraphComponent
         });
 
         let xScaleBase = this.xScaleBase;
-        let yScaleBase = getYaxisRange.yScale;
+        if (getYaxisRange !== undefined) {
+            let yScaleBase = getYaxisRange.yScale;
 
-        // #####################################################
-        // create body to clip graph
-        this.graph
-            .append('svg:clipPath')
-            .attr('id', 'clip')
-            .append('svg:rect')
-            .attr('x', this.bufferSum)
-            .attr('y', 0)
-            .attr('width', this.width - this.bufferSum)
-            .attr('height', this.height);
+            // #####################################################
+            // create body to clip graph
+            this.graph
+                .append('svg:clipPath')
+                .attr('id', 'clip')
+                .append('svg:rect')
+                .attr('x', this.bufferSum)
+                .attr('y', 0)
+                .attr('width', this.width - this.bufferSum)
+                .attr('height', this.height);
 
-        // draw grah line
-        this.graphBody = this.graph
-            .append('g')
-            .attr('clip-path', 'url(#clip)');
-        this.graphBody
-            .append('svg:path')
-            .datum(data)
-            .attr('class', 'line')
-            .attr('fill', 'none')
-            .attr('stroke', entry.color)
-            .attr('stroke-width', entry.lines.lineWidth)
-            .attr('d', d3.line<DataEntry>()
-                .x((d) => {
-                    d.timestamp = d[0];
-                    const xDiagCoord = xScaleBase(d[0]);
-                    d.xDiagCoord = xDiagCoord;
-                    return xDiagCoord;
-                })
-                .y((d) => {
-                    const yDiagCoord = yScaleBase(d[1]);
-                    d.yDiagCoord = yDiagCoord;
-                    return yDiagCoord;
-                })
-                .curve(d3.curveLinear));
+            // draw grah line
+            this.graphBody = this.graph
+                .append('g')
+                .attr('clip-path', 'url(#clip)');
+            this.graphBody
+                .append('svg:path')
+                .datum(data)
+                .attr('class', 'line')
+                .attr('fill', 'none')
+                .attr('stroke', entry.color)
+                .attr('stroke-width', entry.lines.lineWidth)
+                .attr('d', d3.line<DataEntry>()
+                    .x((d) => {
+                        d.timestamp = d[0];
+                        const xDiagCoord = xScaleBase(d[0]);
+                        d.xDiagCoord = xDiagCoord;
+                        return xDiagCoord;
+                    })
+                    .y((d) => {
+                        const yDiagCoord = yScaleBase(d[1]);
+                        d.yDiagCoord = yDiagCoord;
+                        return yDiagCoord;
+                    })
+                    .curve(d3.curveLinear));
+        }
     }
 
     private mousemoveHandler = () => {
