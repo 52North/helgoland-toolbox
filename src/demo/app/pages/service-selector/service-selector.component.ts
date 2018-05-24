@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetApi } from '@helgoland/core';
+import { DatasetApi, ParameterFilter, PlatformTypes, ValueTypes } from '@helgoland/core';
 
 @Component({
     selector: 'my-app',
@@ -45,4 +45,9 @@ export class ServiceSelectorComponent {
             url: 'http://monalisasos.eurac.edu/sos/api/v1/'
         }
     ];
+
+    public providerFilter: ParameterFilter = {
+        platformTypes: PlatformTypes.stationary,
+        valueTypes: ValueTypes.quantity
+    };
 }
