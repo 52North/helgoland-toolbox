@@ -576,6 +576,7 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawYaxis(entry): any {
+        let showAxis = this.plotOptions.yaxis.show;
         const range = this.getyAxisRange(entry.uom);
 
         let yMin = range[0];
@@ -588,33 +589,48 @@ export class D3TimeseriesGraphComponent
             .range([this.height, 0]);
 
         let yAxisGen = d3.axisLeft(yScale).ticks(5);
+        let buffer;
+
+        // only if yAxis should not be visible
+        if (!showAxis) {
+            yAxisGen
+                .tickFormat(() => '')
+                .tickSize(0);
+        }
 
         // draw y axis
         const axis = this.graph.append('svg:g')
             .attr('class', 'y axis')
             .call(yAxisGen);
 
-        // draw y axis label
-        const text = this.graph.append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('dy', '1em')
-            .style('text-anchor', 'middle')
-            .style('fill', 'black')
-            .text(entry.uom)
-            .on('mouseup', () => {
-                this.highlightLine(entry.ids, entry.uom);
-            });
+        // only if yAxis should be visible
+        if (showAxis) {
+            // draw y axis label
+            const text = this.graph.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('dy', '1em')
+                .style('text-anchor', 'middle')
+                .style('fill', 'black')
+                .text(entry.uom)
+                .on('mouseup', () => {
+                    this.highlightLine(entry.ids, entry.uom);
+                });
 
-        const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
-        const buffer = entry.offset + (axisWidth < 30 ? 30 : axisWidth);
+            const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
+            // if yAxis should not be visible, buffer will be set to 0
+            buffer = (showAxis ? entry.offset + (axisWidth < 30 ? 30 : axisWidth) : 0);
 
-        if (!entry.first) {
-            axis.attr('transform', 'translate(' + buffer + ', 0)');
+            if (!entry.first) {
+                axis.attr('transform', 'translate(' + buffer + ', 0)');
+            }
+
+            const textOffset = !entry.first ? buffer : entry.offset;
+            text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
+                .attr('x', 0 - (this.height / 2));
+
+        } else {
+            buffer = 0;
         }
-
-        const textOffset = !entry.first ? buffer : entry.offset;
-        text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
-            .attr('x', 0 - (this.height / 2));
 
         // draw the y grid lines
         if (this.datasetIds.length === 1) {
