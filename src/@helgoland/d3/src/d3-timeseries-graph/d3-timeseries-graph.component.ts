@@ -262,7 +262,6 @@ export class D3TimeseriesGraphComponent
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
             const data = this.datasetMap.get(dataset.internalId).data;
-
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
                 // dataset.uom = 'mc';
@@ -302,10 +301,35 @@ export class D3TimeseriesGraphComponent
             } else {
                 this.preparedData.push(dataEntry);
             }
-
+            this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
             this.processData(dataEntry, dataset.internalId);
             this.plotGraph();
         });
+    }
+
+    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<[number, number]>, uomO: string) {
+        this.preparedData = this.preparedData.filter((entry) => {
+            return !entry.internalId.startsWith('ref' + internalId);
+        });
+        if (this.plotOptions.showReferenceValues) {
+            styles.showReferenceValues.forEach((refValue) => {
+                const refDataEntry = {
+                    internalId: 'ref' + internalId + refValue.id,
+                    color: refValue.color,
+                    data: data.referenceValues[refValue.id],
+                    points: {
+                        fillColor: refValue.color
+                    },
+                    lines: {
+                        lineWidth: 1
+                    },
+                    axisOptions: {
+                        uom: uomO
+                    }
+                };
+                this.preparedData.push(refDataEntry);
+            });
+        }
     }
 
     private processData(dataEntry, internalId) {
@@ -428,7 +452,6 @@ export class D3TimeseriesGraphComponent
 
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
-
         this.preparedData.forEach((entry) => {
             this.drawGraphLine(entry);
         });
