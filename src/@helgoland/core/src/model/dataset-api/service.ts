@@ -1,12 +1,20 @@
 import { Parameter } from './parameter';
 
 export interface Service extends Parameter {
-    type: string;
+    id: string;
+    href: string;
+    label: string;
     version: string;
+    extras: string[];
+    type: string;
+    quantities?: ServiceQuantities;
+    supportsfirstlatest?: boolean;
+    supportedmimetypes?: SupportedMimeTypes;
+    // for internal use:
     apiUrl: string;
-    serviceUrl: string;
-    quantities: ServiceQuantities;
 }
+
+export interface SupportedMimeTypes {}
 
 export interface ServiceQuantities {
     categories?: number;
