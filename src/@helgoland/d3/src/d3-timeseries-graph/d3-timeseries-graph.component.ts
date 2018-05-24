@@ -164,16 +164,21 @@ export class D3TimeseriesGraphComponent
         this.preparedData.splice(this.preparedData.findIndex((entry) => entry.internalId === internalId), 1);
         let newPrepData = this.preparedData;
         this.preparedData = new Array();
-        newPrepData.forEach((entry, idx) => {
-            this.preparedData.push(entry);
-            this.processData(entry, entry.internalId);
-        });
+        if (newPrepData.length <= 0) {
+            this.plotGraph();
+        } else {
+            newPrepData.forEach((entry, idx) => {
+                this.preparedData.push(entry);
+                this.processData(entry, entry.internalId);
+            });
+        }
     }
     protected setSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
             tsData.lines.lineWidth += this.addLineWidth;
+            tsData.lines.pointRadius += this.addLineWidth;
             tsData.bars.lineWidth += this.addLineWidth;
         }
         this.plotGraph();
@@ -183,6 +188,7 @@ export class D3TimeseriesGraphComponent
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
             tsData.lines.lineWidth -= this.addLineWidth;
+            tsData.lines.pointRadius -= this.addLineWidth;
             tsData.bars.lineWidth -= this.addLineWidth;
         }
         this.plotGraph();
@@ -287,6 +293,8 @@ export class D3TimeseriesGraphComponent
 
             if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
                 dataEntry.lines.lineWidth += this.addLineWidth;
+                dataEntry.lines.pointRadius += this.addLineWidth;
+                dataEntry.bars.lineWidth += this.addLineWidth;
             }
 
             if (datasetIdx >= 0) {
@@ -576,7 +584,7 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawYaxis(entry): any {
-        let showAxis = this.plotOptions.yaxis.show;
+        let showAxis = (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis.show);
         const range = this.getyAxisRange(entry.uom);
 
         let yMin = range[0];
@@ -589,7 +597,7 @@ export class D3TimeseriesGraphComponent
             .range([this.height, 0]);
 
         let yAxisGen = d3.axisLeft(yScale).ticks(5);
-        let buffer;
+        let buffer = 0;
 
         // only if yAxis should not be visible
         if (!showAxis) {
@@ -611,14 +619,14 @@ export class D3TimeseriesGraphComponent
                 .attr('dy', '1em')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text(entry.uom)
-                .on('mouseup', () => {
-                    this.highlightLine(entry.ids, entry.uom);
-                });
+                .text(entry.uom);
 
             const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
             // if yAxis should not be visible, buffer will be set to 0
-            buffer = (showAxis ? entry.offset + (axisWidth < 30 ? 30 : axisWidth) : 0);
+            buffer = (showAxis ? entry.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+
+            // tslint:disable-next-line:max-line-length
+            const axisWidthDiv = entry.first ? this.margin.left : (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!entry.first) {
                 axis.attr('transform', 'translate(' + buffer + ', 0)');
@@ -628,8 +636,36 @@ export class D3TimeseriesGraphComponent
             text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
                 .attr('x', 0 - (this.height / 2));
 
-        } else {
-            buffer = 0;
+            const axisDiv = this.graph.append('rect')
+                .attr('class', 'axisDiv')
+                .attr('width', axisWidthDiv)
+                .attr('height', this.height)
+                .attr('fill', 'white')
+                .attr('opacity', 0)
+                .on('mouseover', (d, i, k) => {
+                    d3.select(k[0])
+                        .attr('fill', 'grey')
+                        .attr('opacity', 0.4);
+                })
+                .on('mouseout', (d, i, k) => {
+                    d3.select(k[0])
+                        .attr('fill', 'white')
+                        .attr('opacity', 0);
+                })
+                .on('mouseup', () => {
+                    this.highlightLine(entry.ids, entry.uom);
+                });
+
+            if (!entry.first) {
+                axisDiv
+                    .attr('x', entry.offset)
+                    .attr('y', 0);
+            } else {
+                axisDiv
+                    .attr('x', 0 - this.margin.left - this.maxLabelwidth)
+                    .attr('y', 0);
+            }
+
         }
 
         // draw the y grid lines
@@ -752,7 +788,6 @@ export class D3TimeseriesGraphComponent
                 .attr('cx', line.x())
                 .attr('cy', line.y())
                 .attr('r', entry.lines.pointRadius);
-
         }
     }
 
