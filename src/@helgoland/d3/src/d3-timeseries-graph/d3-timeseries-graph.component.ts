@@ -109,8 +109,7 @@ export class D3TimeseriesGraphComponent
     private dragRectG: any;
 
     private toHighlightDataset: any;
-    private lwHigh = 3; // lineWidth high
-    private lwLow = 1; // lineWidth low
+    private addLineWidth = 2; // value added to linewidth
 
     private plotOptions: D3PlotOptions = {
         showReferenceValues: false,
@@ -172,19 +171,19 @@ export class D3TimeseriesGraphComponent
     }
     protected setSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
-        if (!tsData.selected) {
+        if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
-            tsData.lines.lineWidth = this.lwHigh;
-            tsData.bars.lineWidth = this.lwHigh;
+            tsData.lines.lineWidth += this.addLineWidth;
+            tsData.bars.lineWidth += this.addLineWidth;
         }
         this.plotGraph();
     }
     protected removeSelectedId(internalId: string): void {
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
-        if (tsData.selected) {
+        if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
-            tsData.lines.lineWidth = this.lwLow;
-            tsData.bars.lineWidth = this.lwLow;
+            tsData.lines.lineWidth -= this.addLineWidth;
+            tsData.bars.lineWidth -= this.addLineWidth;
         }
         this.plotGraph();
     }
@@ -264,8 +263,6 @@ export class D3TimeseriesGraphComponent
             // }
             // end of check for datasets
 
-            let linewidth = (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0 ? this.lwHigh : this.lwLow);
-
             const dataEntry = {
                 internalId: dataset.internalId,
                 color: styles.color,
@@ -274,10 +271,11 @@ export class D3TimeseriesGraphComponent
                     fillColor: styles.color
                 },
                 lines: {
-                    lineWidth: (styles.lineWidth !== this.lwLow) ? styles.lineWidth : linewidth
+                    lineWidth: styles.lineWidth,
+                    pointRadius: styles.pointRadius
                 },
                 bars: {
-                    lineWidth: (styles.lineWidth !== this.lwLow) ? styles.lineWidth : linewidth
+                    lineWidth: styles.lineWidth
                 },
                 axisOptions: {
                     uom: dataset.uom,
@@ -286,6 +284,10 @@ export class D3TimeseriesGraphComponent
                 visible: styles.visible
             };
             // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
+
+            if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
+                dataEntry.lines.lineWidth += this.addLineWidth;
+            }
 
             if (datasetIdx >= 0) {
                 this.preparedData[datasetIdx] = dataEntry;
@@ -700,6 +702,22 @@ export class D3TimeseriesGraphComponent
             this.graphBody = this.graph
                 .append('g')
                 .attr('clip-path', 'url(#clip)');
+
+            // create graph line
+            let line = d3.line<DataEntry>()
+                .x((d) => {
+                    d.timestamp = d[0];
+                    const xDiagCoord = xScaleBase(d[0]);
+                    d.xDiagCoord = xDiagCoord;
+                    return xDiagCoord;
+                })
+                .y((d) => {
+                    const yDiagCoord = yScaleBase(d[1]);
+                    d.yDiagCoord = yDiagCoord;
+                    return yDiagCoord;
+                })
+                .curve(d3.curveLinear);
+
             this.graphBody
                 .append('svg:path')
                 .datum(data)
@@ -707,19 +725,18 @@ export class D3TimeseriesGraphComponent
                 .attr('fill', 'none')
                 .attr('stroke', entry.color)
                 .attr('stroke-width', entry.lines.lineWidth)
-                .attr('d', d3.line<DataEntry>()
-                    .x((d) => {
-                        d.timestamp = d[0];
-                        const xDiagCoord = xScaleBase(d[0]);
-                        d.xDiagCoord = xDiagCoord;
-                        return xDiagCoord;
-                    })
-                    .y((d) => {
-                        const yDiagCoord = yScaleBase(d[1]);
-                        d.yDiagCoord = yDiagCoord;
-                        return yDiagCoord;
-                    })
-                    .curve(d3.curveLinear));
+                .attr('d', line);
+
+            this.graphBody.selectAll('.dot')
+                .data(data.filter((d) => { return d; }))
+                .enter().append('circle')
+                .attr('class', 'dot')
+                .attr('stroke', entry.color)
+                .attr('fill', entry.color)
+                .attr('cx', line.x())
+                .attr('cy', line.y())
+                .attr('r', entry.lines.pointRadius);
+
         }
     }
 
