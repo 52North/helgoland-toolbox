@@ -262,7 +262,6 @@ export class D3TimeseriesGraphComponent
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
             const data = this.datasetMap.get(dataset.internalId).data;
-
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
                 // dataset.uom = 'mc';
@@ -302,10 +301,35 @@ export class D3TimeseriesGraphComponent
             } else {
                 this.preparedData.push(dataEntry);
             }
-
+            this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
             this.processData(dataEntry, dataset.internalId);
             this.plotGraph();
         });
+    }
+
+    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<[number, number]>, uomO: string) {
+        this.preparedData = this.preparedData.filter((entry) => {
+            return !entry.internalId.startsWith('ref' + internalId);
+        });
+        if (this.plotOptions.showReferenceValues) {
+            styles.showReferenceValues.forEach((refValue) => {
+                const refDataEntry = {
+                    internalId: 'ref' + internalId + refValue.id,
+                    color: refValue.color,
+                    data: data.referenceValues[refValue.id],
+                    points: {
+                        fillColor: refValue.color
+                    },
+                    lines: {
+                        lineWidth: 1
+                    },
+                    axisOptions: {
+                        uom: uomO
+                    }
+                };
+                this.preparedData.push(refDataEntry);
+            });
+        }
     }
 
     private processData(dataEntry, internalId) {
@@ -428,7 +452,6 @@ export class D3TimeseriesGraphComponent
 
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
-
         this.preparedData.forEach((entry) => {
             this.drawGraphLine(entry);
         });
@@ -625,7 +648,6 @@ export class D3TimeseriesGraphComponent
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? entry.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
 
-            // tslint:disable-next-line:max-line-length
             const axisWidthDiv = entry.first ? this.margin.left : (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!entry.first) {
@@ -800,14 +822,20 @@ export class D3TimeseriesGraphComponent
             const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
             this.showDiagramIndicator(entry, idx, coords[0], entryIdx);
         });
-
         // focus do not overlap each other
         if (this.ypos !== undefined) {
-            let yPos = this.ypos.sort((a, b) => { return a.y - b.y; });
+            let firstLabel = [];
+            // only push one of the pairs of objects (rectangle and label)
+            this.ypos.forEach((e, i) => {
+                if (i % 2 === 0) {
+                    firstLabel.push(e);
+                }
+            });
+            let yPos = firstLabel.sort((a, b) => { return a.y - b.y; });
             yPos.forEach((p, i) => {
                 if (i > 0) {
                     let last = yPos[i - 1].y;
-                    yPos[i].off = Math.max(0, (last + 20) - yPos[i].y);
+                    yPos[i].off = Math.max(0, (last + 30) - yPos[i].y);
                     yPos[i].y += yPos[i].off;
                 }
             });
@@ -816,7 +844,8 @@ export class D3TimeseriesGraphComponent
             let c1 = 0;
             let c2 = 0;
 
-            d3.selectAll('.mouse-focus-label')
+            // d3.selectAll('.mouse-focus-label')
+            d3.selectAll('.focus-visibility')
                 .attr('transform', (d, i) => {
                     // pairs of 2 objects (rectangle (equal) and label (odd))
                     if (i > 0) {
@@ -824,7 +853,7 @@ export class D3TimeseriesGraphComponent
                     }
                     c2 += c1;
                     if (yPos[c2] && yPos[c2].off) {
-                        return 'translate (0,' + (3 + yPos[c2].off) + ')';
+                        return 'translate(0,' + (5 + yPos[c2].off) + ')';
                     }
                 });
         }

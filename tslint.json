@@ -5,7 +5,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "interface-name": false,
-    "max-line-length": [true, 125],
+    "max-line-length": [true, 130],
     "no-access-missing-member": false,
     "no-attribute-parameter-decorator": true,
     "no-console": [true, "time", "timeEnd", "trace"],
