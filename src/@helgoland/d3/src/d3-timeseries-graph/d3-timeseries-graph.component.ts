@@ -648,7 +648,6 @@ export class D3TimeseriesGraphComponent
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? entry.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
 
-            // tslint:disable-next-line:max-line-length
             const axisWidthDiv = entry.first ? this.margin.left : (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!entry.first) {
