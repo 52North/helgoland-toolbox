@@ -823,14 +823,20 @@ export class D3TimeseriesGraphComponent
             const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
             this.showDiagramIndicator(entry, idx, coords[0], entryIdx);
         });
-
         // focus do not overlap each other
         if (this.ypos !== undefined) {
-            let yPos = this.ypos.sort((a, b) => { return a.y - b.y; });
+            let firstLabel = [];
+            // only push one of the pairs of objects (rectangle and label)
+            this.ypos.forEach((e, i) => {
+                if (i % 2 === 0) {
+                    firstLabel.push(e);
+                }
+            });
+            let yPos = firstLabel.sort((a, b) => { return a.y - b.y; });
             yPos.forEach((p, i) => {
                 if (i > 0) {
                     let last = yPos[i - 1].y;
-                    yPos[i].off = Math.max(0, (last + 20) - yPos[i].y);
+                    yPos[i].off = Math.max(0, (last + 30) - yPos[i].y);
                     yPos[i].y += yPos[i].off;
                 }
             });
@@ -839,7 +845,8 @@ export class D3TimeseriesGraphComponent
             let c1 = 0;
             let c2 = 0;
 
-            d3.selectAll('.mouse-focus-label')
+            // d3.selectAll('.mouse-focus-label')
+            d3.selectAll('.focus-visibility')
                 .attr('transform', (d, i) => {
                     // pairs of 2 objects (rectangle (equal) and label (odd))
                     if (i > 0) {
@@ -847,7 +854,7 @@ export class D3TimeseriesGraphComponent
                     }
                     c2 += c1;
                     if (yPos[c2] && yPos[c2].off) {
-                        return 'translate (0,' + (3 + yPos[c2].off) + ')';
+                        return 'translate(0,' + (5 + yPos[c2].off) + ')';
                     }
                 });
         }
