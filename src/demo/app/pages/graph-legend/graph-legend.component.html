@@ -3,7 +3,7 @@
     <!-- <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
       [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"
       (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph> -->
-      <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" 
+    <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" 
       [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)"
       (onSelectId)="setSelected($event)"
       (onContentLoading)="graphLoading = $event" #diagram></n52-d3-timeseries-graph>
@@ -12,8 +12,10 @@
     Loading Graph: {{graphLoading}}
   </div>
   <div style="height: 100px;">
-    <n52-flot-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
-      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-flot-overview-timeseries-graph>
+    <!-- <n52-flot-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
+      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-flot-overview-timeseries-graph> -->
+    <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
+      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-d3-overview-timeseries-graph>
   </div>
   <div>
     Loading Overview: {{overviewLoading}}
