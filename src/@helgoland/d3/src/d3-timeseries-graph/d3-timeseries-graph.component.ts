@@ -421,6 +421,8 @@ export class D3TimeseriesGraphComponent
     }
 
     private plotGraph() {
+        console.log(JSON.stringify(this.plotOptions));
+        console.log(this.plotOptions.grid);
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
