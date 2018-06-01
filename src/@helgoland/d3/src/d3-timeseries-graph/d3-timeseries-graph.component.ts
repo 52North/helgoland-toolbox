@@ -159,18 +159,18 @@ export class D3TimeseriesGraphComponent
         console.log('removed ' + internalId);
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
-
         this.datasetMap.delete(internalId);
-        this.preparedData.splice(this.preparedData.findIndex((entry) => entry.internalId === internalId), 1);
-        let newPrepData = this.preparedData;
-        this.preparedData = new Array();
-        if (newPrepData.length <= 0) {
-            this.plotGraph();
-        } else {
-            newPrepData.forEach((entry, idx) => {
-                this.preparedData.push(entry);
-                this.processData(entry, entry.internalId);
-            });
+        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
+        if (spliceIdx >= 0) {
+            this.preparedData.splice(spliceIdx, 1);
+            if (this.preparedData.length <= 0) {
+                this.yRangesEachUom = new Array();
+                this.plotGraph();
+            } else {
+                this.preparedData.forEach((entry, idx) => {
+                    this.processData(entry, entry.internalId);
+                });
+            }
         }
     }
     protected setSelectedId(internalId: string): void {
@@ -195,7 +195,7 @@ export class D3TimeseriesGraphComponent
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
         Object.assign(this.plotOptions, options);
-        if (this.rawSvg) {
+        if (this.rawSvg && this.yRangesEachUom) {
             this.plotGraph();
         }
     }
@@ -249,11 +249,6 @@ export class D3TimeseriesGraphComponent
                 () => console.log('loadDataset() - complete data loaded') // this.onCompleteLoadingData(dataset)
             );
         }
-    }
-
-    private processDataset(internalId) {
-        let idx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
-        this.processData(this.preparedData[idx], internalId);
     }
 
     // add dataset to preparedData
@@ -421,8 +416,6 @@ export class D3TimeseriesGraphComponent
     }
 
     private plotGraph() {
-        console.log(JSON.stringify(this.plotOptions));
-        console.log(this.plotOptions.grid);
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
