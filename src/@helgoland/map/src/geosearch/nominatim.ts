@@ -30,7 +30,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('format', 'json');
         if (options && options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
         return this.http.client().get(
-            'http://nominatim.openstreetmap.org/search',
+            'https://nominatim.openstreetmap.org/search',
             { params }
         ).map((resArray: NominatimResult[]) => {
             if (resArray.length === 1) {
