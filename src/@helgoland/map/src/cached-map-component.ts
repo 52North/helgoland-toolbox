@@ -1,4 +1,4 @@
-import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, SimpleChanges } from '@angular/core';
+import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
@@ -8,7 +8,7 @@ const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
 const DEFAULT_BASE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const DEFAULT_BASE_LAYER_ATTRIBUTION = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
-export abstract class CachedMapComponent implements OnChanges, DoCheck {
+export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestroy {
 
     /**
      * @input A map with the given ID is created inside this component. This ID can be used outside of the component the
@@ -91,6 +91,10 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck {
                 this.updateLayerControl();
             }
         }
+    }
+
+    public ngOnDestroy(): void {
+        this.map.remove();
     }
 
     protected createMap(): void {
