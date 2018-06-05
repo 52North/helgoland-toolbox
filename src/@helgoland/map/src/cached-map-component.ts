@@ -5,7 +5,7 @@ import { MapCache } from './map-cache.service';
 import { LayerOptions } from './map-options';
 
 const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
-const DEFAULT_BASE_LAYER_URL = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+const DEFAULT_BASE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const DEFAULT_BASE_LAYER_ATTRIBUTION = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
 export abstract class CachedMapComponent implements OnChanges, DoCheck {
