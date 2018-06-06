@@ -1,0 +1,727 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "helgoland-toolbox": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/helgoland-toolbox",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "helgoland-toolbox:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "helgoland-toolbox:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "helgoland-toolbox:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "helgoland-toolbox-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "helgoland-toolbox:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "helgoland-toolbox:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/core": {
+      "root": "projects/helgoland/core",
+      "sourceRoot": "projects/helgoland/core/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/core/tsconfig.lib.json",
+            "project": "projects/helgoland/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/core/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/core/src/test.ts",
+            "tsConfig": "projects/helgoland/core/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/core/tsconfig.lib.json",
+              "projects/helgoland/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/map": {
+      "root": "projects/helgoland/map",
+      "sourceRoot": "projects/helgoland/map/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/map/tsconfig.lib.json",
+            "project": "projects/helgoland/map/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/map/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/map/src/test.ts",
+            "tsConfig": "projects/helgoland/map/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/map/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/map/tsconfig.lib.json",
+              "projects/helgoland/map/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/caching": {
+      "root": "projects/helgoland/caching",
+      "sourceRoot": "projects/helgoland/caching/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/caching/tsconfig.lib.json",
+            "project": "projects/helgoland/caching/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/caching/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/caching/src/test.ts",
+            "tsConfig": "projects/helgoland/caching/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/caching/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/caching/tsconfig.lib.json",
+              "projects/helgoland/caching/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/control": {
+      "root": "projects/helgoland/control",
+      "sourceRoot": "projects/helgoland/control/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/control/tsconfig.lib.json",
+            "project": "projects/helgoland/control/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/control/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/control/src/test.ts",
+            "tsConfig": "projects/helgoland/control/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/control/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/control/tsconfig.lib.json",
+              "projects/helgoland/control/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/depiction": {
+      "root": "projects/helgoland/depiction",
+      "sourceRoot": "projects/helgoland/depiction/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/depiction/tsconfig.lib.json",
+            "project": "projects/helgoland/depiction/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/depiction/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/depiction/src/test.ts",
+            "tsConfig": "projects/helgoland/depiction/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/depiction/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/depiction/tsconfig.lib.json",
+              "projects/helgoland/depiction/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/favorite": {
+      "root": "projects/helgoland/favorite",
+      "sourceRoot": "projects/helgoland/favorite/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/favorite/tsconfig.lib.json",
+            "project": "projects/helgoland/favorite/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/favorite/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/favorite/src/test.ts",
+            "tsConfig": "projects/helgoland/favorite/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/favorite/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/favorite/tsconfig.lib.json",
+              "projects/helgoland/favorite/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/modification": {
+      "root": "projects/helgoland/modification",
+      "sourceRoot": "projects/helgoland/modification/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/modification/tsconfig.lib.json",
+            "project": "projects/helgoland/modification/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/modification/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/modification/src/test.ts",
+            "tsConfig": "projects/helgoland/modification/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/modification/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/modification/tsconfig.lib.json",
+              "projects/helgoland/modification/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/permalink": {
+      "root": "projects/helgoland/permalink",
+      "sourceRoot": "projects/helgoland/permalink/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/permalink/tsconfig.lib.json",
+            "project": "projects/helgoland/permalink/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/permalink/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/permalink/src/test.ts",
+            "tsConfig": "projects/helgoland/permalink/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/permalink/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/permalink/tsconfig.lib.json",
+              "projects/helgoland/permalink/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/selector": {
+      "root": "projects/helgoland/selector",
+      "sourceRoot": "projects/helgoland/selector/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/selector/tsconfig.lib.json",
+            "project": "projects/helgoland/selector/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/selector/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/selector/src/test.ts",
+            "tsConfig": "projects/helgoland/selector/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/selector/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/selector/tsconfig.lib.json",
+              "projects/helgoland/selector/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/label-mapper": {
+      "root": "projects/helgoland/label-mapper",
+      "sourceRoot": "projects/helgoland/label-mapper/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/label-mapper/tsconfig.lib.json",
+            "project": "projects/helgoland/label-mapper/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/label-mapper/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/label-mapper/src/test.ts",
+            "tsConfig": "projects/helgoland/label-mapper/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/label-mapper/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/label-mapper/tsconfig.lib.json",
+              "projects/helgoland/label-mapper/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/time": {
+      "root": "projects/helgoland/time",
+      "sourceRoot": "projects/helgoland/time/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/time/tsconfig.lib.json",
+            "project": "projects/helgoland/time/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/time/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/time/src/test.ts",
+            "tsConfig": "projects/helgoland/time/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/time/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/time/tsconfig.lib.json",
+              "projects/helgoland/time/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/d3": {
+      "root": "projects/helgoland/d3",
+      "sourceRoot": "projects/helgoland/d3/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/d3/tsconfig.lib.json",
+            "project": "projects/helgoland/d3/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/d3/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/d3/src/test.ts",
+            "tsConfig": "projects/helgoland/d3/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/d3/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/d3/tsconfig.lib.json",
+              "projects/helgoland/d3/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/plotly": {
+      "root": "projects/helgoland/plotly",
+      "sourceRoot": "projects/helgoland/plotly/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/plotly/tsconfig.lib.json",
+            "project": "projects/helgoland/plotly/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/plotly/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/plotly/src/test.ts",
+            "tsConfig": "projects/helgoland/plotly/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/plotly/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/plotly/tsconfig.lib.json",
+              "projects/helgoland/plotly/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/flot": {
+      "root": "projects/helgoland/flot",
+      "sourceRoot": "projects/helgoland/flot/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/flot/tsconfig.lib.json",
+            "project": "projects/helgoland/flot/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/flot/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/flot/src/test.ts",
+            "tsConfig": "projects/helgoland/flot/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/flot/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/flot/tsconfig.lib.json",
+              "projects/helgoland/flot/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/time-range-slider": {
+      "root": "projects/helgoland/time-range-slider",
+      "sourceRoot": "projects/helgoland/time-range-slider/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/time-range-slider/tsconfig.lib.json",
+            "project": "projects/helgoland/time-range-slider/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/time-range-slider/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/time-range-slider/src/test.ts",
+            "tsConfig": "projects/helgoland/time-range-slider/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/time-range-slider/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/time-range-slider/tsconfig.lib.json",
+              "projects/helgoland/time-range-slider/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "helgoland-toolbox"
+}
