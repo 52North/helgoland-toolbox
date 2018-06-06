@@ -17,36 +17,22 @@ Install latest Node and NPM following the [instructions](https://nodejs.org/en/d
 
 - `brew install node` for Mac.
 
-##### Yarn
-[Yarn package manager](https://yarnpkg.com/en/) is optional but highly recommended. If you prefer to work with `npm` directly you may ignore this step.
-
-Yarn installs library dependencies faster and also locks theirs versions. It has [more advantages](https://yarnpkg.com/en/) but these two are already pretty attractive. 
-
-Install Yarn by following the [instructions](https://yarnpkg.com/en/docs/install).
-
-- `brew install yarn` for Mac.
-
 ### Installing
 - `fork` this repository.
 - `clone` your fork to your local environment.
-- `yarn install` to install required dependencies (or `npm i`).
+- `npm install` to install required dependencies.
 
-### Build the library
-- `yarn lib:build` for building the library once
-<!-- - `yarn build:watch` for building the library (both ESM and AOT versions) and watch for file changes. -->
+### Build the libraries
+- `npm run build:libs` for building the library once
 
 ### Other commands
 
-##### Lint the code
-- `yarn lint` for performing static code analysis.
-
-<!-- ##### Test the library
-- `yarn test` for running all your `*.spec.ts` tests once. Generated code coverage report may be found in `coverage` folder.
-- `yarn test:watch` for running all you `*.spec.ts` and watch for file changes. -->
+##### Lint the complete code
+- `ng lint` for performing static code analysis.
 
 ##### Generate documentation
-- `yarn compodoc` for generating documentation locally
-- `yarn gh-pages` for generating documentation and uploading it to GitHub Pages
+- `npm run compodoc` for generating documentation locally
+- `npm run gh-pages` for generating documentation and uploading it to GitHub Pages
 
 ##### Bump library version
 - `npm version ***` to increase library version. [More on bumping](https://docs.npmjs.com/cli/version).
@@ -58,13 +44,9 @@ Install Yarn by following the [instructions](https://yarnpkg.com/en/docs/install
 
 <!-- `prepublishOnly` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing. -->
 
-##### Cleaning
-- `yarn clean:tmp` command will clean up all temporary files like `docs`, `dist`, `coverage` etc.
-- `yarn clean:all` command will clean up all temporary files along with `node_modules` folder. 
-
 ### Using demo applications
 
- - just start the demo with `yarn start` and the demo is published 
+ - just start the demo with `ng serve` and the demo is published 
 
 <!-- #### Using `yarn link`
 
@@ -107,5 +89,6 @@ Now, once you update your library source code it will automatically be re-compil
 
  - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
  - don't forget to add styles of nested dependencies
+
 
 

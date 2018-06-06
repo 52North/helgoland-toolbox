@@ -1,0 +1,9 @@
+{
+  "name": "@helgoland/plotly",
+  "version": "0.0.1",
+  "dependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "plotly.js": "^1.38.2"
+  }
+}
