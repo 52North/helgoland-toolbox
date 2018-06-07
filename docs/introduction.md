@@ -25,3 +25,6 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 
 For a better handling of datasets of different APIs, there exists an internal strategy to create dataset ids out of the url of an API and the API specific dataset ID.
 The generation and resolving of this internal ID is handled in the [InternalIdHandler](../injectables/InternalIdHandler.html)
+
+
+> Example: For a dataset with the id `123` of the service api `https://www.sample.de/api/v1/` the internal id looks like `https://www.sample.de/api/v1/__123`
