@@ -9,7 +9,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import { HasLoadableContent, ParameterFilter } from '@helgoland/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
 import { MapCache } from '../base/map-cache.service';

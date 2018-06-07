@@ -1,5 +1,5 @@
 import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
 import { LayerOptions } from './map-options';

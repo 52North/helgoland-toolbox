@@ -21,7 +21,7 @@ import {
     Timeseries,
     TimeseriesExtras,
 } from '@helgoland/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 
 import { MapCache } from '../../base/map-cache.service';

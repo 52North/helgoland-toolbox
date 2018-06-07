@@ -2,7 +2,7 @@ import 'leaflet.markercluster';
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, KeyValueDiffers, OnChanges } from '@angular/core';
 import { DatasetApiInterface, HasLoadableContent, Mixin, Platform } from '@helgoland/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
