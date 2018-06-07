@@ -103,6 +103,11 @@ Now, once you update your library source code it will automatically be re-compil
 }
 ``` -->
 
+## Supported series API versions mapping
+
+| helgoland-toolbox version | [series rest API](https://github.com/52North/series-rest-api) version |
+| v0.0.1-alpha.50 | v1.10.2 |
+
 ## Troubleshooting while using this library
 
  - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
