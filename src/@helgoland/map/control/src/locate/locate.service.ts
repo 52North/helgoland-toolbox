@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 const LOCATION_FOUND_EVENT = 'locationfound';
 const LOCATION_ERROR = 'locationerror';
