@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
 import { MapCache } from '../../base/map-cache.service';

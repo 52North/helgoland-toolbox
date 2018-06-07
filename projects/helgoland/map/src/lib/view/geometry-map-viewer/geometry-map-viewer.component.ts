@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, KeyValueDiffers, OnChanges, SimpleChanges } from '@angular/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
+
 import { CachedMapComponent } from '../../base/cached-map-component';
 import { MapCache } from '../../base/map-cache.service';
 
