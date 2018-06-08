@@ -1,5 +1,5 @@
 import { LocalStorage } from '../local-storage/local-storage.service';
-import { DatasetOptions } from '../model';
+import { DatasetOptions } from '../model/internal/options';
 
 export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]> {
 

@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 
-import { Data, Dataset, Platform } from '../../model';
+import { Data } from '../../model/dataset-api/data';
+import { Dataset } from '../../model/dataset-api/dataset';
+import { Platform } from '../../model/dataset-api/platform';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../../model/internal/http-requests';
 import { Timespan } from '../../model/internal/timeInterval';
 import { DatasetApiV1 } from './api-v1.interface';

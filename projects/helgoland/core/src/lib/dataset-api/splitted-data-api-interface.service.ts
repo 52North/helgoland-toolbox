@@ -5,7 +5,9 @@ import moment from 'moment';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Data, DataParameterFilter, HttpRequestOptions, Timespan } from '../model';
+import { Data } from '../model/dataset-api/data';
+import { DataParameterFilter, HttpRequestOptions } from '../model/internal/http-requests';
+import { Timespan } from '../model/internal/timeInterval';
 import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
 import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';

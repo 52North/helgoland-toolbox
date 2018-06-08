@@ -3,7 +3,7 @@ import { Injectable, Optional } from '@angular/core';
 import { forkJoin, Observable, Observer } from 'rxjs';
 
 import { Settings } from '../model/settings/settings';
-import { SettingsService } from '../settings';
+import { SettingsService } from '../settings/settings.service';
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
