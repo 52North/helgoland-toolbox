@@ -55,9 +55,12 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     const directionNumber = (direction === 'asc' ? 1 : -1);
 
     // set CSS classes
-    Array.from(event.target.parentElement.children).forEach((child: any) => child.classList = '');
-    event.target.classList.toggle('sorted-asc', direction === 'asc');
-    event.target.classList.toggle('sorted-desc', direction === 'desc');
+    Array.from(event.target.parentElement.children).forEach((child: Element) => child.className = '');
+    if (direction === 'asc') {
+      (event.target as Element).classList.add('sorted-asc');
+    } else {
+      (event.target as Element).classList.add('sorted-desc');
+    }
 
     // define correct callback function for sort method
     let sortCallback;
