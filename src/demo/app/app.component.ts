@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
-import { Language } from '@helgoland/core';
+import { Language, StatusCheckService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -14,10 +14,13 @@ export class AppComponent {
     public languageList: Language[];
 
     constructor(
-        translate: TranslateService
+        translate: TranslateService,
+        status: StatusCheckService
     ) {
         translate.setDefaultLang('en');
         translate.use('en');
+
+        status.checkAll().subscribe((res) => res.forEach((entry) => console.log(entry)));
 
         // necessary to load information on e.g. what 'medium' date format should look like in German etc.
         registerLocaleData(localeDe);
