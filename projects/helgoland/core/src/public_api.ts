@@ -14,3 +14,4 @@ export * from './lib/time/index';
 export * from './lib/color/color.service';
 export * from './lib/dataset/dataset.service';
 export * from './lib/pipes/index';
+export * from './lib/status-check/status-check.service';
