@@ -2239,7 +2239,7 @@
 </nav>
                </div>
                <!-- START CONTENT -->
-               <div class="content interface">
+               <div class="content injectable">
                    <div class="content-data">
 
 
@@ -2247,13 +2247,9 @@
 
 
 
-
-
-
-
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li>PresenterMessage</li>
+  <li>Injectables</li>
+  <li>StatusCheckService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -2273,122 +2269,792 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/@helgoland/core/src/presenting/presenter-message.ts</code>
+            <code>src/@helgoland/core/src/status-check/status-check.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
+the corresponding method gives back the URLs which are not reachable. By default all URLs of the datasetApis settings parameter
+will be registered to the internal URLs</p>
 
-
-        <section>
-            <h3 id="index">Index</h3>
-            <table class="table table-sm table-bordered index-table">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <h6><b>Properties</b></h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <ul class="index-list">
-                                <li>
-                                        <a href="#message">message</a>
-                                </li>
-                                <li>
-                                        <a href="#type">type</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
+            </p>
 
 
             <section>
-                <h3 id="inputs">Properties</h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="message"></a>
-                                        <span class="name"><b>message</b><a href="#message"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>message:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#urls">urls</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addUrl">addUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkAll">checkAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkUrl">checkUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkUrls">checkUrls</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#doCheck">doCheck</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#doCheckUrl">doCheckUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeUrl">removeUrl</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(settingsService: <a href="../interfaces/Settings.html">SettingsService<Settings></a>, httpClient: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, useAPIUrls: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:15</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                    <td>settingsService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../interfaces/Settings.html" target="_self" >SettingsService&lt;Settings&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>httpClient</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>useAPIUrls</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addUrl"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            addUrl
+                            </b>
+                            <a href="#addUrl"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>addUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:54</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Adds the URL to the internal collection.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>url</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="checkAll"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            checkAll
+                            </b>
+                            <a href="#checkAll"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>checkAll()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:31</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;string[]&gt;</code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="checkUrl"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            checkUrl
+                            </b>
+                            <a href="#checkUrl"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>checkUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Checks the given URL.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>url</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>Observable with the URL if not reachable.</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="checkUrls"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            checkUrls
+                            </b>
+                            <a href="#checkUrls"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>checkUrls(urls: string[])</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Checks the given URLs.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>urls</td>
+                                                        <td>
+                                                                    <code>string[]</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;string[]&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    <p>Observable of all not reachable URLs.</p>
+
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="doCheck"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            doCheck
+                            </b>
+                            <a href="#doCheck"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>doCheck(urls: string[])</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:82</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>urls</td>
+                                                        <td>
+                                                                    <code>string[]</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;string[]&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="doCheckUrl"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            doCheckUrl
+                            </b>
+                            <a href="#doCheckUrl"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>doCheckUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:67</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>url</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="removeUrl"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            removeUrl
+                            </b>
+                            <a href="#removeUrl"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>removeUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Removes the URL of the internal collection.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>url</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="urls"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            urls
+                            </b>
+                            <a href="#urls"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon fa fa-reset"></span><code>urls:     <code>string[]</code>
 </code>
-                                    </td>
-                                </tr>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/@helgoland/core/src/status-check/status-check.service.ts:15</a></div>
+                            </td>
+                        </tr>
 
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+            </tbody>
+        </table>
+</section>
 
-                                        </td>
-                                    </tr>
-
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/@helgoland/core/src/presenting/presenter-message.ts:5</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="type"></a>
-                                        <span class="name"><b>type</b><a href="#type"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>type:     <code><a href="../interfaces/PresenterMessage.html" target="_self" >PresenterMessageType</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/PresenterMessage.html" target="_self" >PresenterMessageType</a></code>
-
-                                        </td>
-                                    </tr>
-
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="4" class="link-to-prism">src/@helgoland/core/src/presenting/presenter-message.ts:4</a></div>
-                                        </td>
-                                    </tr>
-
-                        </tbody>
-                    </table>
-            </section>
     </div>
 
 
     <div class="tab-pane fade tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PresenterMessageType } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
+import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+import { Settings, SettingsService } from &#x27;@helgoland/core&#x27;;
+import { Observable } from &#x27;rxjs/Observable&#x27;;
+import { Observer } from &#x27;rxjs/Observer&#x27;;
 
-export interface PresenterMessage {
-    type: PresenterMessageType;
-    message: string;
+/**
+ * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
+ * the corresponding method gives back the URLs which are not reachable. By default all URLs of the datasetApis settings parameter
+ * will be registered to the internal URLs
+ */
+@Injectable()
+export class StatusCheckService {
+
+  private urls: string[] &#x3D; [];
+
+  constructor(
+    private settingsService: SettingsService&lt;Settings&gt;,
+    private httpClient: HttpClient,
+    @Optional() private useAPIUrls: boolean
+  ) {
+    const settings &#x3D; this.settingsService.getSettings();
+    if (useAPIUrls &#x3D;&#x3D; null || useAPIUrls &amp;&amp; settings.datasetApis) {
+      settings.datasetApis.forEach((entry) &#x3D;&gt; this.addUrl(entry.url));
+    }
+  }
+
+  /**
+   * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable
+   */
+  public checkAll(): Observable&lt;string[]&gt; {
+    return this.doCheck(this.urls);
+  }
+
+  /**
+   * Checks the given URL.
+   * @returns Observable with the URL if not reachable.
+   */
+  public checkUrl(url: string): Observable&lt;string&gt; {
+    return this.doCheckUrl(url);
+  }
+
+  /**
+   * Checks the given URLs.
+   * @returns Observable of all not reachable URLs.
+   */
+  public checkUrls(urls: string[]): Observable&lt;string[]&gt; {
+    return this.doCheck(urls);
+  }
+
+  /**
+   * Adds the URL to the internal collection.
+   */
+  public addUrl(url: string) {
+    const index &#x3D; this.urls.indexOf(url);
+    if (index &#x3D;&#x3D;&#x3D; -1) { this.urls.push(url); }
+  }
+
+  /**
+   * Removes the URL of the internal collection.
+   */
+  public removeUrl(url: string) {
+    const index &#x3D; this.urls.indexOf(url);
+    if (index &gt; -1) { this.urls.splice(index, 1); }
+  }
+
+  private doCheckUrl(url: string): Observable&lt;string&gt; {
+    return new Observable((observer: Observer&lt;string&gt;) &#x3D;&gt; {
+      this.httpClient.get(url).subscribe(
+        (res) &#x3D;&gt; {
+          observer.next(null);
+          observer.complete();
+        },
+        (error) &#x3D;&gt; {
+          observer.next(url);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  private doCheck(urls: string[]): Observable&lt;string[]&gt; {
+    const requests: Array&lt;Observable&lt;string&gt;&gt; &#x3D; [];
+    urls.forEach((url) &#x3D;&gt; requests.push(this.doCheckUrl(url)));
+    return Observable.forkJoin(requests).map((checkedUrls) &#x3D;&gt; {
+      return checkedUrls.filter((entry) &#x3D;&gt; {
+        if (entry) {
+          return entry;
+        }
+      });
+    });
+  }
+
 }
 </code></pre>
     </div>
+
 </div>
+
+
+
+
 
 
 
@@ -2419,7 +3085,7 @@ export interface PresenterMessage {
 
         <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_URL = 'PresenterMessage.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'StatusCheckService.html';
         </script>
 
        <script src="../js/search/search.js"></script>
