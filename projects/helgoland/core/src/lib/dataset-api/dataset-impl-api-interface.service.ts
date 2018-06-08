@@ -8,20 +8,16 @@ import moment from 'moment';
 import { Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import {
-    Category,
-    Data,
-    Dataset,
-    Feature,
-    Offering,
-    Phenomenon,
-    Platform,
-    Procedure,
-    Service,
-    Station,
-    Timeseries,
-    TimeseriesExtras,
-} from '../model';
+import { Category } from '../model/dataset-api/category';
+import { Data } from '../model/dataset-api/data';
+import { Dataset, Timeseries, TimeseriesExtras } from '../model/dataset-api/dataset';
+import { Feature } from '../model/dataset-api/feature';
+import { Offering } from '../model/dataset-api/offering';
+import { Phenomenon } from '../model/dataset-api/phenomenon';
+import { Platform } from '../model/dataset-api/platform';
+import { Procedure } from '../model/dataset-api/procedure';
+import { Service } from '../model/dataset-api/service';
+import { Station } from '../model/dataset-api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { DatasetApiInterface } from './api-interface';
