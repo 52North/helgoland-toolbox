@@ -24,6 +24,7 @@ import {
   Settings,
   SettingsService,
   SplittedDataDatasetApiInterface,
+  StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetTableModule } from '@helgoland/depiction/dataset-table';
@@ -78,6 +79,13 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
+  {
+    provide: StatusCheckService,
+    useFactory: (settings: SettingsService<Settings>, client: HttpClient) => {
+      return new StatusCheckService(settings, client, true);
+    },
+    deps: [SettingsService, HttpClient]
+  },
   {
     provide: DatasetApiInterface,
     useClass: SplittedDataDatasetApiInterface
