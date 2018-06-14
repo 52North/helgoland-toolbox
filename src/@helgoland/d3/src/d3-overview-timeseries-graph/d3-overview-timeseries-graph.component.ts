@@ -45,6 +45,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     public isContentLoading: (loading: boolean) => void;
 
     public overviewTimespan: Timespan;
+    public timespan: Timespan;
 
     private init = false;
 
@@ -66,12 +67,13 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
         }
     }
 
-    public timeChanged(timespan: Timespan) {
+    public timeSpanChanged(timespan: Timespan) {
         this.onTimespanChanged.emit(timespan);
     }
 
     private calculateOverviewRange() {
         const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+        this.timespan = timespan;
         this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
         this.graphOptions.selection.range = {
             from: timespan.from,
