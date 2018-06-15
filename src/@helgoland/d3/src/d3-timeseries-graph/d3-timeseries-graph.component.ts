@@ -102,7 +102,6 @@ export class D3TimeseriesGraphComponent
     private focuslabelTime: any;
     private bufferSum: number;
     private labelTimestamp: any;
-    private overviewTimespanInterval: [number, number];
 
     private dragging: boolean;
     private dragStart: [number, number];
@@ -576,12 +575,8 @@ export class D3TimeseriesGraphComponent
                 .on('end', () => {
                     // on mouseclick change time after brush was moved
                     if (this.mousedownBrush) {
-                        let xDom = this.getxDomain(d3.event.selection[0], d3.event.selection[1]);
-                        if (xDom[0] !== undefined && xDom[1] !== undefined) {
-                            let xDom2 = xDom[0] + (this.mainTimeInterval.to - this.mainTimeInterval.from);
-                            this.changeTime(xDom[0], xDom[1]);
-                            this.overviewTimespanInterval = [xDom[0], xDom[1]];
-                        }
+                        let timeByCoord = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1]);
+                        this.changeTime(timeByCoord[0], timeByCoord[1]);
                     }
                     this.mousedownBrush = false;
                 });
@@ -615,48 +610,59 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
-     * Function to return x diagram coordinate of main diagram time interval.
-     * Calculate to get brush extent at the beginning.
+     * Function that calculates and returns the x diagram coordinate for the brush range
+     * for the overview diagram by the selected time interval of the main diagram.
+     * Calculate to get brush extent when main diagram time interval changes.
      */
     private getXDomainByTimestamp () {
-        let arrayOfElemLow = new Array();
-        let arrayOfElemHigh = new Array();
-        this.preparedData.forEach((entry) => {
+        /**
+         * calculate range of brush with timestamp and not diagram coordinates
+         * formula:
+         * brush_min =
+         * (overview_width / (overview_max - overview_min)) * (brush_min - overview_min)
+         * brus_max =
+         * (overview_width / (overview_max - overview_min)) * (brush_max - overview_min)
+         */
 
-            // find first index equal or smaller than the start of the selected timespan
-            let idxLow = entry.data.findIndex((elem) => elem.timestamp === this.mainTimeInterval.from);
-            // if not found any data for selected time, take one smaller
-            if (idxLow < 0) {
-                idxLow = entry.data.findIndex((elem) =>  elem.timestamp >= this.mainTimeInterval.from);
-                idxLow -= 1;
-            }
-            // push x diagram coord of data
-            if (idxLow >= 0) {
-                arrayOfElemLow.push(entry.data[idxLow].xDiagCoord);
-            }
+        let minOverviewTimeInterval = this.timespan.from;
+        let maxOverviewTimeInterval = this.timespan.to;
+        let minDiagramTimestamp = this.mainTimeInterval.from;
+        let maxDiagramTimestamp = this.mainTimeInterval.to;
+        let diagramWidth = this.width;
 
-            // find last index equal or bigger than the end of the selected timespan
-            let idxHigh = entry.data.findIndex((elem, idx) => {
-                if (elem.timestamp === this.mainTimeInterval.to || elem.timestamp >= this.mainTimeInterval.to) {
-                    return elem;
-                }
-            });
-            if (idxHigh >= 0) {
-                // push x diagram coord of data
-                arrayOfElemHigh.push(entry.data[idxHigh].xDiagCoord);
-            }
-        });
+        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+        let divOverviewTimeWidth = diagramWidth / diffOverviewTimeInterval;
+        let minCalcBrush = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
+        let maxCalcBrush = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
 
-        let minMainTimeInterval = this.timespan.from;
-        let maxMainTimeInterval = this.timespan.to;
+        return [minCalcBrush, maxCalcBrush];
+    }
 
-        // take maximum of smalles ranges and minimum of biggest ranges
-        if (arrayOfElemLow.length !== 0 && arrayOfElemHigh.length !== 0) {
-            minMainTimeInterval = Math.max.apply(null, arrayOfElemLow);
-            maxMainTimeInterval = Math.min.apply(null, arrayOfElemHigh);
-        }
+    /**
+     * Function that calculates and returns the timestamp for the main diagram calculated
+     * by the selected coordinate of the brush range.
+     * @param minCalcBrush {Number} Number with the minimum coordinate of the selected brush range.
+     * @param maxCalcBrush {Number} Number with the maximum coordinate of the selected brush range.
+     */
+    private getTimestampByCoord(minCalcBrush, maxCalcBrush) {
+        /**
+         * calculate range of brush with timestamp and not diagram coordinates
+         * formula:
+         * minDiagramTimestamp =
+         * ((minCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
+         * maxDiagramTimestamp =
+         * ((maxCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
+         */
 
-        return [minMainTimeInterval, maxMainTimeInterval];
+        let minOverviewTimeInterval = this.timespan.from;
+        let maxOverviewTimeInterval = this.timespan.to;
+        let diagramWidth = this.width;
+
+        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+        let minDiagramTimestamp = ((minCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+        let maxDiagramTimestamp = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+
+        return [minDiagramTimestamp, maxDiagramTimestamp];
     }
 
     /**
@@ -988,6 +994,9 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that shows labeling via mousmove.
+     */
     private mousemoveHandler = () => {
         const coords = d3.mouse(this.background.node());
         this.ypos = [];
@@ -1034,17 +1043,25 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that hides the labeling inside the graph.
+     */
     private mouseoutHandler = () => {
         this.hideDiagramIndicator();
     }
 
-    // drag handling for move
+    /**
+     * Function starting the drag handling for the diagram.
+     */
     private panStartHandler = () => {
         this.draggingMove = false;
         this.dragMoveStart = d3.event.x;
         this.dragMoveRange = this.xAxisRange;
     }
 
+    /**
+     * Function that controlls the panning (dragging) of the graph.
+     */
     private panMoveHandler = () => {
         this.draggingMove = true;
         if (this.dragMoveStart && this.draggingMove) {
@@ -1061,6 +1078,9 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that ends the dragging control.
+     */
     private panEndHandler = () => {
         this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
         this.plotGraph();
@@ -1068,18 +1088,26 @@ export class D3TimeseriesGraphComponent
         this.draggingMove = false;
     }
 
-    // drag handling for zoom
+    /**
+     * Function that starts the zoom handling.
+     */
     private zoomStartHandler = () => {
         this.dragging = false;
         this.dragStart = d3.mouse(this.background.node());
         this.xAxisRangeOrigin.push(this.xAxisRange);
     }
 
+    /**
+     * Function that draws a rectangle when zoom is started and the mouse is moving.
+     */
     private zoomHandler = () => {
         this.dragging = true;
         this.drawDragRectangle();
     }
 
+    /**
+     * Function that ends the zoom handling and calculates the via zoom selected time interval.
+     */
     private zoomEndHandler = () => {
         if (!this.dragStart || !this.dragging) {
             if (this.xAxisRangeOrigin[0]) {
@@ -1104,7 +1132,11 @@ export class D3TimeseriesGraphComponent
         this.resetDrag();
     }
 
-    // return timestamp of provided diagram coord
+    /**
+     * Function that returns the timestamp of provided x diagram coordinates.
+     * @param start {Number} Number with the minimum diagram coordinate.
+     * @param end {Number} Number with the maximum diagram coordinate.
+     */
     private getxDomain(start: number, end: number) {
         let domMinArr = [];
         let domMaxArr = [];
@@ -1153,6 +1185,9 @@ export class D3TimeseriesGraphComponent
         return [domMin, domMax];
     }
 
+    /**
+     * Function that configurates and draws the rectangle.
+     */
     private drawDragRectangle() {
         if (!this.dragStart) { return; }
         this.dragCurrent = d3.mouse(this.background.node());
@@ -1178,6 +1213,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that prepares the retrieved timestamp in a specific object format.
+     * @param from {Number} Number with the minimum timestamp.
+     * @param to {Number} Number with the maximum timestamp.
+     */
     private prepareRange(from: number, to: number) {
         if (from <= to) {
             return { from, to };
@@ -1185,6 +1225,9 @@ export class D3TimeseriesGraphComponent
         return { from: to, to: from };
     }
 
+    /**
+     * Function that disables the drawing rectangle control.
+     */
     private resetDrag() {
         if (this.dragRectG) {
             this.dragRectG.remove();
@@ -1193,6 +1236,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that returns the metadata of a specific entry in the dataset.
+     * @param x {Number} Number of the dataset entry.
+     * @param data {DataEntry} Array with the data of each dataset entry.
+     */
     private getItemForX(x: number, data: DataEntry[]) {
         const index = this.xScaleBase.invert(x);
         const bisectDate = d3.bisector((d: DataEntry) => {
@@ -1201,12 +1249,22 @@ export class D3TimeseriesGraphComponent
         return bisectDate(data, index);
     }
 
+    /**
+     * Function that disables the labeling.
+     */
     private hideDiagramIndicator() {
         this.focusG.style('visibility', 'hidden');
         d3.selectAll('.focus-visibility')
             .attr('visibility', 'hidden');
     }
 
+    /**
+     * Function that enables the lableing of each dataset entry.
+     * @param entry {DataEntry} Object containing the dataset.
+     * @param idx {Number} Number with the position of the dataset entry in the data array.
+     * @param xCoordMouse {Number} Number of the x coordinate of the mouse.
+     * @param entryIdx {Number} Number of the index of the entry.
+     */
     private showDiagramIndicator = (entry, idx: number, xCoordMouse: number, entryIdx: number) => {
         const item = entry.data[idx];
         if (item !== undefined) {
@@ -1224,7 +1282,7 @@ export class D3TimeseriesGraphComponent
             labelBuffer = Math.max(4, labelBuffer);
 
             this.showLabelValues(entry, item, onLeftSide);
-            this.showTimeIndicatorLabel(item, onLeftSide, xCoordMouse, entryIdx);
+            this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
 
             if ((xCoordMouse) > (item.xDiagCoord + labelBuffer) || (xCoordMouse) < (item.xDiagCoord - labelBuffer)) {
                 // hide label if mouse to far from coordinate
@@ -1232,7 +1290,7 @@ export class D3TimeseriesGraphComponent
 
                 if (entry.data[idx - 1] && entry.data[idx - 1].xDiagCoord + labelBuffer >= xCoordMouse) {
                     this.showLabelValues(entry, entry.data[idx - 1], onLeftSide);
-                    this.showTimeIndicatorLabel(item, onLeftSide, xCoordMouse, entryIdx);
+                    this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
 
                     this.chVisLabel(entry, true);
                 }
@@ -1243,7 +1301,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    // function to change visibility of label and white rectangle inside graph (next to mouse-cursor line)
+    /**
+     * Function to change visibility of label and white rectangle inside graph (next to mouse-cursor line).
+     * @param entry {DataEntry} Object containing the dataset.
+     * @param visible {Boolean} Boolean giving information about visibility of a label.
+     */
     private chVisLabel(entry, visible: boolean) {
         if (visible) {
             entry.focusLabel
@@ -1260,6 +1322,12 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to show the labeling inside the graph.
+     * @param entry {DataEntry} Object containg the dataset.
+     * @param item {DataEntry} Object of the entry in the dataset.
+     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
+     */
     private showLabelValues(entry, item: DataEntry, onLeftSide: boolean) {
         let id = 1;
         if (entry.focusLabel) {
@@ -1279,7 +1347,13 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean, xCoord: number, entryIdx: number) {
+    /**
+     * Function to show the time labeling inside the graph.
+     * @param item {DataEntry} Object of the entry in the dataset.
+     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
+     * @param entryIdx {Number} Number of the index of the entry.
+     */
+    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean, entryIdx: number) {
         // timestamp is the time where the mouse-cursor is
         this.labelTimestamp[entryIdx] = item.timestamp;
         let min = d3.min(this.labelTimestamp);
@@ -1300,6 +1374,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that returns the boundings of a html element.
+     * @param el {Object} Object of the html element.
+     */
     private getDimensions(el: any) {
         let w = 0;
         let h = 0;
@@ -1316,6 +1394,10 @@ export class D3TimeseriesGraphComponent
         };
     }
 
+    /**
+     * Function that logs the error in the console.
+     * @param error {Object} Object with the error.
+     */
     private onError(error: any) {
         console.error(error);
     }
