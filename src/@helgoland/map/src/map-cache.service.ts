@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 @Injectable()
 export class MapCache {
