@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, KeyValueDiffers } from '@angular/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 @Component({
     selector: 'n52-geometry-map-viewer',

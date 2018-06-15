@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { HasLoadableContent, ParameterFilter } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 export abstract class MapSelectorComponent<T>
     extends CachedMapComponent

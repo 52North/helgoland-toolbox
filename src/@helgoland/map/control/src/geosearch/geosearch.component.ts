@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GeoSearch, GeoSearchOptions, GeoSearchResult, MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 @Component({
     selector: 'n52-geosearch-control',

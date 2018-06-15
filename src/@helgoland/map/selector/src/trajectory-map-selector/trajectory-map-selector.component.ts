@@ -20,7 +20,7 @@ import {
     Timespan,
 } from '@helgoland/core';
 import { MapCache } from '@helgoland/map';
-import L from 'leaflet';
+import * as L from 'leaflet';
 
 import { MapSelectorComponent } from '../map-selector.component';
 import { TrajectoryResult } from '../model/trajectory-result';
