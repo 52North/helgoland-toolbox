@@ -71,6 +71,10 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
         this.onTimespanChanged.emit(timespan);
     }
 
+    public onGraphLoading(loading: boolean) {
+        this.isContentLoading(loading);
+    }
+
     private calculateOverviewRange() {
         const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
         this.timespan = timespan;

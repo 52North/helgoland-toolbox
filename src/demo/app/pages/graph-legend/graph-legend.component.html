@@ -6,7 +6,7 @@
     <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" 
       [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)"
       (onSelectId)="setSelected($event)"
-      (onContentLoading)="graphLoading = $event" #diagram></n52-d3-timeseries-graph>
+      (onContentLoading)="onGraphLoading($event)" #diagram></n52-d3-timeseries-graph>
   </div>
   <div>
     Loading Graph: {{graphLoading}}
