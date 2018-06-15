@@ -56,10 +56,11 @@ export class D3TimeseriesGraphComponent
     @Output()
     public onSelectId: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
-
-    private preparedData = Array(); // : DataSeries[]
 
     // set zoom limit --> can be adapted to needs
     private config = {
@@ -67,6 +68,8 @@ export class D3TimeseriesGraphComponent
             zoomLimit: 10800000  // 3 hour ((3 * 3600) * 1000) limitation
         }
     };
+
+    private preparedData = Array(); // : DataSeries[]
 
     private mousedownBrush: boolean;
     private rawSvg: any;
@@ -121,6 +124,8 @@ export class D3TimeseriesGraphComponent
     };
 
     private datasetMap: Map<string, DataConst> = new Map();
+
+    private loadingCounter: number = 0;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -225,6 +230,10 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
+    private isContentLoadingD3(loading: boolean): void {
+        this.onContentLoading.emit(loading);
+    };
+
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
         this.loadDataset(dataset);
@@ -233,6 +242,9 @@ export class D3TimeseriesGraphComponent
     // load data of dataset
     private loadDataset(dataset: IDataset) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
+        if (this.loadingCounter === 0) {
+            this.isContentLoadingD3(true); }
+        this.loadingCounter++;
 
         if (dataset instanceof Timeseries) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
@@ -253,9 +265,15 @@ export class D3TimeseriesGraphComponent
                 (error) => this.onError(error),
                 () => {
                     console.log('loadDataset() - complete data loaded');
-                } // this.onCompleteLoadingData(dataset)
+                    this.onCompleteLoadingData(dataset);
+                }
             );
         }
+    }
+
+    private onCompleteLoadingData(dataset: IDataset) {
+        this.loadingCounter--;
+        if (this.loadingCounter === 0) { this.isContentLoadingD3(false); }
     }
 
     /**
@@ -605,39 +623,40 @@ export class D3TimeseriesGraphComponent
         let arrayOfElemHigh = new Array();
         this.preparedData.forEach((entry) => {
 
-            // find first index equal to bigger than the start of the selected timespan
-            let idxLow = entry.data.findIndex((elem) => {
-                if (elem.timestamp === this.mainTimeInterval.from || elem.timestamp >= this.mainTimeInterval.from) {
-                    return elem;
-                }
-            });
-            if (idxLow >= 1) {
-                // push equal or one bigger than the start of the selected timespan
-                arrayOfElemLow.push(entry.data[idxLow - 1].xDiagCoord);
-            } else if (idxLow === 0) {
-                arrayOfElemLow.push(entry.data[0].xDiagCoord);
+            // find first index equal or smaller than the start of the selected timespan
+            let idxLow = entry.data.findIndex((elem) => elem.timestamp === this.mainTimeInterval.from);
+            // if not found any data for selected time, take one smaller
+            if (idxLow < 0) {
+                idxLow = entry.data.findIndex((elem) =>  elem.timestamp >= this.mainTimeInterval.from);
+                idxLow -= 1;
             }
+            // push x diagram coord of data
+            if (idxLow >= 0) {
+                arrayOfElemLow.push(entry.data[idxLow].xDiagCoord);
+            }
+
             // find last index equal or bigger than the end of the selected timespan
             let idxHigh = entry.data.findIndex((elem, idx) => {
                 if (elem.timestamp === this.mainTimeInterval.to || elem.timestamp >= this.mainTimeInterval.to) {
                     return elem;
                 }
             });
-            if (idxHigh >= 1) {
-                // push equal or one bigger than the end of the selected timespan
-                arrayOfElemHigh.push(entry.data[idxHigh - 1].xDiagCoord);
+            if (idxHigh >= 0) {
+                // push x diagram coord of data
+                arrayOfElemHigh.push(entry.data[idxHigh].xDiagCoord);
             }
         });
 
-        let minmainTimeInterval = this.timespan.from;
-        let maxmainTimeInterval = this.timespan.to;
+        let minMainTimeInterval = this.timespan.from;
+        let maxMainTimeInterval = this.timespan.to;
 
+        // take maximum of smalles ranges and minimum of biggest ranges
         if (arrayOfElemLow.length !== 0 && arrayOfElemHigh.length !== 0) {
-            minmainTimeInterval = Math.min.apply(null, arrayOfElemLow);
-            maxmainTimeInterval = Math.min.apply(null, arrayOfElemHigh);
+            minMainTimeInterval = Math.max.apply(null, arrayOfElemLow);
+            maxMainTimeInterval = Math.min.apply(null, arrayOfElemHigh);
         }
 
-        return [minmainTimeInterval, maxmainTimeInterval];
+        return [minMainTimeInterval, maxMainTimeInterval];
     }
 
     /**
