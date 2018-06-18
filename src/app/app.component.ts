@@ -5,7 +5,7 @@ import { Language, StatusCheckService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'n52-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

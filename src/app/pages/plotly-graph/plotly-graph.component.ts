@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { TimedDatasetOptions } from '@helgoland/core';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './plotly-graph.component.html',
     styleUrls: ['./plotly-graph.component.css']
 })

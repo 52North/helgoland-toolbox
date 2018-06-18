@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IDataset, Provider } from '@helgoland/core';
 import { ListSelectorParameter } from '@helgoland/selector';
-import { selector } from 'rxjs/operator/publish';
-
-// import { IDataset, ListSelectorParameter, Provider } from '../../../../../src';
 
 @Component({
-    selector: 'list-selection',
     templateUrl: './list-selection.component.html',
     styleUrls: ['./list-selection.component.scss']
 })

@@ -15,7 +15,6 @@ L.Marker.prototype.options.icon = L.icon({
 });
 
 @Component({
-    selector: 'my-app',
     templateUrl: './map-selector.component.html',
     styleUrls: ['./map-selector.component.css']
 })
@@ -36,7 +35,7 @@ export class MapSelectorComponent {
     public stationFilter: ParameterFilter = {
         // phenomenon: '8'
     };
-    public statusIntervals: boolean = false;
+    public statusIntervals = false;
     public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
 
     public searchOptions: GeoSearchOptions = { countrycodes: [] };

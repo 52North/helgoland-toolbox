@@ -10,12 +10,10 @@ import {
 } from '@helgoland/core';
 import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
 import { GeoJsonObject, LineString, Point } from 'geojson';
-import { selector } from 'rxjs/operator/publish';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
-    selector: 'trajectory',
     templateUrl: './trajectory.component.html',
     styleUrls: ['./trajectory.component.scss']
 })

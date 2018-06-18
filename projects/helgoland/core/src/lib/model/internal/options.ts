@@ -3,12 +3,12 @@ export class DatasetOptions {
     public color: string;
     public visible = true;
     public loading?: boolean;
-    public separateYAxe?= false;
-    public zeroBasedYAxe?= false;
-    public generalize?= false;
+    public separateYAxe ?= false;
+    public zeroBasedYAxe ?= false;
+    public generalize ?= false;
     public showReferenceValues: ReferenceValueOption[] = [];
-    public pointRadius: number = 0;
-    public lineWidth: number = 1;
+    public pointRadius = 0;
+    public lineWidth = 1;
 
     constructor(
         internalId: string,

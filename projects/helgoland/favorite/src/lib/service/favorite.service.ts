@@ -9,7 +9,7 @@ export class FavoriteService {
 
   private singleFavs: Map<string, SingleFavorite>;
   private groupFavs: Map<string, GroupFavorite>;
-  private groupCounter: number = 0;
+  private groupCounter = 0;
 
   constructor(
     protected localStorage: LocalStorage

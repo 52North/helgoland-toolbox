@@ -802,7 +802,7 @@ export class D3TimeseriesGraphComponent
                 .attr('d', line);
 
             this.graphBody.selectAll('.dot')
-                .data(data.filter((d) => { return d; }))
+                .data(data.filter((d) => d))
                 .enter().append('circle')
                 .attr('class', 'dot')
                 .attr('stroke', entry.color)
@@ -831,7 +831,7 @@ export class D3TimeseriesGraphComponent
                     firstLabel.push(e);
                 }
             });
-            let yPos = firstLabel.sort((a, b) => { return a.y - b.y; });
+            let yPos = firstLabel.sort((a, b) => a.y - b.y);
             yPos.forEach((p, i) => {
                 if (i > 0) {
                     let last = yPos[i - 1].y;
@@ -839,7 +839,7 @@ export class D3TimeseriesGraphComponent
                     yPos[i].y += yPos[i].off;
                 }
             });
-            yPos.sort((a, b) => { return a.idx - b.idx; });
+            yPos.sort((a, b) => a.idx - b.idx);
 
             let c1 = 0;
             let c2 = 0;

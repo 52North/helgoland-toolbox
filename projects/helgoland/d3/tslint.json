@@ -12,6 +12,7 @@
             "element",
             "n52",
             "kebab-case"
-        ]
+        ],
+        "prefer-const": false
     }
 }

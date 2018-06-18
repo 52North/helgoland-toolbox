@@ -75,8 +75,8 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
 const APP_PROVIDERS = [
   {
     provide: StatusCheckService,
-    useFactory: (settings: SettingsService<Settings>, client: HttpClient) => {
-      return new StatusCheckService(settings, client, true);
+    useFactory: (settingsService: SettingsService<Settings>, client: HttpClient) => {
+      return new StatusCheckService(settingsService, client, true);
     },
     deps: [SettingsService, HttpClient]
   },

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { DatasetApi, ParameterFilter, PlatformTypes, ValueTypes } from '@helgoland/core';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './service-selector.component.html',
     styleUrls: ['./service-selector.component.css']
 })
