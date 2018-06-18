@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { DatasetOptions, Timespan } from '@helgoland/core';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.css']
 })

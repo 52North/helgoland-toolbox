@@ -31,8 +31,8 @@ export * from './lib/local-storage/local-storage.service';
 export * from './lib/model/dataset-api/data';
 export * from './lib/model/dataset-api/dataset';
 export * from './lib/model/dataset-api/parameter';
-export * from './lib/model/dataset-api/service'
-export * from './lib/model/dataset-api/station'
+export * from './lib/model/dataset-api/service';
+export * from './lib/model/dataset-api/station';
 export * from './lib/model/dataset-api/platform';
 export * from './lib/model/dataset-api/phenomenon';
 export * from './lib/model/dataset-api/procedure';
@@ -40,7 +40,7 @@ export * from './lib/model/dataset-api/offering';
 export * from './lib/model/dataset-api/feature';
 export * from './lib/model/dataset-api/category';
 export * from './lib/model/dataset-api/enums';
-export * from './lib/model/internal/http-requests'
+export * from './lib/model/internal/http-requests';
 export * from './lib/model/internal/provider';
 export * from './lib/model/internal/filter';
 export * from './lib/model/internal/dataset-table-data';

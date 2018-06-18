@@ -7,7 +7,6 @@ import { StyleModificationComponent } from '../../components/style-modification/
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './graph-legend.component.html',
     styleUrls: ['./graph-legend.component.css']
 })

@@ -4,7 +4,6 @@ import { D3PlotOptions } from '@helgoland/d3';
 import { PlotOptions } from '@helgoland/flot';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './timeseries-graph.component.html',
     styleUrls: ['./timeseries-graph.component.css']
 })

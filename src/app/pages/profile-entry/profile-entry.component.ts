@@ -5,7 +5,6 @@ import { TimedDatasetOptions } from '@helgoland/core';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './profile-entry.component.html',
     styleUrls: ['./profile-entry.component.scss']
 })

@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './geometry-view.component.html',
     styleUrls: ['./geometry-view.component.scss']
 })

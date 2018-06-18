@@ -31,7 +31,7 @@
     "lint": "ng lint",
     "ng": "ng",
     "preversion": "npm run lint",
-    "version": "npm run lib:bumpVersions && npm run lib:build && git add -A src",
+    "version": "npm run lib:bumpVersion && npm run lib:build && git add -A src",
     "start": "ng serve",
     "test": "ng test"
   },

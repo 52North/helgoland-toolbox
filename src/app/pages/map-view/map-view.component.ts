@@ -4,7 +4,6 @@ import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerOptions, 
 import L, { circleMarker, LayerEvent } from 'leaflet';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './map-view.component.html',
     styleUrls: ['./map-view.component.css']
 })

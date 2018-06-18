@@ -3,7 +3,6 @@ import { NotifierService, Timespan } from '@helgoland/core';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'time',
   templateUrl: './time.component.html',
   styleUrls: ['./time.component.css']
 })

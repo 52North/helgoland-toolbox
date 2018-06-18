@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DatasetOptions } from '@helgoland/core';
 
 @Component({
-    selector: 'my-app',
     templateUrl: './style-modification.component.html',
     styleUrls: ['./style-modification.component.scss']
 })

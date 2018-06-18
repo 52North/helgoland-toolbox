@@ -3,7 +3,6 @@ import { DatasetOptions, Timespan } from '@helgoland/core';
 import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
 
 @Component({
-  selector: 'my-app',
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.css']
 })
