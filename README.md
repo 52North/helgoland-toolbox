@@ -2,9 +2,9 @@
 
 > tools for a sensor observation service based client
 
-[![npm version](https://badge.fury.io/js/helgoland-toolbox.svg)](https://badge.fury.io/js/helgoland-toolbox)
-[![dependencies Status](https://david-dm.org/52north/helgoland-toolbox/status.svg)](https://david-dm.org/52north/helgoland-toolbox)
-[![devDependencies Status](https://david-dm.org/52north/helgoland-toolbox/dev-status.svg)](https://david-dm.org/52north/helgoland-toolbox?type=dev)
+[![npm version](https://badge.fury.io/js/%40helgoland%2Fcore.svg)](https://badge.fury.io/js/%40helgoland%2Fcore)
+<!-- [![dependencies Status](https://david-dm.org/52north/helgoland-toolbox/status.svg)](https://david-dm.org/52north/helgoland-toolbox)
+[![devDependencies Status](https://david-dm.org/52north/helgoland-toolbox/dev-status.svg)](https://david-dm.org/52north/helgoland-toolbox?type=dev) -->
 
 This project contains [Angular](https://angular.io/) based Modules, Components, Injectables to build a sensor observation service based client. 
 
