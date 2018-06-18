@@ -482,46 +482,6 @@
         }
       }
     },
-    "@helgoland/label-mapper": {
-      "root": "projects/helgoland/label-mapper",
-      "sourceRoot": "projects/helgoland/label-mapper/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/helgoland/label-mapper/tsconfig.lib.json",
-            "project": "projects/helgoland/label-mapper/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/helgoland/label-mapper/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/helgoland/label-mapper/src/test.ts",
-            "tsConfig": "projects/helgoland/label-mapper/tsconfig.spec.json",
-            "karmaConfig": "projects/helgoland/label-mapper/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/helgoland/label-mapper/tsconfig.lib.json",
-              "projects/helgoland/label-mapper/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "@helgoland/time": {
       "root": "projects/helgoland/time",
       "sourceRoot": "projects/helgoland/time/src",
