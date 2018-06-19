@@ -681,6 +681,46 @@
           }
         }
       }
+    },
+    "@helgoland/auth": {
+      "root": "projects/helgoland/auth",
+      "sourceRoot": "projects/helgoland/auth/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/auth/tsconfig.lib.json",
+            "project": "projects/helgoland/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/auth/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/auth/src/test.ts",
+            "tsConfig": "projects/helgoland/auth/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/auth/tsconfig.lib.json",
+              "projects/helgoland/auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "helgoland-toolbox"

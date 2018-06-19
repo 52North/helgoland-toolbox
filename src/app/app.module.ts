@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -13,6 +13,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
+import { BasicAuthService } from '@helgoland/auth';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import { HelgolandControlModule } from '@helgoland/control';
 import {
@@ -43,12 +44,12 @@ import { HelgolandTimeRangeSliderModule } from '@helgoland/time-range-slider';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { settings } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
+import { EventingComponent } from './pages/eventing/eventing.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
@@ -63,14 +64,7 @@ import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
-
-@Injectable()
-export class ExtendedSettingsService extends SettingsService<Settings> {
-  constructor() {
-    super();
-    this.setSettings(settings);
-  }
-}
+import { ExtendedSettingsService } from './settings/settings.service';
 
 const APP_PROVIDERS = [
   {
@@ -91,7 +85,8 @@ const APP_PROVIDERS = [
   {
     provide: GeoSearch,
     useClass: NominatimGeoSearchService
-  }
+  },
+  BasicAuthService
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -104,23 +99,24 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   declarations: [
     AppComponent,
-    LocalSelectorImplComponent,
-    StyleModificationComponent,
-    ServiceSelectorComponent,
-    ListSelectionComponent,
-    TimeseriesGraphComponent,
-    PlotlyGraphComponent,
-    TableComponent,
-    TimeComponent,
+    EventingComponent,
     FavoriteComponent,
-    PermalinkComponent,
-    ServiceFilterSelectorDemoPageComponent,
+    GeometryViewComponent,
+    GraphLegendComponent,
+    ListSelectionComponent,
+    LocalSelectorImplComponent,
     MapSelectorComponent,
     MapViewComponent,
+    PermalinkComponent,
+    PlotlyGraphComponent,
     ProfileEntryComponent,
-    GraphLegendComponent,
-    TrajectoryComponent,
-    GeometryViewComponent
+    ServiceFilterSelectorDemoPageComponent,
+    ServiceSelectorComponent,
+    StyleModificationComponent,
+    TableComponent,
+    TimeComponent,
+    TimeseriesGraphComponent,
+    TrajectoryComponent
   ],
   imports: [
     BrowserModule,

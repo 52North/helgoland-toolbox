@@ -1,6 +1,7 @@
 export const modules = [
   'core',
   'caching',
+  'auth',
   'control',
   'depiction',
   'favorite',
