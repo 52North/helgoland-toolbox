@@ -28,12 +28,11 @@ import { InternalIdHandler } from './internal-id-handler.service';
 export class DatasetImplApiInterface extends DatasetApiInterface {
 
     constructor(
-        protected http: HttpClient,
         protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
         protected translate: TranslateService
     ) {
-        super(http, httpservice, translate);
+        super(httpservice, translate);
     }
 
     public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
@@ -259,7 +258,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     }
 
     private requestApiTexted(url: string, params: ParameterFilter = {}): Observable<string> {
-        return this.http.get(url, {
+        return this.httpservice.client().get(url, {
             params: this.prepareParams(params),
             responseType: 'text'
         });
