@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
@@ -18,12 +17,11 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
     private maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
 
     constructor(
-        protected http: HttpClient,
         protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
         protected translate: TranslateService
     ) {
-        super(http, httpservice, internalDatasetId, translate);
+        super(httpservice, internalDatasetId, translate);
     }
 
     public getTsData<T>(

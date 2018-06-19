@@ -39,7 +39,6 @@ export class UriParameterCoder implements HttpParameterCodec {
 export abstract class DatasetApiInterface implements DatasetApiV2 {
 
     constructor(
-        protected http: HttpClient,
         protected httpService: HttpService,
         protected translate: TranslateService
     ) { }
