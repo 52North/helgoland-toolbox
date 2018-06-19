@@ -101,6 +101,12 @@
       ],
       "@helgoland/time-range-slider/*": [
         "dist/helgoland/time-range-slider/*"
+      ],
+      "@helgoland/auth": [
+        "dist/helgoland/auth"
+      ],
+      "@helgoland/auth/*": [
+        "dist/helgoland/auth/*"
       ]
     }
   }
