@@ -3,9 +3,10 @@
 */
 export * from './lib/core.module';
 
-export * from './lib/color/color.service';
+export * from './lib/abstract-services/api-interface';
+export * from './lib/abstract-services/dataset';
 
-export * from './lib/dataset/dataset.service';
+export * from './lib/color/color.service';
 
 export { DatasetApiV1 } from './lib/dataset-api/interfaces/api-v1.interface';
 export { DatasetApiV2 } from './lib/dataset-api/interfaces/api-v2.interface';

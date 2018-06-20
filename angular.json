@@ -721,6 +721,46 @@
           }
         }
       }
+    },
+    "@helgoland/eventing": {
+      "root": "projects/helgoland/eventing",
+      "sourceRoot": "projects/helgoland/eventing/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/eventing/tsconfig.lib.json",
+            "project": "projects/helgoland/eventing/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/eventing/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/eventing/src/test.ts",
+            "tsConfig": "projects/helgoland/eventing/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/eventing/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/eventing/tsconfig.lib.json",
+              "projects/helgoland/eventing/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "helgoland-toolbox"
