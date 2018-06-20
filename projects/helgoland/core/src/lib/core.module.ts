@@ -28,8 +28,7 @@ import { Time } from './time/time.service';
     Time,
     LocalStorage,
     NotifierService,
-    ColorService,
-    HttpService
+    ColorService
   ]
 })
 export class HelgolandCoreModule { }

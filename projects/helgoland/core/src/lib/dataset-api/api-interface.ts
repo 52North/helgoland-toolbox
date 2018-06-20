@@ -1,7 +1,8 @@
-import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
+import { HttpParameterCodec, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
+import { ApiInterface } from '../abstract-services/api-interface';
 import { Category } from '../model/dataset-api/category';
 import { Data } from '../model/dataset-api/data';
 import { Dataset, Timeseries, TimeseriesExtras } from '../model/dataset-api/dataset';
@@ -36,12 +37,12 @@ export class UriParameterCoder implements HttpParameterCodec {
     }
 }
 
-export abstract class DatasetApiInterface implements DatasetApiV2 {
+export abstract class DatasetApiInterface extends ApiInterface implements DatasetApiV2 {
 
     constructor(
         protected httpService: HttpService,
         protected translate: TranslateService
-    ) { }
+    ) { super(); }
 
     public abstract getPlatforms(
         apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
@@ -110,13 +111,6 @@ export abstract class DatasetApiInterface implements DatasetApiV2 {
     public abstract getProcedure(
         id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
     ): Observable<Procedure>;
-
-    protected createRequestUrl(apiUrl: string, endpoint: string, id?: string) {
-        // TODO Check whether apiUrl ends with slash
-        let requestUrl = apiUrl + endpoint;
-        if (id) { requestUrl += '/' + id; }
-        return requestUrl;
-    }
 
     protected requestApi<T>(url: string, params: ParameterFilter = {}, options: HttpServiceMetadata = {}): Observable<T> {
         return this.httpService.client(options).get<T>(url, { params: this.prepareParams(params) });

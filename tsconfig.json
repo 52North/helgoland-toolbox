@@ -107,6 +107,12 @@
       ],
       "@helgoland/auth/*": [
         "dist/helgoland/auth/*"
+      ],
+      "@helgoland/eventing": [
+        "dist/helgoland/eventing"
+      ],
+      "@helgoland/eventing/*": [
+        "dist/helgoland/eventing/*"
       ]
     }
   }

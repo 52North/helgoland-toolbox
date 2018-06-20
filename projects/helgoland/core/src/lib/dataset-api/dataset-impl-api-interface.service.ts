@@ -1,10 +1,8 @@
 import 'rxjs/add/operator/map';
 
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
-import moment from 'moment';
 import { Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -253,9 +251,9 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     //     throw new Error('Not implemented');
     // }
 
-    protected createRequestTimespan(timespan: Timespan): string {
-        return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
-    }
+    // protected createRequestTimespan(timespan: Timespan): string {
+    //     return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
+    // }
 
     private requestApiTexted(url: string, params: ParameterFilter = {}): Observable<string> {
         return this.httpservice.client().get(url, {

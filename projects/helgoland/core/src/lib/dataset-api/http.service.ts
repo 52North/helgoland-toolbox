@@ -15,7 +15,9 @@ export interface HttpServiceInterceptor {
     intercept(req: HttpRequest<any>, metadata: Partial<HttpServiceMetadata>, next: HttpServiceHandler);
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class HttpService {
 
     private handler: HttpServiceHandler;

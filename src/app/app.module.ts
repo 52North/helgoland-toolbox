@@ -26,6 +26,7 @@ import {
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule, HelgolandDatasetTableModule } from '@helgoland/depiction';
+import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandFlotModule } from '@helgoland/flot';
 import {
@@ -86,7 +87,11 @@ const APP_PROVIDERS = [
     provide: GeoSearch,
     useClass: NominatimGeoSearchService
   },
-  BasicAuthService
+  BasicAuthService,
+  {
+    provide: EventingApiService,
+    useClass: EventingImplApiInterface
+  }
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
