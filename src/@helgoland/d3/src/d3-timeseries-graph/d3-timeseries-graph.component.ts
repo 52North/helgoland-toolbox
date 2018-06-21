@@ -187,7 +187,7 @@ export class D3TimeseriesGraphComponent
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
             tsData.lines.lineWidth += this.addLineWidth;
-            tsData.lines.pointRadius += this.addLineWidth;
+            // tsData.lines.pointRadius += this.addLineWidth;
             tsData.bars.lineWidth += this.addLineWidth;
         }
         this.plotGraph();
@@ -197,7 +197,7 @@ export class D3TimeseriesGraphComponent
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
             tsData.lines.lineWidth -= this.addLineWidth;
-            tsData.lines.pointRadius -= this.addLineWidth;
+            // tsData.lines.pointRadius -= this.addLineWidth;
             tsData.bars.lineWidth -= this.addLineWidth;
         }
         this.plotGraph();
@@ -583,16 +583,22 @@ export class D3TimeseriesGraphComponent
 
             // add brush to svg
             this.backgroundBrush = this.graph.append('g')
-                .attr('width', this.width - this.bufferSum)
+                .attr('width', this.width)
                 .attr('height', this.height)
                 .attr('pointer-events', 'all')
-                .attr('transform', 'translate(' + this.bufferSum + ', 0)')
                 .attr('class', 'brush')
                 .call(brush)
                 .call(brush.move, overviewTimespanInterval);
 
-            // add event to selection to prevent unnecessary re-rendering of brush
+            /**
+             * add event to selection to prevent unnecessary re-rendering of brush
+             * add style of brush selection here
+             * e.g. 'fill' for color,
+             * 'stroke' for borderline-color,
+             * 'stroke-dasharray' for customizing borderline-style
+             */
             this.backgroundBrush.selectAll('.selection')
+                .attr('stroke', 'none')
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
@@ -753,7 +759,7 @@ export class D3TimeseriesGraphComponent
             .attr('class', 'grid')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(xAxisGen
-                .tickSize(-this.height)
+                .tickSize(this.height)
                 .tickFormat(() => '')
             );
 
@@ -865,7 +871,7 @@ export class D3TimeseriesGraphComponent
                 .attr('class', 'grid')
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
-                    .tickSize(-this.width)
+                    .tickSize(this.width)
                     .tickFormat(() => '')
                 );
         }
