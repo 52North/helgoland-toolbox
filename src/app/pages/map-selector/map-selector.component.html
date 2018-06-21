@@ -1,0 +1,52 @@
+<div>
+  <div style="display: flex; flex-direction: row;">
+    <div style="width: 500px; padding: 5px;">
+      <div style="height: 500px;">
+        <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
+          [mapOptions]="mapOptions" [fitBounds]="fitBounds" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps"
+          [overlayMaps]="overlayMaps" [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)"
+          [cluster]="cluster" [statusIntervals]="statusIntervals" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+      </div>
+      <div>Is loading: {{loadingStations}}</div>
+      <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
+      <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
+    </div>
+    <div style="width: 200px;">
+      <n52-service-filter-selector [serviceUrl]="providerUrl" endpoint="phenomenon" (onItemSelected)="onSelectPhenomenon($event)"></n52-service-filter-selector>
+    </div>
+    <!-- <div style="width: 300px; padding: 5px;">
+      <div style="height: 500px;">
+        <n52-station-map-selector mapId="timeseries2" [serviceUrl]="providerUrl" [filter]="stationFilter" [zoomControlOptions]="zoomControlOptions"
+          [fitBounds]="fitBounds2" [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
+          [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="false"></n52-station-map-selector>
+      </div>
+      <n52-geosearch-control mapId="timeseries2" [options]="searchOptions"></n52-geosearch-control>
+      <n52-extent-control mapId="timeseries2" [extent]="fitBounds2"></n52-extent-control>
+    </div> -->
+  </div>
+  <div>
+    <div>
+      <button (click)="zoomToOtherExtend()">Zoom to other extend</button>
+    </div>
+    <n52-locate-control mapId="timeseries"></n52-locate-control>
+    <div>
+      <button (click)="cluster = !cluster;">Toggle cluster</button>
+      <span *ngIf="cluster">clustering active</span>
+    </div>
+    <div>
+      <button (click)="statusIntervals = !statusIntervals;">Toggle statusIntervals</button>
+      <span *ngIf="statusIntervals">statusIntervals active</span>
+    </div>
+    <div>
+      <button (click)="switchProvider();">Switch Provider</button>
+    </div>
+    <div>
+      <button (click)="addOverlayMapLayer();">Add Map Layer</button>
+      <button (click)="removeOverlayMapLayer();">Remove Map Layer</button>
+    </div>
+    <div>
+      <button (click)="showZoomControlsLeft();">Show Zoom Controls Left</button>
+      <button (click)="showZoomControlsRight();">Show Zoom Controls Right</button>
+    </div>
+  </div>
+</div>
