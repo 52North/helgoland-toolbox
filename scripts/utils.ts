@@ -4,6 +4,7 @@ export const modules = [
   'auth',
   'control',
   'depiction',
+  'eventing',
   'favorite',
   'map',
   'modification',
