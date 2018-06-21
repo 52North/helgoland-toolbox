@@ -1,1 +1,0 @@
-export { HelgolandDepictionModule } from './module';
