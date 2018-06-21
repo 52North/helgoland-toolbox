@@ -1,0 +1,31 @@
+<div>
+  <div style="height: 500px;">
+    <!-- <n52-flot-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
+      [timeInterval]="timespan" [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onHighlight)="highlight($event)"
+      (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph> -->
+    <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
+      [graphOptions]="diagramOptions" (onTimespanChanged)="timespanChanged($event)" (onSelectId)="setSelected($event)" (onContentLoading)="graphLoading = $event"
+      #diagram></n52-d3-timeseries-graph>
+  </div>
+  <div>
+    Loading Graph: {{graphLoading}}
+  </div>
+  <div style="height: 100px;">
+    <n52-flot-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="overviewOptions"
+      [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-flot-overview-timeseries-graph>
+  </div>
+  <div>
+    Loading Overview: {{overviewLoading}}
+  </div>
+  <div>
+    <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
+    <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
+    <n52-refresh-button (refreshing)="diagram.reloadData()"></n52-refresh-button>
+  </div>
+  <div *ngFor="let id of datasetIds">
+    <n52-timeseries-entry [datasetId]="id" [changedSelectedDatasets]="changedSelectedDatasets" [selected]="isSelected(id)" [highlight]="id === highlightId"
+      [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
+      (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
+      (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
+  </div>
+</div>
