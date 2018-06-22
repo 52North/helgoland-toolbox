@@ -1,0 +1,52 @@
+{
+    "data": [{
+        "eventType": {
+            "href": "http://test.de/api/v1/eventTypes/1",
+            "id": "1"
+        },
+        "href": "http://test.de/api/v1/events/13629",
+        "id": "13629",
+        "label": "event label",
+        "notificationLevel": {
+            "href": "http://test.de/api/v1/notificationLevels/9",
+            "id": "9"
+        },
+        "publication": {
+            "href": "http://test.de/api/v1/publications/66",
+            "id": "66"
+        },
+        "subscription": {
+            "href": "http://test.de/api/v1/subscriptions/375",
+            "id": "375"
+        },
+        "timestamp": 1529656500000,
+        "timestampCreated": 1529662210000
+    }, {
+        "eventType": {
+            "href": "http://test.de/api/v1/eventTypes/1",
+            "id": "1"
+        },
+        "href": "http://test.de/api/v1/events/13628",
+        "id": "13628",
+        "label": "event label",
+        "notificationLevel": {
+            "href": "http://test.de/api/v1/notificationLevels/9",
+            "id": "9"
+        },
+        "publication": {
+            "href": "http://test.de/api/v1/publications/66",
+            "id": "66"
+        },
+        "subscription": {
+            "href": "http://test.de/api/v1/subscriptions/336",
+            "id": "336"
+        },
+        "timestamp": 1529655300000,
+        "timestampCreated": 1529662210000
+    }],
+    "metadata": {
+        "limit": 100,
+        "offset": 0,
+        "total": 2
+    }
+}
