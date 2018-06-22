@@ -122,6 +122,7 @@ export class D3TimeseriesGraphComponent
     private datasetMap: Map<string, DataConst> = new Map();
 
     private loadingCounter = 0;
+    private currentTimeId: any;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -133,6 +134,9 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
+        let d = new Date();
+        this.currentTimeId = d.getTime();
+
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
@@ -236,7 +240,7 @@ export class D3TimeseriesGraphComponent
 
     private isContentLoadingD3(loading: boolean): void {
         this.onContentLoading.emit(loading);
-    };
+    }
 
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
@@ -435,23 +439,23 @@ export class D3TimeseriesGraphComponent
         return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
-    /**
-     * Function that returns the timerange for the x axis.
-     */
-    private getxAxisRange() {
-        let min = this.preparedData[0].data[0][0];
-        let max = this.preparedData[0].data[this.preparedData[0].data.length - 1][0];
+    // /**
+    //  * Function that returns the timerange for the x axis.
+    //  */
+    // private getxAxisRange() {
+    //     let min = this.preparedData[0].data[0][0];
+    //     let max = this.preparedData[0].data[this.preparedData[0].data.length - 1][0];
 
-        this.preparedData.forEach((entry) => {
+    //     this.preparedData.forEach((entry) => {
 
-            const range = d3.extent<DataEntry, number>(entry.data, (datum, index, array) => {
-                return datum[0]; // datum[0] = timestamp -- datum[1] = value
-            });
-            if (min >= range[0]) { min = range[0]; }
-            if (max <= range[1]) { max = range[1]; }
-        });
-        return [min, max];
-    }
+    //         const range = d3.extent<DataEntry, number>(entry.data, (datum, index, array) => {
+    //             return datum[0]; // datum[0] = timestamp -- datum[1] = value
+    //         });
+    //         if (min >= range[0]) { min = range[0]; }
+    //         if (max <= range[1]) { max = range[1]; }
+    //     });
+    //     return [min, max];
+    // }
 
     /**
      * Function that returns the value range for building the y axis for each uom of every dataset.
@@ -760,7 +764,7 @@ export class D3TimeseriesGraphComponent
             .attr('class', 'grid')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(xAxisGen
-                .tickSize(this.height)
+                .tickSize(-this.height)
                 .tickFormat(() => '')
             );
 
@@ -872,7 +876,7 @@ export class D3TimeseriesGraphComponent
                 .attr('class', 'grid')
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
-                    .tickSize(this.width)
+                    .tickSize(-this.width)
                     .tickFormat(() => '')
                 );
         }
@@ -951,9 +955,12 @@ export class D3TimeseriesGraphComponent
 
             // #####################################################
             // create body to clip graph
+            // unique ID generated through the current time (current time when initialized)
+            let querySelectorClip = 'clip' + this.currentTimeId;
+
             this.graph
                 .append('svg:clipPath')
-                .attr('id', 'clip')
+                .attr('id', querySelectorClip)
                 .append('svg:rect')
                 .attr('x', this.bufferSum)
                 .attr('y', 0)
@@ -963,7 +970,7 @@ export class D3TimeseriesGraphComponent
             // draw grah line
             this.graphBody = this.graph
                 .append('g')
-                .attr('clip-path', 'url(#clip)');
+                .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
             // create graph line
             let line = d3.line<DataEntry>()
@@ -1220,17 +1227,17 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    /**
-     * Function that prepares the retrieved timestamp in a specific object format.
-     * @param from {Number} Number with the minimum timestamp.
-     * @param to {Number} Number with the maximum timestamp.
-     */
-    private prepareRange(from: number, to: number) {
-        if (from <= to) {
-            return { from, to };
-        }
-        return { from: to, to: from };
-    }
+    // /**
+    //  * Function that prepares the retrieved timestamp in a specific object format.
+    //  * @param from {Number} Number with the minimum timestamp.
+    //  * @param to {Number} Number with the maximum timestamp.
+    //  */
+    // private prepareRange(from: number, to: number) {
+    //     if (from <= to) {
+    //         return { from, to };
+    //     }
+    //     return { from: to, to: from };
+    // }
 
     /**
      * Function that disables the drawing rectangle control.
