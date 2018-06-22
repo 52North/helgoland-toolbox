@@ -4,15 +4,16 @@ import {
     ElementRef,
     EventEmitter,
     IterableDiffers,
+    Input,
     Output,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    Data,
     DatasetApiInterface,
-    DatasetOptions,
+    Data,
     DatasetPresenterComponent,
+    DatasetOptions,
     IDataset,
     InternalIdHandler,
     Time,
@@ -70,7 +71,6 @@ export class D3TimeseriesGraphComponent
     };
 
     private preparedData = Array(); // : DataSeries[]
-
     private mousedownBrush: boolean;
     private rawSvg: any;
     private graph: any;
@@ -78,7 +78,6 @@ export class D3TimeseriesGraphComponent
     private xAxisRange: any; // x domain range
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    private yAxisRange: any; // y domain range
     private yRangesEachUom: any; // y array of objects containing ranges for each uom
     private dataYranges: any; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
@@ -96,7 +95,6 @@ export class D3TimeseriesGraphComponent
     private xScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
-    private backgroundBrush: any;
     private focusG: any;
     private highlightFocus: any;
     private focuslabelTime: any;
@@ -116,7 +114,6 @@ export class D3TimeseriesGraphComponent
 
     private toHighlightDataset: any;
     private addLineWidth = 2; // value added to linewidth
-
     private plotOptions: D3PlotOptions = {
         showReferenceValues: false,
         generalizeAllways: true
@@ -124,7 +121,8 @@ export class D3TimeseriesGraphComponent
 
     private datasetMap: Map<string, DataConst> = new Map();
 
-    private loadingCounter: number = 0;
+    private loadingCounter = 0;
+    private currentTimeId: any;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -136,6 +134,9 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
+        let d = new Date();
+        this.currentTimeId = d.getTime();
+
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
@@ -144,6 +145,14 @@ export class D3TimeseriesGraphComponent
         this.graph = this.rawSvg
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+
+        // this.graph.append('circle')
+        //     .attr('cx', 500)
+        //     .attr('cy', 500)
+        //     .attr('r', 500)
+        //     .attr('stroke', 'green')
+        //     .attr('stroke-width', '4')
+        //     .attr('fill', 'yellow');
 
         this.mousedownBrush = false;
         this.dataYranges = new Array();
@@ -231,7 +240,7 @@ export class D3TimeseriesGraphComponent
 
     private isContentLoadingD3(loading: boolean): void {
         this.onContentLoading.emit(loading);
-    };
+    }
 
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
@@ -286,10 +295,9 @@ export class D3TimeseriesGraphComponent
             const data = this.datasetMap.get(dataset.internalId).data;
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
-            // dataset.uom = 'mc';
+                // dataset.uom = 'mc';
             // }
             // end of check for datasets
-
             const dataEntry = {
                 internalId: dataset.internalId,
                 color: styles.color,
@@ -311,7 +319,6 @@ export class D3TimeseriesGraphComponent
                 visible: styles.visible
             };
             // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
-
             if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
                 dataEntry.lines.lineWidth += this.addLineWidth;
                 dataEntry.lines.pointRadius += this.addLineWidth;
@@ -433,24 +440,6 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
-     * Function that returns the timerange for the x axis.
-     */
-    private getxAxisRange() {
-        let min = this.preparedData[0].data[0][0];
-        let max = this.preparedData[0].data[this.preparedData[0].data.length - 1][0];
-
-        this.preparedData.forEach((entry) => {
-
-            const range = d3.extent<DataEntry, number>(entry.data, (datum, index, array) => {
-                return datum[0]; // datum[0] = timestamp -- datum[1] = value
-            });
-            if (min >= range[0]) { min = range[0]; }
-            if (max <= range[1]) { max = range[1]; }
-        });
-        return [min, max];
-    }
-
-    /**
      * Function that returns the value range for building the y axis for each uom of every dataset.
      * @param uom {String} String that is the uom of a dataset
      */
@@ -481,7 +470,6 @@ export class D3TimeseriesGraphComponent
         this.xAxisRange = [this.timespan.from, this.timespan.to];
 
         // #####################################################
-
         this.yRangesEachUom.forEach((entry) => {
             entry.first = (this.yScaleBase === null);
             entry.offset = this.bufferSum;
@@ -509,7 +497,6 @@ export class D3TimeseriesGraphComponent
         // create background rect
         if (this.plotOptions.grid === undefined || this.plotOptions.grid.hoverable) {
             // execute when it is not an overview diagram
-
             this.background = this.graph.append('svg:rect')
                 .attr('width', this.width - this.bufferSum)
                 .attr('height', this.height)
@@ -582,7 +569,7 @@ export class D3TimeseriesGraphComponent
                 });
 
             // add brush to svg
-            this.backgroundBrush = this.graph.append('g')
+            this.background = this.graph.append('g')
                 .attr('width', this.width)
                 .attr('height', this.height)
                 .attr('pointer-events', 'all')
@@ -597,18 +584,18 @@ export class D3TimeseriesGraphComponent
              * 'stroke' for borderline-color,
              * 'stroke-dasharray' for customizing borderline-style
              */
-            this.backgroundBrush.selectAll('.selection')
+            this.background.selectAll('.selection')
                 .attr('stroke', 'none')
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
 
             // do not allow clear selection
-            this.backgroundBrush.selectAll('.overlay')
+            this.background.selectAll('.overlay')
                 .remove();
 
             // add event to resizing handle to allow change time on resize
-            this.backgroundBrush.selectAll('.handle')
+            this.background.selectAll('.handle')
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
@@ -759,7 +746,7 @@ export class D3TimeseriesGraphComponent
             .attr('class', 'grid')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(xAxisGen
-                .tickSize(this.height)
+                .tickSize(-this.height)
                 .tickFormat(() => '')
             );
 
@@ -871,7 +858,7 @@ export class D3TimeseriesGraphComponent
                 .attr('class', 'grid')
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
-                    .tickSize(this.width)
+                    .tickSize(-this.width)
                     .tickFormat(() => '')
                 );
         }
@@ -893,9 +880,9 @@ export class D3TimeseriesGraphComponent
         let changeTrue = [];
         ids.forEach((ID) => {
             if (this.selectedDatasetIds.indexOf(ID) >= 0) {
-                changeFalse.push({ id: ID, change: false });
+                changeFalse.push({id: ID, change: false});
             }
-            changeTrue.push({ id: ID, change: true });
+            changeTrue.push({id: ID, change: true});
         });
 
         let changeAll = true;
@@ -950,9 +937,12 @@ export class D3TimeseriesGraphComponent
 
             // #####################################################
             // create body to clip graph
+            // unique ID generated through the current time (current time when initialized)
+            let querySelectorClip = 'clip' + this.currentTimeId;
+
             this.graph
                 .append('svg:clipPath')
-                .attr('id', 'clip')
+                .attr('id', querySelectorClip)
                 .append('svg:rect')
                 .attr('x', this.bufferSum)
                 .attr('y', 0)
@@ -962,7 +952,7 @@ export class D3TimeseriesGraphComponent
             // draw grah line
             this.graphBody = this.graph
                 .append('g')
-                .attr('clip-path', 'url(#clip)');
+                .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
             // create graph line
             let line = d3.line<DataEntry>()
@@ -1217,18 +1207,6 @@ export class D3TimeseriesGraphComponent
             this.dragRect.attr('width', x2 - x1)
                 .attr('x', x1 + this.bufferSum);
         }
-    }
-
-    /**
-     * Function that prepares the retrieved timestamp in a specific object format.
-     * @param from {Number} Number with the minimum timestamp.
-     * @param to {Number} Number with the maximum timestamp.
-     */
-    private prepareRange(from: number, to: number) {
-        if (from <= to) {
-            return { from, to };
-        }
-        return { from: to, to: from };
     }
 
     /**
