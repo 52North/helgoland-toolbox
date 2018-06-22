@@ -1,24 +1,20 @@
-/* tslint:disable */
-import { enableProdMode, NgModuleRef } from '@angular/core';
-import { disableDebugTools } from '@angular/platform-browser';
-import { Environment } from './model';
+import { Settings } from '@helgoland/core';
 
-enableProdMode();
-
-export const environment: Environment = {
-  production: true,
-  showDevModule: false,
-
-  /** Angular debug tools in the dev console
-   * https://github.com/angular/angular/blob/86405345b781a9dc2438c0fbe3e9409245647019/TOOLS_JS.md
-   * @param modRef
-   * @return {any}
-   */
-  decorateModuleRef(modRef: NgModuleRef<any>) {
-    disableDebugTools();
-    return modRef;
-  },
-  ENV_PROVIDERS: [
-
-  ]
+export const environment = {
+  production: true
 };
+
+export let settings: Settings;
+export const settingsPromise = new Promise<Settings>((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', './assets/settings.json');
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      settings = JSON.parse(xhr.responseText);
+      resolve(settings);
+    } else {
+      reject('Cannot load configuration');
+    }
+  };
+  xhr.send();
+});
