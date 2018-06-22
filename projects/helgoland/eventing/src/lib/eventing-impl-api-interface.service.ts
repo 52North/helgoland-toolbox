@@ -14,7 +14,7 @@ export class EventingImplApiInterface extends EventingApiService {
         private httpService: HttpService
     ) { super(); }
 
-    public getEvents(apiUrl: string, filterParameter?: EventingEventFilter, options?: HttpRequestOptions): Observable<EventingEventResults> {
+    public getEvents(apiUrl: string, filterParameter: EventingEventFilter = {}, options: HttpRequestOptions = {}): Observable<EventingEventResults> {
         const url = this.createRequestUrl(apiUrl, 'events');
         let httpParams = this.prepareFilterParams(filterParameter);
         httpParams = this.addParameterFilter(filterParameter, 'latest', httpParams);
@@ -23,18 +23,18 @@ export class EventingImplApiInterface extends EventingApiService {
         return this.requestApi<EventingEventResults>(url, httpParams, options);
     }
 
-    public getEvent(id: string, apiUrl: string, options?: HttpRequestOptions): Observable<EventingEvent> {
+    public getEvent(id: string, apiUrl: string, options: HttpRequestOptions = {}): Observable<EventingEvent> {
         const url = this.createRequestUrl(apiUrl, 'events', id);
         return this.requestApi<EventingEvent>(url, null, options);
     }
 
-    public getSubscriptions(apiUrl: string, filterParameter?: EventingSubscriptionFilter, options?: HttpRequestOptions): Observable<EventingSubscriptionResults> {
+    public getSubscriptions(apiUrl: string, filterParameter: EventingSubscriptionFilter = {}, options: HttpRequestOptions = {}): Observable<EventingSubscriptionResults> {
         const url = this.createRequestUrl(apiUrl, 'subscriptions');
         const httpParams = this.prepareFilterParams(filterParameter);
         return this.requestApi<EventingSubscriptionResults>(url, httpParams, options);
     }
 
-    public getSubscription(id: string, apiUrl: string, options?: HttpRequestOptions): Observable<EventingSubscription> {
+    public getSubscription(id: string, apiUrl: string, options: HttpRequestOptions = {}): Observable<EventingSubscription> {
         const url = this.createRequestUrl(apiUrl, 'subscriptions', id);
         return this.requestApi<EventingSubscription>(url, null, options);
     }
@@ -66,7 +66,7 @@ export class EventingImplApiInterface extends EventingApiService {
     }
 
     private addParameterFilter(params: EventingFilter, key: string, httpParams: HttpParams): HttpParams {
-        if (params[key] !== undefined) {
+        if (params && params[key] !== undefined) {
             return httpParams.set(key, params[key]);
         }
         return httpParams;
