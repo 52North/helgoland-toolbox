@@ -146,14 +146,6 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        // this.graph.append('circle')
-        //     .attr('cx', 500)
-        //     .attr('cy', 500)
-        //     .attr('r', 500)
-        //     .attr('stroke', 'green')
-        //     .attr('stroke-width', '4')
-        //     .attr('fill', 'yellow');
-
         this.mousedownBrush = false;
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
@@ -273,13 +265,13 @@ export class D3TimeseriesGraphComponent
                 (error) => this.onError(error),
                 () => {
                     console.log('loadDataset() - complete data loaded');
-                    this.onCompleteLoadingData(dataset);
+                    this.onCompleteLoadingData();
                 }
             );
         }
     }
 
-    private onCompleteLoadingData(dataset: IDataset) {
+    private onCompleteLoadingData() {
         this.loadingCounter--;
         if (this.loadingCounter === 0) { this.isContentLoadingD3(false); }
     }
