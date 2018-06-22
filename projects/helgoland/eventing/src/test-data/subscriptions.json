@@ -1,0 +1,48 @@
+{
+    "data": [{
+        "deliveryMethod": {
+            "href": "http://test.de/api/v1/deliveryMethods/email",
+            "id": "email"
+        },
+        "href": "http://test.de/api/v1/subscriptions/428",
+        "id": "428",
+        "template": {
+            "href": "http://test.de/api/v1/templates/94",
+            "id": "94",
+            "label": "subscription-label",
+            "publication": {
+                "href": "http://test.de/api/v1/publications/608",
+                "id": "608"
+            }
+        },
+        "user": {
+            "href": "http://test.de/api/v1/users/55736",
+            "id": "55736"
+        }
+    }, {
+        "deliveryMethod": {
+            "href": "http://test.de/api/v1/deliveryMethods/email",
+            "id": "email"
+        },
+        "href": "http://test.de/api/v1/subscriptions/429",
+        "id": "429",
+        "template": {
+            "href": "http://test.de/api/v1/templates/95",
+            "id": "95",
+            "label": "subscription-label",
+            "publication": {
+                "href": "http://test.de/api/v1/publications/13",
+                "id": "13"
+            }
+        },
+        "user": {
+            "href": "http://test.de/api/v1/users/55736",
+            "id": "55736"
+        }
+    }],
+    "metadata": {
+        "limit": 100,
+        "offset": 0,
+        "total": 2
+    }
+}
