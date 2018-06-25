@@ -4,15 +4,16 @@ import {
     ElementRef,
     EventEmitter,
     IterableDiffers,
+    Input,
     Output,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    Data,
     DatasetApiInterface,
-    DatasetOptions,
+    Data,
     DatasetPresenterComponent,
+    DatasetOptions,
     IDataset,
     InternalIdHandler,
     Time,
@@ -49,16 +50,18 @@ export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
     implements AfterViewInit {
 
-    // @Input()
-    // public highlight: boolean;
+    @Input()
+    // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
+    public mainTimeInterval: Timespan;
 
     @Output()
     public onSelectId: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
-
-    private preparedData = Array(); // : DataSeries[]
 
     // set zoom limit --> can be adapted to needs
     private config = {
@@ -67,13 +70,14 @@ export class D3TimeseriesGraphComponent
         }
     };
 
+    private preparedData = Array(); // : DataSeries[]
+    private mousedownBrush: boolean;
     private rawSvg: any;
     private graph: any;
     private graphBody: any;
     private xAxisRange: any; // x domain range
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    private yAxisRange: any; // y domain range
     private yRangesEachUom: any; // y array of objects containing ranges for each uom
     private dataYranges: any; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
@@ -110,13 +114,15 @@ export class D3TimeseriesGraphComponent
 
     private toHighlightDataset: any;
     private addLineWidth = 2; // value added to linewidth
-
     private plotOptions: D3PlotOptions = {
         showReferenceValues: false,
         generalizeAllways: true
     };
 
     private datasetMap: Map<string, DataConst> = new Map();
+
+    private loadingCounter = 0;
+    private currentTimeId: any;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -128,6 +134,9 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
+        let d = new Date();
+        this.currentTimeId = d.getTime();
+
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
             .attr('width', '100%')
@@ -137,6 +146,7 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
+        this.mousedownBrush = false;
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
     }
@@ -159,18 +169,18 @@ export class D3TimeseriesGraphComponent
         console.log('removed ' + internalId);
         this.dataYranges = new Array();
         this.xAxisRangeOrigin = new Array();
-
         this.datasetMap.delete(internalId);
-        this.preparedData.splice(this.preparedData.findIndex((entry) => entry.internalId === internalId), 1);
-        let newPrepData = this.preparedData;
-        this.preparedData = new Array();
-        if (newPrepData.length <= 0) {
-            this.plotGraph();
-        } else {
-            newPrepData.forEach((entry, idx) => {
-                this.preparedData.push(entry);
-                this.processData(entry, entry.internalId);
-            });
+        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
+        if (spliceIdx >= 0) {
+            this.preparedData.splice(spliceIdx, 1);
+            if (this.preparedData.length <= 0) {
+                this.yRangesEachUom = new Array();
+                this.plotGraph();
+            } else {
+                this.preparedData.forEach((entry, idx) => {
+                    this.processData(entry, entry.internalId);
+                });
+            }
         }
     }
     protected setSelectedId(internalId: string): void {
@@ -178,7 +188,7 @@ export class D3TimeseriesGraphComponent
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
             tsData.lines.lineWidth += this.addLineWidth;
-            tsData.lines.pointRadius += this.addLineWidth;
+            // tsData.lines.pointRadius += this.addLineWidth;
             tsData.bars.lineWidth += this.addLineWidth;
         }
         this.plotGraph();
@@ -188,14 +198,14 @@ export class D3TimeseriesGraphComponent
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
             tsData.lines.lineWidth -= this.addLineWidth;
-            tsData.lines.pointRadius -= this.addLineWidth;
+            // tsData.lines.pointRadius -= this.addLineWidth;
             tsData.bars.lineWidth -= this.addLineWidth;
         }
         this.plotGraph();
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
         Object.assign(this.plotOptions, options);
-        if (this.rawSvg) {
+        if (this.rawSvg && this.yRangesEachUom) {
             this.plotGraph();
         }
     }
@@ -220,6 +230,10 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
+    private isContentLoadingD3(loading: boolean): void {
+        this.onContentLoading.emit(loading);
+    }
+
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
         this.loadDataset(dataset);
@@ -228,6 +242,9 @@ export class D3TimeseriesGraphComponent
     // load data of dataset
     private loadDataset(dataset: IDataset) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
+        if (this.loadingCounter === 0) {
+            this.isContentLoadingD3(true); }
+        this.loadingCounter++;
 
         if (dataset instanceof Timeseries) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
@@ -246,17 +263,23 @@ export class D3TimeseriesGraphComponent
                     });
                 },
                 (error) => this.onError(error),
-                () => console.log('loadDataset() - complete data loaded') // this.onCompleteLoadingData(dataset)
+                () => {
+                    console.log('loadDataset() - complete data loaded');
+                    this.onCompleteLoadingData();
+                }
             );
         }
     }
 
-    private processDataset(internalId) {
-        let idx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
-        this.processData(this.preparedData[idx], internalId);
+    private onCompleteLoadingData() {
+        this.loadingCounter--;
+        if (this.loadingCounter === 0) { this.isContentLoadingD3(false); }
     }
 
-    // add dataset to preparedData
+    /**
+     * Function to prepare each dataset for the graph and adding it to an array of datasets.
+     * @param dataset {IDataset} Object of the whole dataset
+     */
     private prepareTsData(dataset: IDataset): Observable<boolean> { // , data: Data<[number, number]>
         return Observable.create((observer: Observer<boolean>) => {
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
@@ -264,10 +287,9 @@ export class D3TimeseriesGraphComponent
             const data = this.datasetMap.get(dataset.internalId).data;
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
-            // dataset.uom = 'mc';
+                // dataset.uom = 'mc';
             // }
             // end of check for datasets
-
             const dataEntry = {
                 internalId: dataset.internalId,
                 color: styles.color,
@@ -289,7 +311,6 @@ export class D3TimeseriesGraphComponent
                 visible: styles.visible
             };
             // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
-
             if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
                 dataEntry.lines.lineWidth += this.addLineWidth;
                 dataEntry.lines.pointRadius += this.addLineWidth;
@@ -307,6 +328,13 @@ export class D3TimeseriesGraphComponent
         });
     }
 
+    /**
+     * Function to add referencevaluedata to the dataset (e.g. mean).
+     * @param internalId {String} String with the id of a dataset
+     * @param styles {DatasetOptions} Object containing information for dataset styling
+     * @param data {Data} Array of Arrays containing the measurement-data of the dataset
+     * @param uomO {String} String with the uom of a dataset
+     */
     private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<[number, number]>, uomO: string) {
         this.preparedData = this.preparedData.filter((entry) => {
             return !entry.internalId.startsWith('ref' + internalId);
@@ -332,6 +360,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that processes the data to calculate y axis range of each dataset.
+     * @param dataEntry {DataEntry} Object containing dataset related data.
+     * @param internalId {String} String with the ID of a dataset.
+     */
     private processData(dataEntry, internalId) {
         // get min and max value of data
         const range = d3.extent<DataEntry, number>(dataEntry.data, (datum, index, array) => {
@@ -384,31 +417,24 @@ export class D3TimeseriesGraphComponent
         this.plotGraph();
     }
 
+    /**
+     * Function that returns the height of the graph diagram.
+     */
     private calculateHeight(): number {
         return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
     }
 
+    /**
+     * Function that returns the width of the graph diagram.
+     */
     private calculateWidth(): number {
         return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
-    // get time range for x axis
-    private getxAxisRange() {
-        let min = this.preparedData[0].data[0][0];
-        let max = this.preparedData[0].data[this.preparedData[0].data.length - 1][0];
-
-        this.preparedData.forEach((entry) => {
-
-            const range = d3.extent<DataEntry, number>(entry.data, (datum, index, array) => {
-                return datum[0]; // datum[0] = timestamp -- datum[1] = value
-            });
-            if (min >= range[0]) { min = range[0]; }
-            if (max <= range[1]) { max = range[1]; }
-        });
-        return [min, max];
-    }
-
-    // get value range for y axis for each uom of every dataset
+    /**
+     * Function that returns the value range for building the y axis for each uom of every dataset.
+     * @param uom {String} String that is the uom of a dataset
+     */
     private getyAxisRange(uom) {
 
         for (let i = 0; i <= this.yRangesEachUom.length; i++) {
@@ -420,6 +446,10 @@ export class D3TimeseriesGraphComponent
         return null; // error: uom does not exist
     }
 
+    /**
+     * Function to plot the graph and its dependencies
+     * (graph line, graph axes, event handlers)
+     */
     private plotGraph() {
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
@@ -432,7 +462,6 @@ export class D3TimeseriesGraphComponent
         this.xAxisRange = [this.timespan.from, this.timespan.to];
 
         // #####################################################
-
         this.yRangesEachUom.forEach((entry) => {
             entry.first = (this.yScaleBase === null);
             entry.offset = this.bufferSum;
@@ -457,60 +486,176 @@ export class D3TimeseriesGraphComponent
         });
 
         // #####################################################
-        // inside line and mouse events
-        this.background = this.graph.append('svg:rect')
-            .attr('width', this.width - this.bufferSum)
-            .attr('height', this.height)
-            .attr('fill', 'none')
-            .attr('stroke', 'none')
-            .attr('pointer-events', 'all')
-            .attr('transform', 'translate(' + this.bufferSum + ', 0)')
-            .on('mousemove.focus', this.mousemoveHandler)
-            .on('mouseout.focus', this.mouseoutHandler);
+        // create background rect
+        if (this.plotOptions.grid === undefined || this.plotOptions.grid.hoverable) {
+            // execute when it is not an overview diagram
+            this.background = this.graph.append('svg:rect')
+                .attr('width', this.width - this.bufferSum)
+                .attr('height', this.height)
+                .attr('fill', 'none')
+                .attr('stroke', 'none')
+                .attr('pointer-events', 'all')
+                .attr('transform', 'translate(' + this.bufferSum + ', 0)');
 
-        if (this.plotOptions.togglePanZoom === false) {
+            // mouse events hovering
             this.background
-                .on('mousedown.drag', this.zoomStartHandler)
-                .on('mousemove.drag', this.zoomHandler)
-                .on('mouseup.drag', this.zoomEndHandler);
+                .on('mousemove.focus', this.mousemoveHandler)
+                .on('mouseout.focus', this.mouseoutHandler);
+
+            if (this.plotOptions.togglePanZoom === false) {
+                this.background
+                    .on('mousedown.drag', this.zoomStartHandler)
+                    .on('mousemove.drag', this.zoomHandler)
+                    .on('mouseup.drag', this.zoomEndHandler);
+            } else {
+                this.background
+                    .call(d3.drag()
+                        .on('start', this.panStartHandler)
+                        .on('drag', this.panMoveHandler)
+                        .on('end', this.panEndHandler));
+            }
+
+            // line inside graph
+            this.focusG = this.graph.append('g');
+            this.highlightFocus = this.focusG.append('svg:line')
+                .attr('class', 'mouse-focus-line')
+                .attr('x2', '0')
+                .attr('y2', '0')
+                .attr('x1', '0')
+                .attr('y1', '0')
+                .style('stroke', 'black')
+                .style('stroke-width', '1px');
+
+            this.preparedData.forEach((entry) => {
+                // label inside graph
+                entry.focusLabelRect = this.focusG.append('svg:rect')
+                    .attr('class', 'mouse-focus-label')
+                    .style('fill', 'white')
+                    .style('stroke', 'none')
+                    .style('pointer-events', 'none');
+                entry.focusLabel = this.focusG.append('svg:text')
+                    .attr('class', 'mouse-focus-label')
+                    .style('pointer-events', 'none')
+                    .style('fill', entry.color)
+                    .style('font-weight', 'lighter');
+
+                this.focuslabelTime = this.focusG.append('svg:text')
+                    .style('pointer-events', 'none')
+                    .attr('class', 'mouse-focus-time');
+            });
         } else {
-            this.background
-                .call(d3.drag()
-                    .on('start', this.panStartHandler)
-                    .on('drag', this.panMoveHandler)
-                    .on('end', this.panEndHandler));
+            // execute when it is overview diagram
+            let interval = this.getXDomainByTimestamp();
+            let overviewTimespanInterval = [interval[0], interval[1]];
+
+            // create brush
+            let brush = d3.brushX()
+                .extent([[0, 0], [this.width, this.height]])
+                .on('end', () => {
+                    // on mouseclick change time after brush was moved
+                    if (this.mousedownBrush) {
+                        let timeByCoord = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1]);
+                        this.changeTime(timeByCoord[0], timeByCoord[1]);
+                    }
+                    this.mousedownBrush = false;
+                });
+
+            // add brush to svg
+            this.background = this.graph.append('g')
+                .attr('width', this.width)
+                .attr('height', this.height)
+                .attr('pointer-events', 'all')
+                .attr('class', 'brush')
+                .call(brush)
+                .call(brush.move, overviewTimespanInterval);
+
+            /**
+             * add event to selection to prevent unnecessary re-rendering of brush
+             * add style of brush selection here
+             * e.g. 'fill' for color,
+             * 'stroke' for borderline-color,
+             * 'stroke-dasharray' for customizing borderline-style
+             */
+            this.background.selectAll('.selection')
+                .attr('stroke', 'none')
+                .on('mousedown', () => {
+                    this.mousedownBrush = true;
+                });
+
+            // do not allow clear selection
+            this.background.selectAll('.overlay')
+                .remove();
+
+            // add event to resizing handle to allow change time on resize
+            this.background.selectAll('.handle')
+                .on('mousedown', () => {
+                    this.mousedownBrush = true;
+                });
         }
-
-        // line inside graph
-        this.focusG = this.graph.append('g');
-        this.highlightFocus = this.focusG.append('svg:line')
-            .attr('class', 'mouse-focus-line')
-            .attr('x2', '0')
-            .attr('y2', '0')
-            .attr('x1', '0')
-            .attr('y1', '0')
-            .style('stroke', 'black')
-            .style('stroke-width', '1px');
-
-        this.preparedData.forEach((entry) => {
-            // label inside graph
-            entry.focusLabelRect = this.focusG.append('svg:rect')
-                .attr('class', 'mouse-focus-label')
-                .style('fill', 'white')
-                .style('stroke', 'none')
-                .style('pointer-events', 'none');
-            entry.focusLabel = this.focusG.append('svg:text')
-                .attr('class', 'mouse-focus-label')
-                .style('pointer-events', 'none')
-                .style('fill', entry.color)
-                .style('font-weight', 'lighter');
-
-            this.focuslabelTime = this.focusG.append('svg:text')
-                .style('pointer-events', 'none')
-                .attr('class', 'mouse-focus-time');
-        });
     }
 
+    /**
+     * Function that calculates and returns the x diagram coordinate for the brush range
+     * for the overview diagram by the selected time interval of the main diagram.
+     * Calculate to get brush extent when main diagram time interval changes.
+     */
+    private getXDomainByTimestamp () {
+        /**
+         * calculate range of brush with timestamp and not diagram coordinates
+         * formula:
+         * brush_min =
+         * (overview_width / (overview_max - overview_min)) * (brush_min - overview_min)
+         * brus_max =
+         * (overview_width / (overview_max - overview_min)) * (brush_max - overview_min)
+         */
+
+        let minOverviewTimeInterval = this.timespan.from;
+        let maxOverviewTimeInterval = this.timespan.to;
+        let minDiagramTimestamp = this.mainTimeInterval.from;
+        let maxDiagramTimestamp = this.mainTimeInterval.to;
+        let diagramWidth = this.width;
+
+        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+        let divOverviewTimeWidth = diagramWidth / diffOverviewTimeInterval;
+        let minCalcBrush = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
+        let maxCalcBrush = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
+
+        return [minCalcBrush, maxCalcBrush];
+    }
+
+    /**
+     * Function that calculates and returns the timestamp for the main diagram calculated
+     * by the selected coordinate of the brush range.
+     * @param minCalcBrush {Number} Number with the minimum coordinate of the selected brush range.
+     * @param maxCalcBrush {Number} Number with the maximum coordinate of the selected brush range.
+     */
+    private getTimestampByCoord(minCalcBrush, maxCalcBrush) {
+        /**
+         * calculate range of brush with timestamp and not diagram coordinates
+         * formula:
+         * minDiagramTimestamp =
+         * ((minCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
+         * maxDiagramTimestamp =
+         * ((maxCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
+         */
+
+        let minOverviewTimeInterval = this.timespan.from;
+        let maxOverviewTimeInterval = this.timespan.to;
+        let diagramWidth = this.width;
+
+        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+        let minDiagramTimestamp = ((minCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+        let maxDiagramTimestamp = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+
+        return [minDiagramTimestamp, maxDiagramTimestamp];
+    }
+
+    /**
+     * Function that returns the tickvalues for the x axis related to the timestep.
+     * @param time {String} String with the information how the time should be visualized in the x axis.
+     * @param range {Array} Array containing the minimum and maximum range.
+     * @param span {Number} Number with the ticksize for the axis generation.
+     */
     private timeTickValues(time: String, range: any, span: number) {
         if (time === 'minly') {
             return d3.timeMinutes(range, this.xAxisRange[1], span);
@@ -523,6 +668,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that draws the x axis to the svg element.
+     * @param bufferXrange {Number} Number with the distance between left edge and the beginning of the graph.
+     */
     private drawXaxis(bufferXrange: number) {
         // range for x axis scale
         this.xScaleBase = d3.scaleLinear()
@@ -606,6 +755,11 @@ export class D3TimeseriesGraphComponent
             .text('time');
     }
 
+    /**
+     * Function to draw the y axis for each dataset.
+     * Each uom has its own axis.
+     * @param entry {DataEntry} Object containing a dataset.
+     */
     private drawYaxis(entry): any {
         let showAxis = (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis.show);
         const range = this.getyAxisRange(entry.uom);
@@ -707,15 +861,20 @@ export class D3TimeseriesGraphComponent
         };
     }
 
+    /**
+     * Function to set selected Ids that should be highlighted.
+     * @param ids {Array} Array of Strings containing the Ids.
+     * @param uom {String} String with the uom for the selected Ids
+     */
     private highlightLine(ids, uom) {
         this.toHighlightDataset = [];
         let changeFalse = [];
         let changeTrue = [];
         ids.forEach((ID) => {
             if (this.selectedDatasetIds.indexOf(ID) >= 0) {
-                changeFalse.push({ id: ID, change: false });
+                changeFalse.push({id: ID, change: false});
             }
-            changeTrue.push({ id: ID, change: true });
+            changeTrue.push({id: ID, change: true});
         });
 
         let changeAll = true;
@@ -730,6 +889,9 @@ export class D3TimeseriesGraphComponent
         this.changeSelectedIds(this.toHighlightDataset, changeAll);
     }
 
+    /**
+     * Function that changes state of selected Ids.
+     */
     private changeSelectedIds(toHighlight: any, change: boolean) {
         if (change) {
             this.toHighlightDataset.forEach((obj) => {
@@ -749,6 +911,10 @@ export class D3TimeseriesGraphComponent
         this.plotGraph();
     }
 
+    /**
+     * Function to draw the graph line for each dataset.
+     * @param entry {DataEntry} Object containing a dataset.
+     */
     private drawGraphLine(entry: DataEntry) {
         let data = entry.data;
         const getYaxisRange = this.yRangesEachUom.find((obj, index) => {
@@ -763,9 +929,12 @@ export class D3TimeseriesGraphComponent
 
             // #####################################################
             // create body to clip graph
+            // unique ID generated through the current time (current time when initialized)
+            let querySelectorClip = 'clip' + this.currentTimeId;
+
             this.graph
                 .append('svg:clipPath')
-                .attr('id', 'clip')
+                .attr('id', querySelectorClip)
                 .append('svg:rect')
                 .attr('x', this.bufferSum)
                 .attr('y', 0)
@@ -775,7 +944,7 @@ export class D3TimeseriesGraphComponent
             // draw grah line
             this.graphBody = this.graph
                 .append('g')
-                .attr('clip-path', 'url(#clip)');
+                .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
             // create graph line
             let line = d3.line<DataEntry>()
@@ -813,6 +982,9 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that shows labeling via mousmove.
+     */
     private mousemoveHandler = () => {
         const coords = d3.mouse(this.background.node());
         this.ypos = [];
@@ -859,17 +1031,25 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that hides the labeling inside the graph.
+     */
     private mouseoutHandler = () => {
         this.hideDiagramIndicator();
     }
 
-    // drag handling for move
+    /**
+     * Function starting the drag handling for the diagram.
+     */
     private panStartHandler = () => {
         this.draggingMove = false;
         this.dragMoveStart = d3.event.x;
         this.dragMoveRange = this.xAxisRange;
     }
 
+    /**
+     * Function that controlls the panning (dragging) of the graph.
+     */
     private panMoveHandler = () => {
         this.draggingMove = true;
         if (this.dragMoveStart && this.draggingMove) {
@@ -886,26 +1066,36 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that ends the dragging control.
+     */
     private panEndHandler = () => {
         this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
         this.plotGraph();
         this.dragMoveStart = null;
         this.draggingMove = false;
-
     }
 
-    // drag handling for zoom
+    /**
+     * Function that starts the zoom handling.
+     */
     private zoomStartHandler = () => {
         this.dragging = false;
         this.dragStart = d3.mouse(this.background.node());
         this.xAxisRangeOrigin.push(this.xAxisRange);
     }
 
+    /**
+     * Function that draws a rectangle when zoom is started and the mouse is moving.
+     */
     private zoomHandler = () => {
         this.dragging = true;
         this.drawDragRectangle();
     }
 
+    /**
+     * Function that ends the zoom handling and calculates the via zoom selected time interval.
+     */
     private zoomEndHandler = () => {
         if (!this.dragStart || !this.dragging) {
             if (this.xAxisRangeOrigin[0]) {
@@ -930,7 +1120,11 @@ export class D3TimeseriesGraphComponent
         this.resetDrag();
     }
 
-    // return timestamp of provided diagram coord
+    /**
+     * Function that returns the timestamp of provided x diagram coordinates.
+     * @param start {Number} Number with the minimum diagram coordinate.
+     * @param end {Number} Number with the maximum diagram coordinate.
+     */
     private getxDomain(start: number, end: number) {
         let domMinArr = [];
         let domMaxArr = [];
@@ -979,6 +1173,9 @@ export class D3TimeseriesGraphComponent
         return [domMin, domMax];
     }
 
+    /**
+     * Function that configurates and draws the rectangle.
+     */
     private drawDragRectangle() {
         if (!this.dragStart) { return; }
         this.dragCurrent = d3.mouse(this.background.node());
@@ -1004,13 +1201,9 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private prepareRange(from: number, to: number) {
-        if (from <= to) {
-            return { from, to };
-        }
-        return { from: to, to: from };
-    }
-
+    /**
+     * Function that disables the drawing rectangle control.
+     */
     private resetDrag() {
         if (this.dragRectG) {
             this.dragRectG.remove();
@@ -1019,6 +1212,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that returns the metadata of a specific entry in the dataset.
+     * @param x {Number} Number of the dataset entry.
+     * @param data {DataEntry} Array with the data of each dataset entry.
+     */
     private getItemForX(x: number, data: DataEntry[]) {
         const index = this.xScaleBase.invert(x);
         const bisectDate = d3.bisector((d: DataEntry) => {
@@ -1027,12 +1225,22 @@ export class D3TimeseriesGraphComponent
         return bisectDate(data, index);
     }
 
+    /**
+     * Function that disables the labeling.
+     */
     private hideDiagramIndicator() {
         this.focusG.style('visibility', 'hidden');
         d3.selectAll('.focus-visibility')
             .attr('visibility', 'hidden');
     }
 
+    /**
+     * Function that enables the lableing of each dataset entry.
+     * @param entry {DataEntry} Object containing the dataset.
+     * @param idx {Number} Number with the position of the dataset entry in the data array.
+     * @param xCoordMouse {Number} Number of the x coordinate of the mouse.
+     * @param entryIdx {Number} Number of the index of the entry.
+     */
     private showDiagramIndicator = (entry, idx: number, xCoordMouse: number, entryIdx: number) => {
         const item = entry.data[idx];
         if (item !== undefined) {
@@ -1050,7 +1258,7 @@ export class D3TimeseriesGraphComponent
             labelBuffer = Math.max(4, labelBuffer);
 
             this.showLabelValues(entry, item, onLeftSide);
-            this.showTimeIndicatorLabel(item, onLeftSide, xCoordMouse, entryIdx);
+            this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
 
             if ((xCoordMouse) > (item.xDiagCoord + labelBuffer) || (xCoordMouse) < (item.xDiagCoord - labelBuffer)) {
                 // hide label if mouse to far from coordinate
@@ -1058,7 +1266,7 @@ export class D3TimeseriesGraphComponent
 
                 if (entry.data[idx - 1] && entry.data[idx - 1].xDiagCoord + labelBuffer >= xCoordMouse) {
                     this.showLabelValues(entry, entry.data[idx - 1], onLeftSide);
-                    this.showTimeIndicatorLabel(item, onLeftSide, xCoordMouse, entryIdx);
+                    this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
 
                     this.chVisLabel(entry, true);
                 }
@@ -1069,7 +1277,11 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    // function to change visibility of label and white rectangle inside graph (next to mouse-cursor line)
+    /**
+     * Function to change visibility of label and white rectangle inside graph (next to mouse-cursor line).
+     * @param entry {DataEntry} Object containing the dataset.
+     * @param visible {Boolean} Boolean giving information about visibility of a label.
+     */
     private chVisLabel(entry, visible: boolean) {
         if (visible) {
             entry.focusLabel
@@ -1086,6 +1298,12 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to show the labeling inside the graph.
+     * @param entry {DataEntry} Object containg the dataset.
+     * @param item {DataEntry} Object of the entry in the dataset.
+     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
+     */
     private showLabelValues(entry, item: DataEntry, onLeftSide: boolean) {
         let id = 1;
         if (entry.focusLabel) {
@@ -1105,7 +1323,13 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean, xCoord: number, entryIdx: number) {
+    /**
+     * Function to show the time labeling inside the graph.
+     * @param item {DataEntry} Object of the entry in the dataset.
+     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
+     * @param entryIdx {Number} Number of the index of the entry.
+     */
+    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean, entryIdx: number) {
         // timestamp is the time where the mouse-cursor is
         this.labelTimestamp[entryIdx] = item.timestamp;
         let min = d3.min(this.labelTimestamp);
@@ -1126,6 +1350,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function that returns the boundings of a html element.
+     * @param el {Object} Object of the html element.
+     */
     private getDimensions(el: any) {
         let w = 0;
         let h = 0;
@@ -1142,6 +1370,10 @@ export class D3TimeseriesGraphComponent
         };
     }
 
+    /**
+     * Function that logs the error in the console.
+     * @param error {Object} Object with the error.
+     */
     private onError(error: any) {
         console.error(error);
     }

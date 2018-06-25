@@ -3,4 +3,5 @@ export interface D3PlotOptions {
     generalizeAllways?: boolean;
     togglePanZoom?: boolean;
     yaxis?: any;
+    grid?: any;
 }

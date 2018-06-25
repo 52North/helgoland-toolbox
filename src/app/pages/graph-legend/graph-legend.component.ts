@@ -180,6 +180,10 @@ export class GraphLegendComponent {
         console.log('updateOptions' + JSON.stringify(option));
     }
 
+    public onGraphLoading(loading: boolean) {
+        this.graphLoading = loading;
+    }
+
     public onOverviewLoading(loading: boolean) {
         this.overviewLoading = loading;
         this.cdr.detectChanges();
