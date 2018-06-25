@@ -22,17 +22,20 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.parsedTimespanPresets = this.settingSrvc.getSettings().timespanPresets
-      .filter((e) => this.isSafeTimespanPreset(e))
-      .map((e) => ({
-        name: e.name,
-        label: e.label,
-        timespan: {
-          from: this.parseMomentExpression(e.timespan.from).getTime(),
-          to: this.parseMomentExpression(e.timespan.to).getTime()
-        },
-        seperatorAfterThisItem: e.seperatorAfterThisItem
-      }));
+    const timespanPresets = this.settingSrvc.getSettings().timespanPresets;
+    if (timespanPresets) {
+      this.parsedTimespanPresets = timespanPresets
+        .filter((e) => this.isSafeTimespanPreset(e))
+        .map((e) => ({
+          name: e.name,
+          label: e.label,
+          timespan: {
+            from: this.parseMomentExpression(e.timespan.from).getTime(),
+            to: this.parseMomentExpression(e.timespan.to).getTime()
+          },
+          seperatorAfterThisItem: e.seperatorAfterThisItem
+        }));
+    }
   }
 
   public isSafeMomentExpression(expression: string): boolean {

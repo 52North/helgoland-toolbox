@@ -21,10 +21,7 @@ describe('StatusCheckService', () => {
       imports: [HttpClientModule],
       providers: [
         StatusCheckService,
-        {
-          provide: SettingsService,
-          useClass: ExtendedSettingsService
-        }
+        SettingsService
       ]
     });
   });

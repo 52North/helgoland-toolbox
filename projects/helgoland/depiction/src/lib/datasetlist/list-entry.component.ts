@@ -23,8 +23,10 @@ export abstract class ListEntryComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        const temp = this.internalIdHandler.resolveInternalId(this.datasetId);
-        this.loadDataset(temp.id, temp.url);
+        if (this.datasetId) {
+            const temp = this.internalIdHandler.resolveInternalId(this.datasetId);
+            this.loadDataset(temp.id, temp.url);
+        }
     }
 
     public removeDataset() {

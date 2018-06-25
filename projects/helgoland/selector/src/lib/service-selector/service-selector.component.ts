@@ -45,34 +45,35 @@ export class ServiceSelectorComponent implements OnInit {
     public ngOnInit() {
         if (!this.filter) { this.filter = {}; }
         if (!this.providerBlacklist) { this.providerBlacklist = []; }
-        const list = this.datasetApiList;
-        this.loadingCount = list.length;
-        this.services = [];
-        this.unResolvableServices = [];
-        list.forEach((api) => {
-            this.serviceSelectorService.fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
-                .subscribe(
-                    (res) => {
-                        this.loadingCount--;
-                        if (res && res instanceof Array) {
-                            res.forEach((entry) => {
-                                if (entry.quantities.platforms > 0
-                                    || this.supportStations && entry.quantities.stations > 0) {
-                                    this.services.push(entry);
-                                }
+        if (this.datasetApiList) {
+            this.loadingCount = this.datasetApiList.length;
+            this.services = [];
+            this.unResolvableServices = [];
+            this.datasetApiList.forEach((api) => {
+                this.serviceSelectorService.fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
+                    .subscribe(
+                        (res) => {
+                            this.loadingCount--;
+                            if (res && res instanceof Array) {
+                                res.forEach((entry) => {
+                                    if (entry.quantities.platforms > 0
+                                        || this.supportStations && entry.quantities.stations > 0) {
+                                        this.services.push(entry);
+                                    }
+                                });
+                            }
+                            this.services.sort((a, b) => {
+                                if (a.label < b.label) { return -1; }
+                                if (a.label > b.label) { return 1; }
+                                return 0;
                             });
-                        }
-                        this.services.sort((a, b) => {
-                            if (a.label < b.label) { return -1; }
-                            if (a.label > b.label) { return 1; }
-                            return 0;
+                        },
+                        (error) => {
+                            if (this.showUnresolvableServices) { this.unResolvableServices.push(api); }
+                            this.loadingCount--;
                         });
-                    },
-                    (error) => {
-                        if (this.showUnresolvableServices) { this.unResolvableServices.push(api); }
-                        this.loadingCount--;
-                    });
-        });
+            });
+        }
     }
 
     public isSelected(service: Service) {

@@ -33,26 +33,28 @@ export class DatasetByStationSelectorComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-        this.apiInterface.getStation(this.station.properties.id, this.url)
-            .subscribe((station) => {
-                this.station = station;
-                this.counter = 0;
-                for (const id in this.station.properties.timeseries) {
-                    if (this.station.properties.timeseries.hasOwnProperty(id)) {
-                        this.counter++;
-                        this.apiInterface.getSingleTimeseries(id, this.url)
-                            .subscribe((result) => {
-                                const ts = result as ExtendedTimeseries;
-                                ts.selected = this.defaultSelected;
-                                this.timeseriesList.push(ts);
-                                this.updateSelection();
-                                this.counter--;
-                            }, (error) => {
-                                this.counter--;
-                            });
+        if (this.station) {
+            this.apiInterface.getStation(this.station.properties.id, this.url)
+                .subscribe((station) => {
+                    this.station = station;
+                    this.counter = 0;
+                    for (const id in this.station.properties.timeseries) {
+                        if (this.station.properties.timeseries.hasOwnProperty(id)) {
+                            this.counter++;
+                            this.apiInterface.getSingleTimeseries(id, this.url)
+                                .subscribe((result) => {
+                                    const ts = result as ExtendedTimeseries;
+                                    ts.selected = this.defaultSelected;
+                                    this.timeseriesList.push(ts);
+                                    this.updateSelection();
+                                    this.counter--;
+                                }, (error) => {
+                                    this.counter--;
+                                });
+                        }
                     }
-                }
-            });
+                });
+        }
     }
 
     public toggle(timeseries: ExtendedTimeseries) {

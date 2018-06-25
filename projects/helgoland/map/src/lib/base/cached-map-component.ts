@@ -1,4 +1,4 @@
-import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
@@ -8,7 +8,7 @@ const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
 const DEFAULT_BASE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const DEFAULT_BASE_LAYER_ATTRIBUTION = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
-export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestroy {
+export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestroy, OnInit {
 
     /**
      * @input A map with the given ID is created inside this component. This ID can be used outside of the component the
@@ -63,6 +63,12 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         this._differBaseMaps = this.differs.find({}).create();
     }
 
+    public ngOnInit(): void {
+        if (this.mapId === undefined || this.mapId === null) {
+            this.mapId = this.generateUUID();
+        }
+    }
+
     public ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
             if (changes.fitBounds) {
@@ -112,6 +118,15 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         if (this.fitBounds) {
             this.map.fitBounds(this.fitBounds);
         }
+    }
+
+    private generateUUID(): string {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
     private addOverlayMap(layerOptions: LayerOptions) {
