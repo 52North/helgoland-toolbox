@@ -2,9 +2,11 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../out-tsc/spec",
+    "allowSyntheticDefaultImports": true,
     "types": [
       "jasmine",
-      "node"
+      "node",
+      "geojson"
     ]
   },
   "files": [

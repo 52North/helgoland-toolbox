@@ -14,8 +14,6 @@ import { InternalIdHandler } from './internal-id-handler.service';
 @Injectable()
 export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
 
-    private maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
-
     constructor(
         protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
@@ -31,7 +29,8 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
         params: DataParameterFilter = {},
         options: HttpRequestOptions
     ): Observable<Data<T>> {
-        if ((timespan.to - timespan.from) > this.maxTimeExtent) {
+        const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
+        if ((timespan.to - timespan.from) > maxTimeExtent) {
             const requests: Array<Observable<Data<T>>> = [];
             let start = moment(timespan.from).startOf('year');
             let end = moment(timespan.from).endOf('year');
