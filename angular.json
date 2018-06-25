@@ -29,12 +29,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -145,7 +143,9 @@
           "options": {
             "main": "projects/helgoland/core/src/test.ts",
             "tsConfig": "projects/helgoland/core/tsconfig.spec.json",
-            "karmaConfig": "projects/helgoland/core/karma.conf.js"
+            "karmaConfig": "projects/helgoland/core/karma.conf.js",
+            "codeCoverage": true,
+            "codeCoverageExclude": ["**/test.ts"]
           }
         },
         "lint": {

@@ -4,6 +4,7 @@ import { forkJoin, Observable, Observer } from 'rxjs';
 
 import { Settings } from '../model/settings/settings';
 import { SettingsService } from '../settings/settings.service';
+import { map } from 'rxjs/operators';
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
@@ -21,7 +22,7 @@ export class StatusCheckService {
     @Optional() private useAPIUrls: boolean
   ) {
     const settings = this.settingsService.getSettings();
-    if (useAPIUrls == null || useAPIUrls && settings.datasetApis) {
+    if ((useAPIUrls == null || useAPIUrls) && settings.datasetApis !== undefined) {
       settings.datasetApis.forEach((entry) => this.addUrl(entry.url));
     }
   }
@@ -83,13 +84,15 @@ export class StatusCheckService {
   private doCheck(urls: string[]): Observable<string[]> {
     const requests: Array<Observable<string>> = [];
     urls.forEach((url) => requests.push(this.doCheckUrl(url)));
-    return forkJoin(requests).map((checkedUrls) => {
-      return checkedUrls.filter((entry) => {
-        if (entry) {
-          return entry;
-        }
-      });
-    });
+    return forkJoin(requests).pipe(
+      map((checkedUrls) => {
+        return checkedUrls.filter((entry) => {
+          if (entry) {
+            return entry;
+          }
+        });
+      })
+    );
   }
 
 }

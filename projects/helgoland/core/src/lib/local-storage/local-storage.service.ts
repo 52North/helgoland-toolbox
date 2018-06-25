@@ -6,7 +6,7 @@ export class LocalStorage {
     private localStorageEnabled = false;
 
     constructor() {
-        if (typeof(Storage) !== 'undefined') {
+        if (typeof (Storage) !== 'undefined') {
             this.localStorageEnabled = true;
         }
     }
@@ -35,13 +35,14 @@ export class LocalStorage {
             if (result) {
                 return JSON.parse(result);
             }
-            return [];
+            return null;
         }
     }
 
     public loadTextual(param: string): string {
         if (this.localStorageEnabled) {
-            return localStorage.getItem(param);
+            const result = localStorage.getItem(param);
+            if (result) { return result; }
         }
         return null;
     }
