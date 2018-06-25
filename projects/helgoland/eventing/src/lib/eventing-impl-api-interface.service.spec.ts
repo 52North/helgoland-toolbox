@@ -16,8 +16,13 @@ describe('EventingImplApiInterface', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [EventingImplApiInterface, BasicAuthService],
-      imports: [HttpClientTestingModule]
+      providers: [
+        EventingImplApiInterface,
+        BasicAuthService
+      ],
+      imports: [
+        HttpClientTestingModule
+      ]
     });
     httpTestingController = TestBed.get(HttpTestingController);
   });

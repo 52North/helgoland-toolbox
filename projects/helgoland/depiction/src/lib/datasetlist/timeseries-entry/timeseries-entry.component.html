@@ -1,11 +1,11 @@
-<div class="legendItem" style="position: relative;" [ngStyle]="{'border-color': datasetOptions.color}" [ngClass]="{'selected': selected}"
+<div class="legendItem" style="position: relative;" [ngStyle]="{'border-color': datasetOptions?.color}" [ngClass]="{'selected': selected}"
   (click)="toggleSelection()">
-  <div class="loading-overlay" *ngIf="datasetOptions.loading" [ngStyle]="{'background-color': datasetOptions.color}">
+  <div class="loading-overlay" *ngIf="datasetOptions?.loading" [ngStyle]="{'background-color': datasetOptions?.color}">
     <div class="fa fa-refresh fa-spin fa-3x fa-fw"></div>
   </div>
   <div>
     <div class="legendItemheader" [ngClass]="{'highlight': highlight}">
-      <div class="legendItemLabel" [ngStyle]="{'color': datasetOptions.color}">
+      <div class="legendItemLabel" [ngStyle]="{'color': datasetOptions?.color}">
         <n52-label-mapper label="{{platformLabel}}"></n52-label-mapper>
         <!-- <n52-favorite-toggler [dataset]="dataset"></n52-favorite-toggler> -->
       </div>
@@ -36,9 +36,9 @@
     </div>
     <div class="legendicons">
       <span class="fa" [ngClass]="{'fa-chevron-down': !informationVisible, 'fa-chevron-up': informationVisible}" (click)="toggleInformation(); $event.stopPropagation();"></span>
-      <span class="fa" [ngClass]="{'fa-eye-slash': datasetOptions.visible, 'fa-eye': !datasetOptions.visible}" (click)="toggleVisibility(); $event.stopPropagation();"></span>
+      <span class="fa" [ngClass]="{'fa-eye-slash': datasetOptions?.visible, 'fa-eye': !datasetOptions?.visible}" (click)="toggleVisibility(); $event.stopPropagation();"></span>
       <span class="fa fa-map-marker" (click)="showGeometry(); $event.stopPropagation();"></span>
-      <span class="fa fa-pencil" (click)="editDatasetOptions(); $event.stopPropagation();" [ngStyle]="{color: datasetOptions.color}"></span>
+      <span class="fa fa-pencil" (click)="editDatasetOptions(); $event.stopPropagation();" [ngStyle]="{color: datasetOptions?.color}"></span>
       <span class="fa fa-times" (click)="removeDataset(); $event.stopPropagation();"></span>
     </div>
     <div class="collapseLegendEntry small-label" *ngIf="informationVisible">

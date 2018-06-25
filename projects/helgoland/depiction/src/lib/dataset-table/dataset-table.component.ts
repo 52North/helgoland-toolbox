@@ -38,7 +38,6 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   }
 
   public ngOnInit() {
-    console.log(this.datasetIds);
     this.additionalStylesheet = document.getElementById('selectedIdsStylesheet');
     if (!this.additionalStylesheet) {
       this.additionalStylesheet = document.createElement('style');
@@ -82,7 +81,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   }
 
   public reloadData(): void {
-    console.log('reload data at ' + new Date());
+    // console.log('reload data at ' + new Date());
   }
 
   protected graphOptionsChanged(options: any) {

@@ -89,10 +89,14 @@ export class FavoriteService {
   private loadFavorites(): void {
     this.singleFavs = new Map();
     this.groupFavs = new Map();
-    this.localStorage.loadArray<SingleFavorite>(CACHE_PARAM_FAVORITES_SINGLE)
-      .forEach((entry) => this.singleFavs.set(entry.id, entry));
-    this.localStorage.loadArray<GroupFavorite>(CACHE_PARAM_FAVORITES_GROUP)
-      .forEach((entry) => this.groupFavs.set(entry.id, entry));
+    const loadedSingleFavs = this.localStorage.loadArray<SingleFavorite>(CACHE_PARAM_FAVORITES_SINGLE);
+    if (loadedSingleFavs) {
+      loadedSingleFavs.forEach((entry) => this.singleFavs.set(entry.id, entry));
+    }
+    const loadedGroupFavs = this.localStorage.loadArray<GroupFavorite>(CACHE_PARAM_FAVORITES_GROUP);
+    if (loadedGroupFavs) {
+      loadedGroupFavs.forEach((entry) => this.groupFavs.set(entry.id, entry));
+    }
   }
 }
 

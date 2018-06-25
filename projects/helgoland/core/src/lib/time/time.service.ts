@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
-import moment from 'moment';
+import moment from 'moment/src/moment';
 
 import { LocalStorage } from '../local-storage/local-storage.service';
 import { BufferedTime, TimeInterval, Timespan } from '../model/internal/timeInterval';
@@ -45,7 +45,10 @@ export class Time {
         if (timeInterval instanceof Timespan) {
             return timeInterval;
         } else if (timeInterval instanceof BufferedTime) {
-            throw new Error('not implemented yet');
+            const duration = moment.duration(timeInterval.bufferInterval / 2);
+            const from = moment(timeInterval.timestamp).subtract(duration).unix() * 1000;
+            const to = moment(timeInterval.timestamp).add(duration).unix() * 1000;
+            return new Timespan(from, to);
         } else {
             console.error('Wrong time interval!');
         }
