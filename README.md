@@ -12,34 +12,41 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 
 ### Dependencies
 
-##### Node/NPM
+#### Node/NPM
+
 Install latest Node and NPM following the [instructions](https://nodejs.org/en/download/). Make sure you have Node version ≥ 7.0 and NPM ≥ 4.
 
 - `brew install node` for Mac.
 
 ### Installing
+
 - `fork` this repository.
 - `clone` your fork to your local environment.
 - `npm install` to install required dependencies.
 
 ### Build the libraries
+
 - `npm run build:libs` for building the library once
 
 ### Other commands
 
-##### Lint the complete code
+#### Lint the complete code
+
 - `ng lint` for performing static code analysis.
 
-##### Generate documentation
+#### Generate documentation
+
 - `npm run compodoc` for generating documentation locally
 - `npm run gh-pages` for generating documentation and uploading it to GitHub Pages
 
 ##### Bump library version
+
 - `npm version ***` to increase library version. [More on bumping](https://docs.npmjs.com/cli/version).
 
 <!-- `preversion` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing. -->
 
 ##### Publish library to NPM
+
 - `yarn lib:publish` to publish your library sources on [npmjs.com](https://www.npmjs.com/). Once the library is published it will be available for usage in npm packages.
 
 <!-- `prepublishOnly` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing. -->
@@ -77,6 +84,7 @@ Now, once you update your library source code it will automatically be re-compil
 [More information](https://yarnpkg.com/en/docs/cli/link) about `yarn link` command.
 
 > At the moment of publishing this project there is a [bug](https://github.com/angular/angular-cli/issues/3854) exists when using `yarn link` in combination with Angular CLI. The issue is caused by having `node_modules` folder inside linked library. There is a [workaround](https://github.com/angular/angular-cli/issues/3854#issuecomment-274344771) has been provided that suggests to add a `paths` property with all Angular dependencies to the `tsconfig.json` file of the Angular CLI project like it is shown below:
+
 ```
 {
   "compilerOptions": {
@@ -93,8 +101,5 @@ Now, once you update your library source code it will automatically be re-compil
 
 ## Troubleshooting while using this library
 
- - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
- - don't forget to add styles of nested dependencies
-
-
-
+- add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
+- don't forget to add styles of nested dependencies

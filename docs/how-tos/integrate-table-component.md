@@ -122,6 +122,7 @@ constructor() {
   });
 }
 ```
+
 This code is implemented in the helgoland-toolbox github repository and can be viewed [here](https://github.com/52North/helgoland-toolbox/blob/master/src/demo/app/pages/timeseries-graph/timeseries-graph.component.ts).
 
 **A very important step should not be missed**  
