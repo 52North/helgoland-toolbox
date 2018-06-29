@@ -284,10 +284,23 @@ export class D3TimeseriesGraphComponent
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
             const data = this.datasetMap.get(dataset.internalId).data;
+
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
-                // dataset.uom = 'mc';
+            //     dataset.uom = 'mc';
             // }
+
+            // set timeseries invisible, if no data is provided for selected timerange
+            if (data.values.length === 0) {
+                styles.visible = false;
+            }
+
+            // generate random color, if color is not defined
+            if (styles.color === undefined) {
+                styles.color = this.getRandomColor();
+            }
+
+
             // end of check for datasets
             const dataEntry = {
                 internalId: dataset.internalId,
@@ -1389,6 +1402,18 @@ export class D3TimeseriesGraphComponent
             .toString(16)
             .substring(1);
     }
+
+    /**
+     * Function to generate a random color.
+     */
+    private getRandomColor() {
+        let letters = '0123456789ABCDEF'; // to get light colors -> set to 789ABCD
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)]; // to get light colors -> set multiplier to 6
+        }
+        return color;
+      }
 
     /**
      * Function that logs the error in the console.

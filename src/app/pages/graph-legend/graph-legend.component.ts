@@ -15,8 +15,9 @@ export class GraphLegendComponent {
     public datasetIds = [
         'http://www.fluggs.de/sos2/api/v1/__26',
         'http://www.fluggs.de/sos2/api/v1/__51',
+        'http://www.fluggs.de/sos2/api/v1/__72'
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
-        'http://mudak-wrm.dev.52north.org/sos/api/__70'
+        // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public timespan;
     public diagramOptions: PlotOptions = {
