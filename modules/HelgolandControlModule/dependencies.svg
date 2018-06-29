@@ -26,7 +26,7 @@
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_HelgolandControlModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="22,-78 22,-130 548,-130 548,-78 22,-78"/>
+<polygon fill="none" stroke="#000000" points="22,-78 22,-130 549,-130 549,-78 22,-78"/>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_HelgolandControlModule_exports</title>
@@ -35,44 +35,44 @@
 <!-- BoolTogglerComponent -->
 <g id="node1" class="node">
 <title>BoolTogglerComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="540.378,-122 387.622,-122 387.622,-86 540.378,-86 540.378,-122"/>
-<text text-anchor="middle" x="464" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BoolTogglerComponent</text>
+<polygon fill="#ffffb3" stroke="#000000" points="541.378,-122 388.622,-122 388.622,-86 541.378,-86 541.378,-122"/>
+<text text-anchor="middle" x="465" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BoolTogglerComponent</text>
 </g>
 <!-- HelgolandControlModule -->
 <g id="node4" class="node">
 <title>HelgolandControlModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="370.1456,-187 367.1456,-191 346.1456,-191 343.1456,-187 209.8544,-187 209.8544,-151 370.1456,-151 370.1456,-187"/>
-<text text-anchor="middle" x="290" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandControlModule</text>
+<polygon fill="#8dd3c7" stroke="#000000" points="369.1456,-187 366.1456,-191 345.1456,-191 342.1456,-187 208.8544,-187 208.8544,-151 369.1456,-151 369.1456,-187"/>
+<text text-anchor="middle" x="289" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandControlModule</text>
 </g>
 <!-- BoolTogglerComponent&#45;&gt;HelgolandControlModule -->
 <g id="edge1" class="edge">
 <title>BoolTogglerComponent&#45;&gt;HelgolandControlModule</title>
-<path fill="none" stroke="#000000" d="M490.2297,-122.0225C490.2297,-139.3734 490.2297,-163 490.2297,-163 490.2297,-163 380.2874,-163 380.2874,-163"/>
-<polygon fill="#000000" stroke="#000000" points="380.2874,-159.5001 370.2874,-163 380.2873,-166.5001 380.2874,-159.5001"/>
-</g>
-<!-- StringTogglerComponent -->
-<g id="node2" class="node">
-<title>StringTogglerComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="369.8752,-122 210.1248,-122 210.1248,-86 369.8752,-86 369.8752,-122"/>
-<text text-anchor="middle" x="290" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">StringTogglerComponent</text>
-</g>
-<!-- StringTogglerComponent&#45;&gt;HelgolandControlModule -->
-<g id="edge2" class="edge">
-<title>StringTogglerComponent&#45;&gt;HelgolandControlModule</title>
-<path fill="none" stroke="#000000" d="M290,-122.1061C290,-122.1061 290,-140.991 290,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="286.5001,-140.9909 290,-150.991 293.5001,-140.991 286.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M490.8963,-122.0225C490.8963,-139.3734 490.8963,-163 490.8963,-163 490.8963,-163 379.3749,-163 379.3749,-163"/>
+<polygon fill="#000000" stroke="#000000" points="379.3749,-159.5001 369.3749,-163 379.3749,-166.5001 379.3749,-159.5001"/>
 </g>
 <!-- RefreshButtonComponent -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>RefreshButtonComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="192.4818,-122 29.5182,-122 29.5182,-86 192.4818,-86 192.4818,-122"/>
-<text text-anchor="middle" x="111" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">RefreshButtonComponent</text>
+<polygon fill="#ffffb3" stroke="#000000" points="370.4818,-122 207.5182,-122 207.5182,-86 370.4818,-86 370.4818,-122"/>
+<text text-anchor="middle" x="289" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">RefreshButtonComponent</text>
 </g>
 <!-- RefreshButtonComponent&#45;&gt;HelgolandControlModule -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>RefreshButtonComponent&#45;&gt;HelgolandControlModule</title>
-<path fill="none" stroke="#000000" d="M136.6636,-122.0225C136.6636,-139.3734 136.6636,-163 136.6636,-163 136.6636,-163 199.7392,-163 199.7392,-163"/>
-<polygon fill="#000000" stroke="#000000" points="199.7392,-166.5001 209.7392,-163 199.7391,-159.5001 199.7392,-166.5001"/>
+<path fill="none" stroke="#000000" d="M289,-122.1061C289,-122.1061 289,-140.991 289,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="285.5001,-140.9909 289,-150.991 292.5001,-140.991 285.5001,-140.9909"/>
+</g>
+<!-- StringTogglerComponent -->
+<g id="node3" class="node">
+<title>StringTogglerComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="189.8752,-122 30.1248,-122 30.1248,-86 189.8752,-86 189.8752,-122"/>
+<text text-anchor="middle" x="110" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">StringTogglerComponent</text>
+</g>
+<!-- StringTogglerComponent&#45;&gt;HelgolandControlModule -->
+<g id="edge3" class="edge">
+<title>StringTogglerComponent&#45;&gt;HelgolandControlModule</title>
+<path fill="none" stroke="#000000" d="M135.1459,-122.0225C135.1459,-139.3734 135.1459,-163 135.1459,-163 135.1459,-163 198.4682,-163 198.4682,-163"/>
+<polygon fill="#000000" stroke="#000000" points="198.4682,-166.5001 208.4682,-163 198.4681,-159.5001 198.4682,-166.5001"/>
 </g>
 <!-- BoolTogglerComponent  -->
 <g id="node5" class="node">
@@ -83,32 +83,32 @@
 <!-- HelgolandControlModule&#45;&gt;BoolTogglerComponent  -->
 <g id="edge4" class="edge">
 <title>HelgolandControlModule&#45;&gt;BoolTogglerComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M370.2805,-175C405.9489,-175 440.0203,-175 440.0203,-175 440.0203,-175 440.0203,-205.9775 440.0203,-205.9775"/>
-<polygon fill="#000000" stroke="#000000" points="436.5204,-205.9774 440.0203,-215.9775 443.5204,-205.9775 436.5204,-205.9774"/>
-</g>
-<!-- StringTogglerComponent  -->
-<g id="node6" class="node">
-<title>StringTogglerComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="371.8756,-252 208.1244,-252 208.1244,-216 371.8756,-216 371.8756,-252"/>
-<text text-anchor="middle" x="290" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">StringTogglerComponent </text>
-</g>
-<!-- HelgolandControlModule&#45;&gt;StringTogglerComponent  -->
-<g id="edge5" class="edge">
-<title>HelgolandControlModule&#45;&gt;StringTogglerComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M290,-187.1061C290,-187.1061 290,-205.991 290,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="286.5001,-205.9909 290,-215.991 293.5001,-205.991 286.5001,-205.9909"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M369.5514,-175C405.6971,-175 440.3537,-175 440.3537,-175 440.3537,-175 440.3537,-205.9775 440.3537,-205.9775"/>
+<polygon fill="#000000" stroke="#000000" points="436.8538,-205.9774 440.3537,-215.9775 443.8538,-205.9775 436.8538,-205.9774"/>
 </g>
 <!-- RefreshButtonComponent  -->
-<g id="node7" class="node">
+<g id="node6" class="node">
 <title>RefreshButtonComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="190.4825,-252 23.5175,-252 23.5175,-216 190.4825,-216 190.4825,-252"/>
-<text text-anchor="middle" x="107" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">RefreshButtonComponent </text>
+<polygon fill="#fb8072" stroke="#000000" points="372.4825,-252 205.5175,-252 205.5175,-216 372.4825,-216 372.4825,-252"/>
+<text text-anchor="middle" x="289" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">RefreshButtonComponent </text>
 </g>
 <!-- HelgolandControlModule&#45;&gt;RefreshButtonComponent  -->
-<g id="edge6" class="edge">
+<g id="edge5" class="edge">
 <title>HelgolandControlModule&#45;&gt;RefreshButtonComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M209.7056,-175C151.5437,-175 83.0864,-175 83.0864,-175 83.0864,-175 83.0864,-205.9775 83.0864,-205.9775"/>
-<polygon fill="#000000" stroke="#000000" points="79.5865,-205.9774 83.0864,-215.9775 86.5865,-205.9775 79.5865,-205.9774"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M289,-187.1061C289,-187.1061 289,-205.991 289,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="285.5001,-205.9909 289,-215.991 292.5001,-205.991 285.5001,-205.9909"/>
+</g>
+<!-- StringTogglerComponent  -->
+<g id="node7" class="node">
+<title>StringTogglerComponent </title>
+<polygon fill="#fb8072" stroke="#000000" points="187.8756,-252 24.1244,-252 24.1244,-216 187.8756,-216 187.8756,-252"/>
+<text text-anchor="middle" x="106" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">StringTogglerComponent </text>
+</g>
+<!-- HelgolandControlModule&#45;&gt;StringTogglerComponent  -->
+<g id="edge6" class="edge">
+<title>HelgolandControlModule&#45;&gt;StringTogglerComponent </title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M208.611,-175C150.6585,-175 82.6041,-175 82.6041,-175 82.6041,-175 82.6041,-205.9775 82.6041,-205.9775"/>
+<polygon fill="#000000" stroke="#000000" points="79.1042,-205.9774 82.6041,-215.9775 86.1042,-205.9775 79.1042,-205.9774"/>
 </g>
 </g>
 </svg>

@@ -36,59 +36,59 @@
 <title>cluster_HelgolandFlotModule_exports</title>
 <polygon fill="none" stroke="#000000" points="122,-208 122,-260 618,-260 618,-208 122,-208"/>
 </g>
-<!-- FlotTimeseriesGraphComponent -->
+<!-- FlotOverviewTimeseriesGraphComponent -->
 <g id="node1" class="node">
-<title>FlotTimeseriesGraphComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="716.2962,-122 515.7038,-122 515.7038,-86 716.2962,-86 716.2962,-122"/>
-<text text-anchor="middle" x="616" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotTimeseriesGraphComponent</text>
+<title>FlotOverviewTimeseriesGraphComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="715.9901,-122 460.0099,-122 460.0099,-86 715.9901,-86 715.9901,-122"/>
+<text text-anchor="middle" x="588" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotOverviewTimeseriesGraphComponent</text>
 </g>
 <!-- HelgolandFlotModule -->
 <g id="node3" class="node">
 <title>HelgolandFlotModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="440.4313,-187 437.4313,-191 416.4313,-191 413.4313,-187 299.5687,-187 299.5687,-151 440.4313,-151 440.4313,-187"/>
-<text text-anchor="middle" x="370" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandFlotModule</text>
-</g>
-<!-- FlotTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule -->
-<g id="edge1" class="edge">
-<title>FlotTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule</title>
-<path fill="none" stroke="#000000" d="M562.875,-122.1061C562.875,-141.3391 562.875,-169 562.875,-169 562.875,-169 450.451,-169 450.451,-169"/>
-<polygon fill="#000000" stroke="#000000" points="450.4511,-165.5001 440.451,-169 450.451,-172.5001 450.4511,-165.5001"/>
-</g>
-<!-- FlotOverviewTimeseriesGraphComponent -->
-<g id="node2" class="node">
-<title>FlotOverviewTimeseriesGraphComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="497.9901,-122 242.0099,-122 242.0099,-86 497.9901,-86 497.9901,-122"/>
-<text text-anchor="middle" x="370" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotOverviewTimeseriesGraphComponent</text>
+<polygon fill="#8dd3c7" stroke="#000000" points="412.4313,-187 409.4313,-191 388.4313,-191 385.4313,-187 271.5687,-187 271.5687,-151 412.4313,-151 412.4313,-187"/>
+<text text-anchor="middle" x="342" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandFlotModule</text>
 </g>
 <!-- FlotOverviewTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>FlotOverviewTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule</title>
-<path fill="none" stroke="#000000" d="M370,-122.1061C370,-122.1061 370,-140.991 370,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="366.5001,-140.9909 370,-150.991 373.5001,-140.991 366.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M535.375,-122.1061C535.375,-141.3391 535.375,-169 535.375,-169 535.375,-169 422.3598,-169 422.3598,-169"/>
+<polygon fill="#000000" stroke="#000000" points="422.3599,-165.5001 412.3598,-169 422.3598,-172.5001 422.3599,-165.5001"/>
 </g>
-<!-- FlotTimeseriesGraphComponent  -->
-<g id="node5" class="node">
-<title>FlotTimeseriesGraphComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="609.7961,-252 406.2039,-252 406.2039,-216 609.7961,-216 609.7961,-252"/>
-<text text-anchor="middle" x="508" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotTimeseriesGraphComponent </text>
+<!-- FlotTimeseriesGraphComponent -->
+<g id="node2" class="node">
+<title>FlotTimeseriesGraphComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="442.2962,-122 241.7038,-122 241.7038,-86 442.2962,-86 442.2962,-122"/>
+<text text-anchor="middle" x="342" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotTimeseriesGraphComponent</text>
 </g>
-<!-- HelgolandFlotModule&#45;&gt;FlotTimeseriesGraphComponent  -->
-<g id="edge4" class="edge">
-<title>HelgolandFlotModule&#45;&gt;FlotTimeseriesGraphComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M423.1587,-187.1061C423.1587,-187.1061 423.1587,-205.991 423.1587,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="419.6587,-205.9909 423.1587,-215.991 426.6587,-205.991 419.6587,-205.9909"/>
+<!-- FlotTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule -->
+<g id="edge2" class="edge">
+<title>FlotTimeseriesGraphComponent&#45;&gt;HelgolandFlotModule</title>
+<path fill="none" stroke="#000000" d="M342,-122.1061C342,-122.1061 342,-140.991 342,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="338.5001,-140.9909 342,-150.991 345.5001,-140.991 338.5001,-140.9909"/>
 </g>
 <!-- FlotOverviewTimeseriesGraphComponent  -->
-<g id="node6" class="node">
+<g id="node5" class="node">
 <title>FlotOverviewTimeseriesGraphComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="388.4896,-252 129.5104,-252 129.5104,-216 388.4896,-216 388.4896,-252"/>
-<text text-anchor="middle" x="259" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotOverviewTimeseriesGraphComponent </text>
+<polygon fill="#fb8072" stroke="#000000" points="610.4896,-252 351.5104,-252 351.5104,-216 610.4896,-216 610.4896,-252"/>
+<text text-anchor="middle" x="481" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotOverviewTimeseriesGraphComponent </text>
 </g>
 <!-- HelgolandFlotModule&#45;&gt;FlotOverviewTimeseriesGraphComponent  -->
-<g id="edge5" class="edge">
+<g id="edge4" class="edge">
 <title>HelgolandFlotModule&#45;&gt;FlotOverviewTimeseriesGraphComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M344.1398,-187.1061C344.1398,-187.1061 344.1398,-205.991 344.1398,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="340.6398,-205.9909 344.1398,-215.991 347.6398,-205.991 340.6398,-205.9909"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M381.8603,-187.1061C381.8603,-187.1061 381.8603,-205.991 381.8603,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="378.3603,-205.9909 381.8603,-215.991 385.3603,-205.991 378.3603,-205.9909"/>
+</g>
+<!-- FlotTimeseriesGraphComponent  -->
+<g id="node6" class="node">
+<title>FlotTimeseriesGraphComponent </title>
+<polygon fill="#fb8072" stroke="#000000" points="333.7961,-252 130.2039,-252 130.2039,-216 333.7961,-216 333.7961,-252"/>
+<text text-anchor="middle" x="232" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">FlotTimeseriesGraphComponent </text>
+</g>
+<!-- HelgolandFlotModule&#45;&gt;FlotTimeseriesGraphComponent  -->
+<g id="edge5" class="edge">
+<title>HelgolandFlotModule&#45;&gt;FlotTimeseriesGraphComponent </title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.8414,-187.1061C302.8414,-187.1061 302.8414,-205.991 302.8414,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="299.3414,-205.9909 302.8414,-215.991 306.3414,-205.991 299.3414,-205.9909"/>
 </g>
 <!-- HelgolandLabelMapperModule -->
 <g id="node4" class="node">
@@ -99,8 +99,8 @@
 <!-- HelgolandLabelMapperModule&#45;&gt;HelgolandFlotModule -->
 <g id="edge3" class="edge">
 <title>HelgolandLabelMapperModule&#45;&gt;HelgolandFlotModule</title>
-<path fill="none" stroke="#000000" d="M173.571,-122.1061C173.571,-141.3391 173.571,-169 173.571,-169 173.571,-169 289.6394,-169 289.6394,-169"/>
-<polygon fill="#000000" stroke="#000000" points="289.6395,-172.5001 299.6394,-169 289.6394,-165.5001 289.6395,-172.5001"/>
+<path fill="none" stroke="#000000" d="M173.8694,-122.1061C173.8694,-141.3391 173.8694,-169 173.8694,-169 173.8694,-169 261.6717,-169 261.6717,-169"/>
+<polygon fill="#000000" stroke="#000000" points="261.6717,-172.5001 271.6717,-169 261.6716,-165.5001 261.6717,-172.5001"/>
 </g>
 </g>
 </svg>
