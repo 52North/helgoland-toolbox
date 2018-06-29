@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { forkJoin, Observable, Observer } from 'rxjs';
-
-import { Settings } from '../model/settings/settings';
-import { SettingsService } from '../settings/settings.service';
 import { map } from 'rxjs/operators';
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
- * the corresponding method gives back the URLs which are not reachable. By default all URLs of the datasetApis settings parameter
- * will be registered to the internal URLs
+ * the corresponding method gives back the URLs which are not reachable.
  */
 @Injectable()
 export class StatusCheckService {
@@ -17,15 +13,8 @@ export class StatusCheckService {
   private urls: string[] = [];
 
   constructor(
-    private settingsService: SettingsService<Settings>,
-    private httpClient: HttpClient,
-    @Optional() private useAPIUrls: boolean
-  ) {
-    const settings = this.settingsService.getSettings();
-    if ((useAPIUrls == null || useAPIUrls) && settings.datasetApis !== undefined) {
-      settings.datasetApis.forEach((entry) => this.addUrl(entry.url));
-    }
-  }
+    private httpClient: HttpClient
+  ) { }
 
   /**
    * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable
