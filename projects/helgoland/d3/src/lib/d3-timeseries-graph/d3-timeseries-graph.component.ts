@@ -134,8 +134,7 @@ export class D3TimeseriesGraphComponent
     }
 
     public ngAfterViewInit(): void {
-        let d = new Date();
-        this.currentTimeId = d.getTime();
+        this.currentTimeId = this.uuidv4();
 
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
@@ -504,9 +503,11 @@ export class D3TimeseriesGraphComponent
 
             if (this.plotOptions.togglePanZoom === false) {
                 this.background
-                    .on('mousedown.drag', this.zoomStartHandler)
-                    .on('mousemove.drag', this.zoomHandler)
-                    .on('mouseup.drag', this.zoomEndHandler);
+                    .call(d3.zoom()
+                        .on('start', this.zoomStartHandler)
+                        .on('zoom', this.zoomHandler)
+                        .on('end', this.zoomEndHandler)
+                    );
             } else {
                 this.background
                     .call(d3.drag()
@@ -588,6 +589,9 @@ export class D3TimeseriesGraphComponent
 
             // add event to resizing handle to allow change time on resize
             this.background.selectAll('.handle')
+                .style('fill', 'red')
+                .style('opacity', 0.3)
+                .attr('stroke', 'none')
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
@@ -1368,6 +1372,22 @@ export class D3TimeseriesGraphComponent
             w,
             h
         };
+    }
+
+    /**
+     * Function to generate uuid for a diagram
+     */
+    private uuidv4() {
+        return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
+    }
+
+    /**
+     * Function to generate components of the uuid for a diagram
+     */
+    private s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
     }
 
     /**
