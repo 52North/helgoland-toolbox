@@ -12,12 +12,11 @@ import {
 } from '@angular/core';
 import {
     DatasetApiInterface,
-    FirstLastValue,
     HasLoadableContent,
     Mixin,
     ParameterFilter,
     Station,
-    StatusInterval,
+    StatusIntervalResolverService,
     Timeseries,
     TimeseriesExtras,
 } from '@helgoland/core';
@@ -44,6 +43,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
+        protected statusIntervalResolver: StatusIntervalResolverService,
         protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
@@ -86,7 +86,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                 obs.subscribe((extras: TimeseriesExtras) => {
                     let marker;
                     if (extras.statusIntervals) {
-                        const interval = this.getMatchingInterval(ts.lastValue, extras.statusIntervals);
+                        const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
                         if (interval) {
                             marker = this.createColoredMarker(ts.station, interval.color);
                         } else {
@@ -135,16 +135,6 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             this.onSelected.emit(station);
         });
         return marker;
-    }
-
-    private getMatchingInterval(lastValue: FirstLastValue, statusIntervals: StatusInterval[]): StatusInterval {
-        if (lastValue && statusIntervals) {
-            return statusIntervals.find((interval) => {
-                const upper = interval.upper ? parseFloat(interval.upper) : Number.MAX_VALUE;
-                const lower = interval.lower ? parseFloat(interval.lower) : Number.MIN_VALUE;
-                if (lower < lastValue.value && lastValue.value < upper) { return true; }
-            });
-        }
     }
 
     private createStationMarkers() {
