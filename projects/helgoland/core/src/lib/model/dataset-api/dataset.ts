@@ -64,6 +64,7 @@ export class Timeseries implements IDataset {
     public referenceValues: ReferenceValue[];
     public station: Station;
     public parameters: ParameterConstellation;
+    public statusIntervals?: StatusInterval[];
     public hasData = false;
 }
 
