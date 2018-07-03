@@ -10,6 +10,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
+    ColorService,
     DatasetApiInterface,
     Data,
     DatasetPresenterComponent,
@@ -128,7 +129,8 @@ export class D3TimeseriesGraphComponent
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        private colorService: ColorService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc);
     }
@@ -293,11 +295,17 @@ export class D3TimeseriesGraphComponent
             // set timeseries invisible, if no data is provided for selected timerange
             if (data.values.length === 0) {
                 styles.visible = false;
+            } else {
+                if (!styles.visualize) {
+                    styles.visible = false;
+                } else {
+                    styles.visible = true;
+                }
             }
 
             // generate random color, if color is not defined
             if (styles.color === undefined) {
-                styles.color = this.getRandomColor();
+                styles.color = this.colorService.getColor();
             }
 
 
@@ -1402,18 +1410,6 @@ export class D3TimeseriesGraphComponent
             .toString(16)
             .substring(1);
     }
-
-    /**
-     * Function to generate a random color.
-     */
-    private getRandomColor() {
-        let letters = '0123456789ABCDEF'; // to get light colors -> set to 789ABCD
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)]; // to get light colors -> set multiplier to 6
-        }
-        return color;
-      }
 
     /**
      * Function that logs the error in the console.

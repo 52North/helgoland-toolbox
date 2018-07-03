@@ -2,6 +2,7 @@ export class DatasetOptions {
     public internalId: string;
     public color: string;
     public visible = true;
+    public visualize = true;
     public loading?: boolean;
     public separateYAxe ?= false;
     public zeroBasedYAxe ?= false;
