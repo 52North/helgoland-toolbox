@@ -104,6 +104,8 @@ This code is implemented in the helgoland-toolbox github repository and can be v
 
 Implement the functionality of the `n52-d3-timeseries-graph`-directive by adding the following code to the class `AppComponent` in `src/app/app.component.ts`:
 
+- Attention: If you would like to have pre-selected colors for your graph, you can change and add the color as string in the array of the variable `colors`. If you do not provide any color-entries in the array or not enough color-entries with this array, all missing colors will be randomly generated in the D3 timeseries component, because each graph needs an own color-entry.
+
 ```javascript
 // These variables define the links for accessing the datasets and in which colors they are styled.
 public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72'];
