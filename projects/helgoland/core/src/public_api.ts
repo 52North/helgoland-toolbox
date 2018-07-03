@@ -10,6 +10,7 @@ export * from './lib/color/color.service';
 
 export { DatasetApiV1 } from './lib/dataset-api/interfaces/api-v1.interface';
 export { DatasetApiV2 } from './lib/dataset-api/interfaces/api-v2.interface';
+export * from './lib/dataset-api/helper/status-interval-resolver.service';
 export { DatasetApiInterface, UriParameterCoder } from './lib/dataset-api/api-interface';
 export { DatasetApiMapping, DatasetApiVersion } from './lib/dataset-api/api-mapping.service';
 export { SplittedDataDatasetApiInterface } from './lib/dataset-api/splitted-data-api-interface.service';
