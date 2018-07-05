@@ -71,6 +71,9 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
 
     public dataset: IDataset;
 
+    public yAxisRangeMin;
+    public yAxisRangeMax;
+
     constructor(
         protected api: DatasetApiInterface,
         protected timeSrvc: Time,
@@ -110,6 +113,13 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public toggleVisibility() {
         this.datasetOptions.visible = !this.datasetOptions.visible;
         this.datasetOptions.visualize = this.datasetOptions.visible;
+        this.onUpdateOptions.emit(this.datasetOptions);
+    }
+
+    public setYaxisRange() {
+        const min = (this.yAxisRangeMin === null || this.yAxisRangeMin === undefined) ? 0 : this.yAxisRangeMin;
+        const max = (this.yAxisRangeMax === null || this.yAxisRangeMax === undefined) ? 0 : this.yAxisRangeMax;
+        this.datasetOptions.yAxisRange = [min, max];
         this.onUpdateOptions.emit(this.datasetOptions);
     }
 

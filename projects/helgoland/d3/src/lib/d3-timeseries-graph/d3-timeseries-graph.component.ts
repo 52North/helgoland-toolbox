@@ -80,6 +80,7 @@ export class D3TimeseriesGraphComponent
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     private yRangesEachUom: any; // y array of objects containing ranges for each uom
+    private defaultYaxisRange: boolean;
     private dataYranges: any; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
@@ -326,7 +327,9 @@ export class D3TimeseriesGraphComponent
                 },
                 axisOptions: {
                     uom: dataset.uom,
-                    label: dataset.label
+                    label: dataset.label,
+                    zeroBased: styles.zeroBasedYAxis,
+                    yAxisRange: styles.yAxisRange
                 },
                 visible: styles.visible
             };
@@ -386,16 +389,61 @@ export class D3TimeseriesGraphComponent
      * @param internalId {String} String with the ID of a dataset.
      */
     private processData(dataEntry, internalId) {
+        let min;
+        let max;
+
+        let yAxisRange = dataEntry.axisOptions.yAxisRange;
+
         // get min and max value of data
         const range = d3.extent<DataEntry, number>(dataEntry.data, (datum, index, array) => {
             return datum[1]; // datum[0] = timestamp -- datum[1] = value
         });
 
-        let min = range[0];
-        let max = range[1];
-        if (min === max) {
-            min = min - (min * 0.1);
-            max = max + (max * 0.1);
+        let outOfrange = false;
+
+        if (yAxisRange[0] > yAxisRange[1]) {
+            min = yAxisRange[1];
+            max = yAxisRange[0];
+            if (min > range[1] || max < range[0]) {
+                outOfrange = true;
+            }
+        } else {
+            min = yAxisRange[0];
+            max = yAxisRange[1];
+            if (min > range[1] || max < range[0]) {
+                outOfrange = true;
+            }
+        }
+
+        if (this.plotOptions !== undefined && this.plotOptions.grid !== undefined && !this.plotOptions.grid.hoverable) {
+            outOfrange = true;
+        }
+
+        // check if there are given min and max. If not use default min and max calculated from data
+        if (yAxisRange[0] !== yAxisRange[1] && !outOfrange) {
+            this.defaultYaxisRange = false;
+        } else {
+            min = range[0];
+            max = range[1];
+            if (min === max) {
+                min = min - (min * 0.1);
+                max = max + (max * 0.1);
+            }
+            this.defaultYaxisRange = true;
+        }
+
+        // if style option 'zero based y-axis' is checked,
+        // the axis will be aligned to top 0 (with data below 0) or to bottom 0 (with data above 0)
+        let zeroBasedValue = -1;
+        if (dataEntry.axisOptions.zeroBased) {
+            if (range[1] <= 0) {
+                max = 0;
+                zeroBasedValue = 1;
+            }
+            if (range[0] >= 0) {
+                min = 0;
+                zeroBasedValue = 0;
+            }
         }
 
         const newDatasetIdx = this.preparedData.findIndex((e) => e.internalId === internalId);
@@ -405,7 +453,10 @@ export class D3TimeseriesGraphComponent
             this.dataYranges[newDatasetIdx] = {
                 uom: dataEntry.axisOptions.uom,
                 range: [min, max],
-                id: internalId
+                id: internalId,
+                defR: this.defaultYaxisRange,
+                zeroBasedYAxis: dataEntry.axisOptions.zeroBased,
+                zeroBasedValue: zeroBasedValue
             };
         } else {
             this.dataYranges[newDatasetIdx] = null;
@@ -419,16 +470,36 @@ export class D3TimeseriesGraphComponent
                 let yrangeObj = {
                     uom: obj.uom,
                     range: obj.range,
-                    ids: [obj.id]
+                    ids: [obj.id],
+                    defaultRange: obj.defR,
+                    zeroBased: {
+                        bool: obj.zeroBasedYAxis,
+                        value: obj.zeroBasedValue
+                    }
                 };
                 if (idx >= 0) {
-                    if (this.yRangesEachUom[idx].range[0] > obj.range[0]) {
+
+                    if (obj.defR === this.yRangesEachUom[idx].defaultRange) {
+                        if (this.yRangesEachUom[idx].range[0] > obj.range[0]) {
+                            this.yRangesEachUom[idx].range[0] = obj.range[0];
+                        }
+                        if (this.yRangesEachUom[idx].range[1] < obj.range[1]) {
+                            this.yRangesEachUom[idx].range[1] = obj.range[1];
+                        }
+                    } else if (!obj.defR) {
                         this.yRangesEachUom[idx].range[0] = obj.range[0];
-                    }
-                    if (this.yRangesEachUom[idx].range[1] < obj.range[1]) {
                         this.yRangesEachUom[idx].range[1] = obj.range[1];
                     }
+
+                    if (yrangeObj.zeroBased.bool) {
+                        this.yRangesEachUom[idx].zeroBased.bool = yrangeObj.zeroBased.bool;
+                        this.yRangesEachUom[idx].zeroBased.value = yrangeObj.zeroBased.value;
+                    }
+                    if (this.yRangesEachUom[idx].zeroBased.bool) {
+                    }
+
                     this.yRangesEachUom[idx].ids.push(obj.id);
+
                 } else {
                     this.yRangesEachUom.push(yrangeObj);
                 }
@@ -459,7 +530,14 @@ export class D3TimeseriesGraphComponent
 
         for (let i = 0; i <= this.yRangesEachUom.length; i++) {
             if (this.yRangesEachUom[i].uom === uom) {
-                return this.yRangesEachUom[i].range;
+                let range = this.yRangesEachUom[i].range;
+
+                // check for zero based y axis
+                if (this.yRangesEachUom[i].zeroBased) {
+                    range[this.yRangesEachUom[i].zeroBased.value] = 0;
+                }
+
+                return range;
             }
         }
 

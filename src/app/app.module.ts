@@ -71,7 +71,8 @@ const APP_PROVIDERS = [
   {
     provide: StatusCheckService,
     useFactory: (settingsService: SettingsService<Settings>, client: HttpClient) => {
-      return new StatusCheckService(settingsService, client, true);
+      return new StatusCheckService(client);
+      // return new StatusCheckService(settingsService, client, true);
     },
     deps: [SettingsService, HttpClient]
   },
