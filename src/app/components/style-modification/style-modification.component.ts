@@ -10,7 +10,7 @@ export class StyleModificationComponent {
 
     public color: string;
     public generalize: boolean;
-    public zeroBasedXAxe: boolean;
+    public zeroBasedYAxis: boolean;
     public pointRadius: number;
     public lineWidth: number;
 
@@ -23,7 +23,7 @@ export class StyleModificationComponent {
     ) {
         this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
         this.generalize = option.generalize;
-        this.zeroBasedXAxe = option.zeroBasedYAxe;
+        this.zeroBasedYAxis = option.zeroBasedYAxis;
         this.pointRadius = option.pointRadius;
         this.lineWidth = option.lineWidth;
     }
@@ -31,7 +31,7 @@ export class StyleModificationComponent {
     public onOk() {
         if (this.color) { this.option.color = this.color; }
         this.option.generalize = this.generalize;
-        this.option.zeroBasedYAxe = this.zeroBasedXAxe;
+        this.option.zeroBasedYAxis = this.zeroBasedYAxis;
         this.option.lineWidth = this.lineWidth;
         this.option.pointRadius = this.pointRadius;
         this.dialogRef.close(this.option);
