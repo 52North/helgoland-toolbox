@@ -7,6 +7,7 @@ import { HelgolandLabelMapperModule } from '../label-mapper/label-mapper.module'
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
 import { ReferenceValueColorCache, TimeseriesEntryComponent } from './timeseries-entry/timeseries-entry.component';
 import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
+import { FormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
@@ -19,7 +20,8 @@ const COMPONENTS = [
     CommonModule,
     TranslateModule,
     HelgolandCoreModule,
-    HelgolandLabelMapperModule
+    HelgolandLabelMapperModule,
+    FormsModule
   ],
   declarations: [
     COMPONENTS
