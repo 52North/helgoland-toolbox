@@ -11,12 +11,8 @@ export class TimeseriesGraphComponent {
 
     public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
     public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
-    // public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72'];
-    public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63'];
-    public datasetIdsMultiple02 = ['http://www.fluggs.de/sos2/api/v1/__72'];
-    // public colors = ['#123456', '#FF0000'];
-    public colors = ['#123456'];
-    public colors02 = ['#FF0000'];
+    public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72', 'http://www.fluggs.de/sos2/api/v1/__26'];
+    public colors = ['#123456', '#FF0000'];
 
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
     public diagramOptions: PlotOptions = {
@@ -64,10 +60,6 @@ export class TimeseriesGraphComponent {
 
         this.datasetIdsMultiple.forEach((entry, i) => {
             this.datasetOptionsMultiple.set(entry, new DatasetOptions(entry, this.colors[i]));
-        });
-
-        this.datasetIdsMultiple02.forEach((entry, i) => {
-            this.datasetOptionsMultiple02.set(entry, new DatasetOptions(entry, this.colors02[i]));
         });
     }
 
