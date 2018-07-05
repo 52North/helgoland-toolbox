@@ -109,6 +109,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
 
     public toggleVisibility() {
         this.datasetOptions.visible = !this.datasetOptions.visible;
+        this.datasetOptions.visualize = this.datasetOptions.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
     }
 

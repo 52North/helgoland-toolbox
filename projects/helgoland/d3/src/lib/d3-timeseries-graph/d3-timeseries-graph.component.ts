@@ -10,6 +10,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
+    ColorService,
     DatasetApiInterface,
     Data,
     DatasetPresenterComponent,
@@ -128,7 +129,8 @@ export class D3TimeseriesGraphComponent
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        private colorService: ColorService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc);
     }
@@ -284,10 +286,29 @@ export class D3TimeseriesGraphComponent
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
             const styles = this.datasetOptions.get(dataset.internalId);
             const data = this.datasetMap.get(dataset.internalId).data;
+
             // TODO: change uom for testing
             // if (this.preparedData.length > 0) {
-                // dataset.uom = 'mc';
+            //     dataset.uom = 'mc';
             // }
+
+            // set timeseries invisible, if no data is provided for selected timerange
+            if (data.values.length === 0) {
+                styles.visible = false;
+            } else {
+                if (!styles.visualize) {
+                    styles.visible = false;
+                } else {
+                    styles.visible = true;
+                }
+            }
+
+            // generate random color, if color is not defined
+            if (styles.color === undefined) {
+                styles.color = this.colorService.getColor();
+            }
+
+
             // end of check for datasets
             const dataEntry = {
                 internalId: dataset.internalId,
