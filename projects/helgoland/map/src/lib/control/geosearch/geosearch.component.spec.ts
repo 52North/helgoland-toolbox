@@ -1,9 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
+import { GeoSearch, GeoSearchResult } from '../../base/geosearch/geosearch';
+import { NominatimGeoSearchService } from '../../base/geosearch/nominatim.service';
 import { MapCache } from '../../base/map-cache.service';
 import { GeosearchControlComponent } from './geosearch.component';
-import { GeoSearch } from '../../base/geosearch/geosearch';
 
 describe('GeosearchComponent', () => {
   let component: GeosearchControlComponent;
@@ -13,10 +15,14 @@ describe('GeosearchComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         MapCache,
-        GeoSearch
+        {
+          provide: GeoSearch,
+          useClass: NominatimGeoSearchService
+        }
       ],
       imports: [
-        FormsModule
+        FormsModule,
+        HttpClientModule
       ],
       declarations: [GeosearchControlComponent]
     }).compileComponents();
@@ -31,4 +37,16 @@ describe('GeosearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should search with point geometry in result', () => {
+    component.searchTerm = 'gent';
+    component.options = {
+      asPointGeometry: true
+    };
+    component.triggerSearch();
+    component.onResultChanged.subscribe((res: GeoSearchResult) => {
+      expect(res.geometry.type === 'Point').toBeTruthy();
+    });
+  });
+
 });
