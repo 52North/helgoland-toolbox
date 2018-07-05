@@ -68,13 +68,7 @@ import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 import { ExtendedSettingsService } from './settings/settings.service';
 
 const APP_PROVIDERS = [
-  {
-    provide: StatusCheckService,
-    useFactory: (settingsService: SettingsService<Settings>, client: HttpClient) => {
-      return new StatusCheckService(settingsService, client, true);
-    },
-    deps: [SettingsService, HttpClient]
-  },
+  StatusCheckService,
   {
     provide: DatasetApiInterface,
     useClass: SplittedDataDatasetApiInterface
