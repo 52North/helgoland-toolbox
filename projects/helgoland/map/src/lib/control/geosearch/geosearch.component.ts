@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import * as L from 'leaflet';
 
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
@@ -15,6 +15,9 @@ export class GeosearchControlComponent {
 
     @Input()
     public options: GeoSearchOptions;
+
+    @Output()
+    public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter<GeoSearchResult>();
 
     public result: GeoSearchResult;
 
@@ -39,12 +42,15 @@ export class GeosearchControlComponent {
                         this.searchTerm = '';
                         return;
                     }
+                    this.onResultChanged.emit(result);
                     this.result = result;
-                    this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
-                    if (result.bounds) {
-                        this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
-                    } else {
-                        this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
+                    if (this.mapId) {
+                        this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
+                        if (result.bounds) {
+                            this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
+                        } else {
+                            this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
+                        }
                     }
                 },
                 (error) => this.searchTerm = 'error occurred',
@@ -55,6 +61,7 @@ export class GeosearchControlComponent {
 
     public clearSearch() {
         this.searchTerm = '';
+        this.onResultChanged.emit(null);
         this.removeOldGeometry();
     }
 
