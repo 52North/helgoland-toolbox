@@ -270,14 +270,14 @@ export class FlotTimeseriesGraphComponent
                     } else {
                         axe.tsColors[axe.internalIds.indexOf(dataset.internalId)] = styles.color;
                     }
-                    axe.min = styles.zeroBasedYAxe ? 0 : null;
+                    axe.min = styles.zeroBasedYAxis ? 0 : null;
                 } else {
                     this.plotOptions.yaxes.push({
                         uom: dataset.uom,
                         label,
                         tsColors: [styles.color],
                         internalIds: [dataset.internalId],
-                        min: styles.zeroBasedYAxe ? 0 : null
+                        min: styles.zeroBasedYAxis ? 0 : null
                     });
                     axePos = this.plotOptions.yaxes.length;
                 }

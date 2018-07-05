@@ -4,12 +4,13 @@ export class DatasetOptions {
     public visible = true;
     public visualize = true;
     public loading?: boolean;
-    public separateYAxe ?= false;
-    public zeroBasedYAxe ?= false;
+    public separateYAxis ?= false;
+    public zeroBasedYAxis ?= false;
     public generalize ?= false;
     public showReferenceValues: ReferenceValueOption[] = [];
     public pointRadius = 0;
     public lineWidth = 1;
+    public yAxisRange = [0, 0];
 
     constructor(
         internalId: string,
