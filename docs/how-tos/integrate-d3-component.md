@@ -149,3 +149,16 @@ import { D3PlotOptions } from '@helgoland/d3';
 ## Step 3: start working
 
 Now, that we have added all dependencies and the code to access the functionality of the D3 timeseries component you can start working on your app. If you did not run the app while following this tutorial you should now see the timeseries graph by starting your app with `ng serve`.
+
+### Additional Options
+
+#### Add initial min, max value for y axis
+
+It is possible to emit a min and max value for the y-axis with the DatasetOptions for each dataset. With these values, the y-axis will only show the selected y-range. Some restrictions are:
+
+  - If there is no data provided in the selected timerange and y-axis min/max values, the default min and max range will be used.
+  - If the y-axis min and max values are equal, the default min and max range will be used.
+  
+#### Zero-based y axis
+
+It is possible to set a boolean in the DatasetOptions (`zeroBasedYAxis`) to show the y axis with minimum as 0, if the data in the selected timerange is above 0, or maximum 0, if the data in the selected timerange is below 0.
