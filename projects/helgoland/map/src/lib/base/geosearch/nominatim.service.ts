@@ -47,7 +47,7 @@ export interface NominatimReverseResult {
 @Injectable()
 export class NominatimGeoSearchService implements GeoSearch {
 
-    private nominatimUrl = 'https://nominatim.openstreetmap.org/';
+    protected serviceUrl = 'https://nominatim.openstreetmap.org/';u
 
     constructor(
         protected http: HttpService
@@ -61,7 +61,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('format', 'json');
         if (options && options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
         return this.http.client().get(
-            this.nominatimUrl + 'search',
+            this.serviceUrl + 'search',
             { params }
         ).map((resArray: NominatimSearchResult[]) => {
             if (resArray.length === 1) {
@@ -88,7 +88,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 } else {
                     geometry = {
                         type: 'Point',
-                        coordinates: [parseInt(result.lat, 10), parseInt(result.lon, 10)]
+                        coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
                     };
                 }
                 return {
@@ -106,7 +106,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('lon', point.coordinates[1].toString());
         params = params.set('format', 'json');
         return this.http.client().get(
-            this.nominatimUrl + 'reverse',
+            this.serviceUrl + 'reverse',
             { params }
         ).map((res: NominatimReverseResult) => {
             return {
