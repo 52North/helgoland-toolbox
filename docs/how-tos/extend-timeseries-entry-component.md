@@ -50,7 +50,7 @@ This tutorial gives a stepwise instruction on how extend a timeseries entry comp
         ```
   - add `HelgolandDatasetlistModule` in `app.modul.ts` to the import list therefor you need to import it:
         ```typescript
-        import { HelgolandDatasetlistModule } from '@helgoland/depiction/datasetlist';
+        import { HelgolandDatasetlistModule } from '@helgoland/depiction';
         ```
   - please check if you use at least typescript v2.6 or greater, otherwise install it with: 
         ```bash
