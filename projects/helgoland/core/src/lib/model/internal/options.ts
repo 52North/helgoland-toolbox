@@ -4,13 +4,13 @@ export class DatasetOptions {
     public visible = true;
     public visualize = true;
     public loading?: boolean;
-    public separateYAxis ?= false;
-    public zeroBasedYAxis ?= false;
-    public generalize ?= false;
+    public separateYAxis?: boolean = false;
+    public zeroBasedYAxis?: boolean = false;
+    public generalize?: boolean = false;
     public showReferenceValues: ReferenceValueOption[] = [];
     public pointRadius = 0;
     public lineWidth = 1;
-    public yAxisRange = [0, 0];
+    public yAxisRange: MinMaxRange = { min: 0, max: 0 };
 
     constructor(
         internalId: string,
@@ -24,6 +24,11 @@ export class DatasetOptions {
 export class ReferenceValueOption {
     public id: string;
     public color: string;
+}
+
+export interface MinMaxRange {
+    min: number;
+    max: number;
 }
 
 export class TimedDatasetOptions extends DatasetOptions {

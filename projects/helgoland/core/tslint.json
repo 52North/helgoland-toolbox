@@ -13,6 +13,7 @@
             "n52",
             "kebab-case"
         ],
-        "no-empty-interface": false
+        "no-empty-interface": false,
+        "no-inferrable-types": false
     }
 }

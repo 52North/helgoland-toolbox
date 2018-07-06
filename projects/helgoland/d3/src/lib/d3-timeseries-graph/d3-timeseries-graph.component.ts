@@ -20,6 +20,7 @@ import {
     Time,
     Timeseries,
     Timespan,
+    MinMaxRange,
 } from '@helgoland/core';
 import * as d3 from 'd3';
 import moment from 'moment';
@@ -392,7 +393,7 @@ export class D3TimeseriesGraphComponent
         let min;
         let max;
 
-        let yAxisRange = dataEntry.axisOptions.yAxisRange;
+        let yAxisRange = dataEntry.axisOptions.yAxisRange as MinMaxRange;
 
         // get min and max value of data
         const range = d3.extent<DataEntry, number>(dataEntry.data, (datum, index, array) => {
@@ -401,15 +402,15 @@ export class D3TimeseriesGraphComponent
 
         let outOfrange = false;
 
-        if (yAxisRange[0] > yAxisRange[1]) {
-            min = yAxisRange[1];
-            max = yAxisRange[0];
+        if (yAxisRange.min > yAxisRange.max) {
+            min = yAxisRange.max;
+            max = yAxisRange.min;
             if (min > range[1] || max < range[0]) {
                 outOfrange = true;
             }
         } else {
-            min = yAxisRange[0];
-            max = yAxisRange[1];
+            min = yAxisRange.min;
+            max = yAxisRange.max;
             if (min > range[1] || max < range[0]) {
                 outOfrange = true;
             }
@@ -420,7 +421,7 @@ export class D3TimeseriesGraphComponent
         }
 
         // check if there are given min and max. If not use default min and max calculated from data
-        if (yAxisRange[0] !== yAxisRange[1] && !outOfrange) {
+        if (yAxisRange.min !== yAxisRange.max && !outOfrange) {
             this.defaultYaxisRange = false;
         } else {
             min = range[0];

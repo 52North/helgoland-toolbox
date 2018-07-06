@@ -47,7 +47,7 @@ export interface NominatimReverseResult {
 @Injectable()
 export class NominatimGeoSearchService implements GeoSearch {
 
-    protected serviceUrl = 'https://nominatim.openstreetmap.org/';u
+    protected serviceUrl = 'https://nominatim.openstreetmap.org/';
 
     constructor(
         protected http: HttpService
