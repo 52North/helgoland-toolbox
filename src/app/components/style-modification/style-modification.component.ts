@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DatasetOptions } from '@helgoland/core';
+import { DatasetOptions, MinMaxRange } from '@helgoland/core';
 
 @Component({
     templateUrl: './style-modification.component.html',
@@ -13,6 +13,7 @@ export class StyleModificationComponent {
     public zeroBasedYAxis: boolean;
     public pointRadius: number;
     public lineWidth: number;
+    public range: MinMaxRange;
 
     public colorList: string[];
 
@@ -28,12 +29,17 @@ export class StyleModificationComponent {
         this.lineWidth = option.lineWidth;
     }
 
+    public updateRange(range: MinMaxRange) {
+        this.range = range;
+    }
+
     public onOk() {
         if (this.color) { this.option.color = this.color; }
         this.option.generalize = this.generalize;
         this.option.zeroBasedYAxis = this.zeroBasedYAxis;
         this.option.lineWidth = this.lineWidth;
         this.option.pointRadius = this.pointRadius;
+        this.option.yAxisRange = this.range;
         this.dialogRef.close(this.option);
     }
 }
