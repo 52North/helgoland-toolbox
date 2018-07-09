@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColorService, DatasetOptions, Timespan, Time } from '@helgoland/core';
+import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { PlotOptions } from '@helgoland/flot';
+import { D3PlotOptions } from 'projects/helgoland/d3/src/public_api';
 
-import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
+import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
     templateUrl: './graph-legend.component.html',
@@ -20,6 +21,7 @@ export class GraphLegendComponent {
         'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public timespan;
+
     public diagramOptions: PlotOptions = {
         crosshair: {
             mode: 'x'
@@ -73,21 +75,12 @@ export class GraphLegendComponent {
         }
     };
 
+    public d3diagramOptions: D3PlotOptions = {
+        yaxis: true,
+        togglePanZoom: true
+    };
+
     public overviewOptions: PlotOptions = {
-        series: {
-            // downsample: {
-            //   threshold: 0
-            // },
-            points: {
-                show: true,
-                radius: 1
-            },
-            lines: {
-                show: true,
-                fill: false
-            },
-            shadowSize: 1
-        },
         selection: {
             mode: 'overview',
             color: '#718296',
@@ -113,6 +106,17 @@ export class GraphLegendComponent {
             pan: '',
             scale: ''
         },
+        generalizeAllways: true
+    };
+
+    public d3overviewOptions: D3PlotOptions = {
+        // grid: {
+        //     hoverable: false,
+        //     autoHighlight: false
+        // },
+        togglePanZoom: false,
+        grid: true,
+        yaxis: false,
         generalizeAllways: true
     };
 
