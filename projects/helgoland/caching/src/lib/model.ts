@@ -10,7 +10,7 @@ export abstract class HttpCache {
     /**
      * Adds or updates the response in the cache.
      */
-    public abstract put(req: HttpRequest<any>, resp: HttpResponse<any>): void;
+    public abstract put(req: HttpRequest<any>, expirationTime: number | Date, resp: HttpResponse<any>): void;
 }
 
 export abstract class OnGoingHttpCache {
