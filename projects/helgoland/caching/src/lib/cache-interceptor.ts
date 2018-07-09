@@ -47,7 +47,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                 const share = next.handle(req, metadata).share();
                 share.subscribe((res) => {
                     if (res instanceof HttpResponse) {
-                        this.cache.put(req, res);
+                        this.cache.put(req, metadata.expirationTime, res);
                         this.ongoingCache.clear(req);
                         observer.next(res);
                         observer.complete();
