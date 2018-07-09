@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
 
+import { D3GraphOptions } from '../model/d3-graph-options';
+
 @Component({
     selector: 'n52-d3-overview-timeseries-graph',
     templateUrl: './d3-overview-timeseries-graph.component.html',
@@ -25,7 +27,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     public datasetOptions: Map<string, DatasetOptions>;
 
     @Input()
-    public graphOptions: any;
+    public graphOptions: D3GraphOptions;
 
     @Input()
     public timeInterval: TimeInterval;
@@ -79,9 +81,5 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
         const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
         this.timespan = timespan;
         this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
-        this.graphOptions.selection.range = {
-            from: timespan.from,
-            to: timespan.to
-        };
     }
 }
