@@ -11,6 +11,7 @@ import {
 import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
 
 import { D3GraphOptions } from '../model/d3-graph-options';
+import { D3PlotOptions } from '../model/d3-plot-options';
 
 @Component({
     selector: 'n52-d3-overview-timeseries-graph',
@@ -27,7 +28,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     public datasetOptions: Map<string, DatasetOptions>;
 
     @Input()
-    public graphOptions: D3GraphOptions;
+    public graphOptions: D3PlotOptions;
 
     @Input()
     public timeInterval: TimeInterval;

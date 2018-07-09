@@ -30,9 +30,7 @@ describe('D3OverviewTimeseriesGraphComponent', () => {
     fixture = TestBed.createComponent(D3OverviewTimeseriesGraphComponent);
     component = fixture.componentInstance;
     component.timeInterval = new Timespan(new Date().getTime() - 1000000, new Date().getTime());
-    component.graphOptions = {
-      selection: {}
-    };
+    component.graphOptions = {};
     fixture.detectChanges();
   });
 
