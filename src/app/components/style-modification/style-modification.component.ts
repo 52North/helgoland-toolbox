@@ -42,4 +42,8 @@ export class StyleModificationComponent {
         this.option.yAxisRange = this.range;
         this.dialogRef.close(this.option);
     }
+
+    public setColor(temp) {
+        this.color = temp;
+    }
 }
