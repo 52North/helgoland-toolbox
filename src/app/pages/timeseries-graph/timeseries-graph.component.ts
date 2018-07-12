@@ -39,6 +39,9 @@ export class TimeseriesGraphComponent {
     public diagramOptionsD3: D3PlotOptions = {
         togglePanZoom: false,
         showReferenceValues: false,
+        hoverable: true,
+        grid: true,
+        // overview: false,
         generalizeAllways: true
     };
 
