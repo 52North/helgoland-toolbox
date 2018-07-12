@@ -1,3 +1,18 @@
+/**
+ * Options for each Dataset.
+ * @param internalId {string} dataset id
+ * @param color {string} color of the dataset
+ * @param loading {boolean} loading
+ * @param visible {boolean} show graph
+ * @param visualize {boolean} possible to show graph (e.g. data vs no data)
+ * @param separateYAxis {boolean} separate y axis of datasets with same unit
+ * @param zeroBasedYAxis {boolean} align graph that zero y axis is visible
+ * @param generalize {boolean} generalize
+ * @param showReferenceValues {boolean} show reference values
+ * @param pointRadius {number} radius of graphpoint
+ * @param lineWidth {number} width of graphline
+ * @param yAxisRange {MinMaxRange} min and max ramge of y axis
+ */
 export class DatasetOptions {
     public internalId: string;
     public color: string;
