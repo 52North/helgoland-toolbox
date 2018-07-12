@@ -19,9 +19,9 @@ describe('ColorSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ColorSelectorComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     component.color = '#FF3456';
-    component.colorList = [];
+    component.colorList = ['#FF0000', '#00FF00', '#0000FF'];
+    fixture.detectChanges();
   });
 
   it('should create', () => {

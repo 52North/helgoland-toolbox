@@ -15,6 +15,17 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    files: [
+      '../../../node_modules/leaflet/dist/leaflet.css',
+      '../../../node_modules/leaflet.markercluster/dist/MarkerCluster.css',
+      '../../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+      {
+        pattern: '../../../node_modules/leaflet/dist/images/*.png',
+        watched: false,
+        included: false,
+        served: true
+      },
+    ],
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../../../coverage'),
       reports: ['html', 'lcovonly'],

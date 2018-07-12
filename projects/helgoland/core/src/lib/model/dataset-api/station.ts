@@ -3,7 +3,7 @@ import { Parameter } from './parameter';
 
 export class Station {
     public id: string;
-    public geometry: GeoJSON.Point;
+    public geometry: GeoJSON.GeometryObject;
     public properties: StationProperties;
 }
 

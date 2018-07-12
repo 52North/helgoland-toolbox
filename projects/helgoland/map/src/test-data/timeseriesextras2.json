@@ -1,0 +1,54 @@
+{
+    "license": "http://special-licensing.lic/",
+    "statusIntervals": [{
+        "lower": "2000.0",
+        "upper": "100000.0",
+        "name": "2001 - MAX CO",
+        "color": "#5A0000"
+    }, {
+        "lower": "1500.0",
+        "upper": "2000.0",
+        "name": "1501 - 2000 CO",
+        "color": "#C00000"
+    }, {
+        "lower": "1000.0",
+        "upper": "1500.0",
+        "name": "1001 - 1500 CO",
+        "color": "#FF0000"
+    }, {
+        "lower": "800.0",
+        "upper": "1000.0",
+        "name": "801 - 1000 CO",
+        "color": "#FF8000"
+    }, {
+        "lower": "600.0",
+        "upper": "800.0",
+        "name": "601 - 800 CO",
+        "color": "#F8E748"
+    }, {
+        "lower": "400.0",
+        "upper": "600.0",
+        "name": "401 - 600 CO",
+        "color": "#CCFF33"
+    }, {
+        "lower": "300.0",
+        "upper": "400.0",
+        "name": "301 - 400 CO",
+        "color": "#00FF00"
+    }, {
+        "lower": "200.0",
+        "upper": "300.0",
+        "name": "201 - 300 CO",
+        "color": "#009800"
+    }, {
+        "lower": "100.0",
+        "upper": "200.0",
+        "name": "101 - 200 CO",
+        "color": "#007EFD"
+    }, {
+        "lower": "0.0",
+        "upper": "100.0",
+        "name": "0 - 100 CO",
+        "color": "#0000FF"
+    }]
+}
