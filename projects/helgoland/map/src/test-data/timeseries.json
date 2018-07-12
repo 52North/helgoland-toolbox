@@ -1,0 +1,159 @@
+[{
+    "id": "1",
+    "label": "Timeseries1",
+    "uom": "ug/m3",
+    "station": {
+        "properties": {
+            "id": 1,
+            "label": "Station1"
+        },
+        "geometry": {
+            "coordinates": [7.652428150177, 51.934814453125, "NaN"],
+            "type": "Point"
+        },
+        "type": "Feature"
+    },
+    "referenceValues": [],
+    "firstValue": {
+        "timestamp": 1338296400000,
+        "value": 2.0
+    },
+    "lastValue": {
+        "timestamp": 1427968800000,
+        "value": 2.0
+    },
+    "parameters": {
+        "service": {
+            "id": "1",
+            "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+        },
+        "offering": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "feature": {
+            "id": "1112",
+            "label": "41B006 - Bruxelles (Parlement UE)"
+        },
+        "procedure": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "phenomenon": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        },
+        "category": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        }
+    }
+}, {
+    "id": "2",
+    "label": "Timeseries2",
+    "uom": "ug/m3",
+    "station": {
+        "properties": {
+            "id": 2,
+            "label": "Station2"
+        },
+        "geometry": {
+            "coordinates": [7.59587907791138, 51.9692611694336, 84.0],
+            "type": "Point"
+        },
+        "type": "Feature"
+    },
+    "referenceValues": [],
+    "firstValue": {
+        "timestamp": 1338296400000,
+        "value": 2.0
+    },
+    "lastValue": {
+        "timestamp": 1427968800000,
+        "value": 2.0
+    },
+    "parameters": {
+        "service": {
+            "id": "1",
+            "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+        },
+        "offering": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "feature": {
+            "id": "1112",
+            "label": "41B006 - Bruxelles (Parlement UE)"
+        },
+        "procedure": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "phenomenon": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        },
+        "category": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        }
+    }
+}, {
+    "id": "3",
+    "label": "Timeseries3",
+    "uom": "ug/m3",
+    "station": {
+        "properties": {
+            "id": 3,
+            "label": "Station3"
+        },
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [7.60, 51.99],
+                    [7.62, 51.99],
+                    [7.62, 52.00],
+                    [7.60, 52.00],
+                    [7.60, 51.99]
+                ]
+            ]
+        },
+        "type": "Feature"
+    },
+    "referenceValues": [],
+    "firstValue": {
+        "timestamp": 1338296400000,
+        "value": 2.0
+    },
+    "lastValue": {
+        "timestamp": 1427968800000,
+        "value": 800.0
+    },
+    "parameters": {
+        "service": {
+            "id": "1",
+            "label": "IRCEL - CELINE: timeseries-api (SOS 2.0)"
+        },
+        "offering": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "feature": {
+            "id": "1112",
+            "label": "41B006 - Bruxelles (Parlement UE)"
+        },
+        "procedure": {
+            "id": "6522",
+            "label": "6522 - btx, o-xyleen - procedure"
+        },
+        "phenomenon": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        },
+        "category": {
+            "id": "482",
+            "label": "1,2-XYLENE O-XYLENE"
+        }
+    }
+}]

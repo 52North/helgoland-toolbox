@@ -1,0 +1,39 @@
+[{
+  "properties": {
+    "id": 8,
+    "label": "Test1"
+  },
+  "geometry": {
+    "coordinates": [7.652428150177, 51.934814453125, "NaN"],
+    "type": "Point"
+  },
+  "type": "Feature"
+}, {
+  "properties": {
+    "id": 10,
+    "label": "Test2"
+  },
+  "geometry": {
+    "coordinates": [7.59587907791138, 51.9692611694336, 84.0],
+    "type": "Point"
+  },
+  "type": "Feature"
+}, {
+  "properties": {
+    "id": 10,
+    "label": "Test3"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [7.60, 51.99],
+        [7.62, 51.99],
+        [7.62, 52.00],
+        [7.60, 52.00],
+        [7.60, 51.99]
+      ]
+    ]
+  },
+  "type": "Feature"
+}]

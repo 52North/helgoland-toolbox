@@ -20,11 +20,13 @@ import {
     Timeseries,
     TimeseriesExtras,
 } from '@helgoland/core';
+import GeoJSON from 'geojson';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs/Observable';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
+import { Layer } from 'leaflet';
 
 @Component({
     selector: 'n52-station-map-selector',
@@ -68,7 +70,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         if (this.statusIntervals && this.filter && this.filter.phenomenon) {
             this.createValuedMarkers();
         } else {
-            this.createStationMarkers();
+            this.createStationGeometries();
         }
     }
 
@@ -109,35 +111,46 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         });
     }
 
-    private createColoredMarker(station: Station, color: string) {
-        const marker = L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
-            color: '#000',
-            fillColor: color,
-            fillOpacity: 0.8,
-            radius: 10,
-            weight: 2
-        });
-        marker.on('click', () => {
-            this.onSelected.emit(station);
-        });
-        return marker;
+    private createColoredMarker(station: Station, color: string): Layer {
+        return this.createFilledMarker(station, color, 10);
     }
 
-    private createDefaultColoredMarker(station: Station) {
-        const marker = L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
-            color: '#000',
-            fillColor: '#000',
-            fillOpacity: 0.8,
-            radius: 5,
-            weight: 2
-        });
-        marker.on('click', () => {
-            this.onSelected.emit(station);
-        });
-        return marker;
+    private createDefaultColoredMarker(station: Station): Layer {
+        return this.createFilledMarker(station, '#000', 10);
     }
 
-    private createStationMarkers() {
+    private createFilledMarker(station: Station, color: string, radius: number): Layer {
+        let geometry;
+        if (station.geometry.type === 'Point') {
+            const point = station.geometry as GeoJSON.Point;
+            geometry = L.circleMarker([point.coordinates[1], point.coordinates[0]], {
+                color: '#000',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10,
+                weight: 2
+            });
+        } else {
+            geometry = L.geoJSON(station.geometry, {
+                style: (feature) => {
+                    return {
+                        color: '#000',
+                        fillColor: color,
+                        fillOpacity: 0.8,
+                        weight: 2
+                    };
+                }
+            });
+        }
+        if (geometry) {
+            geometry.on('click', () => {
+                this.onSelected.emit(station);
+            });
+            return geometry;
+        }
+    }
+
+    private createStationGeometries() {
         this.apiInterface.getStations(this.serviceUrl, this.filter)
             .subscribe((res) => {
                 if (this.cluster) {
@@ -147,7 +160,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                 }
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
-                        const marker = this.createDefaultMarker(entry);
+                        const marker = this.createDefaultGeometry(entry);
                         if (marker) { this.markerFeatureGroup.addLayer(marker); }
                     });
                     this.markerFeatureGroup.addTo(this.map);
@@ -160,13 +173,13 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             });
     }
 
-    private createDefaultMarker(entry: Station) {
-        if (entry.geometry) {
-            const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
-            marker.on('click', () => this.onSelected.emit(entry));
-            return marker;
+    private createDefaultGeometry(station: Station) {
+        if (station.geometry) {
+            const geometry = L.geoJSON(station.geometry);
+            geometry.on('click', () => this.onSelected.emit(station));
+            return geometry;
         } else {
-            console.error(entry.id + ' has no geometry');
+            console.error(station.id + ' has no geometry');
         }
     }
 }
