@@ -416,7 +416,7 @@ export class D3TimeseriesGraphComponent
             }
         }
 
-        if (this.plotOptions !== undefined && this.plotOptions.grid !== undefined && !this.plotOptions.grid.hoverable) {
+        if (!this.plotOptions.overview) {
             outOfrange = true;
         }
 
@@ -586,7 +586,7 @@ export class D3TimeseriesGraphComponent
 
         // #####################################################
         // create background rect
-        if (this.plotOptions.grid === undefined || this.plotOptions.grid.hoverable) {
+        if (!this.plotOptions.overview) {
             // execute when it is not an overview diagram
             this.background = this.graph.append('svg:rect')
                 .attr('width', this.width - this.bufferSum)
@@ -615,35 +615,6 @@ export class D3TimeseriesGraphComponent
                         .on('drag', this.panMoveHandler)
                         .on('end', this.panEndHandler));
             }
-
-            // line inside graph
-            this.focusG = this.graph.append('g');
-            this.highlightFocus = this.focusG.append('svg:line')
-                .attr('class', 'mouse-focus-line')
-                .attr('x2', '0')
-                .attr('y2', '0')
-                .attr('x1', '0')
-                .attr('y1', '0')
-                .style('stroke', 'black')
-                .style('stroke-width', '1px');
-
-            this.preparedData.forEach((entry) => {
-                // label inside graph
-                entry.focusLabelRect = this.focusG.append('svg:rect')
-                    .attr('class', 'mouse-focus-label')
-                    .style('fill', 'white')
-                    .style('stroke', 'none')
-                    .style('pointer-events', 'none');
-                entry.focusLabel = this.focusG.append('svg:text')
-                    .attr('class', 'mouse-focus-label')
-                    .style('pointer-events', 'none')
-                    .style('fill', entry.color)
-                    .style('font-weight', 'lighter');
-
-                this.focuslabelTime = this.focusG.append('svg:text')
-                    .style('pointer-events', 'none')
-                    .attr('class', 'mouse-focus-time');
-            });
         } else {
             // execute when it is overview diagram
             let interval = this.getXDomainByTimestamp();
@@ -695,6 +666,37 @@ export class D3TimeseriesGraphComponent
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
+        }
+
+        if (this.plotOptions.hoverable) {
+            // line inside graph
+            this.focusG = this.graph.append('g');
+            this.highlightFocus = this.focusG.append('svg:line')
+                .attr('class', 'mouse-focus-line')
+                .attr('x2', '0')
+                .attr('y2', '0')
+                .attr('x1', '0')
+                .attr('y1', '0')
+                .style('stroke', 'black')
+                .style('stroke-width', '1px');
+
+            this.preparedData.forEach((entry) => {
+                // label inside graph
+                entry.focusLabelRect = this.focusG.append('svg:rect')
+                    .attr('class', 'mouse-focus-label')
+                    .style('fill', 'white')
+                    .style('stroke', 'none')
+                    .style('pointer-events', 'none');
+                entry.focusLabel = this.focusG.append('svg:text')
+                    .attr('class', 'mouse-focus-label')
+                    .style('pointer-events', 'none')
+                    .style('fill', entry.color)
+                    .style('font-weight', 'lighter');
+
+                this.focuslabelTime = this.focusG.append('svg:text')
+                    .style('pointer-events', 'none')
+                    .attr('class', 'mouse-focus-time');
+            });
         }
     }
 
@@ -837,14 +839,16 @@ export class D3TimeseriesGraphComponent
             .selectAll('text')
             .style('text-anchor', 'middle');
 
-        // draw the x grid lines
-        this.graph.append('svg:g')
-            .attr('class', 'grid')
-            .attr('transform', 'translate(0,' + this.height + ')')
-            .call(xAxisGen
-                .tickSize(-this.height)
-                .tickFormat(() => '')
-            );
+        if (this.plotOptions.grid) {
+            // draw the x grid lines
+            this.graph.append('svg:g')
+                .attr('class', 'grid')
+                .attr('transform', 'translate(0,' + this.height + ')')
+                .call(xAxisGen
+                    .tickSize(-this.height)
+                    .tickFormat(() => '')
+                );
+        }
 
         // draw upper axis as border
         this.graph.append('svg:g')
