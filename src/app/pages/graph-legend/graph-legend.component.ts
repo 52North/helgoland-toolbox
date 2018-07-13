@@ -77,7 +77,10 @@ export class GraphLegendComponent {
 
     public d3diagramOptions: D3PlotOptions = {
         yaxis: true,
-        togglePanZoom: true
+        togglePanZoom: true,
+        grid: true,
+        hoverable: true,
+        overview: false
     };
 
     public overviewOptions: PlotOptions = {
@@ -115,7 +118,9 @@ export class GraphLegendComponent {
         //     autoHighlight: false
         // },
         togglePanZoom: false,
-        grid: true,
+        grid: false,
+        hoverable: false,
+        overview: true,
         yaxis: false,
         generalizeAllways: true
     };
