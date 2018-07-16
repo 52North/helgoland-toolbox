@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
-import moment from 'moment/src/moment';
+import moment from 'moment';
 
 import { LocalStorage } from '../local-storage/local-storage.service';
 import { BufferedTime, TimeInterval, Timespan } from '../model/internal/timeInterval';
