@@ -3,7 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { BasicAuthService } from '@helgoland/auth';
 import { HttpRequestOptions, Timespan } from '@helgoland/core';
 import { EventingSubscriptionResults } from '@helgoland/eventing';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { EventingImplApiInterface } from './eventing-impl-api-interface.service';
 import { EventingEventFilter } from './model/request';
