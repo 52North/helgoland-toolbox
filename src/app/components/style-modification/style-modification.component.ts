@@ -27,6 +27,7 @@ export class StyleModificationComponent {
         this.zeroBasedYAxis = option.zeroBasedYAxis;
         this.pointRadius = option.pointRadius;
         this.lineWidth = option.lineWidth;
+        this.range = option.yAxisRange;
     }
 
     public updateRange(range: MinMaxRange) {

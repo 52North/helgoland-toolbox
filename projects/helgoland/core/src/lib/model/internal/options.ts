@@ -4,7 +4,6 @@
  * @param color {string} color of the dataset
  * @param loading {boolean} loading
  * @param visible {boolean} show graph
- * @param visualize {boolean} possible to show graph (e.g. data vs no data)
  * @param separateYAxis {boolean} separate y axis of datasets with same unit
  * @param zeroBasedYAxis {boolean} align graph that zero y axis is visible
  * @param generalize {boolean} generalize
@@ -17,7 +16,6 @@ export class DatasetOptions {
     public internalId: string;
     public color: string;
     public visible = true;
-    public visualize = true;
     public loading?: boolean;
     public separateYAxis?: boolean = false;
     public zeroBasedYAxis?: boolean = false;
@@ -25,7 +23,7 @@ export class DatasetOptions {
     public showReferenceValues: ReferenceValueOption[] = [];
     public pointRadius = 0;
     public lineWidth = 1;
-    public yAxisRange: MinMaxRange = { min: 0, max: 0 };
+    public yAxisRange?: MinMaxRange;
 
     constructor(
         internalId: string,

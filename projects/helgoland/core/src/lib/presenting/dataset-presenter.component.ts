@@ -99,8 +99,8 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         }
 
         if (!equal(this.oldGraphOptions, this.graphOptions)) {
-            this.oldGraphOptions = JSON.parse(JSON.stringify(this.graphOptions));
-            const options = JSON.parse(JSON.stringify(this.graphOptions));
+            this.oldGraphOptions = Object.assign({}, this.graphOptions);
+            const options = Object.assign({}, this.graphOptions);
             this.graphOptionsChanged(options);
         }
 
@@ -109,7 +109,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             if (firstChange) { this.oldDatasetOptions = new Map(); }
             this.datasetOptions.forEach((value, key) => {
                 if (!equal(value, this.oldDatasetOptions.get(key))) {
-                    this.oldDatasetOptions.set(key, JSON.parse(JSON.stringify(this.datasetOptions.get(key))));
+                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions.get(key)));
                     this.datasetOptionsChanged(key, value, firstChange);
                 }
             });
