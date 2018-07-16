@@ -18,7 +18,7 @@ export class GraphLegendComponent {
         'http://www.fluggs.de/sos2/api/v1/__51',
         'http://www.fluggs.de/sos2/api/v1/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
-        'http://mudak-wrm.dev.52north.org/sos/api/__70'
+        // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public timespan;
 
@@ -75,13 +75,7 @@ export class GraphLegendComponent {
         }
     };
 
-    public d3diagramOptions: D3PlotOptions = {
-        yaxis: true,
-        togglePanZoom: true,
-        grid: true,
-        hoverable: true,
-        overview: false
-    };
+    public d3diagramOptions: D3PlotOptions = {};
 
     public overviewOptions: PlotOptions = {
         selection: {
@@ -113,16 +107,7 @@ export class GraphLegendComponent {
     };
 
     public d3overviewOptions: D3PlotOptions = {
-        // grid: {
-        //     hoverable: false,
-        //     autoHighlight: false
-        // },
-        togglePanZoom: false,
-        grid: false,
-        hoverable: false,
         overview: true,
-        yaxis: false,
-        generalizeAllways: true
     };
 
     public datasetOptions: Map<string, DatasetOptions> = new Map();
