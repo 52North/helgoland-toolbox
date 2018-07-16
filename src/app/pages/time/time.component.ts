@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NotifierService, Timespan } from '@helgoland/core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
   templateUrl: './time.component.html',
