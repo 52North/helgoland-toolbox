@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
 
-import { D3GraphOptions } from '../model/d3-graph-options';
 import { D3PlotOptions } from '../model/d3-plot-options';
 
 @Component({
@@ -55,7 +54,13 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     constructor(
         protected timeSrvc: Time,
         protected cd: ChangeDetectorRef
-    ) { }
+    ) {
+        if (this.graphOptions) {
+            this.graphOptions.overview = true;
+        } else {
+            this.graphOptions = { overview: true };
+        }
+    }
 
     public ngAfterViewInit(): void {
         this.rangefactor = this.rangefactor || 1;
