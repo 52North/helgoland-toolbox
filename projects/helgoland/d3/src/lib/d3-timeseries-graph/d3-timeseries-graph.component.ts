@@ -165,9 +165,16 @@ export class D3TimeseriesGraphComponent
     private dragMoveRange: [number, number];
 
     private addLineWidth = 2; // value added to linewidth
+
+    // default plot options
     private plotOptions: D3PlotOptions = {
         showReferenceValues: false,
-        generalizeAllways: true
+        generalizeAllways: true,
+        togglePanZoom: true,
+        hoverable: true,
+        grid: true,
+        yaxis: true,
+        overview: false
     };
 
     private datasetMap: Map<string, DataConst> = new Map();
@@ -187,7 +194,6 @@ export class D3TimeseriesGraphComponent
 
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
-
 
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
@@ -255,6 +261,7 @@ export class D3TimeseriesGraphComponent
         this.plotGraph();
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
+
         Object.assign(this.plotOptions, options);
         if (this.rawSvg && this.yRangesEachUom) {
             this.plotGraph();
@@ -615,9 +622,40 @@ export class D3TimeseriesGraphComponent
                 .attr('transform', 'translate(' + this.bufferSum + ', 0)');
 
             // mouse events hovering
-            this.background
-                .on('mousemove.focus', this.mousemoveHandler)
-                .on('mouseout.focus', this.mouseoutHandler);
+            if (this.plotOptions.hoverable) {
+                this.background
+                    .on('mousemove.focus', this.mousemoveHandler)
+                    .on('mouseout.focus', this.mouseoutHandler);
+
+                // line inside graph
+                this.focusG = this.graph.append('g');
+                this.highlightFocus = this.focusG.append('svg:line')
+                    .attr('class', 'mouse-focus-line')
+                    .attr('x2', '0')
+                    .attr('y2', '0')
+                    .attr('x1', '0')
+                    .attr('y1', '0')
+                    .style('stroke', 'black')
+                    .style('stroke-width', '1px');
+
+                this.preparedData.forEach((entry) => {
+                    // label inside graph
+                    entry.focusLabelRect = this.focusG.append('svg:rect')
+                        .attr('class', 'mouse-focus-label')
+                        .style('fill', 'white')
+                        .style('stroke', 'none')
+                        .style('pointer-events', 'none');
+                    entry.focusLabel = this.focusG.append('svg:text')
+                        .attr('class', 'mouse-focus-label')
+                        .style('pointer-events', 'none')
+                        .style('fill', entry.color)
+                        .style('font-weight', 'lighter');
+
+                    this.focuslabelTime = this.focusG.append('svg:text')
+                        .style('pointer-events', 'none')
+                        .attr('class', 'mouse-focus-time');
+                });
+            }
 
             if (this.plotOptions.togglePanZoom === false) {
                 this.background
@@ -684,37 +722,6 @@ export class D3TimeseriesGraphComponent
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
-        }
-
-        if (this.plotOptions.hoverable) {
-            // line inside graph
-            this.focusG = this.graph.append('g');
-            this.highlightFocus = this.focusG.append('svg:line')
-                .attr('class', 'mouse-focus-line')
-                .attr('x2', '0')
-                .attr('y2', '0')
-                .attr('x1', '0')
-                .attr('y1', '0')
-                .style('stroke', 'black')
-                .style('stroke-width', '1px');
-
-            this.preparedData.forEach((entry) => {
-                // label inside graph
-                entry.focusLabelRect = this.focusG.append('svg:rect')
-                    .attr('class', 'mouse-focus-label')
-                    .style('fill', 'white')
-                    .style('stroke', 'none')
-                    .style('pointer-events', 'none');
-                entry.focusLabel = this.focusG.append('svg:text')
-                    .attr('class', 'mouse-focus-label')
-                    .style('pointer-events', 'none')
-                    .style('fill', entry.color)
-                    .style('font-weight', 'lighter');
-
-                this.focuslabelTime = this.focusG.append('svg:text')
-                    .style('pointer-events', 'none')
-                    .attr('class', 'mouse-focus-time');
-            });
         }
     }
 
