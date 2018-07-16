@@ -341,17 +341,6 @@ export class D3TimeseriesGraphComponent
             //     dataset.uom = 'mc';
             // }
 
-            // set timeseries invisible, if no data is provided for selected timerange
-            // if (data.values.length === 0) {
-            //     styles.visible = false;
-            // } else {
-            //     if (!styles.visualize) {
-            //         styles.visible = false;
-            //     } else {
-            //         styles.visible = true;
-            //     }
-            // }
-
             // generate random color, if color is not defined
             if (styles.color === undefined) {
                 styles.color = this.colorService.getColor();
@@ -449,7 +438,7 @@ export class D3TimeseriesGraphComponent
         let setDataExtent = false;
 
         // calculate out of predefined range
-        if (predefinedRange) {
+        if (predefinedRange && !this.graphOptions.overview) {
             if (predefinedRange.min > predefinedRange.max) {
                 calculatedRange = { min: predefinedRange.max, max: predefinedRange.min };
             } else {
