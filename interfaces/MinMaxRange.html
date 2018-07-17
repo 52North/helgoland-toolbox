@@ -2644,6 +2644,13 @@
             <code>projects/helgoland/core/src/lib/model/internal/options.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>numbered range with a min and a max value</p>
+
+            </p>
 
 
         <section>
@@ -2739,16 +2746,87 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class DatasetOptions {
+
+    /**
+     * internal dataset id
+     *
+     * @type {string}
+     * @memberof DatasetOptions
+     */
     public internalId: string;
+
+    /**
+     * color of the dataset
+     *
+     * @type {string}
+     * @memberof DatasetOptions
+     */
     public color: string;
-    public visible &#x3D; true;
+
+    /**
+     * show or hide in the graph
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
+    public visible: boolean &#x3D; true;
+
     public loading?: boolean;
+
+    /**
+     * separate y axis of datasets with same unit
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public separateYAxis?: boolean &#x3D; false;
+
+    /**
+     * align graph that zero y axis is visible
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public zeroBasedYAxis?: boolean &#x3D; false;
+
+    /**
+     * marker to request dataset data generalized
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public generalize?: boolean &#x3D; false;
+
+    /**
+     * list of visible reference values
+     *
+     * @type {ReferenceValueOption[]}
+     * @memberof DatasetOptions
+     */
     public showReferenceValues: ReferenceValueOption[] &#x3D; [];
-    public pointRadius &#x3D; 0;
-    public lineWidth &#x3D; 1;
+
+    /**
+     * radius of graphpoint
+     *
+     * @type {number}
+     * @memberof DatasetOptions
+     */
+    public pointRadius: number &#x3D; 0;
+
+    /**
+     * width of graphline
+     *
+     * @type {number}
+     * @memberof DatasetOptions
+     */
+    public lineWidth: number &#x3D; 1;
+
+    /**
+     * min and max range of y axis
+     *
+     * @type {MinMaxRange}
+     * @memberof DatasetOptions
+     */
     public yAxisRange?: MinMaxRange;
 
     constructor(
@@ -2765,6 +2843,12 @@ export class ReferenceValueOption {
     public color: string;
 }
 
+/**
+ * numbered range with a min and a max value
+ *
+ * @export
+ * @interface MinMaxRange
+ */
 export interface MinMaxRange {
     min: number;
     max: number;
