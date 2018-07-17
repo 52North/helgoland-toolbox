@@ -2,14 +2,12 @@
  * Plot options for D3 component.
  *
  * @export
- * @interface D3PlotOptions
  */
 export interface D3PlotOptions {
 
     /**
      * show reference values for a graph
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     showReferenceValues?: boolean;
@@ -17,7 +15,6 @@ export interface D3PlotOptions {
     /**
      * requests the dataset data generalized
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     generalizeAllways?: boolean;
@@ -25,7 +22,6 @@ export interface D3PlotOptions {
     /**
      * toggle panning (true) and zooming (false)
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     togglePanZoom?: boolean;
@@ -33,7 +29,6 @@ export interface D3PlotOptions {
     /**
      * show or hide y axis
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     yaxis?: boolean;
@@ -41,7 +36,6 @@ export interface D3PlotOptions {
     /**
      * show or hide grid lines inside plot
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     grid?: boolean;
@@ -49,7 +43,6 @@ export interface D3PlotOptions {
     /**
      * show or hide lines with values when hovering with mouse
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     hoverable?: boolean;
@@ -57,7 +50,6 @@ export interface D3PlotOptions {
     /**
      * indicating if component should build overview diagram or not
      *
-     * @type {boolean}
      * @memberof D3PlotOptions
      */
     overview?: boolean;

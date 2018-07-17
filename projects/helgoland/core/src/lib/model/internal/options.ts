@@ -2,14 +2,12 @@
  * Options for each dataset.
  *
  * @export
- * @class DatasetOptions
  */
 export class DatasetOptions {
 
     /**
      * internal dataset id
      *
-     * @type {string}
      * @memberof DatasetOptions
      */
     public internalId: string;
@@ -17,7 +15,6 @@ export class DatasetOptions {
     /**
      * color of the dataset
      *
-     * @type {string}
      * @memberof DatasetOptions
      */
     public color: string;
@@ -25,17 +22,13 @@ export class DatasetOptions {
     /**
      * show or hide in the graph
      *
-     * @type {boolean}
      * @memberof DatasetOptions
      */
     public visible: boolean = true;
 
-    public loading?: boolean;
-
     /**
      * separate y axis of datasets with same unit
      *
-     * @type {boolean}
      * @memberof DatasetOptions
      */
     public separateYAxis?: boolean = false;
@@ -43,7 +36,6 @@ export class DatasetOptions {
     /**
      * align graph that zero y axis is visible
      *
-     * @type {boolean}
      * @memberof DatasetOptions
      */
     public zeroBasedYAxis?: boolean = false;
@@ -51,7 +43,6 @@ export class DatasetOptions {
     /**
      * marker to request dataset data generalized
      *
-     * @type {boolean}
      * @memberof DatasetOptions
      */
     public generalize?: boolean = false;
@@ -59,7 +50,6 @@ export class DatasetOptions {
     /**
      * list of visible reference values
      *
-     * @type {ReferenceValueOption[]}
      * @memberof DatasetOptions
      */
     public showReferenceValues: ReferenceValueOption[] = [];
@@ -67,7 +57,6 @@ export class DatasetOptions {
     /**
      * radius of graphpoint
      *
-     * @type {number}
      * @memberof DatasetOptions
      */
     public pointRadius: number = 0;
@@ -75,7 +64,6 @@ export class DatasetOptions {
     /**
      * width of graphline
      *
-     * @type {number}
      * @memberof DatasetOptions
      */
     public lineWidth: number = 1;
@@ -83,7 +71,6 @@ export class DatasetOptions {
     /**
      * min and max range of y axis
      *
-     * @type {MinMaxRange}
      * @memberof DatasetOptions
      */
     public yAxisRange?: MinMaxRange;
@@ -106,7 +93,6 @@ export class ReferenceValueOption {
  * numbered range with a min and a max value
  *
  * @export
- * @interface MinMaxRange
  */
 export interface MinMaxRange {
     min: number;

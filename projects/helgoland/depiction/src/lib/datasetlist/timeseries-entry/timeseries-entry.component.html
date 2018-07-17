@@ -1,6 +1,6 @@
 <div class="legendItem" style="position: relative;" [ngStyle]="{'border-color': datasetOptions?.color}" [ngClass]="{'selected': selected}"
   (click)="toggleSelection()">
-  <div class="loading-overlay" *ngIf="datasetOptions?.loading" [ngStyle]="{'background-color': datasetOptions?.color}">
+  <div class="loading-overlay" *ngIf="loading" [ngStyle]="{'background-color': datasetOptions?.color}">
     <div class="fa fa-refresh fa-spin fa-3x fa-fw"></div>
   </div>
   <div>
@@ -55,7 +55,8 @@
         <span class="hidden-medium">({{lastValue.value}} {{uom}})</span>
       </div>
       <div *ngIf="dataset?.referenceValues">
-        <div class="additionalLegendEntry" *ngFor="let ref of dataset.referenceValues" (click)="toggleReferenceValue(ref); $event.stopPropagation();" [ngClass]="{'selected': ref.visible}" [ngStyle]="{color: ref.color}">
+        <div class="additionalLegendEntry" *ngFor="let ref of dataset.referenceValues" (click)="toggleReferenceValue(ref); $event.stopPropagation();"
+          [ngClass]="{'selected': ref.visible}" [ngStyle]="{color: ref.color}">
           <span class="fa fa-chevron-right"></span>
           <span>{{ref.label}}</span>
         </div>
