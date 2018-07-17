@@ -1002,6 +1002,12 @@
                         <a href="interfaces/BlacklistedService.html" data-type="entity-link">BlacklistedService</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/Cache.html" data-type="entity-link">Cache</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CachedItem.html" data-type="entity-link">CachedItem</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/Category.html" data-type="entity-link">Category</a>
                     </li>
                     <li class="link">
@@ -1030,6 +1036,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/DataSeries.html" data-type="entity-link">DataSeries</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/DataYRange.html" data-type="entity-link">DataYRange</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/DatasetApi.html" data-type="entity-link">DatasetApi</a>
@@ -1107,6 +1116,9 @@
                         <a href="interfaces/GroupFavorite.html" data-type="entity-link">GroupFavorite</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/HighlightDataset.html" data-type="entity-link">HighlightDataset</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/HttpRequestOptions.html" data-type="entity-link">HttpRequestOptions</a>
                     </li>
                     <li class="link">
@@ -1129,6 +1141,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/Identifiable.html" data-type="entity-link">Identifiable</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InternalDataEntry.html" data-type="entity-link">InternalDataEntry</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/InternalDatasetId.html" data-type="entity-link">InternalDatasetId</a>
@@ -1246,6 +1261,12 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/TrajectoryResult.html" data-type="entity-link">TrajectoryResult</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/YRanges.html" data-type="entity-link">YRanges</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/YScale.html" data-type="entity-link">YScale</a>
                     </li>
             </ul>
         </li>
@@ -2278,6 +2299,12 @@
                         <a href="interfaces/BlacklistedService.html" data-type="entity-link">BlacklistedService</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/Cache.html" data-type="entity-link">Cache</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/CachedItem.html" data-type="entity-link">CachedItem</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/Category.html" data-type="entity-link">Category</a>
                     </li>
                     <li class="link">
@@ -2306,6 +2333,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/DataSeries.html" data-type="entity-link">DataSeries</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/DataYRange.html" data-type="entity-link">DataYRange</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/DatasetApi.html" data-type="entity-link">DatasetApi</a>
@@ -2383,6 +2413,9 @@
                         <a href="interfaces/GroupFavorite.html" data-type="entity-link">GroupFavorite</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/HighlightDataset.html" data-type="entity-link">HighlightDataset</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/HttpRequestOptions.html" data-type="entity-link">HttpRequestOptions</a>
                     </li>
                     <li class="link">
@@ -2405,6 +2438,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/Identifiable.html" data-type="entity-link">Identifiable</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/InternalDataEntry.html" data-type="entity-link">InternalDataEntry</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/InternalDatasetId.html" data-type="entity-link">InternalDatasetId</a>
@@ -2522,6 +2558,12 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/TrajectoryResult.html" data-type="entity-link">TrajectoryResult</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/YRanges.html" data-type="entity-link">YRanges</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/YScale.html" data-type="entity-link">YScale</a>
                     </li>
             </ul>
         </li>
@@ -2701,11 +2743,15 @@
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#createDefaultMarker">createDefaultMarker</a>
+                                <a href="#createDefaultGeometry">createDefaultGeometry</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#createStationMarkers">createStationMarkers</a>
+                                <a href="#createFilledMarker">createFilledMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createStationGeometries">createStationGeometries</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -2802,7 +2848,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:45</a></div>
                             </td>
                         </tr>
 
@@ -2906,7 +2952,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:40</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -2927,7 +2973,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:43</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -3098,7 +3144,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:112</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:114</a></div>
                             </td>
                         </tr>
 
@@ -3147,7 +3193,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                <b>Returns : </b>    <code>Layer</code>
 
                             </div>
                                 <div class="io-description">
@@ -3181,7 +3227,78 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:118</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>station</td>
+                                                        <td>
+                                                                    <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Layer</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createDefaultGeometry"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createDefaultGeometry
+                            </b>
+                            <a href="#createDefaultGeometry"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>createDefaultGeometry(station: <a href="../classes/Station.html">Station</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="176" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:176</a></div>
                             </td>
                         </tr>
 
@@ -3232,27 +3349,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="createDefaultMarker"></a>
+                        <a name="createFilledMarker"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            createDefaultMarker
+                            createFilledMarker
                             </b>
-                            <a href="#createDefaultMarker"><span class="fa fa-link"></span></a>
+                            <a href="#createFilledMarker"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon fa fa-reset"></span>
-                        <code>createDefaultMarker(entry: <a href="../classes/Station.html">Station</a>)</code>
+                        <code>createFilledMarker(station: <a href="../classes/Station.html">Station</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, radius: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:163</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:122</a></div>
                             </td>
                         </tr>
 
@@ -3272,9 +3389,33 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>entry</td>
+                                                        <td>station</td>
                                                         <td>
                                                                     <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>color</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>radius</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -3289,7 +3430,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                <b>Returns : </b>    <code>Layer</code>
 
                             </div>
                                 <div class="io-description">
@@ -3303,27 +3444,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="createStationMarkers"></a>
+                        <a name="createStationGeometries"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            createStationMarkers
+                            createStationGeometries
                             </b>
-                            <a href="#createStationMarkers"><span class="fa fa-link"></span></a>
+                            <a href="#createStationGeometries"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon fa fa-reset"></span>
-                        <code>createStationMarkers()</code>
+                        <code>createStationGeometries()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:140</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:153</a></div>
                             </td>
                         </tr>
 
@@ -3363,7 +3504,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:75</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:77</a></div>
                             </td>
                         </tr>
 
@@ -3403,7 +3544,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -3443,7 +3584,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:55</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -3781,7 +3922,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/map/src/lib/selector/station-map-selector/station-map-selector.component.ts:45</a></div>
                             </td>
                         </tr>
 
@@ -3898,18 +4039,20 @@ import {
     Timeseries,
     TimeseriesExtras,
 } from &#x27;@helgoland/core&#x27;;
+import GeoJSON from &#x27;geojson&#x27;;
 import * as L from &#x27;leaflet&#x27;;
 import { Observable } from &#x27;rxjs/Observable&#x27;;
 
 import { MapCache } from &#x27;../../base/map-cache.service&#x27;;
 import { MapSelectorComponent } from &#x27;../map-selector.component&#x27;;
+import { Layer } from &#x27;leaflet&#x27;;
 
 @Component({
     selector: &#x27;n52-station-map-selector&#x27;,
     templateUrl: &#x27;../map-selector.component.html&#x27;,
     styleUrls: [&#x27;../map-selector.component.scss&#x27;]
 })
-@Mixin([HasLoadableContent])
+// @Mixin([HasLoadableContent])
 export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station&gt; implements OnChanges, AfterViewInit {
 
     @Input()
@@ -3946,7 +4089,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
         if (this.statusIntervals &amp;&amp; this.filter &amp;&amp; this.filter.phenomenon) {
             this.createValuedMarkers();
         } else {
-            this.createStationMarkers();
+            this.createStationGeometries();
         }
     }
 
@@ -3987,35 +4130,46 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
         });
     }
 
-    private createColoredMarker(station: Station, color: string) {
-        const marker &#x3D; L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
-            color: &#x27;#000&#x27;,
-            fillColor: color,
-            fillOpacity: 0.8,
-            radius: 10,
-            weight: 2
-        });
-        marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
-            this.onSelected.emit(station);
-        });
-        return marker;
+    private createColoredMarker(station: Station, color: string): Layer {
+        return this.createFilledMarker(station, color, 10);
     }
 
-    private createDefaultColoredMarker(station: Station) {
-        const marker &#x3D; L.circleMarker([station.geometry.coordinates[1], station.geometry.coordinates[0]], {
-            color: &#x27;#000&#x27;,
-            fillColor: &#x27;#000&#x27;,
-            fillOpacity: 0.8,
-            radius: 5,
-            weight: 2
-        });
-        marker.on(&#x27;click&#x27;, () &#x3D;&gt; {
-            this.onSelected.emit(station);
-        });
-        return marker;
+    private createDefaultColoredMarker(station: Station): Layer {
+        return this.createFilledMarker(station, &#x27;#000&#x27;, 10);
     }
 
-    private createStationMarkers() {
+    private createFilledMarker(station: Station, color: string, radius: number): Layer {
+        let geometry;
+        if (station.geometry.type &#x3D;&#x3D;&#x3D; &#x27;Point&#x27;) {
+            const point &#x3D; station.geometry as GeoJSON.Point;
+            geometry &#x3D; L.circleMarker([point.coordinates[1], point.coordinates[0]], {
+                color: &#x27;#000&#x27;,
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: 10,
+                weight: 2
+            });
+        } else {
+            geometry &#x3D; L.geoJSON(station.geometry, {
+                style: (feature) &#x3D;&gt; {
+                    return {
+                        color: &#x27;#000&#x27;,
+                        fillColor: color,
+                        fillOpacity: 0.8,
+                        weight: 2
+                    };
+                }
+            });
+        }
+        if (geometry) {
+            geometry.on(&#x27;click&#x27;, () &#x3D;&gt; {
+                this.onSelected.emit(station);
+            });
+            return geometry;
+        }
+    }
+
+    private createStationGeometries() {
         this.apiInterface.getStations(this.serviceUrl, this.filter)
             .subscribe((res) &#x3D;&gt; {
                 if (this.cluster) {
@@ -4025,7 +4179,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
                 }
                 if (res instanceof Array &amp;&amp; res.length &gt; 0) {
                     res.forEach((entry) &#x3D;&gt; {
-                        const marker &#x3D; this.createDefaultMarker(entry);
+                        const marker &#x3D; this.createDefaultGeometry(entry);
                         if (marker) { this.markerFeatureGroup.addLayer(marker); }
                     });
                     this.markerFeatureGroup.addTo(this.map);
@@ -4038,13 +4192,13 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
             });
     }
 
-    private createDefaultMarker(entry: Station) {
-        if (entry.geometry) {
-            const marker &#x3D; L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
-            marker.on(&#x27;click&#x27;, () &#x3D;&gt; this.onSelected.emit(entry));
-            return marker;
+    private createDefaultGeometry(station: Station) {
+        if (station.geometry) {
+            const geometry &#x3D; L.geoJSON(station.geometry);
+            geometry.on(&#x27;click&#x27;, () &#x3D;&gt; this.onSelected.emit(station));
+            return geometry;
         } else {
-            console.error(entry.id + &#x27; has no geometry&#x27;);
+            console.error(station.id + &#x27; has no geometry&#x27;);
         }
     }
 }
