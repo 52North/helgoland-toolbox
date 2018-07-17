@@ -9,9 +9,9 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    DatasetApiInterface,
     ColorService,
     Dataset,
+    DatasetApiInterface,
     DatasetOptions,
     FirstLastValue,
     IDataset,
@@ -68,6 +68,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     public tempColor: string;
     public hasData = true;
     public referenceValues: ReferenceValue[];
+    public loading: boolean;
 
     public dataset: IDataset;
 
@@ -142,13 +143,17 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     }
 
     protected loadDataset(id: string, url: string) {
+        debugger;
+        this.loading = true;
         this.api.getSingleTimeseries(id, url).subscribe((timeseries) => {
             this.dataset = timeseries;
             this.setParameters();
+            this.loading = false;
         }, (error) => {
             this.api.getDataset(id, url).subscribe((dataset) => {
                 this.dataset = dataset;
                 this.setParameters();
+                this.loading = false;
             });
         });
     }
