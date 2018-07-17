@@ -1,28 +1,91 @@
 /**
- * Options for each Dataset.
- * @param internalId {string} dataset id
- * @param color {string} color of the dataset
- * @param loading {boolean} loading
- * @param visible {boolean} show graph
- * @param separateYAxis {boolean} separate y axis of datasets with same unit
- * @param zeroBasedYAxis {boolean} align graph that zero y axis is visible
- * @param generalize {boolean} generalize
- * @param showReferenceValues {boolean} show reference values
- * @param pointRadius {number} radius of graphpoint
- * @param lineWidth {number} width of graphline
- * @param yAxisRange {MinMaxRange} min and max ramge of y axis
+ * Options for each dataset.
+ *
+ * @export
+ * @class DatasetOptions
  */
 export class DatasetOptions {
+
+    /**
+     * internal dataset id
+     *
+     * @type {string}
+     * @memberof DatasetOptions
+     */
     public internalId: string;
+
+    /**
+     * color of the dataset
+     *
+     * @type {string}
+     * @memberof DatasetOptions
+     */
     public color: string;
-    public visible = true;
+
+    /**
+     * show or hide in the graph
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
+    public visible: boolean = true;
+
     public loading?: boolean;
+
+    /**
+     * separate y axis of datasets with same unit
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public separateYAxis?: boolean = false;
+
+    /**
+     * align graph that zero y axis is visible
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public zeroBasedYAxis?: boolean = false;
+
+    /**
+     * marker to request dataset data generalized
+     *
+     * @type {boolean}
+     * @memberof DatasetOptions
+     */
     public generalize?: boolean = false;
+
+    /**
+     * list of visible reference values
+     *
+     * @type {ReferenceValueOption[]}
+     * @memberof DatasetOptions
+     */
     public showReferenceValues: ReferenceValueOption[] = [];
-    public pointRadius = 0;
-    public lineWidth = 1;
+
+    /**
+     * radius of graphpoint
+     *
+     * @type {number}
+     * @memberof DatasetOptions
+     */
+    public pointRadius: number = 0;
+
+    /**
+     * width of graphline
+     *
+     * @type {number}
+     * @memberof DatasetOptions
+     */
+    public lineWidth: number = 1;
+
+    /**
+     * min and max range of y axis
+     *
+     * @type {MinMaxRange}
+     * @memberof DatasetOptions
+     */
     public yAxisRange?: MinMaxRange;
 
     constructor(
@@ -39,6 +102,12 @@ export class ReferenceValueOption {
     public color: string;
 }
 
+/**
+ * numbered range with a min and a max value
+ *
+ * @export
+ * @interface MinMaxRange
+ */
 export interface MinMaxRange {
     min: number;
     max: number;
