@@ -52,7 +52,10 @@ interface YScale {
 interface YRanges {
     uom: string;
     range: MinMaxRange;
+    preRange: MinMaxRange;
     zeroBased: boolean;
+    autoRange: boolean;
+    outOfrange: boolean;
     ids: string[];
     first?: boolean;
     yScale?: d3.ScaleLinear<number, number>;
@@ -78,6 +81,7 @@ interface InternalDataEntry {
         label: string;
         zeroBased: boolean;
         yAxisRange: MinMaxRange;
+        autoRangeSelection: boolean;
     };
     visible: boolean;
 }
@@ -85,8 +89,11 @@ interface InternalDataEntry {
 interface DataYRange {
     uom: string;
     range?: MinMaxRange;
+    preRange?: MinMaxRange;
     id: string;
     zeroBasedYAxis: boolean;
+    autoRange: boolean;
+    outOfrange: boolean;
 }
 
 interface DataConst extends IDataset {
@@ -373,7 +380,8 @@ export class D3TimeseriesGraphComponent
                     uom: dataset.uom,
                     label: dataset.label,
                     zeroBased: styles.zeroBasedYAxis,
-                    yAxisRange: styles.yAxisRange
+                    yAxisRange: styles.yAxisRange,
+                    autoRangeSelection: styles.autoRangeSelection
                 },
                 visible: styles.visible
             };
@@ -434,7 +442,9 @@ export class D3TimeseriesGraphComponent
      */
     private processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
+        let calculatedPreRange: MinMaxRange;
         let predefinedRange = dataEntry.axisOptions.yAxisRange;
+        let autoDataExtent = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
         const dataExtent = d3.extent<[number, number], number>(dataEntry.data, (datum, index, array) => {
@@ -448,11 +458,13 @@ export class D3TimeseriesGraphComponent
         if (predefinedRange && !this.graphOptions.overview) {
             if (predefinedRange.min > predefinedRange.max) {
                 calculatedRange = { min: predefinedRange.max, max: predefinedRange.min };
+                calculatedPreRange = { min: predefinedRange.max, max: predefinedRange.min };
             } else {
-                calculatedRange = predefinedRange;
+                calculatedRange = { min: predefinedRange.min, max: predefinedRange.max };
+                calculatedPreRange = { min: predefinedRange.min, max: predefinedRange.max };
             }
-            if (predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0]) {
-                setDataExtent = true;
+            if ( predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0] ) {
+                setDataExtent = autoDataExtent ? false : true;
             }
         } else {
             setDataExtent = true;
@@ -472,9 +484,11 @@ export class D3TimeseriesGraphComponent
         if (dataEntry.axisOptions.zeroBased) {
             if (dataExtent[1] <= 0) {
                 calculatedRange.max = 0;
+                calculatedPreRange.max = 0;
             }
             if (dataExtent[0] >= 0) {
                 calculatedRange.min = 0;
+                calculatedPreRange.min = 0;
             }
         }
 
@@ -485,10 +499,13 @@ export class D3TimeseriesGraphComponent
             this.dataYranges[newDatasetIdx] = {
                 uom: dataEntry.axisOptions.uom,
                 id: dataEntry.internalId,
-                zeroBasedYAxis: dataEntry.axisOptions.zeroBased
+                zeroBasedYAxis: dataEntry.axisOptions.zeroBased,
+                outOfrange: setDataExtent,
+                autoRange: autoDataExtent
             };
             if (isFinite(calculatedRange.min) && isFinite(calculatedRange.max)) {
                 this.dataYranges[newDatasetIdx].range = calculatedRange;
+                this.dataYranges[newDatasetIdx].preRange = calculatedPreRange;
             }
         } else {
             this.dataYranges[newDatasetIdx] = null;
@@ -502,22 +519,42 @@ export class D3TimeseriesGraphComponent
                 let yrangeObj: YRanges = {
                     uom: obj.uom,
                     range: obj.range,
+                    preRange: obj.preRange,
                     ids: [obj.id],
-                    zeroBased: obj.zeroBasedYAxis
+                    zeroBased: obj.zeroBasedYAxis,
+                    outOfrange: obj.outOfrange,
+                    autoRange: obj.autoRange
                 };
 
                 if (idx >= 0) {
                     if (this.yRangesEachUom[idx].range) {
                         if (obj.range) {
-                            if (this.yRangesEachUom[idx].range.min > obj.range.min && !isNaN(obj.range.min)) {
-                                this.yRangesEachUom[idx].range.min = obj.range.min;
+                            let autoRangeSelection = false;
+                            if (this.yRangesEachUom[idx].autoRange || obj.autoRange) {
+                                autoRangeSelection = true;
                             }
-                            if (this.yRangesEachUom[idx].range.max < obj.range.max && !isNaN(obj.range.max)) {
-                                this.yRangesEachUom[idx].range.max = obj.range.max;
+
+                            if (autoRangeSelection) {
+                                // check if preranges exist
+                                if (obj.preRange && this.yRangesEachUom[idx].preRange) {
+                                    this.checkCurrentLatest(idx, obj, 'preRange');
+                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].preRange;
+                                } else {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                }
+                                this.yRangesEachUom[idx].autoRange = autoRangeSelection;
+                            } else {
+                                if (obj.outOfrange && (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange)) {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                } else if (this.yRangesEachUom[idx].outOfrange && (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange)) {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                } else {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                }
                             }
                         }
                     } else {
-                        this.yRangesEachUom[idx].range = obj.range;
+                        this.takeLatest(idx, obj, 'range');
                     }
 
                     this.yRangesEachUom[idx].ids.push(obj.id);
@@ -528,6 +565,19 @@ export class D3TimeseriesGraphComponent
             }
         });
         this.plotGraph();
+    }
+
+    private checkCurrentLatest(idx, obj, pos) {
+        if (this.yRangesEachUom[idx][pos].min > obj[pos].min && !isNaN(obj[pos].min)) {
+            this.yRangesEachUom[idx][pos].min = obj[pos].min;
+        }
+        if (this.yRangesEachUom[idx][pos].max < obj[pos].max && !isNaN(obj[pos].max)) {
+            this.yRangesEachUom[idx][pos].max = obj[pos].max;
+        }
+    }
+
+    private takeLatest(idx, obj, pos) {
+        this.yRangesEachUom[idx][pos] = obj[pos];
     }
 
     /**
