@@ -894,7 +894,7 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing a dataset.
      */
     private drawYaxis(entry): YScale {
-        let showAxis = (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis);
+        let showAxis = ( this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis) );
         const range = this.getyAxisRange(entry.uom);
 
         let yMin = range.min;
