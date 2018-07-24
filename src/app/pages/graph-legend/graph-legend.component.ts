@@ -75,7 +75,9 @@ export class GraphLegendComponent {
         }
     };
 
-    public d3diagramOptions: D3PlotOptions = {};
+    public d3diagramOptions: D3PlotOptions = {
+        yaxis: true
+    };
 
     public overviewOptions: PlotOptions = {
         selection: {
@@ -169,6 +171,7 @@ export class GraphLegendComponent {
 
     public changeYAxesVisibility() {
         this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
+        this.d3diagramOptions.yaxis = !this.d3diagramOptions.yaxis;
     }
 
     public updateOptions(option: DatasetOptions) {
