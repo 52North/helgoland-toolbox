@@ -53,6 +53,7 @@ interface YRanges {
     uom: string;
     range: MinMaxRange;
     preRange: MinMaxRange;
+    originRange: MinMaxRange;
     zeroBased: boolean;
     autoRange: boolean;
     outOfrange: boolean;
@@ -90,6 +91,7 @@ interface DataYRange {
     uom: string;
     range?: MinMaxRange;
     preRange?: MinMaxRange;
+    originRange?: MinMaxRange;
     id: string;
     zeroBasedYAxis: boolean;
     autoRange: boolean;
@@ -444,6 +446,7 @@ export class D3TimeseriesGraphComponent
     private processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
         let calculatedPreRange: MinMaxRange;
+        let calculatedOriginRange: MinMaxRange;
         let predefinedRange = dataEntry.axisOptions.yAxisRange;
         let autoDataExtent = dataEntry.axisOptions.autoRangeSelection;
 
@@ -451,6 +454,8 @@ export class D3TimeseriesGraphComponent
         const dataExtent = d3.extent<[number, number], number>(dataEntry.data, (datum, index, array) => {
             return datum[1]; // datum[0] = timestamp -- datum[1] = value
         });
+
+        calculatedOriginRange = { min: dataExtent[0], max: dataExtent[1] };
 
         // let outOfrange = false;
         let setDataExtent = false;
@@ -507,6 +512,7 @@ export class D3TimeseriesGraphComponent
             if (isFinite(calculatedRange.min) && isFinite(calculatedRange.max)) {
                 this.dataYranges[newDatasetIdx].range = calculatedRange;
                 this.dataYranges[newDatasetIdx].preRange = calculatedPreRange;
+                this.dataYranges[newDatasetIdx].originRange = calculatedOriginRange;
             }
         } else {
             this.dataYranges[newDatasetIdx] = null;
@@ -521,6 +527,7 @@ export class D3TimeseriesGraphComponent
                     uom: obj.uom,
                     range: obj.range,
                     preRange: obj.preRange,
+                    originRange: obj.originRange,
                     ids: [obj.id],
                     zeroBased: obj.zeroBasedYAxis,
                     outOfrange: obj.outOfrange,
@@ -539,10 +546,9 @@ export class D3TimeseriesGraphComponent
                                 }
                                 this.yRangesEachUom[idx].autoRange = true;
                             } else {
-                                if (obj.outOfrange && (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange)) {
-                                    this.checkCurrentLatest(idx, obj, 'range');
-                                    // TODO: if first is changed, range of second will be taken
-                                    // but origin range of all should be taken into account when only one is changed
+                                if (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange) {
+                                    this.checkCurrentLatest(idx, obj, 'originRange');
+                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].originRange;
                                 } else {
                                     this.checkCurrentLatest(idx, obj, 'range');
                                 }
