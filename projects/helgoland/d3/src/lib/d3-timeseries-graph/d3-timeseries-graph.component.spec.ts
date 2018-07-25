@@ -90,27 +90,4 @@ describe('D3TimeseriesGraphComponent - function', () => {
     expect(typeof(component.datasetIds)).toBe('object');
   });
 
-  // it('Setting the main time interval changes the time interval', () => {
-  //   let from = new Date().getTime() - 100000000;
-  //   let to = new Date().getTime();
-  //   // component.onTimespanChanged.emit(new Timespan(from, to));
-  //   component.mainTimeInterval = new Timespan(from, to);
-  //   fixture.detectChanges();
-  //   expect(fixture.nativeElement.timeInterval).toEqual(new Timespan(from, to));
-  // });
-
-  // it('should set timespan', () => {
-  //   let from = new Date().getTime() - 100000000;
-  //   let to = new Date().getTime();
-  //   component.onTimespanChanged.emit(new Timespan(from, to));
-  //   console.log('#######\n##########\n');
-  //   console.log(component.datasetIds);
-  //   console.log(component.timeInterval);
-  //   console.log(component.mainTimeInterval); // input
-  //   component.ngDoCheck();
-  //   console.log(component.datasetIds);
-  //   console.log(component.timeInterval);
-  //   console.log(component.mainTimeInterval);
-  // });
-
 });
