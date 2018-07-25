@@ -120,7 +120,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createFilledMarker(station: Station, color: string, radius: number): Layer {
-        let geometry;
+        let geometry: Layer;
         if (station.geometry.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
             geometry = L.circleMarker([point.coordinates[1], point.coordinates[0]], {
