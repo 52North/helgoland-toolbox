@@ -76,11 +76,8 @@ export class GraphLegendComponent {
     };
 
     public d3diagramOptions: D3PlotOptions = {
-        yaxis: true
-        // TODO: string unten rechts copy right label
-        // TODO: copy right label position angeben
-        // TODO: test mit verschiedenen längen
-        // copyright = {label: , position: }
+        yaxis: true,
+        copyright: { label: 'This should be bottom right and the text is long.', position: { x: 'right', y: 'bottom' } }
     };
 
     public overviewOptions: PlotOptions = {

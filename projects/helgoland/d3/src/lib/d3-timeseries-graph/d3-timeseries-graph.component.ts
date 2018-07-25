@@ -157,6 +157,7 @@ export class D3TimeseriesGraphComponent
     private xScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
+    private copyright: any;
     private focusG: any;
     private highlightFocus: any;
     private focuslabelTime: any;
@@ -481,7 +482,7 @@ export class D3TimeseriesGraphComponent
         // if style option 'zero based y-axis' is checked,
         // the axis will be aligned to top 0 (with data below 0) or to bottom 0 (with data above 0)
         // let zeroBasedValue = -1;
-        if (dataEntry.axisOptions.zeroBased) {
+        if (dataEntry.axisOptions.zeroBased && !this.graphOptions.overview) {
             if (dataExtent[1] <= 0) {
                 calculatedRange.max = 0;
                 calculatedPreRange.max = 0;
@@ -529,25 +530,19 @@ export class D3TimeseriesGraphComponent
                 if (idx >= 0) {
                     if (this.yRangesEachUom[idx].range) {
                         if (obj.range) {
-                            let autoRangeSelection = false;
                             if (this.yRangesEachUom[idx].autoRange || obj.autoRange) {
-                                autoRangeSelection = true;
-                            }
-
-                            if (autoRangeSelection) {
-                                // check if preranges exist
                                 if (obj.preRange && this.yRangesEachUom[idx].preRange) {
                                     this.checkCurrentLatest(idx, obj, 'preRange');
                                     this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].preRange;
                                 } else {
                                     this.checkCurrentLatest(idx, obj, 'range');
                                 }
-                                this.yRangesEachUom[idx].autoRange = autoRangeSelection;
+                                this.yRangesEachUom[idx].autoRange = true;
                             } else {
                                 if (obj.outOfrange && (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange)) {
                                     this.checkCurrentLatest(idx, obj, 'range');
-                                } else if (this.yRangesEachUom[idx].outOfrange && (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange)) {
-                                    this.checkCurrentLatest(idx, obj, 'range');
+                                    // TODO: if first is changed, range of second will be taken
+                                    // but origin range of all should be taken into account when only one is changed
                                 } else {
                                     this.checkCurrentLatest(idx, obj, 'range');
                                 }
@@ -720,6 +715,47 @@ export class D3TimeseriesGraphComponent
                         .on('start', this.panStartHandler)
                         .on('drag', this.panMoveHandler)
                         .on('end', this.panEndHandler));
+            }
+
+            // set copyright label
+            if (this.plotOptions.copyright) {
+                let background = this.getDimensions(this.background.node());
+
+                // default = top left
+                let x = 0; // left
+                let y = 0; // + this.margin.top; // top
+
+                this.copyright = this.graph.append('g');
+                let copyrightLabel = this.copyright.append('svg:text')
+                    .text(this.plotOptions.copyright.label)
+                    .attr('class', 'copyright')
+                    .style('pointer-events', 'none')
+                    .style('fill', 'grey');
+
+                if (this.plotOptions.copyright.position) {
+                    let pos = this.plotOptions.copyright.position;
+                    if (pos.x === 'right') {
+                        x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
+                    }
+                    if (pos.y === 'bottom') {
+                        y = background.h - this.margin.top * 2;
+                    }
+                }
+
+                let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;
+                let xTransform = this.bufferSum + x;
+
+                copyrightLabel
+                    .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
+
+                this.copyright.append('svg:rect')
+                    .attr('class', 'copyright')
+                    .style('fill', 'none')
+                    .style('stroke', 'none')
+                    .style('pointer-events', 'none')
+                    .attr('width', this.getDimensions(copyrightLabel.node()).w)
+                    .attr('height', this.getDimensions(copyrightLabel.node()).h)
+                    .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
             }
         } else {
             // execute when it is overview diagram
