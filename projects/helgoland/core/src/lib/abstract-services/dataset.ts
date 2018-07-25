@@ -7,10 +7,6 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
 
     public datasetOptions: Map<string, T> = new Map();
 
-    constructor(
-        protected localStorage: LocalStorage
-    ) { }
-
     public addDataset(internalId: string, options?: T) {
         if (this.datasetIds.indexOf(internalId) < 0) {
             this.datasetIds.push(internalId);
