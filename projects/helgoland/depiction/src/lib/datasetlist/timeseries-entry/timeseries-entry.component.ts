@@ -143,7 +143,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     }
 
     protected loadDataset(id: string, url: string) {
-        debugger;
+        // debugger;
         this.loading = true;
         this.api.getSingleTimeseries(id, url).subscribe((timeseries) => {
             this.dataset = timeseries;
