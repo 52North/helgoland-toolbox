@@ -41,6 +41,13 @@ export class DatasetOptions {
     public zeroBasedYAxis?: boolean = false;
 
     /**
+     * auto zoom when range selection
+     *
+     * @memberof DatasetOptions
+     */
+    autoRangeSelection?: boolean = false;
+
+    /**
      * marker to request dataset data generalized
      *
      * @memberof DatasetOptions
