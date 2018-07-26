@@ -52,7 +52,11 @@ interface YScale {
 interface YRanges {
     uom: string;
     range: MinMaxRange;
+    preRange: MinMaxRange;
+    originRange: MinMaxRange;
     zeroBased: boolean;
+    autoRange: boolean;
+    outOfrange: boolean;
     ids: string[];
     first?: boolean;
     yScale?: d3.ScaleLinear<number, number>;
@@ -78,6 +82,7 @@ interface InternalDataEntry {
         label: string;
         zeroBased: boolean;
         yAxisRange: MinMaxRange;
+        autoRangeSelection: boolean;
     };
     visible: boolean;
 }
@@ -85,8 +90,12 @@ interface InternalDataEntry {
 interface DataYRange {
     uom: string;
     range?: MinMaxRange;
+    preRange?: MinMaxRange;
+    originRange?: MinMaxRange;
     id: string;
     zeroBasedYAxis: boolean;
+    autoRange: boolean;
+    outOfrange: boolean;
 }
 
 interface DataConst extends IDataset {
@@ -150,6 +159,7 @@ export class D3TimeseriesGraphComponent
     private xScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
+    private copyright: any;
     private focusG: any;
     private highlightFocus: any;
     private focuslabelTime: any;
@@ -373,7 +383,8 @@ export class D3TimeseriesGraphComponent
                     uom: dataset.uom,
                     label: dataset.label,
                     zeroBased: styles.zeroBasedYAxis,
-                    yAxisRange: styles.yAxisRange
+                    yAxisRange: styles.yAxisRange,
+                    autoRangeSelection: styles.autoRangeSelection
                 },
                 visible: styles.visible
             };
@@ -434,12 +445,17 @@ export class D3TimeseriesGraphComponent
      */
     private processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
+        let calculatedPreRange: MinMaxRange;
+        let calculatedOriginRange: MinMaxRange;
         let predefinedRange = dataEntry.axisOptions.yAxisRange;
+        let autoDataExtent = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
         const dataExtent = d3.extent<[number, number], number>(dataEntry.data, (datum, index, array) => {
             return datum[1]; // datum[0] = timestamp -- datum[1] = value
         });
+
+        calculatedOriginRange = { min: dataExtent[0], max: dataExtent[1] };
 
         // let outOfrange = false;
         let setDataExtent = false;
@@ -448,11 +464,13 @@ export class D3TimeseriesGraphComponent
         if (predefinedRange && !this.graphOptions.overview) {
             if (predefinedRange.min > predefinedRange.max) {
                 calculatedRange = { min: predefinedRange.max, max: predefinedRange.min };
+                calculatedPreRange = { min: predefinedRange.max, max: predefinedRange.min };
             } else {
-                calculatedRange = predefinedRange;
+                calculatedRange = { min: predefinedRange.min, max: predefinedRange.max };
+                calculatedPreRange = { min: predefinedRange.min, max: predefinedRange.max };
             }
-            if (predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0]) {
-                setDataExtent = true;
+            if ( predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0] ) {
+                setDataExtent = autoDataExtent ? false : true;
             }
         } else {
             setDataExtent = true;
@@ -469,12 +487,14 @@ export class D3TimeseriesGraphComponent
         // if style option 'zero based y-axis' is checked,
         // the axis will be aligned to top 0 (with data below 0) or to bottom 0 (with data above 0)
         // let zeroBasedValue = -1;
-        if (dataEntry.axisOptions.zeroBased) {
+        if (dataEntry.axisOptions.zeroBased && !this.graphOptions.overview) {
             if (dataExtent[1] <= 0) {
                 calculatedRange.max = 0;
+                calculatedPreRange.max = 0;
             }
             if (dataExtent[0] >= 0) {
                 calculatedRange.min = 0;
+                calculatedPreRange.min = 0;
             }
         }
 
@@ -485,10 +505,14 @@ export class D3TimeseriesGraphComponent
             this.dataYranges[newDatasetIdx] = {
                 uom: dataEntry.axisOptions.uom,
                 id: dataEntry.internalId,
-                zeroBasedYAxis: dataEntry.axisOptions.zeroBased
+                zeroBasedYAxis: dataEntry.axisOptions.zeroBased,
+                outOfrange: setDataExtent,
+                autoRange: autoDataExtent
             };
             if (isFinite(calculatedRange.min) && isFinite(calculatedRange.max)) {
                 this.dataYranges[newDatasetIdx].range = calculatedRange;
+                this.dataYranges[newDatasetIdx].preRange = calculatedPreRange;
+                this.dataYranges[newDatasetIdx].originRange = calculatedOriginRange;
             }
         } else {
             this.dataYranges[newDatasetIdx] = null;
@@ -502,22 +526,36 @@ export class D3TimeseriesGraphComponent
                 let yrangeObj: YRanges = {
                     uom: obj.uom,
                     range: obj.range,
+                    preRange: obj.preRange,
+                    originRange: obj.originRange,
                     ids: [obj.id],
-                    zeroBased: obj.zeroBasedYAxis
+                    zeroBased: obj.zeroBasedYAxis,
+                    outOfrange: obj.outOfrange,
+                    autoRange: obj.autoRange
                 };
 
                 if (idx >= 0) {
                     if (this.yRangesEachUom[idx].range) {
                         if (obj.range) {
-                            if (this.yRangesEachUom[idx].range.min > obj.range.min && !isNaN(obj.range.min)) {
-                                this.yRangesEachUom[idx].range.min = obj.range.min;
-                            }
-                            if (this.yRangesEachUom[idx].range.max < obj.range.max && !isNaN(obj.range.max)) {
-                                this.yRangesEachUom[idx].range.max = obj.range.max;
+                            if (this.yRangesEachUom[idx].autoRange || obj.autoRange) {
+                                if (obj.preRange && this.yRangesEachUom[idx].preRange) {
+                                    this.checkCurrentLatest(idx, obj, 'preRange');
+                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].preRange;
+                                } else {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                }
+                                this.yRangesEachUom[idx].autoRange = true;
+                            } else {
+                                if (obj.outOfrange !== this.yRangesEachUom[idx].outOfrange) {
+                                    this.checkCurrentLatest(idx, obj, 'originRange');
+                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].originRange;
+                                } else {
+                                    this.checkCurrentLatest(idx, obj, 'range');
+                                }
                             }
                         }
                     } else {
-                        this.yRangesEachUom[idx].range = obj.range;
+                        this.takeLatest(idx, obj, 'range');
                     }
 
                     this.yRangesEachUom[idx].ids.push(obj.id);
@@ -528,6 +566,19 @@ export class D3TimeseriesGraphComponent
             }
         });
         this.plotGraph();
+    }
+
+    private checkCurrentLatest(idx, obj, pos) {
+        if (this.yRangesEachUom[idx][pos].min > obj[pos].min && !isNaN(obj[pos].min)) {
+            this.yRangesEachUom[idx][pos].min = obj[pos].min;
+        }
+        if (this.yRangesEachUom[idx][pos].max < obj[pos].max && !isNaN(obj[pos].max)) {
+            this.yRangesEachUom[idx][pos].max = obj[pos].max;
+        }
+    }
+
+    private takeLatest(idx, obj, pos) {
+        this.yRangesEachUom[idx][pos] = obj[pos];
     }
 
     /**
@@ -670,6 +721,47 @@ export class D3TimeseriesGraphComponent
                         .on('start', this.panStartHandler)
                         .on('drag', this.panMoveHandler)
                         .on('end', this.panEndHandler));
+            }
+
+            // set copyright label
+            if (this.plotOptions.copyright) {
+                let background = this.getDimensions(this.background.node());
+
+                // default = top left
+                let x = 0; // left
+                let y = 0; // + this.margin.top; // top
+
+                this.copyright = this.graph.append('g');
+                let copyrightLabel = this.copyright.append('svg:text')
+                    .text(this.plotOptions.copyright.label)
+                    .attr('class', 'copyright')
+                    .style('pointer-events', 'none')
+                    .style('fill', 'grey');
+
+                if (this.plotOptions.copyright.position) {
+                    let pos = this.plotOptions.copyright.position;
+                    if (pos.x === 'right') {
+                        x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
+                    }
+                    if (pos.y === 'bottom') {
+                        y = background.h - this.margin.top * 2;
+                    }
+                }
+
+                let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;
+                let xTransform = this.bufferSum + x;
+
+                copyrightLabel
+                    .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
+
+                this.copyright.append('svg:rect')
+                    .attr('class', 'copyright')
+                    .style('fill', 'none')
+                    .style('stroke', 'none')
+                    .style('pointer-events', 'none')
+                    .attr('width', this.getDimensions(copyrightLabel.node()).w)
+                    .attr('height', this.getDimensions(copyrightLabel.node()).h)
+                    .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
             }
         } else {
             // execute when it is overview diagram
@@ -894,7 +986,7 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing a dataset.
      */
     private drawYaxis(entry): YScale {
-        let showAxis = (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis);
+        let showAxis = ( this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis) );
         const range = this.getyAxisRange(entry.uom);
 
         let yMin = range.min;
