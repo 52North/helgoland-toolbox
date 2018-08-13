@@ -77,7 +77,8 @@ export class GraphLegendComponent {
 
     public d3diagramOptions: D3PlotOptions = {
         yaxis: true,
-        copyright: { label: 'This should be bottom right and the text is long.', position: { x: 'right', y: 'bottom' } }
+        copyright: { label: 'This should be bottom right and the text is long.', position: { x: 'right', y: 'bottom' } },
+        groupYaxis: true
     };
 
     public overviewOptions: PlotOptions = {
@@ -220,6 +221,10 @@ export class GraphLegendComponent {
         this.plotLanguage = language;
         this.d3diagramOptions.language = language;
         this.d3overviewOptions.language = language;
+    }
+
+    public groupYaxisChanged() {
+        this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
     }
 
 }

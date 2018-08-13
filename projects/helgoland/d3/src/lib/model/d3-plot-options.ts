@@ -69,4 +69,13 @@ export interface D3PlotOptions {
      * @memberof D3PlotOptions
      */
     language?: string;
+
+    /**
+     * toggle dataset grouping by uom
+     * true = group y axis by uom
+     * false = single y axis for each timeseries
+     *
+     * @memberof D3PlotOptions
+     */
+    groupYaxis?: boolean;
 }
