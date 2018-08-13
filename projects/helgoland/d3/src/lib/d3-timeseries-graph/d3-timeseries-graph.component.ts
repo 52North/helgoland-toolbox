@@ -935,6 +935,46 @@ export class D3TimeseriesGraphComponent
             hourly = 0.5;
         }
 
+        // TODO
+        let localeForm;
+        switch (this.plotOptions.language) {
+            case 'NL':
+                localeForm = d3.timeFormatLocale({
+                    'dateTime': '%a %b %e %X %Y',
+                    'date': '%d-%m-%Y',
+                    'time': '%H:%M:%S',
+                    'periods': ['AM', 'PM'],
+                    'days': ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
+                    'shortDays': ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'],
+                    'months': ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
+                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
+                });
+                break;
+            case 'DE':
+                localeForm = d3.timeFormatLocale({
+                    'dateTime': '%a %b %e %X %Y',
+                    'date': '%d-%m-%Y',
+                    'time': '%H:%M:%S',
+                    'periods': ['AM', 'PM'],
+                    'days': ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                    'shortDays': ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                    'months': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    'shortMonths': ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+                });
+                break;
+            default:
+                localeForm = d3.timeFormatLocale({
+                    'dateTime': '%a %b %e %X %Y',
+                    'date': '%d-%m-%Y',
+                    'time': '%H:%M:%S',
+                    'periods': ['AM', 'PM'],
+                    'days': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                    'shortDays': ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'],
+                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
+                });
+        }
+
         let tickSize = hourly;
         let timeString = 'hourly';
         let timeFormatString = '%H:%M:%S';
@@ -962,14 +1002,14 @@ export class D3TimeseriesGraphComponent
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, tickSize))
                 .tickFormat((d) => {
-                    return d3.timeFormat(timeFormatString)(new Date(d.valueOf()));
+                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
                 });
         } else {
             timeString = 'minly';
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, 30))
                 .tickFormat((d) => {
-                    return d3.timeFormat(timeFormatString)(new Date(d.valueOf()));
+                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
                 });
         }
 
