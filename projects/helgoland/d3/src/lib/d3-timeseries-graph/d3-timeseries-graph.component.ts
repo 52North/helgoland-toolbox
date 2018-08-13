@@ -1056,8 +1056,12 @@ export class D3TimeseriesGraphComponent
 
         this.checkYselector(entry.uom);
 
-        let yMin = range.min;
-        let yMax = range.max;
+        let yMin = -1;
+        let yMax = 1;
+        if (range !== undefined) {
+            yMin = range.min;
+            yMax = range.max;
+        }
 
         // range for y axis scale
         const rangeOffset = (yMax - yMin) * 0.10;
