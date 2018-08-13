@@ -125,6 +125,8 @@ export class GraphLegendComponent {
     public overviewLoading: boolean;
     public graphLoading: boolean;
 
+    public plotLanguage: string;
+
     constructor(
         private color: ColorService,
         private cdr: ChangeDetectorRef,
@@ -212,6 +214,12 @@ export class GraphLegendComponent {
 
     public refresh(triggered) {
         console.log('refresh at ' + new Date());
+    }
+
+    public languageChanged(language: string) {
+        this.plotLanguage = language;
+        this.d3diagramOptions.language = language;
+        this.d3overviewOptions.language = language;
     }
 
 }
