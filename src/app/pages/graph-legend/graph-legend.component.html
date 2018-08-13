@@ -24,6 +24,9 @@
     <button (click)="languageChanged('NL')">NL</button>
     <button (click)="languageChanged('DE')">DE</button>
     {{plotLanguage}}
+    
+    <button (click)="groupYaxisChanged()">group axis</button>
+    {{d3diagramOptions.groupYaxis}}
 
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
