@@ -21,9 +21,11 @@ import {
     Time,
     TimeInterval,
     Timeseries,
+    ParameterFilter,
 } from '@helgoland/core';
 
-import { ListEntryComponent } from '../list-entry.component';
+import { HighlightableEntry, ListEntryComponent } from '../list-entry.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ReferenceValueColorCache extends IdCache<{ color: string, visible: boolean }> { }
@@ -34,7 +36,7 @@ export class ReferenceValueColorCache extends IdCache<{ color: string, visible: 
     styleUrls: ['./timeseries-entry.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TimeseriesEntryComponent extends ListEntryComponent implements OnChanges {
+export class TimeseriesEntryComponent extends ListEntryComponent implements OnChanges, HighlightableEntry {
 
     @Input()
     public datasetOptions: DatasetOptions;
@@ -44,6 +46,9 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
 
     @Input()
     public changedSelectedDatasets: string;
+
+    @Input()
+    public highlight: boolean;
 
     @Output()
     public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
@@ -77,9 +82,10 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         protected timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
         protected color: ColorService,
-        protected refValCache: ReferenceValueColorCache
+        protected refValCache: ReferenceValueColorCache,
+        protected translateSrvc: TranslateService
     ) {
-        super(internalIdHandler);
+        super(internalIdHandler, translateSrvc);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -93,6 +99,13 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
 
         if (changes.timeInterval) {
             this.checkDataInTimespan();
+        }
+    }
+
+    public toggleUomSelection(id, selected) {
+        if (this.datasetId === id) {
+            this.selected = selected;
+            this.onSelectDataset.emit(this.selected);
         }
     }
 
@@ -142,15 +155,16 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         }
     }
 
-    protected loadDataset(id: string, url: string) {
-        // debugger;
+    protected loadDataset(lang?: string) {
+        const params: ParameterFilter = {};
+        if (lang) { params.lang = lang; }
         this.loading = true;
-        this.api.getSingleTimeseries(id, url).subscribe((timeseries) => {
+        this.api.getSingleTimeseries(this.internalId.id, this.internalId.url, params).subscribe((timeseries) => {
             this.dataset = timeseries;
             this.setParameters();
             this.loading = false;
         }, (error) => {
-            this.api.getDataset(id, url).subscribe((dataset) => {
+            this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => {
                 this.dataset = dataset;
                 this.setParameters();
                 this.loading = false;
