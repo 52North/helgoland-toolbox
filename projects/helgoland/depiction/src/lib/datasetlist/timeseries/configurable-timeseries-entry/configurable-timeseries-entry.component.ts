@@ -1,18 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Dataset, DatasetApiInterface, DatasetOptions, InternalIdHandler, Timeseries } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
 
+/**
+ * Extends the SimpleTimeseriesEntryComponent, with the following functions:
+ *  - dataset options and triggers the editation of the dataset options
+ *  - triggers the show geometry event
+ */
 @Component({
   selector: 'n52-configurable-timeseries-entry',
   templateUrl: './configurable-timeseries-entry.component.html',
   styleUrls: ['./configurable-timeseries-entry.component.css']
 })
-export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent implements OnInit {
+export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
 
   @Input()
   public datasetOptions: DatasetOptions;
+
+  @Input()
+  public highlight: boolean;
 
   @Output()
   public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
