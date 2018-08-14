@@ -23,6 +23,8 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     @Output()
     public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
 
+    public loading;
+
     protected internalId: InternalDatasetId;
 
     private langChangeSubscription: Subscription;
@@ -61,8 +63,4 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
 
     protected abstract loadDataset(lang?: string): void;
 
-}
-
-export interface HighlightableEntry {
-    highlight: boolean;
 }
