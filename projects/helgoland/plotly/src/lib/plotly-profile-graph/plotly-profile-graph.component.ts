@@ -2,16 +2,16 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Ou
 import {
     DatasetApiInterface,
     DatasetPresenterComponent,
-    PresenterHighlight,
     IDataset,
     InternalIdHandler,
+    PresenterHighlight,
     ProfileDataEntry,
     Time,
     TimedDatasetOptions,
     Timespan,
 } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-
 import * as Plotly from 'plotly.js';
 
 interface RawData {
@@ -80,15 +80,18 @@ export class PlotlyProfileGraphComponent
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        protected translateSrvc: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
     }
 
     public ngAfterViewInit(): void {
         this.plotlyArea = this.plotlyElem.nativeElement;
         this.drawChart();
     }
+
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
 
     public reloadData(): void {
         console.log('reload data at ' + new Date());

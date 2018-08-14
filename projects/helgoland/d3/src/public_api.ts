@@ -9,3 +9,4 @@ export * from './lib/model/d3-graph-options';
 export * from './lib/model/d3-axis-type';
 export * from './lib/model/d3-selection-range';
 export * from './lib/model/d3-plot-options';
+export * from './lib/helper/d3-time-format-locale.service';

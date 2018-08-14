@@ -20,6 +20,7 @@ import {
     LocatedTimeValueEntry,
     Time,
 } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
     area,
     axisBottom,
@@ -133,9 +134,10 @@ export class D3TrajectoryGraphComponent
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        protected translateService: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
         this.graphOptions = this.defaultGraphOptions;
     }
 
@@ -174,6 +176,8 @@ export class D3TrajectoryGraphComponent
     public reloadData(): void {
         console.log('reload data at ' + new Date());
     }
+
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
 
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((entry) => {
