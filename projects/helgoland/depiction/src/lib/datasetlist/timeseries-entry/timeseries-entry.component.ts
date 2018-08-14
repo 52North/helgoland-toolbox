@@ -10,9 +10,7 @@ import {
 } from '@angular/core';
 import {
     ColorService,
-    Dataset,
     DatasetApiInterface,
-    DatasetOptions,
     FirstLastValue,
     IDataset,
     IdCache,
@@ -20,11 +18,12 @@ import {
     ReferenceValue,
     Time,
     TimeInterval,
-    Timeseries,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
+import {
+    ConfigurableTimeseriesEntryComponent,
+} from '../configurable-timeseries-entry/configurable-timeseries-entry.component';
 
 @Injectable()
 export class ReferenceValueColorCache extends IdCache<{ color: string, visible: boolean }> { }
@@ -35,10 +34,7 @@ export class ReferenceValueColorCache extends IdCache<{ color: string, visible: 
     styleUrls: ['./timeseries-entry.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TimeseriesEntryComponent extends SimpleTimeseriesEntryComponent implements OnChanges {
-
-    @Input()
-    public datasetOptions: DatasetOptions;
+export class TimeseriesEntryComponent extends ConfigurableTimeseriesEntryComponent implements OnChanges {
 
     @Input()
     public timeInterval: TimeInterval;
@@ -50,16 +46,7 @@ export class TimeseriesEntryComponent extends SimpleTimeseriesEntryComponent imp
     public highlight: boolean;
 
     @Output()
-    public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
-
-    @Output()
-    public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
-
-    @Output()
     public onSelectDate: EventEmitter<Date> = new EventEmitter();
-
-    @Output()
-    public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
     public firstValue: FirstLastValue;
     public lastValue: FirstLastValue;
@@ -114,11 +101,6 @@ export class TimeseriesEntryComponent extends SimpleTimeseriesEntryComponent imp
         this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
     }
 
-    public toggleVisibility() {
-        this.datasetOptions.visible = !this.datasetOptions.visible;
-        this.onUpdateOptions.emit(this.datasetOptions);
-    }
-
     public toggleReferenceValue(refValue: ReferenceValue) {
         const idx = this.datasetOptions.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
         const refValId = this.createRefValId(refValue.referenceValueId);
@@ -131,21 +113,6 @@ export class TimeseriesEntryComponent extends SimpleTimeseriesEntryComponent imp
         }
         this.refValCache.get(refValId).visible = refValue.visible;
         this.onUpdateOptions.emit(this.datasetOptions);
-    }
-
-    public editDatasetOptions() {
-        this.onEditOptions.emit(this.datasetOptions);
-    }
-
-    public showGeometry() {
-        if (this.dataset instanceof Timeseries) {
-            this.onShowGeometry.emit(this.dataset.station.geometry);
-        }
-        if (this.dataset instanceof Dataset) {
-            this.api.getPlatform(this.dataset.parameters.platform.id, this.dataset.url).subscribe((platform) => {
-                this.onShowGeometry.emit(platform.geometry);
-            });
-        }
     }
 
     protected setParameters() {

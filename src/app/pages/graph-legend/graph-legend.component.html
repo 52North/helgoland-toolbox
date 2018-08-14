@@ -25,7 +25,7 @@
     <n52-refresh-button (refreshing)="diagram.reloadData()"></n52-refresh-button>
   </div>
 
-  <div>
+  <!-- <div>
     Complex legend:
     <div *ngFor="let id of datasetIds">
       <n52-timeseries-entry [datasetId]="id" [changedSelectedDatasets]="changedSelectedDatasets" [selected]="isSelected(id)" [highlight]="id === highlightId"
@@ -33,14 +33,21 @@
         (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
         (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
     </div>
+  </div> -->
+
+  <div>
+    Configurable legend:
+    <div *ngFor="let id of datasetIds">
+      <n52-configurable-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [datasetOptions]="datasetOptions.get(id)"
+        (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"></n52-configurable-timeseries-entry>
+    </div>
   </div>
 
   <div>
     Simple legend:
     <div *ngFor="let id of datasetIds">
-      <n52-simple-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
-        (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
-        (onSelectDate)="dateChanged($event)"></n52-simple-timeseries-entry>
+      <n52-simple-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"></n52-simple-timeseries-entry>
     </div>
   </div>
 
