@@ -118,8 +118,6 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
-    public changedSelectedDatasets: any;
-
     public selectedIds: string[] = [];
 
     public overviewLoading: boolean;
@@ -147,7 +145,7 @@ export class GraphLegendComponent {
     }
 
     public isSelected(id: string) {
-        return false;
+        return this.selectedIds.indexOf(id) > -1;
     }
 
     public showGeometry(geometry: GeoJSON.GeoJsonObject) {
@@ -160,8 +158,8 @@ export class GraphLegendComponent {
         this.highlightId = id;
     }
 
-    public setSelected(selectedIds: any) {
-        this.changedSelectedDatasets = selectedIds;
+    public setSelected(selectedIds: string[]) {
+        this.selectedIds = selectedIds;
     }
 
     public deleteTimeseries(id: string) {

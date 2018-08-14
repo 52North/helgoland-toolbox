@@ -2,8 +2,14 @@ import { Component } from '@angular/core';
 import { Dataset, DatasetApiInterface, IDataset, InternalIdHandler, ParameterFilter, Timeseries } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { ListEntryComponent } from '../list-entry.component';
+import { ListEntryComponent } from '../../list-entry.component';
 
+/**
+ * Implements the abstract ListEntryComponent, which has the following functions:
+ *  - can be selected and is selectable internally, with a corresponding output event
+ *  - can be deleted, which also triggers an output event
+ *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
+ */
 @Component({
   selector: 'n52-simple-timeseries-entry',
   templateUrl: './simple-timeseries-entry.component.html',

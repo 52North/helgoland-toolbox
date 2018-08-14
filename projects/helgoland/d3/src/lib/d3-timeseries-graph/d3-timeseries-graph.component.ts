@@ -124,9 +124,6 @@ export class D3TimeseriesGraphComponent
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
     public mainTimeInterval: Timespan;
 
-    @Output()
-    public onSelectId: EventEmitter<any> = new EventEmitter();
-
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
 
@@ -1198,7 +1195,7 @@ export class D3TimeseriesGraphComponent
             });
         }
 
-        this.onSelectId.emit(toHighlightDataset);
+        this.onDatasetSelected.emit(this.selectedDatasetIds);
         this.plotGraph();
     }
 

@@ -4,7 +4,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 /**
- * Represents an dataset entry for a list, which has the following functions:
+ * Represents an abstract dataset entry for a list, which has the following functions:
  *  - can be selected and is selectable internally, with a corresponding output event
  *  - can be deleted, which also triggers an output event
  *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
