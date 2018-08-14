@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatasetApiInterface, Dataset, DatasetOptions, InternalIdHandler } from '@helgoland/core';
+import { Dataset, DatasetApiInterface, DatasetOptions, InternalIdHandler, ParameterFilter } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 
@@ -24,9 +25,10 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
 
     constructor(
         protected api: DatasetApiInterface,
-        protected internalIdHandler: InternalIdHandler
+        protected internalIdHandler: InternalIdHandler,
+        protected translateSrvc: TranslateService
     ) {
-        super(internalIdHandler);
+        super(internalIdHandler, translateSrvc);
     }
 
     public toggleVisibility() {
@@ -38,8 +40,10 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
         this.onEditOptions.emit(options);
     }
 
-    protected loadDataset(id: string, url: string): void {
-        this.api.getDataset(id, url).subscribe((dataset) => this.dataset = dataset);
+    protected loadDataset(lang?: string): void {
+        const params: ParameterFilter = {};
+        if (lang) { params.lang = lang; }
+        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => this.dataset = dataset);
     }
 
 }

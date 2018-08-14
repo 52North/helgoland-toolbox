@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-    DatasetApiInterface,
     Dataset,
+    DatasetApiInterface,
     InternalIdHandler,
     LocatedProfileDataEntry,
+    ParameterFilter,
     PlatformTypes,
     TimedDatasetOptions,
     Timespan,
 } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 
@@ -43,9 +45,10 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
     constructor(
         protected api: DatasetApiInterface,
-        protected internalIdHandler: InternalIdHandler
+        protected internalIdHandler: InternalIdHandler,
+        protected translateSrvc: TranslateService
     ) {
-        super(internalIdHandler);
+        super(internalIdHandler, translateSrvc);
     }
 
     public removeDatasetOptions(options: TimedDatasetOptions) {
@@ -88,10 +91,10 @@ export class ProfileEntryComponent extends ListEntryComponent {
         }
     }
 
-    protected loadDataset(id: string, url: string) {
-        this.api.getDataset(id, url).subscribe((dataset) => {
-            this.dataset = dataset;
-        });
+    protected loadDataset(lang?: string) {
+        const params: ParameterFilter = {};
+        if (lang) { params.lang = lang; }
+        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => this.dataset = dataset);
     }
 
 }
