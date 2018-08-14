@@ -21,11 +21,10 @@ import {
     Time,
     TimeInterval,
     Timeseries,
-    ParameterFilter,
 } from '@helgoland/core';
-
-import { HighlightableEntry, ListEntryComponent } from '../list-entry.component';
 import { TranslateService } from '@ngx-translate/core';
+
+import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
 
 @Injectable()
 export class ReferenceValueColorCache extends IdCache<{ color: string, visible: boolean }> { }
@@ -36,7 +35,7 @@ export class ReferenceValueColorCache extends IdCache<{ color: string, visible: 
     styleUrls: ['./timeseries-entry.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TimeseriesEntryComponent extends ListEntryComponent implements OnChanges, HighlightableEntry {
+export class TimeseriesEntryComponent extends SimpleTimeseriesEntryComponent implements OnChanges {
 
     @Input()
     public datasetOptions: DatasetOptions;
@@ -62,18 +61,12 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
     @Output()
     public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
-    public platformLabel: string;
-    public phenomenonLabel: string;
-    public procedureLabel: string;
-    public categoryLabel: string;
-    public uom: string;
     public firstValue: FirstLastValue;
     public lastValue: FirstLastValue;
     public informationVisible = false;
     public tempColor: string;
     public hasData = true;
     public referenceValues: ReferenceValue[];
-    public loading: boolean;
 
     public dataset: IDataset;
 
@@ -85,7 +78,7 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         protected refValCache: ReferenceValueColorCache,
         protected translateSrvc: TranslateService
     ) {
-        super(internalIdHandler, translateSrvc);
+        super(api, internalIdHandler, translateSrvc);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -155,35 +148,10 @@ export class TimeseriesEntryComponent extends ListEntryComponent implements OnCh
         }
     }
 
-    protected loadDataset(lang?: string) {
-        const params: ParameterFilter = {};
-        if (lang) { params.lang = lang; }
-        this.loading = true;
-        this.api.getSingleTimeseries(this.internalId.id, this.internalId.url, params).subscribe((timeseries) => {
-            this.dataset = timeseries;
-            this.setParameters();
-            this.loading = false;
-        }, (error) => {
-            this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => {
-                this.dataset = dataset;
-                this.setParameters();
-                this.loading = false;
-            });
-        });
-    }
-
-    private setParameters() {
-        if (this.dataset instanceof Dataset) {
-            this.platformLabel = this.dataset.parameters.platform.label;
-        } else if (this.dataset instanceof Timeseries) {
-            this.platformLabel = this.dataset.station.properties.label;
-        }
-        this.phenomenonLabel = this.dataset.parameters.phenomenon.label;
-        this.procedureLabel = this.dataset.parameters.procedure.label;
-        this.categoryLabel = this.dataset.parameters.category.label;
+    protected setParameters() {
+        super.setParameters();
         this.firstValue = this.dataset.firstValue;
         this.lastValue = this.dataset.lastValue;
-        this.uom = this.dataset.uom;
         if (this.dataset.referenceValues) {
             this.dataset.referenceValues.forEach((e) => {
                 const refValId = this.createRefValId(e.referenceValueId);

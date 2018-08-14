@@ -94,7 +94,11 @@ export class ProfileEntryComponent extends ListEntryComponent {
     protected loadDataset(lang?: string) {
         const params: ParameterFilter = {};
         if (lang) { params.lang = lang; }
-        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => this.dataset = dataset);
+        this.loading = true;
+        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => {
+            this.dataset = dataset;
+            this.loading = false;
+        });
     }
 
 }
