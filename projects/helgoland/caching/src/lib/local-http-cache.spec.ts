@@ -25,7 +25,7 @@ describe('LocalHttpCache', () => {
 
     it('should be ', inject([LocalHttpCache, HttpService], (cache: LocalHttpCache, httpService: HttpService) => {
         const url = 'https://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/services';
-        httpService.client({ expirationTime: 1000 }).get(url)
+        httpService.client({ expirationAtMs: new Date().getTime() + 1000 }).get(url)
             .subscribe(res => {
             });
         setTimeout(() => {

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpServiceHandler, HttpServiceInterceptor, HttpServiceMetadata } from '@helgoland/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
+
 import { HttpCache, OnGoingHttpCache } from './model';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         }
 
         // First, check the cache to see if this request exists.
-        const cachedResponse = this.cache.get(req);
+        const cachedResponse = this.cache.get(req, metadata.expirationAtMs);
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
@@ -47,7 +48,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                 const share = next.handle(req, metadata).share();
                 share.subscribe((res) => {
                     if (res instanceof HttpResponse) {
-                        this.cache.put(req, metadata.expirationTime, res);
+                        this.cache.put(req, res, metadata.expirationAtMs);
                         this.ongoingCache.clear(req);
                         observer.next(res);
                         observer.complete();
