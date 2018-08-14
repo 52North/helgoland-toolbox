@@ -5,7 +5,7 @@ export const HTTP_SERVICE_INTERCEPTORS = new InjectionToken<HttpServiceIntercept
 
 export interface HttpServiceMetadata {
     forceUpdate?: boolean;
-    expirationTime?: number | Date;
+    expirationAtMs?: number;
 }
 
 export interface HttpServiceHandler {
