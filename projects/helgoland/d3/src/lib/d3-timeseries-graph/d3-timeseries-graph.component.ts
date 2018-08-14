@@ -22,11 +22,13 @@ import {
     Timeseries,
     Timespan,
 } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3PlotOptions } from '../model/d3-plot-options';
 
 interface DataEntry {
@@ -125,9 +127,6 @@ export class D3TimeseriesGraphComponent
     @Output()
     public onSelectId: EventEmitter<any> = new EventEmitter();
 
-    @Output()
-    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
-
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
 
@@ -210,9 +209,11 @@ export class D3TimeseriesGraphComponent
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        private colorService: ColorService
+        protected timeFormatLocaleService: D3TimeFormatLocaleService,
+        protected colorService: ColorService,
+        protected translateService: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
@@ -230,6 +231,10 @@ export class D3TimeseriesGraphComponent
         this.mousedownBrush = false;
         this.dataYranges = [];
         this.xAxisRangeOrigin = [];
+    }
+
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
+        this.plotGraph();
     }
 
     public reloadData(): void {
@@ -286,7 +291,7 @@ export class D3TimeseriesGraphComponent
             tsData.bars.lineWidth -= this.addLineWidth;
 
             this.checkYselector(tsData.axisOptions.uom);
-            this.yAxisSelect[tsData.axisOptions.uom].ids = this.yAxisSelect[tsData.axisOptions.uom].ids.filter( el => el !== internalId );
+            this.yAxisSelect[tsData.axisOptions.uom].ids = this.yAxisSelect[tsData.axisOptions.uom].ids.filter(el => el !== internalId);
             if (this.yAxisSelect[tsData.axisOptions.uom].ids.length <= 0) {
                 this.yAxisSelect[tsData.axisOptions.uom].clicked = false;
             } else {
@@ -494,7 +499,7 @@ export class D3TimeseriesGraphComponent
                 calculatedRange = { min: predefinedRange.min, max: predefinedRange.max };
                 calculatedPreRange = { min: predefinedRange.min, max: predefinedRange.max };
             }
-            if ( predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0] ) {
+            if (predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0]) {
                 setDataExtent = autoDataExtent ? false : true;
             }
         } else {
@@ -651,6 +656,7 @@ export class D3TimeseriesGraphComponent
      * (graph line, graph axes, event handlers)
      */
     private plotGraph() {
+        if (!this.yRangesEachUom) { return; }
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
@@ -935,45 +941,6 @@ export class D3TimeseriesGraphComponent
             hourly = 0.5;
         }
 
-        // TODO
-        let localeForm;
-        switch (this.plotOptions.language) {
-            case 'NL':
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
-                    'shortDays': ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'],
-                    'months': ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
-                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
-                });
-                break;
-            case 'DE':
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                    'shortDays': ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                    'months': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                    'shortMonths': ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
-                });
-                break;
-            default:
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                    'shortDays': ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                    'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'],
-                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
-                });
-        }
 
         let tickSize = hourly;
         let timeString = 'hourly';
@@ -1002,14 +969,14 @@ export class D3TimeseriesGraphComponent
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, tickSize))
                 .tickFormat((d) => {
-                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
+                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
                 });
         } else {
             timeString = 'minly';
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, 30))
                 .tickFormat((d) => {
-                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
+                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
                 });
         }
 
@@ -1051,7 +1018,7 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing a dataset.
      */
     private drawYaxis(entry): YScale {
-        let showAxis = ( this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis) );
+        let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
         const range = this.getyAxisRange(entry.uom);
 
         this.checkYselector(entry.uom);
@@ -1116,7 +1083,7 @@ export class D3TimeseriesGraphComponent
                 .attr('width', axisWidthDiv)
                 .attr('height', this.height)
                 .attr('fill', 'grey')
-                .attr('opacity', ( this.yAxisSelect[entry.uom].clicked ? this.opac.click : this.opac.default ))
+                .attr('opacity', (this.yAxisSelect[entry.uom].clicked ? this.opac.click : this.opac.default))
                 .on('mouseover', (d, i, k) => {
                     d3.select(k[0])
                         .attr('opacity', this.opac.hover);
@@ -1134,7 +1101,7 @@ export class D3TimeseriesGraphComponent
                     if (!this.yAxisSelect[entry.uom].clicked) {
                         d3.select(k[0])
                             .attr('opacity', this.opac.default);
-                        } else {
+                    } else {
                         d3.select(k[0])
                             .attr('opacity', this.opac.click);
                     }
@@ -1183,8 +1150,8 @@ export class D3TimeseriesGraphComponent
 
         let selector: YAxisSelection = {
             uom: uom,
-            ids: ( this.yAxisSelect[uom] !== undefined ? this.yAxisSelect[uom].ids : [] ),
-            clicked: ( this.yAxisSelect[uom] !== undefined ? this.yAxisSelect[uom].clicked : false )
+            ids: (this.yAxisSelect[uom] !== undefined ? this.yAxisSelect[uom].ids : []),
+            clicked: (this.yAxisSelect[uom] !== undefined ? this.yAxisSelect[uom].clicked : false)
         };
 
         this.yAxisSelect[uom] = selector;
