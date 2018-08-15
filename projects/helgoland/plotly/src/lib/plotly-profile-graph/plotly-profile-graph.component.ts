@@ -93,7 +93,7 @@ export class PlotlyProfileGraphComponent
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
 
-    public reloadData(): void {
+    public reloadDataForDatasets(datasetIds: string[]): void {
         console.log('reload data at ' + new Date());
     }
 

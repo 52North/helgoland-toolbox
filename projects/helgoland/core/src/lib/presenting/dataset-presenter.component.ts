@@ -42,6 +42,9 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     @Input()
     public graphOptions: U;
 
+    @Input()
+    public reloadForDatasets: string[];
+
     @Output()
     public onDatasetSelected: EventEmitter<string[]> = new EventEmitter();
 
@@ -80,6 +83,9 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         if (changes.timeInterval && this.timeInterval) {
             this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
             this.timeIntervalChanges();
+        }
+        if (changes.reloadForDatasets && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
+            this.reloadDataForDatasets(this.reloadForDatasets);
         }
     }
 
@@ -126,7 +132,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         }
     }
 
-    public abstract reloadData(): void;
+    public abstract reloadDataForDatasets(datasets: string[]): void;
 
     protected addDatasetByInternalId(internalId: string) {
         const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);

@@ -35,6 +35,9 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     @Input()
     public rangefactor: number;
 
+    @Input()
+    public reloadForDatasets: string[];
+
     @Output()
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
