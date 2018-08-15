@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    IterableDiffers,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, IterableDiffers, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     ColorService,
     Data,
@@ -234,8 +224,12 @@ export class D3TimeseriesGraphComponent
         this.plotGraph();
     }
 
-    public reloadData(): void {
-        // not implemented yet
+    public reloadDataForDatasets(datasetIds: string[]): void {
+        datasetIds.forEach(id => {
+            if (this.datasetMap.has(id)) {
+                this.loadDatasetData(this.datasetMap.get(id), true);
+            }
+        });
     }
 
     protected addDataset(id: string, url: string): void {
@@ -306,12 +300,12 @@ export class D3TimeseriesGraphComponent
     }
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean) {
         if (!firstChange && this.datasetMap.has(internalId)) {
-            this.loadDataset(this.datasetMap.get(internalId));
+            this.loadDatasetData(this.datasetMap.get(internalId), false);
         }
     }
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((dataset) => {
-            this.loadDataset(dataset);
+            this.loadDatasetData(dataset, false);
         });
     }
     protected onResize(): void {
@@ -331,11 +325,11 @@ export class D3TimeseriesGraphComponent
 
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
-        this.loadDataset(dataset);
+        this.loadDatasetData(dataset, false);
     }
 
     // load data of dataset
-    private loadDataset(dataset: IDataset) {
+    private loadDatasetData(dataset: IDataset, force: boolean) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
         if (this.loadingCounter === 0) {
             this.isContentLoadingD3(true);
@@ -350,7 +344,8 @@ export class D3TimeseriesGraphComponent
                     format: 'flot',
                     expanded: this.plotOptions.showReferenceValues === true,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                }
+                },
+                { forceUpdate: force }
             ).subscribe(
                 (result) => {
                     this.datasetMap.get(dataset.internalId).data = result;

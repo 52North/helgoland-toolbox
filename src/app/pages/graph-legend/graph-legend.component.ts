@@ -20,6 +20,7 @@ export class GraphLegendComponent {
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
+    public reloadForDatasets = [];
     public timespan;
 
     public diagramOptions: PlotOptions = {
@@ -152,6 +153,10 @@ export class GraphLegendComponent {
         this.dialog.open(GeometryViewComponent, {
             data: geometry
         });
+    }
+
+    public refreshData() {
+        this.reloadForDatasets = [this.datasetIds[0]];
     }
 
     public highlight(selected: boolean, id: string) {

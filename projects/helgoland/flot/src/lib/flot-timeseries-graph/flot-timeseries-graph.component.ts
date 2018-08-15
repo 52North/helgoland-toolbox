@@ -146,11 +146,9 @@ export class FlotTimeseriesGraphComponent
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
 
-    public reloadData(): void {
+    public reloadDataForDatasets(datasetIds: string[]): void {
         console.log('reload data at ' + new Date());
-        this.datasetMap.forEach((dataset) => {
-            this.loadData(dataset, true);
-        });
+        this.datasetIds.forEach(id => this.loadData(this.datasetMap.get(id), true));
     }
 
     protected graphOptionsChanged(options: PlotOptions) {

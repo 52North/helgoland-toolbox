@@ -173,7 +173,7 @@ export class D3TrajectoryGraphComponent
         this.drawLineGraph();
     }
 
-    public reloadData(): void {
+    public reloadDataForDatasets(datasetIds: string[]): void {
         console.log('reload data at ' + new Date());
     }
 
