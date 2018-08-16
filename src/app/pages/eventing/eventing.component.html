@@ -1,32 +1,12 @@
-    <div>
-        <button (click)="requestEvents()">Request Events</button>
-    </div>
-    <div>
-        <button (click)="requestSubscriptions()">Request Subscriptions</button>
-    </div>
-    <div *ngIf="loadingEvents">loading Events</div>
-    <div *ngIf="loadingSubscriptions">loading Subscriptions</div>
-    <div *ngIf="eventResultsError">{{eventResultsError}}</div>
-    <div *ngIf="subscriptionResultsError">{{subscriptionResultsError}}</div>
-    <div *ngIf="eventResults">
-        <h3> Events </h3>
-        <div>
-            Limit: {{eventResults.metadata.limit}} - Offset: {{eventResults.metadata.offset}} - Total: {{eventResults.metadata.total}}
-        </div>
-        <div *ngFor="let item of eventResults.data">
-            <div>
-                ID: {{item.id}} - Label: {{item.label}} - DataValue: {{item.data?.value}}
-            </div>
-        </div>
-    </div>
-    <div *ngIf="subscriptionResults">
-        <h3> Subscriptions </h3>
-        <div>
-            Limit: {{subscriptionResults.metadata.limit}} - Offset: {{subscriptionResults.metadata.offset}} - Total: {{subscriptionResults.metadata.total}}
-        </div>
-        <div *ngFor="let item of subscriptionResults.data">
-            <div>
-                ID: {{item.id}} - DeliveryMethod-ID: {{item.deliveryMethod.id}}
-            </div>
-        </div>
-    </div>
+<button (click)="requestEvents()">Request Events</button>
+<button (click)="requestSubscriptions()">Request Subscriptions</button>
+<button (click)="requestPublications()">Request Publications</button>
+<button (click)="requestNotifications()">Request Notifications</button>
+
+<div *ngIf="loading">loading...</div>
+<div *ngIf="requestError">{{requestError}}</div>
+
+<pre *ngIf="eventResults">{{eventResults|json}}</pre>
+<pre *ngIf="subscriptionResults">{{subscriptionResults|json}}</pre>
+<pre *ngIf="publicationResults">{{publicationResults|json}}</pre>
+<pre *ngIf="notificationResults">{{notificationResults|json}}</pre>
