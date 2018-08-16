@@ -15,7 +15,7 @@ import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
-import { HttpService, HttpServiceMetadata } from './http.service';
+import { HttpService } from './http.service';
 import { DatasetApiV2 } from './interfaces/api-v2.interface';
 
 export class UriParameterCoder implements HttpParameterCodec {
@@ -112,8 +112,15 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
         id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
     ): Observable<Procedure>;
 
-    protected requestApi<T>(url: string, params: ParameterFilter = {}, options: HttpServiceMetadata = {}): Observable<T> {
-        return this.httpService.client(options).get<T>(url, { params: this.prepareParams(params) });
+    protected requestApi<T>(
+        url: string, params: ParameterFilter = {}, options: HttpRequestOptions = {}
+    ): Observable<T> {
+        return this.httpService.client(options).get<T>(url,
+            {
+                params: this.prepareParams(params),
+                headers: this.createBasicAuthHeader(options.basicAuthToken)
+            }
+        );
     }
 
     protected prepareParams(params: ParameterFilter): HttpParams {

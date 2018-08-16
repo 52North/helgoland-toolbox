@@ -3,7 +3,7 @@ import 'rxjs/add/operator/share';
 
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpServiceHandler, HttpServiceInterceptor, HttpServiceMetadata } from '@helgoland/core';
+import { HttpServiceHandler, HttpServiceInterceptor, HttpRequestOptions } from '@helgoland/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
@@ -17,7 +17,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
     ) { }
 
     public intercept(
-        req: HttpRequest<any>, metadata: HttpServiceMetadata, next: HttpServiceHandler
+        req: HttpRequest<any>, metadata: HttpRequestOptions, next: HttpServiceHandler
     ): Observable<HttpEvent<any>> {
 
         // Before doing anything, it's important to only cache GET requests.
