@@ -59,12 +59,6 @@ export class EventingImplApiInterface extends EventingApiService {
         return httpParams;
     }
 
-    private createBasicAuthHeader(token: string): HttpHeaders {
-        const headers = new HttpHeaders();
-        if (token) { return headers.set('Authorization', token); }
-        return headers;
-    }
-
     private addParameterFilter(params: EventingFilter, key: string, httpParams: HttpParams): HttpParams {
         if (params && params[key] !== undefined) {
             return httpParams.set(key, params[key]);

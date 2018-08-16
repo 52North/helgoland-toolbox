@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { BasicAuthService } from '@helgoland/auth';
-import { HttpRequestOptions, Timespan } from '@helgoland/core';
+import { BasicAuthServicesKeeper } from '@helgoland/auth';
+import { HttpRequestOptions } from '@helgoland/core';
 import {
   EventingApiService,
   EventingEventFilter,
@@ -16,8 +16,6 @@ import {
 })
 export class EventingComponent {
 
-  private readonly username = '';
-  private readonly password = '';
   private readonly url = '';
 
   public token: string;
@@ -32,16 +30,10 @@ export class EventingComponent {
   public subscriptionResultsError: string;
 
   constructor(
-    private basicAuthSrvc: BasicAuthService,
+    private basicAuthServices: BasicAuthServicesKeeper,
     private eventingApi: EventingApiService
   ) {
-    this.basicAuthSrvc.auth(this.username, this.password, this.url)
-      .subscribe(
-        (res) => {
-          this.token = res;
-        },
-        (error: HttpErrorResponse) => this.authError = error.message
-      );
+    this.basicAuthServices.registerService(this.url);
   }
 
   public requestEvents() {
