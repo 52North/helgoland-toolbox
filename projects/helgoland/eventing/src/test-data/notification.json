@@ -1,0 +1,29 @@
+{
+    "href": "http://test.de/api/v1/notifications/11",
+    "id": "1",
+    "label": "label for 1",
+    "publication": {
+        "href": "http://test.de/api/v1/publications/2",
+        "id": "2"
+    },
+    "rules": [{
+        "eventTrigger": {
+            "code": 32,
+            "label": "label",
+            "threshold": 123,
+            "thresholdUnit": "cm"
+        },
+        "eventType": {
+            "href": "http://test.de/api/v1/eventTypes/1",
+            "id": "1",
+            "label": "event type"
+        },
+        "href": "http://test.de/api/v1/rules/1",
+        "id": 1,
+        "notificationLevel": {
+            "href": "http://test.de/api/v1/notificationLevel/1",
+            "id": "1",
+            "label": "label"
+        }
+    }]
+}
