@@ -26,7 +26,15 @@ export interface AddtionalData {
   /**
    * The additional data arrey with tupels of timestamp and value.
    */
-  data: { timestamp: number, value: number }[];
+  data: AdditionalDataEntry[];
+}
+
+/**
+ * Additional data entry tuple
+ */
+export interface AdditionalDataEntry {
+  timestamp: number;
+  value: number;
 }
 
 /**
