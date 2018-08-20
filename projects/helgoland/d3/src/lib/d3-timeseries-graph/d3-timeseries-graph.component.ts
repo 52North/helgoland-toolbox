@@ -41,7 +41,7 @@ interface YScale {
     yScale: d3.ScaleLinear<number, number>;
 }
 
-interface YRanges {
+export interface YRanges {
     uom: string;
     range: MinMaxRange;
     preRange: MinMaxRange;
@@ -55,7 +55,7 @@ interface YRanges {
     offset?: number;
 }
 
-interface InternalDataEntry {
+export interface InternalDataEntry {
     internalId: string;
     color: string;
     data: [number, number][];
@@ -79,7 +79,7 @@ interface InternalDataEntry {
     visible: boolean;
 }
 
-interface DataYRange {
+export interface DataYRange {
     uom: string;
     range?: MinMaxRange;
     preRange?: MinMaxRange;
@@ -90,7 +90,7 @@ interface DataYRange {
     outOfrange: boolean;
 }
 
-interface DataConst extends IDataset {
+export interface DataConst extends IDataset {
     data?: Data<[number, number]>;
 }
 
@@ -124,7 +124,7 @@ export class D3TimeseriesGraphComponent
         }
     };
 
-    private preparedData = Array(); // : DataSeries[]
+    protected preparedData = []; // : DataSeries[]
     private mousedownBrush: boolean;
     private rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     private graph: any;
@@ -134,8 +134,8 @@ export class D3TimeseriesGraphComponent
     private xAxisRange: Timespan; // x domain range
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    private yRangesEachUom: YRanges[]; // y array of objects containing ranges for each uom
-    private dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
+    protected yRangesEachUom: YRanges[]; // y array of objects containing ranges for each uom
+    protected dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
 
@@ -186,7 +186,7 @@ export class D3TimeseriesGraphComponent
         overview: false
     };
 
-    private datasetMap: Map<string, DataConst> = new Map();
+    protected datasetMap: Map<string, DataConst> = new Map();
 
     private loadingCounter = 0;
     private currentTimeId: string;
@@ -424,7 +424,6 @@ export class D3TimeseriesGraphComponent
             }
             this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
             this.processData(dataEntry);
-            this.plotGraph();
         });
     }
 
@@ -465,7 +464,7 @@ export class D3TimeseriesGraphComponent
      * @param dataEntry {DataEntry} Object containing dataset related data.
      * @param internalId {String} String with the ID of a dataset.
      */
-    private processData(dataEntry: InternalDataEntry) {
+    protected processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
         let calculatedPreRange: MinMaxRange;
         let calculatedOriginRange: MinMaxRange;
@@ -647,7 +646,7 @@ export class D3TimeseriesGraphComponent
      * Function to plot the graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
-    private plotGraph() {
+    protected plotGraph() {
         if (!this.yRangesEachUom) { return; }
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
@@ -679,9 +678,7 @@ export class D3TimeseriesGraphComponent
 
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
-        this.preparedData.forEach((entry) => {
-            this.drawGraphLine(entry);
-        });
+        this.drawAllGraphLines();
 
         // #####################################################
         // create background rect
@@ -838,6 +835,13 @@ export class D3TimeseriesGraphComponent
                     this.mousedownBrush = true;
                 });
         }
+    }
+
+    /**
+     * Draws for every preprared data entry the graph line.
+     */
+    protected drawAllGraphLines() {
+        this.preparedData.forEach((entry) => this.drawGraphLine(entry));
     }
 
     /**
@@ -1198,7 +1202,7 @@ export class D3TimeseriesGraphComponent
      * Function to draw the graph line for each dataset.
      * @param entry {DataEntry} Object containing a dataset.
      */
-    private drawGraphLine(entry: InternalDataEntry) {
+    protected drawGraphLine(entry: InternalDataEntry) {
         const getYaxisRange = this.yRangesEachUom.find((obj, temp, index) => {
             if (obj.uom === entry.axisOptions.uom) {
                 return true;
