@@ -14,6 +14,12 @@
     },{
       "title": "Extend a timeseries entry component",
       "file": "how-tos/extend-timeseries-entry-component.md"
+    },{
+      "title": "Configure a map component",
+      "file": "how-tos/configure-map-component.md"
+    },{
+      "title": "Using basic auth services",
+      "file": "how-tos/basic-auth-services.md"
     }]
   }
 ]

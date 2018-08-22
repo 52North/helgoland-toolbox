@@ -11,37 +11,49 @@ const DEFAULT_BASE_LAYER_ATTRIBUTION = '&copy; <a href="http://osm.org/copyright
 export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestroy, OnInit {
 
     /**
-     * @input A map with the given ID is created inside this component. This ID can be used outside of the component the
-     * work with the map.
-     *
-     * @memberof MapSelectorComponent
+     * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
      */
     @Input()
     public mapId: string;
 
+    /**
+     * The corresponding leaflet map options (see: https://leafletjs.com/reference-1.3.4.html#map-option)
+     */
     @Input()
     public mapOptions: L.MapOptions;
 
+    /**
+     * Bounds for the map
+     */
     @Input()
     public fitBounds: L.LatLngBoundsExpression;
 
+    /**
+     * Map, which holds all overlay map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
+     */
     @Input()
     public overlayMaps: Map<string, LayerOptions>;
 
+    /**
+     * Map, which holds all base map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
+     */
     @Input()
     public baseMaps: Map<string, LayerOptions>;
 
+    /**
+     * Describes the the zoom options (see: https://leafletjs.com/reference-1.3.4.html#control-layers)
+     */
     @Input()
     public layerControlOptions: L.Control.LayersOptions;
 
+    /**
+     * Describes the the zoom control options (see: https://leafletjs.com/reference-1.3.4.html#control-zoom)
+     */
     @Input()
     public zoomControlOptions: L.Control.ZoomOptions;
 
     /**
      * The map object.
-     *
-     * @protected
-     * @memberof MapSelectorComponent
      */
     protected map: L.Map;
 

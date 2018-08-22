@@ -3,16 +3,18 @@ import { Injectable } from '@angular/core';
 import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor, Settings, SettingsService } from '@helgoland/core';
 import { Observable, Observer } from 'rxjs';
 
-import { BasicAuthServicesKeeper } from './basic-auth-services-keeper.service';
+import { BasicAuthServiceMaintainer } from './basic-auth-service-maintainer.service';
 import { BasicAuthService } from './basic-auth.service';
 
-
+/**
+ * Interceptor to a basic auth token if needed.
+ */
 @Injectable()
 export class BasicAuthInterceptorService implements HttpServiceInterceptor {
 
   constructor(
     protected settings: SettingsService<Settings>,
-    protected basicAuthServices: BasicAuthServicesKeeper,
+    protected basicAuthServices: BasicAuthServiceMaintainer,
     protected basicAuthSrvc: BasicAuthService,
     protected receptor: BasicAuthInformer
   ) { }
@@ -57,6 +59,9 @@ export interface BasicAuthCredentials {
   password: string;
 }
 
+/**
+ * Needs to be implemented to do the authentication for the given url.
+ */
 export abstract class BasicAuthInformer {
   public abstract doBasicAuth(url: string): Observable<boolean>;
 }

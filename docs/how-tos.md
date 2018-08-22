@@ -4,7 +4,9 @@ To get in touch with the helgoland-toolbox, here you will find a list of how tos
 
 - [Integrate a D3 timeseries component](./how-tos/integrate-a-d3-timeseries-component.html)
 - [Integrate a table component](./how-tos/integrate-a-table-component.html)
-- [Extend a timeseries entry component](.how-tos/extend-a-timeseries-entry-component.html)
+- [Extend a timeseries entry component](./how-tos/extend-a-timeseries-entry-component.html)
+- [Configure a map component](./how-tos/configure-map-component.html)
+- [Using basic auth services](./how-tos/basic-auth-services.html)
 
 ### Preparing a how to app with angular-cli
 

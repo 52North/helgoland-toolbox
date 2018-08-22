@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+/**
+ * Maintains all basic auth tokens and also do the authentication process.
+ */
 @Injectable()
 export class BasicAuthService {
 
@@ -12,6 +15,9 @@ export class BasicAuthService {
     private http: HttpClient
   ) { }
 
+  /**
+   * Do the authentication.
+   */
   public auth(username: string, password: string, url: string): Observable<string> {
     const token = 'Basic ' + btoa(username + ':' + password);
     const headers = new HttpHeaders({ 'Authorization': token });
@@ -24,16 +30,25 @@ export class BasicAuthService {
       );
   }
 
+  /**
+   * Removes existing token.
+   */
   public clearToken(url: string): void {
     if (this.basicAuthTokens.has(url)) {
       this.basicAuthTokens.delete(url);
     }
   }
 
+  /**
+   * Checks if a token exists.
+   */
   public hasToken(url: string): boolean {
     return this.basicAuthTokens.has(url);
   }
 
+  /**
+   * Gets the token for the given service url.
+   */
   public getToken(url: string): string {
     return this.basicAuthTokens.has(url) ? this.basicAuthTokens.get(url) : null;
   }

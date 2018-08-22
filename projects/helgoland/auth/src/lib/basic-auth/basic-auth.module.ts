@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { HTTP_SERVICE_INTERCEPTORS } from '@helgoland/core';
 
-import { BasicAuthServicesKeeper } from './basic-auth-services-keeper.service';
+import { BasicAuthServiceMaintainer } from './basic-auth-service-maintainer.service';
 import { BasicAuthService } from './basic-auth.service';
 import { BasicAuthInterceptorService } from './basic-auth-interceptor.service';
 
 @NgModule({
   providers: [
     BasicAuthService,
-    BasicAuthServicesKeeper,
+    BasicAuthServiceMaintainer,
     {
       provide: HTTP_SERVICE_INTERCEPTORS,
       useClass: BasicAuthInterceptorService,
