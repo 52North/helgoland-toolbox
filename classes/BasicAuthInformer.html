@@ -91,6 +91,9 @@
                     <li class="link for-chapter2">
                         <a href="additional-documentation/how-tos/configure-a-map-component.html" data-type="entity-link" data-context-id="additional">Configure a map component</a>
                     </li>
+                    <li class="link for-chapter2">
+                        <a href="additional-documentation/how-tos/using-basic-auth-services.html" data-type="entity-link" data-context-id="additional">Using basic auth services</a>
+                    </li>
             </ul>
         </li>
 
@@ -114,20 +117,20 @@
                         <a href="modules/HelgolandBasicAuthModule.html" data-type="entity-link">HelgolandBasicAuthModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-injectables-links-module-HelgolandBasicAuthModule-97ee57ee9f8c56a1b13c88245e279810"
+                                        data-target="#xs-injectables-links-module-HelgolandBasicAuthModule-4d15c244f9805c37f0d9e001e1071149"
                                     >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-injectables-links-module-HelgolandBasicAuthModule-97ee57ee9f8c56a1b13c88245e279810"
+                                        id="xs-injectables-links-module-HelgolandBasicAuthModule-4d15c244f9805c37f0d9e001e1071149"
                                     >
                                         <li class="link">
                                             <a href="injectables/BasicAuthService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthService</a>
                                         </li>
                                         <li class="link">
-                                            <a href="injectables/BasicAuthServicesKeeper.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthServicesKeeper</a>
+                                            <a href="injectables/BasicAuthServiceMaintainer.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthServiceMaintainer</a>
                                         </li>
                                 </ul>
                             </li>
@@ -959,7 +962,7 @@
                                 <a href="injectables/BasicAuthService.html" data-type="entity-link">BasicAuthService</a>
                             </li>
                             <li class="link">
-                                <a href="injectables/BasicAuthServicesKeeper.html" data-type="entity-link">BasicAuthServicesKeeper</a>
+                                <a href="injectables/BasicAuthServiceMaintainer.html" data-type="entity-link">BasicAuthServiceMaintainer</a>
                             </li>
                             <li class="link">
                                 <a href="injectables/CachingInterceptor.html" data-type="entity-link">CachingInterceptor</a>
@@ -1495,6 +1498,9 @@
                     <li class="link for-chapter2">
                         <a href="additional-documentation/how-tos/configure-a-map-component.html" data-type="entity-link" data-context-id="additional">Configure a map component</a>
                     </li>
+                    <li class="link for-chapter2">
+                        <a href="additional-documentation/how-tos/using-basic-auth-services.html" data-type="entity-link" data-context-id="additional">Using basic auth services</a>
+                    </li>
             </ul>
         </li>
 
@@ -1518,20 +1524,20 @@
                         <a href="modules/HelgolandBasicAuthModule.html" data-type="entity-link">HelgolandBasicAuthModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#injectables-links-module-HelgolandBasicAuthModule-97ee57ee9f8c56a1b13c88245e279810"
+                                        data-target="#injectables-links-module-HelgolandBasicAuthModule-4d15c244f9805c37f0d9e001e1071149"
 >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="injectables-links-module-HelgolandBasicAuthModule-97ee57ee9f8c56a1b13c88245e279810"
+                                        id="injectables-links-module-HelgolandBasicAuthModule-4d15c244f9805c37f0d9e001e1071149"
 >
                                         <li class="link">
                                             <a href="injectables/BasicAuthService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthService</a>
                                         </li>
                                         <li class="link">
-                                            <a href="injectables/BasicAuthServicesKeeper.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthServicesKeeper</a>
+                                            <a href="injectables/BasicAuthServiceMaintainer.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>BasicAuthServiceMaintainer</a>
                                         </li>
                                 </ul>
                             </li>
@@ -2363,7 +2369,7 @@
                                 <a href="injectables/BasicAuthService.html" data-type="entity-link">BasicAuthService</a>
                             </li>
                             <li class="link">
-                                <a href="injectables/BasicAuthServicesKeeper.html" data-type="entity-link">BasicAuthServicesKeeper</a>
+                                <a href="injectables/BasicAuthServiceMaintainer.html" data-type="entity-link">BasicAuthServiceMaintainer</a>
                             </li>
                             <li class="link">
                                 <a href="injectables/CachingInterceptor.html" data-type="entity-link">CachingInterceptor</a>
@@ -2857,6 +2863,13 @@
             <code>projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Needs to be implemented to do the authentication for the given url.</p>
+
+            </p>
 
 
 
@@ -2923,7 +2936,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:61</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -2986,16 +2999,18 @@ import { Injectable } from &#x27;@angular/core&#x27;;
 import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor, Settings, SettingsService } from &#x27;@helgoland/core&#x27;;
 import { Observable, Observer } from &#x27;rxjs&#x27;;
 
-import { BasicAuthServicesKeeper } from &#x27;./basic-auth-services-keeper.service&#x27;;
+import { BasicAuthServiceMaintainer } from &#x27;./basic-auth-service-maintainer.service&#x27;;
 import { BasicAuthService } from &#x27;./basic-auth.service&#x27;;
 
-
+/**
+ * Interceptor to a basic auth token if needed.
+ */
 @Injectable()
 export class BasicAuthInterceptorService implements HttpServiceInterceptor {
 
   constructor(
     protected settings: SettingsService&lt;Settings&gt;,
-    protected basicAuthServices: BasicAuthServicesKeeper,
+    protected basicAuthServices: BasicAuthServiceMaintainer,
     protected basicAuthSrvc: BasicAuthService,
     protected receptor: BasicAuthInformer
   ) { }
@@ -3040,6 +3055,9 @@ export interface BasicAuthCredentials {
   password: string;
 }
 
+/**
+ * Needs to be implemented to do the authentication for the given url.
+ */
 export abstract class BasicAuthInformer {
   public abstract doBasicAuth(url: string): Observable&lt;boolean&gt;;
 }

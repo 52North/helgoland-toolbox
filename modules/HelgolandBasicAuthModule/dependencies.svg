@@ -22,41 +22,41 @@
 <text text-anchor="start" x="429.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_HelgolandBasicAuthModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="30,-70 30,-195 466,-195 466,-70 30,-70"/>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="19,-70 19,-195 477,-195 477,-70 19,-70"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_HelgolandBasicAuthModule_providers</title>
-<polygon fill="none" stroke="#000000" points="38,-78 38,-130 458,-130 458,-78 38,-78"/>
+<polygon fill="none" stroke="#000000" points="27,-78 27,-130 469,-130 469,-78 27,-78"/>
 </g>
 <!-- BasicAuthService -->
 <g id="node1" class="node">
 <title>BasicAuthService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="369" cy="-104" rx="80.5142" ry="18"/>
-<text text-anchor="middle" x="369" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BasicAuthService</text>
+<ellipse fill="#fdb462" stroke="#000000" cx="380" cy="-104" rx="80.5142" ry="18"/>
+<text text-anchor="middle" x="380" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BasicAuthService</text>
 </g>
 <!-- HelgolandBasicAuthModule -->
 <g id="node3" class="node">
 <title>HelgolandBasicAuthModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="351.465,-187 348.465,-191 327.465,-191 324.465,-187 174.535,-187 174.535,-151 351.465,-151 351.465,-187"/>
-<text text-anchor="middle" x="263" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandBasicAuthModule</text>
+<polygon fill="#8dd3c7" stroke="#000000" points="357.465,-187 354.465,-191 333.465,-191 330.465,-187 180.535,-187 180.535,-151 357.465,-151 357.465,-187"/>
+<text text-anchor="middle" x="269" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">HelgolandBasicAuthModule</text>
 </g>
 <!-- BasicAuthService&#45;&gt;HelgolandBasicAuthModule -->
 <g id="edge1" class="edge">
 <title>BasicAuthService&#45;&gt;HelgolandBasicAuthModule</title>
-<path fill="none" stroke="#000000" d="M319.8629,-118.4256C319.8629,-118.4256 319.8629,-140.8939 319.8629,-140.8939"/>
-<polygon fill="#000000" stroke="#000000" points="316.363,-140.8938 319.8629,-150.8939 323.363,-140.8939 316.363,-140.8938"/>
+<path fill="none" stroke="#000000" d="M328.3629,-118.104C328.3629,-118.104 328.3629,-140.7209 328.3629,-140.7209"/>
+<polygon fill="#000000" stroke="#000000" points="324.863,-140.7209 328.3629,-150.7209 331.863,-140.7209 324.863,-140.7209"/>
 </g>
-<!-- BasicAuthServicesKeeper -->
+<!-- BasicAuthServiceMaintainer -->
 <g id="node2" class="node">
-<title>BasicAuthServicesKeeper</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="158" cy="-104" rx="112.2743" ry="18"/>
-<text text-anchor="middle" x="158" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BasicAuthServicesKeeper</text>
+<title>BasicAuthServiceMaintainer</title>
+<ellipse fill="#fdb462" stroke="#000000" cx="158" cy="-104" rx="123.2475" ry="18"/>
+<text text-anchor="middle" x="158" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">BasicAuthServiceMaintainer</text>
 </g>
-<!-- BasicAuthServicesKeeper&#45;&gt;HelgolandBasicAuthModule -->
+<!-- BasicAuthServiceMaintainer&#45;&gt;HelgolandBasicAuthModule -->
 <g id="edge2" class="edge">
-<title>BasicAuthServicesKeeper&#45;&gt;HelgolandBasicAuthModule</title>
-<path fill="none" stroke="#000000" d="M222.4523,-118.7495C222.4523,-118.7495 222.4523,-140.5882 222.4523,-140.5882"/>
-<polygon fill="#000000" stroke="#000000" points="218.9524,-140.5881 222.4523,-150.5882 225.9524,-140.5882 218.9524,-140.5881"/>
+<title>BasicAuthServiceMaintainer&#45;&gt;HelgolandBasicAuthModule</title>
+<path fill="none" stroke="#000000" d="M230.8206,-118.7495C230.8206,-118.7495 230.8206,-140.5882 230.8206,-140.5882"/>
+<polygon fill="#000000" stroke="#000000" points="227.3207,-140.5881 230.8206,-150.5882 234.3207,-140.5882 227.3207,-140.5881"/>
 </g>
 </g>
 </svg>
