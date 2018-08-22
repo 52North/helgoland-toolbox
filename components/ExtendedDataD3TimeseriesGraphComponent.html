@@ -3157,7 +3157,7 @@ the array is reset.</p>
                                 <a href="#langChangeSubscription">langChangeSubscription</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Protected</span>
                                 <a href="#oldDatasetOptions">oldDatasetOptions</a>
                             </li>
                             <li>
@@ -3702,6 +3702,8 @@ the array is reset.</p>
                         <code>datasetIds</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>List of presented dataset ids.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>string[]</code>
 
@@ -3709,144 +3711,6 @@ the array is reset.</p>
                         <p>
                             <em>Default value: </em><code>[]</code>
                         </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:30</div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="datasetOptions"></a>
-                        <code>datasetOptions</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type:</em>    <code>Map&lt;string | T&gt;</code>
-
-                            </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:39</div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="graphOptions"></a>
-                        <code>graphOptions</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type:</em>    <code>U</code>
-
-                            </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:43</div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="reloadForDatasets"></a>
-                        <code>reloadForDatasets</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type:</em>    <code>string[]</code>
-
-                            </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:46</div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="selectedDatasetIds"></a>
-                        <code>selectedDatasetIds</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type:</em>    <code>string[]</code>
-
-                            </p>
-                        <p>
-                            <em>Default value: </em><code>[]</code>
-                        </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:33</div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="timeInterval"></a>
-                        <code>timeInterval</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type:</em>    <code><a href="../injectables/Time.html" target="_self" >TimeInterval</a></code>
-
-                            </p>
                     </td>
                 </tr>
                             <tr>
@@ -3862,6 +3726,154 @@ the array is reset.</p>
                         </tr>
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="datasetOptions"></a>
+                        <code>datasetOptions</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>The corresponding dataset options.</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code>Map&lt;string | T&gt;</code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:54</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="graphOptions"></a>
+                        <code>graphOptions</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>Options for general presentation of the data.</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code>U</code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:61</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="reloadForDatasets"></a>
+                        <code>reloadForDatasets</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>List of datasets for which a reload should be triggered, when the Array is set to new value.</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code>string[]</code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:67</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="selectedDatasetIds"></a>
+                        <code>selectedDatasetIds</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>List of presented selected dataset ids.</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code>string[]</code>
+
+                            </p>
+                        <p>
+                            <em>Default value: </em><code>[]</code>
+                        </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:42</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="timeInterval"></a>
+                        <code>timeInterval</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>The time interval in which the data should presented.</p>
+</div>
+                            <p>
+                            <em>Type:</em>    <code><a href="../injectables/Time.html" target="_self" >TimeInterval</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:48</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
 </section>
     <section>
     <h3 id="outputs">Outputs</h3>
@@ -3873,6 +3885,8 @@ the array is reset.</p>
                         <code>onContentLoading</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event flag, while there is data loaded in the component.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
 
                     </td>
@@ -3885,7 +3899,7 @@ the array is reset.</p>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:58</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:91</div>
                             </td>
                         </tr>
             </tbody>
@@ -3898,6 +3912,8 @@ the array is reset.</p>
                         <code>onDatasetSelected</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event with a list of selected datasets.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;string[]&gt;</a></code>
 
                     </td>
@@ -3910,7 +3926,7 @@ the array is reset.</p>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:49</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:73</div>
                             </td>
                         </tr>
             </tbody>
@@ -3923,6 +3939,8 @@ the array is reset.</p>
                         <code>onMessageThrown</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event, when there occured a message in the component.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/PresenterMessage.html" target="_self" >EventEmitter&lt;PresenterMessage&gt;</a></code>
 
                     </td>
@@ -3935,7 +3953,7 @@ the array is reset.</p>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:55</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:85</div>
                             </td>
                         </tr>
             </tbody>
@@ -3948,6 +3966,8 @@ the array is reset.</p>
                         <code>onTimespanChanged</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event when the timespan in the presentation is adjusted.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;Timespan&gt;</a></code>
 
                     </td>
@@ -3960,7 +3980,7 @@ the array is reset.</p>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:52</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:79</div>
                             </td>
                         </tr>
             </tbody>
@@ -7870,7 +7890,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:146</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:179</div>
                             </td>
                         </tr>
 
@@ -7959,7 +7979,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:137</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:170</div>
                             </td>
                         </tr>
 
@@ -8037,7 +8057,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:156</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:189</div>
                             </td>
                         </tr>
 
@@ -8139,7 +8159,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:154</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:187</div>
                             </td>
                         </tr>
 
@@ -8216,7 +8236,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:96</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:129</div>
                             </td>
                         </tr>
 
@@ -8262,7 +8282,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:82</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:115</div>
                             </td>
                         </tr>
 
@@ -8339,7 +8359,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:92</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:125</div>
                             </td>
                         </tr>
 
@@ -8386,7 +8406,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:142</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:175</div>
                             </td>
                         </tr>
 
@@ -8464,7 +8484,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:135</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:168</div>
                             </td>
                         </tr>
 
@@ -8542,7 +8562,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:148</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:181</div>
                             </td>
                         </tr>
 
@@ -8620,7 +8640,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:152</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:185</div>
                             </td>
                         </tr>
 
@@ -8698,7 +8718,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:150</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:183</div>
                             </td>
                         </tr>
 
@@ -8776,7 +8796,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:144</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:177</div>
                             </td>
                         </tr>
 
@@ -11255,7 +11275,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:64</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:97</div>
                             </td>
                         </tr>
 
@@ -11296,7 +11316,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:60</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:93</div>
                             </td>
                         </tr>
 
@@ -11337,7 +11357,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:67</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:100</div>
                             </td>
                         </tr>
 
@@ -11351,7 +11371,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                         <a name="oldDatasetOptions"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
+                                <span class="modifier">Protected</span>
                             oldDatasetOptions
                             </b>
                             <a href="#oldDatasetOptions"><span class="fa fa-link"></span></a>
@@ -11378,7 +11398,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:40</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:55</div>
                             </td>
                         </tr>
 
@@ -11419,7 +11439,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:66</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:99</div>
                             </td>
                         </tr>
 
@@ -11460,7 +11480,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:65</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:98</div>
                             </td>
                         </tr>
 
@@ -11501,7 +11521,7 @@ Calculate to get brush extent when main diagram time interval changes.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:62</div>
+                                    <div class="io-line">Defined in D3TimeseriesGraphComponent:95</div>
                             </td>
                         </tr>
 

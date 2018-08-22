@@ -3086,7 +3086,7 @@
                                 <a href="#langChangeSubscription">langChangeSubscription</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Protected</span>
                                 <a href="#oldDatasetOptions">oldDatasetOptions</a>
                             </li>
                             <li>
@@ -3526,6 +3526,8 @@
                         <code>datasetIds</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>List of presented dataset ids.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>string[]</code>
 
@@ -3543,7 +3545,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:30</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:36</div>
                             </td>
                         </tr>
             </tbody>
@@ -3556,6 +3558,8 @@
                         <code>datasetOptions</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>The corresponding dataset options.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>Map&lt;string | T&gt;</code>
 
@@ -3570,7 +3574,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:39</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:54</div>
                             </td>
                         </tr>
             </tbody>
@@ -3583,6 +3587,8 @@
                         <code>graphOptions</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Options for general presentation of the data.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>U</code>
 
@@ -3597,7 +3603,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:43</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:61</div>
                             </td>
                         </tr>
             </tbody>
@@ -3610,6 +3616,8 @@
                         <code>reloadForDatasets</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>List of datasets for which a reload should be triggered, when the Array is set to new value.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>string[]</code>
 
@@ -3624,7 +3632,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:46</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:67</div>
                             </td>
                         </tr>
             </tbody>
@@ -3637,6 +3645,8 @@
                         <code>selectedDatasetIds</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>List of presented selected dataset ids.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code>string[]</code>
 
@@ -3654,7 +3664,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:33</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:42</div>
                             </td>
                         </tr>
             </tbody>
@@ -3667,6 +3677,8 @@
                         <code>timeInterval</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>The time interval in which the data should presented.</p>
+</div>
                             <p>
                             <em>Type:</em>    <code><a href="../injectables/Time.html" target="_self" >TimeInterval</a></code>
 
@@ -3681,7 +3693,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:36</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:48</div>
                             </td>
                         </tr>
             </tbody>
@@ -3754,6 +3766,8 @@
                         <code>onContentLoading</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event flag, while there is data loaded in the component.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
 
                     </td>
@@ -3766,7 +3780,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:58</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:91</div>
                             </td>
                         </tr>
             </tbody>
@@ -3779,6 +3793,8 @@
                         <code>onDatasetSelected</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event with a list of selected datasets.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;string[]&gt;</a></code>
 
                     </td>
@@ -3791,7 +3807,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:49</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:73</div>
                             </td>
                         </tr>
             </tbody>
@@ -3804,6 +3820,8 @@
                         <code>onMessageThrown</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event, when there occured a message in the component.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../interfaces/PresenterMessage.html" target="_self" >EventEmitter&lt;PresenterMessage&gt;</a></code>
 
                     </td>
@@ -3816,7 +3834,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:55</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:85</div>
                             </td>
                         </tr>
             </tbody>
@@ -3829,6 +3847,8 @@
                         <code>onTimespanChanged</code>
                     </td>
                     <td class="col-md-10">
+                        <div><p>Event when the timespan in the presentation is adjusted.</p>
+</div>
                         <em><code>$event</code> type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;Timespan&gt;</a></code>
 
                     </td>
@@ -3841,7 +3861,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:52</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:79</div>
                             </td>
                         </tr>
             </tbody>
@@ -6386,7 +6406,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:146</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:179</div>
                             </td>
                         </tr>
 
@@ -6475,7 +6495,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:137</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:170</div>
                             </td>
                         </tr>
 
@@ -6553,7 +6573,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:156</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:189</div>
                             </td>
                         </tr>
 
@@ -6655,7 +6675,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:154</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:187</div>
                             </td>
                         </tr>
 
@@ -6732,7 +6752,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:96</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:129</div>
                             </td>
                         </tr>
 
@@ -6778,7 +6798,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:82</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:115</div>
                             </td>
                         </tr>
 
@@ -6855,7 +6875,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:92</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:125</div>
                             </td>
                         </tr>
 
@@ -6902,7 +6922,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:142</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:175</div>
                             </td>
                         </tr>
 
@@ -6980,7 +7000,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:135</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:168</div>
                             </td>
                         </tr>
 
@@ -7058,7 +7078,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:148</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:181</div>
                             </td>
                         </tr>
 
@@ -7136,7 +7156,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:152</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:185</div>
                             </td>
                         </tr>
 
@@ -7214,7 +7234,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:150</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:183</div>
                             </td>
                         </tr>
 
@@ -7292,7 +7312,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:144</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:177</div>
                             </td>
                         </tr>
 
@@ -8652,7 +8672,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:64</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:97</div>
                             </td>
                         </tr>
 
@@ -8693,7 +8713,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:60</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:93</div>
                             </td>
                         </tr>
 
@@ -8734,7 +8754,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:67</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:100</div>
                             </td>
                         </tr>
 
@@ -8748,7 +8768,7 @@
                         <a name="oldDatasetOptions"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
+                                <span class="modifier">Protected</span>
                             oldDatasetOptions
                             </b>
                             <a href="#oldDatasetOptions"><span class="fa fa-link"></span></a>
@@ -8775,7 +8795,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:40</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:55</div>
                             </td>
                         </tr>
 
@@ -8816,7 +8836,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:66</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:99</div>
                             </td>
                         </tr>
 
@@ -8857,7 +8877,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:65</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:98</div>
                             </td>
                         </tr>
 
@@ -8898,7 +8918,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in DatasetPresenterComponent:62</div>
+                                    <div class="io-line">Defined in DatasetPresenterComponent:95</div>
                             </td>
                         </tr>
 
