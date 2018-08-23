@@ -56,11 +56,17 @@ export interface D3PlotOptions {
 
     /**
      * show copyright label
-     * position: { x: right/left, y: top/bottom }
-     * default position: top left
+     *
+     * default position is top left
      *
      * @memberof D3PlotOptions
      */
-    copyright?: { label: string, position?: { x: string, y: string } };
+    copyright?: D3Copyright;
 
+}
+
+export interface D3Copyright {
+    label: string;
+    positionX?: 'right' | 'left';
+    positionY?: 'top' | 'bottom';
 }

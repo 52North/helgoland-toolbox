@@ -23,37 +23,70 @@ import { PresenterMessage } from './presenter-message';
 
 const equal = require('deep-equal');
 
+/**
+ * Abstract superclass for all components, which will present datasets.
+ */
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U>
     extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
 
+    /**
+     * List of presented dataset ids.
+     */
     @Input()
     public datasetIds: string[] = [];
 
+    /**
+     * List of presented selected dataset ids.
+     */
     @Input()
     public selectedDatasetIds: string[] = [];
 
+    /**
+     * The time interval in which the data should presented.
+     */
     @Input()
     public timeInterval: TimeInterval;
 
+    /**
+     * The corresponding dataset options.
+     */
     @Input()
     public datasetOptions: Map<string, T>;
-    public oldDatasetOptions: Map<string, T>;
+    protected oldDatasetOptions: Map<string, T>;
 
+    /**
+     * Options for general presentation of the data.
+     */
     @Input()
     public graphOptions: U;
 
+    /**
+     * List of datasets for which a reload should be triggered, when the Array is set to new value.
+     */
     @Input()
     public reloadForDatasets: string[];
 
+    /**
+     * Event with a list of selected datasets.
+     */
     @Output()
     public onDatasetSelected: EventEmitter<string[]> = new EventEmitter();
 
+    /**
+     * Event when the timespan in the presentation is adjusted.
+     */
     @Output()
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
+    /**
+     * Event, when there occured a message in the component.
+     */
     @Output()
     public onMessageThrown: EventEmitter<PresenterMessage> = new EventEmitter();
 
+    /**
+     * Event flag, while there is data loaded in the component.
+     */
     @Output()
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
