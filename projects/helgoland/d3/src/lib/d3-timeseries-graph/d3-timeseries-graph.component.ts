@@ -743,43 +743,7 @@ export class D3TimeseriesGraphComponent
                         .on('end', this.panEndHandler));
             }
 
-            // set copyright label
-            if (this.plotOptions.copyright) {
-                let background = this.getDimensions(this.background.node());
-
-                // default = top left
-                let x = 0; // left
-                let y = 0; // + this.margin.top; // top
-
-                this.copyright = this.graph.append('g');
-                let copyrightLabel = this.copyright.append('svg:text')
-                    .text(this.plotOptions.copyright.label)
-                    .attr('class', 'copyright')
-                    .style('pointer-events', 'none')
-                    .style('fill', 'grey');
-
-                if (this.plotOptions.copyright.positionX === 'right') {
-                    x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
-                }
-                if (this.plotOptions.copyright.positionY === 'bottom') {
-                    y = background.h - this.margin.top * 2;
-                }
-
-                let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;
-                let xTransform = this.bufferSum + x;
-
-                copyrightLabel
-                    .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
-
-                this.copyright.append('svg:rect')
-                    .attr('class', 'copyright')
-                    .style('fill', 'none')
-                    .style('stroke', 'none')
-                    .style('pointer-events', 'none')
-                    .attr('width', this.getDimensions(copyrightLabel.node()).w)
-                    .attr('height', this.getDimensions(copyrightLabel.node()).h)
-                    .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
-            }
+            this.createCopyrightLabel();
         } else {
             // execute when it is overview diagram
             let interval = this.getXDomainByTimestamp();
@@ -831,6 +795,39 @@ export class D3TimeseriesGraphComponent
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
+        }
+    }
+
+    private createCopyrightLabel() {
+        if (this.plotOptions.copyright) {
+            let background = this.getDimensions(this.background.node());
+            // default = top left
+            let x = 0; // left
+            let y = 0; // + this.margin.top; // top
+            this.copyright = this.graph.append('g');
+            let copyrightLabel = this.copyright.append('svg:text')
+                .text(this.plotOptions.copyright.label)
+                .attr('class', 'copyright')
+                .style('pointer-events', 'none')
+                .style('fill', 'grey');
+            if (this.plotOptions.copyright.positionX === 'right') {
+                x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
+            }
+            if (this.plotOptions.copyright.positionY === 'bottom') {
+                y = background.h - this.margin.top * 2;
+            }
+            let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;
+            let xTransform = this.bufferSum + x;
+            copyrightLabel
+                .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
+            this.copyright.append('svg:rect')
+                .attr('class', 'copyright')
+                .style('fill', 'none')
+                .style('stroke', 'none')
+                .style('pointer-events', 'none')
+                .attr('width', this.getDimensions(copyrightLabel.node()).w)
+                .attr('height', this.getDimensions(copyrightLabel.node()).h)
+                .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
         }
     }
 
@@ -1232,17 +1229,18 @@ export class D3TimeseriesGraphComponent
 
                 // create graph line
                 let line = d3.line<DataEntry>()
+                    .defined((d) => !isNaN(d[1]))
                     .x((d) => {
                         d.timestamp = d[0];
                         const xDiagCoord = xScaleBase(d[0]);
-                        if (xDiagCoord !== NaN) {
+                        if (!isNaN(xDiagCoord)) {
                             d.xDiagCoord = xDiagCoord;
                             return xDiagCoord;
                         }
                     })
                     .y((d) => {
                         const yDiagCoord = yScaleBase(d[1]);
-                        if (yDiagCoord !== NaN) {
+                        if (!isNaN(yDiagCoord)) {
                             d.yDiagCoord = yDiagCoord;
                             return yDiagCoord;
                         }
@@ -1259,7 +1257,7 @@ export class D3TimeseriesGraphComponent
                     .attr('d', line);
 
                 this.graphBody.selectAll('.dot')
-                    .data(entry.data.filter((d) => d))
+                    .data(entry.data.filter((d) => !isNaN(d[1])))
                     .enter().append('circle')
                     .attr('class', 'dot')
                     .attr('stroke', entry.color)
@@ -1530,8 +1528,8 @@ export class D3TimeseriesGraphComponent
      * @param entryIdx {Number} Number of the index of the entry.
      */
     private showDiagramIndicator = (entry, idx: number, xCoordMouse: number, entryIdx: number) => {
-        const item = entry.data[idx];
-        if (item !== undefined) {
+        const item: DataEntry = entry.data[idx];
+        if (item !== undefined && item.yDiagCoord) {
             // create line where mouse is
             this.focusG.style('visibility', 'visible');
             // show label if data available for time
