@@ -758,14 +758,11 @@ export class D3TimeseriesGraphComponent
                     .style('pointer-events', 'none')
                     .style('fill', 'grey');
 
-                if (this.plotOptions.copyright.position) {
-                    let pos = this.plotOptions.copyright.position;
-                    if (pos.x === 'right') {
-                        x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
-                    }
-                    if (pos.y === 'bottom') {
-                        y = background.h - this.margin.top * 2;
-                    }
+                if (this.plotOptions.copyright.positionX === 'right') {
+                    x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
+                }
+                if (this.plotOptions.copyright.positionY === 'bottom') {
+                    y = background.h - this.margin.top * 2;
                 }
 
                 let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;

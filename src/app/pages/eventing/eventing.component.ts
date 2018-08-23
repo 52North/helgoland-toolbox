@@ -1,16 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { BasicAuthServicesKeeper } from '@helgoland/auth';
+import { BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   EventFilter,
   EventingApiService,
   EventResults,
   NotificationFilter,
+  NotificationResults,
   PublicationFilter,
   PublicationResults,
   SubscriptionFilter,
   SubscriptionResults,
-  NotificationResults,
 } from '@helgoland/eventing';
 
 @Component({
@@ -34,7 +34,7 @@ export class EventingComponent {
   public notificationResults: NotificationResults;
 
   constructor(
-    private basicAuthServices: BasicAuthServicesKeeper,
+    private basicAuthServices: BasicAuthServiceMaintainer,
     private eventingApi: EventingApiService
   ) {
     this.basicAuthServices.registerService(this.url);
