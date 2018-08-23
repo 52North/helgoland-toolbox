@@ -49,7 +49,7 @@ export interface AdditionalDataEntry {
 export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges {
 
   @Input()
-  public additionalData: AddtionalData[];
+  public additionalData: AddtionalData[] = [];
 
   private additionalPreparedData: InternalDataEntry[] = [];
 
