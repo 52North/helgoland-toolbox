@@ -49,6 +49,7 @@ import { ROUTES } from './app.routes';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
+import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { EventingComponent } from './pages/eventing/eventing.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
@@ -97,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   declarations: [
+    AdditionalDataGraphComponent,
     AppComponent,
     EventingComponent,
     FavoriteComponent,

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { EventingComponent } from './pages/eventing/eventing.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
@@ -20,6 +21,7 @@ export const ROUTES: Routes = [
   { path: 'eventing', component: EventingComponent },
   { path: 'favorite', component: FavoriteComponent },
   { path: 'graph-legend', component: GraphLegendComponent },
+  { path: 'additional-data-graph', component: AdditionalDataGraphComponent },
   { path: 'list-selection', component: ListSelectionComponent },
   { path: 'map-selector', component: MapSelectorComponent },
   { path: 'map-view', component: MapViewComponent },

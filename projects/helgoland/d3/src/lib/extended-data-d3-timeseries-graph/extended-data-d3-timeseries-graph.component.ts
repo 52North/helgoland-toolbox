@@ -1,4 +1,4 @@
-import { Component, Input, IterableDiffers, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, IterableDiffers, OnChanges, SimpleChanges } from '@angular/core';
 import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, Time } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { extent } from 'd3';
@@ -46,7 +46,7 @@ export interface AdditionalDataEntry {
   templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
   styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss']
 })
-export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges {
+export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges, AfterViewInit {
 
   @Input()
   public additionalData: AddtionalData[] = [];
@@ -67,7 +67,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   public ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (changes.additionalData && this.additionalData) {
+    if (changes.additionalData && this.additionalData && this.graph) {
       this.clearAdditionalData();
       this.plotGraph();
     }
@@ -78,6 +78,13 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     super.plotGraph();
   }
 
+  public ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+    if (this.additionalData) {
+      setTimeout(() => this.plotGraph(), 0);
+    }
+  }
+
   private clearAdditionalData() {
     this.additionalPreparedData.forEach(data => {
       this.yRangesEachUom.forEach(e => {
@@ -86,10 +93,12 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       });
     });
 
-    for (let i = this.yRangesEachUom.length - 1; i >= 0; i--) {
-      const element = this.yRangesEachUom[i];
-      if (element.ids.length === 0) {
-        this.yRangesEachUom.splice(i, 1);
+    if (this.yRangesEachUom) {
+      for (let i = this.yRangesEachUom.length - 1; i >= 0; i--) {
+        const element = this.yRangesEachUom[i];
+        if (element.ids.length === 0) {
+          this.yRangesEachUom.splice(i, 1);
+        }
       }
     }
 
@@ -97,68 +106,71 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   }
 
   private prepareAdditionaData() {
-    this.additionalData.forEach(entry => {
-      let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-      let dataset = this.datasetMap.get(entry.linkedDatasetId);
+    if (this.additionalData) {
+      this.additionalData.forEach(entry => {
+        let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+        let dataset = this.datasetMap.get(entry.linkedDatasetId);
 
-      const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
-      let dataEntry: InternalDataEntry;
-      if (prepDataIdx === -1) {
-        dataEntry = {
-          internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
-          color: options.color,
-          data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
-          points: {
-            fillColor: options.color
-          },
-          lines: {
-            lineWidth: options.lineWidth,
-            pointRadius: options.pointRadius
-          },
-          bars: {
-            lineWidth: options.lineWidth
-          },
-          axisOptions: {
-            uom: dataset ? dataset.uom : entry.yaxisLabel,
-            label: dataset ? dataset.label : entry.yaxisLabel,
-            zeroBased: options.zeroBasedYAxis,
-            yAxisRange: options.yAxisRange,
-            autoRangeSelection: options.autoRangeSelection
-          },
-          visible: options.visible
-        };
-        this.additionalPreparedData.push(dataEntry);
-      } else {
-        dataEntry = this.additionalPreparedData[prepDataIdx];
-      }
-
-      const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
-      const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => datum[1]);
-
-      if (newDatasetIdx === -1) {
-        const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
-        const axisRange = {
-          uom: entry.yaxisLabel,
-          range: { min: dataExtent[0], max: dataExtent[1] },
-          autoRange: options.autoRangeSelection,
-          preRange: { min: dataExtent[0], max: dataExtent[1] },
-          originRange: { min: dataExtent[0], max: dataExtent[1] },
-          zeroBased: options.zeroBasedYAxis,
-          outOfrange: false,
-          ids: [entry.yaxisLabel]
-        };
-        if (existingAxisIndex > -1) {
-          this.yRangesEachUom[existingAxisIndex] = axisRange;
+        const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
+        let dataEntry: InternalDataEntry;
+        if (prepDataIdx === -1) {
+          dataEntry = {
+            internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
+            color: options.color,
+            data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
+            points: {
+              fillColor: options.color
+            },
+            lines: {
+              lineWidth: options.lineWidth,
+              pointRadius: options.pointRadius
+            },
+            bars: {
+              lineWidth: options.lineWidth
+            },
+            axisOptions: {
+              uom: dataset ? dataset.uom : entry.yaxisLabel,
+              label: dataset ? dataset.label : entry.yaxisLabel,
+              zeroBased: options.zeroBasedYAxis,
+              yAxisRange: options.yAxisRange,
+              autoRangeSelection: options.autoRangeSelection
+            },
+            visible: options.visible
+          };
+          this.additionalPreparedData.push(dataEntry);
         } else {
-          this.yRangesEachUom.push(axisRange);
+          dataEntry = this.additionalPreparedData[prepDataIdx];
         }
-      } else {
-        this.yRangesEachUom[newDatasetIdx].range = {
-          min: Math.min(dataExtent[0], this.yRangesEachUom[newDatasetIdx].range.min),
-          max: Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max)
-        };
-      }
-    });
+
+        const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
+        const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => datum[1]);
+
+        if (newDatasetIdx === -1) {
+          const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
+          const axisRange = {
+            uom: entry.yaxisLabel,
+            range: { min: dataExtent[0], max: dataExtent[1] },
+            autoRange: options.autoRangeSelection,
+            preRange: { min: dataExtent[0], max: dataExtent[1] },
+            originRange: { min: dataExtent[0], max: dataExtent[1] },
+            zeroBased: options.zeroBasedYAxis,
+            outOfrange: false,
+            ids: [entry.yaxisLabel]
+          };
+          if (existingAxisIndex > -1) {
+            this.yRangesEachUom[existingAxisIndex] = axisRange;
+          } else {
+            this.yRangesEachUom.push(axisRange);
+          }
+        } else {
+          this.yRangesEachUom[newDatasetIdx].range = {
+            min: Math.min(dataExtent[0], this.yRangesEachUom[newDatasetIdx].range.min),
+            max: Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max)
+          };
+          this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
+        }
+      });
+    }
   }
 
   protected drawAllGraphLines() {

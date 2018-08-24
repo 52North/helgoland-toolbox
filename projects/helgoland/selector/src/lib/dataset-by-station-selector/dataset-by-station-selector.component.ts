@@ -21,6 +21,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
     @Input()
     public defaultSelected = false;
 
+    @Input()
+    public phenomenonId: string;
+
     @Output()
     public onSelectionChanged: EventEmitter<Timeseries[]> = new EventEmitter<Timeseries[]>();
 
