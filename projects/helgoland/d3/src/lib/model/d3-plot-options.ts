@@ -64,13 +64,6 @@ export interface D3PlotOptions {
     copyright?: { label: string, position?: { x: string, y: string } };
 
     /**
-     * language used in the plot
-     *
-     * @memberof D3PlotOptions
-     */
-    language?: string;
-
-    /**
      * toggle dataset grouping by uom
      * true = group y axis by uom
      * false = single y axis for each timeseries
