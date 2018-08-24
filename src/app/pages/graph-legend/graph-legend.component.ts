@@ -14,14 +14,19 @@ import { StyleModificationComponent } from '../../components/style-modification/
 export class GraphLegendComponent {
 
     public datasetIds = [
-        'http://www.fluggs.de/sos2/api/v1/__26',
-        'http://www.fluggs.de/sos2/api/v1/__51',
-        'http://www.fluggs.de/sos2/api/v1/__72',
+        // 'http://www.fluggs.de/sos2/api/v1/__26',
+        // 'http://www.fluggs.de/sos2/api/v1/__51',
+        // 'http://www.fluggs.de/sos2/api/v1/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
+        'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
+        'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
+        'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public reloadForDatasets = [];
     public timespan;
+    public plotLanguage;
 
     public diagramOptions: PlotOptions = {
         crosshair: {
@@ -80,9 +85,10 @@ export class GraphLegendComponent {
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',
-            positionX: 'left',
+            positionX: 'right',
             positionY: 'bottom'
-        }
+        },
+        groupYaxis: true
     };
 
     public overviewOptions: PlotOptions = {
@@ -219,6 +225,10 @@ export class GraphLegendComponent {
 
     public refresh(triggered) {
         console.log('refresh at ' + new Date());
+    }
+
+    public groupYaxisChanged() {
+        this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
     }
 
 }

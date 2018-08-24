@@ -12,6 +12,9 @@
   <mat-checkbox [(ngModel)]="autoRangeSelection">keep selected range</mat-checkbox>
 </div>
 <div>
+  <mat-checkbox [(ngModel)]="separateYAxis">separate dataset from axis</mat-checkbox>
+</div>
+<div>
   <mat-form-field>
     <mat-select [(value)]="pointRadius" placeholder="Point radius">
       <mat-option [value]="0">0px</mat-option>
