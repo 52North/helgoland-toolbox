@@ -5,9 +5,12 @@ import {
     IterableDiffer,
     IterableDiffers,
     OnChanges,
+    OnDestroy,
     Output,
     SimpleChanges,
 } from '@angular/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 import { DatasetApiInterface } from '../dataset-api/api-interface';
 import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
@@ -21,7 +24,7 @@ import { PresenterMessage } from './presenter-message';
 const equal = require('deep-equal');
 
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U>
-    extends ResizableComponent implements OnChanges, DoCheck, HasLoadableContent {
+    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
 
     @Input()
     public datasetIds: string[] = [];
@@ -38,6 +41,9 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     @Input()
     public graphOptions: U;
+
+    @Input()
+    public reloadForDatasets: string[];
 
     @Output()
     public onDatasetSelected: EventEmitter<string[]> = new EventEmitter();
@@ -58,16 +64,19 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     private datasetIdsDiffer: IterableDiffer<string>;
     private selectedDatasetIdsDiffer: IterableDiffer<string>;
     private oldGraphOptions: U;
+    private langChangeSubscription: Subscription;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time
+        protected timeSrvc: Time,
+        protected translateService: TranslateService
     ) {
         super();
         this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
         this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();
+        this.langChangeSubscription = this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -75,6 +84,13 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
             this.timeIntervalChanges();
         }
+        if (changes.reloadForDatasets && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
+            this.reloadDataForDatasets(this.reloadForDatasets);
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.langChangeSubscription.unsubscribe();
     }
 
     public ngDoCheck(): void {
@@ -116,12 +132,14 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         }
     }
 
-    public abstract reloadData(): void;
+    public abstract reloadDataForDatasets(datasets: string[]): void;
 
     protected addDatasetByInternalId(internalId: string) {
         const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);
         this.addDataset(internalIdObj.id, internalIdObj.url);
     }
+
+    protected abstract onLanguageChanged(langChangeEvent: LangChangeEvent): void;
 
     protected abstract timeIntervalChanges(): void;
 

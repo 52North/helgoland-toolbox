@@ -1,16 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { HelgolandLabelMapperModule } from '../label-mapper/label-mapper.module';
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
-import { ReferenceValueColorCache, TimeseriesEntryComponent } from './timeseries-entry/timeseries-entry.component';
+import {
+  ConfigurableTimeseriesEntryComponent,
+} from './timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component';
+import {
+  FirstLatestTimeseriesEntryComponent,
+} from './timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component';
+import { SimpleTimeseriesEntryComponent } from './timeseries/simple-timeseries-entry/simple-timeseries-entry.component';
+import {
+  ReferenceValueColorCache,
+  TimeseriesEntryComponent,
+} from './timeseries/timeseries-entry/timeseries-entry.component';
 import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
-import { FormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
+  ConfigurableTimeseriesEntryComponent,
+  SimpleTimeseriesEntryComponent,
+  FirstLatestTimeseriesEntryComponent,
   ProfileEntryComponent,
   TrajectoryEntryComponent
 ];

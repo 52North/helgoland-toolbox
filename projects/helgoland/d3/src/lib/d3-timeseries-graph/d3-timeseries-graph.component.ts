@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    IterableDiffers,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, IterableDiffers, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     ColorService,
     Data,
@@ -22,11 +12,13 @@ import {
     Timeseries,
     Timespan,
 } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3PlotOptions } from '../model/d3-plot-options';
 
 interface DataEntry {
@@ -49,7 +41,7 @@ interface YScale {
     yScale: d3.ScaleLinear<number, number>;
 }
 
-interface YRanges {
+export interface YRanges {
     uom: string;
     range: MinMaxRange;
     preRange: MinMaxRange;
@@ -63,7 +55,7 @@ interface YRanges {
     offset?: number;
 }
 
-interface InternalDataEntry {
+export interface InternalDataEntry {
     internalId: string;
     color: string;
     data: [number, number][];
@@ -88,7 +80,7 @@ interface InternalDataEntry {
     visible: boolean;
 }
 
-interface DataYRange {
+export interface DataYRange {
     uom: string;
     range?: MinMaxRange;
     preRange?: MinMaxRange;
@@ -99,7 +91,7 @@ interface DataYRange {
     outOfrange: boolean;
 }
 
-interface DataConst extends IDataset {
+export interface DataConst extends IDataset {
     data?: Data<[number, number]>;
 }
 
@@ -124,12 +116,6 @@ export class D3TimeseriesGraphComponent
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
     public mainTimeInterval: Timespan;
 
-    @Output()
-    public onSelectId: EventEmitter<any> = new EventEmitter();
-
-    @Output()
-    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
-
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
 
@@ -140,7 +126,7 @@ export class D3TimeseriesGraphComponent
         }
     };
 
-    private preparedData = Array(); // : DataSeries[]
+    protected preparedData = []; // : DataSeries[]
     private mousedownBrush: boolean;
     private rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     private graph: any;
@@ -150,8 +136,8 @@ export class D3TimeseriesGraphComponent
     private xAxisRange: Timespan; // x domain range
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    private yRangesEachUom: YRanges[]; // y array of objects containing ranges for each uom
-    private dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
+    protected yRangesEachUom: YRanges[]; // y array of objects containing ranges for each uom
+    protected dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
 
@@ -217,9 +203,11 @@ export class D3TimeseriesGraphComponent
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        private colorService: ColorService
+        protected timeFormatLocaleService: D3TimeFormatLocaleService,
+        protected colorService: ColorService,
+        protected translateService: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
@@ -239,8 +227,16 @@ export class D3TimeseriesGraphComponent
         this.xAxisRangeOrigin = [];
     }
 
-    public reloadData(): void {
-        // not implemented yet
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
+        this.plotGraph();
+    }
+
+    public reloadDataForDatasets(datasetIds: string[]): void {
+        datasetIds.forEach(id => {
+            if (this.datasetMap.has(id)) {
+                this.loadDatasetData(this.datasetMap.get(id), true);
+            }
+        });
     }
 
     protected addDataset(id: string, url: string): void {
@@ -314,12 +310,12 @@ export class D3TimeseriesGraphComponent
     }
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean) {
         if (!firstChange && this.datasetMap.has(internalId)) {
-            this.loadDataset(this.datasetMap.get(internalId));
+            this.loadDatasetData(this.datasetMap.get(internalId), false);
         }
     }
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((dataset) => {
-            this.loadDataset(dataset);
+            this.loadDatasetData(dataset, false);
         });
     }
     protected onResize(): void {
@@ -339,11 +335,11 @@ export class D3TimeseriesGraphComponent
 
     private loadAddedDataset(dataset: IDataset) {
         this.datasetMap.set(dataset.internalId, dataset);
-        this.loadDataset(dataset);
+        this.loadDatasetData(dataset, false);
     }
 
     // load data of dataset
-    private loadDataset(dataset: IDataset) {
+    private loadDatasetData(dataset: IDataset, force: boolean) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
         if (this.loadingCounter === 0) {
             this.isContentLoadingD3(true);
@@ -358,7 +354,8 @@ export class D3TimeseriesGraphComponent
                     format: 'flot',
                     expanded: this.plotOptions.showReferenceValues === true,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                }
+                },
+                { forceUpdate: force }
             ).subscribe(
                 (result) => {
                     this.datasetMap.get(dataset.internalId).data = result;
@@ -449,7 +446,6 @@ export class D3TimeseriesGraphComponent
             }
             this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
             this.processData(dataEntry);
-            this.plotGraph();
         });
     }
 
@@ -490,7 +486,7 @@ export class D3TimeseriesGraphComponent
      * @param dataEntry {DataEntry} Object containing dataset related data.
      * @param internalId {String} String with the ID of a dataset.
      */
-    private processData(dataEntry: InternalDataEntry) {
+    protected processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
         let calculatedPreRange: MinMaxRange;
         let calculatedOriginRange: MinMaxRange;
@@ -516,7 +512,7 @@ export class D3TimeseriesGraphComponent
                 calculatedRange = { min: predefinedRange.min, max: predefinedRange.max };
                 calculatedPreRange = { min: predefinedRange.min, max: predefinedRange.max };
             }
-            if ( predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0] ) {
+            if (predefinedRange.min > dataExtent[1] || predefinedRange.max < dataExtent[0]) {
                 setDataExtent = autoDataExtent ? false : true;
             }
         } else {
@@ -672,7 +668,8 @@ export class D3TimeseriesGraphComponent
      * Function to plot the graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
-    private plotGraph() {
+    protected plotGraph() {
+        if (!this.yRangesEachUom) { return; }
 
         this.preparedData.forEach((entry) => {
             let idx = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
@@ -735,9 +732,7 @@ export class D3TimeseriesGraphComponent
 
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
-        this.preparedData.forEach((entry) => {
-            this.drawGraphLine(entry);
-        });
+        this.drawAllGraphLines();
 
         // #####################################################
         // create background rect
@@ -897,6 +892,13 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
+     * Draws for every preprared data entry the graph line.
+     */
+    protected drawAllGraphLines() {
+        this.preparedData.forEach((entry) => this.drawGraphLine(entry));
+    }
+
+    /**
      * Function that calculates and returns the x diagram coordinate for the brush range
      * for the overview diagram by the selected time interval of the main diagram.
      * Calculate to get brush extent when main diagram time interval changes.
@@ -989,45 +991,6 @@ export class D3TimeseriesGraphComponent
             hourly = 0.5;
         }
 
-        // TODO
-        let localeForm;
-        switch (this.plotOptions.language) {
-            case 'NL':
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'],
-                    'shortDays': ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'],
-                    'months': ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'],
-                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
-                });
-                break;
-            case 'DE':
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                    'shortDays': ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                    'months': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                    'shortMonths': ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
-                });
-                break;
-            default:
-                localeForm = d3.timeFormatLocale({
-                    'dateTime': '%a %b %e %X %Y',
-                    'date': '%d-%m-%Y',
-                    'time': '%H:%M:%S',
-                    'periods': ['AM', 'PM'],
-                    'days': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                    'shortDays': ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                    'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'],
-                    'shortMonths': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
-                });
-        }
 
         let tickSize = hourly;
         let timeString = 'hourly';
@@ -1056,14 +1019,14 @@ export class D3TimeseriesGraphComponent
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, tickSize))
                 .tickFormat((d) => {
-                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
+                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
                 });
         } else {
             timeString = 'minly';
             xAxisGen = d3.axisBottom(this.xScaleBase)
                 .tickValues(this.timeTickValues(timeString, minRangeGer, 30))
                 .tickFormat((d) => {
-                    return localeForm.format(timeFormatString)(new Date(d.valueOf()));
+                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
                 });
         }
 
@@ -1206,7 +1169,7 @@ export class D3TimeseriesGraphComponent
                     if (!this.yAxisSelect[id].clicked) {
                         d3.select(k[0])
                             .attr('opacity', this.opac.default);
-                        } else {
+                    } else {
                         d3.select(k[0])
                             .attr('opacity', this.opac.click);
                     }
@@ -1369,7 +1332,7 @@ export class D3TimeseriesGraphComponent
             });
         }
 
-        this.onSelectId.emit(toHighlightDataset);
+        this.onDatasetSelected.emit(this.selectedDatasetIds);
         this.plotGraph();
     }
 
@@ -1377,7 +1340,7 @@ export class D3TimeseriesGraphComponent
      * Function to draw the graph line for each dataset.
      * @param entry {DataEntry} Object containing a dataset.
      */
-    private drawGraphLine(entry: InternalDataEntry) {
+    protected drawGraphLine(entry: InternalDataEntry) {
         // check for y axis grouping
         let getYaxisRange;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {

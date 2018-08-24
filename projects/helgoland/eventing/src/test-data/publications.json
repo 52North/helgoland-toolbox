@@ -1,0 +1,23 @@
+{
+    "data": [{
+        "href": "http://test.de/api/v1/publications/1",
+        "id": "1",
+        "label": "label for 1",
+        "seriesHref": "http://bla/1"
+    }, {
+        "href": "http://test.de/api/v1/publications/2",
+        "id": "2",
+        "label": "label for 2",
+        "seriesHref": "http://bla/2"
+    }, {
+        "href": "http://test.de/api/v1/publications/3",
+        "id": "3",
+        "label": "label for 3",
+        "seriesHref": "http://bla/3"
+    }],
+    "metadata": {
+        "limit": 100,
+        "offset": 0,
+        "total": 3
+    }
+}

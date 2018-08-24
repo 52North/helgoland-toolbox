@@ -14,6 +14,7 @@ export interface Settings {
 export interface DatasetApi {
     name: string;
     url: string;
+    basicAuth?: boolean;
 }
 
 export interface BlacklistedService {

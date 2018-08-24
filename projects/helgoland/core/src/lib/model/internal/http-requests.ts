@@ -17,4 +17,5 @@ export interface DataParameterFilter extends ParameterFilter {
 export interface HttpRequestOptions {
     forceUpdate?: boolean;
     basicAuthToken?: string;
+    expirationAtMs?: number;
 }

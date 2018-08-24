@@ -1,0 +1,12 @@
+{
+    "details": {
+        "category": "cat",
+        "feature": "fea",
+        "phenomenon": "phenom",
+        "procedure": "proc",
+        "unit": "cm"
+    },
+    "id": "1",
+    "label": "label for 1",
+    "seriesHref": "http://bla/1"
+}

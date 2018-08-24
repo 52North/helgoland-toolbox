@@ -7,6 +7,9 @@
       </div>
     </div>
   </div>
+  <div *ngIf="zoomLevel">Zoomlevel: {{zoomLevel}}</div>
+  <div *ngIf="bounds">North: {{bounds.getNorth()|number:'1.3-3'}}, East: {{bounds.getEast()|number:'1.3-3'}}, South: {{bounds.getSouth()|number:'1.3-3'}},
+    West: {{bounds.getWest()|number:'1.3-3'}}</div>
   <div>
     <n52-geosearch-control mapId="map-view" [options]="searchOptions"></n52-geosearch-control>
     <n52-extent-control mapId="map-view" [extent]="fitBounds"></n52-extent-control>
