@@ -399,7 +399,7 @@ export class D3TimeseriesGraphComponent
             const data = this.datasetMap.get(dataset.internalId).data;
 
             // TODO: change uom for testing
-            // if (this.preparedData.length > 1) {
+            // if (this.preparedData.length > 0) {
             //     dataset.uom = 'mc';
             // }
 
@@ -728,7 +728,6 @@ export class D3TimeseriesGraphComponent
             rangeArray = this.dataYranges;
         }
 
-        // TODO: visibility of text in y Axis
         rangeArray.forEach((entry) => {
             entry.first = (this.yScaleBase === null);
             entry.offset = this.bufferSum;
@@ -736,6 +735,7 @@ export class D3TimeseriesGraphComponent
             let yAxisResult = this.drawYaxis(entry);
             if (this.yScaleBase === null) {
                 this.yScaleBase = yAxisResult.yScale;
+                this.bufferSum = yAxisResult.buffer;
             } else {
                 this.bufferSum = yAxisResult.buffer;
             }
@@ -1102,25 +1102,28 @@ export class D3TimeseriesGraphComponent
         // only if yAxis should be visible
         if (showAxis) {
             // draw y axis label
-            const text = this.graph.append('text')
+            const text = axis.append('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
+                .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
                 .text((entry.id ? (entry.uom + ' (' + entry.id + ')') : entry.uom));
 
-            const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
+            const axisWidth = axis.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? entry.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
-
-            const axisWidthDiv = entry.first ? this.margin.left : (axisWidth < this.margin.left ? this.margin.left : axisWidth);
+            const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!entry.first) {
                 axis.attr('transform', 'translate(' + buffer + ', 0)');
+            } else {
+                buffer = axisWidthDiv - this.margin.left;
+                axis.attr('transform', 'translate(' + buffer + ', 0)');
             }
 
-            const textOffset = !entry.first ? buffer : entry.offset;
-            text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
+            let textoff = axisWidthDiv - 5;
+            text.attr('y', 0 - textoff)
                 .attr('x', 0 - (this.height / 2));
 
             // set id to uom, if group yaxis is toggled, else set id to dataset id
