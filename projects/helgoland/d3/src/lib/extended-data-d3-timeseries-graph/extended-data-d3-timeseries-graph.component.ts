@@ -123,7 +123,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             label: dataset ? dataset.label : entry.yaxisLabel,
             zeroBased: options.zeroBasedYAxis,
             yAxisRange: options.yAxisRange,
-            autoRangeSelection: options.autoRangeSelection
+            autoRangeSelection: options.autoRangeSelection,
+            separateYAxis: options.separateYAxis
           },
           visible: options.visible
         };
