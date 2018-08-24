@@ -1,4 +1,4 @@
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 export class HasLoadableContent {
 

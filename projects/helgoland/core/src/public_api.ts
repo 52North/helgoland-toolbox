@@ -20,8 +20,7 @@ export {
     HTTP_SERVICE_INTERCEPTORS,
     HttpService,
     HttpServiceInterceptor,
-    HttpServiceHandler,
-    HttpServiceMetadata
+    HttpServiceHandler
 } from './lib/dataset-api/http.service';
 
 export { Language } from './lib/language/model/language';

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpCache } from './model';
 
 interface CachedItem {
-    expirationTime: number;
+    expirationAtMs: number;
     response: HttpResponse<any>;
 }
 
@@ -17,28 +17,28 @@ export class LocalHttpCache extends HttpCache {
 
     private cache: Cache = {};
 
-    public get(req: HttpRequest<any>): HttpResponse<any> {
-        if (this.cache[req.urlWithParams]) {
-            const expirationTime = this.cache[req.urlWithParams].expirationTime;
+    public get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> {
+        const key = req.urlWithParams;
+        if (this.cache[key]) {
             const currentTime = new Date().getTime();
-            if (expirationTime >= currentTime) {
-                return this.cache[req.urlWithParams].response;
+            if (isNaN(this.cache[key].expirationAtMs)) {
+                this.cache[key].expirationAtMs = expirationAtMs;
+                return this.cache[key].response;
             } else {
-                delete this.cache[req.urlWithParams];
+                if (this.cache[key].expirationAtMs >= currentTime) {
+                    if (this.cache[key].expirationAtMs > expirationAtMs) { this.cache[key].expirationAtMs = expirationAtMs; }
+                    return this.cache[key].response;
+                } else {
+                    delete this.cache[key];
+                }
             }
         }
         return null;
     }
 
-    public put(req: HttpRequest<any>, expirationTime: number | Date, resp: HttpResponse<any>) {
-        let time;
-        if (expirationTime instanceof Date) {
-            time = expirationTime.getTime();
-        } else {
-            time = new Date().getTime() + expirationTime;
-        }
+    public put(req: HttpRequest<any>, resp: HttpResponse<any>, expirationAtMs?: number) {
         this.cache[req.urlWithParams] = {
-            expirationTime: time,
+            expirationAtMs: expirationAtMs || new Date().getTime() + 30000,
             response: resp
         };
     }

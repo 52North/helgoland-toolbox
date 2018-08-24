@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerOptions, MapCache } from '@helgoland/map';
-import L, { circleMarker, LayerEvent } from 'leaflet';
+import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer } from 'leaflet';
 
 @Component({
     templateUrl: './map-view.component.html',
@@ -42,23 +42,33 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         opacity: 1
     };
 
+    public zoomLevel: number;
+    public bounds: LatLngBounds;
+
     constructor(
         private httpClient: HttpClient,
         private mapCache: MapCache
     ) { }
 
     public ngAfterViewInit(): void {
-        this.mapCache.getMap('map-view').on('zoomend', (event) => {
-            const map: L.Map = event.target;
-            console.log('Current zoom level: ' + map.getZoom());
-        });
+        this.mapCache.getMap('map-view')
+            .on('zoomend', (event) => this.updateLabels(event))
+            .on('load', (event) => this.updateLabels(event))
+            .on('move', (event) => this.updateLabels(event));
+    }
+
+    private updateLabels(event: LeafletEvent) {
+        const map: L.Map = event.target;
+        this.zoomLevel = map.getZoom();
+        this.bounds = map.getBounds();
     }
 
     public ngOnInit(): void {
+
         this.baseMaps.set('Topo', {
             label: 'Topo',
             visible: true,
-            layer: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            layer: tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                 maxZoom: 17,
                 attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, ' +
                     '<a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; ' +
@@ -70,7 +80,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         this.baseMaps.set('OM', {
             label: 'OM',
             visible: false,
-            layer: L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+            layer: tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             })
@@ -85,7 +95,10 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'warning-shapes-fine',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                    maxZoom: 12,
+                    minZoom: 11,
+                    bounds: [[51.061, 13.751], [51.047, 13.730]],
                     layers: 'ckan:_53fbae20_e2fb_4fd1_b5d6_c798e11b96d1',
                     projection: 'EPSG:4326',
                     format: 'image/png',
@@ -97,7 +110,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'urban-atlas-2006-dresden',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_7f1cce1a_62b3_49f3_ac3f_cf73ed1586fa',
                     projection: 'EPSG:4326',
                     transparent: true
@@ -108,7 +121,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'interpolated-emissions',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_8e2bef33_248f_42b5_bd50_0f474a54d11f',
                     projection: 'EPSG:4326',
                     transparent: true
@@ -119,7 +132,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'emission-simulation',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_9f064e17_799e_4261_8599_d3ee31b5392b',
                     projection: 'EPSG:4326',
                     transparent: true
@@ -130,7 +143,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'warning-shapes-coarse',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_b2fa0f61_6578_493d_815b_9bd8cfeb2313',
                     projection: 'EPSG:4326',
                     transparent: true
@@ -141,7 +154,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'Heavy Metal Samples',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_c8b2d332_2019_4311_a600_eefe94eb6b54',
                     projection: 'EPSG:4326',
                     transparent: true
@@ -152,7 +165,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             {
                 label: 'street-cleaning',
                 visible: true,
-                layer: L.tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+                layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
                     layers: 'ckan:_d6bea91f_ac86_4990_a2d5_c603de92e22c',
                     projection: 'EPSG:4326',
                     transparent: true

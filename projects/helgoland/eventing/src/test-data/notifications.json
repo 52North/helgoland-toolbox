@@ -1,0 +1,24 @@
+{
+    "data": [{
+        "href": "http://test.de/api/v1/notifications/1",
+        "id": "1",
+        "label": "label for 1",
+        "publication": {
+            "href": "http://test.de/api/v1/publications/2",
+            "id": "2"
+        }
+    }, {
+        "href": "http://test.de/api/v1/notifications/2",
+        "id": "2",
+        "label": "label for 2",
+        "publication": {
+            "href": "http://test.de/api/v1/publications/5",
+            "id": "5"
+        }
+    }],
+    "metadata": {
+        "limit": 100,
+        "offset": 0,
+        "total": 2
+    }
+}

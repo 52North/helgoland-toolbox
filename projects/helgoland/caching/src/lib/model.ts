@@ -5,12 +5,12 @@ export abstract class HttpCache {
     /**
      * Returns a cached response, if any, or null if not present.
      */
-    public abstract get(req: HttpRequest<any>): HttpResponse<any> | null;
+    public abstract get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> | null;
 
     /**
      * Adds or updates the response in the cache.
      */
-    public abstract put(req: HttpRequest<any>, expirationTime: number | Date, resp: HttpResponse<any>): void;
+    public abstract put(req: HttpRequest<any>, resp: HttpResponse<any>, expirationAtMs?: number): void;
 }
 
 export abstract class OnGoingHttpCache {
