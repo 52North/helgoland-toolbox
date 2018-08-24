@@ -918,63 +918,37 @@ export class D3TimeseriesGraphComponent
      */
     private drawXaxis(bufferXrange: number) {
         // range for x axis scale
-        this.xScaleBase = d3.scaleLinear()
+        this.xScaleBase = d3.scaleTime()
             .domain([this.xAxisRange.from, this.xAxisRange.to])
             .range([bufferXrange, this.width]);
 
-        // calculate range for about 7 ticks on x axis
-        let calcTicks = (((this.xAxisRange.to - this.xAxisRange.from) / 1000) / 7);
-        let hourly = Math.ceil(calcTicks / 3600);
-        let daily = Math.ceil(calcTicks / (3600 * 48));
+        let xAxis = d3.axisBottom(this.xScaleBase)
+            .tickFormat(d => {
+                const date = new Date(d.valueOf());
 
-        if ((calcTicks / 3600) <= 0.6) {
-            hourly = 0.5;
-        }
+                const formatMillisecond = '.%L',
+                    formatSecond = ':%S',
+                    formatMinute = '%H:%M',
+                    formatHour = '%H:%M',
+                    formatDay = '%a %d',
+                    formatWeek = '%b %d',
+                    formatMonth = '%B',
+                    formatYear = '%Y';
 
+                const format = d3.timeSecond(date) < date ? formatMillisecond
+                    : d3.timeMinute(date) < date ? formatSecond
+                        : d3.timeHour(date) < date ? formatMinute
+                            : d3.timeDay(date) < date ? formatHour
+                                : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
+                                    : d3.timeYear(date) < date ? formatMonth
+                                        : formatYear;
+                return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
+            });
 
-        let tickSize = hourly;
-        let timeString = 'hourly';
-        let timeFormatString = '%H:%M:%S';
-
-        if (hourly > 11) {
-            timeFormatString = '%d %b %H:%M';
-        }
-
-        if (hourly > 47) {
-            timeFormatString = '%d %B';
-            tickSize = (Math.max(1, Math.round(hourly / 12))) * 12;
-        }
-
-        // calculate minimum range dependent on tickSize for UTC // 7200000 (e.g. tickSize = 4 --> every 4 hours)
-        let minRange = this.xAxisRange.from + ((3600000 * tickSize) - (this.xAxisRange.from % (3600000 * tickSize)));
-        // minimum range for UTC+2
-        let minRangeGer = minRange + 3600000 * (tickSize / 2);
-        if ((minRange - 3600000 * (tickSize / 2)) >= this.xAxisRange.from) {
-            minRangeGer = minRange - 3600000 * (tickSize / 2);
-        }
-
-        // calculate tickvalues dependent on tickSize for UTC+2
-        let xAxisGen;
-        if (tickSize >= 1) {
-            xAxisGen = d3.axisBottom(this.xScaleBase)
-                .tickValues(this.timeTickValues(timeString, minRangeGer, tickSize))
-                .tickFormat((d) => {
-                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
-                });
-        } else {
-            timeString = 'minly';
-            xAxisGen = d3.axisBottom(this.xScaleBase)
-                .tickValues(this.timeTickValues(timeString, minRangeGer, 30))
-                .tickFormat((d) => {
-                    return this.timeFormatLocaleService.getTimeLocale(timeFormatString)(new Date(d.valueOf()));
-                });
-        }
-
-        // draw x axis
-        this.graph.append('svg:g')
+        this.graph.append('g')
             .attr('class', 'x axis')
             .attr('transform', 'translate(0,' + this.height + ')')
-            .call(xAxisGen)
+            .call(xAxis)
             .selectAll('text')
             .style('text-anchor', 'middle');
 
@@ -983,7 +957,7 @@ export class D3TimeseriesGraphComponent
             this.graph.append('svg:g')
                 .attr('class', 'grid')
                 .attr('transform', 'translate(0,' + this.height + ')')
-                .call(xAxisGen
+                .call(xAxis
                     .tickSize(-this.height)
                     .tickFormat(() => '')
                 );
