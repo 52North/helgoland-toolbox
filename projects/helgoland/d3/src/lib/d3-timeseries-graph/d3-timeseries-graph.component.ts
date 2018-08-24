@@ -83,6 +83,7 @@ interface InternalDataEntry {
         zeroBased: boolean;
         yAxisRange: MinMaxRange;
         autoRangeSelection: boolean;
+        separateYAxis: boolean;
     };
     visible: boolean;
 }
@@ -153,6 +154,9 @@ export class D3TimeseriesGraphComponent
     private dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
+
+    private listOfUoms = Array();
+    private listOfSeparation = Array();
 
     private height: number;
     private width: number;
@@ -394,7 +398,6 @@ export class D3TimeseriesGraphComponent
                 styles.color = this.colorService.getColor();
             }
 
-
             // end of check for datasets
             const dataEntry: InternalDataEntry = {
                 internalId: dataset.internalId,
@@ -415,10 +418,23 @@ export class D3TimeseriesGraphComponent
                     label: dataset.label,
                     zeroBased: styles.zeroBasedYAxis,
                     yAxisRange: styles.yAxisRange,
-                    autoRangeSelection: styles.autoRangeSelection
+                    autoRangeSelection: styles.autoRangeSelection,
+                    separateYAxis: styles.separateYAxis
                 },
                 visible: styles.visible
             };
+
+            let separationIdx = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+            if (styles.separateYAxis) {
+                if (separationIdx < 0) {
+                    this.listOfSeparation.push(dataset.internalId);
+                }
+            } else {
+                // TODO: alternative for filter (slice)
+                this.listOfSeparation = this.listOfSeparation.filter(entry => entry === dataset.internalId);
+            }
+
+
             // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
             if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
                 dataEntry.lines.lineWidth += this.addLineWidth;
@@ -658,6 +674,11 @@ export class D3TimeseriesGraphComponent
      */
     private plotGraph() {
 
+        this.preparedData.forEach((entry) => {
+            let idx = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
+            if (idx < 0) { this.listOfUoms.push(entry.axisOptions.uom); }
+        });
+
         // adapt axis highlighting, when changing grouping of y axis
         if (this.oldGroupYaxis !== this.plotOptions.groupYaxis) {
             this.changeYselection();
@@ -677,9 +698,22 @@ export class D3TimeseriesGraphComponent
         let rangeArray = [];
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
             rangeArray = this.yRangesEachUom;
+            // push all listOfSeparation into rangeArray
+            if (this.listOfSeparation.length > 0) {
+                this.listOfSeparation.forEach((sepId) => {
+                    let newEl = this.dataYranges.find((el) => el.id === sepId);
+                    if (newEl && (rangeArray.findIndex(el => el.id === newEl.id) < 0)) {
+                        console.log('push');
+                        rangeArray.push(newEl);
+                    }
+                });
+            }
+
         } else {
             rangeArray = this.dataYranges;
         }
+
+        // TODO: bei ändern des Graphs wird die extra y achse gelöscht
 
         // TODO: visibility of text in y Axis
         rangeArray.forEach((entry) => {
@@ -1072,11 +1106,20 @@ export class D3TimeseriesGraphComponent
      */
     private drawYaxis(entry): YScale {
         let showAxis = ( this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis) );
-
         // check for y axis grouping
+        console.log(this.listOfUoms);
+        console.log(this.listOfSeparation);
         let range;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
-            range = this.getyAxisRange(entry.uom);
+            let uomIdx = this.listOfUoms.findIndex((uom) => uom === entry.uom);
+            if (uomIdx >= 0) {
+                range = this.getyAxisRange(entry.uom);
+            } else {
+                // if not entry.uom but separated id
+                let entryElem = this.dataYranges.find((el) => el.id === entry.id);
+                range = entryElem.range;
+            }
+
         } else {
             let entryElem = this.dataYranges.find((el) => el.id === entry.id);
             range = entryElem.range;
@@ -1258,18 +1301,23 @@ export class D3TimeseriesGraphComponent
                     if (this.yAxisSelect.hasOwnProperty(key)) {
                         let el = this.yAxisSelect[key];
                         let dataEl = this.preparedData.find((entry) => entry.internalId === el.id);
-                        el.uom = dataEl.axisOptions.uom;
-                        if (!groupList[el.uom]) {
+                        let selectionID;
+                        if (dataEl.axisOptions.separateYAxis) {
+                            selectionID = el.uom + '' + dataEl.internalId;
+                        } else {
+                            selectionID = dataEl.axisOptions.uom;
+                        }
+                        if (!groupList[selectionID]) {
                             let currentUom: YAxisSelection = {
-                                id: el.uom,
+                                id: selectionID,
                                 ids: [],
                                 clicked: false
                             };
-                            groupList[el.uom] = currentUom;
+                            groupList[selectionID] = currentUom;
                         }
                         if (el.clicked) {
-                            groupList[el.uom].ids.push(el.id);
-                            groupList[el.uom].clicked = true;
+                            groupList[selectionID].ids.push(el.id);
+                            groupList[selectionID].clicked = true;
                         }
                     }
                 }
