@@ -30,6 +30,7 @@ import {
     Timespan,
 } from '@helgoland/core';
 import { LabelMapperService } from '@helgoland/depiction';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
@@ -99,9 +100,10 @@ export class FlotTimeseriesGraphComponent
         protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected labelMapper: LabelMapperService
+        protected labelMapper: LabelMapperService,
+        protected translateSrvc: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
     }
 
     public ngAfterViewInit() {
@@ -142,11 +144,11 @@ export class FlotTimeseriesGraphComponent
         this.plotGraph();
     }
 
-    public reloadData(): void {
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+    public reloadDataForDatasets(datasetIds: string[]): void {
         console.log('reload data at ' + new Date());
-        this.datasetMap.forEach((dataset) => {
-            this.loadData(dataset, true);
-        });
+        this.datasetIds.forEach(id => this.loadData(this.datasetMap.get(id), true));
     }
 
     protected graphOptionsChanged(options: PlotOptions) {

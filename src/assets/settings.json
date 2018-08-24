@@ -38,6 +38,11 @@
         {
             "name": "Monalisa-Sos",
             "url": "http://monalisasos.eurac.edu/sos/api/v1/"
+        },
+        {
+            "name": "BasicAuth-API",
+            "url": "",
+            "basicAuth": true
         }
     ]
 }

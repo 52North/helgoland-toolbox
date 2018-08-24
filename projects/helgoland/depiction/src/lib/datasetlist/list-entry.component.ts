@@ -1,7 +1,15 @@
-import { EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { InternalIdHandler } from '@helgoland/core';
+import { EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
-export abstract class ListEntryComponent implements OnInit {
+/**
+ * Represents an abstract dataset entry for a list, which has the following functions:
+ *  - can be selected and is selectable internally, with a corresponding output event
+ *  - can be deleted, which also triggers an output event
+ *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
+ */
+export abstract class ListEntryComponent implements OnInit, OnDestroy {
 
     @Input()
     public datasetId: string;
@@ -9,24 +17,33 @@ export abstract class ListEntryComponent implements OnInit {
     @Input()
     public selected: boolean;
 
-    @Input()
-    public highlight: boolean;
-
     @Output()
     public onDeleteDataset: EventEmitter<boolean> = new EventEmitter();
 
     @Output()
     public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
 
+    public loading;
+
+    protected internalId: InternalDatasetId;
+
+    private langChangeSubscription: Subscription;
+
     constructor(
-        protected internalIdHandler: InternalIdHandler
+        protected internalIdHandler: InternalIdHandler,
+        protected translateSrvc: TranslateService
     ) { }
 
     public ngOnInit(): void {
         if (this.datasetId) {
-            const temp = this.internalIdHandler.resolveInternalId(this.datasetId);
-            this.loadDataset(temp.id, temp.url);
+            this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+            this.loadDataset(this.translateSrvc.currentLang);
         }
+        this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
+    }
+
+    public ngOnDestroy(): void {
+        this.langChangeSubscription.unsubscribe();
     }
 
     public removeDataset() {
@@ -38,12 +55,12 @@ export abstract class ListEntryComponent implements OnInit {
         this.onSelectDataset.emit(this.selected);
     }
 
-    public toggleUomSelection(id, selected) {
-        if (this.datasetId === id) {
-            this.selected = selected;
-            this.onSelectDataset.emit(this.selected);
+    protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
+        if (this.internalId) {
+            this.loadDataset(langChangeEvent.lang);
         }
     }
 
-    protected abstract loadDataset(id: string, url: string): void;
+    protected abstract loadDataset(lang?: string): void;
+
 }

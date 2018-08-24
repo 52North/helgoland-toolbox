@@ -4,7 +4,10 @@
 
 export * from './lib/datasetlist/module';
 export * from './lib/datasetlist/profile-entry/profile-entry.component';
-export * from './lib/datasetlist/timeseries-entry/timeseries-entry.component';
+export * from './lib/datasetlist/timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component';
+export * from './lib/datasetlist/timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component';
+export * from './lib/datasetlist/timeseries/simple-timeseries-entry/simple-timeseries-entry.component';
+export * from './lib/datasetlist/timeseries/timeseries-entry/timeseries-entry.component';
 export * from './lib/datasetlist/trajectory-entry/trajectory-entry.component';
 
 export * from './lib/dataset-table/dataset-table.component';

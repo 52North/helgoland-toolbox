@@ -1,19 +1,17 @@
-import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { HttpRequestOptions } from '../model/internal/http-requests';
 
 export const HTTP_SERVICE_INTERCEPTORS = new InjectionToken<HttpServiceInterceptor>('HTTP_SERVICE_INTERCEPTORS');
 
-export interface HttpServiceMetadata {
-    forceUpdate?: boolean;
-    expirationTime?: number | Date;
-}
-
 export interface HttpServiceHandler {
-    handle(req: HttpRequest<any>, metadata: Partial<HttpServiceMetadata>);
+    handle(req: HttpRequest<any>, options: Partial<HttpRequestOptions>): Observable<HttpEvent<any>>;
 }
 
 export interface HttpServiceInterceptor {
-    intercept(req: HttpRequest<any>, metadata: Partial<HttpServiceMetadata>, next: HttpServiceHandler);
+    intercept(req: HttpRequest<any>, options: Partial<HttpRequestOptions>, next: HttpServiceHandler): Observable<HttpEvent<any>>;
 }
 
 @Injectable({
@@ -28,19 +26,19 @@ export class HttpService {
         @Optional() @Inject(HTTP_SERVICE_INTERCEPTORS) interceptors: HttpServiceInterceptor[] | null
     ) {
         let handler: HttpServiceHandler = {
-            handle: (req, metadata) => httpHandler.handle(req)
+            handle: (req, options) => httpHandler.handle(req)
         };
         if (interceptors) {
             handler = interceptors.reduceRight((next, interceptor) => ({
-                handle: (req, metadata) => interceptor.intercept(req, metadata, next)
+                handle: (req, options) => interceptor.intercept(req, options, next)
             }), handler);
         }
         this.handler = handler;
     }
 
-    public client(metadata: HttpServiceMetadata = {}): HttpClient {
+    public client(options: HttpRequestOptions = {}): HttpClient {
         return new HttpClient({
-            handle: (req) => this.handler.handle(req, metadata)
+            handle: (req) => this.handler.handle(req, options)
         });
     }
 }

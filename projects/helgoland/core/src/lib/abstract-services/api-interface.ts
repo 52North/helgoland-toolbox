@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 import { Timespan } from '../model/internal/timeInterval';
+import { HttpHeaders } from '@angular/common/http';
 
 export abstract class ApiInterface {
 
@@ -13,6 +14,12 @@ export abstract class ApiInterface {
 
     protected createRequestTimespan(timespan: Timespan): string {
         return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
+    }
+
+    protected createBasicAuthHeader(token: string): HttpHeaders {
+        const headers = new HttpHeaders();
+        if (token) { return headers.set('Authorization', token); }
+        return headers;
     }
 
 }

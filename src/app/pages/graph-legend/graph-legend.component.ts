@@ -20,6 +20,7 @@ export class GraphLegendComponent {
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
+    public reloadForDatasets = [];
     public timespan;
 
     public diagramOptions: PlotOptions = {
@@ -118,14 +119,10 @@ export class GraphLegendComponent {
 
     public highlightId: string;
 
-    public changedSelectedDatasets: any;
-
     public selectedIds: string[] = [];
 
     public overviewLoading: boolean;
     public graphLoading: boolean;
-
-    public plotLanguage: string;
 
     constructor(
         private color: ColorService,
@@ -149,7 +146,7 @@ export class GraphLegendComponent {
     }
 
     public isSelected(id: string) {
-        return false;
+        return this.selectedIds.indexOf(id) > -1;
     }
 
     public showGeometry(geometry: GeoJSON.GeoJsonObject) {
@@ -158,12 +155,16 @@ export class GraphLegendComponent {
         });
     }
 
+    public refreshData() {
+        this.reloadForDatasets = [this.datasetIds[0]];
+    }
+
     public highlight(selected: boolean, id: string) {
         this.highlightId = id;
     }
 
-    public setSelected(selectedIds: any) {
-        this.changedSelectedDatasets = selectedIds;
+    public setSelected(selectedIds: string[]) {
+        this.selectedIds = selectedIds;
     }
 
     public deleteTimeseries(id: string) {
@@ -214,12 +215,6 @@ export class GraphLegendComponent {
 
     public refresh(triggered) {
         console.log('refresh at ' + new Date());
-    }
-
-    public languageChanged(language: string) {
-        this.plotLanguage = language;
-        this.d3diagramOptions.language = language;
-        this.d3overviewOptions.language = language;
     }
 
 }
