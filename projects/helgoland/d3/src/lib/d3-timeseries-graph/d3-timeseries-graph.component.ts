@@ -126,15 +126,15 @@ export class D3TimeseriesGraphComponent
 
     protected preparedData = []; // : DataSeries[]
     private mousedownBrush: boolean;
-    private rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
-    private graph: any;
+    protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
+    protected graph: any;
     private graphBody: any;
     private dragRect: any;
     private dragRectG: any;
     private xAxisRange: Timespan; // x domain range
     private xAxisRangeOrigin: any; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    protected yRangesEachUom: YRanges[]; // y array of objects containing ranges for each uom
+    protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
     protected dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
@@ -148,7 +148,7 @@ export class D3TimeseriesGraphComponent
         left: 40
     };
     private maxLabelwidth = 0;
-    private xScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of x value
+    private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
     private copyright: any;
@@ -1197,11 +1197,7 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing a dataset.
      */
     protected drawGraphLine(entry: InternalDataEntry) {
-        const getYaxisRange = this.yRangesEachUom.find((obj, temp, index) => {
-            if (obj.uom === entry.axisOptions.uom) {
-                return true;
-            } // uom does exist in this.yRangesEachUom
-        });
+        const getYaxisRange = this.yRangesEachUom.find((obj) => obj.ids.indexOf(entry.internalId) > -1);
 
         if (entry.data.length > 0) {
             let xScaleBase = this.xScaleBase;
