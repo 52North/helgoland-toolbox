@@ -7,7 +7,7 @@ import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-i
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { ExtendedDataD3TimeseriesGraphComponent } from './extended-data-d3-timeseries-graph.component';
 
-fdescribe('D3TimeseriesGraphComponent - function', () => {
+describe('D3TimeseriesGraphComponent - function', () => {
     let component: ExtendedDataD3TimeseriesGraphComponent;
     let fixture: ComponentFixture<ExtendedDataD3TimeseriesGraphComponent>;
 

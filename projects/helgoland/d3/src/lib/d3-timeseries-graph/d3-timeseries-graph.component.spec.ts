@@ -1,11 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
-import { Timespan } from '../../../../core/src/public_api';
 
 describe('D3TimeseriesGraphComponent - raw', () => {
   let component: D3TimeseriesGraphComponent;
@@ -50,7 +50,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 
   it('should have no datasetIds', () => {
     expect(component.datasetIds).toBeDefined();
-    expect(typeof(component.datasetIds)).toBe('object');
+    expect(typeof (component.datasetIds)).toBe('object');
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBe(0);
   });
@@ -60,7 +60,8 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID26 = 'http://www.fluggs.de/sos2/api/v1/__26';
+  let datasetID6899 = 'http://geo.irceline.be/sos/api/v1/__6899';
+  let datasetID6522 = 'http://geo.irceline.be/sos/api/v1/__6522';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -78,8 +79,25 @@ describe('D3TimeseriesGraphComponent - function', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(D3TimeseriesGraphComponent);
+    (fixture.nativeElement as HTMLElement).style.height = '500px';
     component = fixture.componentInstance;
-    component.datasetIds.push(datasetID26);
+    const datasetOptions: Map<string, DatasetOptions> = new Map();
+    const option6899 = new DatasetOptions(datasetID6899, '#FF0000');
+    option6899.pointRadius = 4;
+    option6899.lineWidth = 2;
+    option6899.visible = true;
+    const option6522 = new DatasetOptions(datasetID6522, '#00FF00');
+    option6522.pointRadius = 4;
+    option6522.lineWidth = 2;
+    option6522.visible = true;
+    datasetOptions.set(datasetID6899, option6899);
+    datasetOptions.set(datasetID6522, option6522);
+    const end = new Date().getTime();
+    const diff = 360000000;
+    component.timeInterval = new Timespan(end - diff, end);
+    component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
+    component.datasetIds = [datasetID6899, datasetID6522];
+    component.datasetOptions = datasetOptions;
     fixture.detectChanges();
   });
 
@@ -87,7 +105,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBeGreaterThan(0);
-    expect(typeof(component.datasetIds)).toBe('object');
+    expect(typeof (component.datasetIds)).toBe('object');
   });
 
 });
