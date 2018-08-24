@@ -63,6 +63,15 @@ export interface D3PlotOptions {
      */
     copyright?: D3Copyright;
 
+    /**
+    * toggle dataset grouping by uom
+    * true = group y axis by uom
+    * false = single y axis for each timeseries
+    *
+    * @memberof D3PlotOptions
+    */
+    groupYaxis?: boolean;
+
 }
 
 export interface D3Copyright {
