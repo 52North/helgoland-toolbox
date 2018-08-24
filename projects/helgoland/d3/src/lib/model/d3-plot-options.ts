@@ -63,10 +63,4 @@ export interface D3PlotOptions {
      */
     copyright?: { label: string, position?: { x: string, y: string } };
 
-    /**
-     * language used in the plot
-     *
-     * @memberof D3PlotOptions
-     */
-    language?: string;
 }

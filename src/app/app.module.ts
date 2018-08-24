@@ -13,13 +13,12 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
-import { BasicAuthService } from '@helgoland/auth';
+import { BasicAuthInformer, BasicAuthService, HelgolandBasicAuthModule } from '@helgoland/auth';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import { HelgolandControlModule } from '@helgoland/control';
 import {
   DatasetApiInterface,
   HelgolandCoreModule,
-  Settings,
   SettingsService,
   SplittedDataDatasetApiInterface,
   StatusCheckService,
@@ -50,6 +49,7 @@ import { ROUTES } from './app.routes';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
+import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { EventingComponent } from './pages/eventing/eventing.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
@@ -153,14 +153,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandTimeRangeSliderModule,
     HelgolandD3Module,
     HelgolandDatasetTableModule,
-    HelgolandPlotlyModule
+    HelgolandPlotlyModule,
+    HelgolandBasicAuthModule
   ],
   entryComponents: [
     StyleModificationComponent,
     GeometryViewComponent
   ],
   providers: [
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    {
+      provide: BasicAuthInformer,
+      useClass: BasicAuthInformerImplService
+    }
   ]
 })
 export class AppModule { }

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class BasicAuthService {
 
-  private basicAuthToken: string;
+  private basicAuthTokens: Map<string, string> = new Map();
 
   constructor(
     private http: HttpClient
@@ -18,22 +18,24 @@ export class BasicAuthService {
     return this.http.get(url, { headers })
       .pipe(
         map(res => {
-          this.basicAuthToken = token;
+          this.basicAuthTokens.set(url, token);
           return token;
         })
       );
   }
 
-  public clearToken(): void {
-    this.basicAuthToken = null;
+  public clearToken(url: string): void {
+    if (this.basicAuthTokens.has(url)) {
+      this.basicAuthTokens.delete(url);
+    }
   }
 
-  public hasToken(): boolean {
-    return this.basicAuthToken != null;
+  public hasToken(url: string): boolean {
+    return this.basicAuthTokens.has(url);
   }
 
-  public getToken(): string {
-    return this.basicAuthToken;
+  public getToken(url: string): string {
+    return this.basicAuthTokens.has(url) ? this.basicAuthTokens.get(url) : null;
   }
 
 }

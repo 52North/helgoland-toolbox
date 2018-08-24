@@ -1,13 +1,14 @@
 import { Component, IterableDiffers, OnInit } from '@angular/core';
 import {
   DatasetApiInterface,
-  DatasetPresenterComponent,
   DatasetOptions,
+  DatasetPresenterComponent,
   DatasetTableData,
   InternalIdHandler,
   Time,
   Timeseries,
 } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'n52-dataset-table',
@@ -32,9 +33,10 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     protected iterableDiffers: IterableDiffers,
     protected api: DatasetApiInterface,
     protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time
+    protected timeSrvc: Time,
+    protected translateSrvc: TranslateService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
   }
 
   public ngOnInit() {
@@ -80,7 +82,9 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     this.preparedData = this.preparedData.sort(sortCallback);
   }
 
-  public reloadData(): void {
+  protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+  public reloadDataForDatasets(datasetIds: string[]): void {
     // console.log('reload data at ' + new Date());
   }
 
