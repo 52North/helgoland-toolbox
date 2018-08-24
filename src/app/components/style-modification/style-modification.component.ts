@@ -12,6 +12,7 @@ export class StyleModificationComponent {
     public generalize: boolean;
     public zeroBasedYAxis: boolean;
     public autoRangeSelection: boolean;
+    public separateYAxis: boolean;
     public pointRadius: number;
     public lineWidth: number;
     public range: MinMaxRange;
@@ -30,6 +31,7 @@ export class StyleModificationComponent {
         this.pointRadius = option.pointRadius;
         this.lineWidth = option.lineWidth;
         this.range = option.yAxisRange;
+        this.separateYAxis = option.separateYAxis;
     }
 
     public updateRange(range: MinMaxRange) {
@@ -44,6 +46,7 @@ export class StyleModificationComponent {
         this.option.lineWidth = this.lineWidth;
         this.option.pointRadius = this.pointRadius;
         this.option.yAxisRange = this.range;
+        this.option.separateYAxis = this.separateYAxis;
         this.dialogRef.close(this.option);
     }
 
