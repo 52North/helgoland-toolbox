@@ -3525,6 +3525,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
     @Input()
     public defaultSelected &#x3D; false;
 
+    @Input()
+    public phenomenonId: string;
+
     @Output()
     public onSelectionChanged: EventEmitter&lt;Timeseries[]&gt; &#x3D; new EventEmitter&lt;Timeseries[]&gt;();
 

@@ -2976,6 +2976,9 @@
                                 <a href="#defaultSelected">defaultSelected</a>
                             </li>
                             <li>
+                                <a href="#phenomenonId">phenomenonId</a>
+                            </li>
+                            <li>
                                 <a href="#station">station</a>
                             </li>
                             <li>
@@ -3017,7 +3020,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -3081,6 +3084,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
+                        <a name="phenomenonId"></a>
+                        <code>phenomenonId</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type:</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
                         <a name="station"></a>
                         <code>station</code>
                     </td>
@@ -3136,7 +3160,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:28</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -3173,7 +3197,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:38</a></div>
                             </td>
                         </tr>
 
@@ -3213,7 +3237,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:63</a></div>
                             </td>
                         </tr>
 
@@ -3284,7 +3308,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:65</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:68</a></div>
                             </td>
                         </tr>
 
@@ -3335,7 +3359,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -3375,7 +3399,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:30</a></div>
                             </td>
                         </tr>
 
@@ -3410,6 +3434,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     @Input()
     public defaultSelected &#x3D; false;
+
+    @Input()
+    public phenomenonId: string;
 
     @Output()
     public onSelectionChanged: EventEmitter&lt;Timeseries[]&gt; &#x3D; new EventEmitter&lt;Timeseries[]&gt;();

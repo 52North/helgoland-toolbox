@@ -2888,9 +2888,11 @@
                                         <a href="#label">label</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#positionX">positionX</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#positionY">positionY</a>
                                 </li>
                             </ul>
@@ -2956,6 +2958,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -2985,6 +2992,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -3056,12 +3068,21 @@
      */
     copyright?: D3Copyright;
 
+    /**
+    * toggle dataset grouping by uom
+    * true &#x3D; group y axis by uom
+    * false &#x3D; single y axis for each timeseries
+    *
+    * @memberof D3PlotOptions
+    */
+    groupYaxis?: boolean;
+
 }
 
 export interface D3Copyright {
     label: string;
-    positionX: &#x27;right&#x27; | &#x27;left&#x27;;
-    positionY: &#x27;top&#x27; | &#x27;bottom&#x27;;
+    positionX?: &#x27;right&#x27; | &#x27;left&#x27;;
+    positionY?: &#x27;top&#x27; | &#x27;bottom&#x27;;
 }
 </code></pre>
     </div>
