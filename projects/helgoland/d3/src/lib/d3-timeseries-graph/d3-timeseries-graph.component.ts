@@ -1102,7 +1102,7 @@ export class D3TimeseriesGraphComponent
         // only if yAxis should be visible
         if (showAxis) {
             // draw y axis label
-            const text = axis.append('text')
+            const text = this.graph.append('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .style('font', '18px times')
@@ -1122,8 +1122,11 @@ export class D3TimeseriesGraphComponent
                 axis.attr('transform', 'translate(' + buffer + ', 0)');
             }
 
-            let textoff = axisWidthDiv - 5;
-            text.attr('y', 0 - textoff)
+            let textOff = - (this.bufferSum);
+            if (entry.first) {
+                textOff = 48 - 5;
+            }
+            text.attr('y', 0 - textOff)
                 .attr('x', 0 - (this.height / 2));
 
             // set id to uom, if group yaxis is toggled, else set id to dataset id
