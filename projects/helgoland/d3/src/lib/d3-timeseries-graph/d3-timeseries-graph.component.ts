@@ -1124,7 +1124,7 @@ export class D3TimeseriesGraphComponent
 
             let textOff = - (this.bufferSum);
             if (entry.first) {
-                textOff = 48 - 5;
+                textOff = this.margin.left;
             }
             text.attr('y', 0 - textOff)
                 .attr('x', 0 - (this.height / 2));
