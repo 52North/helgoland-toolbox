@@ -46,10 +46,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
                             this.counter++;
                             this.apiInterface.getSingleTimeseries(id, this.url)
                                 .subscribe((result) => {
-                                    const ts = result as ExtendedTimeseries;
-                                    ts.selected = this.defaultSelected;
-                                    this.timeseriesList.push(ts);
-                                    this.updateSelection();
+                                    this.prepareResult(result as ExtendedTimeseries, this.defaultSelected);
                                     this.counter--;
                                 }, (error) => {
                                     this.counter--;
@@ -62,6 +59,12 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     public toggle(timeseries: ExtendedTimeseries) {
         timeseries.selected = !timeseries.selected;
+        this.updateSelection();
+    }
+
+    protected prepareResult(result: ExtendedTimeseries, selection: boolean) {
+        result.selected = selection;
+        this.timeseriesList.push(result);
         this.updateSelection();
     }
 
