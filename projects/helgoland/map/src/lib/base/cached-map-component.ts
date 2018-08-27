@@ -1,4 +1,15 @@
-import { DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+    DoCheck,
+    EventEmitter,
+    Input,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
@@ -51,6 +62,12 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
      */
     @Input()
     public zoomControlOptions: L.Control.ZoomOptions;
+
+    /**
+     * Informs when initialization is done with map id.
+     */
+    @Output()
+    public mapInitialized: EventEmitter<string> = new EventEmitter();
 
     /**
      * The map object.
@@ -119,6 +136,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         if (!this.mapOptions || this.zoomControlOptions) { this.mapOptions = { zoomControl: false }; }
         this.map = L.map(this.mapId, this.mapOptions);
         this.mapCache.setMap(this.mapId, this.map);
+        this.mapInitialized.emit(this.mapId);
         if (this.baseMaps && this.baseMaps.size > 0) {
             this.baseMaps.forEach((entry, key) => this.addBaseMap(entry));
         } else {
