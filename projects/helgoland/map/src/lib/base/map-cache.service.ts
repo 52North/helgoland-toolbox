@@ -14,4 +14,12 @@ export class MapCache {
         this.mapCache.set(id, map);
     }
 
+    public hasMap(id: string): boolean {
+        return this.mapCache.has(id);
+    }
+
+    public deleteMap(id: string): boolean {
+        return this.mapCache.delete(id);
+    }
+
 }
