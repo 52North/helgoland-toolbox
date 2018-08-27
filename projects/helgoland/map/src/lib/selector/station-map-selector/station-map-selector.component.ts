@@ -64,7 +64,6 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     protected drawGeometries() {
-        this.noResultsFound = false;
         this.isContentLoading(true);
         if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         if (this.statusIntervals && this.filter && this.filter.phenomenon) {
@@ -166,7 +165,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                     this.markerFeatureGroup.addTo(this.map);
                     this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
                 } else {
-                    this.noResultsFound = true;
+                    this.onNoResultsFound.emit(true);
                 }
                 this.map.invalidateSize();
                 this.isContentLoading(false);
