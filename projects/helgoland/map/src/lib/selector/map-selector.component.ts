@@ -45,7 +45,8 @@ export abstract class MapSelectorComponent<T>
 
     public isContentLoading: (loading: boolean) => void;
 
-    public noResultsFound: boolean;
+    @Output()
+    public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
         protected mapCache: MapCache,

@@ -81,7 +81,6 @@ export class ProfileTrajectoryMapSelectorComponent
     }
 
     protected drawGeometries() {
-        this.noResultsFound = false;
         this.isContentLoading(true);
         this.apiInterface.getDatasets(this.serviceUrl, this.filter).subscribe((datasets) => {
             datasets.forEach((dataset) => {
