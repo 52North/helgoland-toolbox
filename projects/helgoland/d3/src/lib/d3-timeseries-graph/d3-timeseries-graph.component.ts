@@ -134,10 +134,10 @@ export class D3TimeseriesGraphComponent
     private dragRect: any;
     private dragRectG: any;
     private xAxisRange: Timespan; // x domain range
-    private xAxisRangeOrigin: any; // x domain range
+    private xAxisRangeOrigin: any = []; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
-    protected dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
+    protected dataYranges: DataYRange[] = []; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
 
@@ -223,8 +223,9 @@ export class D3TimeseriesGraphComponent
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
-        this.dataYranges = [];
-        this.xAxisRangeOrigin = [];
+        setTimeout(() => {
+            this.plotGraph();
+        }, 10);
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
@@ -627,7 +628,9 @@ export class D3TimeseriesGraphComponent
                 }
             }
         });
-        this.plotGraph();
+        if (this.graph) {
+            this.plotGraph();
+        }
     }
 
     private checkCurrentLatest(idx, obj, pos) {
@@ -1062,12 +1065,12 @@ export class D3TimeseriesGraphComponent
             } else {
                 // if not entry.uom but separated id
                 let entryElem = this.dataYranges.find((el) => el.id === entry.id);
-                range = entryElem.range;
+                if (entryElem) { range = entryElem.range; }
             }
 
         } else {
             let entryElem = this.dataYranges.find((el) => el.id === entry.id);
-            range = entryElem.range;
+            if (entryElem) { range = entryElem.range; }
         }
 
         let yMin = -1;
