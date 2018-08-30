@@ -48,6 +48,13 @@ export interface D3PlotOptions {
     hoverable?: boolean;
 
     /**
+     * style when hovering with mouse
+     *
+     * @memberof D3PlotOptions
+     */
+    hoverStyle?: string;
+
+    /**
      * indicating if component should build overview diagram or not
      *
      * @memberof D3PlotOptions
@@ -78,4 +85,11 @@ export interface D3Copyright {
     label: string;
     positionX?: 'right' | 'left';
     positionY?: 'top' | 'bottom';
+}
+
+export enum HoveringStyle {
+    nearestPoint = 'nearestPoint', // default
+    line = 'line',
+    pointLine = 'pointLine',
+    old = 'old'
 }

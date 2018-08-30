@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { PlotOptions } from '@helgoland/flot';
-import { D3PlotOptions } from 'projects/helgoland/d3/src/public_api';
+import { D3PlotOptions, HoveringStyle } from 'projects/helgoland/d3/src/public_api';
 
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { HighlightOutput } from 'projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph.component';
 
 @Component({
     templateUrl: './graph-legend.component.html',
@@ -17,14 +18,16 @@ export class GraphLegendComponent {
         // 'http://www.fluggs.de/sos2/api/v1/__26',
         // 'http://www.fluggs.de/sos2/api/v1/__51',
         // 'http://www.fluggs.de/sos2/api/v1/__72',
-        // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
+
+        'http://geo.irceline.be/sos/api/v1/__6941',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
         'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
         'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
-        'http://geo.irceline.be/sos/api/v1/__6941',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
+
+        // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
@@ -138,6 +141,9 @@ export class GraphLegendComponent {
     public overviewLoading: boolean;
     public graphLoading: boolean;
 
+    public hoverstyle: string = HoveringStyle.old;
+    public highlightedTime: Date;
+
     constructor(
         private color: ColorService,
         private cdr: ChangeDetectorRef,
@@ -233,6 +239,16 @@ export class GraphLegendComponent {
 
     public groupYaxisChanged() {
         this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
+    }
+
+    public changeHovering(id) {
+        this.hoverstyle = HoveringStyle[id];
+        this.d3diagramOptions.hoverStyle = this.hoverstyle;
+    }
+
+    public highlightChanged(highlightObject: HighlightOutput) {
+        console.log(highlightObject.ids);
+        this.highlightedTime = new Date(highlightObject.timestamp);
     }
 
 }
