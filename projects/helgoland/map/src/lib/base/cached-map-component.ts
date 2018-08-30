@@ -130,6 +130,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     public ngOnDestroy(): void {
         this.map.remove();
+        this.mapCache.deleteMap(this.mapId);
     }
 
     protected createMap(): void {
