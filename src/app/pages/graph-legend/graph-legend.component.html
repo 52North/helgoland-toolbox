@@ -4,7 +4,7 @@
     (onContentLoading)="graphLoading = $event" #diagram></n52-flot-timeseries-graph> -->
   <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
     [graphOptions]="d3diagramOptions" [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
-    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" #diagram></n52-d3-timeseries-graph>
+    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)" #diagram></n52-d3-timeseries-graph>
 </div>
 <div>
   Loading Graph: {{graphLoading}}
@@ -22,6 +22,12 @@
   <div>
     <button (click)="groupYaxisChanged()">group axis</button>
     {{d3diagramOptions.groupYaxis}}
+    
+    <button (click)="changeHovering('nearestPoint')">nearestPoint</button>
+    <button (click)="changeHovering('line')">line</button>
+    <button (click)="changeHovering('pointLine')">pointLine</button>
+    <button (click)="changeHovering('old')">old</button>
+    {{highlightedTime}}
 
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
