@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
-import { AddtionalData, D3PlotOptions } from '@helgoland/d3';
+import { AdditionalData, D3PlotOptions } from '@helgoland/d3';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
@@ -15,7 +15,7 @@ export class AdditionalDataGraphComponent {
         'http://www.fluggs.de/sos2/api/v1/__26',
     ];
 
-    public additionalData: AddtionalData[] = [];
+    public additionalData: AdditionalData[] = [];
     public timespan;
 
     public graphOptions: D3PlotOptions = {
@@ -42,7 +42,7 @@ export class AdditionalDataGraphComponent {
 
         this.setNewTimespan();
 
-        const options = new DatasetOptions(this.datasetIds[0], 'red');
+        const options = new DatasetOptions('addData', 'red');
         options.pointRadius = 3;
         options.lineWidth = 3;
         this.additionalData = [{
@@ -51,12 +51,8 @@ export class AdditionalDataGraphComponent {
             datasetOptions: options,
             data: [
                 {
-                    timestamp: new Date().getTime() - 1000,
-                    value: Math.random()
-                },
-                {
                     timestamp: new Date().getTime(),
-                    value: Math.random()
+                    value: this.createValue()
                 }
             ]
         }];
@@ -64,7 +60,7 @@ export class AdditionalDataGraphComponent {
         setInterval(() => {
             this.additionalData[0].data.push({
                 timestamp: new Date().getTime(),
-                value: Math.random()
+                value: this.createValue()
             });
             this.additionalData = Object.assign([], this.additionalData);
             this.setNewTimespan();
@@ -73,7 +69,7 @@ export class AdditionalDataGraphComponent {
 
     private setNewTimespan() {
         const end = new Date().getTime();
-        const diff = 20000;
+        const diff = 60000;
         this.timespan = new Timespan(end - diff, end);
     }
 
@@ -113,4 +109,11 @@ export class AdditionalDataGraphComponent {
         }
     }
 
+
+    private createValue(): number {
+        return Math.random() * 10;
+    }
+
 }
+
+
