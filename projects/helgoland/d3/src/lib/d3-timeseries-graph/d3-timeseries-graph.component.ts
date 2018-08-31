@@ -1189,9 +1189,10 @@ export class D3TimeseriesGraphComponent
         if (this.datasetIds.length === 1) {
             this.graph.append('svg:g')
                 .attr('class', 'grid')
+                .attr('transform', 'translate(' + buffer + ', 0)')
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
-                    .tickSize(-this.width)
+                    .tickSize(-this.width + buffer)
                     .tickFormat(() => '')
                 );
         }
