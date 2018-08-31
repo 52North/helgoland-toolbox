@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Input, IterableDiffers, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  SimpleChanges,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, Time } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { extent } from 'd3';
@@ -44,7 +52,8 @@ export interface AdditionalDataEntry {
 @Component({
   selector: 'n52-extended-data-d3-timeseries-graph',
   templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
-  styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss']
+  styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges, AfterViewInit {
 
@@ -169,6 +178,11 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             max: Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max)
           };
           this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
+        }
+
+        if (entry.yaxisLabel && !entry.linkedDatasetId) {
+          let idx = this.listOfUoms.indexOf(entry.yaxisLabel);
+          if (idx < 0) { this.listOfUoms.push(entry.yaxisLabel); }
         }
       });
     }
