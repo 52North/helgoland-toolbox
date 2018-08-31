@@ -223,9 +223,7 @@ export class D3TimeseriesGraphComponent
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
-        setTimeout(() => {
-            this.plotGraph();
-        }, 10);
+        this.plotGraph();
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
@@ -650,7 +648,7 @@ export class D3TimeseriesGraphComponent
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
     /**
