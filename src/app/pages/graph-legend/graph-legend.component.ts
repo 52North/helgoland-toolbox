@@ -14,17 +14,17 @@ import { StyleModificationComponent } from '../../components/style-modification/
 export class GraphLegendComponent {
 
     public datasetIds = [
-        // 'http://www.fluggs.de/sos2/api/v1/__26',
-        // 'http://www.fluggs.de/sos2/api/v1/__51',
-        // 'http://www.fluggs.de/sos2/api/v1/__72',
+        'http://www.fluggs.de/sos2/api/v1/__26',
+        'http://www.fluggs.de/sos2/api/v1/__51',
+        'http://www.fluggs.de/sos2/api/v1/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
-        'http://geo.irceline.be/sos/api/v1/__6941',
-        'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
+        // 'http://geo.irceline.be/sos/api/v1/__6941',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
