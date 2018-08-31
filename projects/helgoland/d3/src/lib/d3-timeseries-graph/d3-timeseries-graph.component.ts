@@ -702,24 +702,23 @@ export class D3TimeseriesGraphComponent
         this.xAxisRange = this.timespan;
 
         // #####################################################
-        let rangeArray = [];
+        let yAxisArray = [];
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
-            rangeArray = this.yRangesEachUom;
+            yAxisArray = this.yRangesEachUom;
             // push all listOfSeparation into rangeArray
             if (this.listOfSeparation.length > 0) {
                 this.listOfSeparation.forEach((sepId) => {
                     let newEl = this.dataYranges.find((el) => el.id === sepId);
-                    if (newEl && (rangeArray.findIndex(el => el.id === newEl.id) < 0)) {
-                        rangeArray.push(newEl);
+                    if (newEl && (yAxisArray.findIndex(el => el.id === newEl.id) < 0)) {
+                        yAxisArray.push(newEl);
                     }
                 });
             }
-
         } else {
-            rangeArray = this.dataYranges;
+            yAxisArray = this.dataYranges;
         }
 
-        rangeArray.forEach((entry) => {
+        yAxisArray.forEach((entry) => {
             entry.first = (this.yScaleBase === null);
             entry.offset = this.bufferSum;
 
@@ -1176,7 +1175,7 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw the y grid lines
-        if (this.datasetIds.length === 1) {
+        if (this.yRangesEachUom.length === 1) {
             this.graph.append('svg:g')
                 .attr('class', 'grid')
                 .attr('transform', 'translate(' + buffer + ', 0)')
