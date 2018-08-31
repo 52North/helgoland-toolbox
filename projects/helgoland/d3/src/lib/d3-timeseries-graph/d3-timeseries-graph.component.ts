@@ -119,13 +119,6 @@ export class D3TimeseriesGraphComponent
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
 
-    // set zoom limit --> can be adapted to needs
-    private config = {
-        time: {
-            zoomLimit: 10800000  // 3 hour ((3 * 3600) * 1000) limitation
-        }
-    };
-
     protected preparedData = []; // : DataSeries[]
     private mousedownBrush: boolean;
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
@@ -141,7 +134,7 @@ export class D3TimeseriesGraphComponent
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos = 0;
 
-    private listOfUoms = Array();
+    protected listOfUoms: string[] = [];
     private listOfSeparation = Array();
 
     private height: number;
@@ -335,9 +328,6 @@ export class D3TimeseriesGraphComponent
     }
 
     private changeTime(from: number, to: number) {
-        if (to - from < this.config.time.zoomLimit) {
-            to = from + this.config.time.zoomLimit;
-        }
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
@@ -1520,10 +1510,13 @@ export class D3TimeseriesGraphComponent
      * Function that ends the dragging control.
      */
     private panEndHandler = () => {
-        this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-        this.plotGraph();
-        this.dragMoveStart = null;
-        this.draggingMove = false;
+        if (this.xAxisRangePan) {
+            this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
+            this.plotGraph();
+            this.dragMoveStart = null;
+            this.draggingMove = false;
+            this.xAxisRangePan = null;
+        }
     }
 
     /**
