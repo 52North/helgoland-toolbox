@@ -12,7 +12,6 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 - `depiction` - components to show data or metadata (e.g. dataset data table, timeseries entry, label-mapper)
 - `eventing` - describes the model of the eventing API and has an interface to communicate with the API
 - `favorite` - components and services to handle datasets in favorites
-- `flot` - timeseries graph presentation with [Flot](https://www.flotcharts.org/)
 - `map` - components to display leaflet maps for view or selection, and also some map controls (geo-search, locate, zoom)
 - `modification` - dataset modification (color or other graph represent points)
 - `permalink` - components to generate permalinks and service to resolve them
