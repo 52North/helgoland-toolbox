@@ -327,26 +327,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                     </li>
                     <li class="link">
-                        <a href="modules/HelgolandFlotModule.html" data-type="entity-link">HelgolandFlotModule</a>
-                            <li class="chapter inner">
-                                <div class="simple menu-toggler" data-toggle="collapse"
-                                    ${ isNormalMode ? 'data-target="#components-links-module-HelgolandFlotModule-2c0b72bc2436a0f272b8ea4995b8f17c"' : 'data-target="#xs-components-links-module-HelgolandFlotModule-2c0b72bc2436a0f272b8ea4995b8f17c"' }>
-                                    <span class="icon ion-md-cog"></span>
-                                    <span>Components</span>
-                                    <span class="icon ion-ios-arrow-down"></span>
-                                </div>
-                                <ul class="links collapse"
-                                    ${ isNormalMode ? 'id="components-links-module-HelgolandFlotModule-2c0b72bc2436a0f272b8ea4995b8f17c"' : 'id="xs-components-links-module-HelgolandFlotModule-2c0b72bc2436a0f272b8ea4995b8f17c"' }>
-                                        <li class="link">
-                                            <a href="components/FlotOverviewTimeseriesGraphComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FlotOverviewTimeseriesGraphComponent</a>
-                                        </li>
-                                        <li class="link">
-                                            <a href="components/FlotTimeseriesGraphComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FlotTimeseriesGraphComponent</a>
-                                        </li>
-                                </ul>
-                            </li>
-                    </li>
-                    <li class="link">
                         <a href="modules/HelgolandLabelMapperModule.html" data-type="entity-link">HelgolandLabelMapperModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
@@ -909,16 +889,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             <ul class="links collapse"
             ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                     <li class="link">
+                        <a href="interfaces/AdditionalData.html" data-type="entity-link">AdditionalData</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/AdditionalDataEntry.html" data-type="entity-link">AdditionalDataEntry</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Address.html" data-type="entity-link">Address</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/AddtionalData.html" data-type="entity-link">AddtionalData</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/AxesOptions.html" data-type="entity-link">AxesOptions</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/BasicAuthCredentials.html" data-type="entity-link">BasicAuthCredentials</a>
@@ -961,9 +938,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/DataParameterFilter.html" data-type="entity-link">DataParameterFilter</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/DataSeries.html" data-type="entity-link">DataSeries</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/DataYRange.html" data-type="entity-link">DataYRange</a>
@@ -1134,12 +1108,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/PlatformParameter.html" data-type="entity-link">PlatformParameter</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/Plot.html" data-type="entity-link">Plot</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/PlotOptions.html" data-type="entity-link">PlotOptions</a>
-                    </li>
-                    <li class="link">
                         <a href="interfaces/PresenterHighlight.html" data-type="entity-link">PresenterHighlight</a>
                     </li>
                     <li class="link">
@@ -1171,9 +1139,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/ScatterData.html" data-type="entity-link">ScatterData</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/SeriesOptions.html" data-type="entity-link">SeriesOptions</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Service.html" data-type="entity-link">Service</a>

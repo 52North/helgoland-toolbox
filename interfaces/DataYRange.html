@@ -492,13 +492,6 @@ export class D3TimeseriesGraphComponent
     @ViewChild(&#x27;d3timeseries&#x27;)
     public d3Elem: ElementRef;
 
-    // set zoom limit --&gt; can be adapted to needs
-    private config &#x3D; {
-        time: {
-            zoomLimit: 10800000  // 3 hour ((3 * 3600) * 1000) limitation
-        }
-    };
-
     protected preparedData &#x3D; []; // : DataSeries[]
     private mousedownBrush: boolean;
     protected rawSvg: any; // d3.Selection&lt;EnterElement, {}, null, undefined&gt;;
@@ -507,14 +500,14 @@ export class D3TimeseriesGraphComponent
     private dragRect: any;
     private dragRectG: any;
     private xAxisRange: Timespan; // x domain range
-    private xAxisRangeOrigin: any; // x domain range
+    private xAxisRangeOrigin: any &#x3D; []; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     protected yRangesEachUom: YRanges[] &#x3D; []; // y array of objects containing ranges for each uom
-    protected dataYranges: DataYRange[]; // y array of objects containing ranges of all datasets
+    protected dataYranges: DataYRange[] &#x3D; []; // y array of objects containing ranges of all datasets
     private ypos: any; // y array of objects containing ranges of all datasets
     private idxOfPos &#x3D; 0;
 
-    private listOfUoms &#x3D; Array();
+    protected listOfUoms: string[] &#x3D; [];
     private listOfSeparation &#x3D; Array();
 
     private height: number;
@@ -596,8 +589,7 @@ export class D3TimeseriesGraphComponent
             .attr(&#x27;transform&#x27;, &#x27;translate(&#x27; + (this.margin.left + this.maxLabelwidth) + &#x27;,&#x27; + this.margin.top + &#x27;)&#x27;);
 
         this.mousedownBrush &#x3D; false;
-        this.dataYranges &#x3D; [];
-        this.xAxisRangeOrigin &#x3D; [];
+        this.plotGraph();
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
@@ -709,9 +701,6 @@ export class D3TimeseriesGraphComponent
     }
 
     private changeTime(from: number, to: number) {
-        if (to - from &lt; this.config.time.zoomLimit) {
-            to &#x3D; from + this.config.time.zoomLimit;
-        }
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
@@ -1000,7 +989,9 @@ export class D3TimeseriesGraphComponent
                 }
             }
         });
-        this.plotGraph();
+        if (this.graph) {
+            this.plotGraph();
+        }
     }
 
     private checkCurrentLatest(idx, obj, pos) {
@@ -1020,7 +1011,7 @@ export class D3TimeseriesGraphComponent
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
     /**
@@ -1084,24 +1075,23 @@ export class D3TimeseriesGraphComponent
         this.xAxisRange &#x3D; this.timespan;
 
         // #####################################################
-        let rangeArray &#x3D; [];
+        let yAxisArray &#x3D; [];
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis &#x3D;&#x3D;&#x3D; undefined) {
-            rangeArray &#x3D; this.yRangesEachUom;
+            yAxisArray &#x3D; this.yRangesEachUom;
             // push all listOfSeparation into rangeArray
             if (this.listOfSeparation.length &gt; 0) {
                 this.listOfSeparation.forEach((sepId) &#x3D;&gt; {
                     let newEl &#x3D; this.dataYranges.find((el) &#x3D;&gt; el.id &#x3D;&#x3D;&#x3D; sepId);
-                    if (newEl &amp;&amp; (rangeArray.findIndex(el &#x3D;&gt; el.id &#x3D;&#x3D;&#x3D; newEl.id) &lt; 0)) {
-                        rangeArray.push(newEl);
+                    if (newEl &amp;&amp; (yAxisArray.findIndex(el &#x3D;&gt; el.id &#x3D;&#x3D;&#x3D; newEl.id) &lt; 0)) {
+                        yAxisArray.push(newEl);
                     }
                 });
             }
-
         } else {
-            rangeArray &#x3D; this.dataYranges;
+            yAxisArray &#x3D; this.dataYranges;
         }
 
-        rangeArray.forEach((entry) &#x3D;&gt; {
+        yAxisArray.forEach((entry) &#x3D;&gt; {
             entry.first &#x3D; (this.yScaleBase &#x3D;&#x3D;&#x3D; null);
             entry.offset &#x3D; this.bufferSum;
 
@@ -1435,12 +1425,12 @@ export class D3TimeseriesGraphComponent
             } else {
                 // if not entry.uom but separated id
                 let entryElem &#x3D; this.dataYranges.find((el) &#x3D;&gt; el.id &#x3D;&#x3D;&#x3D; entry.id);
-                range &#x3D; entryElem.range;
+                if (entryElem) { range &#x3D; entryElem.range; }
             }
 
         } else {
             let entryElem &#x3D; this.dataYranges.find((el) &#x3D;&gt; el.id &#x3D;&#x3D;&#x3D; entry.id);
-            range &#x3D; entryElem.range;
+            if (entryElem) { range &#x3D; entryElem.range; }
         }
 
         let yMin &#x3D; -1;
@@ -1558,12 +1548,13 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw the y grid lines
-        if (this.datasetIds.length &#x3D;&#x3D;&#x3D; 1) {
+        if (this.yRangesEachUom.length &#x3D;&#x3D;&#x3D; 1) {
             this.graph.append(&#x27;svg:g&#x27;)
                 .attr(&#x27;class&#x27;, &#x27;grid&#x27;)
+                .attr(&#x27;transform&#x27;, &#x27;translate(&#x27; + buffer + &#x27;, 0)&#x27;)
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
-                    .tickSize(-this.width)
+                    .tickSize(-this.width + buffer)
                     .tickFormat(() &#x3D;&gt; &#x27;&#x27;)
                 );
         }
@@ -1892,10 +1883,13 @@ export class D3TimeseriesGraphComponent
      * Function that ends the dragging control.
      */
     private panEndHandler &#x3D; () &#x3D;&gt; {
-        this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-        this.plotGraph();
-        this.dragMoveStart &#x3D; null;
-        this.draggingMove &#x3D; false;
+        if (this.xAxisRangePan) {
+            this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
+            this.plotGraph();
+            this.dragMoveStart &#x3D; null;
+            this.draggingMove &#x3D; false;
+            this.xAxisRangePan &#x3D; null;
+        }
     }
 
     /**

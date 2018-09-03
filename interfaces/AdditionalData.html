@@ -46,7 +46,7 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>AddtionalData</li>
+  <li>AdditionalData</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -275,7 +275,15 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, Input, IterableDiffers, OnChanges, SimpleChanges } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  AfterViewInit,
+  Component,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  SimpleChanges,
+  ViewEncapsulation,
+} from &#x27;@angular/core&#x27;;
 import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, Time } from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { extent } from &#x27;d3&#x27;;
@@ -287,7 +295,7 @@ import { D3TimeFormatLocaleService } from &#x27;../helper/d3-time-format-locale.
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
  * One of the optional properties &#x27;linkedDatasetId&#x27; and &#x27;yaxisLabel&#x27; is mandatory.
  */
-export interface AddtionalData {
+export interface AdditionalData {
   /**
    * Linked to an existing dataset in the graph component and uses it dataset options if no other datasetoptions are presented.
    */
@@ -321,12 +329,13 @@ export interface AdditionalDataEntry {
 @Component({
   selector: &#x27;n52-extended-data-d3-timeseries-graph&#x27;,
   templateUrl: &#x27;../d3-timeseries-graph/d3-timeseries-graph.component.html&#x27;,
-  styleUrls: [&#x27;../d3-timeseries-graph/d3-timeseries-graph.component.scss&#x27;]
+  styleUrls: [&#x27;../d3-timeseries-graph/d3-timeseries-graph.component.scss&#x27;],
+  encapsulation: ViewEncapsulation.None
 })
 export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges, AfterViewInit {
 
   @Input()
-  public additionalData: AddtionalData[] &#x3D; [];
+  public additionalData: AdditionalData[] &#x3D; [];
 
   private additionalPreparedData: InternalDataEntry[] &#x3D; [];
 
@@ -385,67 +394,83 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   private prepareAdditionaData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry &#x3D;&gt; {
-        let options &#x3D; entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-        let dataset &#x3D; this.datasetMap.get(entry.linkedDatasetId);
+        if (entry.linkedDatasetId || entry.yaxisLabel) {
 
-        const prepDataIdx &#x3D; this.additionalPreparedData.findIndex(e &#x3D;&gt; e.internalId.startsWith(entry.linkedDatasetId) || e.internalId &#x3D;&#x3D;&#x3D; entry.yaxisLabel);
-        let dataEntry: InternalDataEntry;
-        if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
-          dataEntry &#x3D; {
-            internalId: entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel,
-            color: options.color,
-            data: options.visible ? entry.data.map(e &#x3D;&gt; [e.timestamp, e.value]) as [number, number][] : [],
-            points: {
-              fillColor: options.color
-            },
-            lines: {
-              lineWidth: options.lineWidth,
-              pointRadius: options.pointRadius
-            },
-            bars: {
-              lineWidth: options.lineWidth
-            },
-            axisOptions: {
-              uom: dataset ? dataset.uom : entry.yaxisLabel,
-              label: dataset ? dataset.label : entry.yaxisLabel,
-              zeroBased: options.zeroBasedYAxis,
-              yAxisRange: options.yAxisRange,
-              autoRangeSelection: options.autoRangeSelection,
-              separateYAxis: options.separateYAxis
-            },
-            visible: options.visible
-          };
-          this.additionalPreparedData.push(dataEntry);
-        } else {
-          dataEntry &#x3D; this.additionalPreparedData[prepDataIdx];
-        }
+          let options &#x3D; entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+          let dataset &#x3D; this.datasetMap.get(entry.linkedDatasetId);
 
-        const newDatasetIdx &#x3D; this.yRangesEachUom.findIndex((e) &#x3D;&gt; e.ids.indexOf(entry.linkedDatasetId) &gt; -1);
-        const dataExtent &#x3D; extent&lt;[number, number], number&gt;(dataEntry.data, (datum) &#x3D;&gt; datum[1]);
-
-        if (newDatasetIdx &#x3D;&#x3D;&#x3D; -1) {
-          const existingAxisIndex &#x3D; this.yRangesEachUom.findIndex(e &#x3D;&gt; e.ids.indexOf(entry.yaxisLabel) !&#x3D;&#x3D; -1);
-          const axisRange &#x3D; {
-            uom: entry.yaxisLabel,
-            range: { min: dataExtent[0], max: dataExtent[1] },
-            autoRange: options.autoRangeSelection,
-            preRange: { min: dataExtent[0], max: dataExtent[1] },
-            originRange: { min: dataExtent[0], max: dataExtent[1] },
-            zeroBased: options.zeroBasedYAxis,
-            outOfrange: false,
-            ids: [entry.yaxisLabel]
-          };
-          if (existingAxisIndex &gt; -1) {
-            this.yRangesEachUom[existingAxisIndex] &#x3D; axisRange;
+          const prepDataIdx &#x3D; this.additionalPreparedData.findIndex(e &#x3D;&gt; e.internalId.startsWith(entry.linkedDatasetId) || e.internalId &#x3D;&#x3D;&#x3D; entry.yaxisLabel);
+          let dataEntry: InternalDataEntry;
+          if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
+            dataEntry &#x3D; {
+              internalId: entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel,
+              color: options.color,
+              data: options.visible ? entry.data.map(e &#x3D;&gt; [e.timestamp, e.value]) as [number, number][] : [],
+              points: {
+                fillColor: options.color
+              },
+              lines: {
+                lineWidth: options.lineWidth,
+                pointRadius: options.pointRadius
+              },
+              bars: {
+                lineWidth: options.lineWidth
+              },
+              axisOptions: {
+                uom: dataset ? dataset.uom : entry.yaxisLabel,
+                label: dataset ? dataset.label : entry.yaxisLabel,
+                zeroBased: options.zeroBasedYAxis,
+                yAxisRange: options.yAxisRange,
+                autoRangeSelection: options.autoRangeSelection,
+                separateYAxis: options.separateYAxis
+              },
+              visible: options.visible
+            };
+            this.additionalPreparedData.push(dataEntry);
           } else {
-            this.yRangesEachUom.push(axisRange);
+            dataEntry &#x3D; this.additionalPreparedData[prepDataIdx];
+            dataEntry.axisOptions.uom &#x3D; dataset ? dataset.uom : entry.yaxisLabel;
+            dataEntry.axisOptions.label &#x3D; dataset ? dataset.label : entry.yaxisLabel;
+          }
+
+          const newDatasetIdx &#x3D; this.yRangesEachUom.findIndex((e) &#x3D;&gt; e.ids.indexOf(entry.linkedDatasetId) &gt; -1);
+          const dataExtent &#x3D; extent&lt;[number, number], number&gt;(dataEntry.data, (datum) &#x3D;&gt; datum[1]);
+          if (newDatasetIdx &#x3D;&#x3D;&#x3D; -1) {
+            const existingAxisIndex &#x3D; this.yRangesEachUom.findIndex(e &#x3D;&gt; e.ids.indexOf(entry.yaxisLabel) !&#x3D;&#x3D; -1);
+            const axisRange &#x3D; {
+              uom: entry.yaxisLabel,
+              range: { min: dataExtent[0], max: dataExtent[1] },
+              autoRange: options.autoRangeSelection,
+              preRange: { min: dataExtent[0], max: dataExtent[1] },
+              originRange: { min: dataExtent[0], max: dataExtent[1] },
+              zeroBased: options.zeroBasedYAxis,
+              outOfrange: false,
+              ids: [entry.yaxisLabel]
+            };
+            if (existingAxisIndex &gt; -1) {
+              this.yRangesEachUom[existingAxisIndex] &#x3D; axisRange;
+            } else {
+              this.yRangesEachUom.push(axisRange);
+            }
+          } else {
+            if (this.yRangesEachUom[newDatasetIdx].range) {
+              this.yRangesEachUom[newDatasetIdx].range.min &#x3D; Math.min(dataExtent[0], this.yRangesEachUom[newDatasetIdx].range.min);
+              this.yRangesEachUom[newDatasetIdx].range.max &#x3D; Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max);
+            } else {
+              this.yRangesEachUom[newDatasetIdx].range &#x3D; {
+                min: dataExtent[0],
+                max: dataExtent[1]
+              };
+            }
+            this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel);
+          }
+
+          if (entry.yaxisLabel &amp;&amp; !entry.linkedDatasetId) {
+            let idx &#x3D; this.listOfUoms.indexOf(entry.yaxisLabel);
+            if (idx &lt; 0) { this.listOfUoms.push(entry.yaxisLabel); }
           }
         } else {
-          this.yRangesEachUom[newDatasetIdx].range &#x3D; {
-            min: Math.min(dataExtent[0], this.yRangesEachUom[newDatasetIdx].range.min),
-            max: Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max)
-          };
-          this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel);
+          console.warn(&#x27;The additional entry needs at least a \&#x27;linkedDatasetId\&#x27; or a \&#x27;yaxisLabel\&#x27; property: &#x27;, entry);
         }
       });
     }
@@ -483,7 +508,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'AddtionalData.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'AdditionalData.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
