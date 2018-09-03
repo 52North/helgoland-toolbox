@@ -9,8 +9,8 @@
   </div>
   <hr>
   <div style="height: 300px;">
-    <n52-flot-timeseries-graph [datasetIds]="[favorite.favorite.internalId]" [datasetOptions]="favorite.option" [timeInterval]="favorite.timespan"
-      (onLoading)="favorite.loading = $event"></n52-flot-timeseries-graph>
+    <n52-d3-timeseries-graph [datasetIds]="[favorite.favorite.internalId]" [datasetOptions]="favorite.option" [timeInterval]="favorite.timespan"
+      (onLoading)="favorite.loading = $event"></n52-d3-timeseries-graph>
   </div>
   <hr>
 </div>

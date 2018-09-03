@@ -27,7 +27,6 @@ import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule, HelgolandDatasetTableModule } from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
-import { HelgolandFlotModule } from '@helgoland/flot';
 import {
   GeoSearch,
   HelgolandMapControlModule,
@@ -141,7 +140,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule,
-    HelgolandFlotModule,
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandFavoriteModule,

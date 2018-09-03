@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
-import { PlotOptions } from '@helgoland/flot';
 import { D3PlotOptions } from 'projects/helgoland/d3/src/public_api';
 
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
@@ -32,59 +31,6 @@ export class GraphLegendComponent {
     public timespan;
     public plotLanguage;
 
-    public diagramOptions: PlotOptions = {
-        crosshair: {
-            mode: 'x'
-        },
-        showReferenceValues: true,
-        grid: {
-            autoHighlight: true,
-            hoverable: true
-        },
-        legend: {
-            show: false
-        },
-        pan: {
-            frameRate: 10,
-            interactive: true
-        },
-        selection: {
-            mode: null
-        },
-        series: {
-            // downsample: {
-            //   threshold: 0
-            // },
-            shadowSize: 1
-        },
-        touch: {
-            delayTouchEnded: 200,
-            pan: 'x',
-            scale: ''
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-            // monthNames: monthNamesTranslaterServ.getMonthNames()
-            //            timeformat: '%Y/%m/%d',
-            // use these the following two lines to have small ticks at the bottom ob the diagram
-            //            tickLength: 5,
-            //            tickColor: '#000'
-        },
-        yaxis: {
-            additionalWidth: 17,
-            labelWidth: 50,
-            min: null,
-            panRange: false,
-            show: true,
-            // tickFormatter: function(val, axis) {
-            //     var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
-            //     var formatted = '' + Math.round(val * factor) / factor;
-            //     return formatted + '<br>' + this.uom;
-            // }
-        }
-    };
-
     public d3diagramOptions: D3PlotOptions = {
         yaxis: true,
         copyright: {
@@ -93,35 +39,6 @@ export class GraphLegendComponent {
             positionY: 'bottom'
         },
         groupYaxis: true
-    };
-
-    public overviewOptions: PlotOptions = {
-        selection: {
-            mode: 'overview',
-            color: '#718296',
-            shape: 'butt',
-            minSize: 30
-        },
-        grid: {
-            hoverable: false,
-            autoHighlight: false
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-            // monthNames: monthNamesTranslaterServ.getMonthNames()
-        },
-        yaxis: {
-            show: false
-        },
-        legend: {
-            show: false
-        },
-        touch: {
-            pan: '',
-            scale: ''
-        },
-        generalizeAllways: true
     };
 
     public d3overviewOptions: D3PlotOptions = {
@@ -188,7 +105,6 @@ export class GraphLegendComponent {
     }
 
     public changeYAxesVisibility() {
-        this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
         this.d3diagramOptions.yaxis = !this.d3diagramOptions.yaxis;
     }
 
