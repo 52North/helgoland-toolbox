@@ -31,29 +31,31 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
 
     protected drawGeometries() {
         this.isContentLoading(true);
-        if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+        if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         this.apiInterface.getPlatforms(this.serviceUrl, this.filter)
             .subscribe((res) => {
-                if (this.cluster) {
-                    this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
-                } else {
-                    this.markerFeatureGroup = L.featureGroup();
-                }
-                if (res instanceof Array && res.length > 0) {
-                    res.forEach((entry) => {
-                        const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
-                        marker.on('click', () => {
-                            this.onSelected.emit(entry);
+                if (this.map) {
+                    if (this.cluster) {
+                        this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
+                    } else {
+                        this.markerFeatureGroup = L.featureGroup();
+                    }
+                    if (res instanceof Array && res.length > 0) {
+                        res.forEach((entry) => {
+                            const marker = L.marker([entry.geometry.coordinates[1], entry.geometry.coordinates[0]]);
+                            marker.on('click', () => {
+                                this.onSelected.emit(entry);
+                            });
+                            this.markerFeatureGroup.addLayer(marker);
                         });
-                        this.markerFeatureGroup.addLayer(marker);
-                    });
-                    this.markerFeatureGroup.addTo(this.map);
-                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
-                } else {
-                    this.onNoResultsFound.emit(true);
+                        this.markerFeatureGroup.addTo(this.map);
+                        this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
+                    } else {
+                        this.onNoResultsFound.emit(true);
+                    }
+                    this.map.invalidateSize();
+                    this.isContentLoading(false);
                 }
-                this.map.invalidateSize();
-                this.isContentLoading(false);
             });
     }
 }

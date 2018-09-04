@@ -170,7 +170,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     }
 
     private removeOverlayMap(layerOptions: LayerOptions) {
-        if (this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
+        if (this.map && this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
             this.map.removeLayer(this.oldOverlayLayer[layerOptions.label]);
             delete this.oldOverlayLayer[layerOptions.label];
         }
@@ -195,7 +195,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     }
 
     private removeBaseMap(layerOptions: LayerOptions) {
-        if (this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+        if (this.map && this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
             this.map.removeLayer(this.oldBaseLayer[layerOptions.label]);
             delete this.oldBaseLayer[layerOptions.label];
         }
