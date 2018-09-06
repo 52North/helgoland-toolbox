@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, Time } from '@helgoland/core';
+import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, MinMaxRange, Time } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { extent } from 'd3';
 
@@ -117,83 +117,86 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   private prepareAdditionaData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry => {
-        if (entry.linkedDatasetId || entry.yaxisLabel) {
+        if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data) {
 
-          let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-          let dataset = this.datasetMap.get(entry.linkedDatasetId);
-
-          const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
-          let dataEntry: InternalDataEntry;
-          if (prepDataIdx === -1) {
-            dataEntry = {
-              internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
-              color: options.color,
-              data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
-              points: {
-                fillColor: options.color
-              },
-              lines: {
-                lineWidth: options.lineWidth,
-                pointRadius: options.pointRadius
-              },
-              bars: {
-                lineWidth: options.lineWidth
-              },
-              axisOptions: {
-                uom: dataset ? dataset.uom : entry.yaxisLabel,
-                label: dataset ? dataset.label : entry.yaxisLabel,
-                zeroBased: options.zeroBasedYAxis,
-                yAxisRange: options.yAxisRange,
-                autoRangeSelection: options.autoRangeSelection,
-                separateYAxis: options.separateYAxis
-              },
-              visible: options.visible
-            };
-            this.additionalPreparedData.push(dataEntry);
-          } else {
-            dataEntry = this.additionalPreparedData[prepDataIdx];
-            dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
-            dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
-          }
-
-          const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
-          const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => datum[1]);
-          if (newDatasetIdx === -1) {
-            const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
-            const axisRange = {
-              uom: entry.yaxisLabel,
-              range: { min: dataExtent[0], max: dataExtent[1] },
-              autoRange: options.autoRangeSelection,
-              preRange: { min: dataExtent[0], max: dataExtent[1] },
-              originRange: { min: dataExtent[0], max: dataExtent[1] },
-              zeroBased: options.zeroBasedYAxis,
-              outOfrange: false,
-              ids: [entry.yaxisLabel]
-            };
-            if (existingAxisIndex > -1) {
-              this.yRangesEachUom[existingAxisIndex] = axisRange;
-            } else {
-              this.yRangesEachUom.push(axisRange);
-            }
-          } else {
-            if (this.yRangesEachUom[newDatasetIdx].range) {
-              this.yRangesEachUom[newDatasetIdx].range.min = Math.min(dataExtent[0], this.yRangesEachUom[newDatasetIdx].range.min);
-              this.yRangesEachUom[newDatasetIdx].range.max = Math.max(dataExtent[1], this.yRangesEachUom[newDatasetIdx].range.max);
-            } else {
-              this.yRangesEachUom[newDatasetIdx].range = {
-                min: dataExtent[0],
-                max: dataExtent[1]
+          if (entry.data.length > 0) {
+            let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+            let dataset = this.datasetMap.get(entry.linkedDatasetId);
+            const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
+            let dataEntry: InternalDataEntry;
+            if (prepDataIdx === -1) {
+              dataEntry = {
+                internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
+                color: options.color,
+                data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
+                points: {
+                  fillColor: options.color
+                },
+                lines: {
+                  lineWidth: options.lineWidth,
+                  pointRadius: options.pointRadius
+                },
+                bars: {
+                  lineWidth: options.lineWidth
+                },
+                axisOptions: {
+                  uom: dataset ? dataset.uom : entry.yaxisLabel,
+                  label: dataset ? dataset.label : entry.yaxisLabel,
+                  zeroBased: options.zeroBasedYAxis,
+                  yAxisRange: options.yAxisRange,
+                  autoRangeSelection: options.autoRangeSelection,
+                  separateYAxis: options.separateYAxis
+                },
+                visible: options.visible
               };
+              this.additionalPreparedData.push(dataEntry);
+            } else {
+              dataEntry = this.additionalPreparedData[prepDataIdx];
+              dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
+              dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
             }
-            this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
-          }
 
-          if (entry.yaxisLabel && !entry.linkedDatasetId) {
-            let idx = this.listOfUoms.indexOf(entry.yaxisLabel);
-            if (idx < 0) { this.listOfUoms.push(entry.yaxisLabel); }
+            const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
+            const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => {
+              if (this.timespan.from <= datum[0] && this.timespan.to >= datum[0]) { return datum[1]; }
+            });
+            if (dataExtent[0] && dataExtent[1]) {
+              const range: MinMaxRange = { min: dataExtent[0], max: dataExtent[1] };
+              this.extendRange(range);
+              if (newDatasetIdx === -1) {
+                const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
+                const axisRange = {
+                  uom: entry.yaxisLabel,
+                  range: range,
+                  autoRange: options.autoRangeSelection,
+                  preRange: range,
+                  originRange: range,
+                  zeroBased: options.zeroBasedYAxis,
+                  outOfrange: false,
+                  ids: [entry.yaxisLabel]
+                };
+                if (existingAxisIndex > -1) {
+                  this.yRangesEachUom[existingAxisIndex] = axisRange;
+                } else {
+                  this.yRangesEachUom.push(axisRange);
+                }
+              } else {
+                if (this.yRangesEachUom[newDatasetIdx].range) {
+                  this.yRangesEachUom[newDatasetIdx].range.min = Math.min(range.min, this.yRangesEachUom[newDatasetIdx].range.min);
+                  this.yRangesEachUom[newDatasetIdx].range.max = Math.max(range.max, this.yRangesEachUom[newDatasetIdx].range.max);
+                } else {
+                  this.yRangesEachUom[newDatasetIdx].range = range;
+                }
+                this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
+              }
+              if (entry.yaxisLabel && !entry.linkedDatasetId) {
+                let idx = this.listOfUoms.indexOf(entry.yaxisLabel);
+                if (idx < 0) { this.listOfUoms.push(entry.yaxisLabel); }
+              }
+            }
           }
         } else {
-          console.warn('The additional entry needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property: ', entry);
+          console.warn('Please check the additional entry, it needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property and a \'data\' property: ', entry);
         }
       });
     }
