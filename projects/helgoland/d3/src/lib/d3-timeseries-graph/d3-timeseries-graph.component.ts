@@ -529,10 +529,7 @@ export class D3TimeseriesGraphComponent
 
         if (setDataExtent) {
             calculatedRange = { min: dataExtent[0], max: dataExtent[1] };
-            if (calculatedRange.min === calculatedRange.max) {
-                calculatedRange.min = calculatedRange.min - (calculatedRange.min * 0.1);
-                calculatedRange.max = calculatedRange.max + (calculatedRange.max * 0.1);
-            }
+            this.extendRange(calculatedRange);
         }
 
         // if style option 'zero based y-axis' is checked,
@@ -618,6 +615,13 @@ export class D3TimeseriesGraphComponent
         });
         if (this.graph) {
             this.plotGraph();
+        }
+    }
+
+    protected extendRange(range: MinMaxRange) {
+        if (range.min === range.max) {
+            range.min = range.min - 1;
+            range.max = range.max + 1;
         }
     }
 
@@ -952,24 +956,6 @@ export class D3TimeseriesGraphComponent
         let maxDiagramTimestamp = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
 
         return [minDiagramTimestamp, maxDiagramTimestamp];
-    }
-
-    /**
-     * Function that returns the tickvalues for the x axis related to the timestep.
-     * @param time {String} String with the information how the time should be visualized in the x axis.
-     * @param range {Array} Array containing the minimum and maximum range.
-     * @param span {Number} Number with the ticksize for the axis generation.
-     */
-    private timeTickValues(time: String, range: any, span: number) {
-        if (time === 'minly') {
-            return d3.timeMinutes(range, new Date(this.xAxisRange.to), span);
-        }
-        if (time === 'hourly') {
-            return d3.timeHours(range, new Date(this.xAxisRange.to), span);
-        }
-        if (time === 'daily') {
-            return d3.timeDay.range(range, new Date(this.xAxisRange.to), span);
-        }
     }
 
     /**
