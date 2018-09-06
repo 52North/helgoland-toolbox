@@ -546,7 +546,8 @@ export class D3TimeseriesGraphComponent
         hoverable: true,
         grid: true,
         yaxis: true,
-        overview: false
+        overview: false,
+        showTimeLabel: true
     };
 
     private oldGroupYaxis;
@@ -672,7 +673,6 @@ export class D3TimeseriesGraphComponent
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
         this.oldGroupYaxis &#x3D; this.plotOptions.groupYaxis;
-
         Object.assign(this.plotOptions, options);
         if (this.rawSvg &amp;&amp; this.yRangesEachUom) {
             this.plotGraph();
@@ -894,10 +894,7 @@ export class D3TimeseriesGraphComponent
 
         if (setDataExtent) {
             calculatedRange &#x3D; { min: dataExtent[0], max: dataExtent[1] };
-            if (calculatedRange.min &#x3D;&#x3D;&#x3D; calculatedRange.max) {
-                calculatedRange.min &#x3D; calculatedRange.min - (calculatedRange.min * 0.1);
-                calculatedRange.max &#x3D; calculatedRange.max + (calculatedRange.max * 0.1);
-            }
+            this.extendRange(calculatedRange);
         }
 
         // if style option &#x27;zero based y-axis&#x27; is checked,
@@ -906,11 +903,11 @@ export class D3TimeseriesGraphComponent
         if (dataEntry.axisOptions.zeroBased &amp;&amp; !this.graphOptions.overview) {
             if (dataExtent[1] &lt;&#x3D; 0) {
                 calculatedRange.max &#x3D; 0;
-                calculatedPreRange.max &#x3D; 0;
+                if (calculatedPreRange) { calculatedPreRange.max &#x3D; 0; }
             }
             if (dataExtent[0] &gt;&#x3D; 0) {
                 calculatedRange.min &#x3D; 0;
-                calculatedPreRange.min &#x3D; 0;
+                if (calculatedPreRange) { calculatedPreRange.min &#x3D; 0; }
             }
         }
 
@@ -986,6 +983,13 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    protected extendRange(range: MinMaxRange) {
+        if (range.min &#x3D;&#x3D;&#x3D; range.max) {
+            range.min &#x3D; range.min - 1;
+            range.max &#x3D; range.max + 1;
+        }
+    }
+
     private checkCurrentLatest(idx, obj, pos) {
         if (this.yRangesEachUom[idx][pos].min &gt; obj[pos].min &amp;&amp; !isNaN(obj[pos].min)) {
             this.yRangesEachUom[idx][pos].min &#x3D; obj[pos].min;
@@ -1003,7 +1007,7 @@ export class D3TimeseriesGraphComponent
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom + (this.plotOptions.showTimeLabel ? 0 : 20);
     }
 
     /**
@@ -1057,6 +1061,7 @@ export class D3TimeseriesGraphComponent
         }
 
         this.height &#x3D; this.calculateHeight();
+        console.log(this.height);
         this.width &#x3D; this.calculateWidth();
         this.graph.selectAll(&#x27;*&#x27;).remove();
 
@@ -1320,24 +1325,6 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
-     * Function that returns the tickvalues for the x axis related to the timestep.
-     * @param time {String} String with the information how the time should be visualized in the x axis.
-     * @param range {Array} Array containing the minimum and maximum range.
-     * @param span {Number} Number with the ticksize for the axis generation.
-     */
-    private timeTickValues(time: String, range: any, span: number) {
-        if (time &#x3D;&#x3D;&#x3D; &#x27;minly&#x27;) {
-            return d3.timeMinutes(range, new Date(this.xAxisRange.to), span);
-        }
-        if (time &#x3D;&#x3D;&#x3D; &#x27;hourly&#x27;) {
-            return d3.timeHours(range, new Date(this.xAxisRange.to), span);
-        }
-        if (time &#x3D;&#x3D;&#x3D; &#x27;daily&#x27;) {
-            return d3.timeDay.range(range, new Date(this.xAxisRange.to), span);
-        }
-    }
-
-    /**
      * Function that draws the x axis to the svg element.
      * @param bufferXrange {Number} Number with the distance between left edge and the beginning of the graph.
      */
@@ -1356,7 +1343,7 @@ export class D3TimeseriesGraphComponent
                     formatMinute &#x3D; &#x27;%H:%M&#x27;,
                     formatHour &#x3D; &#x27;%H:%M&#x27;,
                     formatDay &#x3D; &#x27;%a %d&#x27;,
-                    formatWeek &#x3D; &#x27;%b %d&#x27;,
+                    formatWeek &#x3D; &#x27;%a %d&#x27;,
                     formatMonth &#x3D; &#x27;%B&#x27;,
                     formatYear &#x3D; &#x27;%Y&#x27;;
 
@@ -1394,11 +1381,13 @@ export class D3TimeseriesGraphComponent
             .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
 
         // text label for the x axis
-        this.graph.append(&#x27;text&#x27;)
-            .attr(&#x27;x&#x27;, (this.width + bufferXrange) / 2)
-            .attr(&#x27;y&#x27;, this.height + this.margin.bottom - 5)
-            .style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;)
-            .text(&#x27;time&#x27;);
+        if (this.plotOptions.showTimeLabel) {
+            this.graph.append(&#x27;text&#x27;)
+                .attr(&#x27;x&#x27;, (this.width + bufferXrange) / 2)
+                .attr(&#x27;y&#x27;, this.height + this.margin.bottom - 5)
+                .style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;)
+                .text(&#x27;time&#x27;);
+        }
     }
 
     /**

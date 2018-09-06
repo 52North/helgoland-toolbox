@@ -1488,7 +1488,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
 
     protected drawGeometries() {
         this.isContentLoading(true);
-        if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+        if (this.map &amp;&amp; this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         if (this.statusIntervals &amp;&amp; this.filter &amp;&amp; this.filter.phenomenon) {
             this.createValuedMarkers();
         } else {
@@ -1525,11 +1525,11 @@ export class StationMapSelectorComponent extends MapSelectorComponent&lt;Station
 
             Observable.forkJoin(obsList).subscribe(() &#x3D;&gt; {
                 this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
-                this.map.invalidateSize();
+                if (this.map) { this.map.invalidateSize(); }
                 this.isContentLoading(false);
             });
 
-            this.markerFeatureGroup.addTo(this.map);
+            if (this.map) { this.markerFeatureGroup.addTo(this.map); }
         });
     }
 
