@@ -181,7 +181,8 @@ export class D3TimeseriesGraphComponent
         hoverable: true,
         grid: true,
         yaxis: true,
-        overview: false
+        overview: false,
+        showTimeLabel: true
     };
 
     private oldGroupYaxis;
@@ -307,7 +308,6 @@ export class D3TimeseriesGraphComponent
     }
     protected graphOptionsChanged(options: D3PlotOptions): void {
         this.oldGroupYaxis = this.plotOptions.groupYaxis;
-
         Object.assign(this.plotOptions, options);
         if (this.rawSvg && this.yRangesEachUom) {
             this.plotGraph();
@@ -642,7 +642,7 @@ export class D3TimeseriesGraphComponent
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom + (this.plotOptions.showTimeLabel ? 0 : 20);
     }
 
     /**
@@ -696,6 +696,7 @@ export class D3TimeseriesGraphComponent
         }
 
         this.height = this.calculateHeight();
+        console.log(this.height);
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
 
@@ -1015,11 +1016,13 @@ export class D3TimeseriesGraphComponent
             .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
 
         // text label for the x axis
-        this.graph.append('text')
-            .attr('x', (this.width + bufferXrange) / 2)
-            .attr('y', this.height + this.margin.bottom - 5)
-            .style('text-anchor', 'middle')
-            .text('time');
+        if (this.plotOptions.showTimeLabel) {
+            this.graph.append('text')
+                .attr('x', (this.width + bufferXrange) / 2)
+                .attr('y', this.height + this.margin.bottom - 5)
+                .style('text-anchor', 'middle')
+                .text('time');
+        }
     }
 
     /**
