@@ -541,11 +541,11 @@ export class D3TimeseriesGraphComponent
         if (dataEntry.axisOptions.zeroBased && !this.graphOptions.overview) {
             if (dataExtent[1] <= 0) {
                 calculatedRange.max = 0;
-                calculatedPreRange.max = 0;
+                if (calculatedPreRange) { calculatedPreRange.max = 0; }
             }
             if (dataExtent[0] >= 0) {
                 calculatedRange.min = 0;
-                calculatedPreRange.min = 0;
+                if (calculatedPreRange) { calculatedPreRange.min = 0; }
             }
         }
 
