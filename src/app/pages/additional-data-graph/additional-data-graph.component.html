@@ -1,6 +1,6 @@
 <div style="height: 500px;">
   <n52-extended-data-d3-timeseries-graph [datasetIds]="datasetIds" [additionalData]="additionalData" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
-    [graphOptions]="graphOptions" (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
+    [presenterOptions]="graphOptions" (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
     #diagram></n52-extended-data-d3-timeseries-graph>
 </div>
 

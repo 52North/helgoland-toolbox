@@ -1,13 +1,13 @@
 <div style="height: 500px;">
   <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
-    [graphOptions]="d3diagramOptions" [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
+    [presenterOptions]="d3diagramOptions" [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
     (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" #diagram></n52-d3-timeseries-graph>
 </div>
 <div>
   Loading Graph: {{graphLoading}}
 </div>
 <div style="height: 200px;">
-  <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [graphOptions]="d3overviewOptions"
+  <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions" [presenterOptions]="d3overviewOptions"
     [reloadForDatasets]="reloadForDatasets" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-d3-overview-timeseries-graph>
 </div>
 <div>

@@ -306,7 +306,7 @@ export class D3TimeseriesGraphComponent
         }
         this.plotGraph();
     }
-    protected graphOptionsChanged(options: D3PlotOptions): void {
+    protected presenterOptionsChanged(options: D3PlotOptions): void {
         this.oldGroupYaxis = this.plotOptions.groupYaxis;
         Object.assign(this.plotOptions, options);
         if (this.rawSvg && this.yRangesEachUom) {
@@ -512,7 +512,7 @@ export class D3TimeseriesGraphComponent
         let setDataExtent = false;
 
         // calculate out of predefined range
-        if (predefinedRange && !this.graphOptions.overview) {
+        if (predefinedRange && !this.plotOptions.overview) {
             if (predefinedRange.min > predefinedRange.max) {
                 calculatedRange = { min: predefinedRange.max, max: predefinedRange.min };
                 calculatedPreRange = { min: predefinedRange.max, max: predefinedRange.min };
@@ -535,7 +535,7 @@ export class D3TimeseriesGraphComponent
         // if style option 'zero based y-axis' is checked,
         // the axis will be aligned to top 0 (with data below 0) or to bottom 0 (with data above 0)
         // let zeroBasedValue = -1;
-        if (dataEntry.axisOptions.zeroBased && !this.graphOptions.overview) {
+        if (dataEntry.axisOptions.zeroBased && !this.plotOptions.overview) {
             if (dataExtent[1] <= 0) {
                 calculatedRange.max = 0;
                 if (calculatedPreRange) { calculatedPreRange.max = 0; }
@@ -696,7 +696,6 @@ export class D3TimeseriesGraphComponent
         }
 
         this.height = this.calculateHeight();
-        console.log(this.height);
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
 
