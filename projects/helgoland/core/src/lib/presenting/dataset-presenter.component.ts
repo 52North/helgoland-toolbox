@@ -23,10 +23,12 @@ import { PresenterMessage } from './presenter-message';
 
 const equal = require('deep-equal');
 
+export interface PresenterOptions { }
+
 /**
  * Abstract superclass for all components, which will present datasets.
  */
-export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U>
+export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions>
     extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
 
     /**
@@ -58,7 +60,8 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
      * Options for general presentation of the data.
      */
     @Input()
-    public graphOptions: U;
+    public presenterOptions: U;
+    protected oldPresenterOptions: U;
 
     /**
      * List of datasets for which a reload should be triggered, when the Array is set to new value.
@@ -96,7 +99,6 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     private datasetIdsDiffer: IterableDiffer<string>;
     private selectedDatasetIdsDiffer: IterableDiffer<string>;
-    private oldGraphOptions: U;
     private langChangeSubscription: Subscription;
 
     constructor(
@@ -147,10 +149,10 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             });
         }
 
-        if (!equal(this.oldGraphOptions, this.graphOptions)) {
-            this.oldGraphOptions = Object.assign({}, this.graphOptions);
-            const options = Object.assign({}, this.graphOptions);
-            this.graphOptionsChanged(options);
+        if (!equal(this.oldPresenterOptions, this.presenterOptions)) {
+            this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
+            const options = Object.assign({}, this.presenterOptions);
+            this.presenterOptionsChanged(options);
         }
 
         if (this.datasetOptions) {
@@ -184,7 +186,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     protected abstract removeSelectedId(internalId: string): void;
 
-    protected abstract graphOptionsChanged(options: U): void;
+    protected abstract presenterOptionsChanged(options: U): void;
 
     protected abstract datasetOptionsChanged(internalId: string, options: T, firstChange: boolean): void;
 
