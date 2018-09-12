@@ -498,7 +498,10 @@ export class D3TimeseriesGraphComponent
         let calculatedRange: MinMaxRange;
         let calculatedPreRange: MinMaxRange;
         let calculatedOriginRange: MinMaxRange;
-        let predefinedRange = dataEntry.axisOptions.yAxisRange;
+        let predefinedRange: MinMaxRange;
+        if (dataEntry.axisOptions.yAxisRange && dataEntry.axisOptions.yAxisRange.min !== dataEntry.axisOptions.yAxisRange.max) {
+            predefinedRange = dataEntry.axisOptions.yAxisRange;
+        }
         let autoDataExtent = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
