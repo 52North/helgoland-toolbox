@@ -31,10 +31,12 @@ export class BasicAuthServiceMaintainer {
     if (matchedUrl) {
       return matchedUrl;
     }
-
-    const api = this.settingsService.getSettings().datasetApis.find((e) => url.startsWith(e.url) && e.basicAuth);
-    if (api) {
-      return api.url;
+    const settings = this.settingsService.getSettings();
+    if (settings && settings.datasetApis && Array.isArray(settings.datasetApis)) {
+      const api = settings.datasetApis.find((e) => url.startsWith(e.url) && e.basicAuth);
+      if (api) {
+        return api.url;
+      }
     }
   }
 
