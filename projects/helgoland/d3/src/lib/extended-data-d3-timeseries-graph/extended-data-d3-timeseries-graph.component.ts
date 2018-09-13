@@ -160,7 +160,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => {
               if (this.timespan.from <= datum[0] && this.timespan.to >= datum[0]) { return datum[1]; }
             });
-            if (dataExtent[0] && dataExtent[1]) {
+            if (isFinite(dataExtent[0]) && isFinite(dataExtent[1])) {
               const range: MinMaxRange = { min: dataExtent[0], max: dataExtent[1] };
               this.extendRange(range);
               if (newDatasetIdx === -1) {
