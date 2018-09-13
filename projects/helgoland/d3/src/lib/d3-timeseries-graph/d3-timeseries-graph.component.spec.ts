@@ -42,7 +42,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
   });
 
   it('should have option variables to be undefined', () => {
-    expect(component.graphOptions).toBe(undefined);
+    expect(component.presenterOptions).toBe(undefined);
     expect(component.isContentLoading).toBe(undefined);
     expect(component.mainTimeInterval).toBe(undefined);
     expect(component.timeInterval).toBe(undefined);
