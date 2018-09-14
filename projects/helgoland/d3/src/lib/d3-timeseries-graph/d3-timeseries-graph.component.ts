@@ -968,7 +968,7 @@ export class D3TimeseriesGraphComponent
     private drawXaxis(bufferXrange: number) {
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
-            .domain([this.xAxisRange.from, this.xAxisRange.to])
+            .domain([new Date(this.xAxisRange.from), new Date(this.xAxisRange.to)])
             .range([bufferXrange, this.width]);
 
         let xAxis = d3.axisBottom(this.xScaleBase)
@@ -979,8 +979,8 @@ export class D3TimeseriesGraphComponent
                     formatSecond = ':%S',
                     formatMinute = '%H:%M',
                     formatHour = '%H:%M',
-                    formatDay = '%a %d',
-                    formatWeek = '%a %d',
+                    formatDay = '%b %d',
+                    formatWeek = '%b %d',
                     formatMonth = '%B',
                     formatYear = '%Y';
 
@@ -1053,7 +1053,6 @@ export class D3TimeseriesGraphComponent
 
         let yMin = -1;
         let yMax = 1;
-
         if (range !== undefined && range !== null) {
             yMin = range.min;
             yMax = range.max;
