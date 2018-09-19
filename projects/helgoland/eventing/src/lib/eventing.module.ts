@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 
+import { EventingApiService } from './eventing-api.service';
+import { EventingImplApiInterface } from './eventing-impl-api-interface.service';
+
+/**
+ * Provides standard eventing api service implemention
+ */
 @NgModule({
-  imports: [],
-  declarations: [],
-  exports: [],
-  providers: []
+  providers: [{
+    provide: EventingApiService,
+    useClass: EventingImplApiInterface
+  }]
 })
-export class EventingModule { }
+export class HelgolandEventingModule { }

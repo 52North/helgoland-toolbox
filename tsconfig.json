@@ -91,12 +91,6 @@
       "@helgoland/plotly/*": [
         "dist/helgoland/plotly/*"
       ],
-      "@helgoland/flot": [
-        "dist/helgoland/flot"
-      ],
-      "@helgoland/flot/*": [
-        "dist/helgoland/flot/*"
-      ],
       "@helgoland/time-range-slider": [
         "dist/helgoland/time-range-slider"
       ],

@@ -27,7 +27,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     public datasetOptions: Map<string, DatasetOptions>;
 
     @Input()
-    public graphOptions: D3PlotOptions;
+    public presenterOptions: D3PlotOptions;
 
     @Input()
     public timeInterval: TimeInterval;
@@ -58,10 +58,10 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
         protected timeSrvc: Time,
         protected cd: ChangeDetectorRef
     ) {
-        if (this.graphOptions) {
-            this.graphOptions.overview = true;
+        if (this.presenterOptions) {
+            this.presenterOptions.overview = true;
         } else {
-            this.graphOptions = { overview: true };
+            this.presenterOptions = { overview: true };
         }
     }
 

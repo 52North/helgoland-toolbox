@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DatasetOptions, Timespan } from '@helgoland/core';
 import { D3PlotOptions } from '@helgoland/d3';
-import { PlotOptions } from '@helgoland/flot';
 
 @Component({
     templateUrl: './timeseries-graph.component.html',
@@ -15,27 +14,6 @@ export class TimeseriesGraphComponent {
     public colors = ['#123456', '#FF0000'];
 
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
-    public diagramOptions: PlotOptions = {
-        crosshair: {
-            mode: 'x'
-        },
-        pan: {
-            frameRate: 10,
-            interactive: true
-        },
-        touch: {
-            delayTouchEnded: 200,
-            pan: 'x',
-            scale: ''
-        },
-        yaxis: {
-            additionalWidth: 17,
-            labelWidth: 50,
-            min: null,
-            panRange: false,
-            show: true,
-        }
-    };
     public diagramOptionsD3: D3PlotOptions = {
         togglePanZoom: false,
         showReferenceValues: false,

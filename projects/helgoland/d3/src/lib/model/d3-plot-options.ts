@@ -79,6 +79,13 @@ export interface D3PlotOptions {
     */
     groupYaxis?: boolean;
 
+    /**
+    * show the label of the xaxis
+    *
+    * @memberof D3PlotOptions
+    */
+    showTimeLabel?: boolean;
+
 }
 
 export interface D3Copyright {

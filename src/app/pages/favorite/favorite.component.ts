@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetOptions, Timespan } from '@helgoland/core';
+import { DatasetApiInterface, DatasetOptions, Timespan } from '@helgoland/core';
 import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
 
 @Component({
@@ -12,9 +12,13 @@ export class FavoriteComponent {
 
   constructor(
     private favoriteSrvc: FavoriteService,
-    private jsonExport: JsonFavoriteExporterService
+    private jsonExport: JsonFavoriteExporterService,
+    private api: DatasetApiInterface
   ) {
-    this.loadFavorites();
+    this.api.getSingleTimeseries('26', 'http://www.fluggs.de/sos2/api/v1/').subscribe(dataset => {
+      this.favoriteSrvc.addFavorite(dataset);
+      this.loadFavorites();
+    });
   }
 
   public changeLabelName(favorite: SingleFavorite) {
