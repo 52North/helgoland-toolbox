@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
-import { PlotOptions } from '@helgoland/flot';
 import { D3PlotOptions, HoveringStyle } from 'projects/helgoland/d3/src/public_api';
 
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
@@ -15,78 +14,23 @@ import { HighlightOutput } from 'projects/helgoland/d3/src/lib/d3-timeseries-gra
 export class GraphLegendComponent {
 
     public datasetIds = [
-        // 'http://www.fluggs.de/sos2/api/v1/__26',
-        // 'http://www.fluggs.de/sos2/api/v1/__51',
-        // 'http://www.fluggs.de/sos2/api/v1/__72',
-
-        'http://geo.irceline.be/sos/api/v1/__6941',
-        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
+        'http://www.fluggs.de/sos2/api/v1/__26',
+        'http://www.fluggs.de/sos2/api/v1/__51',
+        'http://www.fluggs.de/sos2/api/v1/__72',
+        // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
         // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
         // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
-
-        // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
+        // 'http://geo.irceline.be/sos/api/v1/__6941',
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
     public reloadForDatasets = [];
     public timespan;
     public plotLanguage;
-
-    public diagramOptions: PlotOptions = {
-        crosshair: {
-            mode: 'x'
-        },
-        showReferenceValues: true,
-        grid: {
-            autoHighlight: true,
-            hoverable: true
-        },
-        legend: {
-            show: false
-        },
-        pan: {
-            frameRate: 10,
-            interactive: true
-        },
-        selection: {
-            mode: null
-        },
-        series: {
-            // downsample: {
-            //   threshold: 0
-            // },
-            shadowSize: 1
-        },
-        touch: {
-            delayTouchEnded: 200,
-            pan: 'x',
-            scale: ''
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-            // monthNames: monthNamesTranslaterServ.getMonthNames()
-            //            timeformat: '%Y/%m/%d',
-            // use these the following two lines to have small ticks at the bottom ob the diagram
-            //            tickLength: 5,
-            //            tickColor: '#000'
-        },
-        yaxis: {
-            additionalWidth: 17,
-            labelWidth: 50,
-            min: null,
-            panRange: false,
-            show: true,
-            // tickFormatter: function(val, axis) {
-            //     var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
-            //     var formatted = '' + Math.round(val * factor) / factor;
-            //     return formatted + '<br>' + this.uom;
-            // }
-        }
-    };
 
     public d3diagramOptions: D3PlotOptions = {
         yaxis: true,
@@ -96,35 +40,6 @@ export class GraphLegendComponent {
             positionY: 'bottom'
         },
         groupYaxis: true
-    };
-
-    public overviewOptions: PlotOptions = {
-        selection: {
-            mode: 'overview',
-            color: '#718296',
-            shape: 'butt',
-            minSize: 30
-        },
-        grid: {
-            hoverable: false,
-            autoHighlight: false
-        },
-        xaxis: {
-            mode: 'time',
-            timezone: 'browser',
-            // monthNames: monthNamesTranslaterServ.getMonthNames()
-        },
-        yaxis: {
-            show: false
-        },
-        legend: {
-            show: false
-        },
-        touch: {
-            pan: '',
-            scale: ''
-        },
-        generalizeAllways: true
     };
 
     public d3overviewOptions: D3PlotOptions = {
@@ -194,7 +109,6 @@ export class GraphLegendComponent {
     }
 
     public changeYAxesVisibility() {
-        this.diagramOptions.yaxis.show = !this.diagramOptions.yaxis.show;
         this.d3diagramOptions.yaxis = !this.d3diagramOptions.yaxis;
     }
 

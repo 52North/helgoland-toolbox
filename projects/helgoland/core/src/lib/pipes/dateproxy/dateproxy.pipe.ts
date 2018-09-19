@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
-    name: 'date',
+    name: 'dateI18n',
     pure: false
 })
 export class DateProxyPipe implements PipeTransform {

@@ -68,7 +68,7 @@ export class ProfileTrajectoryMapSelectorComponent
 
     public ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (changes.selectedTimespan && this.selectedTimespan) {
+        if (changes.selectedTimespan && this.selectedTimespan && this.map) {
             this.clearMap();
             this.initLayer();
             this.data.forEach((entry) => {
@@ -88,7 +88,7 @@ export class ProfileTrajectoryMapSelectorComponent
                 const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
                 this.apiInterface.getData<LocatedProfileDataEntry>(dataset.id, this.serviceUrl, timespan)
                     .subscribe((data) => {
-                        if (data.values instanceof Array) {
+                        if (this.map && data.values instanceof Array) {
                             this.initLayer();
                             this.data = [];
                             const timelist: number[] = [];
@@ -113,7 +113,7 @@ export class ProfileTrajectoryMapSelectorComponent
     }
 
     private clearMap() {
-        if (this.layer) {
+        if (this.map && this.layer) {
             this.map.removeLayer(this.layer);
         }
     }

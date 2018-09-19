@@ -30,7 +30,6 @@
       "hammerjs",
       "jasmine",
       "node",
-      "flot",
       "jquery"
     ]
   },

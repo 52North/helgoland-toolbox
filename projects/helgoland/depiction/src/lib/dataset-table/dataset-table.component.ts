@@ -88,7 +88,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     // console.log('reload data at ' + new Date());
   }
 
-  protected graphOptionsChanged(options: any) {
+  protected presenterOptionsChanged(options: any) {
     // only included because it's required by abstract parent class (wouldn't compile without)
     // no point in implementing this method in a non-graphing component
   }

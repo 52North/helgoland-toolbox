@@ -13,6 +13,5 @@ export const modules = [
   'time',
   'time-range-slider',
   'd3',
-  'plotly',
-  'flot'
+  'plotly'
 ];

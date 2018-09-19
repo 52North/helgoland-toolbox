@@ -602,46 +602,6 @@
         }
       }
     },
-    "@helgoland/flot": {
-      "root": "projects/helgoland/flot",
-      "sourceRoot": "projects/helgoland/flot/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/helgoland/flot/tsconfig.lib.json",
-            "project": "projects/helgoland/flot/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/helgoland/flot/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/helgoland/flot/src/test.ts",
-            "tsConfig": "projects/helgoland/flot/tsconfig.spec.json",
-            "karmaConfig": "projects/helgoland/flot/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/helgoland/flot/tsconfig.lib.json",
-              "projects/helgoland/flot/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "@helgoland/time-range-slider": {
       "root": "projects/helgoland/time-range-slider",
       "sourceRoot": "projects/helgoland/time-range-slider/src",

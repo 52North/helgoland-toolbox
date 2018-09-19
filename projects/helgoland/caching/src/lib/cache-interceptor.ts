@@ -1,11 +1,8 @@
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/share';
-
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpServiceHandler, HttpServiceInterceptor, HttpRequestOptions } from '@helgoland/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor } from '@helgoland/core';
+import { Observable, Observer, of } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 import { HttpCache, OnGoingHttpCache } from './model';
 
@@ -35,7 +32,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
-            return Observable.of(cachedResponse);
+            return of(cachedResponse);
         }
 
         // check if the same request is still in the pipe
@@ -45,8 +42,8 @@ export class CachingInterceptor implements HttpServiceInterceptor {
             // No cached response exists. Go to the network, and cache
             // the response when it arrives.
             return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-                const share = next.handle(req, metadata).share();
-                share.subscribe((res) => {
+                const shared = next.handle(req, metadata).pipe(share());
+                shared.subscribe((res) => {
                     if (res instanceof HttpResponse) {
                         this.cache.put(req, res, metadata.expirationAtMs);
                         this.ongoingCache.clear(req);
@@ -57,7 +54,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                     observer.error(error);
                     observer.complete();
                 });
-                this.ongoingCache.set(req, share);
+                this.ongoingCache.set(req, shared);
             });
         }
     }

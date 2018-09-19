@@ -65,7 +65,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
 
     protected drawGeometries() {
         this.isContentLoading(true);
-        if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+        if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         if (this.statusIntervals && this.filter && this.filter.phenomenon) {
             this.createValuedMarkers();
         } else {
@@ -102,11 +102,11 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
 
             Observable.forkJoin(obsList).subscribe(() => {
                 this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
-                this.map.invalidateSize();
+                if (this.map) { this.map.invalidateSize(); }
                 this.isContentLoading(false);
             });
 
-            this.markerFeatureGroup.addTo(this.map);
+            if (this.map) { this.markerFeatureGroup.addTo(this.map); }
         });
     }
 

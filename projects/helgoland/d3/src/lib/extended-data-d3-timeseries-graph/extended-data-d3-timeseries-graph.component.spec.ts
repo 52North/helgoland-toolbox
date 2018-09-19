@@ -42,7 +42,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
                 data: [
                     {
                         timestamp: new Date().getTime() - 1000,
-                        value: Math.random()
+                        value: 0
                     },
                     {
                         timestamp: new Date().getTime(),
