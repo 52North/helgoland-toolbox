@@ -161,7 +161,6 @@ export class GraphLegendComponent {
     }
 
     public highlightChanged(highlightObject: HighlightOutput) {
-        console.log(highlightObject.ids);
         this.highlightedTime = new Date(highlightObject.timestamp);
     }
 
