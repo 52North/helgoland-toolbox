@@ -18,10 +18,8 @@
     <button (click)="groupYaxisChanged()">group axis</button>
     {{d3diagramOptions.groupYaxis}}
     
-    <button (click)="changeHovering('nearestPoint')">nearestPoint</button>
+    <button (click)="changeHovering('point')">point</button>
     <button (click)="changeHovering('line')">line</button>
-    <button (click)="changeHovering('pointLine')">pointLine</button>
-    <button (click)="changeHovering('old')">old</button>
     {{highlightedTime}}
 
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
