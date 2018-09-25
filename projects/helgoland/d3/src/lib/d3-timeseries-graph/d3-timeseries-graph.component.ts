@@ -140,6 +140,7 @@ export class D3TimeseriesGraphComponent
     private mousedownBrush: boolean;
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     protected graph: any;
+    // protected graphFocus: any;
     private graphBody: any;
     private dragRect: any;
     private dragRectG: any;
@@ -169,6 +170,8 @@ export class D3TimeseriesGraphComponent
     private copyright: any;
     private focusG: any;
     private highlightFocus: any;
+    private highlightRect: any;
+    private highlightText: any;
     private focuslabelTime: any;
     private bufferSum: number;
     private labelTimestamp: number[];
@@ -197,7 +200,7 @@ export class D3TimeseriesGraphComponent
         generalizeAllways: true,
         togglePanZoom: true,
         hoverable: true,
-        hoverStyle: HoveringStyle.old,
+        hoverStyle: HoveringStyle.point,
         grid: true,
         yaxis: true,
         overview: false,
@@ -234,6 +237,10 @@ export class D3TimeseriesGraphComponent
         this.graph = this.rawSvg
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+
+        // this.graphFocus = this.rawSvg
+        //     .append('g')
+        //     .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
         this.plotGraph();
@@ -784,14 +791,13 @@ export class D3TimeseriesGraphComponent
 
             // mouse events hovering
             if (this.plotOptions.hoverable) {
-                console.log(this.plotOptions.hoverStyle);
-                if (this.plotOptions.hoverStyle === HoveringStyle.old) {
+                if (this.plotOptions.hoverStyle === HoveringStyle.line) {
                     this.background
                         .on('mousemove.focus', this.mousemoveHandlerOld)
                         .on('mouseout.focus', this.mouseoutHandlerOld);
 
                     // line inside graph
-                    this.focusG = this.graph.append('g');
+                    // this.focusG = this.graph.append('g');
                     this.highlightFocus = this.focusG.append('svg:line')
                         .attr('class', 'mouse-focus-line')
                         .attr('x2', '0')
@@ -819,12 +825,10 @@ export class D3TimeseriesGraphComponent
                             .attr('class', 'mouse-focus-time');
                     });
                 } else {
+                    // no background events -> events will be send to next level
                     this.background
-                        .on('mousemove.focus', this.mousemoveHandler)
-                        .on('mouseout.focus', this.mouseoutHandler);
-
+                        .attr('pointer-events', 'none');
                 }
-
             }
 
             if (this.plotOptions.togglePanZoom === false) {
@@ -934,6 +938,12 @@ export class D3TimeseriesGraphComponent
      * Draws for every preprared data entry the graph line.
      */
     protected drawAllGraphLines() {
+        // this.focusG = this.graphFocus.append('g');
+        this.focusG = this.graph.append('g');
+        if (this.plotOptions.hoverStyle === HoveringStyle.point) {
+            this.highlightRect = this.focusG.append('svg:rect');
+            this.highlightText = this.focusG.append('svg:text');
+        }
         this.preparedData.forEach((entry) => this.drawGraphLine(entry));
     }
 
@@ -1435,12 +1445,108 @@ export class D3TimeseriesGraphComponent
                 this.graphBody.selectAll('.dot')
                     .data(entry.data.filter((d) => !isNaN(d[1])))
                     .enter().append('circle')
-                    .attr('class', 'dot')
+                    .attr('class', 'graphDots')
                     .attr('stroke', entry.color)
                     .attr('fill', entry.color)
                     .attr('cx', line.x())
                     .attr('cy', line.y())
                     .attr('r', entry.lines.pointRadius);
+
+                if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
+                    let transparentDotRadius = '8px';
+                    let dots = this.graphBody.selectAll('.dot')
+                        .data(entry.data.filter((d) => !isNaN(d[1])))
+                        .enter().append('circle')
+                        .attr('class', 'hoverDots')
+                        .attr('stroke', 'transparent')
+                        .attr('stroke-width', transparentDotRadius)
+                        .attr('fill', 'none')
+                        .attr('cx', line.x())
+                        .attr('cy', line.y());
+
+                    dots
+                        .on('mouseover', (d, i, k) => {
+                            d3.select(k[i])
+                                .attr('fill', entry.color)
+                                .attr('opacity', 0.8)
+                                .attr('r', 8);
+
+                            this.highlightRect
+                                .style('visibility', 'visible');
+                            this.highlightText
+                                .style('visibility', 'visible');
+
+                            // hovering label for dots
+                            let dotLabel = this.highlightText
+                                .text(d[1] + ' ' + entry.axisOptions.uom) // d[0] = timestamp, d[1] = data
+                                .attr('class', 'mouseHoverDotLabel')
+                                .style('pointer-events', 'none')
+                                .style('fill', entry.color);
+
+                            let coords = d3.mouse(this.background.node());
+                            let onLeftSide = false;
+                            if ((this.background.node().getBBox().width + this.bufferSum) / 2 > coords[0]) { onLeftSide = true; }
+
+                            let rectX = d.xDiagCoord + 15;
+                            let rectY = d.yDiagCoord;
+                            let rectW = this.getDimensions(dotLabel.node()).w + 8;
+                            let rectH = this.getDimensions(dotLabel.node()).h; // + 4;
+                            if (!onLeftSide) {
+                                rectX = d.xDiagCoord - 15 - rectW;
+                                rectY = d.yDiagCoord;
+                            }
+
+                            let dotRectangle = this.highlightRect
+                                .attr('class', 'mouseHoverDotRect')
+                                .style('fill', 'white')
+                                .style('stroke', entry.color)
+                                .style('stroke-width', '1px')
+                                .style('pointer-events', 'none')
+                                .attr('width', rectW)
+                                .attr('height', rectH)
+                                .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
+
+                            let labelX = d.xDiagCoord + 4 + 15;
+                            let labelY = d.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
+
+                            if (!onLeftSide) {
+                                labelX = d.xDiagCoord - rectW + 4 - 15;
+                                labelY = d.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
+                            }
+
+                            this.highlightText
+                                .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
+
+                            // generate output of highlighted data
+                            let idOutput: HighlightValue = {
+                                'timestamp': d[0],
+                                'value': d[1]
+                            };
+                            this.highlightOutput = {
+                                'timestamp': d[0],
+                                'ids': []
+                            };
+                            this.highlightOutput.ids[entry.internalId] = idOutput;
+                            this.onHighlightChanged.emit(this.highlightOutput);
+                        })
+                        .on('mouseout', (d, i, k) => {
+                            d3.select(k[i])
+                                .attr('fill', entry.color)
+                                .attr('r', entry.lines.pointRadius);
+
+                            d3.selectAll('.hoverDots')
+                                .attr('stroke', 'transparent')
+                                .attr('stroke-width', transparentDotRadius)
+                                .attr('fill', 'none');
+
+                            this.highlightRect
+                                .style('visibility', 'hidden');
+                            this.highlightText
+                                .style('visibility', 'hidden');
+
+                        });
+
+                }
             }
         }
     }

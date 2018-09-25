@@ -52,7 +52,7 @@ export interface D3PlotOptions {
      *
      * @memberof D3PlotOptions
      */
-    hoverStyle?: string;
+    hoverStyle?: HoveringStyle;
 
     /**
      * indicating if component should build overview diagram or not
@@ -95,8 +95,6 @@ export interface D3Copyright {
 }
 
 export enum HoveringStyle {
-    nearestPoint = 'nearestPoint', // default
     line = 'line',
-    pointLine = 'pointLine',
-    old = 'old'
+    point = 'point' // default
 }

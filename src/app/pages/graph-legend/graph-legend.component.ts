@@ -56,7 +56,7 @@ export class GraphLegendComponent {
     public overviewLoading: boolean;
     public graphLoading: boolean;
 
-    public hoverstyle: string = HoveringStyle.old;
+    public hoverstyle: HoveringStyle; // = HoveringStyle.old;
     public highlightedTime: Date;
 
     constructor(
@@ -155,7 +155,7 @@ export class GraphLegendComponent {
         this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
     }
 
-    public changeHovering(id) {
+    public changeHovering(id: string) {
         this.hoverstyle = HoveringStyle[id];
         this.d3diagramOptions.hoverStyle = this.hoverstyle;
     }
