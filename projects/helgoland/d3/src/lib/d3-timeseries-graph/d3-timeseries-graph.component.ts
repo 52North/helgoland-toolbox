@@ -140,7 +140,7 @@ export class D3TimeseriesGraphComponent
     private mousedownBrush: boolean;
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     protected graph: any;
-    // protected graphFocus: any;
+    protected graphFocus: any;
     private graphBody: any;
     private dragRect: any;
     private dragRectG: any;
@@ -167,6 +167,7 @@ export class D3TimeseriesGraphComponent
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
+    private pointHovering: any;
     private copyright: any;
     private focusG: any;
     private highlightFocus: any;
@@ -238,9 +239,9 @@ export class D3TimeseriesGraphComponent
             .append('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        // this.graphFocus = this.rawSvg
-        //     .append('g')
-        //     .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+        this.graphFocus = this.rawSvg
+            .append('g')
+            .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
         this.plotGraph();
@@ -731,6 +732,7 @@ export class D3TimeseriesGraphComponent
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
         this.graph.selectAll('*').remove();
+        this.graphFocus.selectAll('*').remove();
 
         this.bufferSum = 0;
         this.yScaleBase = null;
@@ -775,29 +777,29 @@ export class D3TimeseriesGraphComponent
 
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
+        this.background = this.graph.append('svg:rect')
+            .attr('width', this.width - this.bufferSum)
+            .attr('height', this.height)
+            .attr('id', 'backgroundRect')
+            .attr('fill', 'none')
+            .attr('stroke', 'none')
+            .attr('pointer-events', 'all')
+            .attr('transform', 'translate(' + this.bufferSum + ', 0)');
+
         this.drawAllGraphLines();
 
         // #####################################################
         // create background rect
         if (!this.plotOptions.overview) {
             // execute when it is not an overview diagram
-            this.background = this.graph.append('svg:rect')
-                .attr('width', this.width - this.bufferSum)
-                .attr('height', this.height)
-                .attr('fill', 'none')
-                .attr('stroke', 'none')
-                .attr('pointer-events', 'all')
-                .attr('transform', 'translate(' + this.bufferSum + ', 0)');
-
             // mouse events hovering
             if (this.plotOptions.hoverable) {
                 if (this.plotOptions.hoverStyle === HoveringStyle.line) {
                     this.background
-                        .on('mousemove.focus', this.mousemoveHandlerOld)
-                        .on('mouseout.focus', this.mouseoutHandlerOld);
+                        .on('mousemove.focus', this.mousemoveHandler)
+                        .on('mouseout.focus', this.mouseoutHandler);
 
                     // line inside graph
-                    // this.focusG = this.graph.append('g');
                     this.highlightFocus = this.focusG.append('svg:line')
                         .attr('class', 'mouse-focus-line')
                         .attr('x2', '0')
@@ -825,9 +827,9 @@ export class D3TimeseriesGraphComponent
                             .attr('class', 'mouse-focus-time');
                     });
                 } else {
-                    // no background events -> events will be send to next level
+                    // different layout when hovering
                     this.background
-                        .attr('pointer-events', 'none');
+                        .on('mousemove.focus', this.mousemoveHandlerPointHovering);
                 }
             }
 
@@ -938,8 +940,7 @@ export class D3TimeseriesGraphComponent
      * Draws for every preprared data entry the graph line.
      */
     protected drawAllGraphLines() {
-        // this.focusG = this.graphFocus.append('g');
-        this.focusG = this.graph.append('g');
+        this.focusG = this.graphFocus.append('g');
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
             this.highlightRect = this.focusG.append('svg:rect');
             this.highlightText = this.focusG.append('svg:text');
@@ -1454,7 +1455,7 @@ export class D3TimeseriesGraphComponent
 
                 if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
                     let transparentDotRadius = '8px';
-                    let dots = this.graphBody.selectAll('.dot')
+                    this.pointHovering = this.graphBody.selectAll('.dot')
                         .data(entry.data.filter((d) => !isNaN(d[1])))
                         .enter().append('circle')
                         .attr('class', 'hoverDots')
@@ -1464,7 +1465,7 @@ export class D3TimeseriesGraphComponent
                         .attr('cx', line.x())
                         .attr('cy', line.y());
 
-                    dots
+                    this.pointHovering
                         .on('mouseover', (d, i, k) => {
                             d3.select(k[i])
                                 .attr('fill', entry.color)
@@ -1478,7 +1479,7 @@ export class D3TimeseriesGraphComponent
 
                             // hovering label for dots
                             let dotLabel = this.highlightText
-                                .text(d[1] + ' ' + entry.axisOptions.uom) // d[0] = timestamp, d[1] = data
+                                .text(d[1] + ' ' + entry.axisOptions.uom + '\n' + moment(d[0]).format('DD.MM.YY HH:mm')) // d[0] = timestamp, d[1] = data
                                 .attr('class', 'mouseHoverDotLabel')
                                 .style('pointer-events', 'none')
                                 .style('fill', entry.color);
@@ -1491,9 +1492,15 @@ export class D3TimeseriesGraphComponent
                             let rectY = d.yDiagCoord;
                             let rectW = this.getDimensions(dotLabel.node()).w + 8;
                             let rectH = this.getDimensions(dotLabel.node()).h; // + 4;
+
                             if (!onLeftSide) {
                                 rectX = d.xDiagCoord - 15 - rectW;
                                 rectY = d.yDiagCoord;
+                            }
+
+                            if ((coords[1] + rectH + 4) > this.background.node().getBBox().height) {
+                                // when label below x axis
+                                console.log('Translate label to a higher place. - not yet implemented');
                             }
 
                             let dotRectangle = this.highlightRect
@@ -1554,7 +1561,7 @@ export class D3TimeseriesGraphComponent
     /**
      * Function that shows labeling via mousmove.
      */
-    private mousemoveHandlerOld = () => {
+    private mousemoveHandler = () => {
         const coords = d3.mouse(this.background.node());
         this.ypos = [];
         this.idxOfPos = 0;
@@ -1615,31 +1622,40 @@ export class D3TimeseriesGraphComponent
         this.onHighlightChanged.emit(this.highlightOutput);
     }
 
-    private mousemoveHandler = () => {
-        // TODO: hovering style
+    private mousemoveHandlerPointHovering = () => {
         const coords = d3.mouse(this.background.node());
         this.ypos = [];
-        this.idxOfPos = 0;
-        this.labelTimestamp = [];
-        this.labelXCoord = [];
         this.preparedData.forEach((entry, entryIdx) => {
             const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
-            // this.enableLabeling(idx);
         });
-    }
 
-    /**
-     * Function that hides the labeling inside the graph.
-     */
-    private mouseoutHandlerOld = () => {
-        this.hideDiagramIndicator();
+        // focus do not overlap each other
+        if (this.ypos !== undefined) {
+            let firstLabel = [];
+            // only push one of the pairs of objects (rectangle and label)
+            this.ypos.forEach((e, i) => {
+                if (i % 2 === 0) {
+                    firstLabel.push(e);
+                }
+            });
+            let yPos = firstLabel.sort((a, b) => a.y - b.y);
+            yPos.forEach((p, i) => {
+                if (i > 0) {
+                    let last = yPos[i - 1].y;
+                    yPos[i].off = Math.max(0, (last + 30) - yPos[i].y);
+                    yPos[i].y += yPos[i].off;
+                }
+            });
+            yPos.sort((a, b) => a.idx - b.idx);
+        }
+        this.onHighlightChanged.emit(this.highlightOutput);
     }
 
     /**
      * Function that hides the labeling inside the graph.
      */
     private mouseoutHandler = () => {
-        // this.hideDiagramIndicator();
+        this.hideDiagramIndicator();
     }
 
     /**
