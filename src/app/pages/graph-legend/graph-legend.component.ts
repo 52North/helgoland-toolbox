@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
-import { D3PlotOptions } from 'projects/helgoland/d3/src/public_api';
+import { D3PlotOptions, HoveringStyle } from 'projects/helgoland/d3/src/public_api';
 
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { HighlightOutput } from 'projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph.component';
 
 @Component({
     templateUrl: './graph-legend.component.html',
@@ -54,6 +55,9 @@ export class GraphLegendComponent {
 
     public overviewLoading: boolean;
     public graphLoading: boolean;
+
+    public hoverstyle: HoveringStyle; // = HoveringStyle.old;
+    public highlightedTime: Date;
 
     constructor(
         private color: ColorService,
@@ -149,6 +153,15 @@ export class GraphLegendComponent {
 
     public groupYaxisChanged() {
         this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
+    }
+
+    public changeHovering(id: string) {
+        this.hoverstyle = HoveringStyle[id];
+        this.d3diagramOptions.hoverStyle = this.hoverstyle;
+    }
+
+    public highlightChanged(highlightObject: HighlightOutput) {
+        this.highlightedTime = new Date(highlightObject.timestamp);
     }
 
 }
