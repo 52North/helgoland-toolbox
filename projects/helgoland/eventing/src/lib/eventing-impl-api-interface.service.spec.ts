@@ -90,7 +90,7 @@ describe('EventingImplApiInterface', () => {
       latest: true,
       offset: 10,
       limit: 12,
-      subscriptions: '123',
+      subscriptions: ['123'],
       timespan: timespan
     };
     service.getEvents(testUrl, filterParameter).subscribe(data => expect(data).toEqual(testData));
