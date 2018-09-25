@@ -4,6 +4,6 @@ import { EventingFilter } from './common';
 
 export interface EventFilter extends EventingFilter {
     latest?: boolean;
-    subscriptions?: string;
+    subscriptions?: string[];
     timespan?: Timespan;
 }
