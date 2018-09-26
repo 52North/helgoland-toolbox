@@ -781,6 +781,7 @@ export class D3TimeseriesGraphComponent
         this.drawXaxis(this.bufferSum);
 
         if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
+            // create background grouping for hovering points and panning
             this.background = this.graph.append('g');
             this.rectBackground = this.background.append('svg:rect')
                 .attr('width', this.width - this.bufferSum)
@@ -791,6 +792,7 @@ export class D3TimeseriesGraphComponent
                 .attr('pointer-events', 'all')
                 .attr('transform', 'translate(' + this.bufferSum + ', 0)');
         } else {
+            // create background as rectangle providing panning
             this.background = this.graph.append('svg:rect')
                 .attr('width', this.width - this.bufferSum)
                 .attr('height', this.height)
@@ -953,6 +955,7 @@ export class D3TimeseriesGraphComponent
     protected drawAllGraphLines() {
         this.focusG = this.graphFocus.append('g');
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
+            // create label for point hovering
             this.highlightRect = this.focusG.append('svg:rect');
             this.highlightText = this.focusG.append('svg:text');
         }
@@ -1466,7 +1469,9 @@ export class D3TimeseriesGraphComponent
                     .attr('r', entry.lines.pointRadius);
 
                 if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
+                    // execute for point hovering
                     let transparentDotRadius = '8px';
+                    // join datasets to create transparent circles to hover
                     this.dotsArray = this.dotsArray.concat(entry.data.filter((d) => !isNaN(d[1])));
                     this.pointHovering = this.background.selectAll('.hoverDots') // this.graphBody
                         .data(this.dotsArray)
@@ -1492,7 +1497,7 @@ export class D3TimeseriesGraphComponent
                                 this.highlightText
                                     .style('visibility', 'visible');
 
-                                // hovering label for dots
+                                // create text for hovering label
                                 let dotLabel = this.highlightText
                                     .text(d[1] + ' ' + entry.axisOptions.uom + '\n' + moment(d[0]).format('DD.MM.YY HH:mm')) // d[0] = timestamp, d[1] = data
                                     .attr('class', 'mouseHoverDotLabel')
@@ -1517,6 +1522,7 @@ export class D3TimeseriesGraphComponent
                                     console.log('Translate label to a higher place. - not yet implemented');
                                 }
 
+                                // create hovering label
                                 let dotRectangle = this.highlightRect
                                     .attr('class', 'mouseHoverDotRect')
                                     .style('fill', 'white')
@@ -1556,11 +1562,13 @@ export class D3TimeseriesGraphComponent
                                 .attr('fill', entry.color)
                                 .attr('r', entry.lines.pointRadius);
 
+                            // make hovered dot invisible
                             d3.selectAll('.hoverDots')
                                 .attr('stroke', 'transparent')
                                 .attr('stroke-width', transparentDotRadius)
                                 .attr('fill', 'none');
 
+                            // make label invisible
                             this.highlightRect
                                 .style('visibility', 'hidden');
                             this.highlightText
@@ -1689,6 +1697,7 @@ export class D3TimeseriesGraphComponent
      */
     private zoomStartHandler = () => {
         this.dragging = false;
+        // dependent on point or line hovering
         this.dragStart = ( this.plotOptions.hoverStyle === HoveringStyle.point ? d3.mouse(this.rectBackground.node()) : d3.mouse(this.background.node()) );
         this.xAxisRangeOrigin.push([this.xAxisRange.from, this.xAxisRange.to]);
     }
@@ -1786,6 +1795,7 @@ export class D3TimeseriesGraphComponent
      */
     private drawDragRectangle() {
         if (!this.dragStart) { return; }
+        // dependent on point or line hovering
         this.dragCurrent = ( this.plotOptions.hoverStyle === HoveringStyle.point ? d3.mouse(this.rectBackground.node()) : d3.mouse(this.background.node()) );
 
         const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
