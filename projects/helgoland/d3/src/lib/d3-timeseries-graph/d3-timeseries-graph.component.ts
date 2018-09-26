@@ -91,6 +91,7 @@ export interface DataYRange {
     zeroBasedYAxis: boolean;
     autoRange: boolean;
     outOfrange: boolean;
+    yScale?: d3.ScaleLinear<number, number>;
 }
 
 export interface HighlightOutput {
@@ -141,7 +142,7 @@ export class D3TimeseriesGraphComponent
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     protected graph: any;
     protected graphFocus: any;
-    private graphBody: any;
+    protected graphBody: any;
     private dragRect: any;
     private dragRectG: any;
     private xAxisRange: Timespan; // x domain range
@@ -164,8 +165,8 @@ export class D3TimeseriesGraphComponent
         left: 40
     };
     private maxLabelwidth = 0;
-    private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
-    private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
+    protected xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
+    protected yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     private background: any;
     private pointHovering: any;
     private copyright: any;
@@ -1375,20 +1376,7 @@ export class D3TimeseriesGraphComponent
     protected drawGraphLine(entry: InternalDataEntry) {
         // const getYaxisRange = this.yRangesEachUom.find((obj) => obj.ids.indexOf(entry.internalId) > -1);
         // check for y axis grouping
-        let getYaxisRange;
-        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
-            getYaxisRange = this.yRangesEachUom.find((obj) => {
-                if (obj.uom === entry.axisOptions.uom) {
-                    return true;
-                } // uom does exist in this.yRangesEachUom
-            });
-        } else {
-            getYaxisRange = this.dataYranges.find((obj) => {
-                if (obj.id === entry.internalId) {
-                    return true;
-                } // id does exist in this.dataYranges
-            });
-        }
+        let getYaxisRange = this.getYaxisRange(entry);
 
         if (entry.data.length > 0) {
             let xScaleBase = this.xScaleBase;
@@ -1740,6 +1728,22 @@ export class D3TimeseriesGraphComponent
         this.dragStart = null;
         this.dragging = false;
         this.resetDrag();
+    }
+
+    protected getYaxisRange(entry: InternalDataEntry) {
+        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
+            return this.yRangesEachUom.find((obj) => {
+                if (obj.uom === entry.axisOptions.uom) {
+                    return true;
+                } // uom does exist in this.yRangesEachUom
+            });
+        } else {
+            return this.dataYranges.find((obj) => {
+                if (obj.id === entry.internalId) {
+                    return true;
+                } // id does exist in this.dataYranges
+            });
+        }
     }
 
     /**
