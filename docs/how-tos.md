@@ -7,6 +7,7 @@ To get in touch with the helgoland-toolbox, here you will find a list of how tos
 - [Extend a timeseries entry component](./how-tos/extend-a-timeseries-entry-component.html)
 - [Configure a map component](./how-tos/configure-map-component.html)
 - [Using basic auth services](./how-tos/basic-auth-services.html)
+- [Handle styling options for datasets](../how-tos/handle-styling-options.html)
 
 ### Preparing a how to app with angular-cli
 
@@ -15,12 +16,12 @@ Starting from the very beginning in setting up the ng-app, angular-cli needs to 
 Following the instructions of the [angular quickstart guide](https://angular.io/guide/quickstart) a new ng-app will be created with its folder-structure.
 Open a terminal and change the working directory to the supposed location, where you want to create your ng-app with an integrated D3 timeseries component. In this tutorial the new ng-app will be named `helgoland-how-to`.
 
-||Command|
-| ------------- |-------------|
-|Install angular-cli   |`npm install -g @angular/cli`|
-|Create ng-app         |`ng new helgoland-how-to`|
-|Change into app-folder|`cd helgoland-how-to`|
-|Start app             |`ng serve`|
+| Step                   | Command                       |
+|------------------------|-------------------------------|
+| Install angular-cli    | `npm install -g @angular/cli` |
+| Create ng-app          | `ng new helgoland-how-to`     |
+| Change into app-folder | `cd helgoland-how-to`         |
+| Start app              | `ng serve`                    |
 
 #### Suggestions for error handling
 
