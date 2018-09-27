@@ -127,6 +127,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx === -1) {
               dataEntry = {
                 internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
+                id: -1,
                 color: options.color,
                 data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
                 points: {
