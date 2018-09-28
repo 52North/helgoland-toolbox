@@ -330,7 +330,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             const dataExtent &#x3D; extent&lt;[number, number], number&gt;(dataEntry.data, (datum) &#x3D;&gt; {
               if (this.timespan.from &lt;&#x3D; datum[0] &amp;&amp; this.timespan.to &gt;&#x3D; datum[0]) { return datum[1]; }
             });
-            if (dataExtent[0] &amp;&amp; dataExtent[1]) {
+            if (isFinite(dataExtent[0]) &amp;&amp; isFinite(dataExtent[1])) {
               const range: MinMaxRange &#x3D; { min: dataExtent[0], max: dataExtent[1] };
               this.extendRange(range);
               if (newDatasetIdx &#x3D;&#x3D;&#x3D; -1) {

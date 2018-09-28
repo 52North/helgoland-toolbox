@@ -406,10 +406,12 @@ export class BasicAuthServiceMaintainer {
     if (matchedUrl) {
       return matchedUrl;
     }
-
-    const api &#x3D; this.settingsService.getSettings().datasetApis.find((e) &#x3D;&gt; url.startsWith(e.url) &amp;&amp; e.basicAuth);
-    if (api) {
-      return api.url;
+    const settings &#x3D; this.settingsService.getSettings();
+    if (settings &amp;&amp; settings.datasetApis &amp;&amp; Array.isArray(settings.datasetApis)) {
+      const api &#x3D; settings.datasetApis.find((e) &#x3D;&gt; url.startsWith(e.url) &amp;&amp; e.basicAuth);
+      if (api) {
+        return api.url;
+      }
     }
   }
 

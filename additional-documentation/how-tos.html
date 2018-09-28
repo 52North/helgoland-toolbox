@@ -58,17 +58,38 @@
 <li><a href="./how-tos/extend-a-timeseries-entry-component.html">Extend a timeseries entry component</a></li>
 <li><a href="./how-tos/configure-map-component.html">Configure a map component</a></li>
 <li><a href="./how-tos/basic-auth-services.html">Using basic auth services</a></li>
+<li><a href="../how-tos/handle-styling-options.html">Handle styling options for datasets</a></li>
 </ul>
 <h3 id="preparing-a-how-to-app-with-angular-cli">Preparing a how to app with angular-cli</h3>
 <p>Starting from the very beginning in setting up the ng-app, angular-cli needs to be installed with npm. If you already have a running project skip this step and start with one of the how-tos.</p>
 <p>Following the instructions of the <a href="https://angular.io/guide/quickstart">angular quickstart guide</a> a new ng-app will be created with its folder-structure.
 Open a terminal and change the working directory to the supposed location, where you want to create your ng-app with an integrated D3 timeseries component. In this tutorial the new ng-app will be named <code>helgoland-how-to</code>.</p>
-<p>||Command|
-| ------------- |-------------|
-|Install angular-cli   |<code>npm install -g @angular/cli</code>|
-|Create ng-app         |<code>ng new helgoland-how-to</code>|
-|Change into app-folder|<code>cd helgoland-how-to</code>|
-|Start app             |<code>ng serve</code>|</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Step</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install angular-cli</td>
+<td><code>npm install -g @angular/cli</code></td>
+</tr>
+<tr>
+<td>Create ng-app</td>
+<td><code>ng new helgoland-how-to</code></td>
+</tr>
+<tr>
+<td>Change into app-folder</td>
+<td><code>cd helgoland-how-to</code></td>
+</tr>
+<tr>
+<td>Start app</td>
+<td><code>ng serve</code></td>
+</tr>
+</tbody>
+</table>
 <h4 id="suggestions-for-error-handling">Suggestions for error handling</h4>
 <ul>
 <li><code>Cannot find module &#39;@angular-devkit/core&#39;</code> click <a href="https://github.com/angular/angular-cli/issues/9307">here</a></li>

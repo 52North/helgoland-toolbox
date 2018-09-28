@@ -465,7 +465,7 @@ export class D3TrajectoryGraphComponent
         protected translateService: TranslateService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
-        this.graphOptions &#x3D; this.defaultGraphOptions;
+        this.presenterOptions &#x3D; this.defaultGraphOptions;
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -535,7 +535,7 @@ export class D3TrajectoryGraphComponent
         throw new Error(&#x27;Method not implemented.&#x27;);
     }
 
-    protected graphOptionsChanged(options: D3GraphOptions): void {
+    protected presenterOptionsChanged(options: D3GraphOptions): void {
         this.timeIntervalChanges();
     }
 
@@ -669,7 +669,7 @@ export class D3TrajectoryGraphComponent
     }
 
     private getXValue(data: DataEntry) {
-        switch (this.graphOptions.axisType) {
+        switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return data.dist;
             case D3AxisType.Time:
@@ -706,7 +706,7 @@ export class D3TrajectoryGraphComponent
     }
 
     private drawGraph(yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
-        if (this.graphOptions.dotted) {
+        if (this.presenterOptions.dotted) {
             this.drawDots(this.baseValues, yScale, options);
         } else {
             this.drawValueLine(this.baseValues, yScale, options);
@@ -937,10 +937,10 @@ export class D3TrajectoryGraphComponent
     }
 
     private showBottomIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
-        if (this.graphOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Distance) {
+        if (this.presenterOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Distance) {
             this.focuslabelY.text(item.dist + &#x27; km&#x27;);
         }
-        if (this.graphOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Ticks) {
+        if (this.presenterOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Ticks) {
             this.focuslabelY.text(&#x27;Measurement: &#x27; + item.tick);
         }
         this.focuslabelY
@@ -967,7 +967,7 @@ export class D3TrajectoryGraphComponent
     private getItemForX(x: number, data: DataEntry[]) {
         const index &#x3D; this.xScaleBase.invert(x);
         const bisectDate &#x3D; bisector((d: DataEntry) &#x3D;&gt; {
-            switch (this.graphOptions.axisType) {
+            switch (this.presenterOptions.axisType) {
                 case D3AxisType.Distance:
                     return d.dist;
                 case D3AxisType.Time:
@@ -1038,7 +1038,7 @@ export class D3TrajectoryGraphComponent
 
         const xAxisGen &#x3D; axisBottom(this.xScaleBase).ticks(5);
 
-        if (this.graphOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Time) {
+        if (this.presenterOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Time) {
             xAxisGen.tickFormat((d) &#x3D;&gt; {
                 return timeFormat(&#x27;%d.%m.%Y %H:%M:%S&#x27;)(new Date(d.valueOf()));
             });
@@ -1074,7 +1074,7 @@ export class D3TrajectoryGraphComponent
     }
 
     private getXDomain(values: DataEntry[]) {
-        switch (this.graphOptions.axisType) {
+        switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return [values[0].dist, values[values.length - 1].dist];
             case D3AxisType.Time:
@@ -1085,7 +1085,7 @@ export class D3TrajectoryGraphComponent
     }
 
     private getXAxisLabel() {
-        switch (this.graphOptions.axisType) {
+        switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return &#x27;Distance&#x27;;
             case D3AxisType.Time:

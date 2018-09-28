@@ -1,0 +1,327 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>PresenterOptions</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/core/src/lib/presenting/dataset-presenter.component.ts</code>
+        </p>
+
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    DoCheck,
+    EventEmitter,
+    Input,
+    IterableDiffer,
+    IterableDiffers,
+    OnChanges,
+    OnDestroy,
+    Output,
+    SimpleChanges,
+} from &#x27;@angular/core&#x27;;
+import { LangChangeEvent, TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+
+import { DatasetApiInterface } from &#x27;../dataset-api/api-interface&#x27;;
+import { InternalIdHandler } from &#x27;../dataset-api/internal-id-handler.service&#x27;;
+import { DatasetOptions } from &#x27;../model/internal/options&#x27;;
+import { ResizableComponent } from &#x27;../model/internal/ResizableComponent&#x27;;
+import { TimeInterval, Timespan } from &#x27;../model/internal/timeInterval&#x27;;
+import { HasLoadableContent } from &#x27;../model/mixins/has-loadable-content&#x27;;
+import { Time } from &#x27;../time/time.service&#x27;;
+import { PresenterMessage } from &#x27;./presenter-message&#x27;;
+
+const equal &#x3D; require(&#x27;deep-equal&#x27;);
+
+export interface PresenterOptions { }
+
+/**
+ * Abstract superclass for all components, which will present datasets.
+ */
+export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions&gt;
+    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
+
+    /**
+     * List of presented dataset ids.
+     */
+    @Input()
+    public datasetIds: string[] &#x3D; [];
+
+    /**
+     * List of presented selected dataset ids.
+     */
+    @Input()
+    public selectedDatasetIds: string[] &#x3D; [];
+
+    /**
+     * The time interval in which the data should presented.
+     */
+    @Input()
+    public timeInterval: TimeInterval;
+
+    /**
+     * The corresponding dataset options.
+     */
+    @Input()
+    public datasetOptions: Map&lt;string, T&gt;;
+    protected oldDatasetOptions: Map&lt;string, T&gt;;
+
+    /**
+     * Options for general presentation of the data.
+     */
+    @Input()
+    public presenterOptions: U;
+    protected oldPresenterOptions: U;
+
+    /**
+     * List of datasets for which a reload should be triggered, when the Array is set to new value.
+     */
+    @Input()
+    public reloadForDatasets: string[];
+
+    /**
+     * Event with a list of selected datasets.
+     */
+    @Output()
+    public onDatasetSelected: EventEmitter&lt;string[]&gt; &#x3D; new EventEmitter();
+
+    /**
+     * Event when the timespan in the presentation is adjusted.
+     */
+    @Output()
+    public onTimespanChanged: EventEmitter&lt;Timespan&gt; &#x3D; new EventEmitter();
+
+    /**
+     * Event, when there occured a message in the component.
+     */
+    @Output()
+    public onMessageThrown: EventEmitter&lt;PresenterMessage&gt; &#x3D; new EventEmitter();
+
+    /**
+     * Event flag, while there is data loaded in the component.
+     */
+    @Output()
+    public onContentLoading: EventEmitter&lt;boolean&gt; &#x3D; new EventEmitter();
+
+    public isContentLoading: (loading: boolean) &#x3D;&gt; void;
+
+    protected timespan: Timespan;
+
+    private datasetIdsDiffer: IterableDiffer&lt;string&gt;;
+    private selectedDatasetIdsDiffer: IterableDiffer&lt;string&gt;;
+    private langChangeSubscription: Subscription;
+
+    constructor(
+        protected iterableDiffers: IterableDiffers,
+        protected api: DatasetApiInterface,
+        protected datasetIdResolver: InternalIdHandler,
+        protected timeSrvc: Time,
+        protected translateService: TranslateService
+    ) {
+        super();
+        this.datasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
+        this.selectedDatasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
+        this.langChangeSubscription &#x3D; this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) &#x3D;&gt; this.onLanguageChanged(langChangeEvent));
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.timeInterval &amp;&amp; this.timeInterval) {
+            this.timespan &#x3D; this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+            this.timeIntervalChanges();
+        }
+        if (changes.reloadForDatasets &amp;&amp; this.reloadForDatasets &amp;&amp; this.reloadDataForDatasets.length &gt; 0) {
+            this.reloadDataForDatasets(this.reloadForDatasets);
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.langChangeSubscription.unsubscribe();
+    }
+
+    public ngDoCheck(): void {
+        const datasetIdsChanges &#x3D; this.datasetIdsDiffer.diff(this.datasetIds);
+        if (datasetIdsChanges) {
+            datasetIdsChanges.forEachAddedItem((addedItem) &#x3D;&gt; {
+                this.addDatasetByInternalId(addedItem.item);
+            });
+            datasetIdsChanges.forEachRemovedItem((removedItem) &#x3D;&gt; {
+                this.removeDataset(removedItem.item);
+            });
+        }
+
+        const selectedDatasetIdsChanges &#x3D; this.selectedDatasetIdsDiffer.diff(this.selectedDatasetIds);
+        if (selectedDatasetIdsChanges) {
+            selectedDatasetIdsChanges.forEachAddedItem((addedItem) &#x3D;&gt; {
+                this.setSelectedId(addedItem.item);
+            });
+            selectedDatasetIdsChanges.forEachRemovedItem((removedItem) &#x3D;&gt; {
+                this.removeSelectedId(removedItem.item);
+            });
+        }
+
+        if (!equal(this.oldPresenterOptions, this.presenterOptions)) {
+            this.oldPresenterOptions &#x3D; Object.assign({}, this.presenterOptions);
+            const options &#x3D; Object.assign({}, this.presenterOptions);
+            this.presenterOptionsChanged(options);
+        }
+
+        if (this.datasetOptions) {
+            const firstChange &#x3D; this.oldDatasetOptions &#x3D;&#x3D;&#x3D; undefined;
+            if (firstChange) { this.oldDatasetOptions &#x3D; new Map(); }
+            this.datasetOptions.forEach((value, key) &#x3D;&gt; {
+                if (!equal(value, this.oldDatasetOptions.get(key))) {
+                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions.get(key)));
+                    this.datasetOptionsChanged(key, value, firstChange);
+                }
+            });
+        }
+    }
+
+    public abstract reloadDataForDatasets(datasets: string[]): void;
+
+    protected addDatasetByInternalId(internalId: string) {
+        const internalIdObj &#x3D; this.datasetIdResolver.resolveInternalId(internalId);
+        this.addDataset(internalIdObj.id, internalIdObj.url);
+    }
+
+    protected abstract onLanguageChanged(langChangeEvent: LangChangeEvent): void;
+
+    protected abstract timeIntervalChanges(): void;
+
+    protected abstract addDataset(id: string, url: string): void;
+
+    protected abstract removeDataset(internalId: string): void;
+
+    protected abstract setSelectedId(internalId: string): void;
+
+    protected abstract removeSelectedId(internalId: string): void;
+
+    protected abstract presenterOptionsChanged(options: U): void;
+
+    protected abstract datasetOptionsChanged(internalId: string, options: T, firstChange: boolean): void;
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'PresenterOptions.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

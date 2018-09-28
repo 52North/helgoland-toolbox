@@ -104,7 +104,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -183,7 +183,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -261,14 +261,11 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;rxjs/add/observable/of&#x27;;
-import &#x27;rxjs/add/operator/share&#x27;;
-
-import { HttpEvent, HttpRequest, HttpResponse } from &#x27;@angular/common/http&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpEvent, HttpRequest, HttpResponse } from &#x27;@angular/common/http&#x27;;
 import { Injectable } from &#x27;@angular/core&#x27;;
-import { HttpServiceHandler, HttpServiceInterceptor, HttpRequestOptions } from &#x27;@helgoland/core&#x27;;
-import { Observable } from &#x27;rxjs/Observable&#x27;;
-import { Observer } from &#x27;rxjs/Observer&#x27;;
+import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor } from &#x27;@helgoland/core&#x27;;
+import { Observable, Observer, of } from &#x27;rxjs&#x27;;
+import { share } from &#x27;rxjs/operators&#x27;;
 
 import { HttpCache, OnGoingHttpCache } from &#x27;./model&#x27;;
 
@@ -298,7 +295,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
-            return Observable.of(cachedResponse);
+            return of(cachedResponse);
         }
 
         // check if the same request is still in the pipe
@@ -308,8 +305,8 @@ export class CachingInterceptor implements HttpServiceInterceptor {
             // No cached response exists. Go to the network, and cache
             // the response when it arrives.
             return new Observable&lt;HttpEvent&lt;any&gt;&gt;((observer: Observer&lt;HttpEvent&lt;any&gt;&gt;) &#x3D;&gt; {
-                const share &#x3D; next.handle(req, metadata).share();
-                share.subscribe((res) &#x3D;&gt; {
+                const shared &#x3D; next.handle(req, metadata).pipe(share());
+                shared.subscribe((res) &#x3D;&gt; {
                     if (res instanceof HttpResponse) {
                         this.cache.put(req, res, metadata.expirationAtMs);
                         this.ongoingCache.clear(req);
@@ -320,7 +317,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                     observer.error(error);
                     observer.complete();
                 });
-                this.ongoingCache.set(req, share);
+                this.ongoingCache.set(req, shared);
             });
         }
     }

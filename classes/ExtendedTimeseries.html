@@ -738,7 +738,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     public ngOnInit() {
         if (this.station) {
-            this.apiInterface.getStation(this.station.properties.id, this.url)
+            const stationId &#x3D; this.station.properties &amp;&amp; this.station.properties.id ? this.station.properties.id : this.station.id;
+            this.apiInterface.getStation(stationId, this.url)
                 .subscribe((station) &#x3D;&gt; {
                     this.station &#x3D; station;
                     this.counter &#x3D; 0;

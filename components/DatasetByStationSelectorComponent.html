@@ -436,7 +436,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:65</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -519,7 +519,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -590,7 +590,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/helgoland/selector/src/lib/dataset-by-station-selector/dataset-by-station-selector.component.ts:72</a></div>
                             </td>
                         </tr>
 
@@ -733,7 +733,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     public ngOnInit() {
         if (this.station) {
-            this.apiInterface.getStation(this.station.properties.id, this.url)
+            const stationId &#x3D; this.station.properties &amp;&amp; this.station.properties.id ? this.station.properties.id : this.station.id;
+            this.apiInterface.getStation(stationId, this.url)
                 .subscribe((station) &#x3D;&gt; {
                     this.station &#x3D; station;
                     this.counter &#x3D; 0;

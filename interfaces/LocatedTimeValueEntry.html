@@ -140,6 +140,8 @@
 export interface Data&lt;T extends IDataEntry&gt; {
     values: T[];
     referenceValues: ReferenceValues&lt;T&gt;;
+    valueBeforeTimespan?: T;
+    valueAfterTimespan?: T;
 }
 
 export class ReferenceValues&lt;T extends IDataEntry&gt; {

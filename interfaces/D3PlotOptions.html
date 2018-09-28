@@ -110,7 +110,15 @@
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
+                                        <a href="#hoverStyle">hoverStyle</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#overview">overview</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#requestBeforeAfterValues">requestBeforeAfterValues</a>
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
@@ -346,6 +354,46 @@ false = single y axis for each timeseries</p>
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="hoverStyle"></a>
+                                        <span class="name"><b>hoverStyle</b><a href="#hoverStyle"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>hoverStyle:     <code><a href="../miscellaneous/enumerations.html#HoveringStyle" target="_self" >HoveringStyle</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="../miscellaneous/enumerations.html#HoveringStyle" target="_self" >HoveringStyle</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>style when hovering with mouse</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="overview"></a>
                                         <span class="name"><b>overview</b><a href="#overview"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
@@ -377,6 +425,46 @@ false = single y axis for each timeseries</p>
                             <tr>
                                 <td class="col-md-4">
                                     <div class="io-description"><p>indicating if component should build overview diagram or not</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="requestBeforeAfterValues"></a>
+                                        <span class="name"><b>requestBeforeAfterValues</b><a href="#requestBeforeAfterValues"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>requestBeforeAfterValues:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Request the data with expanded=true, to get valueBeforeTimespan/valueAfterTimespan</p>
 </div>
                                 </td>
                             </tr>
@@ -592,6 +680,13 @@ false = single y axis for each timeseries</p>
     hoverable?: boolean;
 
     /**
+     * style when hovering with mouse
+     *
+     * @memberof D3PlotOptions
+     */
+    hoverStyle?: HoveringStyle;
+
+    /**
      * indicating if component should build overview diagram or not
      *
      * @memberof D3PlotOptions
@@ -623,12 +718,24 @@ false = single y axis for each timeseries</p>
     */
     showTimeLabel?: boolean;
 
+    /**
+    * Request the data with expanded&#x3D;true, to get valueBeforeTimespan/valueAfterTimespan
+    *
+    * @memberof D3PlotOptions
+    */
+    requestBeforeAfterValues?: boolean;
+
 }
 
 export interface D3Copyright {
     label: string;
     positionX?: &#x27;right&#x27; | &#x27;left&#x27;;
     positionY?: &#x27;top&#x27; | &#x27;bottom&#x27;;
+}
+
+export enum HoveringStyle {
+    line &#x3D; &#x27;line&#x27;,
+    point &#x3D; &#x27;point&#x27; // default
 }
 </code></pre>
     </div>

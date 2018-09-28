@@ -86,7 +86,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/data.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/data.ts:11</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -106,6 +106,8 @@
 export interface Data&lt;T extends IDataEntry&gt; {
     values: T[];
     referenceValues: ReferenceValues&lt;T&gt;;
+    valueBeforeTimespan?: T;
+    valueAfterTimespan?: T;
 }
 
 export class ReferenceValues&lt;T extends IDataEntry&gt; {

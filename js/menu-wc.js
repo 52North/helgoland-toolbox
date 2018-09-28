@@ -78,6 +78,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     <li class="link for-chapter2">
                         <a href="additional-documentation/how-tos/using-basic-auth-services.html" data-type="entity-link" data-context-id="additional">Using basic auth services</a>
                     </li>
+                    <li class="link for-chapter2">
+                        <a href="additional-documentation/how-tos/handle-dataset-options-to-style-the-timeseries.html" data-type="entity-link" data-context-id="additional">Handle dataset options to style the timeseries</a>
+                    </li>
             </ul>
         </li>
         <li class="chapter modules">
@@ -91,9 +94,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             </a>
             <ul class="links collapse"
             ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
-                    <li class="link">
-                        <a href="modules/EventingModule.html" data-type="entity-link">EventingModule</a>
-                    </li>
                     <li class="link">
                         <a href="modules/HelgolandBasicAuthModule.html" data-type="entity-link">HelgolandBasicAuthModule</a>
                             <li class="chapter inner">
@@ -285,6 +285,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         </li>
                                 </ul>
                             </li>
+                    </li>
+                    <li class="link">
+                        <a href="modules/HelgolandEventingModule.html" data-type="entity-link">HelgolandEventingModule</a>
                     </li>
                     <li class="link">
                         <a href="modules/HelgolandFavoriteModule.html" data-type="entity-link">HelgolandFavoriteModule</a>
@@ -1018,6 +1021,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/HighlightDataset.html" data-type="entity-link">HighlightDataset</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/HighlightOutput.html" data-type="entity-link">HighlightOutput</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/HighlightValue.html" data-type="entity-link">HighlightValue</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/HttpRequestOptions.html" data-type="entity-link">HttpRequestOptions</a>
                     </li>
                     <li class="link">
@@ -1112,6 +1121,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/PresenterMessage.html" data-type="entity-link">PresenterMessage</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/PresenterOptions.html" data-type="entity-link">PresenterOptions</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Procedure.html" data-type="entity-link">Procedure</a>
