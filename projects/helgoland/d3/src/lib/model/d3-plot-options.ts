@@ -86,6 +86,13 @@ export interface D3PlotOptions {
     */
     showTimeLabel?: boolean;
 
+    /**
+    * Request the data with expanded=true, to get valueBeforeTimespan/valueAfterTimespan
+    *
+    * @memberof D3PlotOptions
+    */
+    requestBeforeAfterValues?: boolean;
+
 }
 
 export interface D3Copyright {
