@@ -14,4 +14,17 @@
         stroke-opacity: 0.7;
         shape-rendering: crispEdges;
     }
+
+    .formerButton,
+    .laterButton {
+        fill: grey;
+        opacity: 0.3;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+    .arrow {
+        stroke: grey;
+        stroke-width: 3px;
+    }
 }
