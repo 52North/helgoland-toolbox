@@ -1,6 +1,6 @@
+import { DatasetTypes, PlatformTypes } from './enums';
 import { Parameter } from './parameter';
 import { Station } from './station';
-import { DatasetTypes, PlatformTypes } from './enums';
 
 export interface IDataset extends Parameter {
     url: string;
@@ -10,6 +10,7 @@ export interface IDataset extends Parameter {
     lastValue: FirstLastValue;
     referenceValues: ReferenceValue[];
     parameters: ParameterConstellation;
+    renderingHints: RenderingHints;
 }
 
 export class ParameterConstellation {
@@ -34,6 +35,31 @@ export class ReferenceValue {
     public visible?: boolean;
 }
 
+export interface RenderingHints {
+    chartType: string;
+    properties: {
+        color: string;
+    };
+}
+
+export interface LineRenderingHints extends RenderingHints {
+    chartType: 'line';
+    properties: {
+        color: string;
+        width: string;
+        lineType: string;
+    };
+}
+
+export interface BarRenderingHints {
+    chartType: 'bar';
+    properties: {
+        color: string;
+        width: string;
+        interval: string;
+    };
+}
+
 export class DatasetParameterConstellation extends ParameterConstellation {
     public platform: PlatformParameter;
 }
@@ -51,6 +77,7 @@ export class Dataset implements IDataset {
     public platformType: PlatformTypes;
     public parameters: DatasetParameterConstellation;
     public seriesParameters?: DatasetParameterConstellation;
+    public renderingHints: RenderingHints;
 }
 
 export class Timeseries implements IDataset {
@@ -66,6 +93,7 @@ export class Timeseries implements IDataset {
     public parameters: ParameterConstellation;
     public statusIntervals?: StatusInterval[];
     public hasData = false;
+    public renderingHints: RenderingHints;
 }
 
 export interface TimeseriesExtras {

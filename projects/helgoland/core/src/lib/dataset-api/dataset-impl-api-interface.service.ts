@@ -94,11 +94,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         });
     }
 
-    public getSingleTimeseries(
-        id: string,
-        apiUrl: string,
-        params?: ParameterFilter
-    ): Observable<Timeseries> {
+    public getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter): Observable<Timeseries> {
         const url = this.createRequestUrl(apiUrl, 'timeseries', id);
         return this.requestApiTexted(url, params).pipe(map((result) => {
             const timeseries = deserialize<Timeseries>(Timeseries, result);
@@ -106,6 +102,11 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
             this.internalDatasetId.generateInternalId(timeseries);
             return timeseries;
         }));
+    }
+
+    public getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter): Observable<Timeseries> {
+        const resolvedId = this.internalDatasetId.resolveInternalId(internalId);
+        return this.getSingleTimeseries(resolvedId.id, resolvedId.url, params);
     }
 
     public getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras> {
@@ -223,16 +224,16 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         );
     }
 
-    public getDataset(
-        id: string,
-        apiUrl: string,
-        params?: ParameterFilter,
-        options?: HttpRequestOptions
-    ): Observable<Dataset> {
+    public getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset> {
         const url = this.createRequestUrl(apiUrl, 'datasets', id);
         return this.requestApi<Dataset>(url, params, options).pipe(
             map((res) => this.prepareDataset(res, apiUrl))
         );
+    }
+
+    public getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset> {
+        const resolvedId = this.internalDatasetId.resolveInternalId(internalId);
+        return this.getDataset(resolvedId.id, resolvedId.url, params, options);
     }
 
     public getData<T>(
