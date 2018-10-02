@@ -9,22 +9,13 @@ import { DatasetApiV1 } from './api-v1.interface';
 
 export interface DatasetApiV2 extends DatasetApiV1 {
 
-    getPlatforms(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Platform[]>;
-    getPlatform(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Platform>;
+    getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]>;
+    getPlatform(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform>;
 
-    getDatasets(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Dataset[]>;
-    getDataset(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Dataset>;
-    getData<T>(
-        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
-    ): Observable<Data<T>>;
+    getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]>;
+    getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
+    getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
+    getData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
 
     // getGeometries(id: string, apiUrl: string, params?): Observable<>;
 

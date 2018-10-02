@@ -4,7 +4,8 @@
 export * from './lib/core.module';
 
 export * from './lib/abstract-services/api-interface';
-export * from './lib/abstract-services/dataset';
+export * from './lib/abstract-services/dataset.service';
+export * from './lib/abstract-services/rendering-hints-dataset.service';
 
 export * from './lib/color/color.service';
 
