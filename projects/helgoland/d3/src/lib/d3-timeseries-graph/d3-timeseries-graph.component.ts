@@ -917,14 +917,14 @@ export class D3TimeseriesGraphComponent
                             if (d !== undefined) {
                                 let coords = d3.mouse(this.background.node());
                                 let dataset = d.data[4];
-                                let mX = coords[0],
-                                    mY = coords[1],
+                                let mX = coords[0] + this.bufferSum,
+                                    mY = coords[1] + this.margin.top,
                                     pX = dataset.xDiagCoord,
                                     pY = dataset.yDiagCoord;
 
-                                // TODO: calculate distance between point and mouse when hovering
-                                let dist = Math.sqrt( Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
-console.log(dist);
+                                // calculate distance between point and mouse when hovering
+                                let dist = Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
+
                                 if (dist <= 8) {
                                     let rectBack = this.background.node().getBBox();
                                     if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
@@ -999,6 +999,17 @@ console.log(dist);
                                         this.onHighlightChanged.emit(this.highlightOutput);
 
                                     }
+                                } else {
+                                    // unhighlight hovered dot
+                                    d3.select('#dot-' + dataset[0] + '-' + d.data[5].id + '')
+                                        .attr('opacity', 1)
+                                        .attr('r', d.data[5].lines.pointRadius);
+
+                                    // make label invisible
+                                    this.highlightRect
+                                        .style('visibility', 'hidden');
+                                    this.highlightText
+                                        .style('visibility', 'hidden');
                                 }
 
                             }
@@ -1863,9 +1874,6 @@ console.log(dist);
      * Function starting the drag handling for the diagram.
      */
     private panStartHandler = () => {
-        console.log(d3);
-        console.log(d3.event);
-        console.log(d3.event.x);
         this.draggingMove = false;
         this.dragMoveStart = d3.event.x;
         this.dragMoveRange = [this.xAxisRange.from, this.xAxisRange.to];
