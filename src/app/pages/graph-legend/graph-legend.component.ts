@@ -56,7 +56,7 @@ export class GraphLegendComponent {
     public overviewLoading: boolean;
     public graphLoading: boolean;
 
-    public hoverstyle: HoveringStyle; // = HoveringStyle.old;
+    public hoverstyle: HoveringStyle;
     public highlightedTime: Date;
 
     constructor(

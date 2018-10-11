@@ -4,6 +4,8 @@ export interface IDataEntry { }
 export interface Data<T extends IDataEntry> {
     values: T[];
     referenceValues: ReferenceValues<T>;
+    valueBeforeTimespan?: T;
+    valueAfterTimespan?: T;
 }
 
 export class ReferenceValues<T extends IDataEntry> {

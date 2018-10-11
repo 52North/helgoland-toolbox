@@ -1,5 +1,13 @@
 import {
-    AfterViewInit, Component, ElementRef, EventEmitter, Input, IterableDiffers, ViewChild, ViewEncapsulation, Output
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    IterableDiffers,
+    Output,
+    ViewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 import {
     ColorService,
@@ -17,8 +25,6 @@ import {
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment from 'moment';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
@@ -144,7 +150,7 @@ export class D3TimeseriesGraphComponent
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     protected graph: any;
     protected graphFocus: any;
-    private graphBody: any;
+    protected graphBody: any;
     private dragRect: any;
     private dragRectG: any;
     private background: any;
@@ -214,7 +220,8 @@ export class D3TimeseriesGraphComponent
         grid: true,
         yaxis: true,
         overview: false,
-        showTimeLabel: true
+        showTimeLabel: true,
+        requestBeforeAfterValues: false
     };
 
     constructor(
@@ -360,12 +367,13 @@ export class D3TimeseriesGraphComponent
         this.plotGraph();
     }
 
-    private changeTime(from: number, to: number) {
-        this.onTimespanChanged.emit(new Timespan(from, to));
+    public centerTime(timestamp: number) {
+        const centeredTimespan = this.timeSrvc.centerTimespan(this.timespan, new Date(timestamp));
+        this.onTimespanChanged.emit(centeredTimespan);
     }
 
-    private isContentLoadingD3(loading: boolean): void {
-        this.onContentLoading.emit(loading);
+    private changeTime(from: number, to: number) {
+        this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
     private loadAddedDataset(dataset: IDataset) {
@@ -376,9 +384,7 @@ export class D3TimeseriesGraphComponent
     // load data of dataset
     private loadDatasetData(dataset: IDataset, force: boolean) {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
-        if (this.loadingCounter === 0) {
-            this.isContentLoadingD3(true);
-        }
+        if (this.loadingCounter === 0) { this.onContentLoading.emit(true); }
         this.loadingCounter++;
 
         if (dataset instanceof Timeseries) {
@@ -387,120 +393,116 @@ export class D3TimeseriesGraphComponent
             this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
-                    expanded: this.plotOptions.showReferenceValues === true,
+                    expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 },
                 { forceUpdate: force }
             ).subscribe(
-                (result) => {
-                    this.datasetMap.get(dataset.internalId).data = result;
-                    this.prepareTsData(dataset).subscribe(() => {
-                    });
-                },
+                (result) => this.prepareTsData(dataset, result),
                 (error) => this.onError(error),
-                () => {
-                    this.onCompleteLoadingData();
-                }
+                () => this.onCompleteLoadingData()
             );
         }
     }
 
     private onCompleteLoadingData() {
         this.loadingCounter--;
-        if (this.loadingCounter === 0) { this.isContentLoadingD3(false); }
+        if (this.loadingCounter === 0) { this.onContentLoading.emit(false); }
     }
 
     /**
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareTsData(dataset: IDataset): Observable<boolean> { // , data: Data<[number, number]>
-        return Observable.create((observer: Observer<boolean>) => {
-            const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-            const styles = this.datasetOptions.get(dataset.internalId);
-            const data = this.datasetMap.get(dataset.internalId).data;
+    private prepareTsData(dataset: IDataset, data: Data<[number, number]>) {
 
-            // change uom for testing
-            // if (this.preparedData.length > 0) {
-            //     dataset.uom = 'mc';
-            // }
+        // add surrounding entries to the set
+        if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
+        if (data.valueAfterTimespan) { data.values.push(data.valueAfterTimespan); }
 
-            // generate random color, if color is not defined
-            if (styles.color === undefined) {
-                styles.color = this.colorService.getColor();
-            }
+        this.datasetMap.get(dataset.internalId).data = data;
+        const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+        const styles = this.datasetOptions.get(dataset.internalId);
 
-            // end of check for datasets
-            const dataEntry: InternalDataEntry = {
-                internalId: dataset.internalId,
-                id: this.loadingCounter,
-                color: styles.color,
-                data: styles.visible ? data.values : [],
-                points: {
-                    fillColor: styles.color
-                },
-                lines: {
-                    lineWidth: styles.lineWidth,
-                    pointRadius: styles.pointRadius
-                },
-                bars: {
-                    lineWidth: styles.lineWidth
-                },
-                axisOptions: {
-                    uom: dataset.uom,
-                    label: dataset.label,
-                    zeroBased: styles.zeroBasedYAxis,
-                    yAxisRange: styles.yAxisRange,
-                    autoRangeSelection: styles.autoRangeSelection,
-                    separateYAxis: styles.separateYAxis
-                },
-                visible: styles.visible
+        // TODO: change uom for testing
+        // if (this.preparedData.length > 0) {
+        //     dataset.uom = 'mc';
+        // }
+
+        // generate random color, if color is not defined
+        if (styles.color === undefined) {
+            styles.color = this.colorService.getColor();
+        }
+
+        // end of check for datasets
+        const dataEntry: InternalDataEntry = {
+            internalId: dataset.internalId,
+            id: this.loadingCounter,
+            color: styles.color,
+            data: styles.visible ? data.values : [],
+            points: {
+                fillColor: styles.color
+            },
+            lines: {
+                lineWidth: styles.lineWidth,
+                pointRadius: styles.pointRadius
+            },
+            bars: {
+                lineWidth: styles.lineWidth
+            },
+            axisOptions: {
+                uom: dataset.uom,
+                label: dataset.label,
+                zeroBased: styles.zeroBasedYAxis,
+                yAxisRange: styles.yAxisRange,
+                autoRangeSelection: styles.autoRangeSelection,
+                separateYAxis: styles.separateYAxis
+            },
+            visible: styles.visible
+        };
+        let arrayIDX: number = this.dotsObjects.findIndex((el) => el.label.internalId === dataEntry.internalId);
+        if (arrayIDX >= 0) {
+            this.dotsObjects[arrayIDX].label = dataEntry;
+            this.dotsObjects[arrayIDX].data = dataEntry.data;
+        } else {
+            let pObject: PointObject = {
+                'label': dataEntry,
+                'data': dataEntry.data.filter((d) => !isNaN(d[1]))
             };
+            this.dotsObjects.push(pObject);
+        }
 
-            let arrayIDX: number = this.dotsObjects.findIndex((el) => el.label.internalId === dataEntry.internalId);
-            if (arrayIDX >= 0) {
-                this.dotsObjects[arrayIDX].label = dataEntry;
-                this.dotsObjects[arrayIDX].data = dataEntry.data;
-            } else {
-                let pObject: PointObject = {
-                    'label': dataEntry,
-                    'data': dataEntry.data.filter((d) => !isNaN(d[1]))
-                };
-                this.dotsObjects.push(pObject);
+        let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+        if (styles.separateYAxis) {
+            if (separationIdx < 0) {
+                this.listOfSeparation.push(dataset.internalId);
             }
+        } else {
+            this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
+        }
 
-            let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+        // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
+        if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
+            dataEntry.lines.lineWidth += this.addLineWidth;
+            dataEntry.lines.pointRadius += this.addLineWidth;
+            dataEntry.bars.lineWidth += this.addLineWidth;
+
             if (styles.separateYAxis) {
-                if (separationIdx < 0) {
-                    this.listOfSeparation.push(dataset.internalId);
-                }
-            } else {
-                this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
-            }
-
-            // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
-            if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
-                dataEntry.lines.lineWidth += this.addLineWidth;
-                dataEntry.lines.pointRadius += this.addLineWidth;
-                dataEntry.bars.lineWidth += this.addLineWidth;
-
-                if (styles.separateYAxis) {
-                    this.checkYselector(dataEntry.internalId, dataEntry.axisOptions.uom);
-                    if (this.yAxisSelect[dataEntry.internalId]) {
-                        this.yAxisSelect[dataEntry.internalId].clicked = true;
-                        this.yAxisSelect[dataEntry.internalId].ids.push(dataEntry.internalId);
-                    }
+                this.checkYselector(dataEntry.internalId, dataEntry.axisOptions.uom);
+                if (this.yAxisSelect[dataEntry.internalId]) {
+                    this.yAxisSelect[dataEntry.internalId].clicked = true;
+                    this.yAxisSelect[dataEntry.internalId].ids.push(dataEntry.internalId);
                 }
             }
+        }
 
-            if (datasetIdx >= 0) {
-                this.preparedData[datasetIdx] = dataEntry;
-            } else {
-                this.preparedData.push(dataEntry);
-            }
-            this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
-            this.processData(dataEntry);
-        });
+        if (datasetIdx >= 0) {
+            this.preparedData[datasetIdx] = dataEntry;
+        } else {
+            this.preparedData.push(dataEntry);
+        }
+        this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
+        this.processData(dataEntry);
     }
 
     /**
@@ -806,6 +808,7 @@ export class D3TimeseriesGraphComponent
             .attr('transform', 'translate(' + this.bufferSum + ', 0)');
 
         this.drawAllGraphLines();
+        this.addTimespanJumpButtons();
 
         // #####################################################
         // create background rect
@@ -1118,6 +1121,75 @@ export class D3TimeseriesGraphComponent
                     .on('start', this.panStartHandler)
                     .on('drag', this.panMoveHandler)
                     .on('end', this.panEndHandler));
+        }
+    }
+
+    private addTimespanJumpButtons() {
+        let dataVisible = false;
+        let formerTimestamp = null;
+        let laterTimestamp = null;
+        if (this.plotOptions.requestBeforeAfterValues) {
+            this.preparedData.forEach((entry: InternalDataEntry) => {
+                const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e[0] && this.timespan.to > e[0]) && isFinite(e[1]));
+                if (firstIdxInTimespan < 0) {
+                    const lastIdxInTimespan = entry.data.findIndex(e => (e[0] > this.timespan.from && e[0] > this.timespan.to) && isFinite(e[1]));
+                    if (lastIdxInTimespan >= 0) {
+                        laterTimestamp = entry.data[entry.data.length - 1][0];
+                    }
+                    const temp = entry.data.findIndex(e => (e[0] < this.timespan.from && e[0] < this.timespan.to) && isFinite(e[1]));
+                    if (temp >= 0) {
+                        formerTimestamp = entry.data[entry.data.length - 1][0];
+                    }
+                } else {
+                    dataVisible = true;
+                }
+            });
+        }
+        if (!dataVisible) {
+            const buttonWidth = 50;
+            const leftRight = 15;
+            if (formerTimestamp) {
+                const g = this.background.append('g');
+                g.append('svg:rect')
+                    .attr('class', 'formerButton')
+                    .attr('width', buttonWidth + 'px')
+                    .attr('height', this.height + 'px')
+                    .attr('transform', 'translate(' + this.bufferSum + ', 0)')
+                    .on('click', () => this.centerTime(formerTimestamp));
+                g.append('line')
+                    .attr('class', 'arrow')
+                    .attr('x1', 0 + this.bufferSum + leftRight + 'px')
+                    .attr('y1', this.height / 2 + 'px')
+                    .attr('x2', 0 + this.bufferSum + (buttonWidth - leftRight) + 'px')
+                    .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
+                g.append('line')
+                    .attr('class', 'arrow')
+                    .attr('x1', 0 + this.bufferSum + leftRight + 'px')
+                    .attr('y1', this.height / 2 + 'px')
+                    .attr('x2', 0 + this.bufferSum + (buttonWidth - leftRight) + 'px')
+                    .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
+            }
+            if (laterTimestamp) {
+                const g = this.background.append('g');
+                g.append('svg:rect')
+                    .attr('class', 'laterButton')
+                    .attr('width', '50px')
+                    .attr('height', this.height)
+                    .attr('transform', 'translate(' + (this.width - 50) + ', 0)')
+                    .on('click', () => this.centerTime(laterTimestamp));
+                g.append('line')
+                    .attr('class', 'arrow')
+                    .attr('x1', this.width - leftRight + 'px')
+                    .attr('y1', this.height / 2 + 'px')
+                    .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
+                    .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
+                g.append('line')
+                    .attr('class', 'arrow')
+                    .attr('x1', this.width - leftRight + 'px')
+                    .attr('y1', this.height / 2 + 'px')
+                    .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
+                    .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
+            }
         }
     }
 
@@ -1594,20 +1666,7 @@ export class D3TimeseriesGraphComponent
     protected drawGraphLine(entry: InternalDataEntry) {
         // const getYaxisRange = this.yRangesEachUom.find((obj) => obj.ids.indexOf(entry.internalId) > -1);
         // check for y axis grouping
-        let getYaxisRange;
-        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
-            getYaxisRange = this.yRangesEachUom.find((obj) => {
-                if (obj.uom === entry.axisOptions.uom) {
-                    return true;
-                } // uom does exist in this.yRangesEachUom
-            });
-        } else {
-            getYaxisRange = this.dataYranges.find((obj) => {
-                if (obj.id === entry.internalId) {
-                    return true;
-                } // id does exist in this.dataYranges
-            });
-        }
+        let getYaxisRange = this.getYaxisRange(entry);
 
         if (entry.data.length > 0) {
             let xScaleBase = this.xScaleBase;
@@ -1832,6 +1891,22 @@ export class D3TimeseriesGraphComponent
         this.dragStart = null;
         this.dragging = false;
         this.resetDrag();
+    }
+
+    protected getYaxisRange(entry: InternalDataEntry) {
+        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
+            return this.yRangesEachUom.find((obj) => {
+                if (obj.uom === entry.axisOptions.uom) {
+                    return true;
+                } // uom does exist in this.yRangesEachUom
+            });
+        } else {
+            return this.dataYranges.find((obj) => {
+                if (obj.id === entry.internalId) {
+                    return true;
+                } // id does exist in this.dataYranges
+            });
+        }
     }
 
     /**
