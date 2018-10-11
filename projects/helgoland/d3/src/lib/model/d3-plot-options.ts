@@ -96,6 +96,5 @@ export interface D3Copyright {
 
 export enum HoveringStyle {
     line = 'line',
-    point = 'point', // default
-    new = 'new'
+    point = 'point' // default
 }
