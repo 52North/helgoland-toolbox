@@ -60,8 +60,8 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID6899 = 'http://geo.irceline.be/sos/api/v1/__6899';
-  let datasetID6522 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let datasetID1 = 'http://mudak-wrm.dev.52north.org/52n-sos-wv-webapp/api/v1/__17';
+  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -82,23 +82,28 @@ describe('D3TimeseriesGraphComponent - function', () => {
     (fixture.nativeElement as HTMLElement).style.height = '500px';
     component = fixture.componentInstance;
     const datasetOptions: Map<string, DatasetOptions> = new Map();
-    const option6899 = new DatasetOptions(datasetID6899, '#FF0000');
-    option6899.pointRadius = 4;
-    option6899.lineWidth = 2;
-    option6899.visible = true;
-    const option6522 = new DatasetOptions(datasetID6522, '#00FF00');
-    option6522.pointRadius = 4;
-    option6522.lineWidth = 2;
-    option6522.visible = true;
-    datasetOptions.set(datasetID6899, option6899);
-    datasetOptions.set(datasetID6522, option6522);
-    const end = new Date().getTime();
-    const diff = 360000000;
+    const option1 = new DatasetOptions(datasetID1, '#FF0000');
+    option1.pointRadius = 4;
+    option1.lineWidth = 2;
+    option1.visible = true;
+    component.presenterOptions = { requestBeforeAfterValues: true };
+    const option2 = new DatasetOptions(datasetID2, '#00FF00');
+    option2.pointRadius = 4;
+    option2.lineWidth = 2;
+    option2.visible = true;
+    datasetOptions.set(datasetID1, option1);
+    datasetOptions.set(datasetID2, option2);
+    const end = new Date(1900).getTime();
+    const diff = 100000000;
     component.timeInterval = new Timespan(end - diff, end);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
-    component.datasetIds = [datasetID6899, datasetID6522];
+    component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
-    fixture.detectChanges();
+    component.onTimespanChanged.subscribe(timespan => {
+      component.timeInterval = timespan;
+      component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
+    });
+    setInterval(() => fixture.detectChanges(), 100);
   });
 
   it('should have a dataset', () => {

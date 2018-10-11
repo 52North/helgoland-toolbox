@@ -20,6 +20,9 @@
     },{
       "title": "Using basic auth services",
       "file": "how-tos/basic-auth-services.md"
+    },{
+      "title": "Handle dataset options to style the timeseries",
+      "file": "how-tos/handle-styling-options.md"
     }]
   }
 ]
