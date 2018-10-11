@@ -17,7 +17,7 @@
 
     .point-paths path {
         stroke: #aaa;
-        stroke-opacity: 1;
+        stroke-opacity: 0; // set to 1 to visualize point-hovering-net
         fill-opacity: 0;
     }
 
