@@ -209,6 +209,7 @@ export class D3TimeseriesGraphComponent
     private addLineWidth = 2; // value added to linewidth
     private loadingCounter = 0;
     private currentTimeId: string;
+    private countDatasets = 0;
 
     // default plot options
     private plotOptions: D3PlotOptions = {
@@ -398,7 +399,7 @@ export class D3TimeseriesGraphComponent
                 },
                 { forceUpdate: force }
             ).subscribe(
-                (result) => this.prepareTsData(dataset, result),
+                (result) => this.prepareTsData(dataset, result, this.countDatasets++),
                 (error) => this.onError(error),
                 () => this.onCompleteLoadingData()
             );
@@ -414,7 +415,7 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareTsData(dataset: IDataset, data: Data<[number, number]>) {
+    private prepareTsData(dataset: IDataset, data: Data<[number, number]>, countDataset: number) {
 
         // add surrounding entries to the set
         if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
@@ -437,7 +438,7 @@ export class D3TimeseriesGraphComponent
         // end of check for datasets
         const dataEntry: InternalDataEntry = {
             internalId: dataset.internalId,
-            id: this.loadingCounter,
+            id: countDataset,
             color: styles.color,
             data: styles.visible ? data.values : [],
             points: {
@@ -929,9 +930,7 @@ export class D3TimeseriesGraphComponent
     }
 
     private createHoveringNet() {
-        let data = this.dotsObjects;
-
-        data = data.map(function (series, i) {
+        let data = this.dotsObjects.map(function (series, i) {
             series.data = series.data.map(function (point) {
                 point.series = i;
                 return point;
@@ -990,13 +989,13 @@ export class D3TimeseriesGraphComponent
                     return 'M' + d.join(' ') + 'Z';
                 }
             })
-            .attr('transform', 'translate(' + this.margin.left + ', 0)')
+            .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .on('mousemove', (d) => {
                 if (d !== undefined) {
                     let coords = d3.mouse(this.background.node());
                     let dataset = d.data[4];
                     let mX = coords[0] + this.bufferSum,
-                        mY = coords[1] + this.margin.top,
+                        mY = coords[1], // + this.margin.top,
                         pX = dataset.xDiagCoord,
                         pY = dataset.yDiagCoord;
 
