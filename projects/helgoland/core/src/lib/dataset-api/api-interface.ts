@@ -44,73 +44,31 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
         protected translate: TranslateService
     ) { super(); }
 
-    public abstract getPlatforms(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Platform[]>;
-    public abstract getPlatform(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Platform>;
-    public abstract getDatasets(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Dataset[]>;
-    public abstract getDataset(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Dataset>;
-    public abstract getData<T>(
-        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
-    ): Observable<Data<T>>;
-    public abstract getServices(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Service[]>;
-    public abstract getService(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Service>;
-    public abstract getStations(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Station[]>;
-    public abstract getStation(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Station>;
-    public abstract getTimeseries(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Timeseries[]>;
-    public abstract getSingleTimeseries(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Timeseries>;
+    public abstract getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]>;
+    public abstract getPlatform(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform>;
+    public abstract getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]>;
+    public abstract getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
+    public abstract getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
+    public abstract getData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
+    public abstract getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]>;
+    public abstract getService(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service>;
+    public abstract getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]>;
+    public abstract getStation(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station>;
+    public abstract getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]>;
+    public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
+    public abstract getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
-    public abstract getTsData<T>(
-        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
-    ): Observable<Data<T>>;
-    public abstract getCategories(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Category[]>;
-    public abstract getCategory(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Category>;
-    public abstract getPhenomena(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Phenomenon[]>;
-    public abstract getPhenomenon(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Phenomenon>;
-    public abstract getOfferings(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Offering[]>;
-    public abstract getOffering(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Offering>;
-    public abstract getFeatures(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Feature[]>;
-    public abstract getFeature(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Feature>;
-    public abstract getProcedures(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Procedure[]>;
-    public abstract getProcedure(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable<Procedure>;
+    public abstract getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
+    public abstract getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]>;
+    public abstract getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category>;
+    public abstract getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]>;
+    public abstract getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon>;
+    public abstract getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]>;
+    public abstract getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering>;
+    public abstract getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]>;
+    public abstract getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature>;
+    public abstract getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure[]>;
+    public abstract getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure>;
 
     protected requestApi<T>(
         url: string, params: ParameterFilter = {}, options: HttpRequestOptions = {}
