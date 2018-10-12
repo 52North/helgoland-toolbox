@@ -15,6 +15,22 @@
         shape-rendering: crispEdges;
     }
 
+    .point-paths path {
+        stroke: #aaa;
+        stroke-opacity: 0; // set to 1 to visualize point-hovering-net
+        fill-opacity: 0;
+    }
+
+    .graphDots {
+        stroke-width: 0px;
+        stroke-opacity: 1;
+    }
+
+    .graphDots .hover {
+        stroke-width: 20px;
+        stroke-opacity: .5;
+    }
+
     .formerButton,
     .laterButton {
         fill: grey;
