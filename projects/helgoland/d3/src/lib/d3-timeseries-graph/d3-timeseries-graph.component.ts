@@ -28,6 +28,8 @@ import moment from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { voronoi } from 'd3';
+import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
 interface DataEntry {
     yDiagCoord?: number;
@@ -39,32 +41,9 @@ interface DataEntry {
     xDiagCoord?: number;
 }
 
-interface HighlightDataset {
-    id: string;
-    change: boolean;
-}
-
-interface YScale {
-    buffer: number;
-    yScale: d3.ScaleLinear<number, number>;
-}
-
-export interface YRanges {
-    uom: string;
-    range: MinMaxRange;
-    preRange: MinMaxRange;
-    originRange: MinMaxRange;
-    zeroBased: boolean;
-    autoRange: boolean;
-    outOfrange: boolean;
-    ids: string[];
-    first?: boolean;
-    yScale?: d3.ScaleLinear<number, number>;
-    offset?: number;
-}
-
 export interface InternalDataEntry {
     internalId: string;
+    id: number;
     color: string;
     data: [number, number][];
     points: {
@@ -88,18 +67,6 @@ export interface InternalDataEntry {
     visible: boolean;
 }
 
-export interface DataYRange {
-    uom: string;
-    range?: MinMaxRange;
-    preRange?: MinMaxRange;
-    originRange?: MinMaxRange;
-    id: string;
-    zeroBasedYAxis: boolean;
-    autoRange: boolean;
-    outOfrange: boolean;
-    yScale?: d3.ScaleLinear<number, number>;
-}
-
 export interface HighlightOutput {
     timestamp: number;
     ids: Array<HighlightValue>;
@@ -114,11 +81,47 @@ export interface DataConst extends IDataset {
     data?: Data<[number, number]>;
 }
 
+export interface YRanges {
+    uom: string;
+    range?: MinMaxRange; // necessary if grouped by uom
+    preRange?: MinMaxRange; // necessary if grouped by uom
+    originRange?: MinMaxRange; // necessary if grouped by uom
+    zeroBased: boolean;
+    autoRange: boolean;
+    outOfrange: boolean;
+    id?: string; // necessary if grouped by internalId
+    ids?: string[]; // necessary if grouped by uom
+    first?: boolean;
+    yScale?: d3.ScaleLinear<number, number>;
+    offset?: number;
+}
+
+interface YScale {
+    buffer: number;
+    yScale: d3.ScaleLinear<number, number>;
+}
+
 interface YAxisSelection {
     id: string;
     clicked: boolean;
     ids?: Array<string>;
     uom?: string;
+}
+
+interface YPositioner {
+    idx: number;
+    y: number;
+    off: number;
+}
+
+interface PointObject {
+    label: InternalDataEntry;
+    data: [number, number][];
+}
+
+interface HighlightDataset {
+    id: string;
+    change: boolean;
 }
 
 @Component({
@@ -143,24 +146,50 @@ export class D3TimeseriesGraphComponent
 
     public highlightOutput: HighlightOutput;
 
-    protected preparedData = []; // : DataSeries[]
-    private mousedownBrush: boolean;
+    // DOM elements
     protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
     protected graph: any;
     protected graphFocus: any;
     protected graphBody: any;
     private dragRect: any;
     private dragRectG: any;
+    private background: any;
+    private copyright: any;
+    private focusG: any;
+    private highlightFocus: any;
+    private highlightRect: any;
+    private highlightText: any;
+    private focuslabelTime: any;
+
+    // options for interaction
+    private dragging: boolean;
+    private dragStart: [number, number];
+    private dragCurrent: [number, number];
+    private draggingMove: boolean;
+    private dragMoveStart: number; // [number, number];
+    private dragMoveRange: [number, number];
+    private mousedownBrush: boolean;
+    private oldGroupYaxis: boolean;
+
+    // data types
+    protected preparedData = []; // : DataSeries[]
+    protected datasetMap: Map<string, DataConst> = new Map();
+    protected listOfUoms: string[] = [];
+    protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
+    protected dataYranges: YRanges[] = []; // y array of objects containing ranges of all datasets
     private xAxisRange: Timespan; // x domain range
     private xAxisRangeOrigin: any = []; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
-    protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
-    protected dataYranges: DataYRange[] = []; // y array of objects containing ranges of all datasets
-    private ypos: any; // y array of objects containing ranges of all datasets
-    private idxOfPos = 0;
-
-    protected listOfUoms: string[] = [];
+    private ypos: [YPositioner]; // y array of objects containing ranges of all datasets
     private listOfSeparation = Array();
+    private yAxisSelect;
+
+    private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
+    private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
+    private dotsObjects: any[];
+    private labelTimestamp: number[];
+    private labelXCoord: number[];
+    private bufferSum: number;
 
     private height: number;
     private width: number;
@@ -171,39 +200,15 @@ export class D3TimeseriesGraphComponent
         left: 40
     };
     private maxLabelwidth = 0;
-    protected xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
-    protected yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
-    private background: any;
-    private rectBackground: any;
-    private dotsArray: any[];
-    private pointHovering: any;
-    private copyright: any;
-    private focusG: any;
-    private highlightFocus: any;
-    private highlightRect: any;
-    private highlightText: any;
-    private focuslabelTime: any;
-    private bufferSum: number;
-    private labelTimestamp: number[];
-    private labelXCoord: number[];
-
-    private dragging: boolean;
-    private dragStart: [number, number];
-    private dragCurrent: [number, number];
-
-    private draggingMove: boolean;
-    private dragMoveStart: [number, number];
-    private dragMoveRange: [number, number];
-
-    private yAxisSelect;
+    private idxOfPos = 0;
     private opac = {
         default: 0,
         hover: 0.3,
         click: 0.5
     };
-
-
     private addLineWidth = 2; // value added to linewidth
+    private loadingCounter = 0;
+    private currentTimeId: string;
 
     // default plot options
     private plotOptions: D3PlotOptions = {
@@ -219,13 +224,6 @@ export class D3TimeseriesGraphComponent
         requestBeforeAfterValues: false
     };
 
-    private oldGroupYaxis;
-
-    protected datasetMap: Map<string, DataConst> = new Map();
-
-    private loadingCounter = 0;
-    private currentTimeId: string;
-
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
@@ -240,6 +238,7 @@ export class D3TimeseriesGraphComponent
 
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
+        this.dotsObjects = [];
 
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
@@ -346,6 +345,9 @@ export class D3TimeseriesGraphComponent
     }
     protected presenterOptionsChanged(options: D3PlotOptions): void {
         this.oldGroupYaxis = this.plotOptions.groupYaxis;
+        if (this.plotOptions.hoverStyle !== HoveringStyle.point && options.hoverStyle === HoveringStyle.point) {
+            d3.select('g.d3line').attr('visibility', 'visible');
+        }
         Object.assign(this.plotOptions, options);
         if (this.rawSvg && this.yRangesEachUom) {
             this.plotGraph();
@@ -435,6 +437,7 @@ export class D3TimeseriesGraphComponent
         // end of check for datasets
         const dataEntry: InternalDataEntry = {
             internalId: dataset.internalId,
+            id: this.loadingCounter,
             color: styles.color,
             data: styles.visible ? data.values : [],
             points: {
@@ -457,8 +460,19 @@ export class D3TimeseriesGraphComponent
             },
             visible: styles.visible
         };
+        let arrayIDX: number = this.dotsObjects.findIndex((el) => el.label.internalId === dataEntry.internalId);
+        if (arrayIDX >= 0) {
+            this.dotsObjects[arrayIDX].label = dataEntry;
+            this.dotsObjects[arrayIDX].data = dataEntry.data;
+        } else {
+            let pObject: PointObject = {
+                'label': dataEntry,
+                'data': dataEntry.data.filter((d) => !isNaN(d[1]))
+            };
+            this.dotsObjects.push(pObject);
+        }
 
-        let separationIdx = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+        let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
         if (styles.separateYAxis) {
             if (separationIdx < 0) {
                 this.listOfSeparation.push(dataset.internalId);
@@ -526,7 +540,6 @@ export class D3TimeseriesGraphComponent
     /**
      * Function that processes the data to calculate y axis range of each dataset.
      * @param dataEntry {DataEntry} Object containing dataset related data.
-     * @param internalId {String} String with the ID of a dataset.
      */
     protected processData(dataEntry: InternalDataEntry) {
         let calculatedRange: MinMaxRange;
@@ -536,7 +549,7 @@ export class D3TimeseriesGraphComponent
         if (dataEntry.axisOptions.yAxisRange && dataEntry.axisOptions.yAxisRange.min !== dataEntry.axisOptions.yAxisRange.max) {
             predefinedRange = dataEntry.axisOptions.yAxisRange;
         }
-        let autoDataExtent = dataEntry.axisOptions.autoRangeSelection;
+        let autoDataExtent: boolean = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
         const dataExtent = d3.extent<[number, number], number>(dataEntry.data, (datum, index, array) => {
@@ -545,7 +558,6 @@ export class D3TimeseriesGraphComponent
 
         calculatedOriginRange = { min: dataExtent[0], max: dataExtent[1] };
 
-        // let outOfrange = false;
         let setDataExtent = false;
 
         // calculate out of predefined range
@@ -590,7 +602,7 @@ export class D3TimeseriesGraphComponent
             this.dataYranges[newDatasetIdx] = {
                 uom: dataEntry.axisOptions.uom,
                 id: dataEntry.internalId,
-                zeroBasedYAxis: dataEntry.axisOptions.zeroBased,
+                zeroBased: dataEntry.axisOptions.zeroBased,
                 outOfrange: setDataExtent,
                 autoRange: autoDataExtent
             };
@@ -607,14 +619,14 @@ export class D3TimeseriesGraphComponent
         this.yRangesEachUom = [];
         this.dataYranges.forEach((obj) => {
             if (obj !== null) {
-                let idx = this.yRangesEachUom.findIndex((e) => e.uom === obj.uom);
+                let idx: number = this.yRangesEachUom.findIndex((e) => e.uom === obj.uom);
                 let yrangeObj: YRanges = {
                     uom: obj.uom,
                     range: obj.range,
                     preRange: obj.preRange,
                     originRange: obj.originRange,
                     ids: [obj.id],
-                    zeroBased: obj.zeroBasedYAxis,
+                    zeroBased: obj.zeroBased,
                     outOfrange: obj.outOfrange,
                     autoRange: obj.autoRange
                 };
@@ -693,11 +705,11 @@ export class D3TimeseriesGraphComponent
      * Function that returns the value range for building the y axis for each uom of every dataset.
      * @param uom {String} String that is the uom of a dataset
      */
-    private getyAxisRange(uom) {
+    private getyAxisRange(uom: string) {
 
         for (let i = 0; i <= this.yRangesEachUom.length; i++) {
             if (this.yRangesEachUom[i].uom === uom) {
-                let range = this.yRangesEachUom[i].range;
+                let range: MinMaxRange = this.yRangesEachUom[i].range;
 
                 // check for zero based y axis
                 // if (this.yRangesEachUom[i].zeroBased) {
@@ -727,7 +739,7 @@ export class D3TimeseriesGraphComponent
         if (!this.yRangesEachUom) { return; }
 
         this.preparedData.forEach((entry) => {
-            let idx = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
+            let idx: number = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
             if (idx < 0) { this.listOfUoms.push(entry.axisOptions.uom); }
         });
 
@@ -748,13 +760,13 @@ export class D3TimeseriesGraphComponent
         this.xAxisRange = this.timespan;
 
         // #####################################################
-        let yAxisArray = [];
+        let yAxisArray: YRanges[] = [];
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
             yAxisArray = this.yRangesEachUom;
             // push all listOfSeparation into rangeArray
             if (this.listOfSeparation.length > 0) {
                 this.listOfSeparation.forEach((sepId) => {
-                    let newEl = this.dataYranges.find((el) => el.id === sepId);
+                    let newEl: YRanges = this.dataYranges.find((el) => el.id === sepId);
                     if (newEl && (yAxisArray.findIndex(el => el.id === newEl.id) < 0)) {
                         yAxisArray.push(newEl);
                     }
@@ -785,28 +797,15 @@ export class D3TimeseriesGraphComponent
         // draw x and y axis
         this.drawXaxis(this.bufferSum);
 
-        if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
-            // create background grouping for hovering points and panning
-            this.background = this.graph.append('g');
-            this.rectBackground = this.background.append('svg:rect')
-                .attr('width', this.width - this.bufferSum)
-                .attr('height', this.height)
-                .attr('id', 'backgroundRect')
-                .attr('fill', 'none')
-                .attr('stroke', 'none')
-                .attr('pointer-events', 'all')
-                .attr('transform', 'translate(' + this.bufferSum + ', 0)');
-        } else {
-            // create background as rectangle providing panning
-            this.background = this.graph.append('svg:rect')
-                .attr('width', this.width - this.bufferSum)
-                .attr('height', this.height)
-                .attr('id', 'backgroundRect')
-                .attr('fill', 'none')
-                .attr('stroke', 'none')
-                .attr('pointer-events', 'all')
-                .attr('transform', 'translate(' + this.bufferSum + ', 0)');
-        }
+        // create background as rectangle providing panning
+        this.background = this.graph.append('svg:rect')
+            .attr('width', this.width - this.bufferSum)
+            .attr('height', this.height)
+            .attr('id', 'backgroundRect')
+            .attr('fill', 'none')
+            .attr('stroke', 'none')
+            .attr('pointer-events', 'all')
+            .attr('transform', 'translate(' + this.bufferSum + ', 0)');
 
         this.drawAllGraphLines();
         this.addTimespanJumpButtons();
@@ -850,6 +849,13 @@ export class D3TimeseriesGraphComponent
                             .attr('class', 'mouse-focus-time');
                     });
                 }
+                if (this.plotOptions.hoverStyle === HoveringStyle.point) {
+                    // create voronoi net for point-hovering
+                    this.createHoveringNet();
+                    this.createHoveringNet();
+                } else {
+                    d3.select('g.d3line').attr('visibility', 'hidden');
+                }
             }
 
             if (this.plotOptions.togglePanZoom === false) {
@@ -870,7 +876,7 @@ export class D3TimeseriesGraphComponent
             this.createCopyrightLabel();
         } else {
             // execute when it is overview diagram
-            let interval = this.getXDomainByTimestamp();
+            let interval: [number, number] = this.getXDomainByTimestamp();
             let overviewTimespanInterval = [interval[0], interval[1]];
 
             // create brush
@@ -879,7 +885,7 @@ export class D3TimeseriesGraphComponent
                 .on('end', () => {
                     // on mouseclick change time after brush was moved
                     if (this.mousedownBrush) {
-                        let timeByCoord = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1]);
+                        let timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1]);
                         this.changeTime(timeByCoord[0], timeByCoord[1]);
                     }
                     this.mousedownBrush = false;
@@ -919,6 +925,202 @@ export class D3TimeseriesGraphComponent
                 .on('mousedown', () => {
                     this.mousedownBrush = true;
                 });
+        }
+    }
+
+    private createHoveringNet() {
+        let data = this.dotsObjects;
+
+        data = data.map(function (series, i) {
+            series.data = series.data.map(function (point) {
+                point.series = i;
+                return point;
+            });
+            return series;
+        });
+
+        let x = d3.scaleLinear(), // d3.scale.linear(),
+            y = d3.scaleLinear(),
+            x0, y0;
+
+        x0 = x0 || x;
+        y0 = y0 || y;
+
+        let vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
+            /**
+             * cl = { data: [], label: internalId }
+             * point = each point in a dataset
+            */
+            let outputLine = cl.data.map(function (point, pointIndex) {
+                let outputPoint = [x(point.xDiagCoord), y(point.yDiagCoord), lineIndex, pointIndex, point, cl.label];
+                return outputPoint; // adding series index to point because data is being flattened
+            });
+            return outputLine;
+        }));
+
+        let wrap = this.rawSvg.selectAll('g.d3line').data([this.dotsObjects]);
+        let gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
+        gEnter.append('g').attr('class', 'point-paths');
+
+        let left = this.bufferSum, // + this.margin.left,
+            top = this.margin.top,
+            right = this.background.node().getBBox().width + this.bufferSum, // + this.margin.left,
+            bottom = this.margin.top + this.background.node().getBBox().height;
+
+        let Diffvoronoi = d3.voronoi()
+            .extent([[left, top], [right, bottom]]);
+        let diffVoronoi2 = Diffvoronoi.polygons(vertices);
+
+        let pointPaths = wrap.select('.point-paths').selectAll('path')
+            .data(diffVoronoi2);
+        pointPaths
+            .enter().append('path')
+            .attr('class', function (d, i) {
+                return 'path-' + i;
+            });
+        pointPaths.exit().remove();
+        pointPaths
+            .attr('clip-path', function (d) {
+                if (d !== undefined) {
+                    return 'url(#clip-' + d.data[5].internalId.substring(d.data[5].internalId.length - 2, d.data[5].internalId.length) + '-' + d[0] + ')';
+                }
+            })
+            .attr('d', function (d) {
+                if (d !== undefined) {
+                    return 'M' + d.join(' ') + 'Z';
+                }
+            })
+            .attr('transform', 'translate(' + this.margin.left + ', 0)')
+            .on('mousemove', (d) => {
+                if (d !== undefined) {
+                    let coords = d3.mouse(this.background.node());
+                    let dataset = d.data[4];
+                    let mX = coords[0] + this.bufferSum,
+                        mY = coords[1] + this.margin.top,
+                        pX = dataset.xDiagCoord,
+                        pY = dataset.yDiagCoord;
+
+                    // calculate distance between point and mouse when hovering
+                    let dist: number = Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
+
+                    if (dist <= 8) {
+                        let rectBack = this.background.node().getBBox();
+                        if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
+                            // highlight hovered dot
+                            d3.select('#dot-' + dataset[0] + '-' + d.data[5].id + '')
+                                .attr('opacity', 0.8)
+                                .attr('r', '8px');
+
+                            this.highlightRect
+                                .style('visibility', 'visible');
+                            this.highlightText
+                                .style('visibility', 'visible');
+
+                            // create text for hovering label
+                            let dotLabel = this.highlightText
+                                .text(dataset[1] + ' ' + d.data[5].axisOptions.uom + '\n' + moment(dataset[0]).format('DD.MM.YY HH:mm')) // d[0] = timestamp, d[1] = data
+                                .attr('class', 'mouseHoverDotLabel')
+                                .style('pointer-events', 'none')
+                                .style('fill', 'black'); // d.data[5].color);
+
+                            let onLeftSide = false;
+                            if ((this.background.node().getBBox().width + this.bufferSum) / 2 > coords[0]) { onLeftSide = true; }
+
+                            let rectX: number = dataset.xDiagCoord + 15;
+                            let rectY: number = dataset.yDiagCoord;
+                            let rectW: number = this.getDimensions(dotLabel.node()).w + 8;
+                            let rectH: number = this.getDimensions(dotLabel.node()).h; // + 4;
+
+                            if (!onLeftSide) {
+                                rectX = dataset.xDiagCoord - 15 - rectW;
+                                rectY = dataset.yDiagCoord;
+                            }
+
+                            if ((coords[1] + rectH + 4) > this.background.node().getBBox().height) {
+                                // when label below x axis
+                                console.log('Translate label to a higher place. - not yet implemented');
+                            }
+
+                            // create hovering label
+                            let dotRectangle = this.highlightRect
+                                .attr('class', 'mouseHoverDotRect')
+                                .style('fill', 'white')
+                                .style('fill-opacity', 1)
+                                .style('stroke', d.data[5].color)
+                                .style('stroke-width', '1px')
+                                .style('pointer-events', 'none')
+                                .attr('width', rectW)
+                                .attr('height', rectH)
+                                .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
+
+                            let labelX: number = dataset.xDiagCoord + 4 + 15;
+                            let labelY: number = dataset.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
+
+                            if (!onLeftSide) {
+                                labelX = dataset.xDiagCoord - rectW + 4 - 15;
+                                labelY = dataset.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
+                            }
+
+                            this.highlightText
+                                .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
+
+                            // generate output of highlighted data
+                            let idOutput: HighlightValue = {
+                                'timestamp': dataset[0],
+                                'value': dataset[1]
+                            };
+                            this.highlightOutput = {
+                                'timestamp': dataset[0],
+                                'ids': []
+                            };
+                            this.highlightOutput.ids[d.data[5].internalId] = idOutput;
+                            this.onHighlightChanged.emit(this.highlightOutput);
+
+                        }
+                    } else {
+                        // unhighlight hovered dot
+                        d3.select('#dot-' + dataset[0] + '-' + d.data[5].id + '')
+                            .attr('opacity', 1)
+                            .attr('r', d.data[5].lines.pointRadius);
+
+                        // make label invisible
+                        this.highlightRect
+                            .style('visibility', 'hidden');
+                        this.highlightText
+                            .style('visibility', 'hidden');
+                    }
+
+                }
+            })
+            .on('mouseout', (d) => {
+                if (d !== undefined) {
+                    let dataset = d.data[4];
+
+                    // unhighlight hovered dot
+                    d3.select('#dot-' + dataset[0] + '-' + d.data[5].id + '')
+                        .attr('opacity', 1)
+                        .attr('r', d.data[5].lines.pointRadius);
+
+                    // make label invisible
+                    this.highlightRect
+                        .style('visibility', 'hidden');
+                    this.highlightText
+                        .style('visibility', 'hidden');
+                }
+            });
+        if (this.plotOptions.togglePanZoom === false) {
+            pointPaths
+                .call(d3.zoom()
+                    .on('start', this.zoomStartHandler)
+                    .on('zoom', this.zoomHandler)
+                    .on('end', this.zoomEndHandler)
+                );
+        } else {
+            pointPaths
+                .call(d3.drag()
+                    .on('start', this.panStartHandler)
+                    .on('drag', this.panMoveHandler)
+                    .on('end', this.panEndHandler));
         }
     }
 
@@ -1029,12 +1231,11 @@ export class D3TimeseriesGraphComponent
      */
     protected drawAllGraphLines() {
         this.focusG = this.graphFocus.append('g');
-        if (this.plotOptions.hoverStyle === HoveringStyle.point) {
+        if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
             // create label for point hovering
             this.highlightRect = this.focusG.append('svg:rect');
             this.highlightText = this.focusG.append('svg:text');
         }
-        this.dotsArray = [];
         this.preparedData.forEach((entry) => this.drawGraphLine(entry));
     }
 
@@ -1043,7 +1244,7 @@ export class D3TimeseriesGraphComponent
      * for the overview diagram by the selected time interval of the main diagram.
      * Calculate to get brush extent when main diagram time interval changes.
      */
-    private getXDomainByTimestamp() {
+    private getXDomainByTimestamp(): [number, number] {
         /**
          * calculate range of brush with timestamp and not diagram coordinates
          * formula:
@@ -1061,8 +1262,8 @@ export class D3TimeseriesGraphComponent
 
         let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
         let divOverviewTimeWidth = diagramWidth / diffOverviewTimeInterval;
-        let minCalcBrush = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
-        let maxCalcBrush = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
+        let minCalcBrush: number = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
+        let maxCalcBrush: number = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
 
         return [minCalcBrush, maxCalcBrush];
     }
@@ -1073,7 +1274,7 @@ export class D3TimeseriesGraphComponent
      * @param minCalcBrush {Number} Number with the minimum coordinate of the selected brush range.
      * @param maxCalcBrush {Number} Number with the maximum coordinate of the selected brush range.
      */
-    private getTimestampByCoord(minCalcBrush, maxCalcBrush) {
+    private getTimestampByCoord(minCalcBrush: number, maxCalcBrush: number): [number, number] {
         /**
          * calculate range of brush with timestamp and not diagram coordinates
          * formula:
@@ -1088,8 +1289,8 @@ export class D3TimeseriesGraphComponent
         let diagramWidth = this.width;
 
         let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
-        let minDiagramTimestamp = ((minCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
-        let maxDiagramTimestamp = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+        let minDiagramTimestamp: number = ((minCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+        let maxDiagramTimestamp: number = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
 
         return [minDiagramTimestamp, maxDiagramTimestamp];
     }
@@ -1320,7 +1521,7 @@ export class D3TimeseriesGraphComponent
      * If it does not exist, it will be created.
      * @param identifier {String} String providing the selected uom or the selected dataset ID.
      */
-    private checkYselector(identifier, uom) {
+    private checkYselector(identifier: string, uom: string) {
         if (this.yAxisSelect === undefined) {
             this.yAxisSelect = {};
         }
@@ -1418,7 +1619,7 @@ export class D3TimeseriesGraphComponent
      * @param ids {Array} Array of Strings containing the Ids.
      * @param uom {String} String with the uom for the selected Ids
      */
-    private highlightLine(ids) {
+    private highlightLine(ids: string[]) {
         let changeFalse: HighlightDataset[] = [];
         let changeTrue: HighlightDataset[] = [];
         ids.forEach((ID) => {
@@ -1524,121 +1725,14 @@ export class D3TimeseriesGraphComponent
                     .data(entry.data.filter((d) => !isNaN(d[1])))
                     .enter().append('circle')
                     .attr('class', 'graphDots')
+                    .attr('id', function (d) {
+                        return 'dot-' + d[0] + '-' + entry.id + '';
+                    })
                     .attr('stroke', entry.color)
                     .attr('fill', entry.color)
                     .attr('cx', line.x())
                     .attr('cy', line.y())
                     .attr('r', entry.lines.pointRadius);
-
-                if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
-                    // execute for point hovering
-                    let transparentDotRadius = '8px';
-                    // join datasets to create transparent circles to hover
-                    this.dotsArray = this.dotsArray.concat(entry.data.filter((d) => !isNaN(d[1])));
-                    this.pointHovering = this.background.selectAll('.hoverDots') // this.graphBody
-                        .data(this.dotsArray)
-                        .enter().append('circle')
-                        .attr('class', 'hoverDots')
-                        .attr('stroke', 'transparent')
-                        .attr('stroke-width', transparentDotRadius)
-                        .attr('fill', 'none')
-                        .attr('cx', line.x())
-                        .attr('cy', line.y());
-
-                    this.pointHovering
-                        .on('mouseover', (d, i, k) => {
-                            let coords = d3.mouse(this.rectBackground.node());
-                            if ( coords[0] >= 0 && coords[0] <= this.rectBackground.node().getBBox().width ) {
-                                d3.select(k[i])
-                                    .attr('fill', entry.color)
-                                    .attr('opacity', 0.8)
-                                    .attr('r', 8);
-
-                                this.highlightRect
-                                    .style('visibility', 'visible');
-                                this.highlightText
-                                    .style('visibility', 'visible');
-
-                                // create text for hovering label
-                                let dotLabel = this.highlightText
-                                    .text(d[1] + ' ' + entry.axisOptions.uom + '\n' + moment(d[0]).format('DD.MM.YY HH:mm')) // d[0] = timestamp, d[1] = data
-                                    .attr('class', 'mouseHoverDotLabel')
-                                    .style('pointer-events', 'none')
-                                    .style('fill', entry.color);
-
-                                let onLeftSide = false;
-                                if ((this.rectBackground.node().getBBox().width + this.bufferSum) / 2 > coords[0]) { onLeftSide = true; }
-
-                                let rectX = d.xDiagCoord + 15;
-                                let rectY = d.yDiagCoord;
-                                let rectW = this.getDimensions(dotLabel.node()).w + 8;
-                                let rectH = this.getDimensions(dotLabel.node()).h; // + 4;
-
-                                if (!onLeftSide) {
-                                    rectX = d.xDiagCoord - 15 - rectW;
-                                    rectY = d.yDiagCoord;
-                                }
-
-                                if ((coords[1] + rectH + 4) > this.rectBackground.node().getBBox().height) {
-                                    // when label below x axis
-                                    console.log('Translate label to a higher place. - not yet implemented');
-                                }
-
-                                // create hovering label
-                                let dotRectangle = this.highlightRect
-                                    .attr('class', 'mouseHoverDotRect')
-                                    .style('fill', 'white')
-                                    .style('stroke', entry.color)
-                                    .style('stroke-width', '1px')
-                                    .style('pointer-events', 'none')
-                                    .attr('width', rectW)
-                                    .attr('height', rectH)
-                                    .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
-
-                                let labelX = d.xDiagCoord + 4 + 15;
-                                let labelY = d.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
-
-                                if (!onLeftSide) {
-                                    labelX = d.xDiagCoord - rectW + 4 - 15;
-                                    labelY = d.yDiagCoord + this.getDimensions(dotRectangle.node()).h - 4;
-                                }
-
-                                this.highlightText
-                                    .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
-
-                                // generate output of highlighted data
-                                let idOutput: HighlightValue = {
-                                    'timestamp': d[0],
-                                    'value': d[1]
-                                };
-                                this.highlightOutput = {
-                                    'timestamp': d[0],
-                                    'ids': []
-                                };
-                                this.highlightOutput.ids[entry.internalId] = idOutput;
-                                this.onHighlightChanged.emit(this.highlightOutput);
-                            }
-                        })
-                        .on('mouseout', (d, i, k) => {
-                            d3.select(k[i])
-                                .attr('fill', entry.color)
-                                .attr('r', entry.lines.pointRadius);
-
-                            // make hovered dot invisible
-                            d3.selectAll('.hoverDots')
-                                .attr('stroke', 'transparent')
-                                .attr('stroke-width', transparentDotRadius)
-                                .attr('fill', 'none');
-
-                            // make label invisible
-                            this.highlightRect
-                                .style('visibility', 'hidden');
-                            this.highlightText
-                                .style('visibility', 'hidden');
-
-                        });
-
-                }
             }
         }
     }
@@ -1648,7 +1742,7 @@ export class D3TimeseriesGraphComponent
      */
     private mousemoveHandler = () => {
         const coords = d3.mouse(this.background.node());
-        this.ypos = [];
+        this.ypos = [null];
         this.idxOfPos = 0;
         this.labelTimestamp = [];
         this.labelXCoord = [];
@@ -1669,7 +1763,7 @@ export class D3TimeseriesGraphComponent
             this.focusG.style('visibility', 'hidden');
         } else {
             // focus do not overlap each other
-            if (this.ypos !== undefined) {
+            if (this.ypos !== undefined && this.ypos[0] !== null) {
                 let firstLabel = [];
                 // only push one of the pairs of objects (rectangle and label)
                 this.ypos.forEach((e, i) => {
@@ -1729,7 +1823,7 @@ export class D3TimeseriesGraphComponent
     private panMoveHandler = () => {
         this.draggingMove = true;
         if (this.dragMoveStart && this.draggingMove) {
-            let diff = -(d3.event.x - d3.event.subject.x);
+            let diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
             let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
             let ratioTimestampDiagCoord = amountTimestamp / this.width;
             let newTimeMin = this.dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
@@ -1760,7 +1854,7 @@ export class D3TimeseriesGraphComponent
     private zoomStartHandler = () => {
         this.dragging = false;
         // dependent on point or line hovering
-        this.dragStart = ( this.plotOptions.hoverStyle === HoveringStyle.point ? d3.mouse(this.rectBackground.node()) : d3.mouse(this.background.node()) );
+        this.dragStart = d3.mouse(this.background.node());
         this.xAxisRangeOrigin.push([this.xAxisRange.from, this.xAxisRange.to]);
     }
 
@@ -1873,8 +1967,7 @@ export class D3TimeseriesGraphComponent
      */
     private drawDragRectangle() {
         if (!this.dragStart) { return; }
-        // dependent on point or line hovering
-        this.dragCurrent = ( this.plotOptions.hoverStyle === HoveringStyle.point ? d3.mouse(this.rectBackground.node()) : d3.mouse(this.background.node()) );
+        this.dragCurrent = d3.mouse(this.background.node());
 
         const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
         const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);
@@ -1932,7 +2025,7 @@ export class D3TimeseriesGraphComponent
 
     /**
      * Function that enables the lableing of each dataset entry.
-     * @param entry {DataEntry} Object containing the dataset.
+     * @param entry {InternalDataEntry} Object containing the dataset.
      * @param idx {Number} Number with the position of the dataset entry in the data array.
      * @param xCoordMouse {Number} Number of the x coordinate of the mouse.
      * @param entryIdx {Number} Number of the index of the entry.
@@ -2020,7 +2113,8 @@ export class D3TimeseriesGraphComponent
                 .attr('y', item.yDiagCoord - this.getDimensions(entry.focusLabel.node()).h + 3)
                 .attr('width', this.getDimensions(entry.focusLabel.node()).w)
                 .attr('height', this.getDimensions(entry.focusLabel.node()).h);
-            this.ypos.push({ idx: this.idxOfPos++, y: item.yDiagCoord, off: 0 });
+            let yposObj: YPositioner = { idx: this.idxOfPos++, y: item.yDiagCoord, off: 0 };
+            this.ypos.push(yposObj);
 
             this.highlightOutput.ids[entry.internalId] = {
                 'timestamp': item[0],
