@@ -85,6 +85,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   protected plotGraph() {
     this.prepareAdditionaData();
     super.plotGraph();
+    // execute twice to first create DOM elements and then add data
+    super.createHoveringNet(this.additionalPreparedData);
+    super.createHoveringNet(this.additionalPreparedData);
   }
 
   public ngAfterViewInit(): void {

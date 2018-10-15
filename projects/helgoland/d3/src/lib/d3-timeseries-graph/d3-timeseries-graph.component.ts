@@ -186,7 +186,7 @@ export class D3TimeseriesGraphComponent
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
-    private dotsObjects: any[];
+    // private dotsObjects: any[];
     private labelTimestamp: number[];
     private labelXCoord: number[];
     private bufferSum: number;
@@ -238,7 +238,7 @@ export class D3TimeseriesGraphComponent
 
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
-        this.dotsObjects = [];
+        // this.dotsObjects = [];
 
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
             .append('svg')
@@ -437,7 +437,7 @@ export class D3TimeseriesGraphComponent
         // end of check for datasets
         const dataEntry: InternalDataEntry = {
             internalId: dataset.internalId,
-            id: this.loadingCounter,
+            id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
             color: styles.color,
             data: styles.visible ? data.values : [],
             points: {
@@ -460,17 +460,6 @@ export class D3TimeseriesGraphComponent
             },
             visible: styles.visible
         };
-        let arrayIDX: number = this.dotsObjects.findIndex((el) => el.label.internalId === dataEntry.internalId);
-        if (arrayIDX >= 0) {
-            this.dotsObjects[arrayIDX].label = dataEntry;
-            this.dotsObjects[arrayIDX].data = dataEntry.data;
-        } else {
-            let pObject: PointObject = {
-                'label': dataEntry,
-                'data': dataEntry.data.filter((d) => !isNaN(d[1]))
-            };
-            this.dotsObjects.push(pObject);
-        }
 
         let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
         if (styles.separateYAxis) {
@@ -851,8 +840,8 @@ export class D3TimeseriesGraphComponent
                 }
                 if (this.plotOptions.hoverStyle === HoveringStyle.point) {
                     // create voronoi net for point-hovering
-                    this.createHoveringNet();
-                    this.createHoveringNet();
+                    this.createHoveringNet(this.preparedData);
+                    this.createHoveringNet(this.preparedData);
                 } else {
                     d3.select('g.d3line').attr('visibility', 'hidden');
                 }
@@ -928,10 +917,8 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private createHoveringNet() {
-        let data = this.dotsObjects;
-
-        data = data.map(function (series, i) {
+    protected createHoveringNet(inputData) {
+        let data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
                 point.series = i;
                 return point;
@@ -952,13 +939,13 @@ export class D3TimeseriesGraphComponent
              * point = each point in a dataset
             */
             let outputLine = cl.data.map(function (point, pointIndex) {
-                let outputPoint = [x(point.xDiagCoord), y(point.yDiagCoord), lineIndex, pointIndex, point, cl.label];
+                let outputPoint = [x(point.xDiagCoord), y(point.yDiagCoord), lineIndex, pointIndex, point, cl];
                 return outputPoint; // adding series index to point because data is being flattened
             });
             return outputLine;
         }));
 
-        let wrap = this.rawSvg.selectAll('g.d3line').data([this.dotsObjects]);
+        let wrap = this.rawSvg.selectAll('g.d3line').data([this.preparedData]);
         let gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
         gEnter.append('g').attr('class', 'point-paths');
 
@@ -990,13 +977,13 @@ export class D3TimeseriesGraphComponent
                     return 'M' + d.join(' ') + 'Z';
                 }
             })
-            .attr('transform', 'translate(' + this.margin.left + ', 0)')
+            .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .on('mousemove', (d) => {
                 if (d !== undefined) {
                     let coords = d3.mouse(this.background.node());
                     let dataset = d.data[4];
                     let mX = coords[0] + this.bufferSum,
-                        mY = coords[1] + this.margin.top,
+                        mY = coords[1], // + this.margin.top,
                         pX = dataset.xDiagCoord,
                         pY = dataset.yDiagCoord;
 
