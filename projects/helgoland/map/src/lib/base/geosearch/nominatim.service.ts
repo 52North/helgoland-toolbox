@@ -105,15 +105,20 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('lat', point.coordinates[0].toString());
         params = params.set('lon', point.coordinates[1].toString());
         params = params.set('format', 'json');
+        if (options && options.addressdetails !== undefined) { params = params.set('addressdetails', options.addressdetails ? '1' : '0'); }
+        if (options && options.zoom !== undefined) { params = params.set('zoom', `${options.zoom}`); }
         return this.http.client().get(
             this.serviceUrl + 'reverse',
             { params }
         ).map((res: NominatimReverseResult) => {
-            return {
+            const result = {
                 lat: res.lat,
                 lon: res.lon,
                 displayName: res.display_name,
-                address: {
+                boundingbox: res.boundingbox
+            } as GeoReverseResult;
+            if (res.address) {
+                result.address = {
                     city: res.address.city,
                     cityDistrict: res.address.city_district,
                     country: res.address.country,
@@ -126,9 +131,9 @@ export class NominatimGeoSearchService implements GeoSearch {
                     state: res.address.state,
                     stateDistrict: res.address.state_district,
                     suburb: res.address.suburb
-                },
-                boundingbox: res.boundingbox
-            } as GeoReverseResult;
+                };
+            }
+            return result;
         });
     }
 
