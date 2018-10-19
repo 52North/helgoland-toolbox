@@ -27,6 +27,7 @@ import { Observable } from 'rxjs/Observable';
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import { Layer } from 'leaflet';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'n52-station-map-selector',
@@ -42,6 +43,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     @Input()
     public statusIntervals: boolean;
 
+    /**
+     * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
+     */
+    @Input()
+    public ignoreStatusIntervalIfBeforeDuration = Infinity;
+
     private markerFeatureGroup: L.FeatureGroup;
 
     constructor(
@@ -56,11 +63,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
 
     public ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (this.map) {
-            if (changes.statusIntervals) {
-                this.drawGeometries();
-            }
-        }
+        if (this.map && changes.statusIntervals) { this.drawGeometries(); }
     }
 
     protected drawGeometries() {
@@ -87,20 +90,17 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                 obs.subscribe((extras: TimeseriesExtras) => {
                     let marker;
                     if (extras.statusIntervals) {
-                        const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
-                        if (interval) {
-                            marker = this.createColoredMarker(ts.station, interval.color);
-                        } else {
-                            marker = this.createDefaultColoredMarker(ts.station);
+                        if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
+                            const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
+                            if (interval) { marker = this.createColoredMarker(ts.station, interval.color); }
                         }
-                    } else {
-                        marker = this.createDefaultColoredMarker(ts.station);
                     }
+                    if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
                     this.markerFeatureGroup.addLayer(marker);
                 });
             });
 
-            Observable.forkJoin(obsList).subscribe(() => {
+            forkJoin(obsList).subscribe(() => {
                 this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
                 if (this.map) { this.map.invalidateSize(); }
                 this.isContentLoading(false);
