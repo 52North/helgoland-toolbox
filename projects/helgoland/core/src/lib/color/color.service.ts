@@ -5,7 +5,6 @@ export class ColorService {
 
     /**
      * Creates a random color and return it as a hex string.
-     * @returns {string}
      */
     public getColor(): string {
         return this.getRandomColor();
@@ -13,9 +12,6 @@ export class ColorService {
 
     /**
      * Converts a hex string and opacity in percent to RGBA color as string.
-     * @param {string} hex
-     * @param {number} opacity
-     * @returns {string}
      */
     public convertHexToRGBA(hex: string, opacity: number): string {
         hex = hex.replace('#', '');
