@@ -304,27 +304,30 @@ export class D3TimeseriesGraphComponent
             tsData.lines.pointRadius += this.addLineWidth;
             tsData.bars.lineWidth += this.addLineWidth;
 
-            let identifier = (this.plotOptions.groupYaxis ? tsData.axisOptions.uom : tsData.internalId);
-            this.checkYselector(identifier, tsData.axisOptions.uom);
-            this.yAxisSelect[identifier].clicked = true;
-            this.yAxisSelect[identifier].ids.push(internalId);
-
-            // check axis for uom of dataset with selected internalId
-            let existingUom = this.yRangesEachUom.find(el => el.uom === identifier);
-            if (existingUom !== undefined && existingUom.ids !== undefined) {
-                // only highlight axis of uom if all datasets with this uom are highlighted
-                // count datasets for specific uom
-                if (this.yAxisSelect[identifier].ids.length !== this.countUomDatasets(identifier)) {
-                    this.yAxisSelect[identifier].clicked = false;
-                } else {
-                    this.yAxisSelect[identifier].clicked = true;
-                }
-            }
-
-            if (tsData.axisOptions.separateYAxis) {
+            if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
                 this.checkYselector(tsData.internalId, tsData.axisOptions.uom);
                 if (this.yAxisSelect[internalId]) {
                     this.yAxisSelect[internalId].clicked = true;
+                }
+            } else {
+                let identifier = tsData.axisOptions.uom;
+                let existingUom = this.yRangesEachUom.find(el => el.uom === identifier);
+
+                if (existingUom.ids.findIndex(el => el === internalId) >= 0) {
+                    this.checkYselector(identifier, tsData.axisOptions.uom);
+                    this.yAxisSelect[identifier].clicked = true;
+                    this.yAxisSelect[identifier].ids.push(internalId);
+
+                    // check axis for uom of dataset with selected internalId
+                    if (existingUom !== undefined && existingUom.ids !== undefined) {
+                        // only highlight axis of uom if all datasets with this uom are highlighted
+                        // count datasets for specific uom
+                        if (this.yAxisSelect[identifier].ids.length !== existingUom.ids.length) {
+                            this.yAxisSelect[identifier].clicked = false;
+                        } else {
+                            this.yAxisSelect[identifier].clicked = true;
+                        }
+                    }
                 }
             }
         }
@@ -338,18 +341,19 @@ export class D3TimeseriesGraphComponent
             tsData.lines.pointRadius -= this.addLineWidth;
             tsData.bars.lineWidth -= this.addLineWidth;
 
-            let identifier = (this.plotOptions.groupYaxis ? tsData.axisOptions.uom : tsData.internalId);
-            this.checkYselector(identifier, tsData.axisOptions.uom);
-            this.yAxisSelect[identifier].ids = this.yAxisSelect[identifier].ids.filter(el => el !== internalId);
-            if (this.yAxisSelect[tsData.internalId]) {
-                this.yAxisSelect[tsData.internalId].ids = [];
-            }
-            this.yAxisSelect[identifier].clicked = false;
-            if (tsData.axisOptions.separateYAxis) {
+            if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
                 this.checkYselector(tsData.internalId, tsData.axisOptions.uom);
                 if (this.yAxisSelect[tsData.internalId]) {
                     this.yAxisSelect[tsData.internalId].clicked = false;
+                    if (this.yAxisSelect[tsData.internalId]) {
+                        this.yAxisSelect[tsData.internalId].ids = [];
+                    }
                 }
+            } else {
+                let identifier = tsData.axisOptions.uom;
+                this.checkYselector(identifier, tsData.axisOptions.uom);
+                this.yAxisSelect[identifier].ids = this.yAxisSelect[identifier].ids.filter(el => el !== internalId);
+                this.yAxisSelect[identifier].clicked = false;
             }
         }
         this.plotGraph();
@@ -492,6 +496,31 @@ export class D3TimeseriesGraphComponent
                 if (this.yAxisSelect[dataEntry.internalId]) {
                     this.yAxisSelect[dataEntry.internalId].clicked = true;
                     this.yAxisSelect[dataEntry.internalId].ids.push(dataEntry.internalId);
+                }
+            }
+        }
+
+        // check selected datasets for highlighting
+        if (this.yAxisSelect) {
+            if (styles.separateYAxis) {
+                if (this.yAxisSelect[dataEntry.axisOptions.uom]) {
+                    let idx = this.yAxisSelect[dataEntry.axisOptions.uom].ids.findIndex(el => el === dataEntry.internalId);
+                    if (idx >= 0) {
+                        this.yAxisSelect[dataEntry.axisOptions.uom].ids.splice(idx, 1);
+                    }
+                    let counted = this.countGroupedDatasets(dataEntry.axisOptions.uom, dataEntry.internalId);
+                    if (this.yAxisSelect[dataEntry.axisOptions.uom].ids.length === counted) {
+                        this.yAxisSelect[dataEntry.axisOptions.uom].clicked = true;
+                    }
+                }
+            } else {
+                if (this.yAxisSelect[dataEntry.internalId] && this.yAxisSelect[dataEntry.axisOptions.uom]) {
+                    if (this.yAxisSelect[dataEntry.internalId].clicked) {
+                        this.yAxisSelect[dataEntry.axisOptions.uom].ids.push(dataEntry.internalId);
+                    } else {
+                        this.yAxisSelect[dataEntry.axisOptions.uom].clicked = false;
+                    }
+                    delete this.yAxisSelect[dataEntry.internalId];
                 }
             }
         }
@@ -1490,11 +1519,7 @@ export class D3TimeseriesGraphComponent
                     if (entry.id) {
                         entryArray.push(entry.id);
                     } else {
-                        this.dataYranges.forEach(ds => {
-                            if (ds.uom === entry.uom) {
-                                entryArray.push(ds.id);
-                            }
-                        });
+                        entryArray = entry.ids;
                     }
                     this.highlightLine(entryArray);
                 });
@@ -1565,13 +1590,21 @@ export class D3TimeseriesGraphComponent
                                 let dataEl = this.preparedData.find((entry) => entry.internalId === id);
                                 let newSelector: YAxisSelection = {
                                     id: id,
-                                    ids: [],
+                                    ids: [id],
                                     clicked: true,
                                     uom: dataEl.axisOptions.uom
                                 };
                                 groupList[id] = newSelector;
-                                groupList[id].ids.push(id);
                             });
+                        } else if (el.clicked && el.uom !== el.id) {
+                            let dataEl = this.preparedData.find((entry) => entry.internalId === el.id);
+                            let newSelector: YAxisSelection = {
+                                id: el.id,
+                                ids: [el.id],
+                                clicked: true,
+                                uom: dataEl.axisOptions.uom
+                            };
+                            groupList[el.id] = newSelector;
                         }
                     }
                 }
@@ -1584,44 +1617,33 @@ export class D3TimeseriesGraphComponent
                         let selectionID;
                         if (dataEl && dataEl.axisOptions.separateYAxis) {
                             // selection is dataset with internalId
-                            selectionID = dataEl.internalId; // el.uom + '' + dataEl.internalId;
-                            if (!groupList[dataEl.axisOptions.uom]) {
-                                let currentUom: YAxisSelection = {
-                                    id: dataEl.axisOptions.uom,
-                                    ids: [],
-                                    clicked: false,
-                                    uom: dataEl.axisOptions.uom
-                                };
-                                groupList[dataEl.axisOptions.uom] = currentUom;
-                            }
+                            selectionID = dataEl.internalId;
                         } else {
                             // selection is uom
-                            selectionID = dataEl.axisOptions.uom;
+                            selectionID = el.uom;
                         }
                         if (!groupList[selectionID]) {
                             let currentUom: YAxisSelection = {
                                 id: selectionID,
                                 ids: [],
                                 clicked: false,
-                                uom: dataEl.axisOptions.uom
+                                uom: el.uom
                             };
                             groupList[selectionID] = currentUom;
                         }
 
                         if (el.clicked) {
                             groupList[selectionID].ids.push(el.id);
-                            if (selectionID !== dataEl.axisOptions.uom && groupList[dataEl.axisOptions.uom]) {
-                                groupList[dataEl.axisOptions.uom].ids.push(el.id);
-                            }
                         }
 
-                        let existingUom = this.yRangesEachUom.find(obj => obj.uom === selectionID);
-                        if (existingUom !== undefined) {
-                            // if (groupList[selectionID].ids.length === existingUom.ids.length) {
-                            if (groupList[selectionID].ids.length === this.countUomDatasets(selectionID)) {
+                        if (el.uom === selectionID) {
+                            // execute for grouped uom
+                            let groupedDatasets = this.countGroupedDatasets(selectionID, el.uom);
+                            if (groupList[selectionID].ids.length === groupedDatasets) {
                                 groupList[selectionID].clicked = true;
                             }
                         } else if (el.clicked) {
+                            // execute for ungrouped dataset
                             groupList[selectionID].clicked = true;
                         }
                     }
@@ -1634,15 +1656,17 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
-     * Function that returns the amount of datasets with the same uom by a given uom
+     * Function that returns the amount of datasets that are grouped with the same uom
      * @param uom {String} uom
+     * @param id {String} internalId of the dataset that can be skipped
      * returns {Number} amount of datasets with the given uom
      */
-    private countUomDatasets(uom: string): number {
+    private countGroupedDatasets(uom: string, id: string): number {
         let arrayUomCount = 0;
         this.dataYranges.forEach(el => {
-            if (el.uom === uom) {
-                arrayUomCount ++;
+            if (el.uom === uom && el.id !== id) {
+                let idx = this.preparedData.findIndex(ds => ds.internalId === el.id && ds.axisOptions.separateYAxis === false);
+                if (idx >= 0) { arrayUomCount++; }
             }
         });
         return arrayUomCount;
@@ -1663,7 +1687,6 @@ export class D3TimeseriesGraphComponent
             changeTrue.push({ id: ID, change: true });
         });
 
-        // let changeAll = true;
         if (ids.length === changeFalse.length) {
             this.changeSelectedIds(changeFalse, true);
         } else {
