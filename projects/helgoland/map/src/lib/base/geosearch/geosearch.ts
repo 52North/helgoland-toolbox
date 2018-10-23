@@ -13,8 +13,10 @@ export interface GeoSearchOptions {
     asPointGeometry?: boolean;
 }
 
-// tslint:disable-next-line:no-empty-interface
-export interface GeoReverseOptions { }
+export interface GeoReverseOptions {
+    addressdetails?: boolean;
+    zoom?: number;
+}
 
 export interface GeoReverseResult {
     lat: string;
