@@ -83,7 +83,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   }
 
   protected plotGraph() {
-    this.prepareAdditionaData();
+    this.prepareAdditionalData();
     super.plotGraph();
     // execute twice to first create DOM elements and then add data
     super.createHoveringNet(this.additionalPreparedData);
@@ -117,7 +117,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     this.additionalPreparedData = [];
   }
 
-  private prepareAdditionaData() {
+  private prepareAdditionalData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry => {
         if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data) {
@@ -149,7 +149,11 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   zeroBased: options.zeroBasedYAxis,
                   yAxisRange: options.yAxisRange,
                   autoRangeSelection: options.autoRangeSelection,
-                  separateYAxis: options.separateYAxis
+                  separateYAxis: options.separateYAxis,
+                  parameters: {
+                      station: dataset.parameters.feature.label,
+                      phenomenon: dataset.parameters.phenomenon.label
+                  }
                 },
                 visible: options.visible
               };
@@ -177,7 +181,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   originRange: range,
                   zeroBased: options.zeroBasedYAxis,
                   outOfrange: false,
-                  ids: [entry.yaxisLabel]
+                  ids: [entry.yaxisLabel],
+                  parameters: dataEntry.axisOptions.parameters
                 };
                 if (existingAxisIndex > -1) {
                   this.yRangesEachUom[existingAxisIndex] = axisRange;

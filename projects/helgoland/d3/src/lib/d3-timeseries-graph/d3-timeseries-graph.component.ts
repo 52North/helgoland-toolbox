@@ -63,6 +63,10 @@ export interface InternalDataEntry {
         yAxisRange: MinMaxRange;
         autoRangeSelection: boolean;
         separateYAxis: boolean;
+        parameters: {
+            station: String;
+            phenomenon: String;
+        };
     };
     visible: boolean;
 }
@@ -94,6 +98,10 @@ export interface YRanges {
     first?: boolean;
     yScale?: d3.ScaleLinear<number, number>;
     offset?: number;
+    parameters: {   // additional information for the y axis label
+        station: String;
+        phenomenon: String;
+    };
 }
 
 interface YScale {
@@ -471,7 +479,11 @@ export class D3TimeseriesGraphComponent
                 zeroBased: styles.zeroBasedYAxis,
                 yAxisRange: styles.yAxisRange,
                 autoRangeSelection: styles.autoRangeSelection,
-                separateYAxis: styles.separateYAxis
+                separateYAxis: styles.separateYAxis,
+                parameters: {
+                    station: dataset.parameters.feature.label,
+                    phenomenon: dataset.parameters.phenomenon.label
+                }
             },
             visible: styles.visible
         };
@@ -633,7 +645,8 @@ export class D3TimeseriesGraphComponent
                 id: dataEntry.internalId,
                 zeroBased: dataEntry.axisOptions.zeroBased,
                 outOfrange: setDataExtent,
-                autoRange: autoDataExtent
+                autoRange: autoDataExtent,
+                parameters: dataEntry.axisOptions.parameters
             };
             if (isFinite(calculatedRange.min) && isFinite(calculatedRange.max)) {
                 this.dataYranges[newDatasetIdx].range = calculatedRange;
@@ -657,7 +670,8 @@ export class D3TimeseriesGraphComponent
                     ids: [obj.id],
                     zeroBased: obj.zeroBased,
                     outOfrange: obj.outOfrange,
-                    autoRange: obj.autoRange
+                    autoRange: obj.autoRange,
+                    parameters: obj.parameters
                 };
 
                 if (idx >= 0) {
@@ -1457,10 +1471,14 @@ export class D3TimeseriesGraphComponent
             const text = this.graph.append('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
+                .attr('class', 'yaxisTextLabel')
                 .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text((entry.id ? (entry.uom + ' (' + entry.id + ')') : entry.uom));
+                .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
+
+            this.graph.selectAll('.yaxisTextLabel')
+                .call(this.wrapText, (axis.node().getBBox().height - 10), this.height / 2);
 
             const axisWidth = axis.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
             // if yAxis should not be visible, buffer will be set to 0
@@ -1478,8 +1496,7 @@ export class D3TimeseriesGraphComponent
             if (entry.first) {
                 textOff = this.margin.left;
             }
-            text.attr('y', 0 - textOff)
-                .attr('x', 0 - (this.height / 2));
+            text.attr('y', 0 - textOff);
 
             // set id to uom, if group yaxis is toggled, else set id to dataset id
             let id: string = (entry.id ? entry.id : entry.uom);
@@ -2209,6 +2226,39 @@ export class D3TimeseriesGraphComponent
                 .classed('hidden', false);
         }
         this.highlightOutput.timestamp = this.labelTimestamp[idxOfMin];
+    }
+
+    /**
+     * Function to wrap the text for the y axis label.
+     * @param text {any} y axis label
+     * @param width {Number} width of the axis which must not be crossed
+     * @param xposition {Number} position to center the label in the middle
+     */
+    private wrapText(textObj: any, width: number, xposition: number) {
+        textObj.each(function (u, i, d) {
+            let text = d3.select(this),
+                words = text.text().split(/\s+/).reverse(),
+                word,
+                line = [],
+                // lineNumber = 0,
+                lineHeight = (i === d.length - 1 ? 0.3 : 1.1), // ems
+                y = text.attr('y'),
+                dy = parseFloat(text.attr('dy')),
+                tspan = text.text(null).append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', dy + 'em');
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(' '));
+                let node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
+                let hasGreaterWidth = node.getComputedTextLength() > width;
+                if (hasGreaterWidth) {
+                    line.pop();
+                    tspan.text(line.join(' '));
+                    line = [word];
+                    tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', lineHeight + dy + 'em').text(word);
+                    // tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', ++lineNumber * lineHeight + dy + 'em').text(word);
+                }
+            }
+        });
     }
 
     /**
