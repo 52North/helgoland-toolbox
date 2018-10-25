@@ -809,7 +809,7 @@ export class D3TimeseriesGraphComponent
             // push all listOfSeparation into yAxisArray
             if (this.listOfSeparation.length > 0) {
                 this.listOfSeparation.forEach((sepId) => {
-                    let newEl: YRanges = this.dataYranges.find((el) => el.id === sepId);
+                    let newEl: YRanges = this.dataYranges.find((el) => el !== null && el.id === sepId);
                     if (newEl && (yAxisArray.findIndex(el => el.id === newEl.id) < 0)) {
                         // if all dataset for specific uom are separated from grouping, the yaxis of this uom will be removed from axis
                         let existingUom = yAxisArray.findIndex(el => el.uom === newEl.uom && (el.ids !== undefined || el.ids.length === 0));
@@ -831,17 +831,19 @@ export class D3TimeseriesGraphComponent
         }
 
         yAxisArray.forEach((entry) => {
-            entry.first = (this.yScaleBase === null);
-            entry.offset = this.bufferSum;
+            if (entry !== null) {
+                entry.first = (this.yScaleBase === null);
+                entry.offset = this.bufferSum;
 
-            let yAxisResult = this.drawYaxis(entry);
-            if (this.yScaleBase === null) {
-                this.yScaleBase = yAxisResult.yScale;
-                this.bufferSum = yAxisResult.buffer;
-            } else {
-                this.bufferSum = yAxisResult.buffer;
+                let yAxisResult = this.drawYaxis(entry);
+                if (this.yScaleBase === null) {
+                    this.yScaleBase = yAxisResult.yScale;
+                    this.bufferSum = yAxisResult.buffer;
+                } else {
+                    this.bufferSum = yAxisResult.buffer;
+                }
+                entry.yScale = yAxisResult.yScale;
             }
-            entry.yScale = yAxisResult.yScale;
         });
 
         if (!this.yScaleBase) {
@@ -1428,12 +1430,12 @@ export class D3TimeseriesGraphComponent
                 range = this.getyAxisRange(entry.uom);
             } else {
                 // if not entry.uom but separated id
-                let entryElem = this.dataYranges.find((el) => el.id === entry.id);
+                let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
                 if (entryElem) { range = entryElem.range; }
             }
 
         } else {
-            let entryElem = this.dataYranges.find((el) => el.id === entry.id);
+            let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
             if (entryElem) { range = entryElem.range; }
         }
 
@@ -1681,7 +1683,7 @@ export class D3TimeseriesGraphComponent
     private countGroupedDatasets(uom: string, id: string): number {
         let arrayUomCount = 0;
         this.dataYranges.forEach(el => {
-            if (el.uom === uom && el.id !== id) {
+            if (el !== null && el.uom === uom && el.id !== id) {
                 let idx = this.preparedData.findIndex(ds => ds.internalId === el.id && ds.axisOptions.separateYAxis === false);
                 if (idx >= 0) { arrayUomCount++; }
             }
@@ -1970,13 +1972,13 @@ export class D3TimeseriesGraphComponent
     protected getYaxisRange(entry: InternalDataEntry) {
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
             return this.yRangesEachUom.find((obj) => {
-                if (obj.uom === entry.axisOptions.uom) {
+                if (obj !== null && obj.uom === entry.axisOptions.uom) {
                     return true;
                 } // uom does exist in this.yRangesEachUom
             });
         } else {
             return this.dataYranges.find((obj) => {
-                if (obj.id === entry.internalId) {
+                if (obj !== null && obj.id === entry.internalId) {
                     return true;
                 } // id does exist in this.dataYranges
             });
