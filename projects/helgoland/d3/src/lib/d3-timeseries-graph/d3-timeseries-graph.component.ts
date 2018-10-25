@@ -197,6 +197,7 @@ export class D3TimeseriesGraphComponent
     // private dotsObjects: any[];
     private labelTimestamp: number[];
     private labelXCoord: number[];
+    private distLabelXCoord: number[];
     private bufferSum: number;
 
     private height: number;
@@ -468,7 +469,7 @@ export class D3TimeseriesGraphComponent
             },
             lines: {
                 lineWidth: styles.lineWidth,
-                pointRadius: styles.pointRadius
+                pointRadius: 3 // styles.pointRadius
             },
             bars: {
                 lineWidth: styles.lineWidth
@@ -1822,6 +1823,7 @@ export class D3TimeseriesGraphComponent
         this.idxOfPos = 0;
         this.labelTimestamp = [];
         this.labelXCoord = [];
+        this.distLabelXCoord = [];
         this.preparedData.forEach((entry, entryIdx) => {
             const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
             this.showDiagramIndicator(entry, idx, coords[0], entryIdx);
@@ -1838,6 +1840,7 @@ export class D3TimeseriesGraphComponent
             // do not show line in graph when no data available for timestamp
             this.focusG.style('visibility', 'hidden');
         } else {
+            // TODO: check overlap
             // focus do not overlap each other
             if (this.ypos !== undefined && this.ypos[0] !== null) {
                 let firstLabel = [];
@@ -2109,6 +2112,7 @@ export class D3TimeseriesGraphComponent
     private showDiagramIndicator = (entry, idx: number, xCoordMouse: number, entryIdx: number) => {
         const item: DataEntry = entry.data[idx];
         this.labelXCoord[entryIdx] = null;
+        this.distLabelXCoord[entryIdx] = null;
 
         if (item !== undefined && item.yDiagCoord && item[1] !== undefined) {
             // create line where mouse is
@@ -2116,29 +2120,37 @@ export class D3TimeseriesGraphComponent
             // show label if data available for time
             this.chVisLabel(entry, true, entryIdx);
 
-            let onLeftSide = false;
-            if ((this.background.node().getBBox().width + this.bufferSum) / 2 > item.xDiagCoord) { onLeftSide = true; }
-
+            let xMouseAndBuffer = xCoordMouse + this.bufferSum;
             let labelBuffer = ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001)
                 * ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001);
 
-            labelBuffer = Math.max(4, labelBuffer);
+            labelBuffer = Math.max(10, labelBuffer);
 
-            this.showLabelValues(entry, item, onLeftSide);
-            this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
+            this.showLabelValues(entry, item);
+            this.showTimeIndicatorLabel(item, entryIdx, xMouseAndBuffer);
 
-            if ((xCoordMouse) > (item.xDiagCoord + labelBuffer) || (xCoordMouse) < (item.xDiagCoord - labelBuffer)) {
-                // hide label if mouse to far from coordinate
+            if (item.xDiagCoord >= this.background.node().getBBox().width + this.bufferSum || xMouseAndBuffer < item.xDiagCoord - labelBuffer) {
                 this.chVisLabel(entry, false, entryIdx);
+            }
 
-                if (entry.data[idx - 1] && entry.data[idx - 1].xDiagCoord + labelBuffer >= xCoordMouse) {
-                    this.showLabelValues(entry, entry.data[idx - 1], onLeftSide);
-                    this.showTimeIndicatorLabel(item, onLeftSide, entryIdx);
-
+            if (xMouseAndBuffer < item.xDiagCoord) {
+                if (entry.data[idx - 1] && (Math.abs(entry.data[idx - 1].xDiagCoord - xMouseAndBuffer) < Math.abs(item.xDiagCoord - xMouseAndBuffer))) {
+                    this.chVisLabel(entry, false, entryIdx);
+                    // show closest element to mouse
+                    this.showLabelValues(entry, entry.data[idx - 1]);
+                    this.showTimeIndicatorLabel(entry.data[idx - 1], entryIdx, xMouseAndBuffer);
                     this.chVisLabel(entry, true, entryIdx);
+
+                    // check for graph width and range between data point and mouse
+                    if (entry.data[idx - 1].xDiagCoord >= this.background.node().getBBox().width + this.bufferSum
+                        || entry.data[idx - 1].xDiagCoord <= this.bufferSum
+                        || entry.data[idx - 1].xDiagCoord + labelBuffer < xMouseAndBuffer) {
+                        this.chVisLabel(entry, false, entryIdx);
+                    }
                 }
             }
         } else {
+            // TODO: set hovering for labelbuffer after last and before first value of the graph
             // hide label if no data available for time
             this.chVisLabel(entry, false, entryIdx);
         }
@@ -2172,12 +2184,11 @@ export class D3TimeseriesGraphComponent
      * Function to show the labeling inside the graph.
      * @param entry {DataEntry} Object containg the dataset.
      * @param item {DataEntry} Object of the entry in the dataset.
-     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
      */
-    private showLabelValues(entry, item: DataEntry, onLeftSide: boolean) {
+    private showLabelValues(entry, item: DataEntry) {
         let id = 1;
+        let onLeftSide = this.checkLeftSide(item.xDiagCoord);
         if (entry.focusLabel) {
-            // TODO: change to block and not individual tooltip
             entry.focusLabel.text(item[id] + (entry.axisOptions.uom ? entry.axisOptions.uom : ''));
             const entryX = onLeftSide ?
                 item.xDiagCoord + 4 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w + 4;
@@ -2204,30 +2215,37 @@ export class D3TimeseriesGraphComponent
     /**
      * Function to show the time labeling inside the graph.
      * @param item {DataEntry} Object of the entry in the dataset.
-     * @param onLeftSide {Boolean} Boolean giving information if the mouse is on left side of the diagram.
      * @param entryIdx {Number} Number of the index of the entry.
      */
-    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean, entryIdx: number) {
+    private showTimeIndicatorLabel(item: DataEntry, entryIdx: number, mouseCoord: number) {
         // timestamp is the time where the mouse-cursor is
         this.labelTimestamp[entryIdx] = item.timestamp;
         this.labelXCoord[entryIdx] = item.xDiagCoord;
-        let min = d3.min(this.labelTimestamp);
-        let idxOfMin = this.labelTimestamp.findIndex((elem) => elem === min);
-        let right = item.xDiagCoord + 2;
-        let left = item.xDiagCoord - this.getDimensions(this.focuslabelTime.node()).w - 2;
+        this.distLabelXCoord[entryIdx] = Math.abs(mouseCoord - item.xDiagCoord);
+        let min = d3.min(this.distLabelXCoord);
+        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === min);
+        let onLeftSide = this.checkLeftSide(item.xDiagCoord);
+        let right = this.labelXCoord[idxOfMin] + 2;
+        let left = this.labelXCoord[idxOfMin] - this.getDimensions(this.focuslabelTime.node()).w - 2;
         this.focuslabelTime.text(moment(this.labelTimestamp[idxOfMin]).format('DD.MM.YY HH:mm'));
         this.focuslabelTime
             .attr('x', onLeftSide ? right : left)
             .attr('y', 13);
-        if (item.timestamp === min) {
-            this.highlightFocus
-                .attr('x1', item.xDiagCoord) // this.labelXCoord[idxOfMin]
-                .attr('y1', 0)
-                .attr('x2', item.xDiagCoord) // this.labelXCoord[idxOfMin]
-                .attr('y2', this.height)
-                .classed('hidden', false);
-        }
+        this.highlightFocus
+            .attr('x1', this.labelXCoord[idxOfMin])
+            .attr('y1', 0)
+            .attr('x2', this.labelXCoord[idxOfMin])
+            .attr('y2', this.height)
+            .classed('hidden', false);
         this.highlightOutput.timestamp = this.labelTimestamp[idxOfMin];
+    }
+
+    /**
+     * Function giving information if the mouse is on left side of the diagram.
+     * @param itemCoord {number} x coordinate of the value (e.g. mouse) to be checked
+     */
+    private checkLeftSide(itemCoord: number): boolean {
+        return ((this.background.node().getBBox().width + this.bufferSum) / 2 > itemCoord) ? true : false;
     }
 
     /**
