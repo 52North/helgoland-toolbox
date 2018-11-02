@@ -24,7 +24,7 @@ export class GraphLegendComponent {
         // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
         // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
         // 'http://geo.irceline.be/sos/api/v1/__6941',
-        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
+        // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
