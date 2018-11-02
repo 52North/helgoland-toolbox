@@ -20,7 +20,8 @@ describe('NominatimService', () => {
 
   it('should search with point geometry in result', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
     service.searchTerm('gent', {
-      asPointGeometry: true
+      asPointGeometry: true,
+      addressdetails: true
     }).subscribe(res => {
       expect(res.geometry.type === 'Point').toBeTruthy();
     });
