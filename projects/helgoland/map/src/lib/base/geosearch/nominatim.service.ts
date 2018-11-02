@@ -14,9 +14,23 @@ interface NominatimSearchResult {
     lat: string;
     lon: string;
     boundingbox: number[];
+    address?: {
+        city?: string;
+        city_district?: string;
+        construction?: string;
+        continent?: string;
+        country?: string;
+        country_code?: string;
+        house_number?: string;
+        neighbourhood?: string;
+        postcode?: string;
+        public_building?: string;
+        state?: string;
+        suburb?: string;
+    };
 }
 
-export interface Address {
+interface Address {
     address29: string;
     house_number: string;
     road: string;
@@ -32,7 +46,7 @@ export interface Address {
     country_code: string;
 }
 
-export interface NominatimReverseResult {
+interface NominatimReverseResult {
     place_id: string;
     licence: string;
     osm_type: string;
@@ -53,13 +67,14 @@ export class NominatimGeoSearchService implements GeoSearch {
         protected http: HttpService
     ) { }
 
-    public searchTerm(term: string, options?: GeoSearchOptions): Observable<GeoSearchResult> {
+    public searchTerm(term: string, options: GeoSearchOptions = {}): Observable<GeoSearchResult> {
         let params = new HttpParams();
-        params = params.set('limit', '1');
-        params = params.set('polygon_geojson', options.asPointGeometry ? '0' : '1');
         params = params.set('q', term);
         params = params.set('format', 'json');
-        if (options && options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
+        params = params.set('limit', '1');
+        if (options.countrycodes) { params = params.set('countrycodes', options.countrycodes.join(',')); }
+        if (options.addressdetails !== null) { params = params.set('addressdetails', options.addressdetails ? '1' : '0'); }
+        if (options.asPointGeometry !== null) { params = params.set('polygon_geojson', options.asPointGeometry ? '0' : '1'); }
         return this.http.client().get(
             this.serviceUrl + 'search',
             { params }
@@ -67,21 +82,6 @@ export class NominatimGeoSearchService implements GeoSearch {
             if (resArray.length === 1) {
                 const result = resArray[0];
                 const name = result.display_name;
-                let bounds: Array<[number, number]>;
-                if (result.boundingbox) {
-                    bounds = [
-                        [
-                            result.boundingbox[0],
-                            result.boundingbox[2]
-                        ],
-                        [
-                            result.boundingbox[1],
-                            result.boundingbox[3]
-                        ]
-                    ];
-                } else {
-                    bounds = null;
-                }
                 let geometry;
                 if (result.geojson) {
                     geometry = result.geojson;
@@ -91,11 +91,21 @@ export class NominatimGeoSearchService implements GeoSearch {
                         coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
                     };
                 }
-                return {
-                    name,
-                    geometry,
-                    bounds
-                };
+                const returnResult: GeoSearchResult = { name, geometry };
+                if (result.boundingbox) {
+                    returnResult.bounds = [
+                        [
+                            result.boundingbox[0],
+                            result.boundingbox[2]
+                        ],
+                        [
+                            result.boundingbox[1],
+                            result.boundingbox[3]
+                        ]
+                    ];
+                }
+                if (result.address) { returnResult.address = result.address; }
+                return returnResult;
             }
         });
     }

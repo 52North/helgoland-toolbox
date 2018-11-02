@@ -6,11 +6,26 @@ export interface GeoSearchResult {
     name: string;
     geometry: GeoJSON.GeoJsonObject;
     bounds?: LatLngBoundsLiteral;
+    address?: {
+        city?: string;
+        city_district?: string;
+        construction?: string;
+        continent?: string;
+        country?: string;
+        country_code?: string;
+        house_number?: string;
+        neighbourhood?: string;
+        postcode?: string;
+        public_building?: string;
+        state?: string;
+        suburb?: string;
+    };
 }
 
 export interface GeoSearchOptions {
     countrycodes?: string[];
     asPointGeometry?: boolean;
+    addressdetails?: boolean;
 }
 
 export interface GeoReverseOptions {
