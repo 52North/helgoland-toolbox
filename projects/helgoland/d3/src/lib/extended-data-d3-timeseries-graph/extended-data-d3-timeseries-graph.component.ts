@@ -149,14 +149,16 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   zeroBased: options.zeroBasedYAxis,
                   yAxisRange: options.yAxisRange,
                   autoRangeSelection: options.autoRangeSelection,
-                  separateYAxis: options.separateYAxis,
-                  parameters: {
-                      station: dataset.parameters.feature.label,
-                      phenomenon: dataset.parameters.phenomenon.label
-                  }
+                  separateYAxis: options.separateYAxis
                 },
                 visible: options.visible
               };
+              if (dataset) {
+                dataEntry.axisOptions.parameters = {
+                  station: dataset.parameters.feature.label,
+                  phenomenon: dataset.parameters.phenomenon.label
+                };
+              }
               this.additionalPreparedData.push(dataEntry);
             } else {
               dataEntry = this.additionalPreparedData[prepDataIdx];

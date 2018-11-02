@@ -61,7 +61,7 @@ export interface InternalDataEntry {
         yAxisRange: MinMaxRange;
         autoRangeSelection: boolean;
         separateYAxis: boolean;
-        parameters: {
+        parameters?: {
             station: String;
             phenomenon: String;
         };
