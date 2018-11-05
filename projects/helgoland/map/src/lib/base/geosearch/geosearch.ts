@@ -17,15 +17,18 @@ export interface GeoSearchResult {
         neighbourhood?: string;
         postcode?: string;
         public_building?: string;
+        road?: string;
         state?: string;
         suburb?: string;
+        town?: string;
+        [key: string]: string;
     };
 }
 
 export interface GeoSearchOptions {
-    countrycodes?: string[];
-    asPointGeometry?: boolean;
     addressdetails?: boolean;
+    asPointGeometry?: boolean;
+    countrycodes?: string[];
 }
 
 export interface GeoReverseOptions {
@@ -38,18 +41,18 @@ export interface GeoReverseResult {
     lon: string;
     displayName?: string;
     address?: {
-        houseNumber: string;
-        road: string;
-        neighbourhood: string;
-        suburb: string;
-        cityDistrict: string;
         city: string;
-        county: string;
-        stateDistrict: string;
-        state: string;
-        postcode: string;
+        cityDistrict: string;
         country: string;
         countryCode: string;
+        county: string;
+        houseNumber: string;
+        neighbourhood: string;
+        postcode: string;
+        road: string;
+        state: string;
+        stateDistrict: string;
+        suburb: string;
     };
     boundingbox?: string[];
 }
