@@ -39,7 +39,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         top: 10,
         right: 10,
         bottom: 40,
-        left: 40
+        left: 10
     };
 
     constructor() { }
