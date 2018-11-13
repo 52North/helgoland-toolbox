@@ -66,6 +66,7 @@ import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 import { ExtendedSettingsService } from './settings/settings.service';
+import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 
 const APP_PROVIDERS = [
   StatusCheckService,
@@ -99,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AdditionalDataGraphComponent,
     AppComponent,
+    D3GeneralPopupComponent,
     EventingComponent,
     FavoriteComponent,
     GeometryViewComponent,
@@ -158,7 +160,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   entryComponents: [
     StyleModificationComponent,
-    GeometryViewComponent
+    GeometryViewComponent,
+    D3GeneralPopupComponent
   ],
   providers: [
     APP_PROVIDERS,

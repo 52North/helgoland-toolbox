@@ -3,7 +3,11 @@ import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from 'projects/helgoland/d3/src/public_api';
 
+import { D3GeneralDatasetInput } from '@helgoland/d3';
+import { HttpClient } from '@angular/common/http';
+
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
+import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 import { HighlightOutput } from 'projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph.component';
 
@@ -63,7 +67,9 @@ export class GraphLegendComponent {
         private color: ColorService,
         private cdr: ChangeDetectorRef,
         private dialog: MatDialog,
-        private time: Time
+        private time: Time,
+
+        private http: HttpClient,
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
@@ -162,6 +168,39 @@ export class GraphLegendComponent {
 
     public highlightChanged(highlightObject: HighlightOutput) {
         this.highlightedTime = new Date(highlightObject.timestamp);
+    }
+
+    // public clickedDataPoint(dataEntry: DataEntry, internalDataEntry: InternalDataEntry) {
+    public clickedDataPoint(input) {
+        console.log('input [DataEntry, InternalDataEntry] for API request');
+        console.log(input[0]); // : DataEntry
+        console.log(input[1]); // : InternalDataEntry
+
+        // TODO: use input ([DataEntry, InternalDataEntry]) to request data for diagram
+        this.http.get('assets/dataset/sampledataset.csv', {responseType: 'text'})
+        .subscribe(
+            data => {
+                const dataSplit = data.split(/\r\n|\n|\r|,/);
+                const dataset: D3GeneralDatasetInput = {
+                    data: [],
+                    xlabel: dataSplit[0],
+                    ylabel: dataSplit[1]
+                };
+
+                for (let i = 2; i < dataSplit.length; i += 2) {
+                    dataset.data.push( { x: Number(dataSplit[i]), y: Number(dataSplit[i + 1]) } );
+                }
+
+                // todo: input should be of type D3GeneralDataset
+                this.dialog.open(D3GeneralPopupComponent, {
+                    data: dataset
+                });
+            },
+            error => {
+                console.log(error);
+            }
+        );
+
     }
 
 }

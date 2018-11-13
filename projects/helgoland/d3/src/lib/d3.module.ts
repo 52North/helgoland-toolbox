@@ -8,13 +8,15 @@ import {
   ExtendedDataD3TimeseriesGraphComponent,
 } from './extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from './helper/d3-time-format-locale.service';
+import { D3GeneralGraphComponent } from './d3-general-graph/d3-general-graph.component';
 
 @NgModule({
   declarations: [
     D3TrajectoryGraphComponent,
     D3TimeseriesGraphComponent,
     D3OverviewTimeseriesGraphComponent,
-    ExtendedDataD3TimeseriesGraphComponent
+    ExtendedDataD3TimeseriesGraphComponent,
+    D3GeneralGraphComponent
   ],
   imports: [
     HelgolandCoreModule
@@ -23,7 +25,8 @@ import { D3TimeFormatLocaleService } from './helper/d3-time-format-locale.servic
     D3TrajectoryGraphComponent,
     D3TimeseriesGraphComponent,
     D3OverviewTimeseriesGraphComponent,
-    ExtendedDataD3TimeseriesGraphComponent
+    ExtendedDataD3TimeseriesGraphComponent,
+    D3GeneralGraphComponent
   ],
   providers: [
     D3TimeFormatLocaleService
