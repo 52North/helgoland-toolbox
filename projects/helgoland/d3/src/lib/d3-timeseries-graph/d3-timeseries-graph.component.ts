@@ -29,7 +29,7 @@ import moment from 'moment';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 
-interface DataEntry {
+export interface DataEntry {
     yDiagCoord?: number;
     timestamp?: number;
     xDiagMin?: number;
@@ -135,6 +135,9 @@ export class D3TimeseriesGraphComponent
 
     @Output()
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+
+    @Output()
+    public onClickDataPoint: EventEmitter<[DataEntry, InternalDataEntry]> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -1035,14 +1038,7 @@ export class D3TimeseriesGraphComponent
                 if (d !== undefined) {
                     let coords = d3.mouse(this.background.node());
                     let dataset = d.data[4];
-                    let mX = coords[0] + this.bufferSum,
-                        mY = coords[1], // + this.margin.top,
-                        pX = dataset.xDiagCoord,
-                        pY = dataset.yDiagCoord;
-
-                    // calculate distance between point and mouse when hovering
-                    let dist: number = Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
-
+                    let dist = this.calcDistanceHovering(dataset, coords);
                     if (dist <= 8) {
                         let rectBack = this.background.node().getBBox();
                         if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
@@ -1147,7 +1143,9 @@ export class D3TimeseriesGraphComponent
                     this.highlightText
                         .style('visibility', 'hidden');
                 }
-            });
+            })
+            .on('mousedown', (d) => { this.clickDataPoint(d); });
+
         if (this.plotOptions.togglePanZoom === false) {
             pointPaths
                 .call(d3.zoom()
@@ -1161,6 +1159,31 @@ export class D3TimeseriesGraphComponent
                     .on('start', this.panStartHandler)
                     .on('drag', this.panMoveHandler)
                     .on('end', this.panEndHandler));
+        }
+    }
+
+    /**
+     * Function to calculate distance between mouse and a hovered point.
+     * @param dataset {} Coordinates of the hovered point.
+     * @param coords {} Coordinates of the mouse.
+     */
+    private calcDistanceHovering(dataset, coords: [number, number]): number {
+        let mX = coords[0] + this.bufferSum,
+            mY = coords[1], // + this.margin.top,
+            pX = dataset.xDiagCoord,
+            pY = dataset.yDiagCoord;
+        // calculate distance between point and mouse when hovering
+        return Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
+    }
+
+    private clickDataPoint(d) {
+        if (d !== undefined) {
+            let coords = d3.mouse(this.background.node());
+            let dataset = d.data[4];
+            let dist = this.calcDistanceHovering(dataset, coords);
+            if (dist <= 8) {
+                this.onClickDataPoint.emit([d.data[4], d.data[5]]);
+            }
         }
     }
 

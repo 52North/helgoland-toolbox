@@ -29,7 +29,7 @@ export class TimeseriesGraphComponent {
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
     public datasetOptionsMultiple: Map<string, DatasetOptions> = new Map();
     public datasetOptionsMultiple02: Map<string, DatasetOptions> = new Map();
-    public panZoom: any = 'zoom';
+    public panZoom = 'zoom';
 
     constructor() {
         this.datasetIds.forEach((entry) => {
