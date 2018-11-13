@@ -14,8 +14,6 @@ import { extent } from 'd3';
 import { D3TimeseriesGraphComponent, InternalDataEntry } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 
-import { MatDialog } from '@angular/material';
-
 /**
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
  * One of the optional properties 'linkedDatasetId' and 'yaxisLabel' is mandatory.
