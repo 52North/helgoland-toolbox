@@ -1,4 +1,12 @@
 
+// input tyoe for d3-general-graph component
+export interface D3GeneralDatasetInput {
+    data: D3GeneralDataPoint[];
+    xlabel: string;
+    ylabel: string;
+}
+
+// dataset type inside d3-general-graph component
 export interface D3GeneralDataset {
     data: D3GeneralDataPoint[];
     plotOptions: {

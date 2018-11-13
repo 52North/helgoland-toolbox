@@ -1,7 +1,7 @@
 <div style="height: 500px;">
   <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
     [presenterOptions]="d3diagramOptions" [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
-    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)" (onShowSpectrum)="showSpectrum($event)" #diagram></n52-d3-timeseries-graph>
+    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)" #diagram></n52-d3-timeseries-graph>
 </div>
 <div>
   Loading Graph: {{graphLoading}}
