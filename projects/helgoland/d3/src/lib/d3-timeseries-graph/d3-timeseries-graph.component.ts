@@ -137,7 +137,7 @@ export class D3TimeseriesGraphComponent
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
     @Output()
-    public onShowSpectrum: EventEmitter<[DataEntry, InternalDataEntry]> = new EventEmitter();
+    public onClickDataPoint: EventEmitter<[DataEntry, InternalDataEntry]> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -1144,7 +1144,7 @@ export class D3TimeseriesGraphComponent
                         .style('visibility', 'hidden');
                 }
             })
-            .on('mousedown', (d) => { this.showSpectrum(d); });
+            .on('mousedown', (d) => { this.clickDataPoint(d); });
 
         if (this.plotOptions.togglePanZoom === false) {
             pointPaths
@@ -1176,13 +1176,13 @@ export class D3TimeseriesGraphComponent
         return Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
     }
 
-    private showSpectrum(d) {
+    private clickDataPoint(d) {
         if (d !== undefined) {
             let coords = d3.mouse(this.background.node());
             let dataset = d.data[4];
             let dist = this.calcDistanceHovering(dataset, coords);
             if (dist <= 8) {
-                this.onShowSpectrum.emit([d.data[4], d.data[5]]);
+                this.onClickDataPoint.emit([d.data[4], d.data[5]]);
             }
         }
     }

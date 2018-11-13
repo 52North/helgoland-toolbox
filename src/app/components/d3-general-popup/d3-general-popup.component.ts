@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { D3GeneralDataset } from '@helgoland/d3';
+import { D3GeneralDatasetInput } from '@helgoland/d3';
 
 @Component({
     templateUrl: './d3-general-popup.component.html',
@@ -9,14 +9,14 @@ import { D3GeneralDataset } from '@helgoland/d3';
 export class D3GeneralPopupComponent {
 
     @Input()
-    public generalDataset: D3GeneralDataset;
+    public generalDatasetInput: D3GeneralDatasetInput;
 
     constructor(
         public dialogRef: MatDialogRef<D3GeneralPopupComponent>,
         @Inject(MAT_DIALOG_DATA)
-        public dataset: D3GeneralDataset
+        public dataset: D3GeneralDatasetInput
     ) {
-        this.generalDataset = dataset;
+        this.generalDatasetInput = dataset;
     }
 
     public onClose() {

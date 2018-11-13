@@ -7,7 +7,7 @@ import {
     OnChanges
 } from '@angular/core';
 import * as d3 from 'd3';
-import { D3GeneralDataset, D3GeneralDataPoint } from '../model/d3-general';
+import { D3GeneralDataset, D3GeneralDatasetInput, D3GeneralDataPoint } from '../model/d3-general';
 
 @Component({
     selector: 'n52-d3-general-graph',
@@ -20,7 +20,10 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
     public d3Elem: ElementRef;
 
     @Input()
-    public generalData: D3GeneralDataset;
+    public generalDataInput: D3GeneralDatasetInput;
+
+    // componentn data variables
+    private generalData: D3GeneralDataset;
 
     // graph components
     private rawSvg: any;
@@ -52,7 +55,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
         console.log('input for d3 general graph component');
-        console.log(this.generalData);
+        console.log(this.generalDataInput);
 
         this.prepareData();
 
@@ -65,6 +68,13 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
     }
 
     private prepareData() {
+        this.generalData = {
+            data: this.generalDataInput.data,
+            plotOptions: {
+                xlabel: this.generalDataInput.xlabel,
+                ylabel: this.generalDataInput.ylabel
+            }
+        };
         this.plotGraph();
     }
 

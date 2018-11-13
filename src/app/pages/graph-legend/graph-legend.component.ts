@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from 'projects/helgoland/d3/src/public_api';
 
-import { D3GeneralDataset } from '@helgoland/d3';
+import { D3GeneralDatasetInput } from '@helgoland/d3';
 import { HttpClient } from '@angular/common/http';
 
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
@@ -171,7 +171,7 @@ export class GraphLegendComponent {
     }
 
     // public showSpectrum(dataEntry: DataEntry, internalDataEntry: InternalDataEntry) {
-    public showSpectrum(input) {
+    public clickedDataPoint(input) {
         console.log('input [DataEntry, InternalDataEntry] for API request');
         console.log(input[0]); // : DataEntry
         console.log(input[1]); // : InternalDataEntry
