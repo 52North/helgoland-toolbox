@@ -45,7 +45,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>DatasetService</li>
+  <li>RenderingHintsDatasetService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -63,10 +63,16 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/core/src/lib/abstract-services/dataset.service.ts</code>
+            <code>projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts</code>
         </p>
 
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+            </p>
 
 
 
@@ -102,6 +108,26 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addDataset">addDataset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#addLoadedDataset">addLoadedDataset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createOptionsOfRenderingHints">createOptionsOfRenderingHints</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#handleBarRenderingHints">handleBarRenderingHints</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#handleLineRenderingHints">handleLineRenderingHints</a>
+                            </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#addDataset">addDataset</a>
@@ -149,6 +175,54 @@
     </table>
 </section>
 
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(api: <a href="../interfaces/DatasetApi.html">DatasetApiInterface</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:6</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../interfaces/DatasetApi.html" target="_self" >DatasetApiInterface</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
             <section>
     
@@ -186,9 +260,15 @@
                             <i>Default value : </i><code>[]</code>
                         </td>
                     </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:5</a></div>
+                                    <div class="io-line">Defined in DatasetService:5</div>
                             </td>
                         </tr>
 
@@ -226,9 +306,15 @@
                             <i>Default value : </i><code>new Map()</code>
                         </td>
                     </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:7</a></div>
+                                    <div class="io-line">Defined in DatasetService:7</div>
                             </td>
                         </tr>
 
@@ -266,7 +352,404 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:9</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>internalId</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code>T</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addLoadedDataset"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            addLoadedDataset
+                            </b>
+                            <a href="#addLoadedDataset"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>addLoadedDataset(dataset: <a href="../interfaces/IDataset.html">IDataset</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:30</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataset</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createOptionsOfRenderingHints"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createOptionsOfRenderingHints
+                            </b>
+                            <a href="#createOptionsOfRenderingHints"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createOptionsOfRenderingHints(dataset: <a href="../interfaces/IDataset.html">IDataset</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataset</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>T</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="handleBarRenderingHints"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            handleBarRenderingHints
+                            </b>
+                            <a href="#handleBarRenderingHints"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>handleBarRenderingHints(barHints: <a href="../interfaces/RenderingHints.html">BarRenderingHints</a>, options: <a href="../interfaces/Data.html">DatasetOptions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:62</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>barHints</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/RenderingHints.html" target="_self" >BarRenderingHints</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="handleLineRenderingHints"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            handleLineRenderingHints
+                            </b>
+                            <a href="#handleLineRenderingHints"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>handleLineRenderingHints(lineHints: <a href="../interfaces/RenderingHints.html">LineRenderingHints</a>, options: <a href="../interfaces/Data.html">DatasetOptions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/rendering-hints-dataset.service.ts:56</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>lineHints</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/RenderingHints.html" target="_self" >LineRenderingHints</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addDataset"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            addDataset
+                            </b>
+                            <a href="#addDataset"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>addDataset(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, options?: T)</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in DatasetService:9</div>
                             </td>
                         </tr>
 
@@ -348,9 +831,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:49</a></div>
+                                    <div class="io-line">Defined in DatasetService:49</div>
                             </td>
                         </tr>
 
@@ -419,9 +908,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:40</a></div>
+                                    <div class="io-line">Defined in DatasetService:40</div>
                             </td>
                         </tr>
 
@@ -460,9 +955,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:53</a></div>
+                                    <div class="io-line">Defined in DatasetService:53</div>
                             </td>
                         </tr>
 
@@ -500,9 +1001,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:25</a></div>
+                                    <div class="io-line">Defined in DatasetService:25</div>
                             </td>
                         </tr>
 
@@ -540,9 +1047,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:31</a></div>
+                                    <div class="io-line">Defined in DatasetService:31</div>
                             </td>
                         </tr>
 
@@ -612,9 +1125,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:51</a></div>
+                                    <div class="io-line">Defined in DatasetService:51</div>
                             </td>
                         </tr>
 
@@ -652,9 +1171,15 @@
                 </tr>
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Service.html" target="_self" >DatasetService</a></code>
+</div>
+                                </td>
+                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/core/src/lib/abstract-services/dataset.service.ts:44</a></div>
+                                    <div class="io-line">Defined in DatasetService:44</div>
                             </td>
                         </tr>
 
@@ -724,60 +1249,72 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DatasetOptions } from &#x27;../model/internal/options&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DatasetApiInterface } from &#x27;../dataset-api/api-interface&#x27;;
+import { BarRenderingHints, IDataset, LineRenderingHints } from &#x27;../model/dataset-api/dataset&#x27;;
+import { DatasetOptions } from &#x27;../model/internal/options&#x27;;
+import { DatasetService } from &#x27;./dataset.service&#x27;;
 
-export abstract class DatasetService&lt;T extends DatasetOptions | DatasetOptions[]&gt; {
+export abstract class RenderingHintsDatasetService&lt;T extends DatasetOptions | DatasetOptions[]&gt; extends DatasetService&lt;T&gt; {
 
-    public datasetIds: string[] &#x3D; [];
-
-    public datasetOptions: Map&lt;string, T&gt; &#x3D; new Map();
+    constructor(
+        protected api: DatasetApiInterface
+    ) {
+        super();
+    }
 
     public addDataset(internalId: string, options?: T) {
-        if (this.datasetIds.indexOf(internalId) &lt; 0) {
+        if (options) {
             this.datasetIds.push(internalId);
-            if (options) {
-                this.datasetOptions.set(internalId, options);
-            } else {
-                this.datasetOptions.set(internalId, this.createStyles(internalId));
+            this.datasetOptions.set(internalId, options);
+        } else if (this.datasetIds.indexOf(internalId) &lt; 0) {
+            this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
+                (timeseries) &#x3D;&gt; this.addLoadedDataset(timeseries),
+                (error) &#x3D;&gt; {
+                    this.api.getDatasetByInternalId(internalId).subscribe(
+                        (dataset) &#x3D;&gt; this.addLoadedDataset(dataset),
+                    );
+                }
+            );
+        }
+    }
+
+    private addLoadedDataset(dataset: IDataset) {
+        this.datasetIds.push(dataset.internalId);
+        this.datasetOptions.set(dataset.internalId, this.createOptionsOfRenderingHints(dataset));
+    }
+
+    private createOptionsOfRenderingHints(dataset: IDataset): T {
+        const options &#x3D; this.createStyles(dataset.internalId) as DatasetOptions;
+        if (dataset.renderingHints) {
+            if (dataset.renderingHints.properties &amp;&amp; dataset.renderingHints.properties.color) {
+                options.color &#x3D; dataset.renderingHints.properties.color;
             }
-            this.saveState();
-        } else if (options instanceof Array) {
-            const temp &#x3D; (this.datasetOptions.get(internalId) as DatasetOptions[]);
-            options.forEach((e) &#x3D;&gt; temp.push(e));
-            this.saveState();
+            switch (dataset.renderingHints.chartType) {
+                case &#x27;line&#x27;:
+                    this.handleLineRenderingHints(dataset.renderingHints as LineRenderingHints, options);
+                    break;
+                case &#x27;bar&#x27;:
+                    this.handleBarRenderingHints(dataset.renderingHints as BarRenderingHints, options);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return options as T;
+    }
+
+
+    private handleLineRenderingHints(lineHints: LineRenderingHints, options: DatasetOptions) {
+        if (lineHints.properties.width) {
+            options.lineWidth &#x3D; Math.round(parseFloat(lineHints.properties.width));
         }
     }
 
-    public removeAllDatasets() {
-        this.datasetIds.length &#x3D; 0;
-        this.datasetOptions.clear();
-        this.saveState();
-    }
-
-    public removeDataset(internalId: string) {
-        const datasetIdx &#x3D; this.datasetIds.indexOf(internalId);
-        if (datasetIdx &gt; -1) {
-            this.datasetIds.splice(datasetIdx, 1);
-            this.datasetOptions.delete(internalId);
+    private handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
+        if (barHints.properties.width) {
+            options.lineWidth &#x3D; Math.round(parseFloat(barHints.properties.width));
         }
-        this.saveState();
     }
-
-    public hasDatasets(): boolean {
-        return this.datasetIds.length &gt; 0;
-    }
-
-    public updateDatasetOptions(options: T, internalId: string) {
-        this.datasetOptions.set(internalId, options);
-        this.saveState();
-    }
-
-    protected abstract createStyles(internalId: string): T;
-
-    protected abstract saveState(): void;
-
-    protected abstract loadState(): void;
-
 }
 </code></pre>
     </div>
@@ -806,7 +1343,7 @@ export abstract class DatasetService&lt;T extends DatasetOptions | DatasetOption
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'DatasetService.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'RenderingHintsDatasetService.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

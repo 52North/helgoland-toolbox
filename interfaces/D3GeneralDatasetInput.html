@@ -46,7 +46,7 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>GeoReverseResult</li>
+  <li>D3GeneralDatasetInput</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -64,7 +64,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/map/src/lib/base/geosearch/geosearch.ts</code>
+            <code>projects/helgoland/d3/src/lib/model/d3-general.ts</code>
         </p>
 
 
@@ -82,22 +82,13 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#address">address</a>
+                                        <a href="#data">data</a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#boundingbox">boundingbox</a>
+                                        <a href="#xlabel">xlabel</a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#displayName">displayName</a>
-                                </li>
-                                <li>
-                                        <a href="#lat">lat</a>
-                                </li>
-                                <li>
-                                        <a href="#lon">lon</a>
+                                        <a href="#ylabel">ylabel</a>
                                 </li>
                             </ul>
                         </td>
@@ -114,13 +105,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="address"></a>
-                                        <span class="name"><b>address</b><a href="#address"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="data"></a>
+                                        <span class="name"><b>data</b><a href="#data"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>address:     <code>literal type</code>
+                                        <code>data:     <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataPoint[]</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -128,16 +119,11 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>literal type</code>
+                                            <i>Type : </i>    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataPoint[]</a></code>
 
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
 
 
 
@@ -148,81 +134,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="boundingbox"></a>
-                                        <span class="name"><b>boundingbox</b><a href="#boundingbox"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="xlabel"></a>
+                                        <span class="name"><b>xlabel</b><a href="#xlabel"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>boundingbox:     <code>string[]</code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code>string[]</code>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
-
-
-
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="displayName"></a>
-                                        <span class="name"><b>displayName</b><a href="#displayName"><span class="icon ion-ios-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>displayName:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
-
-
-
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="lat"></a>
-                                        <span class="name"><b>lat</b><a href="#lat"><span class="icon ion-ios-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>lat:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>xlabel:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -245,13 +163,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="lon"></a>
-                                        <span class="name"><b>lon</b><a href="#lon"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="ylabel"></a>
+                                        <span class="name"><b>ylabel</b><a href="#ylabel"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>lon:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>ylabel:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -275,71 +193,26 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Point } from &#x27;geojson&#x27;;
-import { LatLngBoundsLiteral } from &#x27;leaflet&#x27;;
-import { Observable } from &#x27;rxjs/Observable&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface D3GeneralDatasetInput {
+    data: D3GeneralDataPoint[];
+    xlabel: string;
+    ylabel: string;
+}
 
-export interface GeoSearchResult {
-    name: string;
-    geometry: GeoJSON.GeoJsonObject;
-    bounds?: LatLngBoundsLiteral;
-    address?: {
-        city?: string;
-        city_district?: string;
-        construction?: string;
-        continent?: string;
-        country?: string;
-        country_code?: string;
-        house_number?: string;
-        neighbourhood?: string;
-        postcode?: string;
-        public_building?: string;
-        road?: string;
-        state?: string;
-        suburb?: string;
-        town?: string;
-        [key: string]: string;
+// dataset type inside d3-general-graph component
+export interface D3GeneralDataset {
+    data: D3GeneralDataPoint[];
+    plotOptions: {
+        xlabel: string;
+        ylabel: string;
+        xScale?: d3.ScaleLinear&lt;number, number&gt;;
+        yScale?: d3.ScaleLinear&lt;number, number&gt;;
     };
 }
 
-export interface GeoSearchOptions {
-    addressdetails?: boolean;
-    asPointGeometry?: boolean;
-    countrycodes?: string[];
-}
-
-export interface GeoReverseOptions {
-    addressdetails?: boolean;
-    zoom?: number;
-}
-
-export interface GeoReverseResult {
-    lat: string;
-    lon: string;
-    displayName?: string;
-    address?: {
-        city: string;
-        cityDistrict: string;
-        country: string;
-        countryCode: string;
-        county: string;
-        houseNumber: string;
-        neighbourhood: string;
-        postcode: string;
-        road: string;
-        state: string;
-        stateDistrict: string;
-        suburb: string;
-    };
-    boundingbox?: string[];
-}
-
-export abstract class GeoSearch {
-
-    public abstract searchTerm(term: string, options?: GeoSearchOptions): Observable&lt;GeoSearchResult&gt;;
-
-    public abstract reverse(point: Point, options?: GeoReverseOptions): Observable&lt;GeoReverseResult&gt;;
-
+export interface D3GeneralDataPoint {
+    x: number;
+    y: number;
 }
 </code></pre>
     </div>
@@ -367,7 +240,7 @@ export abstract class GeoSearch {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'GeoReverseResult.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'D3GeneralDatasetInput.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -1,0 +1,1604 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>D3GeneralGraphComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-d3-general-graph</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>d3-general-graph.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./d3-general-graph.component.html</code></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#buffer">buffer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#d3Elem">d3Elem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#generalData">generalData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#graph">graph</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#graphBody">graphBody</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#height">height</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#margin">margin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#rawSvg">rawSvg</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#width">width</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#calculateHeight">calculateHeight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#calculateWidth">calculateWidth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawGraphLine">drawGraphLine</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawXaxis">drawXaxis</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawYaxis">drawYaxis</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getDimensions">getDimensions</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges">ngOnChanges</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#plotGraph">plotGraph</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#prepareData">prepareData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#generalDataInput">generalDataInput</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="generalDataInput"></a>
+                        <code>generalDataInput</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDatasetInput</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:17</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+        <h3 id="methods">
+            Methods
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="calculateHeight"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            calculateHeight
+                            </b>
+                            <a href="#calculateHeight"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>calculateHeight()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="255" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:255</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function that returns the height of the graph diagram.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="calculateWidth"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            calculateWidth
+                            </b>
+                            <a href="#calculateWidth"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>calculateWidth()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="262" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:262</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function that returns the width of the graph diagram.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawGraphLine"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            drawGraphLine
+                            </b>
+                            <a href="#drawGraphLine"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>drawGraphLine(dataset: <a href="../interfaces/Data.html">D3GeneralDataset</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="203" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:203</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function to draw the line of the graph.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataset</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataset</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                        <td>
+                                                                <code><p>Object with information about the datset.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawXaxis"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            drawXaxis
+                            </b>
+                            <a href="#drawXaxis"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>drawXaxis(dataset: <a href="../interfaces/Data.html">D3GeneralDataset</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:145</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function to draw x axis.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataset</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataset</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                        <td>
+                                                                <code><p>Object with information about the dataset.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawYaxis"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            drawYaxis
+                            </b>
+                            <a href="#drawYaxis"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>drawYaxis(dataset: <a href="../interfaces/Data.html">D3GeneralDataset</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:91</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function to draw y axis.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataset</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataset</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                        <td>
+                                                                <code><p>Object with information about the dataset.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getDimensions"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            getDimensions
+                            </b>
+                            <a href="#getDimensions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>getDimensions(el: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="270" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:270</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function that returns the boundings of a html element.</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>el</td>
+                                                        <td>
+                                                                    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                        <td>
+                                                                <code><p>Object of the html element.</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>literal type</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngAfterViewInit"></a>
+                        <span class="name">
+                            <b>
+                            ngAfterViewInit
+                            </b>
+                            <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnChanges"></a>
+                        <span class="name">
+                            <b>
+                            ngOnChanges
+                            </b>
+                            <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>ngOnChanges(changes: )</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>changes</td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="plotGraph"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            plotGraph
+                            </b>
+                            <a href="#plotGraph"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>plotGraph()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:75</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Function to call functions related to plotting a dataset in a graph.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="prepareData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            prepareData
+                            </b>
+                            <a href="#prepareData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>prepareData()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="buffer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            buffer
+                            </b>
+                            <a href="#buffer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>buffer:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:30</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="d3Elem"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            d3Elem
+                            </b>
+                            <a href="#d3Elem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>d3Elem:     <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>ViewChild</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="generalData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            generalData
+                            </b>
+                            <a href="#generalData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>generalData:     <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataset</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataset</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="graph"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            graph
+                            </b>
+                            <a href="#graph"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>graph:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:24</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="graphBody"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            graphBody
+                            </b>
+                            <a href="#graphBody"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>graphBody:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:25</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="height"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            height
+                            </b>
+                            <a href="#height"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>height:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:28</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="margin"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            margin
+                            </b>
+                            <a href="#margin"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>margin:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+        top: 10,
+        right: 10,
+        bottom: 40,
+        left: 10
+    }</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rawSvg"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            rawSvg
+                            </b>
+                            <a href="#rawSvg"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>rawSvg:     <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:23</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="width"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            width
+                            </b>
+                            <a href="#width"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>width:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">projects/helgoland/d3/src/lib/d3-general-graph/d3-general-graph.component.ts:29</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from &#x27;@angular/core&#x27;;
+import * as d3 from &#x27;d3&#x27;;
+
+import { D3GeneralDataPoint, D3GeneralDataset, D3GeneralDatasetInput } from &#x27;../model/d3-general&#x27;;
+
+@Component({
+    selector: &#x27;n52-d3-general-graph&#x27;,
+    templateUrl: &#x27;./d3-general-graph.component.html&#x27;,
+    styleUrls: [&#x27;./d3-general-graph.component.scss&#x27;]
+})
+export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
+
+    @ViewChild(&#x27;d3general&#x27;)
+    public d3Elem: ElementRef;
+
+    @Input()
+    public generalDataInput: D3GeneralDatasetInput;
+
+    // componentn data variables
+    private generalData: D3GeneralDataset;
+
+    // graph components
+    private rawSvg: any;
+    private graph: any;
+    private graphBody: any;
+
+    // component settings
+    private height: number;
+    private width: number;
+    private buffer &#x3D; 0;
+
+    private margin &#x3D; {
+        top: 10,
+        right: 10,
+        bottom: 40,
+        left: 10
+    };
+
+    constructor() { }
+
+    ngAfterViewInit() {
+        this.rawSvg &#x3D; d3.select(this.d3Elem.nativeElement)
+            .append(&#x27;svg&#x27;)
+            .attr(&#x27;width&#x27;, &#x27;100%&#x27;)
+            .attr(&#x27;height&#x27;, &#x27;100%&#x27;);
+
+        this.graph &#x3D; this.rawSvg
+            .append(&#x27;g&#x27;)
+            .attr(&#x27;transform&#x27;, &#x27;translate(&#x27; + this.margin.left + &#x27;,&#x27; + this.margin.top + &#x27;)&#x27;);
+        this.prepareData();
+    }
+
+    ngOnChanges(changes) {
+        if (changes.generalDataInput &amp;&amp; this.rawSvg) {
+            this.prepareData();
+        }
+    }
+
+    private prepareData() {
+        if (this.generalDataInput) {
+            this.generalData &#x3D; {
+                data: this.generalDataInput.data,
+                plotOptions: {
+                    xlabel: this.generalDataInput.xlabel,
+                    ylabel: this.generalDataInput.ylabel
+                }
+            };
+            this.plotGraph();
+        }
+    }
+
+    /**
+     * Function to call functions related to plotting a dataset in a graph.
+     */
+    private plotGraph() {
+        const dataset &#x3D; this.generalData;
+        this.height &#x3D; this.calculateHeight();
+        this.width &#x3D; this.calculateWidth();
+
+        dataset.plotOptions.yScale &#x3D; this.drawYaxis(dataset);
+        dataset.plotOptions.xScale &#x3D; this.drawXaxis(dataset);
+        this.drawGraphLine(dataset);
+    }
+
+
+
+    /**
+     * Function to draw y axis.
+     * @param dataset {D3GeneralDataset} Object with information about the dataset.
+     */
+    private drawYaxis(dataset: D3GeneralDataset) {
+
+        // range for y axis scale
+        let yRange &#x3D; d3.extent(d3.values(dataset.data.map((d) &#x3D;&gt; {
+            if ((!isNaN(d.x) &amp;&amp; !isNaN(d.y))) {
+                return d.y;
+            }
+        })));
+
+        const yRangeOffset &#x3D; (yRange[1] - yRange[0]) * 0.10;
+        const yScale &#x3D; d3.scaleLinear()
+            .domain([yRange[0] - yRangeOffset, yRange[1] + yRangeOffset])
+            .range([this.height, 0]);
+
+        let yAxisGen &#x3D; d3.axisLeft(yScale).ticks(5);
+
+        // draw y axis
+        const yAxis &#x3D; this.graph.append(&#x27;svg:g&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;y axis&#x27;)
+            .call(yAxisGen);
+
+        // draw y axis label
+        const yAxisLabel &#x3D; this.graph.append(&#x27;text&#x27;)
+            // .attr(&#x27;transform&#x27;, &#x27;rotate(-90)&#x27;)
+            .attr(&#x27;transform&#x27;, &#x27;translate(0, &#x27; + this.height / 2 + &#x27;)rotate(-90)&#x27;)
+            .attr(&#x27;dy&#x27;, &#x27;1em&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;yAxisTextLabel&#x27;)
+            .style(&#x27;font&#x27;, &#x27;18px times&#x27;)
+            .style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;)
+            .style(&#x27;fill&#x27;, &#x27;black&#x27;)
+            .text(dataset.plotOptions.ylabel);
+
+        // this.graph.selectAll(&#x27;.yAxisTextLabel&#x27;)
+        this.buffer &#x3D; yAxis.node().getBBox().width + 10 + this.getDimensions(yAxisLabel.node()).h;
+
+        yAxis.attr(&#x27;transform&#x27;, &#x27;translate(&#x27; + this.buffer + &#x27;, 0)&#x27;);
+
+        // draw y grid lines
+        this.graph.append(&#x27;svg:g&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;grid&#x27;)
+            .attr(&#x27;transform&#x27;, &#x27;translate(&#x27; + this.buffer + &#x27;, 0)&#x27;)
+            .call(d3.axisLeft(yScale)
+                .ticks(5)
+                .tickSize(-this.width + this.buffer)
+                .tickFormat(() &#x3D;&gt; &#x27;&#x27;)
+            );
+
+        return yScale;
+    }
+
+    /**
+     * Function to draw x axis.
+     * @param dataset {D3GeneralDataset} Object with information about the dataset.
+     */
+    private drawXaxis(dataset: D3GeneralDataset) {
+
+        // range for y axis scale
+        let xRange: [number, number] &#x3D; d3.extent(d3.values(dataset.data.map((d) &#x3D;&gt; {
+            if ((!isNaN(d.x) &amp;&amp; !isNaN(d.y))) {
+                return d.x;
+            }
+        })));
+
+        const xRangeOffset &#x3D; (xRange[1] - xRange[0]) * 0.10;
+        let xScale &#x3D; d3.scaleLinear()
+            .domain([xRange[0] - xRangeOffset, xRange[1] + xRangeOffset])
+            .range([this.buffer, this.width]);
+
+        let xAxis &#x3D; d3.axisBottom(xScale)
+            .ticks(10)
+            .tickFormat(d &#x3D;&gt; {
+                return &#x27;&#x27; + d.valueOf();
+            });
+
+        this.graph.append(&#x27;g&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;x axis&#x27;)
+            .attr(&#x27;transform&#x27;, &#x27;translate(0,&#x27; + this.height + &#x27;)&#x27;)
+            .call(xAxis)
+            .selectAll(&#x27;text&#x27;)
+            .style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;);
+
+        // draw x grid lines
+        this.graph.append(&#x27;svg:g&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;grid&#x27;)
+            .attr(&#x27;transform&#x27;, &#x27;translate(0,&#x27; + this.height + &#x27;)&#x27;)
+            .call(xAxis
+                .tickSize(-this.height)
+                .tickFormat(() &#x3D;&gt; &#x27;&#x27;)
+            );
+
+
+        // draw upper axis as border
+        this.graph.append(&#x27;svg:g&#x27;)
+            .attr(&#x27;class&#x27;, &#x27;x axis&#x27;)
+            .call(d3.axisTop(xScale)
+                .ticks(0)
+                .tickSize(0));
+
+        // draw x axis label
+        this.graph.append(&#x27;text&#x27;)
+            .attr(&#x27;x&#x27;, (this.width + this.buffer) / 2)
+            .attr(&#x27;y&#x27;, this.height + this.margin.bottom - 5)
+            .style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;)
+            .text(dataset.plotOptions.xlabel);
+
+        return xScale;
+    }
+
+    /**
+     * Function to draw the line of the graph.
+     * @param dataset {D3GeneralDataset} Object with information about the datset.
+     */
+    private drawGraphLine(dataset: D3GeneralDataset) {
+
+        this.graph
+            .append(&#x27;svg:clipPath&#x27;)
+            .attr(&#x27;id&#x27;, &#x27;graphLineID&#x27;)
+            .append(&#x27;svg:rect&#x27;)
+            .attr(&#x27;x&#x27;, this.buffer)
+            .attr(&#x27;y&#x27;, 0)
+            .attr(&#x27;width&#x27;, this.width - this.buffer)
+            .attr(&#x27;height&#x27;, this.height);
+
+        // create grah line component
+        this.graphBody &#x3D; this.graph
+            .append(&#x27;g&#x27;)
+            .attr(&#x27;clip-path&#x27;, &#x27;url(#&#x27; + &#x27;graphLineID&#x27; + &#x27;)&#x27;);
+
+        // create line with dataset
+        let graphLine &#x3D; d3.line&lt;D3GeneralDataPoint&gt;()
+            .defined(d &#x3D;&gt; (!isNaN(d.x) &amp;&amp; !isNaN(d.y)))
+            .x((d) &#x3D;&gt; {
+                if (!isNaN(d.x) &amp;&amp; !isNaN(d.y)) {
+                    const x &#x3D; dataset.plotOptions.xScale(d.x);
+                    if (!isNaN(x)) {
+                        return x;
+                    }
+                }
+            })
+            .y((d) &#x3D;&gt; {
+                if (!isNaN(d.x) &amp;&amp; !isNaN(d.y)) {
+                    const y &#x3D; dataset.plotOptions.yScale(d.y);
+                    if (!isNaN(y)) {
+                        return y;
+                    }
+                }
+            })
+            .curve(d3.curveLinear);
+
+        // draw graph line
+        this.graphBody &#x3D; this.graph.append(&#x27;g&#x27;);
+        this.graphBody.append(&#x27;svg:path&#x27;)
+            .datum(dataset.data)
+            .attr(&#x27;class&#x27;, &#x27;line&#x27;)
+            .attr(&#x27;fill&#x27;, &#x27;none&#x27;)
+            .attr(&#x27;stroke&#x27;, &#x27;red&#x27;)
+            .attr(&#x27;stroke-width&#x27;, 4)
+            .attr(&#x27;d&#x27;, graphLine);
+
+    }
+
+    /**
+     * Function that returns the height of the graph diagram.
+     */
+    private calculateHeight(): number {
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
+    }
+
+    /**
+     * Function that returns the width of the graph diagram.
+     */
+    private calculateWidth(): number {
+        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right;
+    }
+
+    /**
+     * Function that returns the boundings of a html element.
+     * @param el {Object} Object of the html element.
+     */
+    private getDimensions(el: any): { w: number, h: number } {
+        let w &#x3D; 0;
+        let h &#x3D; 0;
+        if (el) {
+            const dimensions &#x3D; el.getBBox();
+            w &#x3D; dimensions.width;
+            h &#x3D; dimensions.height;
+        } else {
+            console.log(&#x27;error: getDimensions() &#x27; + el + &#x27; not found.&#x27;);
+        }
+        return {
+            w,
+            h
+        };
+    }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;d3&quot; #d3general&gt;&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="d3" #d3general></div></div>'
+    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'D3GeneralGraphComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'D3GeneralGraphComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

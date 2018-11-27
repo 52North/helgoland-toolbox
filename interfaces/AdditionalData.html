@@ -360,8 +360,11 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   }
 
   protected plotGraph() {
-    this.prepareAdditionaData();
+    this.prepareAdditionalData();
     super.plotGraph();
+    // execute twice to first create DOM elements and then add data
+    super.createHoveringNet(this.additionalPreparedData);
+    super.createHoveringNet(this.additionalPreparedData);
   }
 
   public ngAfterViewInit(): void {
@@ -391,7 +394,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     this.additionalPreparedData &#x3D; [];
   }
 
-  private prepareAdditionaData() {
+  private prepareAdditionalData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry &#x3D;&gt; {
         if ((entry.linkedDatasetId || entry.yaxisLabel) &amp;&amp; entry.data) {
@@ -404,6 +407,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
               dataEntry &#x3D; {
                 internalId: entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel,
+                id: -1,
                 color: options.color,
                 data: options.visible ? entry.data.map(e &#x3D;&gt; [e.timestamp, e.value]) as [number, number][] : [],
                 points: {
@@ -426,6 +430,12 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                 },
                 visible: options.visible
               };
+              if (dataset) {
+                dataEntry.axisOptions.parameters &#x3D; {
+                  station: dataset.parameters.feature.label,
+                  phenomenon: dataset.parameters.phenomenon.label
+                };
+              }
               this.additionalPreparedData.push(dataEntry);
             } else {
               dataEntry &#x3D; this.additionalPreparedData[prepDataIdx];
@@ -450,7 +460,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   originRange: range,
                   zeroBased: options.zeroBasedYAxis,
                   outOfrange: false,
-                  ids: [entry.yaxisLabel]
+                  ids: [entry.yaxisLabel],
+                  parameters: dataEntry.axisOptions.parameters
                 };
                 if (existingAxisIndex &gt; -1) {
                   this.yRangesEachUom[existingAxisIndex] &#x3D; axisRange;

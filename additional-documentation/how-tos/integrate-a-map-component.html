@@ -1,0 +1,444 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	      <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="how-to-integrate-a-helgoland-map">How to Integrate a helgoland map</h1>
+<p>In this tutorial a stepwise instruction will be given on how to integrate a helgoland map into an angular app (ng-app).</p>
+<p>First initialize an app as described in the prepare section <a href="https://github.com/52North/helgoland-toolbox/blob/develop/docs/how-tos.md">here</a> or integrate the helgoland map in an existing project. In the following we will refer to the class AppComponent as main class, where we will add the helgoland map. In case of intergating the helgoland map into an existing project, it should be taken care of to add the code in the correct html, ts and module files.
+<strong>During the integration of the helgoland map, errors might occur. Please read the steps till the end to use the provided solutions for potential errors.</strong></p>
+<h2 id="step-1-import-helgoland-dependencies">Step 1: import helgoland dependencies</h2>
+<p>To start working with the helgoland map a few dependencies are needed:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/@helgoland/map">helgoland-map</a> and <a href="https://www.npmjs.com/package/@helgoland/core">helgoland-core</a> are necessary to provide the app with access to various helgoland map specifications.</li>
+<li>For translations <a href="http://www.ngx-translate.com/">ngx-translate</a> is used and the <a href="https://www.npmjs.com/package/@ngx-translate/http-loader">ngx-translate-http-loader</a> will load the translations.</li>
+<li><a href="https://www.npmjs.com/package/@helgoland/selector">helgoland-selector</a> and <a href="https://www.npmjs.com/package/@helgoland/depiction">helgoland-depiction</a> are used for further interaction with the map.</li>
+</ul>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Install dependencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm i @helgoland/core</code></td>
+</tr>
+<tr>
+<td><code>npm i @helgoland/map</code></td>
+</tr>
+<tr>
+<td><code>npm i @ngx-translate/http-loader</code></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>npm i @helgoland/selector</code></td>
+</tr>
+<tr>
+<td><code>npm i @helgoland/depiction</code></td>
+</tr>
+</tbody>
+</table>
+<p>Import dependencies to your ng-app by adding the following javascript code to <code>src/app/app.module.ts</code>:</p>
+<div><pre class="line-numbers"><code class="language-javascript">// Add dependencies for helgoland components.
+import { HelgolandMapSelectorModule } from &#39;&#64;helgoland/map&#39;;
+import { DatasetApiInterface, SplittedDataDatasetApiInterface } from &#39;&#64;helgoland/core&#39;;
+
+// Add dependencies for translations.
+import { HttpClient } from &#39;&#64;angular/common/http&#39;;
+import { TranslateLoader, TranslateModule } from &#39;&#64;ngx-translate/core&#39;;
+import { TranslateHttpLoader } from &#39;&#64;ngx-translate/http-loader&#39;;</code></pre></div><p>Another step is to add the dependencies correctly to the <code>@NgModule</code>. As imports we will define the <code>TranslateModule</code> and as providers we need to take the <code>DatasetApiInterface</code> with the <code>SplittedDataDatasetApiInterface</code> as <code>useClass</code>. To use the translation functions we will add a function called <code>HttpLoaderFactory</code> which needs to be exported.
+Further, to add a helgoland map, we need to add <code>HelgolandMapSelectorModule</code> to the imports.
+You can compare your <code>src/app/app.module.ts</code> file with the following code below:</p>
+<div><pre class="line-numbers"><code class="language-javascript">&#64;NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HelgolandMapSelectorModule
+  ],
+  providers: [
+    {
+      provide: DatasetApiInterface,
+      useClass: SplittedDataDatasetApiInterface
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}</code></pre></div><p>To fully add leaflet to the app, we need to make sure, that the tiles of the leaflet map are loaded. Therefore we will need to embed the leaflet styles into the main <code>styles.scss</code>:</p>
+<div><pre class="line-numbers"><code class="language-css">&#64;import &#39;~leaflet/dist/leaflet.css&#39;;</code></pre></div><h3 id="suggestions-for-error-handling">Suggestions for error handling</h3>
+<h4 id="redeclare-block-scoped-variable-ngdevmode-">redeclare block-scoped variable &#39;ngDevMode&#39;</h4>
+<div><pre class="line-numbers"><code class="language-none">ERROR in node_modules/&#64;angular/core/src/render3/ng_dev_mode.d.ts(9,11): error TS2451: Cannot redeclare block-scoped variable &#39;ngDevMode&#39;.</code></pre></div><p><strong>Solution:</strong> add to your main <code>tsconfig.json</code> the following code after <code>lib</code> (click <a href="https://github.com/angular/angular/issues/21670">here</a> for more information regarding this issue)</p>
+<div><pre class="line-numbers"><code class="language-json">,
+&quot;paths&quot;: {
+    &quot;&#64;angular/*&quot;:[&quot;node_modules/&#64;angular/*&quot;],
+}</code></pre></div><h4 id="rxjs">rxjs</h4>
+<div><pre class="line-numbers"><code class="language-none">ERROR in node_modules/&#64;helgoland/map/lib/base/geosearch/geosearch.d.ts(3,10): error TS2305: Module &#39;&quot;./helgoland-how-to/node_modules/rxjs/Observable&quot;&#39; has no exported member &#39;Observable&#39;.
+node_modules/&#64;helgoland/map/lib/base/geosearch/nominatim.service.d.ts(4,10): error TS2305: Module &#39;&quot;./helgoland-how-to/node_modules/rxjs/Observable&quot;&#39; has no exported member &#39;Observable&#39;.
+node_modules/rxjs/Observable.d.ts(1,15): error TS2307: Cannot find module &#39;rxjs-compat/Observable&#39;.
+node_modules/rxjs/operator/map.d.ts(1,15): error TS2307: Cannot find module &#39;rxjs-compat/operator/map&#39;.</code></pre></div><p><strong>Solution:</strong> install rxjs-compat with the following command: <code>npm install rxjs-compat --save</code></p>
+<h2 id="step-2-add-code">Step 2: add code</h2>
+<p>Now we will integrate the directive of the helgoland map. Implement the directive of the map by adding the following code to <code>src/app/app.component.html</code>. All fields in the <code>n52-station-map-selector</code>-directive are required to provide options and other information.</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;div&gt;
+  &lt;n52-station-map-selector [mapId]=&quot;&#39;timeseries&#39;&quot; [serviceUrl]=&quot;providerUrl&quot; [filter]=&quot;stationFilter&quot; [zoomControlOptions]=&quot;zoomControlOptions&quot;
+    [mapOptions]=&quot;mapOptions&quot; [fitBounds]=&quot;fitBounds&quot; [avoidZoomToSelection]=&quot;avoidZoomToSelection&quot; [baseMaps]=&quot;baseMaps&quot;
+    [overlayMaps]=&quot;overlayMaps&quot; [layerControlOptions]=&quot;layerControlOptions&quot; (onSelected)=&quot;onStationSelected($event)&quot;
+    [cluster]=&quot;cluster&quot; [statusIntervals]=&quot;statusIntervals&quot; (onContentLoading)=&quot;loadingStations = $event&quot;&gt;&lt;/n52-station-map-selector&gt;
+&lt;/div&gt;
+&lt;div&gt;Is loading: {{loadingStations}}&lt;/div&gt;</code></pre></div><ul>
+<li>Optional the style can be adapted by adding a css style modification to the directive. For example the following code will change the size:  </li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;div style=&quot;height: 500px;&quot;&gt;&lt;/div&gt;</code></pre></div><p>This code is implemented in the helgoland-toolbox github repository and can be viewed <a href="https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.html">here</a>.</p>
+<p>Implement the functionality of the <code>n52-station-map-selector</code>-directive by adding the following code to the class <code>AppComponent</code> in <code>src/app/app.component.ts</code>:</p>
+<div><pre class="line-numbers"><code class="language-javascript">public providerUrl = &#39;http://geo.irceline.be/sos/api/v1/&#39;;
+
+public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
+public zoomControlOptions: L.Control.ZoomOptions = { position: &#39;topleft&#39; };
+public avoidZoomToSelection = false;
+public baseMaps: Map&lt;string, LayerOptions&gt; = new Map&lt;string, LayerOptions&gt;();
+public overlayMaps: Map&lt;string, LayerOptions&gt; = new Map&lt;string, LayerOptions&gt;();
+public layerControlOptions: L.Control.LayersOptions = { position: &#39;bottomleft&#39; };
+public cluster = false;
+public loadingStations: boolean;
+public stationFilter: ParameterFilter = {
+// phenomenon: &#39;8&#39;
+};
+public statusIntervals = false;
+public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
+
+public onStationSelected(station: Station) {
+    console.log(&#39;Clicked station: &#39; + station.properties.label);
+}</code></pre></div><p>This code is implemented in the helgoland-toolbox github repository and can be viewed <a href="https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.ts">here</a>.</p>
+<p><strong>A very important step should not be missed</strong><br>To use the functionality of the functions in the class <code>AppComponent</code> we need to add the dependencies to use predefined data types or interface (e.g. <code>LayerOptions</code>). Predefined marker icons (the iconURL can be adapted by the path to your own marker image) can also be added, but this is optional to create a map, because otherwise default marker images will be used.</p>
+<div><pre class="line-numbers"><code class="language-javascript">import { ParameterFilter, Phenomenon, Station } from &#39;&#64;helgoland/core&#39;;
+import { GeoSearchOptions, LayerOptions } from &#39;&#64;helgoland/map&#39;;
+import * as L from &#39;leaflet&#39;;
+
+// optional, to adapt leaflet markers
+L.Marker.prototype.options.icon = L.icon({
+    iconRetinaUrl: &#39;assets/img/marker-icon-2x.png&#39;,
+    iconUrl: &#39;assets/img/marker-icon.png&#39;,
+    shadowUrl: &#39;assets/img/marker-shadow.png&#39;,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+});</code></pre></div><h2 id="step-3-add-further-interaction">Step 3: add further interaction</h2>
+<p>We have managed to add a helgoland map to our app with markers on it and the possibility to receive click events giving information about which station was clicked. To extend the model by a <code>zoom to extent</code>-button or a list of phenomenons, the following instructions might be helpful.</p>
+<h3 id="helgoland-map-control">Helgoland Map Control</h3>
+<p>With this Module it is possible to zoom back to the start view position and as well search for streets, cities, countries, etc. .</p>
+<p>Add <code>HelgolandMapControlModule</code> to the imports of <code>@helgoland/map</code> and also to the imports of <code>@NgModule</code> similar to the way described in earlier steps. Then we can add either the Geosearch Control or the Extent Control or both.
+For the Geosearch Control we need to add a provider. Therefore add <code>GeoSearch</code> and <code>NominatimGeoSearchService</code> to the imports of <code>@helgoland/map</code> and the following code to the providers array of <code>@NgModule</code>:</p>
+<h4 id="geosearch-and-extended-control">Geosearch and Extended Control</h4>
+<p>To add these controls we need to use GeoSearch as a provider in our <code>src/app/app.module.ts</code>.</p>
+<div><pre class="line-numbers"><code class="language-javascript">{
+    provide: GeoSearch,
+    useClass: NominatimGeoSearchService
+},</code></pre></div><p>Directives to be added in the <code>src/app/app.component.html</code>.</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;n52-geosearch-control mapId=&quot;timeseries&quot; [options]=&quot;searchOptions&quot;&gt;&lt;/n52-geosearch-control&gt;
+&lt;n52-extent-control mapId=&quot;timeseries&quot; [extent]=&quot;fitBounds&quot;&gt;&lt;/n52-extent-control&gt;</code></pre></div><p>The code to be added to the class <code>AppComponent</code>, that declares the missing input value for the geosearch-control-directive.</p>
+<div><pre class="line-numbers"><code class="language-javascript">public searchOptions: GeoSearchOptions = { countrycodes: [] };</code></pre></div><h3 id="helgoland-selector">Helgoland Selector</h3>
+<p>If you did not install the dependencies <code>@helgoland/selector</code> and <code>@helgoland/depiction</code> yet, than you should install them now as seen in the first step.</p>
+<h4 id="settings-service-provider">Settings Service Provider</h4>
+<p>To add the Helgoland Selector Module to our app and use the service-filter for the helgoland map, we need to import and extend a service. Therefore we need to import Settings in our <code>./environements/environment.ts</code> and export the variable <code>settings</code> of type <code>Settings</code>.</p>
+<div><pre class="line-numbers"><code class="language-javascript">import { Settings } from &#39;&#64;helgoland/core&#39;;
+
+export let settings: Settings = {};</code></pre></div><p>Then we need to create a new folder called <code>settings</code> and a file <code>settings.service.ts</code> in that the service-extension  <code>ExtendedSettingsService</code> will be implemented using the following code:</p>
+<div><pre class="line-numbers"><code class="language-javascript">import { Injectable } from &#39;&#64;angular/core&#39;;
+import { Settings, SettingsService } from &#39;&#64;helgoland/core&#39;;
+
+import { settings } from &#39;../../environments/environment&#39;;
+
+&#64;Injectable()
+export class ExtendedSettingsService extends SettingsService&lt;Settings&gt; {
+    constructor() {
+        super();
+        this.setSettings(settings);
+    }
+}</code></pre></div><p>The <code>ExtendedSettingsService</code> needs to be added to the imports in the <code>src/app/app.module.ts</code>.</p>
+<div><pre class="line-numbers"><code class="language-javascript">import { ExtendedSettingsService } from &#39;./settings/settings.service&#39;;</code></pre></div><p>The project tree should look similar to this now:</p>
+<div><pre class="line-numbers"><code class="language-none">src
+|___ app
+    |___ settings
+        |___settings.service.ts
+    |___ app.component.html
+    |___ app.component... ~files
+    |___ app.module.ts
+|___ assets
+|___ environments
+    |___ environment.ts</code></pre></div><h4 id="service-filter-selector">Service Filter Selector</h4>
+<p>Further, import the additionally installed dependencies to our ng-app by adding the following javascript code to <code>src/app/app.module.ts</code> and adding the imports as well to the imports of <code>@NgModule</code>. Also add the dependency <code>SettingsService</code> to the imports of <code>@helgoland/core</code>:</p>
+<div><pre class="line-numbers"><code class="language-javascript">import { HelgolandSelectorModule } from &#39;&#64;helgoland/selector&#39;;
+import { HelgolandDatasetlistModule } from &#39;&#64;helgoland/depiction&#39;;</code></pre></div><p>We can use the new created <code>ExtendedSettingsService</code> as <code>useClass</code> for our <code>SettingsService</code> provider.</p>
+<div><pre class="line-numbers"><code class="language-javascript">{
+    provide: SettingsService,
+    useClass: ExtendedSettingsService
+},</code></pre></div><p>To add the directive of the filter selector, the following code needs to be added to the <code>src/app/app.component.html</code>.</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;n52-service-filter-selector [serviceUrl]=&quot;providerUrl&quot; endpoint=&quot;phenomenon&quot; (onItemSelected)=&quot;onSelectPhenomenon($event)&quot;&gt;&lt;/n52-service-filter-selector&gt;</code></pre></div><p>Addtionally, to use the select events, the code below can be added to the class <code>AppComponent</code>.</p>
+<div><pre class="line-numbers"><code class="language-javascript">public onSelectPhenomenon(phenomenon: Phenomenon) {
+    console.log(&#39;Select: &#39; + phenomenon.label + &#39; with ID: &#39; + phenomenon.id);
+    this.stationFilter = {
+        phenomenon: phenomenon.id
+    };
+}</code></pre></div><h2 id="step-4-start-working">Step 4: start working</h2>
+<p>Now, that we have added all dependencies and the code to access the functionality of the helgoland map you can start working on your app. If you did not run the app while following this tutorial you should now see the map by starting your app with <code>ng serve</code> and some more interaction possibilities below the map.</p>
+<h2 id="step-5-check-code">Step 5: check code</h2>
+<p>In the following the main app files can be viewed. If you would like to change the styling of your page, you might have a closer look at the <code>app.component.html</code>.</p>
+<h4 id="src-app-app-component-html"><code>src/app/app.component.html</code></h4>
+<div><pre class="line-numbers"><code class="language-html">&lt;h1&gt;How To: Integrate Helgoland Map&lt;/h1&gt;
+
+&lt;div style=&quot;display: flex; flex-direction: row;&quot;&gt;
+  &lt;div style=&quot;width: 500px; padding: 5px;&quot;&gt;
+    &lt;div style=&quot;height: 500px;&quot;&gt;
+      &lt;n52-station-map-selector [mapId]=&quot;&#39;timeseries&#39;&quot; [serviceUrl]=&quot;providerUrl&quot; [filter]=&quot;stationFilter&quot;
+        [zoomControlOptions]=&quot;zoomControlOptions&quot; [mapOptions]=&quot;mapOptions&quot; [fitBounds]=&quot;fitBounds&quot;
+        [avoidZoomToSelection]=&quot;avoidZoomToSelection&quot; [baseMaps]=&quot;baseMaps&quot; [overlayMaps]=&quot;overlayMaps&quot;
+        [layerControlOptions]=&quot;layerControlOptions&quot; (onSelected)=&quot;onStationSelected($event)&quot; [cluster]=&quot;cluster&quot;
+        [statusIntervals]=&quot;statusIntervals&quot; (onContentLoading)=&quot;loadingStations = $event&quot;&gt;&lt;/n52-station-map-selector&gt;
+    &lt;/div&gt;
+    &lt;div&gt;Is loading: {{loadingStations}}&lt;/div&gt;
+    &lt;n52-geosearch-control mapId=&quot;timeseries&quot; [options]=&quot;searchOptions&quot;&gt;&lt;/n52-geosearch-control&gt;
+    &lt;n52-extent-control mapId=&quot;timeseries&quot; [extent]=&quot;fitBounds&quot;&gt;&lt;/n52-extent-control&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width: 200px;&quot;&gt;
+    &lt;n52-service-filter-selector [serviceUrl]=&quot;providerUrl&quot; endpoint=&quot;phenomenon&quot; (onItemSelected)=&quot;onSelectPhenomenon($event)&quot;&gt;&lt;/n52-service-filter-selector&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre></div><h4 id="src-app-app-component-ts"><code>src/app/app.component.ts</code></h4>
+<div><pre class="line-numbers"><code class="language-javascript">import { Component } from &#39;&#64;angular/core&#39;;
+
+import { ParameterFilter, Phenomenon, Station } from &#39;&#64;helgoland/core&#39;;
+import { GeoSearchOptions, LayerOptions } from &#39;&#64;helgoland/map&#39;;
+import * as L from &#39;leaflet&#39;;
+
+&#64;Component({
+  selector: &#39;app-root&#39;,
+  templateUrl: &#39;./app.component.html&#39;,
+  styleUrls: [&#39;./app.component.scss&#39;]
+})
+export class AppComponent {
+  public providerUrl = &#39;http://geo.irceline.be/sos/api/v1/&#39;;
+
+  public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
+  public zoomControlOptions: L.Control.ZoomOptions = { position: &#39;topleft&#39; };
+  public avoidZoomToSelection = false;
+  public baseMaps: Map&lt;string, LayerOptions&gt; = new Map&lt;string, LayerOptions&gt;();
+  public overlayMaps: Map&lt;string, LayerOptions&gt; = new Map&lt;string, LayerOptions&gt;();
+  public layerControlOptions: L.Control.LayersOptions = { position: &#39;bottomleft&#39; };
+  public cluster = false;
+  public loadingStations: boolean;
+  public stationFilter: ParameterFilter = {
+    // phenomenon: &#39;8&#39;
+  };
+  public statusIntervals = false;
+  public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
+
+  public searchOptions: GeoSearchOptions = { countrycodes: [] };
+
+  public onStationSelected(station: Station) {
+    console.log(&#39;Clicked station: &#39; + station.properties.label);
+  }
+
+  public onSelectPhenomenon(phenomenon: Phenomenon) {
+    console.log(&#39;Select: &#39; + phenomenon.label + &#39; with ID: &#39; + phenomenon.id);
+    this.stationFilter = {
+      phenomenon: phenomenon.id
+    };
+  }
+
+}</code></pre></div><h4 id="src-app-app-module-ts"><code>src/app/app.module.ts</code></h4>
+<div><pre class="line-numbers"><code class="language-javascript">import { BrowserModule } from &#39;&#64;angular/platform-browser&#39;;
+import { NgModule } from &#39;&#64;angular/core&#39;;
+
+import { AppRoutingModule } from &#39;./app-routing.module&#39;;
+import { AppComponent } from &#39;./app.component&#39;;
+
+// Add dependencies for helgoland components.
+import { GeoSearch, HelgolandMapControlModule, HelgolandMapSelectorModule, NominatimGeoSearchService } from &#39;&#64;helgoland/map&#39;;
+import { DatasetApiInterface, SettingsService, SplittedDataDatasetApiInterface } from &#39;&#64;helgoland/core&#39;;
+import { HelgolandSelectorModule } from &#39;&#64;helgoland/selector&#39;;
+import { HelgolandDatasetlistModule } from &#39;&#64;helgoland/depiction&#39;;
+import { ExtendedSettingsService } from &#39;./settings/settings.service&#39;;
+
+// Add dependencies for translations.
+import { HttpClient } from &#39;&#64;angular/common/http&#39;;
+import { TranslateLoader, TranslateModule } from &#39;&#64;ngx-translate/core&#39;;
+import { TranslateHttpLoader } from &#39;&#64;ngx-translate/http-loader&#39;;
+
+
+&#64;NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HelgolandMapSelectorModule,
+    HelgolandMapControlModule,
+    HelgolandSelectorModule,
+    HelgolandDatasetlistModule
+  ],
+  providers: [
+    {
+      provide: DatasetApiInterface,
+      useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: GeoSearch,
+      useClass: NominatimGeoSearchService
+    },
+    {
+      provide: SettingsService,
+      useClass: ExtendedSettingsService
+    },
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}</code></pre></div><h4 id="src-tsconfig-json"><code>src/tsconfig.json</code></h4>
+<div><pre class="line-numbers"><code class="language-json">{
+  &quot;compileOnSave&quot;: false,
+  &quot;compilerOptions&quot;: {
+    &quot;baseUrl&quot;: &quot;./&quot;,
+    &quot;outDir&quot;: &quot;./dist/out-tsc&quot;,
+    &quot;sourceMap&quot;: true,
+    &quot;declaration&quot;: false,
+    &quot;module&quot;: &quot;es2015&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;emitDecoratorMetadata&quot;: true,
+    &quot;experimentalDecorators&quot;: true,
+    &quot;importHelpers&quot;: true,
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;typeRoots&quot;: [
+      &quot;node_modules/&#64;types&quot;
+    ],
+    &quot;lib&quot;: [
+      &quot;es2018&quot;,
+      &quot;dom&quot;
+    ],
+    &quot;paths&quot;: {
+        &quot;&#64;angular/*&quot;:[&quot;node_modules/&#64;angular/*&quot;],
+    }
+  }
+}</code></pre></div>
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 2;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'integrate-a-map-component.html';
+       </script>
+
+       <script src="../../js/libs/custom-elements.min.js"></script>
+       <script src="../../js/libs/lit-html.js"></script>
+       <script src="../../js/menu-wc.js"></script>
+
+       <script src="../../js/libs/bootstrap-native.js"></script>
+
+       <script src="../../js/libs/es6-shim.min.js"></script>
+       <script src="../../js/libs/EventDispatcher.js"></script>
+       <script src="../../js/libs/promise.min.js"></script>
+       <script src="../../js/libs/zepto.min.js"></script>
+
+       <script src="../../js/compodoc.js"></script>
+
+       <script src="../../js/tabs.js"></script>
+       <script src="../../js/menu.js"></script>
+       <script src="../../js/libs/clipboard.min.js"></script>
+       <script src="../../js/libs/prism.js"></script>
+       <script src="../../js/sourceCode.js"></script>
+          <script src="../../js/search/search.js"></script>
+          <script src="../../js/search/lunr.min.js"></script>
+          <script src="../../js/search/search-lunr.js"></script>
+          <script src="../../js/search/search_index.js"></script>
+       <script src="../../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

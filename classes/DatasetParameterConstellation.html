@@ -163,7 +163,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/dataset.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/dataset.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -204,7 +204,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:21</div>
+                                    <div class="io-line">Defined in ParameterConstellation:22</div>
                             </td>
                         </tr>
 
@@ -245,7 +245,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:18</div>
+                                    <div class="io-line">Defined in ParameterConstellation:19</div>
                             </td>
                         </tr>
 
@@ -286,7 +286,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:17</div>
+                                    <div class="io-line">Defined in ParameterConstellation:18</div>
                             </td>
                         </tr>
 
@@ -327,7 +327,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:20</div>
+                                    <div class="io-line">Defined in ParameterConstellation:21</div>
                             </td>
                         </tr>
 
@@ -368,7 +368,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:19</div>
+                                    <div class="io-line">Defined in ParameterConstellation:20</div>
                             </td>
                         </tr>
 
@@ -409,7 +409,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ParameterConstellation:16</div>
+                                    <div class="io-line">Defined in ParameterConstellation:17</div>
                             </td>
                         </tr>
 
@@ -428,9 +428,9 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Parameter } from &#x27;./parameter&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DatasetTypes, PlatformTypes } from &#x27;./enums&#x27;;
+import { Parameter } from &#x27;./parameter&#x27;;
 import { Station } from &#x27;./station&#x27;;
-import { DatasetTypes, PlatformTypes } from &#x27;./enums&#x27;;
 
 export interface IDataset extends Parameter {
     url: string;
@@ -440,6 +440,7 @@ export interface IDataset extends Parameter {
     lastValue: FirstLastValue;
     referenceValues: ReferenceValue[];
     parameters: ParameterConstellation;
+    renderingHints: RenderingHints;
 }
 
 export class ParameterConstellation {
@@ -464,6 +465,31 @@ export class ReferenceValue {
     public visible?: boolean;
 }
 
+export interface RenderingHints {
+    chartType: string;
+    properties: {
+        color: string;
+    };
+}
+
+export interface LineRenderingHints extends RenderingHints {
+    chartType: &#x27;line&#x27;;
+    properties: {
+        color: string;
+        width: string;
+        lineType: string;
+    };
+}
+
+export interface BarRenderingHints {
+    chartType: &#x27;bar&#x27;;
+    properties: {
+        color: string;
+        width: string;
+        interval: string;
+    };
+}
+
 export class DatasetParameterConstellation extends ParameterConstellation {
     public platform: PlatformParameter;
 }
@@ -481,6 +507,7 @@ export class Dataset implements IDataset {
     public platformType: PlatformTypes;
     public parameters: DatasetParameterConstellation;
     public seriesParameters?: DatasetParameterConstellation;
+    public renderingHints: RenderingHints;
 }
 
 export class Timeseries implements IDataset {
@@ -496,6 +523,7 @@ export class Timeseries implements IDataset {
     public parameters: ParameterConstellation;
     public statusIntervals?: StatusInterval[];
     public hasData &#x3D; false;
+    public renderingHints: RenderingHints;
 }
 
 export interface TimeseriesExtras {

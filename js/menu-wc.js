@@ -70,6 +70,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="additional-documentation/how-tos/integrate-a-table-component.html" data-type="entity-link" data-context-id="additional">Integrate a table component</a>
                     </li>
                     <li class="link for-chapter2">
+                        <a href="additional-documentation/how-tos/integrate-a-map-component.html" data-type="entity-link" data-context-id="additional">Integrate a map component</a>
+                    </li>
+                    <li class="link for-chapter2">
                         <a href="additional-documentation/how-tos/extend-a-timeseries-entry-component.html" data-type="entity-link" data-context-id="additional">Extend a timeseries entry component</a>
                     </li>
                     <li class="link for-chapter2">
@@ -196,13 +199,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="modules/HelgolandD3Module.html" data-type="entity-link">HelgolandD3Module</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                    ${ isNormalMode ? 'data-target="#components-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' : 'data-target="#xs-components-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' }>
+                                    ${ isNormalMode ? 'data-target="#components-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' : 'data-target="#xs-components-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' }>
                                     <span class="icon ion-md-cog"></span>
                                     <span>Components</span>
                                     <span class="icon ion-ios-arrow-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                    ${ isNormalMode ? 'id="components-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' : 'id="xs-components-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' }>
+                                    ${ isNormalMode ? 'id="components-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' : 'id="xs-components-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' }>
+                                        <li class="link">
+                                            <a href="components/D3GeneralGraphComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                        </li>
                                         <li class="link">
                                             <a href="components/D3OverviewTimeseriesGraphComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
                                         </li>
@@ -219,13 +225,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                    ${ isNormalMode ? 'data-target="#injectables-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' : 'data-target="#xs-injectables-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' }>
+                                    ${ isNormalMode ? 'data-target="#injectables-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' : 'data-target="#xs-injectables-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' }>
                                     <span class="icon ion-md-arrow-round-down"></span>
                                     <span>Injectables</span>
                                     <span class="icon ion-ios-arrow-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                    ${ isNormalMode ? 'id="injectables-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' : 'id="xs-injectables-links-module-HelgolandD3Module-9f5369bbfd60146c73503af42c58ce92"' }>
+                                    ${ isNormalMode ? 'id="injectables-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' : 'id="xs-injectables-links-module-HelgolandD3Module-c34b88e3a18f2a63543eb879ee03b4c5"' }>
                                         <li class="link">
                                             <a href="injectables/D3TimeFormatLocaleService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>D3TimeFormatLocaleService</a>
                                         </li>
@@ -813,6 +819,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="classes/ReferenceValues.html" data-type="entity-link">ReferenceValues</a>
                     </li>
                     <li class="link">
+                        <a href="classes/RenderingHintsDatasetService.html" data-type="entity-link">RenderingHintsDatasetService</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/ResizableComponent.html" data-type="entity-link">ResizableComponent</a>
                     </li>
                     <li class="link">
@@ -901,6 +910,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/Address.html" data-type="entity-link">Address</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/BarRenderingHints.html" data-type="entity-link">BarRenderingHints</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/BasicAuthCredentials.html" data-type="entity-link">BasicAuthCredentials</a>
                     </li>
                     <li class="link">
@@ -922,6 +934,15 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/D3Copyright.html" data-type="entity-link">D3Copyright</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/D3GeneralDataPoint.html" data-type="entity-link">D3GeneralDataPoint</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/D3GeneralDataset.html" data-type="entity-link">D3GeneralDataset</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/D3GeneralDatasetInput.html" data-type="entity-link">D3GeneralDatasetInput</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/D3GraphOptions.html" data-type="entity-link">D3GraphOptions</a>
                     </li>
                     <li class="link">
@@ -941,9 +962,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/DataParameterFilter.html" data-type="entity-link">DataParameterFilter</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/DataYRange.html" data-type="entity-link">DataYRange</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/DatasetApi.html" data-type="entity-link">DatasetApi</a>
@@ -1063,6 +1081,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="interfaces/Layout.html" data-type="entity-link">Layout</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/LineRenderingHints.html" data-type="entity-link">LineRenderingHints</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/ListSelectorParameter.html" data-type="entity-link">ListSelectorParameter</a>
                     </li>
                     <li class="link">
@@ -1145,6 +1166,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/RawData.html" data-type="entity-link">RawData</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/RenderingHints.html" data-type="entity-link">RenderingHints</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Rule.html" data-type="entity-link">Rule</a>

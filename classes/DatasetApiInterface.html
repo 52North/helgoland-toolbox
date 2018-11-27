@@ -118,6 +118,11 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Abstract</span>
+                                <a href="#getDatasetByInternalId">getDatasetByInternalId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
                                 <a href="#getDatasets">getDatasets</a>
                             </li>
                             <li>
@@ -184,6 +189,11 @@
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Abstract</span>
                                 <a href="#getSingleTimeseries">getSingleTimeseries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#getSingleTimeseriesByInternalId">getSingleTimeseriesByInternalId</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -334,7 +344,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:84</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:62</a></div>
                             </td>
                         </tr>
 
@@ -430,7 +440,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:87</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:63</a></div>
                             </td>
                         </tr>
 
@@ -538,7 +548,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:59</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -666,7 +676,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -753,6 +763,102 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="getDatasetByInternalId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Abstract</span>
+                            getDatasetByInternalId
+                            </b>
+                            <a href="#getDatasetByInternalId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>getDatasetByInternalId(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>, options?: <a href="../interfaces/HttpRequestOptions.html">HttpRequestOptions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:51</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>internalId</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/HttpRequestOptions.html" target="_self" >HttpRequestOptions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../interfaces/Data.html" target="_self" >Observable&lt;Dataset&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="getDatasets"></a>
                         <span class="name">
                             <b>
@@ -774,7 +880,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:53</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:49</a></div>
                             </td>
                         </tr>
 
@@ -870,7 +976,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:105</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -978,7 +1084,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:102</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:68</a></div>
                             </td>
                         </tr>
 
@@ -1074,7 +1180,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:99</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:67</a></div>
                             </td>
                         </tr>
 
@@ -1182,7 +1288,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:96</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -1278,7 +1384,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:90</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -1374,7 +1480,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:93</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -1482,7 +1588,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -1686,7 +1792,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:71</a></div>
                             </td>
                         </tr>
 
@@ -1794,7 +1900,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="108" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:108</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:70</a></div>
                             </td>
                         </tr>
 
@@ -1890,7 +1996,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:65</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:54</a></div>
                             </td>
                         </tr>
 
@@ -1998,7 +2104,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:53</a></div>
                             </td>
                         </tr>
 
@@ -2094,7 +2200,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -2181,6 +2287,102 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="getSingleTimeseriesByInternalId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Abstract</span>
+                            getSingleTimeseriesByInternalId
+                            </b>
+                            <a href="#getSingleTimeseriesByInternalId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>getSingleTimeseriesByInternalId(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>, options?: <a href="../interfaces/HttpRequestOptions.html">HttpRequestOptions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:59</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>internalId</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/HttpRequestOptions.html" target="_self" >HttpRequestOptions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../injectables/Time.html" target="_self" >Observable&lt;Timeseries&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="getStation"></a>
                         <span class="name">
                             <b>
@@ -2202,7 +2404,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -2310,7 +2512,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:55</a></div>
                             </td>
                         </tr>
 
@@ -2406,7 +2608,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:74</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -2502,7 +2704,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:80</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -2586,7 +2788,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:81</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -2713,7 +2915,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:84</a></div>
                             </td>
                         </tr>
 
@@ -2784,7 +2986,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:115</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-interface.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -3184,73 +3386,31 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
         protected translate: TranslateService
     ) { super(); }
 
-    public abstract getPlatforms(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Platform[]&gt;;
-    public abstract getPlatform(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Platform&gt;;
-    public abstract getDatasets(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Dataset[]&gt;;
-    public abstract getDataset(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Dataset&gt;;
-    public abstract getData&lt;T&gt;(
-        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Data&lt;T&gt;&gt;;
-    public abstract getServices(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Service[]&gt;;
-    public abstract getService(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Service&gt;;
-    public abstract getStations(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Station[]&gt;;
-    public abstract getStation(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Station&gt;;
-    public abstract getTimeseries(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Timeseries[]&gt;;
-    public abstract getSingleTimeseries(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Timeseries&gt;;
+    public abstract getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Platform[]&gt;;
+    public abstract getPlatform(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Platform&gt;;
+    public abstract getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Dataset[]&gt;;
+    public abstract getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Dataset&gt;;
+    public abstract getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Dataset&gt;;
+    public abstract getData&lt;T&gt;(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable&lt;Data&lt;T&gt;&gt;;
+    public abstract getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Service[]&gt;;
+    public abstract getService(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Service&gt;;
+    public abstract getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Station[]&gt;;
+    public abstract getStation(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Station&gt;;
+    public abstract getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Timeseries[]&gt;;
+    public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Timeseries&gt;;
+    public abstract getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Timeseries&gt;;
     public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable&lt;TimeseriesExtras&gt;;
-    public abstract getTsData&lt;T&gt;(
-        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Data&lt;T&gt;&gt;;
-    public abstract getCategories(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Category[]&gt;;
-    public abstract getCategory(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Category&gt;;
-    public abstract getPhenomena(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Phenomenon[]&gt;;
-    public abstract getPhenomenon(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Phenomenon&gt;;
-    public abstract getOfferings(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Offering[]&gt;;
-    public abstract getOffering(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Offering&gt;;
-    public abstract getFeatures(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Feature[]&gt;;
-    public abstract getFeature(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Feature&gt;;
-    public abstract getProcedures(
-        apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Procedure[]&gt;;
-    public abstract getProcedure(
-        id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions
-    ): Observable&lt;Procedure&gt;;
+    public abstract getTsData&lt;T&gt;(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable&lt;Data&lt;T&gt;&gt;;
+    public abstract getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Category[]&gt;;
+    public abstract getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Category&gt;;
+    public abstract getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Phenomenon[]&gt;;
+    public abstract getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Phenomenon&gt;;
+    public abstract getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Offering[]&gt;;
+    public abstract getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Offering&gt;;
+    public abstract getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Feature[]&gt;;
+    public abstract getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Feature&gt;;
+    public abstract getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Procedure[]&gt;;
+    public abstract getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Procedure&gt;;
 
     protected requestApi&lt;T&gt;(
         url: string, params: ParameterFilter &#x3D; {}, options: HttpRequestOptions &#x3D; {}

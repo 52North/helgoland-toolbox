@@ -95,6 +95,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#getDatasetByInternalId">getDatasetByInternalId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getDatasets">getDatasets</a>
                             </li>
                             <li>
@@ -148,6 +152,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#getSingleTimeseries">getSingleTimeseries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getSingleTimeseriesByInternalId">getSingleTimeseriesByInternalId</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -291,7 +299,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:132</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:133</a></div>
                             </td>
                         </tr>
 
@@ -386,7 +394,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:137</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:138</a></div>
                             </td>
                         </tr>
 
@@ -481,7 +489,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="238" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:238</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="239" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:239</a></div>
                             </td>
                         </tr>
 
@@ -620,7 +628,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="226" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:226</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="227" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:227</a></div>
                             </td>
                         </tr>
 
@@ -707,6 +715,101 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="getDatasetByInternalId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            getDatasetByInternalId
+                            </b>
+                            <a href="#getDatasetByInternalId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>getDatasetByInternalId(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>, options?: <a href="../interfaces/HttpRequestOptions.html">HttpRequestOptions</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="234" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:234</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>internalId</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/HttpRequestOptions.html" target="_self" >HttpRequestOptions</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../interfaces/Data.html" target="_self" >Observable&lt;Dataset&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="getDatasets"></a>
                         <span class="name">
                             <b>
@@ -727,7 +830,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="219" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:219</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="220" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:220</a></div>
                             </td>
                         </tr>
 
@@ -822,7 +925,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="179" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:179</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="180" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:180</a></div>
                             </td>
                         </tr>
 
@@ -929,7 +1032,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="174" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:174</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:175</a></div>
                             </td>
                         </tr>
 
@@ -1024,7 +1127,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="164" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:164</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:165</a></div>
                             </td>
                         </tr>
 
@@ -1131,7 +1234,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:159</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="160" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:160</a></div>
                             </td>
                         </tr>
 
@@ -1226,7 +1329,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:144</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:145</a></div>
                             </td>
                         </tr>
 
@@ -1321,7 +1424,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:149</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:150</a></div>
                             </td>
                         </tr>
 
@@ -1428,7 +1531,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:209</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="210" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:210</a></div>
                             </td>
                         </tr>
 
@@ -1535,7 +1638,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="204" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:204</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:205</a></div>
                             </td>
                         </tr>
 
@@ -1630,7 +1733,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:194</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="195" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:195</a></div>
                             </td>
                         </tr>
 
@@ -1737,7 +1840,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="189" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:189</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="190" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:190</a></div>
                             </td>
                         </tr>
 
@@ -2109,6 +2212,89 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="getSingleTimeseriesByInternalId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            getSingleTimeseriesByInternalId
+                            </b>
+                            <a href="#getSingleTimeseriesByInternalId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>getSingleTimeseriesByInternalId(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params?: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:107</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>internalId</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            Yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../injectables/Time.html" target="_self" >Observable&lt;Timeseries&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="getStation"></a>
                         <span class="name">
                             <b>
@@ -2414,7 +2600,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:112</a></div>
                             </td>
                         </tr>
 
@@ -2497,7 +2683,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:116</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:117</a></div>
                             </td>
                         </tr>
 
@@ -2636,7 +2822,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="265" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:265</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="266" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:266</a></div>
                             </td>
                         </tr>
 
@@ -2719,7 +2905,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="258" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:258</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="259" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/dataset-impl-api-interface.service.ts:259</a></div>
                             </td>
                         </tr>
 
@@ -2887,11 +3073,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         });
     }
 
-    public getSingleTimeseries(
-        id: string,
-        apiUrl: string,
-        params?: ParameterFilter
-    ): Observable&lt;Timeseries&gt; {
+    public getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter): Observable&lt;Timeseries&gt; {
         const url &#x3D; this.createRequestUrl(apiUrl, &#x27;timeseries&#x27;, id);
         return this.requestApiTexted(url, params).pipe(map((result) &#x3D;&gt; {
             const timeseries &#x3D; deserialize&lt;Timeseries&gt;(Timeseries, result);
@@ -2899,6 +3081,11 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
             this.internalDatasetId.generateInternalId(timeseries);
             return timeseries;
         }));
+    }
+
+    public getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter): Observable&lt;Timeseries&gt; {
+        const resolvedId &#x3D; this.internalDatasetId.resolveInternalId(internalId);
+        return this.getSingleTimeseries(resolvedId.id, resolvedId.url, params);
     }
 
     public getTimeseriesExtras(id: string, apiUrl: string): Observable&lt;TimeseriesExtras&gt; {
@@ -3016,16 +3203,16 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         );
     }
 
-    public getDataset(
-        id: string,
-        apiUrl: string,
-        params?: ParameterFilter,
-        options?: HttpRequestOptions
-    ): Observable&lt;Dataset&gt; {
+    public getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Dataset&gt; {
         const url &#x3D; this.createRequestUrl(apiUrl, &#x27;datasets&#x27;, id);
         return this.requestApi&lt;Dataset&gt;(url, params, options).pipe(
             map((res) &#x3D;&gt; this.prepareDataset(res, apiUrl))
         );
+    }
+
+    public getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable&lt;Dataset&gt; {
+        const resolvedId &#x3D; this.internalDatasetId.resolveInternalId(internalId);
+        return this.getDataset(resolvedId.id, resolvedId.url, params, options);
     }
 
     public getData&lt;T&gt;(
