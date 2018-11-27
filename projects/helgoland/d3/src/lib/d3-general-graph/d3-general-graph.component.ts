@@ -1,13 +1,7 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    ViewChild,
-    OnChanges
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
-import { D3GeneralDataset, D3GeneralDatasetInput, D3GeneralDataPoint } from '../model/d3-general';
+
+import { D3GeneralDataPoint, D3GeneralDataset, D3GeneralDatasetInput } from '../model/d3-general';
 
 @Component({
     selector: 'n52-d3-general-graph',
@@ -53,29 +47,26 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         this.graph = this.rawSvg
             .append('g')
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
-
-        console.log('input for d3 general graph component');
-        console.log(this.generalDataInput);
-
         this.prepareData();
-
     }
 
     ngOnChanges(changes) {
-        // if (changes.generalData && this.rawSvg) {
-        //     this.prepareData(this.generalData);
-        // }
+        if (changes.generalDataInput && this.rawSvg) {
+            this.prepareData();
+        }
     }
 
     private prepareData() {
-        this.generalData = {
-            data: this.generalDataInput.data,
-            plotOptions: {
-                xlabel: this.generalDataInput.xlabel,
-                ylabel: this.generalDataInput.ylabel
-            }
-        };
-        this.plotGraph();
+        if (this.generalDataInput) {
+            this.generalData = {
+                data: this.generalDataInput.data,
+                plotOptions: {
+                    xlabel: this.generalDataInput.xlabel,
+                    ylabel: this.generalDataInput.ylabel
+                }
+            };
+            this.plotGraph();
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries
 export { AdditionalData, ExtendedDataD3TimeseriesGraphComponent } from './lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
 export * from './lib/model/d3-graph-options';
 export * from './lib/model/d3-axis-type';
+export * from './lib/model/d3-highlight';
 export * from './lib/model/d3-selection-range';
 export * from './lib/model/d3-plot-options';
 export * from './lib/helper/d3-time-format-locale.service';

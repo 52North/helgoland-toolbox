@@ -27,6 +27,7 @@ import * as d3 from 'd3';
 import moment from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { HighlightOutput, HighlightValue } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 
 export interface DataEntry {
@@ -67,16 +68,6 @@ export interface InternalDataEntry {
         };
     };
     visible: boolean;
-}
-
-export interface HighlightOutput {
-    timestamp: number;
-    ids: Array<HighlightValue>;
-}
-
-export interface HighlightValue {
-    timestamp: number;
-    value: number;
 }
 
 export interface DataConst extends IDataset {
