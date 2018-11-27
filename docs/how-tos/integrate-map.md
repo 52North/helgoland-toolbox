@@ -45,6 +45,7 @@ You can compare your `src/app/app.module.ts` file with the following code below:
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -204,6 +205,8 @@ public searchOptions: GeoSearchOptions = { countrycodes: [] };
 
 ### Helgoland Selector
 
+If you did not install the dependencies `@helgoland/selector` and `@helgoland/depiction` yet, than you should install them now as seen in the first step.
+
 #### Settings Service Provider
 
 To add the Helgoland Selector Module to our app and use the service-filter for the helgoland map, we need to import and extend a service. Therefore we need to import Settings in our `./environements/environment.ts` and export the variable `settings` of type `Settings`.
@@ -211,7 +214,7 @@ To add the Helgoland Selector Module to our app and use the service-filter for t
 ```javascript
 import { Settings } from '@helgoland/core';
 
-export let settings: Settings;
+export let settings: Settings = {};
 ```
 
 Then we need to create a new folder called `settings` and a file `settings.service.ts` in that the service-extension  `ExtendedSettingsService` will be implemented using the following code:
@@ -254,7 +257,7 @@ src
 
 #### Service Filter Selector
 
-Import further dependencies to our ng-app by adding the following javascript code to `src/app/app.module.ts` and adding the imports as well to the imports of `@NgModule`:
+Further, import the additionally installed dependencies to our ng-app by adding the following javascript code to `src/app/app.module.ts` and adding the imports as well to the imports of `@NgModule`. Also add the dependency `SettingsService` to the imports of `@helgoland/core`:
 
 ```javascript
 import { HelgolandSelectorModule } from '@helgoland/selector';
@@ -288,4 +291,171 @@ public onSelectPhenomenon(phenomenon: Phenomenon) {
 
 ## Step 4: start working
 
-Now, that we have added all dependencies and the code to access the functionality of the helgoland map you can start working on your app. If you did not run the app while following this tutorial you should now see the map by starting your app with `ng serve` and some more interaction possibilities below the map and on the right.
+Now, that we have added all dependencies and the code to access the functionality of the helgoland map you can start working on your app. If you did not run the app while following this tutorial you should now see the map by starting your app with `ng serve` and some more interaction possibilities below the map.
+
+## Step 5: check code
+
+In the following the main app files can be viewed. If you would like to change the styling of your page, you might have a closer look at the `app.component.html`.
+
+#### `src/app/app.component.html`
+```html
+<h1>How To: Integrate Helgoland Map</h1>
+
+<div style="display: flex; flex-direction: row;">
+  <div style="width: 500px; padding: 5px;">
+    <div style="height: 500px;">
+      <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter"
+        [zoomControlOptions]="zoomControlOptions" [mapOptions]="mapOptions" [fitBounds]="fitBounds"
+        [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
+        [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster"
+        [statusIntervals]="statusIntervals" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+    </div>
+    <div>Is loading: {{loadingStations}}</div>
+    <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
+    <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
+  </div>
+  <div style="width: 200px;">
+    <n52-service-filter-selector [serviceUrl]="providerUrl" endpoint="phenomenon" (onItemSelected)="onSelectPhenomenon($event)"></n52-service-filter-selector>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+```
+
+#### `src/app/app.component.ts`
+```
+import { Component } from '@angular/core';
+
+import { ParameterFilter, Phenomenon, Station } from '@helgoland/core';
+import { GeoSearchOptions, LayerOptions } from '@helgoland/map';
+import * as L from 'leaflet';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+
+  public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
+  public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
+  public avoidZoomToSelection = false;
+  public baseMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
+  public overlayMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
+  public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
+  public cluster = false;
+  public loadingStations: boolean;
+  public stationFilter: ParameterFilter = {
+    // phenomenon: '8'
+  };
+  public statusIntervals = false;
+  public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
+
+  public searchOptions: GeoSearchOptions = { countrycodes: [] };
+
+  public onStationSelected(station: Station) {
+    console.log('Clicked station: ' + station.properties.label);
+  }
+
+  public onSelectPhenomenon(phenomenon: Phenomenon) {
+    console.log('Select: ' + phenomenon.label + ' with ID: ' + phenomenon.id);
+    this.stationFilter = {
+      phenomenon: phenomenon.id
+    };
+  }
+
+}
+```
+
+#### `src/app/app.module.ts`
+```
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+// Add dependencies for helgoland components.
+import { GeoSearch, HelgolandMapControlModule, HelgolandMapSelectorModule, NominatimGeoSearchService } from '@helgoland/map';
+import { DatasetApiInterface, SettingsService, SplittedDataDatasetApiInterface } from '@helgoland/core';
+import { HelgolandSelectorModule } from '@helgoland/selector';
+import { HelgolandDatasetlistModule } from '@helgoland/depiction';
+import { ExtendedSettingsService } from './settings/settings.service';
+
+// Add dependencies for translations.
+import { HttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HelgolandMapSelectorModule,
+    HelgolandMapControlModule,
+    HelgolandSelectorModule,
+    HelgolandDatasetlistModule
+  ],
+  providers: [
+    {
+      provide: DatasetApiInterface,
+      useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: GeoSearch,
+      useClass: NominatimGeoSearchService
+    },
+    {
+      provide: SettingsService,
+      useClass: ExtendedSettingsService
+    },
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+```
+
+#### `src/tsconfig.json`
+```json
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+        "@angular/*":["node_modules/@angular/*"],
+    }
+  }
+}
+```
