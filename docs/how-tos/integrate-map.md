@@ -323,7 +323,7 @@ In the following the main app files can be viewed. If you would like to change t
 ```
 
 #### `src/app/app.component.ts`
-```
+```javascript
 import { Component } from '@angular/core';
 
 import { ParameterFilter, Phenomenon, Station } from '@helgoland/core';
@@ -369,7 +369,7 @@ export class AppComponent {
 ```
 
 #### `src/app/app.module.ts`
-```
+```javascript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
