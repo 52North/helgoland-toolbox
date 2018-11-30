@@ -145,6 +145,13 @@ public onStationSelected(station: Station) {
 }
 ```
 
+Changeable parameters:
+
+- `fitBounds` - bounding box of the zoom extend adaptle by changing latitude and longitude (currently extend is set to Brüssel)
+- `zoomControlOptions` - position of the zoom control and further options
+- `layerControlOptions` - position of the layers control and further options
+- `mapOptions` - options concerning the interaction (e.g. to enable zoom or dragging)
+
 This code is implemented in the helgoland-toolbox github repository and can be viewed [here](https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.ts).
 
 **A very important step should not be missed**  
@@ -171,6 +178,56 @@ L.Marker.prototype.options.icon = L.icon({
 ## Step 3: add further interaction
 
 We have managed to add a helgoland map to our app with markers on it and the possibility to receive click events giving information about which station was clicked. To extend the model by a `zoom to extent`-button or a list of phenomenons, the following instructions might be helpful.
+
+### Adapt Layers
+
+To add layers as for example overlay we can define a function, that adds a tilelayer to the variable `overlayMaps. If this function is executed, a layers control will be visible in the bottomleft corner of the map. The position is adaptable as seen in the list of changeable parameters in the previous step.
+We will add buttons to the view outside the map and define the script that should be executed in the AppComponent.
+
+```html
+<div>
+  <button (click)="addOverlayMapLayer();">Add Map Layer</button>
+  <button (click)="removeOverlayMapLayer();">Remove Map Layer</button>
+</div>
+```
+
+First, the overlays will be deleted. Two tilelayer, provided by a WMS, will be added to the overlay layers.
+
+```javascript
+ public addOverlayMapLayer() {
+    this.overlayMaps = new Map<string, LayerOptions>();
+    this.overlayMaps.set('pm10_24hmean_1x1',
+      {
+        label: 'pm10_24hmean_1x1',
+        visible: true,
+        layer: L.tileLayer.wms('http://geo.irceline.be/rio/wms', {
+          layers: 'pm10_hmean_1x1',
+          transparent: true,
+          format: 'image/png',
+          opacity: 0.7,
+          pane: 'tilePane',
+          zIndex: -9998,
+        })
+      });
+    this.overlayMaps.set('realtime:o3_station_max',
+      {
+        label: 'realtime:o3_station_max',
+        visible: true,
+        layer: L.tileLayer.wms('http://geo.irceline.be/wms', {
+          layers: 'realtime:o3_station_max',
+          transparent: true,
+          format: 'image/png',
+          pane: 'tilePane',
+          zIndex: -9997,
+        })
+      }
+    );
+  }
+
+  public removeOverlayMapLayer() {
+    this.overlayMaps = new Map<string, LayerOptions>();
+  }
+```
 
 ### Helgoland Map Control
 

@@ -1477,7 +1477,8 @@ export class D3TimeseriesGraphComponent
                 .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
+                .text((entry.id ? ( entry.uom + ' @ ' + entry.parameters.station) : entry.uom));
+                // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
 
             this.graph.selectAll('.yaxisTextLabel')
                 .call(this.wrapText, (axis.node().getBBox().height - 10), this.height / 2);
@@ -1499,6 +1500,46 @@ export class D3TimeseriesGraphComponent
                 textOff = this.margin.left;
             }
             text.attr('y', 0 - textOff);
+
+            if (text) {
+                let textWidth = text.node().getBBox().width;
+                let textHeight = text.node().getBBox().height;
+                let textPosition = {
+                    x: text.node().getBBox().x,
+                    y: text.node().getBBox().y
+                };
+                let axisradius = 4;
+                let startOfPoints = {
+                    x: textPosition.y + textHeight / 2 + axisradius / 2, // + 2 because radius === 4
+                    y: Math.abs(textPosition.x + textWidth) - axisradius * 2
+                };
+                let pointOffset = 0;
+
+                if (entry.ids) {
+                    entry.ids.forEach((entryID) => {
+                        let dataentry = this.preparedData.find(el => el.internalId === entryID);
+                        this.graph.append('circle')
+                            .attr('class', 'axisDots')
+                            .attr('id', 'axisdot-' + entry.id)
+                            .attr('stroke', dataentry.color)
+                            .attr('fill', dataentry.color)
+                            .attr('cx', startOfPoints.x)
+                            .attr('cy', startOfPoints.y - pointOffset)
+                            .attr('r', axisradius);
+                        pointOffset += axisradius * 3;
+                    });
+                } else {
+                    let dataentry = this.preparedData.find(el => el.internalId === entry.id);
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('id', 'axisdot-' + entry.id)
+                        .attr('stroke', dataentry.color)
+                        .attr('fill', dataentry.color)
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', startOfPoints.y - pointOffset)
+                        .attr('r', axisradius);
+                }
+            }
 
             // set id to uom, if group yaxis is toggled, else set id to dataset id
             let id: string = (entry.id ? entry.id : entry.uom);
