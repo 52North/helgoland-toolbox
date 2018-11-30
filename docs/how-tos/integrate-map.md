@@ -223,6 +223,10 @@ First, the overlays will be deleted. Two tilelayer, provided by a WMS, will be a
       }
     );
   }
+
+  public removeOverlayMapLayer() {
+    this.overlayMaps = new Map<string, LayerOptions>();
+  }
 ```
 
 ### Helgoland Map Control
