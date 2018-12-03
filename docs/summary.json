@@ -12,6 +12,9 @@
       "title": "Integrate a table component",
       "file": "how-tos/integrate-table-component.md"
     },{
+      "title": "Integrate a map component",
+      "file": "how-tos/integrate-map.md"
+    },{
       "title": "Extend a timeseries entry component",
       "file": "how-tos/extend-timeseries-entry-component.md"
     },{
