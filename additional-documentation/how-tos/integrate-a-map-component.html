@@ -170,7 +170,14 @@ public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
 
 public onStationSelected(station: Station) {
     console.log(&#39;Clicked station: &#39; + station.properties.label);
-}</code></pre></div><p>This code is implemented in the helgoland-toolbox github repository and can be viewed <a href="https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.ts">here</a>.</p>
+}</code></pre></div><p>Changeable parameters:</p>
+<ul>
+<li><code>fitBounds</code> - bounding box of the zoom extend adaptle by changing latitude and longitude (currently extend is set to Brüssel)</li>
+<li><code>zoomControlOptions</code> - position of the zoom control and further options</li>
+<li><code>layerControlOptions</code> - position of the layers control and further options</li>
+<li><code>mapOptions</code> - options concerning the interaction (e.g. to enable zoom or dragging)</li>
+</ul>
+<p>This code is implemented in the helgoland-toolbox github repository and can be viewed <a href="https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.ts">here</a>.</p>
 <p><strong>A very important step should not be missed</strong><br>To use the functionality of the functions in the class <code>AppComponent</code> we need to add the dependencies to use predefined data types or interface (e.g. <code>LayerOptions</code>). Predefined marker icons (the iconURL can be adapted by the path to your own marker image) can also be added, but this is optional to create a map, because otherwise default marker images will be used.</p>
 <div><pre class="line-numbers"><code class="language-javascript">import { ParameterFilter, Phenomenon, Station } from &#39;&#64;helgoland/core&#39;;
 import { GeoSearchOptions, LayerOptions } from &#39;&#64;helgoland/map&#39;;
@@ -188,7 +195,46 @@ L.Marker.prototype.options.icon = L.icon({
     shadowSize: [41, 41]
 });</code></pre></div><h2 id="step-3-add-further-interaction">Step 3: add further interaction</h2>
 <p>We have managed to add a helgoland map to our app with markers on it and the possibility to receive click events giving information about which station was clicked. To extend the model by a <code>zoom to extent</code>-button or a list of phenomenons, the following instructions might be helpful.</p>
-<h3 id="helgoland-map-control">Helgoland Map Control</h3>
+<h3 id="adapt-layers">Adapt Layers</h3>
+<p>To add layers as for example overlay we can define a function, that adds a tilelayer to the variable `overlayMaps. If this function is executed, a layers control will be visible in the bottomleft corner of the map. The position is adaptable as seen in the list of changeable parameters in the previous step.
+We will add buttons to the view outside the map and define the script that should be executed in the AppComponent.</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;div&gt;
+  &lt;button (click)=&quot;addOverlayMapLayer();&quot;&gt;Add Map Layer&lt;/button&gt;
+  &lt;button (click)=&quot;removeOverlayMapLayer();&quot;&gt;Remove Map Layer&lt;/button&gt;
+&lt;/div&gt;</code></pre></div><p>First, the overlays will be deleted. Two tilelayer, provided by a WMS, will be added to the overlay layers.</p>
+<div><pre class="line-numbers"><code class="language-javascript"> public addOverlayMapLayer() {
+    this.overlayMaps = new Map&lt;string, LayerOptions&gt;();
+    this.overlayMaps.set(&#39;pm10_24hmean_1x1&#39;,
+      {
+        label: &#39;pm10_24hmean_1x1&#39;,
+        visible: true,
+        layer: L.tileLayer.wms(&#39;http://geo.irceline.be/rio/wms&#39;, {
+          layers: &#39;pm10_hmean_1x1&#39;,
+          transparent: true,
+          format: &#39;image/png&#39;,
+          opacity: 0.7,
+          pane: &#39;tilePane&#39;,
+          zIndex: -9998,
+        })
+      });
+    this.overlayMaps.set(&#39;realtime:o3_station_max&#39;,
+      {
+        label: &#39;realtime:o3_station_max&#39;,
+        visible: true,
+        layer: L.tileLayer.wms(&#39;http://geo.irceline.be/wms&#39;, {
+          layers: &#39;realtime:o3_station_max&#39;,
+          transparent: true,
+          format: &#39;image/png&#39;,
+          pane: &#39;tilePane&#39;,
+          zIndex: -9997,
+        })
+      }
+    );
+  }
+
+  public removeOverlayMapLayer() {
+    this.overlayMaps = new Map&lt;string, LayerOptions&gt;();
+  }</code></pre></div><h3 id="helgoland-map-control">Helgoland Map Control</h3>
 <p>With this Module it is possible to zoom back to the start view position and as well search for streets, cities, countries, etc. .</p>
 <p>Add <code>HelgolandMapControlModule</code> to the imports of <code>@helgoland/map</code> and also to the imports of <code>@NgModule</code> similar to the way described in earlier steps. Then we can add either the Geosearch Control or the Extent Control or both.
 For the Geosearch Control we need to add a provider. Therefore add <code>GeoSearch</code> and <code>NominatimGeoSearchService</code> to the imports of <code>@helgoland/map</code> and the following code to the providers array of <code>@NgModule</code>:</p>
