@@ -28,6 +28,8 @@ export class AdditionalDataGraphComponent {
 
     public graphLoading: boolean;
 
+    public interval: NodeJS.Timer;
+
     constructor(
         private color: ColorService,
         private dialog: MatDialog
@@ -56,15 +58,22 @@ export class AdditionalDataGraphComponent {
                 }
             ]
         }];
+    }
 
-        setInterval(() => {
-            this.additionalData[0].data.push({
-                timestamp: new Date().getTime(),
-                value: this.createValue()
-            });
-            this.additionalData = Object.assign([], this.additionalData);
-            this.setNewTimespan();
-        }, 1000);
+    public toggleTimer() {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+        } else {
+            this.interval = setInterval(() => {
+                this.additionalData[0].data.push({
+                    timestamp: new Date().getTime(),
+                    value: this.createValue()
+                });
+                this.additionalData = Object.assign([], this.additionalData);
+                this.setNewTimespan();
+            }, 1000);
+        }
     }
 
     private setNewTimespan() {
