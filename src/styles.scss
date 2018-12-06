@@ -106,3 +106,29 @@ body {
       opacity: 0;
   }
 }
+
+// add for lastest value labels in the map
+
+.last-value-container {
+  background-color: white;
+  padding: 3px;
+  border: 2px blue solid;
+  border-radius: 5px;
+  height: auto !important;
+  width: auto !important;
+  text-align: center;
+}
+
+.last-value-container .last-value-date {
+  display: none;
+  white-space: pre;
+}
+
+.last-value-container:hover {
+  display: inherit;
+  z-index: 999999 !important;
+}
+
+.last-value-container:hover .last-value-date {
+  display: inherit;
+}

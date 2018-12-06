@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ParameterFilter, Phenomenon, Station } from '@helgoland/core';
-import { GeoSearchOptions, LayerOptions } from '@helgoland/map';
+import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
+import { GeoSearchOptions, LastValuePresentation, LayerOptions } from '@helgoland/map';
 import L from 'leaflet';
 
 L.Marker.prototype.options.icon = L.icon({
@@ -35,6 +35,13 @@ export class MapSelectorComponent {
     public stationFilter: ParameterFilter = {
         // phenomenon: '8'
     };
+    public lastValueSeriesIDs = [
+        'https://www.fluggs.de/sos2/api/v1/__51',
+        'https://www.fluggs.de/sos2/api/v1/__78',
+        'https://www.fluggs.de/sos2/api/v1/__95',
+        'https://www.fluggs.de/sos2/api/v1/__54'
+    ];
+    public lastValuePresentation = LastValuePresentation.Textual;
     public statusIntervals = false;
     public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
 
@@ -112,5 +119,9 @@ export class MapSelectorComponent {
         this.stationFilter = {
             phenomenon: phenomenon.id
         };
+    }
+
+    public timeseriesSelected(ts: Timeseries) {
+        alert(`Clicked ${ts.label}`);
     }
 }
