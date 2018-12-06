@@ -45,6 +45,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
+import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
@@ -66,7 +67,6 @@ import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 import { ExtendedSettingsService } from './settings/settings.service';
-import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 
 const APP_PROVIDERS = [
   StatusCheckService,

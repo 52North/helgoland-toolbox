@@ -16,6 +16,7 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
+      'styles-test.css',
       '../../../node_modules/leaflet/dist/leaflet.css',
       '../../../node_modules/leaflet.markercluster/dist/MarkerCluster.css',
       '../../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
