@@ -21,7 +21,9 @@ describe('NominatimService', () => {
   it('should search with point geometry in result', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
     service.searchTerm('gent', {
       asPointGeometry: true,
-      addressdetails: true
+      addressdetails: true,
+      countrycodes: ['be'],
+      acceptLanguage: 'de'
     }).subscribe(res => {
       expect(res.geometry.type === 'Point').toBeTruthy();
     });
@@ -32,8 +34,10 @@ describe('NominatimService', () => {
       type: 'Point',
       coordinates: [51.9350437, 7.6520628]
     };
-    service.reverse(point).subscribe(res => {
-        expect(res.address).toBeTruthy();
+    service.reverse(point, {
+      acceptLanguage: 'be'
+    }).subscribe(res => {
+      expect(res.address).toBeTruthy();
     });
   }));
 
