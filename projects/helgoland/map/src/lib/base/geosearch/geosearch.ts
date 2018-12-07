@@ -26,12 +26,14 @@ export interface GeoSearchResult {
 }
 
 export interface GeoSearchOptions {
+    acceptLanguage?: string;
     addressdetails?: boolean;
     asPointGeometry?: boolean;
     countrycodes?: string[];
 }
 
 export interface GeoReverseOptions {
+    acceptLanguage?: string;
     addressdetails?: boolean;
     zoom?: number;
 }
