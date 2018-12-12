@@ -9,8 +9,6 @@ import {
     KeyValueDiffers,
     OnChanges,
     SimpleChanges,
-    EventEmitter,
-    Output
 } from '@angular/core';
 import {
     DatasetApiInterface,
@@ -29,15 +27,7 @@ import { Observable } from 'rxjs/Observable';
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import { Layer } from 'leaflet';
-import { forkJoin, Observer } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { LastValueLabelGenerator } from '../services/last-value-label-generator.interface';
-
-export const enum LastValuePresentation {
-    None,
-    Colorized,
-    Textual,
-}
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'n52-station-map-selector',
@@ -53,20 +43,11 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     @Input()
     public statusIntervals: boolean;
 
-    @Input()
-    public lastValueSeriesIDs: string[];
-
-    @Input()
-    public lastValuePresentation: LastValuePresentation = LastValuePresentation.Colorized;
-
     /**
      * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
      */
     @Input()
     public ignoreStatusIntervalIfBeforeDuration = Infinity;
-
-    @Output()
-    public onSelectedTimeseries: EventEmitter<Timeseries> = new EventEmitter();
 
     private markerFeatureGroup: L.FeatureGroup;
 
@@ -75,8 +56,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected differs: KeyValueDiffers,
-        protected cd: ChangeDetectorRef,
-        protected lastValueLabelGenerator: LastValueLabelGenerator
+        protected cd: ChangeDetectorRef
     ) {
         super(mapCache, differs, cd);
     }
@@ -90,96 +70,43 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         this.isContentLoading(true);
         if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
         if (this.statusIntervals && this.filter && this.filter.phenomenon) {
-            this.createPhenomenonMarkers();
-        } else if (this.lastValueSeriesIDs && this.lastValueSeriesIDs.length) {
-            this.createMarkersBySeriesIDs();
+            this.createValuedMarkers();
         } else {
             this.createStationGeometries();
         }
     }
 
-    private createPhenomenonMarkers() {
+    private createValuedMarkers() {
         const tempFilter: ParameterFilter = {
             phenomenon: this.filter.phenomenon,
             expanded: true
         };
         this.apiInterface.getTimeseries(this.serviceUrl, tempFilter).subscribe((timeseries: Timeseries[]) => {
             this.markerFeatureGroup = L.featureGroup();
-            const obsList: Array<Observable<Layer>> = [];
+            const obsList: Array<Observable<TimeseriesExtras>> = [];
             timeseries.forEach((ts: Timeseries) => {
-                obsList.push(this.createMarker(ts).pipe(tap(m => this.markerFeatureGroup.addLayer(m))));
-            });
-            this.finalizeMarkerObservables(obsList);
-        });
-    }
-
-    private createMarkersBySeriesIDs() {
-        this.markerFeatureGroup = L.featureGroup();
-        const obsList: Array<Observable<Timeseries>> = [];
-        this.lastValueSeriesIDs.forEach(entry => {
-            obsList.push(this.apiInterface.getSingleTimeseriesByInternalId(entry).pipe(tap(ts => {
-                this.createMarker(ts).subscribe(m => {
-                    this.markerFeatureGroup.addLayer(m);
-                    m.on('click', () => this.onSelectedTimeseries.emit(ts));
-                });
-            })));
-        });
-        this.finalizeMarkerObservables(obsList);
-    }
-
-    private createMarker(ts: Timeseries) {
-        switch (this.lastValuePresentation) {
-            case LastValuePresentation.Colorized:
-                return this.createColorizedMarker(ts);
-            case LastValuePresentation.Textual:
-                return this.createLabeledMarker(ts);
-            default:
-                break;
-        }
-    }
-
-    private finalizeMarkerObservables(obsList: Observable<any>[]) {
-        forkJoin(obsList).subscribe(() => {
-            this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
-            if (this.map) {
-                this.map.invalidateSize();
-            }
-            this.isContentLoading(false);
-        });
-        if (this.map) {
-            this.markerFeatureGroup.addTo(this.map);
-        }
-    }
-
-    private createColorizedMarker(ts: Timeseries): Observable<Layer> {
-        return new Observable<Layer>((observer: Observer<Layer>) => {
-            this.apiInterface.getTimeseriesExtras(ts.id, this.serviceUrl).subscribe((extras: TimeseriesExtras) => {
-                let marker;
-                if (extras.statusIntervals) {
-                    if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
-                        const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
-                        if (interval) {
-                            marker = this.createColoredMarker(ts.station, interval.color);
+                const obs = this.apiInterface.getTimeseriesExtras(ts.id, this.serviceUrl);
+                obsList.push(obs);
+                obs.subscribe((extras: TimeseriesExtras) => {
+                    let marker;
+                    if (extras.statusIntervals) {
+                        if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
+                            const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
+                            if (interval) { marker = this.createColoredMarker(ts.station, interval.color); }
                         }
                     }
-                }
-                if (!marker) {
-                    marker = this.createDefaultColoredMarker(ts.station);
-                }
-                observer.next(marker);
-                observer.complete();
+                    if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
+                    this.markerFeatureGroup.addLayer(marker);
+                });
             });
-        });
-    }
 
-    private createLabeledMarker(ts: Timeseries): Observable<Layer> {
-        return new Observable<Layer>(observer => {
-            const icon = this.lastValueLabelGenerator.createIconLabel(ts);
-            if (ts.station.geometry.type === 'Point') {
-                const point = ts.station.geometry as GeoJSON.Point;
-                observer.next(L.marker([point.coordinates[1], point.coordinates[0]], { icon }));
-                observer.complete();
-            }
+            forkJoin(obsList).subscribe(() => {
+                this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
+                if (this.map) { this.map.invalidateSize(); }
+                this.isContentLoading(false);
+            });
+
+            if (this.map) { this.markerFeatureGroup.addTo(this.map); }
         });
     }
 
@@ -204,7 +131,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             });
         } else {
             geometry = L.geoJSON(station.geometry, {
-                style: () => {
+                style: (feature) => {
                     return {
                         color: '#000',
                         fillColor: color,

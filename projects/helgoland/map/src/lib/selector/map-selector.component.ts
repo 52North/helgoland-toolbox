@@ -20,16 +20,12 @@ export abstract class MapSelectorComponent<T>
 
     /**
      * @input The serviceUrl, where the selection should be loaded.
-     *
-     * @memberof MapSelectorComponent
      */
     @Input()
     public serviceUrl: string;
 
     /**
      * @input The filter which should be used, while fetching the selection.
-     *
-     * @memberof MapSelectorComponent
      */
     @Input()
     public filter: ParameterFilter;
@@ -42,6 +38,12 @@ export abstract class MapSelectorComponent<T>
 
     @Output()
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+
+    /**
+     * @input Additional configuration for the marker zooming (https://leafletjs.com/reference-1.3.4.html#fitbounds-options)
+     */
+    @Input()
+    public fitBoundsMarkerOptions: L.FitBoundsOptions;
 
     public isContentLoading: (loading: boolean) => void;
 
@@ -91,7 +93,7 @@ export abstract class MapSelectorComponent<T>
      */
     protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
         if (!this.avoidZoomToSelection) {
-            this.map.fitBounds(bounds);
+            this.map.fitBounds(bounds, this.fitBoundsMarkerOptions || {});
         }
     }
 
