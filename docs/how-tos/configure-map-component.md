@@ -13,6 +13,8 @@ add input to the component:
 
 add layer to the overlays map:
 ```typescript
+import { tileLayer } from 'leaflet';
+
 this.overlayMaps.set('some-internal-map-id',
     {
         label: 'map-label', // will be shown in layer control
