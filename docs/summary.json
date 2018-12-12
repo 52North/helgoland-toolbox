@@ -26,6 +26,9 @@
     },{
       "title": "Handle dataset options to style the timeseries",
       "file": "how-tos/handle-styling-options.md"
+    },{
+      "title": "Add last value map selector",
+      "file": "how-tos/add-last-value-map-selector.md"
     }]
   }
 ]
