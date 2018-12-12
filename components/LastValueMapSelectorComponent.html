@@ -38,7 +38,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>ProfileEntryComponent</li>
+  <li>LastValueMapSelectorComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -61,17 +61,30 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts</code>
+    <code>projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Displays selectable series with their last values on an map.</p>
+
+    </p>
 
     <p class="comment">
         <h3>Extends</h3>
     </p>
     <p class="comment">
-            <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+            <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
     </p>
 
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
 
 
 <section>
@@ -91,19 +104,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>n52-profile-entry</code></td>
+                <td class="col-md-9"><code>n52-last-value-map-selector</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>profile-entry.component.scss</code></td>
+                <td class="col-md-9"><code>.map-selector.component.scss</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./profile-entry.component.html</code></td>
+                <td class="col-md-9"><code>../map-selector.component.html</code></td>
             </tr>
 
 
@@ -124,28 +137,12 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#dataset">dataset</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#editableOptions">editableOptions</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#tempColor">tempColor</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Protected</span>
-                                <a href="#internalId">internalId</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Private</span>
-                                <a href="#langChangeSubscription">langChangeSubscription</a>
+                                <a href="#markerFeatureGroup">markerFeatureGroup</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#loading">loading</a>
+                                <a href="#isContentLoading">isContentLoading</a>
                             </li>
                         </ul>
                     </td>
@@ -160,57 +157,57 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#editDatasetOptions">editDatasetOptions</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#createColoredMarker">createColoredMarker</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#isMobile">isMobile</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#createColorizedMarker">createColorizedMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createDefaultColoredMarker">createDefaultColoredMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFilledMarker">createFilledMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createLabeledMarker">createLabeledMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createMarker">createMarker</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createMarkersBySeriesIDs">createMarkersBySeriesIDs</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
-                                <a href="#loadDataset">loadDataset</a>
+                                <a href="#drawGeometries">drawGeometries</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#openInCombiView">openInCombiView</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#removeDatasetOptions">removeDatasetOptions</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#showGeometry">showGeometry</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#toggleVisibility">toggleVisibility</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#finalizeMarkerObservables">finalizeMarkerObservables</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
                                     <span class="modifier">Abstract</span>
-                                <a href="#loadDataset">loadDataset</a>
+                                <a href="#drawGeometries">drawGeometries</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#ngOnInit">ngOnInit</a>
+                                <a href="#ngOnChanges">ngOnChanges</a>
                             </li>
                             <li>
                                     <span class="modifier">Protected</span>
-                                <a href="#onLanguageChanged">onLanguageChanged</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#removeDataset">removeDataset</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#toggleSelection">toggleSelection</a>
+                                <a href="#zoomToMarkerBounds">zoomToMarkerBounds</a>
                             </li>
                         </ul>
                     </td>
@@ -225,13 +222,25 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#datasetOptions">datasetOptions</a>
+                                <a href="#ignoreStatusIntervalIfBeforeDuration">ignoreStatusIntervalIfBeforeDuration</a>
                             </li>
                             <li>
-                                <a href="#datasetId">datasetId</a>
+                                <a href="#lastValuePresentation">lastValuePresentation</a>
                             </li>
                             <li>
-                                <a href="#selected">selected</a>
+                                <a href="#lastValueSeriesIDs">lastValueSeriesIDs</a>
+                            </li>
+                            <li>
+                                <a href="#avoidZoomToSelection">avoidZoomToSelection</a>
+                            </li>
+                            <li>
+                                <a href="#filter">filter</a>
+                            </li>
+                            <li>
+                                <a href="#fitBoundsMarkerOptions">fitBoundsMarkerOptions</a>
+                            </li>
+                            <li>
+                                <a href="#serviceUrl">serviceUrl</a>
                             </li>
                         </ul>
                     </td>
@@ -246,25 +255,13 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#onDeleteDatasetOptions">onDeleteDatasetOptions</a>
+                                <a href="#onContentLoading">onContentLoading</a>
                             </li>
                             <li>
-                                <a href="#onEditOptions">onEditOptions</a>
+                                <a href="#onNoResultsFound">onNoResultsFound</a>
                             </li>
                             <li>
-                                <a href="#onOpenInCombiView">onOpenInCombiView</a>
-                            </li>
-                            <li>
-                                <a href="#onShowGeometry">onShowGeometry</a>
-                            </li>
-                            <li>
-                                <a href="#onUpdateOptions">onUpdateOptions</a>
-                            </li>
-                            <li>
-                                <a href="#onDeleteDataset">onDeleteDataset</a>
-                            </li>
-                            <li>
-                                <a href="#onSelectDataset">onSelectDataset</a>
+                                <a href="#onSelected">onSelected</a>
                             </li>
                         </ul>
                     </td>
@@ -282,12 +279,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(api: <a href="../interfaces/DatasetApi.html">DatasetApiInterface</a>, internalIdHandler: <a href="../injectables/InternalIdHandler.html">InternalIdHandler</a>, translateSrvc: <a href="../interfaces/Service.html">TranslateService</a>)</code>
+<code>constructor(mapCache: <a href="../injectables/MapCache.html">MapCache</a>, differs: <a href="https://angular.io/api/core/KeyValueDiffers" target="_blank">KeyValueDiffers</a>, cd: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>, apiInterface: <a href="../interfaces/DatasetApi.html">DatasetApiInterface</a>, lastValueLabelGenerator: <a href="../classes/LastValueLabelGenerator.html">LastValueLabelGenerator</a>, statusIntervalResolver: <a href="../injectables/StatusIntervalResolverService.html">StatusIntervalResolverService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:47</a></div>
                             </td>
                         </tr>
 
@@ -305,7 +302,43 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>api</td>
+                                                        <td>mapCache</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/MapCache.html" target="_self" >MapCache</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>differs</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/core/KeyValueDiffers" target="_blank" >KeyValueDiffers</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>cd</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>apiInterface</td>
                                                   
                                                         <td>
                                                                     <code><a href="../interfaces/DatasetApi.html" target="_self" >DatasetApiInterface</a></code>
@@ -317,10 +350,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>internalIdHandler</td>
+                                                        <td>lastValueLabelGenerator</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../injectables/InternalIdHandler.html" target="_self" >InternalIdHandler</a></code>
+                                                                    <code><a href="../classes/LastValueLabelGenerator.html" target="_self" >LastValueLabelGenerator</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -329,10 +362,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>translateSrvc</td>
+                                                        <td>statusIntervalResolver</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../interfaces/Service.html" target="_self" >TranslateService</a></code>
+                                                                    <code><a href="../injectables/StatusIntervalResolverService.html" target="_self" >StatusIntervalResolverService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -355,46 +388,20 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
-                        <a name="datasetOptions"></a>
-                        <code>datasetOptions</code>
+                        <a name="ignoreStatusIntervalIfBeforeDuration"></a>
+                        <code>ignoreStatusIntervalIfBeforeDuration</code>
                     </td>
                     <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions[]</a></code>
-
-                            </p>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:24</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="datasetId"></a>
-                        <code>datasetId</code>
-                    </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                            </p>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                        <div><p>Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.</p>
 </div>
-                                </td>
-                            </tr>
+                        <p>
+                            <em>Default value : </em><code>Infinity</code>
+                        </p>
+                    </td>
+                </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in ListEntryComponent:15</div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:45</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -403,8 +410,57 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
-                        <a name="selected"></a>
-                        <code>selected</code>
+                        <a name="lastValuePresentation"></a>
+                        <code>lastValuePresentation</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>Presentation type how to display the series.</p>
+</div>
+                            <p>
+                            <em>Type :</em>    <code><a href="../miscellaneous/enumerations.html#LastValuePresentation" target="_self" >LastValuePresentation</a></code>
+
+                            </p>
+                        <p>
+                            <em>Default value : </em><code>LastValuePresentation.Colorized</code>
+                        </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="lastValueSeriesIDs"></a>
+                        <code>lastValueSeriesIDs</code>
+                    </td>
+                    <td class="col-md-10">
+                        <div><p>The list of internal series IDs, which should be presented with their last values on the map.</p>
+</div>
+                            <p>
+                            <em>Type :</em>    <code>string[]</code>
+
+                            </p>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="avoidZoomToSelection"></a>
+                        <code>avoidZoomToSelection</code>
                     </td>
                     <td class="col-md-10">
                             <p>
@@ -415,13 +471,94 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in ListEntryComponent:18</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:34</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="filter"></a>
+                        <code>filter</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in MapSelectorComponent:31</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="fitBoundsMarkerOptions"></a>
+                        <code>fitBoundsMarkerOptions</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code>L.FitBoundsOptions</code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in MapSelectorComponent:46</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="serviceUrl"></a>
+                        <code>serviceUrl</code>
+                    </td>
+                    <td class="col-md-10">
+                            <p>
+                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                            </p>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in MapSelectorComponent:25</div>
                             </td>
                         </tr>
             </tbody>
@@ -433,103 +570,8 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
-                        <a name="onDeleteDatasetOptions"></a>
-                        <code>onDeleteDatasetOptions</code>
-                    </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;TimedDatasetOptions&gt;</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:30</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="onEditOptions"></a>
-                        <code>onEditOptions</code>
-                    </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;TimedDatasetOptions&gt;</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:33</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="onOpenInCombiView"></a>
-                        <code>onOpenInCombiView</code>
-                    </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;TimedDatasetOptions&gt;</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:36</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="onShowGeometry"></a>
-                        <code>onShowGeometry</code>
-                    </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;GeoJSON.GeoJsonObject&gt;</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:39</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="onUpdateOptions"></a>
-                        <code>onUpdateOptions</code>
-                    </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;TimedDatasetOptions[]&gt;</a></code>
-
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:27</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="onDeleteDataset"></a>
-                        <code>onDeleteDataset</code>
+                        <a name="onContentLoading"></a>
+                        <code>onContentLoading</code>
                     </td>
                     <td class="col-md-10">
                         <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
@@ -538,13 +580,13 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in ListEntryComponent:21</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:40</div>
                             </td>
                         </tr>
             </tbody>
@@ -553,8 +595,8 @@
             <tbody>
                 <tr>
                     <td class="col-md-2">
-                        <a name="onSelectDataset"></a>
-                        <code>onSelectDataset</code>
+                        <a name="onNoResultsFound"></a>
+                        <code>onNoResultsFound</code>
                     </td>
                     <td class="col-md-10">
                         <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
@@ -563,13 +605,38 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4" colspan="2">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in ListEntryComponent:24</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:51</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a name="onSelected"></a>
+                        <code>onSelected</code>
+                    </td>
+                    <td class="col-md-10">
+                        <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;T&gt;</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in MapSelectorComponent:37</div>
                             </td>
                         </tr>
             </tbody>
@@ -586,27 +653,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="editDatasetOptions"></a>
+                        <a name="createColoredMarker"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
-                            editDatasetOptions
+                                <span class="modifier">Private</span>
+                            createColoredMarker
                             </b>
-                            <a href="#editDatasetOptions"><span class="icon ion-ios-link"></span></a>
+                            <a href="#createColoredMarker"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>editDatasetOptions(options: <a href="../injectables/Time.html">TimedDatasetOptions</a>)</code>
+                        <code>createColoredMarker(ts: <a href="../injectables/Time.html">Timeseries</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:126</a></div>
                             </td>
                         </tr>
 
@@ -626,9 +693,9 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>options</td>
+                                                        <td>ts</td>
                                                         <td>
-                                                                    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -637,113 +704,14 @@
                                                     
 
                                                 </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="isMobile"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            isMobile
-                            </b>
-                            <a href="#isMobile"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>isMobile()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:67</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="loadDataset"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
-                            loadDataset
-                            </b>
-                            <a href="#loadDataset"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>loadDataset(lang?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:94</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
                                                 <tr>
-                                                        <td>lang</td>
+                                                        <td>color</td>
                                                         <td>
                                                                     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                                         </td>
                                                     
                                                     <td>
-                                                            Yes
+                                                            No
                                                     </td>
                                                     
 
@@ -754,7 +722,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                <b>Returns : </b>    <code>Layer</code>
 
                             </div>
                                 <div class="io-description">
@@ -768,27 +736,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="openInCombiView"></a>
+                        <a name="createColorizedMarker"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
-                            openInCombiView
+                                <span class="modifier">Private</span>
+                            createColorizedMarker
                             </b>
-                            <a href="#openInCombiView"><span class="icon ion-ios-link"></span></a>
+                            <a href="#createColorizedMarker"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>openInCombiView(option: <a href="../injectables/Time.html">TimedDatasetOptions</a>)</code>
+                        <code>createColorizedMarker(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:74</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="105" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:105</a></div>
                             </td>
                         </tr>
 
@@ -808,9 +776,468 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>option</td>
+                                                        <td>ts</td>
                                                         <td>
-                                                                    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;Layer&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createDefaultColoredMarker"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createDefaultColoredMarker
+                            </b>
+                            <a href="#createDefaultColoredMarker"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createDefaultColoredMarker(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:130</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>ts</td>
+                                                        <td>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Layer</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createFilledMarker"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createFilledMarker
+                            </b>
+                            <a href="#createFilledMarker"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createFilledMarker(ts: <a href="../injectables/Time.html">Timeseries</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, radius: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:134</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>ts</td>
+                                                        <td>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>color</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>radius</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Layer</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createLabeledMarker"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createLabeledMarker
+                            </b>
+                            <a href="#createLabeledMarker"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createLabeledMarker(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:163</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>ts</td>
+                                                        <td>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Observable&lt;Layer&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createMarker"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createMarker
+                            </b>
+                            <a href="#createMarker"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createMarker(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:80</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>ts</td>
+                                                        <td>
+                                                                    <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="createMarkersBySeriesIDs"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            createMarkersBySeriesIDs
+                            </b>
+                            <a href="#createMarkersBySeriesIDs"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>createMarkersBySeriesIDs()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:67</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawGeometries"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            drawGeometries
+                            </b>
+                            <a href="#drawGeometries"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>drawGeometries()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:60</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="finalizeMarkerObservables"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            finalizeMarkerObservables
+                            </b>
+                            <a href="#finalizeMarkerObservables"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>finalizeMarkerObservables(obsList: Observable<any>[])</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:90</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>obsList</td>
+                                                        <td>
+                                                                    <code>Observable&lt;any&gt;[]</code>
                                                         </td>
                                                     
                                                     <td>
@@ -839,247 +1266,128 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="removeDatasetOptions"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            removeDatasetOptions
-                            </b>
-                            <a href="#removeDatasetOptions"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>removeDatasetOptions(options: <a href="../injectables/Time.html">TimedDatasetOptions</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:54</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>options</td>
-                                                        <td>
-                                                                    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="showGeometry"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            showGeometry
-                            </b>
-                            <a href="#showGeometry"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>showGeometry(option: <a href="../injectables/Time.html">TimedDatasetOptions</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:78</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>option</td>
-                                                        <td>
-                                                                    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="toggleVisibility"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            toggleVisibility
-                            </b>
-                            <a href="#toggleVisibility"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>toggleVisibility(options: <a href="../injectables/Time.html">TimedDatasetOptions</a>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:62</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>options</td>
-                                                        <td>
-                                                                    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="loadDataset"></a>
+                        <a name="drawGeometries"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
                                 <span class="modifier">Abstract</span>
-                            loadDataset
+                            drawGeometries
                             </b>
-                            <a href="#loadDataset"><span class="icon ion-ios-link"></span></a>
+                            <a href="#drawGeometries"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>loadDataset(lang?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        <code>drawGeometries()</code>
                     </td>
                 </tr>
 
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:64</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:85</div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Draws the geometries</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngAfterViewInit"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            ngAfterViewInit
+                            </b>
+                            <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>ngAfterViewInit()</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in MapSelectorComponent:61</div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngOnChanges"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            ngOnChanges
+                            </b>
+                            <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon icon ion-ios-reset"></span>
+                        <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in MapSelectorComponent:69</div>
                             </td>
                         </tr>
 
@@ -1099,178 +1407,9 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>lang</td>
+                                                        <td>changes</td>
                                                         <td>
-                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            Yes
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnDestroy"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            ngOnDestroy
-                            </b>
-                            <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnDestroy()</code>
-                    </td>
-                </tr>
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:45</div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnInit"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            ngOnInit
-                            </b>
-                            <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnInit()</code>
-                    </td>
-                </tr>
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:37</div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="onLanguageChanged"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
-                            onLanguageChanged
-                            </b>
-                            <a href="#onLanguageChanged"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>onLanguageChanged(langChangeEvent: <a href="../interfaces/Event.html">LangChangeEvent</a>)</code>
-                    </td>
-                </tr>
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:58</div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>langChangeEvent</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/Event.html" target="_self" >LangChangeEvent</a></code>
+                                                                    <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -1299,90 +1438,82 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="removeDataset"></a>
+                        <a name="zoomToMarkerBounds"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Public</span>
-                            removeDataset
+                                <span class="modifier">Protected</span>
+                            zoomToMarkerBounds
                             </b>
-                            <a href="#removeDataset"><span class="icon ion-ios-link"></span></a>
+                            <a href="#zoomToMarkerBounds"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>removeDataset()</code>
+                        <code>zoomToMarkerBounds(bounds: L.LatLngBoundsExpression)</code>
                     </td>
                 </tr>
 
 
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:49</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:94</div>
                             </td>
                         </tr>
 
 
                 <tr>
                     <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="toggleSelection"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            toggleSelection
-                            </b>
-                            <a href="#toggleSelection"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>toggleSelection()</code>
-                    </td>
-                </tr>
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                            <div class="io-description"><p>Zooms to the given bounds</p>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:53</div>
-                            </td>
-                        </tr>
 
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>bounds</td>
+                                                        <td>
+                                                                    <code>L.LatLngBoundsExpression</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
 
-                <tr>
-                    <td class="col-md-4">
-
+                                                        <td>
+                                                                <code><p>where to zoom</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                             </div>
+                                <div class="io-description">
+                                    
+                                </div>
                     </td>
                 </tr>
             </tbody>
@@ -1398,183 +1529,31 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="dataset"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            dataset
-                            </b>
-                            <a href="#dataset"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>dataset:     <code><a href="../interfaces/Data.html" target="_self" >Dataset</a></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/Data.html" target="_self" >Dataset</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:41</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="editableOptions"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            editableOptions
-                            </b>
-                            <a href="#editableOptions"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>editableOptions:     <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:43</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="tempColor"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
-                            tempColor
-                            </b>
-                            <a href="#tempColor"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>tempColor:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/depiction/src/lib/datasetlist/profile-entry/profile-entry.component.ts:44</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="internalId"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
-                            internalId
-                            </b>
-                            <a href="#internalId"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>internalId:     <code><a href="../interfaces/InternalDatasetId.html" target="_self" >InternalDatasetId</a></code>
-</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/InternalDatasetId.html" target="_self" >InternalDatasetId</a></code>
-
-                        </td>
-                    </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
-</div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:28</div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="langChangeSubscription"></a>
+                        <a name="markerFeatureGroup"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            langChangeSubscription
+                            markerFeatureGroup
                             </b>
-                            <a href="#langChangeSubscription"><span class="icon ion-ios-link"></span></a>
+                            <a href="#markerFeatureGroup"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>langChangeSubscription:     <code><a href="../interfaces/Subscription.html" target="_self" >Subscription</a></code>
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>markerFeatureGroup:     <code><a href="../interfaces/Feature.html" target="_self" >L.FeatureGroup</a></code>
 </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/Subscription.html" target="_self" >Subscription</a></code>
+                            <i>Type : </i>    <code><a href="../interfaces/Feature.html" target="_self" >L.FeatureGroup</a></code>
 
                         </td>
                     </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
-</div>
-                                </td>
-                            </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:30</div>
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/map/src/lib/selector/last-value-map-selector/last-value-map-selector.component.ts:47</a></div>
                             </td>
                         </tr>
 
@@ -1585,31 +1564,37 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="loading"></a>
+                        <a name="isContentLoading"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            loading
+                            isContentLoading
                             </b>
-                            <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                            <a href="#isContentLoading"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>loading:     <code></code>
+                        <span class="modifier-icon icon ion-ios-reset"></span><code>isContentLoading:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                        </td>
+                    </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../classes/ListEntryComponent.html" target="_self" >ListEntryComponent</a></code>
+                                    <div class="io-line">Inherited from     <code><a href="../classes/MapSelectorComponent.html" target="_self" >MapSelectorComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in ListEntryComponent:26</div>
+                                    <div class="io-line">Defined in MapSelectorComponent:48</div>
                             </td>
                         </tr>
 
@@ -1622,146 +1607,186 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, ChangeDetectorRef, Component, Input, KeyValueDiffers } from &#x27;@angular/core&#x27;;
 import {
-    Dataset,
-    DatasetApiInterface,
-    InternalIdHandler,
-    LocatedProfileDataEntry,
-    ParameterFilter,
-    PlatformTypes,
-    TimedDatasetOptions,
-    Timespan,
+  DatasetApiInterface,
+  HasLoadableContent,
+  Mixin,
+  StatusIntervalResolverService,
+  Timeseries,
+  TimeseriesExtras,
 } from &#x27;@helgoland/core&#x27;;
-import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { circleMarker, featureGroup, geoJSON, Layer, marker } from &#x27;leaflet&#x27;;
+import { forkJoin, Observable, Observer } from &#x27;rxjs&#x27;;
+import { switchMap, tap } from &#x27;rxjs/operators&#x27;;
 
-import { ListEntryComponent } from &#x27;../list-entry.component&#x27;;
+import { MapCache } from &#x27;../../base/map-cache.service&#x27;;
+import { MapSelectorComponent } from &#x27;../map-selector.component&#x27;;
+import { LastValueLabelGenerator, LastValuePresentation } from &#x27;../services/last-value-label-generator.interface&#x27;;
 
+/**
+ * Displays selectable series with their last values on an map.
+ */
 @Component({
-    selector: &#x27;n52-profile-entry&#x27;,
-    templateUrl: &#x27;./profile-entry.component.html&#x27;,
-    styleUrls: [&#x27;./profile-entry.component.scss&#x27;]
+  selector: &#x27;n52-last-value-map-selector&#x27;,
+  templateUrl: &#x27;../map-selector.component.html&#x27;,
+  styleUrls: [&#x27;../map-selector.component.scss&#x27;]
 })
-export class ProfileEntryComponent extends ListEntryComponent {
+@Mixin([HasLoadableContent])
+export class LastValueMapSelectorComponent extends MapSelectorComponent&lt;Timeseries&gt; implements AfterViewInit {
 
-    @Input()
-    public datasetOptions: TimedDatasetOptions[];
+  /**
+   * The list of internal series IDs, which should be presented with their last values on the map.
+   */
+  @Input()
+  public lastValueSeriesIDs: string[];
 
-    @Output()
-    public onUpdateOptions: EventEmitter&lt;TimedDatasetOptions[]&gt; &#x3D; new EventEmitter();
+  /**
+   * Presentation type how to display the series.
+   */
+  @Input()
+  public lastValuePresentation: LastValuePresentation &#x3D; LastValuePresentation.Colorized;
 
-    @Output()
-    public onDeleteDatasetOptions: EventEmitter&lt;TimedDatasetOptions&gt; &#x3D; new EventEmitter();
+  /**
+   * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
+   */
+  @Input()
+  public ignoreStatusIntervalIfBeforeDuration &#x3D; Infinity;
 
-    @Output()
-    public onEditOptions: EventEmitter&lt;TimedDatasetOptions&gt; &#x3D; new EventEmitter();
+  private markerFeatureGroup: L.FeatureGroup;
 
-    @Output()
-    public onOpenInCombiView: EventEmitter&lt;TimedDatasetOptions&gt; &#x3D; new EventEmitter();
+  constructor(
+    protected mapCache: MapCache,
+    protected differs: KeyValueDiffers,
+    protected cd: ChangeDetectorRef,
+    protected apiInterface: DatasetApiInterface,
+    protected lastValueLabelGenerator: LastValueLabelGenerator,
+    protected statusIntervalResolver: StatusIntervalResolverService
+  ) {
+    super(mapCache, differs, cd);
+  }
 
-    @Output()
-    public onShowGeometry: EventEmitter&lt;GeoJSON.GeoJsonObject&gt; &#x3D; new EventEmitter();
-
-    public dataset: Dataset;
-
-    public editableOptions: TimedDatasetOptions;
-    public tempColor: string;
-
-    constructor(
-        protected api: DatasetApiInterface,
-        protected internalIdHandler: InternalIdHandler,
-        protected translateSrvc: TranslateService
-    ) {
-        super(internalIdHandler, translateSrvc);
+  protected drawGeometries(): void {
+    this.isContentLoading(true);
+    if (this.lastValueSeriesIDs &amp;&amp; this.lastValueSeriesIDs.length) {
+      this.createMarkersBySeriesIDs();
     }
+  }
 
-    public removeDatasetOptions(options: TimedDatasetOptions) {
-        this.onDeleteDatasetOptions.emit(options);
+  private createMarkersBySeriesIDs() {
+    this.markerFeatureGroup &#x3D; featureGroup();
+    const obsList: Array&lt;Observable&lt;any&gt;&gt; &#x3D; [];
+    this.lastValueSeriesIDs.forEach(entry &#x3D;&gt; {
+      const tsObs &#x3D; this.apiInterface.getSingleTimeseriesByInternalId(entry);
+      obsList.push(tsObs.pipe(switchMap(val &#x3D;&gt; this.createMarker(val).pipe(tap(res &#x3D;&gt; {
+        this.markerFeatureGroup.addLayer(res);
+        res.on(&#x27;click&#x27;, () &#x3D;&gt; this.onSelected.emit(val));
+      })))));
+    });
+    this.finalizeMarkerObservables(obsList);
+  }
+
+  private createMarker(ts: Timeseries) {
+    switch (this.lastValuePresentation) {
+      case LastValuePresentation.Colorized:
+        return this.createColorizedMarker(ts);
+      case LastValuePresentation.Textual:
+        return this.createLabeledMarker(ts);
     }
+    return this.createColorizedMarker(ts);
+  }
 
-    public editDatasetOptions(options: TimedDatasetOptions) {
-        this.onEditOptions.emit(options);
+  private finalizeMarkerObservables(obsList: Observable&lt;any&gt;[]) {
+    forkJoin(obsList).subscribe(() &#x3D;&gt; {
+      console.log(&#x27;do zoom to bounds&#x27;);
+      if (this.map) {
+        const bounds &#x3D; this.markerFeatureGroup.getBounds();
+        this.zoomToMarkerBounds(bounds);
+        this.map.invalidateSize();
+      }
+      this.isContentLoading(false);
+    });
+    if (this.map) {
+      this.markerFeatureGroup.addTo(this.map);
     }
+  }
 
-    public toggleVisibility(options: TimedDatasetOptions) {
-        options.visible &#x3D; !options.visible;
-        this.onUpdateOptions.emit(this.datasetOptions);
-    }
-
-    public isMobile() {
-        if (this.dataset) {
-            return this.dataset.platformType &#x3D;&#x3D;&#x3D; PlatformTypes.mobileInsitu;
+  private createColorizedMarker(ts: Timeseries): Observable&lt;Layer&gt; {
+    return new Observable&lt;Layer&gt;((observer: Observer&lt;Layer&gt;) &#x3D;&gt; {
+      this.apiInterface.getTimeseriesExtras(ts.id, ts.url).subscribe((extras: TimeseriesExtras) &#x3D;&gt; {
+        let coloredMarker;
+        if (extras.statusIntervals) {
+          if ((ts.lastValue.timestamp) &gt; new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
+            const interval &#x3D; this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
+            if (interval) {
+              coloredMarker &#x3D; this.createColoredMarker(ts, interval.color);
+            }
+          }
         }
-        return false;
-    }
-
-    public openInCombiView(option: TimedDatasetOptions) {
-        this.onOpenInCombiView.emit(option);
-    }
-
-    public showGeometry(option: TimedDatasetOptions) {
-        const internalId &#x3D; this.internalIdHandler.resolveInternalId(this.datasetId);
-        if (this.isMobile()) {
-            const timespan &#x3D; new Timespan(option.timestamp);
-            this.api.getData&lt;LocatedProfileDataEntry&gt;(internalId.id, internalId.url, timespan).subscribe((result) &#x3D;&gt; {
-                if (result.values.length &#x3D;&#x3D;&#x3D; 1) {
-                    this.onShowGeometry.emit(result.values[0].geometry);
-                }
-            });
-        } else {
-            this.api.getPlatform(this.dataset.parameters.platform.id, internalId.url).subscribe((platform) &#x3D;&gt; {
-                this.onShowGeometry.emit(platform.geometry);
-            });
+        if (!coloredMarker) {
+          coloredMarker &#x3D; this.createDefaultColoredMarker(ts);
         }
-    }
+        observer.next(coloredMarker);
+        observer.complete();
+      });
+    });
+  }
 
-    protected loadDataset(lang?: string) {
-        const params: ParameterFilter &#x3D; {};
-        if (lang) { params.lang &#x3D; lang; }
-        this.loading &#x3D; true;
-        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) &#x3D;&gt; {
-            this.dataset &#x3D; dataset;
-            this.loading &#x3D; false;
-        });
+  private createColoredMarker(ts: Timeseries, color: string): Layer {
+    return this.createFilledMarker(ts, color, 10);
+  }
+
+  private createDefaultColoredMarker(ts: Timeseries): Layer {
+    return this.createFilledMarker(ts, &#x27;#000&#x27;, 10);
+  }
+
+  private createFilledMarker(ts: Timeseries, color: string, radius: number): Layer {
+    let geometry: Layer;
+    if (ts.station.geometry.type &#x3D;&#x3D;&#x3D; &#x27;Point&#x27;) {
+      const point &#x3D; ts.station.geometry as GeoJSON.Point;
+      geometry &#x3D; circleMarker([point.coordinates[1], point.coordinates[0]], {
+        color: &#x27;#000&#x27;,
+        fillColor: color,
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 2
+      });
+    } else {
+      geometry &#x3D; geoJSON(ts.station.geometry, {
+        style: (feature) &#x3D;&gt; {
+          return {
+            color: &#x27;#000&#x27;,
+            fillColor: color,
+            fillOpacity: 0.8,
+            weight: 2
+          };
+        }
+      });
     }
+    if (geometry) {
+      geometry.on(&#x27;click&#x27;, () &#x3D;&gt; this.onSelected.emit(ts));
+      return geometry;
+    }
+  }
+
+  private createLabeledMarker(ts: Timeseries): Observable&lt;Layer&gt; {
+    return new Observable&lt;Layer&gt;(observer &#x3D;&gt; {
+      const icon &#x3D; this.lastValueLabelGenerator.createIconLabel(ts);
+      if (ts.station.geometry.type &#x3D;&#x3D;&#x3D; &#x27;Point&#x27;) {
+        const point &#x3D; ts.station.geometry as GeoJSON.Point;
+        observer.next(marker([point.coordinates[1], point.coordinates[0]], { icon }));
+        observer.complete();
+      }
+    });
+  }
 
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;legendItem&quot; style&#x3D;&quot;position: relative;&quot; [ngClass]&#x3D;&quot;{&#x27;selected&#x27;: selected}&quot; (click)&#x3D;&quot;toggleSelection()&quot;&gt;
-  &lt;div class&#x3D;&quot;legendItemheader&quot;&gt;
-    &lt;div class&#x3D;&quot;legendItemLabel&quot;&gt;
-      &lt;n52-label-mapper label&#x3D;&quot;{{dataset?.parameters.platform.label}}&quot;&gt;&lt;/n52-label-mapper&gt;
-    &lt;/div&gt;
-    &lt;div class&#x3D;&quot;small&quot;&gt;
-      &lt;n52-label-mapper label&#x3D;&quot;{{dataset?.parameters.phenomenon.label}}&quot;&gt;&lt;/n52-label-mapper&gt;
-      &lt;span *ngIf&#x3D;&quot;dataset?.uom&quot;&gt;[
-        &lt;n52-label-mapper label&#x3D;&quot;{{dataset.uom}}&quot;&gt;&lt;/n52-label-mapper&gt;]&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div class&#x3D;&quot;small&quot;&gt;
-      &lt;n52-label-mapper label&#x3D;&quot;{{dataset?.parameters.procedure.label}}&quot;&gt;&lt;/n52-label-mapper&gt;
-    &lt;/div&gt;
-    &lt;div class&#x3D;&quot;small&quot; *ngIf&#x3D;&quot;dataset?.parameters.category.label !&#x3D; dataset?.parameters.phenomenon.label&quot;&gt;
-      &lt;n52-label-mapper label&#x3D;&quot;{{dataset?.parameters.category.label}}&quot;&gt;&lt;/n52-label-mapper&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div *ngFor&#x3D;&quot;let item of datasetOptions&quot;&gt;
-    &lt;div&gt;
-      &lt;span [ngStyle]&#x3D;&quot;{&#x27;color&#x27;: item.color}&quot;&gt;{{item.timestamp | date: &#x27;short&#x27;}}&lt;/span&gt;
-      &lt;span class&#x3D;&quot;fa&quot; [ngClass]&#x3D;&quot;{&#x27;fa-eye-slash&#x27;: item.visible, &#x27;fa-eye&#x27;: !item.visible}&quot; (click)&#x3D;&quot;toggleVisibility(item); $event.stopPropagation();&quot;
-        title&#x3D;&quot;{{&#x27;profiles.legend.visibility&#x27; | translate}}&quot;&gt;&lt;/span&gt;
-      &lt;span class&#x3D;&quot;fa fa-pencil&quot; (click)&#x3D;&quot;editDatasetOptions(item); $event.stopPropagation();&quot; [ngStyle]&#x3D;&quot;{color: item.color}&quot;
-        title&#x3D;&quot;{{&#x27;profiles.legend.edit-style&#x27; | translate}}&quot;&gt;&lt;/span&gt;
-      &lt;span class&#x3D;&quot;fa fa-map-marker&quot; (click)&#x3D;&quot;showGeometry(item); $event.stopPropagation();&quot; title&#x3D;&quot;{{&#x27;profiles.legend.show-geometry&#x27; | translate}}&quot;&gt;&lt;/span&gt;
-      &lt;span class&#x3D;&quot;fa fa-times&quot; (click)&#x3D;&quot;removeDatasetOptions(item); $event.stopPropagation();&quot; title&#x3D;&quot;{{&#x27;profiles.legend.delete-subentry&#x27; | translate}}&quot;&gt;&lt;/span&gt;
-    &lt;/div&gt;
-    &lt;div (click)&#x3D;&quot;openInCombiView(item); $event.stopPropagation();&quot; *ngIf&#x3D;&quot;isMobile()&quot; class&#x3D;&quot;toCombiView&quot;&gt;
-      &lt;span class&#x3D;&quot;fa fa-arrow-right&quot;&gt;&lt;/span&gt;
-      &lt;span&gt;{{&#x27;profiles.legend.go-to-combi-view&#x27; | translate}}&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;map-wrapper&quot; style&#x3D;&quot;height: 100%;&quot;&gt;
+  &lt;div [attr.id]&#x3D;&quot;mapId&quot; class&#x3D;&quot;map-viewer&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
     </div>
@@ -1791,10 +1816,10 @@ export class ProfileEntryComponent extends ListEntryComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="legendItem" style="position: relative;" [ngClass]="{\'selected\': selected}" (click)="toggleSelection()">  <div class="legendItemheader">    <div class="legendItemLabel">      <n52-label-mapper label="{{dataset?.parameters.platform.label}}"></n52-label-mapper>    </div>    <div class="small">      <n52-label-mapper label="{{dataset?.parameters.phenomenon.label}}"></n52-label-mapper>      <span *ngIf="dataset?.uom">[        <n52-label-mapper label="{{dataset.uom}}"></n52-label-mapper>]</span>    </div>    <div class="small">      <n52-label-mapper label="{{dataset?.parameters.procedure.label}}"></n52-label-mapper>    </div>    <div class="small" *ngIf="dataset?.parameters.category.label != dataset?.parameters.phenomenon.label">      <n52-label-mapper label="{{dataset?.parameters.category.label}}"></n52-label-mapper>    </div>  </div>  <div *ngFor="let item of datasetOptions">    <div>      <span [ngStyle]="{\'color\': item.color}">{{item.timestamp | date: \'short\'}}</span>      <span class="fa" [ngClass]="{\'fa-eye-slash\': item.visible, \'fa-eye\': !item.visible}" (click)="toggleVisibility(item); $event.stopPropagation();"        title="{{\'profiles.legend.visibility\' | translate}}"></span>      <span class="fa fa-pencil" (click)="editDatasetOptions(item); $event.stopPropagation();" [ngStyle]="{color: item.color}"        title="{{\'profiles.legend.edit-style\' | translate}}"></span>      <span class="fa fa-map-marker" (click)="showGeometry(item); $event.stopPropagation();" title="{{\'profiles.legend.show-geometry\' | translate}}"></span>      <span class="fa fa-times" (click)="removeDatasetOptions(item); $event.stopPropagation();" title="{{\'profiles.legend.delete-subentry\' | translate}}"></span>    </div>    <div (click)="openInCombiView(item); $event.stopPropagation();" *ngIf="isMobile()" class="toCombiView">      <span class="fa fa-arrow-right"></span>      <span>{{\'profiles.legend.go-to-combi-view\' | translate}}</span>    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="map-wrapper" style="height: 100%;">  <div [attr.id]="mapId" class="map-viewer"></div></div></div>'
     var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
-    var ACTUAL_COMPONENT = {'name': 'ProfileEntryComponent'};
+    var ACTUAL_COMPONENT = {'name': 'LastValueMapSelectorComponent'};
 </script>
 <script src="../js/tree.js"></script>
 
@@ -1828,7 +1853,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'ProfileEntryComponent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'LastValueMapSelectorComponent.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

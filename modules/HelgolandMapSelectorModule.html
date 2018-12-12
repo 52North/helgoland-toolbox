@@ -266,19 +266,27 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
-import { NgModule } from &#x27;@angular/core&#x27;;
+import { ModuleWithProviders, NgModule, Type } from &#x27;@angular/core&#x27;;
 import { HelgolandCoreModule } from &#x27;@helgoland/core&#x27;;
 
 import { HelgolandMapModule } from &#x27;../base/map.module&#x27;;
+import { LastValueMapSelectorComponent } from &#x27;./last-value-map-selector/last-value-map-selector.component&#x27;;
 import { PlatformMapSelectorComponent } from &#x27;./platform-map-selector/platform-map-selector.component&#x27;;
+import { LastValueLabelGenerator } from &#x27;./services/last-value-label-generator.interface&#x27;;
+import { LastValueLabelGeneratorService } from &#x27;./services/last-value-label-generator.service&#x27;;
 import { StationMapSelectorComponent } from &#x27;./station-map-selector/station-map-selector.component&#x27;;
 import { ProfileTrajectoryMapSelectorComponent } from &#x27;./trajectory-map-selector/trajectory-map-selector.component&#x27;;
 
 const COMPONENTS &#x3D; [
     PlatformMapSelectorComponent,
     StationMapSelectorComponent,
-    ProfileTrajectoryMapSelectorComponent
+    ProfileTrajectoryMapSelectorComponent,
+    LastValueMapSelectorComponent
 ];
+
+export interface HelgolandMapSelectorModuleConfig {
+    lastValueLabelGeneratorService: Type&lt;LastValueLabelGenerator&gt;;
+}
 
 @NgModule({
     declarations: [
@@ -293,9 +301,19 @@ const COMPONENTS &#x3D; [
         COMPONENTS
     ],
     providers: [
+        { provide: LastValueLabelGenerator, useClass: LastValueLabelGeneratorService }
     ]
 })
-export class HelgolandMapSelectorModule { }
+export class HelgolandMapSelectorModule {
+    static forRoot(config?: HelgolandMapSelectorModuleConfig): ModuleWithProviders {
+        return {
+            ngModule: HelgolandMapSelectorModule,
+            providers: [
+                { provide: LastValueLabelGenerator, useClass: config &amp;&amp; config.lastValueLabelGeneratorService || LastValueLabelGeneratorService }
+            ]
+        };
+    }
+}
 </code></pre>
     </div>
 </div>

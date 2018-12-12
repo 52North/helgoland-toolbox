@@ -137,7 +137,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/helgoland/map/src/lib/base/geosearch/geosearch.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/map/src/lib/base/geosearch/geosearch.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -221,7 +221,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/map/src/lib/base/geosearch/geosearch.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/helgoland/map/src/lib/base/geosearch/geosearch.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -319,12 +319,14 @@ export interface GeoSearchResult {
 }
 
 export interface GeoSearchOptions {
+    acceptLanguage?: string;
     addressdetails?: boolean;
     asPointGeometry?: boolean;
     countrycodes?: string[];
 }
 
 export interface GeoReverseOptions {
+    acceptLanguage?: string;
     addressdetails?: boolean;
     zoom?: number;
 }

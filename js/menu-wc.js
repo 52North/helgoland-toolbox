@@ -84,6 +84,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     <li class="link for-chapter2">
                         <a href="additional-documentation/how-tos/handle-dataset-options-to-style-the-timeseries.html" data-type="entity-link" data-context-id="additional">Handle dataset options to style the timeseries</a>
                     </li>
+                    <li class="link for-chapter2">
+                        <a href="additional-documentation/how-tos/add-last-value-map-selector.html" data-type="entity-link" data-context-id="additional">Add last value map selector</a>
+                    </li>
             </ul>
         </li>
         <li class="chapter modules">
@@ -444,13 +447,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="modules/HelgolandMapSelectorModule.html" data-type="entity-link">HelgolandMapSelectorModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                    ${ isNormalMode ? 'data-target="#components-links-module-HelgolandMapSelectorModule-483789e9ae48c610b020ed0ebf7b6582"' : 'data-target="#xs-components-links-module-HelgolandMapSelectorModule-483789e9ae48c610b020ed0ebf7b6582"' }>
+                                    ${ isNormalMode ? 'data-target="#components-links-module-HelgolandMapSelectorModule-fa1663479d6382c5e4a9e47be71eef55"' : 'data-target="#xs-components-links-module-HelgolandMapSelectorModule-fa1663479d6382c5e4a9e47be71eef55"' }>
                                     <span class="icon ion-md-cog"></span>
                                     <span>Components</span>
                                     <span class="icon ion-ios-arrow-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                    ${ isNormalMode ? 'id="components-links-module-HelgolandMapSelectorModule-483789e9ae48c610b020ed0ebf7b6582"' : 'id="xs-components-links-module-HelgolandMapSelectorModule-483789e9ae48c610b020ed0ebf7b6582"' }>
+                                    ${ isNormalMode ? 'id="components-links-module-HelgolandMapSelectorModule-fa1663479d6382c5e4a9e47be71eef55"' : 'id="xs-components-links-module-HelgolandMapSelectorModule-fa1663479d6382c5e4a9e47be71eef55"' }>
                                         <li class="link">
                                             <a href="components/BoolTogglerComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                         </li>
@@ -673,6 +676,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/GeosearchControlComponent.html" data-type="entity-link">GeosearchControlComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/LastValueMapSelectorComponent.html" data-type="entity-link">LastValueMapSelectorComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/LocateControlComponent.html" data-type="entity-link">LocateControlComponent</a>
                             </li>
                             <li class="link">
@@ -792,6 +798,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <a href="classes/LanguageChangNotifier.html" data-type="entity-link">LanguageChangNotifier</a>
                     </li>
                     <li class="link">
+                        <a href="classes/LastValueLabelGenerator.html" data-type="entity-link">LastValueLabelGenerator</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/ListEntryComponent.html" data-type="entity-link">ListEntryComponent</a>
                     </li>
                     <li class="link">
@@ -873,6 +882,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="injectables/HttpService.html" data-type="entity-link">HttpService</a>
+                            </li>
+                            <li class="link">
+                                <a href="injectables/LastValueLabelGeneratorService.html" data-type="entity-link">LastValueLabelGeneratorService</a>
                             </li>
                             <li class="link">
                                 <a href="injectables/LocalHttpCache.html" data-type="entity-link">LocalHttpCache</a>
@@ -1034,6 +1046,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="link">
                         <a href="interfaces/GroupFavorite.html" data-type="entity-link">GroupFavorite</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/HelgolandMapSelectorModuleConfig.html" data-type="entity-link">HelgolandMapSelectorModuleConfig</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/HighlightDataset.html" data-type="entity-link">HighlightDataset</a>

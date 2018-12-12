@@ -590,6 +590,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         if (options.countrycodes) { params &#x3D; params.set(&#x27;countrycodes&#x27;, options.countrycodes.join(&#x27;,&#x27;)); }
         if (options.addressdetails !&#x3D;&#x3D; null) { params &#x3D; params.set(&#x27;addressdetails&#x27;, options.addressdetails ? &#x27;1&#x27; : &#x27;0&#x27;); }
         if (options.asPointGeometry !&#x3D;&#x3D; null) { params &#x3D; params.set(&#x27;polygon_geojson&#x27;, options.asPointGeometry ? &#x27;0&#x27; : &#x27;1&#x27;); }
+        if (options.acceptLanguage) { params &#x3D; params.set(&#x27;accept-language&#x27;, options.acceptLanguage); }
         return this.http.client().get(
             this.serviceUrl + &#x27;search&#x27;,
             { params }
@@ -625,12 +626,13 @@ export class NominatimGeoSearchService implements GeoSearch {
         });
     }
 
-    public reverse(point: Point, options?: GeoReverseOptions): Observable&lt;GeoReverseResult&gt; {
+    public reverse(point: Point, options: GeoReverseOptions &#x3D; {}): Observable&lt;GeoReverseResult&gt; {
         let params &#x3D; new HttpParams();
         params &#x3D; params.set(&#x27;lat&#x27;, point.coordinates[0].toString());
         params &#x3D; params.set(&#x27;lon&#x27;, point.coordinates[1].toString());
         params &#x3D; params.set(&#x27;format&#x27;, &#x27;json&#x27;);
         if (options &amp;&amp; options.addressdetails !&#x3D;&#x3D; undefined) { params &#x3D; params.set(&#x27;addressdetails&#x27;, options.addressdetails ? &#x27;1&#x27; : &#x27;0&#x27;); }
+        if (options.acceptLanguage !&#x3D;&#x3D; null) { params &#x3D; params.set(&#x27;accept-language&#x27;, options.acceptLanguage); }
         if (options &amp;&amp; options.zoom !&#x3D;&#x3D; undefined) { params &#x3D; params.set(&#x27;zoom&#x27;, &#x60;${options.zoom}&#x60;); }
         return this.http.client().get(
             this.serviceUrl + &#x27;reverse&#x27;,

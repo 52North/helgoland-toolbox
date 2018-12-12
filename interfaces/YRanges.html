@@ -2081,6 +2081,21 @@ export class D3TimeseriesGraphComponent
                 if (entry.ids) {
                     entry.ids.forEach((entryID) &#x3D;&gt; {
                         let dataentry &#x3D; this.preparedData.find(el &#x3D;&gt; el.internalId &#x3D;&#x3D;&#x3D; entryID);
+                        if (dataentry) {
+                            this.graph.append(&#x27;circle&#x27;)
+                                .attr(&#x27;class&#x27;, &#x27;axisDots&#x27;)
+                                .attr(&#x27;id&#x27;, &#x27;axisdot-&#x27; + entry.id)
+                                .attr(&#x27;stroke&#x27;, dataentry.color)
+                                .attr(&#x27;fill&#x27;, dataentry.color)
+                                .attr(&#x27;cx&#x27;, startOfPoints.x)
+                                .attr(&#x27;cy&#x27;, startOfPoints.y - pointOffset)
+                                .attr(&#x27;r&#x27;, axisradius);
+                            pointOffset +&#x3D; axisradius * 3;
+                        }
+                    });
+                } else {
+                    let dataentry &#x3D; this.preparedData.find(el &#x3D;&gt; el.internalId &#x3D;&#x3D;&#x3D; entry.id);
+                    if (dataentry) {
                         this.graph.append(&#x27;circle&#x27;)
                             .attr(&#x27;class&#x27;, &#x27;axisDots&#x27;)
                             .attr(&#x27;id&#x27;, &#x27;axisdot-&#x27; + entry.id)
@@ -2089,18 +2104,7 @@ export class D3TimeseriesGraphComponent
                             .attr(&#x27;cx&#x27;, startOfPoints.x)
                             .attr(&#x27;cy&#x27;, startOfPoints.y - pointOffset)
                             .attr(&#x27;r&#x27;, axisradius);
-                        pointOffset +&#x3D; axisradius * 3;
-                    });
-                } else {
-                    let dataentry &#x3D; this.preparedData.find(el &#x3D;&gt; el.internalId &#x3D;&#x3D;&#x3D; entry.id);
-                    this.graph.append(&#x27;circle&#x27;)
-                        .attr(&#x27;class&#x27;, &#x27;axisDots&#x27;)
-                        .attr(&#x27;id&#x27;, &#x27;axisdot-&#x27; + entry.id)
-                        .attr(&#x27;stroke&#x27;, dataentry.color)
-                        .attr(&#x27;fill&#x27;, dataentry.color)
-                        .attr(&#x27;cx&#x27;, startOfPoints.x)
-                        .attr(&#x27;cy&#x27;, startOfPoints.y - pointOffset)
-                        .attr(&#x27;r&#x27;, axisradius);
+                    }
                 }
             }
 
