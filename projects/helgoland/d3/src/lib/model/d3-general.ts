@@ -1,3 +1,4 @@
+import { ScaleLinear } from 'd3';
 
 // input tyoe for d3-general-graph component
 export interface D3GeneralDatasetInput {
@@ -12,8 +13,8 @@ export interface D3GeneralDataset {
     plotOptions: {
         xlabel: string;
         ylabel: string;
-        xScale?: d3.ScaleLinear<number, number>;
-        yScale?: d3.ScaleLinear<number, number>;
+        xScale?: ScaleLinear<number, number>;
+        yScale?: ScaleLinear<number, number>;
     };
 }
 
