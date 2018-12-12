@@ -3,6 +3,7 @@ import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { HelgolandMapModule } from '../base/map.module';
+import { LastValueMapSelectorComponent } from './last-value-map-selector/last-value-map-selector.component';
 import { PlatformMapSelectorComponent } from './platform-map-selector/platform-map-selector.component';
 import { LastValueLabelGenerator } from './services/last-value-label-generator.interface';
 import { LastValueLabelGeneratorService } from './services/last-value-label-generator.service';
@@ -12,7 +13,8 @@ import { ProfileTrajectoryMapSelectorComponent } from './trajectory-map-selector
 const COMPONENTS = [
     PlatformMapSelectorComponent,
     StationMapSelectorComponent,
-    ProfileTrajectoryMapSelectorComponent
+    ProfileTrajectoryMapSelectorComponent,
+    LastValueMapSelectorComponent
 ];
 
 export interface HelgolandMapSelectorModuleConfig {

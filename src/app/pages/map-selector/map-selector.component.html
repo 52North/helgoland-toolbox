@@ -2,12 +2,11 @@
   <div style="display: flex; flex-direction: row;">
     <div style="width: 500px; padding: 5px;">
       <div style="height: 500px;">
-        <n52-station-map-selector [mapId]="'timeseries'" [lastValueSeriesIDs]="lastValueSeriesIDs"
-          [lastValuePresentation]="lastValuePresentation" [serviceUrl]="providerUrl" [filter]="stationFilter"
+        <n52-station-map-selector [mapId]="'timeseries'" [serviceUrl]="providerUrl" [filter]="stationFilter"
           [zoomControlOptions]="zoomControlOptions" [mapOptions]="mapOptions" [fitBounds]="fitBounds"
           [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
           [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster"
-          (onSelectedTimeseries)="timeseriesSelected($event)" [statusIntervals]="statusIntervals" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+          [statusIntervals]="statusIntervals" (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
       </div>
       <div>Is loading: {{loadingStations}}</div>
       <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
@@ -51,4 +50,9 @@
       <button (click)="showZoomControlsRight();">Show Zoom Controls Right</button>
     </div>
   </div>
+</div>
+<hr>
+<div style="height: 500px;">
+  <n52-last-value-map-selector [fitBounds]="fitBounds" [lastValueSeriesIDs]="lastValueSeriesIDs"
+    [lastValuePresentation]="lastValuePresentation" [fitBoundsMarkerOptions]="fitBoundsMarkerOptions"></n52-last-value-map-selector>
 </div>
