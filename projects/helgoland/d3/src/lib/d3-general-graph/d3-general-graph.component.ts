@@ -434,7 +434,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                                 .style('visibility', 'visible');
 
                             // create text for hovering label
-                            let text = this.plotOptions.date ? 'x: ' + dataset.x + ' y: ' + moment(dataset[0]).format('DD.MM.YY HH:mm') : 'x: ' + dataset.x + ' y: ' + dataset.y;
+                            let text = this.plotOptions.date ? 'x: ' + moment(dataset.x).format('DD.MM.YY HH:mm') + ' y: ' + dataset.y : 'x: ' + dataset.x + ' y: ' + dataset.y;
                             let dotLabel = this.highlightText
                                 .text(text)
                                 .attr('class', 'mouseHoverDotLabel')
