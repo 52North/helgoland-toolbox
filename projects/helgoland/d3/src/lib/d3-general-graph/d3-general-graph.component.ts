@@ -1,7 +1,23 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    OnChanges,
+    ViewChild
+} from '@angular/core';
 import * as d3 from 'd3';
-
-import { D3GeneralDataPoint, D3GeneralDataset, D3GeneralDatasetInput } from '../model/d3-general';
+import {
+    D3GeneralDataPoint,
+    D3GeneralDataset,
+    D3GeneralInput,
+    D3GeneralPlotOptions,
+    D3GeneralAxisOptions,
+    Range,
+    D3GeneralGraphOptions
+} from '../model/d3-general';
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import moment from 'moment';
 
 @Component({
     selector: 'n52-d3-general-graph',
@@ -14,20 +30,40 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
     public d3Elem: ElementRef;
 
     @Input()
-    public generalDataInput: D3GeneralDatasetInput;
+    public generalD3Input: D3GeneralInput;
 
-    // componentn data variables
-    private generalData: D3GeneralDataset;
+    // componennt data variables
+    private generalData: D3GeneralDataset[] = [];
+    private axisOptions: D3GeneralAxisOptions = {};
+    private plotOptions: D3GeneralPlotOptions = {
+        xlabel: 'x',
+        ylabel: 'y',
+        date: false
+    };
+
+    private defaultGraphOptions: D3GeneralGraphOptions = {
+        color: 'red',
+        lines: {
+            lineWidth: 2,
+            pointRadius: 2
+        }
+    };
 
     // graph components
     private rawSvg: any;
     private graph: any;
     private graphBody: any;
+    private background: any;
+    private graphFocus: any;
+    private focusG: any;
+    private highlightRect: any;
+    private highlightText: any;
 
     // component settings
     private height: number;
     private width: number;
     private buffer = 0;
+    private maxLabelwidth = 0;
 
     private margin = {
         top: 10,
@@ -36,7 +72,9 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         left: 10
     };
 
-    constructor() { }
+    constructor(
+        protected timeFormatLocaleService: D3TimeFormatLocaleService
+    ) { }
 
     ngAfterViewInit() {
         this.rawSvg = d3.select(this.d3Elem.nativeElement)
@@ -47,24 +85,41 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         this.graph = this.rawSvg
             .append('g')
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+
+        this.graphFocus = this.rawSvg
+            .append('g')
+            .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+
+
         this.prepareData();
     }
 
     ngOnChanges(changes) {
-        if (changes.generalDataInput && this.rawSvg) {
+        if (changes.generalD3Input && this.rawSvg) {
+            this.generalD3Input = changes.generalD3Input.currentValue;
             this.prepareData();
         }
     }
 
     private prepareData() {
-        if (this.generalDataInput) {
-            this.generalData = {
-                data: this.generalDataInput.data,
-                plotOptions: {
-                    xlabel: this.generalDataInput.xlabel,
-                    ylabel: this.generalDataInput.ylabel
-                }
-            };
+        if (this.generalD3Input) {
+            // add all input dataset into one array (public generalData)
+            let data = [];
+
+            this.generalD3Input.datasets.forEach((ds, index) => {
+                let dataset: D3GeneralDataset = {
+                    data: ds.data,
+                    id: index
+                };
+                data = data.concat(ds.data);
+                this.generalData.push(dataset);
+            });
+
+            this.plotOptions = this.generalD3Input.plotOptions;
+            this.axisOptions.date = true;
+            this.axisOptions.xRange = this.getRange(data, 'x');
+            this.axisOptions.yRange = this.getRange(data, 'y');
+
             this.plotGraph();
         }
     }
@@ -73,36 +128,56 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
      * Function to call functions related to plotting a dataset in a graph.
      */
     private plotGraph() {
-        const dataset = this.generalData;
         this.height = this.calculateHeight();
         this.width = this.calculateWidth();
 
-        dataset.plotOptions.yScale = this.drawYaxis(dataset);
-        dataset.plotOptions.xScale = this.drawXaxis(dataset);
-        this.drawGraphLine(dataset);
+        this.axisOptions.yScale = this.drawYaxis(this.plotOptions);
+        this.axisOptions.xScale = this.drawXaxis(this.plotOptions);
+
+        // create background as rectangle providing panning
+        this.background = this.graph.append('svg:rect')
+            .attr('width', this.width - this.buffer)
+            .attr('height', this.height)
+            .attr('id', 'backgroundRect')
+            .attr('fill', 'none')
+            .attr('stroke', 'none')
+            .attr('pointer-events', 'all')
+            .attr('transform', 'translate(' + this.buffer + ', 0)');
+
+
+        this.focusG = this.graphFocus.append('g');
+        this.highlightRect = this.focusG.append('svg:rect');
+        this.highlightText = this.focusG.append('svg:text');
+
+        this.generalData.forEach(dataset => {
+            this.drawGraphLine(dataset);
+        });
+
+        this.createHoveringNet(this.generalData);
+        this.createHoveringNet(this.generalData);
     }
-
-
 
     /**
      * Function to draw y axis.
      * @param dataset {D3GeneralDataset} Object with information about the dataset.
      */
-    private drawYaxis(dataset: D3GeneralDataset) {
+    private drawYaxis(options: D3GeneralPlotOptions) {
 
-        // range for y axis scale
-        let yRange = d3.extent(d3.values(dataset.data.map((d) => {
-            if ((!isNaN(d.x) && !isNaN(d.y))) {
-                return d.y;
-            }
-        })));
+        // set range offset for y axis scale
+        let yRangeOffset = 10;
+        const yRange = this.axisOptions.yRange;
+        // check for multiple datapoints
+        if (yRange.max !== yRange.min) {
+            yRangeOffset = (yRange.max - yRange.min) * 0.10;
+        } else {
+            yRangeOffset = yRange.min * 0.10;
+        }
 
-        const yRangeOffset = (yRange[1] - yRange[0]) * 0.10;
         const yScale = d3.scaleLinear()
-            .domain([yRange[0] - yRangeOffset, yRange[1] + yRangeOffset])
+            .domain([yRange.min - yRangeOffset, yRange.max + yRangeOffset])
             .range([this.height, 0]);
 
-        let yAxisGen = d3.axisLeft(yScale).ticks(5);
+        const yAxisGen = d3.axisLeft(yScale).ticks(5);
 
         // draw y axis
         const yAxis = this.graph.append('svg:g')
@@ -118,7 +193,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .style('font', '18px times')
             .style('text-anchor', 'middle')
             .style('fill', 'black')
-            .text(dataset.plotOptions.ylabel);
+            .text(options.ylabel);
 
         // this.graph.selectAll('.yAxisTextLabel')
         this.buffer = yAxis.node().getBBox().width + 10 + this.getDimensions(yAxisLabel.node()).h;
@@ -142,24 +217,47 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
      * Function to draw x axis.
      * @param dataset {D3GeneralDataset} Object with information about the dataset.
      */
-    private drawXaxis(dataset: D3GeneralDataset) {
+    private drawXaxis(options: D3GeneralPlotOptions) {
+        // set range offset for x axis scale
+        const xRange = this.axisOptions.xRange;
+        // check for multiple datapoints
+        let ticks = 10;
+        let xRangeOffset = (xRange.max - xRange.min) * 0.10;
+        if (xRange.max === xRange.min) {
+            ticks = 5;
+            xRangeOffset = xRange.min * 0.10;
+        }
 
-        // range for y axis scale
-        let xRange: [number, number] = d3.extent(d3.values(dataset.data.map((d) => {
-            if ((!isNaN(d.x) && !isNaN(d.y))) {
-                return d.x;
-            }
-        })));
-
-        const xRangeOffset = (xRange[1] - xRange[0]) * 0.10;
-        let xScale = d3.scaleLinear()
-            .domain([xRange[0] - xRangeOffset, xRange[1] + xRangeOffset])
+        const xScale = d3.scaleLinear()
+            .domain([xRange.min - xRangeOffset, xRange.max + xRangeOffset])
             .range([this.buffer, this.width]);
 
-        let xAxis = d3.axisBottom(xScale)
-            .ticks(10)
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(ticks)
             .tickFormat(d => {
-                return '' + d.valueOf();
+                if (options.date) {
+                    const date = new Date(d.valueOf());
+
+                    const formatMillisecond = '.%L',
+                        formatSecond = ':%S',
+                        formatMinute = '%H:%M',
+                        formatHour = '%H:%M',
+                        formatDay = '%b %d',
+                        formatWeek = '%b %d',
+                        formatMonth = '%B',
+                        formatYear = '%Y';
+
+                    const format = d3.timeSecond(date) < date ? formatMillisecond
+                        : d3.timeMinute(date) < date ? formatSecond
+                            : d3.timeHour(date) < date ? formatMinute
+                                : d3.timeDay(date) < date ? formatHour
+                                    : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
+                                        : d3.timeYear(date) < date ? formatMonth
+                                            : formatYear;
+                    return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
+                } else {
+                    return '' + d.valueOf();
+                }
             });
 
         this.graph.append('g')
@@ -178,7 +276,6 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                 .tickFormat(() => '')
             );
 
-
         // draw upper axis as border
         this.graph.append('svg:g')
             .attr('class', 'x axis')
@@ -191,7 +288,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .attr('x', (this.width + this.buffer) / 2)
             .attr('y', this.height + this.margin.bottom - 5)
             .style('text-anchor', 'middle')
-            .text(dataset.plotOptions.xlabel);
+            .text(options.xlabel);
 
         return xScale;
     }
@@ -201,52 +298,246 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
      * @param dataset {D3GeneralDataset} Object with information about the datset.
      */
     private drawGraphLine(dataset: D3GeneralDataset) {
-
-        this.graph
-            .append('svg:clipPath')
-            .attr('id', 'graphLineID')
-            .append('svg:rect')
-            .attr('x', this.buffer)
-            .attr('y', 0)
-            .attr('width', this.width - this.buffer)
-            .attr('height', this.height);
-
         // create grah line component
         this.graphBody = this.graph
             .append('g')
-            .attr('clip-path', 'url(#' + 'graphLineID' + ')');
+            .attr('clip-path', 'url(#' + dataset.id + ')');
 
         // create line with dataset
         let graphLine = d3.line<D3GeneralDataPoint>()
             .defined(d => (!isNaN(d.x) && !isNaN(d.y)))
             .x((d) => {
-                if (!isNaN(d.x) && !isNaN(d.y)) {
-                    const x = dataset.plotOptions.xScale(d.x);
-                    if (!isNaN(x)) {
-                        return x;
-                    }
+                const xCoord = this.axisOptions.xScale(d.x);
+                if (!isNaN(xCoord)) {
+                    d.xCoord = xCoord;
+                    return xCoord;
                 }
             })
             .y((d) => {
-                if (!isNaN(d.x) && !isNaN(d.y)) {
-                    const y = dataset.plotOptions.yScale(d.y);
-                    if (!isNaN(y)) {
-                        return y;
-                    }
+                const yCoord = this.axisOptions.yScale(d.y);
+                if (!isNaN(yCoord)) {
+                    d.yCoord = yCoord;
+                    return yCoord;
                 }
             })
             .curve(d3.curveLinear);
 
-        // draw graph line
-        this.graphBody = this.graph.append('g');
-        this.graphBody.append('svg:path')
+        this.graphBody
+            .append('svg:path')
             .datum(dataset.data)
             .attr('class', 'line')
             .attr('fill', 'none')
-            .attr('stroke', 'red')
-            .attr('stroke-width', 4)
+            .attr('stroke', this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color)
+            .attr('stroke-width', this.plotOptions.graph ? this.plotOptions.graph.lines.lineWidth : this.defaultGraphOptions.lines.lineWidth)
             .attr('d', graphLine);
 
+        // draw circles around datapoints
+        this.graphBody.selectAll('.graphDots')
+            .data(dataset.data.filter((d) => !isNaN(d.y)))
+            .enter().append('circle')
+            .attr('class', 'graphDots')
+            .attr('id', function (d) {
+                let datasetxCoordSplit = d.xCoord.toString().split('.')[0] + '-' + d.xCoord.toString().split('.')[1];
+                return 'dot-' + datasetxCoordSplit + '-' + dataset.id + '';
+            })
+            .attr('stroke', this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color)
+            .attr('fill', this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color)
+            .attr('cx', graphLine.x())
+            .attr('cy', graphLine.y())
+            .attr('r', this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius);
+
+    }
+
+    private createHoveringNet(inputData): void {
+        let data = inputData.map(function (series, i) {
+            series.data = series.data.map(function (point) {
+                point.series = i;
+                point[0] = point.x;
+                point[1] = point.y;
+                return point;
+            });
+            return series;
+        });
+
+        let x = d3.scaleLinear(),
+            y = d3.scaleLinear();
+
+        let vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
+            /**
+             * cl = { data: [{0: number, 1: number, series: number, x: number, y: number}, {}, ...], id: number }
+             * point = each point in a dataset
+            */
+            let outputLine = cl.data.map(function (point, pointIndex) {
+                let outputPoint = [x(point.xCoord), y(point.yCoord), lineIndex, pointIndex, point, cl];
+                return outputPoint; // adding series index to point because data is being flattened
+            });
+            return outputLine;
+        }));
+
+        let left = this.buffer, // + this.margin.left,
+            top = this.margin.top,
+            right = this.background.node().getBBox().width + this.buffer, // + this.margin.left,
+            bottom = this.margin.top + this.background.node().getBBox().height;
+
+        // filter dataset - delete all entries that are NaN
+        let verticesFiltered = vertices.filter(d => !isNaN(d[0]) || !isNaN(d[1]));
+        const Diffvoronoi = d3.voronoi()
+            .extent([[left, top], [right, bottom]]);
+        let diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
+
+        let wrap = this.rawSvg.selectAll('g.d3line').data([verticesFiltered]);
+        let gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
+        gEnter.append('g').attr('class', 'point-paths');
+
+        // let wrap = this.rawSvg.append('svg:g').attr('class', 'point-paths');
+
+        let pointPaths = wrap.select('.point-paths').selectAll('path')
+            .data(diffVoronoi2);
+        pointPaths
+            .enter().append('path')
+            .attr('class', function (d, i) {
+                return 'path-' + i;
+            })
+            // pointPaths.exit().remove();
+            // pointPaths
+            .attr('clip-path', function (d) {
+                if (d !== undefined) {
+                    let datasetxCoordSplit = d.data[4].xCoord.toString().split('.')[0] + '-' + d.data[4].xCoord.toString().split('.')[1];
+                    return 'url(#clip-' + d.data[5].id + '-' + datasetxCoordSplit + ')';
+                }
+            })
+            .attr('d', function (d) {
+                if (d !== undefined) {
+                    return 'M' + d.join(' ') + 'Z';
+                }
+            })
+            .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
+            .on('mousemove', (d) => {
+                if (d !== undefined) {
+                    let coords = d3.mouse(this.background.node());
+                    let dataset = d.data[4];
+                    let dist = this.calcDistanceHovering(dataset, coords);
+                    let radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
+                    let color = this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color;
+                    if (dist <= 8) {
+                        let rectBack = this.background.node().getBBox();
+                        if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
+                            // highlight hovered dot
+                            let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                            d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
+                                .attr('opacity', 0.8)
+                                .attr('r', (radius * 2));
+
+                            this.highlightRect
+                                .style('visibility', 'visible');
+                            this.highlightText
+                                .style('visibility', 'visible');
+
+                            // create text for hovering label
+                            let text = this.plotOptions.date ? 'x: ' + dataset.x + ' y: ' + moment(dataset[0]).format('DD.MM.YY HH:mm') : 'x: ' + dataset.x + ' y: ' + dataset.y;
+                            let dotLabel = this.highlightText
+                                .text(text)
+                                .attr('class', 'mouseHoverDotLabel')
+                                .style('pointer-events', 'none')
+                                .style('fill', color);
+
+                            let onLeftSide = false;
+                            if ((this.background.node().getBBox().width + this.buffer) / 2 > coords[0]) { onLeftSide = true; }
+
+                            let rectX: number = dataset.xCoord + 15;
+                            let rectY: number = dataset.yCoord;
+                            let rectW: number = this.getDimensions(dotLabel.node()).w + 8;
+                            let rectH: number = this.getDimensions(dotLabel.node()).h; // + 4;
+
+                            if (!onLeftSide) {
+                                rectX = dataset.xCoord - 15 - rectW;
+                                rectY = dataset.yCoord;
+                            }
+
+                            if ((coords[1] + rectH + 4) > this.background.node().getBBox().height) {
+                                // when label below x axis
+                                console.log('Translate label to a higher place. - not yet implemented');
+                            }
+
+                            // create hovering label
+                            let dotRectangle = this.highlightRect
+                                .attr('class', 'mouseHoverDotRect')
+                                .style('fill', 'white')
+                                .style('fill-opacity', 1)
+                                .style('stroke', color)
+                                .style('stroke-width', '1px')
+                                .style('pointer-events', 'none')
+                                .attr('width', rectW)
+                                .attr('height', rectH)
+                                .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
+
+                            let labelX: number = dataset.xCoord + 4 + 15;
+                            let labelY: number = dataset.yCoord + this.getDimensions(dotRectangle.node()).h - 4;
+
+                            if (!onLeftSide) {
+                                labelX = dataset.xCoord - rectW + 4 - 15;
+                                labelY = dataset.yCoord + this.getDimensions(dotRectangle.node()).h - 4;
+                            }
+
+                            this.highlightText
+                                .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
+                        }
+                    } else {
+                        // unhighlight hovered dot
+                        let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                        d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
+                            .attr('opacity', 1)
+                            .attr('r', radius);
+
+                        // make label invisible
+                        this.highlightRect
+                            .style('visibility', 'hidden');
+                        this.highlightText
+                            .style('visibility', 'hidden');
+                    }
+                }
+            })
+            .on('mouseout', (d) => {
+                if (d !== undefined) {
+                    let dataset = d.data[4];
+                    let radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
+                    // unhighlight hovered dot
+                    let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                    d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
+                        .attr('opacity', 1)
+                        .attr('r', radius);
+
+                    // make label invisible
+                    this.highlightRect
+                        .style('visibility', 'hidden');
+                    this.highlightText
+                        .style('visibility', 'hidden');
+                }
+            });
+    }
+
+    /**
+     * Function to calculate distance between mouse and a hovered point.
+     * @param dataset {} Coordinates of the hovered point.
+     * @param coords {} Coordinates of the mouse.
+     */
+    private calcDistanceHovering(dataset: D3GeneralDataPoint, coords: [number, number]): number {
+        let mX = coords[0] + this.buffer,
+            mY = coords[1], // + this.margin.top,
+            pX = dataset.xCoord,
+            pY = dataset.yCoord;
+        // calculate distance between point and mouse when hovering
+        return Math.sqrt(Math.pow((pX - mX), 2) + Math.pow((pY - mY), 2));
+    }
+
+    private getRange(data: D3GeneralDataPoint[], selector: string): Range {
+        // range for axis scale
+        let range: [number, number] = d3.extent(d3.values(data.map((d) => {
+            if ((!isNaN(d.x) && !isNaN(d.y))) {
+                return d[selector];
+            }
+        })));
+        return { min: range[0], max: range[1] };
     }
 
     /**
