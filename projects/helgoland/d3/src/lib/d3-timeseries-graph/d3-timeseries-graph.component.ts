@@ -16,10 +16,12 @@ import {
     DatasetOptions,
     DatasetPresenterComponent,
     IDataset,
+    InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
     Time,
     Timeseries,
+    TimeseriesData,
     Timespan,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -63,8 +65,9 @@ export interface InternalDataEntry {
         autoRangeSelection: boolean;
         separateYAxis: boolean;
         parameters?: {
-            station: String;
-            phenomenon: String;
+            feature: { id: String, label: String };
+            phenomenon: { id: String, label: String };
+            offering: { id: String, label: String };
         };
     };
     visible: boolean;
@@ -88,8 +91,9 @@ export interface YRanges {
     yScale?: d3.ScaleLinear<number, number>;
     offset?: number;
     parameters: {   // additional information for the y axis label
-        station: String;
-        phenomenon: String;
+        feature: { id: String, label: String };
+        phenomenon: { id: String, label: String };
+        offering: { id: String, label: String };
     };
 }
 
@@ -128,7 +132,7 @@ export class D3TimeseriesGraphComponent
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
     @Output()
-    public onClickDataPoint: EventEmitter<[DataEntry, InternalDataEntry]> = new EventEmitter();
+    public onClickDataPoint: EventEmitter<TimeseriesData[]> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -461,8 +465,9 @@ export class D3TimeseriesGraphComponent
                 autoRangeSelection: styles.autoRangeSelection,
                 separateYAxis: styles.separateYAxis,
                 parameters: {
-                    station: dataset.parameters.feature.label,
-                    phenomenon: dataset.parameters.phenomenon.label
+                    feature: dataset.parameters.feature,
+                    phenomenon: dataset.parameters.phenomenon,
+                    offering: dataset.parameters.offering
                 }
             },
             visible: styles.visible
@@ -974,11 +979,7 @@ export class D3TimeseriesGraphComponent
         });
 
         let x = d3.scaleLinear(), // d3.scale.linear(),
-            y = d3.scaleLinear(),
-            x0, y0;
-
-        x0 = x0 || x;
-        y0 = y0 || y;
+            y = d3.scaleLinear();
 
         let vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
             /**
@@ -1001,9 +1002,11 @@ export class D3TimeseriesGraphComponent
             right = this.background.node().getBBox().width + this.bufferSum, // + this.margin.left,
             bottom = this.margin.top + this.background.node().getBBox().height;
 
+        // filter dataset - delete all entries that are NaN
+        let verticesFiltered = vertices.filter(d => !isNaN(d[0]) || !isNaN(d[1]));
         let Diffvoronoi = d3.voronoi()
             .extent([[left, top], [right, bottom]]);
-        let diffVoronoi2 = Diffvoronoi.polygons(vertices);
+        let diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
 
         let pointPaths = wrap.select('.point-paths').selectAll('path')
             .data(diffVoronoi2);
@@ -1173,9 +1176,51 @@ export class D3TimeseriesGraphComponent
             let dataset = d.data[4];
             let dist = this.calcDistanceHovering(dataset, coords);
             if (dist <= 8) {
-                this.onClickDataPoint.emit([d.data[4], d.data[5]]);
+                let dataEntry: DataEntry = d.data[4];
+                let internalDataEntry: InternalDataEntry = d.data[5];
+                const timepoint = dataEntry.timestamp;
+                const externalId: InternalDatasetId = this.datasetIdResolver.resolveInternalId(internalDataEntry.internalId);
+                const apiurl = externalId.url;
+                const timespan = this.parsePointToSpan(timepoint);
+
+                // request all timeseries that have data for the same offering and feature
+                this.api.getTimeseries(apiurl,
+                    {
+                        offering: internalDataEntry.axisOptions.parameters.offering.id,
+                        feature: internalDataEntry.axisOptions.parameters.feature.id
+                    }).subscribe(
+                        (tsArray) => {
+                            const timeseries = [];
+                            tsArray.forEach(ts => {
+                                timeseries.push(ts.id);
+                            });
+
+                            // request ts data by timeseries ID for specific offering and feature
+                            this.api.getTimeseriesData(apiurl, {
+                                timespan: timespan,
+                                timeseries: timeseries
+                            }).subscribe(
+                                (tsData) => {
+                                    this.onClickDataPoint.emit(tsData);
+                                },
+                                (error) => {
+                                    console.log(error);
+                                }
+                            );
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+
             }
         }
+    }
+
+    private parsePointToSpan(timepoint) {
+        const timeDate: Date = new Date(timepoint);
+        return 'PT1s/' + timeDate.toISOString();
+        // return 'PT1h/' + timeDate.toISOString();
     }
 
     private addTimespanJumpButtons(): void {
@@ -1477,8 +1522,8 @@ export class D3TimeseriesGraphComponent
                 .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text((entry.id ? ( entry.uom + ' @ ' + entry.parameters.station) : entry.uom));
-                // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
+                .text((entry.id ? (entry.uom + ' @ ' + entry.parameters.feature.label) : entry.uom));
+            // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
 
             this.graph.selectAll('.yaxisTextLabel')
                 .call(this.wrapText, (axis.node().getBBox().height - 10), this.height / 2);
