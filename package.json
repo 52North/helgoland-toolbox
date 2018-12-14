@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "0.0.1-alpha.70",
+  "version": "0.0.1-alpha.72",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -56,7 +56,7 @@
     "@types/d3": "^5.0.0",
     "@types/geojson": "^7946.0.4",
     "@types/jquery": "^3.3.6",
-    "@types/leaflet": "^1.2.10",
+    "@types/leaflet": "1.2.13",
     "@types/leaflet.markercluster": "^1.0.3",
     "@types/moment": "^2.13.0",
     "@types/plotly.js": "^1.38.6",

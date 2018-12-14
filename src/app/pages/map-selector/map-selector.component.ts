@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ParameterFilter, Phenomenon, Station } from '@helgoland/core';
-import { GeoSearchOptions, LayerOptions } from '@helgoland/map';
-import L from 'leaflet';
+import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
+import { GeoSearchOptions, LastValuePresentation, LayerOptions } from '@helgoland/map';
+import { FitBoundsOptions, Marker, icon, tileLayer } from 'leaflet';
 
-L.Marker.prototype.options.icon = L.icon({
+Marker.prototype.options.icon = icon({
     iconRetinaUrl: 'assets/img/marker-icon-2x.png',
     iconUrl: 'assets/img/marker-icon.png',
     shadowUrl: 'assets/img/marker-shadow.png',
@@ -37,8 +37,18 @@ export class MapSelectorComponent {
     };
     public statusIntervals = false;
     public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
-
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
+
+
+    public lastValueSeriesIDs = [
+        'https://www.fluggs.de/sos2/api/v1/__51',
+        'https://www.fluggs.de/sos2/api/v1/__78',
+        'https://www.fluggs.de/sos2/api/v1/__95',
+        'https://www.fluggs.de/sos2/api/v1/__54'
+    ];
+    public lastValuePresentation = LastValuePresentation.Textual;
+    public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };
+
 
     public addOverlayMapLayer() {
         this.overlayMaps = new Map<string, LayerOptions>();
@@ -46,7 +56,7 @@ export class MapSelectorComponent {
             {
                 label: 'pm10_24hmean_1x1',
                 visible: true,
-                layer: L.tileLayer.wms('http://geo.irceline.be/rio/wms', {
+                layer: tileLayer.wms('http://geo.irceline.be/rio/wms', {
                     layers: 'pm10_hmean_1x1',
                     transparent: true,
                     format: 'image/png',
@@ -64,7 +74,7 @@ export class MapSelectorComponent {
             {
                 label: 'realtime:o3_station_max',
                 visible: true,
-                layer: L.tileLayer.wms('http://geo.irceline.be/wms', {
+                layer: tileLayer.wms('http://geo.irceline.be/wms', {
                     layers: 'realtime:o3_station_max',
                     transparent: true,
                     format: 'image/png',
@@ -113,4 +123,9 @@ export class MapSelectorComponent {
             phenomenon: phenomenon.id
         };
     }
+
+    public timeseriesSelected(ts: Timeseries) {
+        alert(`Clicked ${ts.label}`);
+    }
+
 }

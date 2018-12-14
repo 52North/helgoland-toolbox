@@ -1,3 +1,4 @@
+import { ScaleLinear } from 'd3';
 
 // input tyoe for d3-general-graph component
 export interface D3GeneralInput {

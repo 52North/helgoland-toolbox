@@ -12,6 +12,9 @@
       "title": "Integrate a table component",
       "file": "how-tos/integrate-table-component.md"
     },{
+      "title": "Integrate a map component",
+      "file": "how-tos/integrate-map.md"
+    },{
       "title": "Extend a timeseries entry component",
       "file": "how-tos/extend-timeseries-entry-component.md"
     },{
@@ -23,6 +26,9 @@
     },{
       "title": "Handle dataset options to style the timeseries",
       "file": "how-tos/handle-styling-options.md"
+    },{
+      "title": "Add last value map selector",
+      "file": "how-tos/add-last-value-map-selector.md"
     }]
   }
 ]
