@@ -111,3 +111,9 @@ export interface StatusInterval {
 export interface PlatformParameter extends Parameter {
     platformType: PlatformTypes;
 }
+
+export class TimeseriesData {
+    public id: string;
+    public url: string;
+    public data: FirstLastValue[];
+}

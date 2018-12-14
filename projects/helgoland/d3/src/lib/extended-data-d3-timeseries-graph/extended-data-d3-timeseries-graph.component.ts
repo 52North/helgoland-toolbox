@@ -155,8 +155,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
               };
               if (dataset) {
                 dataEntry.axisOptions.parameters = {
-                  station: dataset.parameters.feature.label,
-                  phenomenon: dataset.parameters.phenomenon.label
+                  feature: dataset.parameters.feature,
+                  phenomenon: dataset.parameters.phenomenon,
+                  offering: dataset.parameters.offering
                 };
               }
               this.additionalPreparedData.push(dataEntry);

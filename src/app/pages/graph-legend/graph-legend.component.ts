@@ -1,8 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
-import { D3GeneralDatasetInput, D3PlotOptions, HighlightOutput, HoveringStyle } from '@helgoland/d3';
+import { ColorService, DatasetOptions, Time, TimeseriesData, Timespan } from '@helgoland/core';
+import {
+    D3GeneralDataPoint,
+    D3GeneralDatasetInput,
+    D3GeneralInput,
+    D3PlotOptions,
+    HighlightOutput,
+    HoveringStyle
+} from '@helgoland/d3';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
@@ -167,28 +174,61 @@ export class GraphLegendComponent {
         this.highlightedTime = new Date(highlightObject.timestamp);
     }
 
-    // public clickedDataPoint(dataEntry: DataEntry, internalDataEntry: InternalDataEntry) {
-    public clickedDataPoint(input) {
-        console.log('input [DataEntry, InternalDataEntry] for API request');
-        console.log(input[0]); // : DataEntry
-        console.log(input[1]); // : InternalDataEntry
+    /**
+     * Function that is executed as soons as a hovered datapoint is clicked.
+     * @param tsData {TimeseriesData[]} array of various timeseries with data at the same timestamp
+     */
+    public clickedDataPoint(tsData: TimeseriesData[]) {
+        console.log(tsData);
+        const datasets: D3GeneralDatasetInput[] = [];
+        tsData.forEach(ts => {
+            const values: D3GeneralDataPoint[] = ts.data.map((val) => {
+                return { x: val.timestamp, y: val.value, date: (new Date(val.timestamp)).toUTCString() };
+            });
+            const singleTs: D3GeneralDatasetInput = {
+                data: values,
+                id: ts.id
+            };
 
-        // TODO: use input ([DataEntry, InternalDataEntry]) to request data for diagram
-        this.http.get('assets/dataset/sampledataset.csv', { responseType: 'text' })
+            datasets.push(singleTs);
+        });
+        const popupInput: D3GeneralInput = {
+            datasets: datasets,
+            plotOptions: {
+                // TODO: change to x and y axis label + make date boolean dynamic
+                xlabel: 'Time',
+                ylabel: 'DataPoint',
+                date: true
+            }
+        };
+
+        this.dialog.open(D3GeneralPopupComponent, {
+            data: popupInput
+        });
+    }
+
+    public showPopup() {
+        this.http.get('../assets/dataset/sampledataset.csv', { responseType: 'text' })
             .subscribe(
                 data => {
                     const dataSplit = data.split(/\r\n|\n|\r|,/);
-                    const dataset: D3GeneralDatasetInput = {
-                        data: [],
-                        xlabel: dataSplit[0],
-                        ylabel: dataSplit[1]
+                    const dataset: D3GeneralInput = {
+                        datasets: [],
+                        plotOptions: {
+                            xlabel: dataSplit[0],
+                            ylabel: dataSplit[1],
+                            date: false
+                        }
                     };
-
+                    const dataPoints: D3GeneralDataPoint[] = [];
                     for (let i = 2; i < dataSplit.length; i += 2) {
-                        dataset.data.push({ x: Number(dataSplit[i]), y: Number(dataSplit[i + 1]) });
+                        dataPoints.push({ x: Number(dataSplit[i]), y: Number(dataSplit[i + 1]) });
                     }
-
-                    // todo: input should be of type D3GeneralDataset
+                    dataset.datasets.push(
+                        {
+                            data: dataPoints,
+                            id: 'csv file'
+                        });
                     this.dialog.open(D3GeneralPopupComponent, {
                         data: dataset
                     });
@@ -197,7 +237,6 @@ export class GraphLegendComponent {
                     console.log(error);
                 }
             );
-
     }
 
 }

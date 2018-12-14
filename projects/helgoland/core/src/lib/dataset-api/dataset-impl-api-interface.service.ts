@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { Category } from '../model/dataset-api/category';
 import { Data } from '../model/dataset-api/data';
-import { Dataset, Timeseries, TimeseriesExtras } from '../model/dataset-api/dataset';
+import { Dataset, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
@@ -86,6 +86,31 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
                         entry.url = apiUrl;
                         this.internalDatasetId.generateInternalId(entry);
                     });
+                    observer.next(timeseriesList);
+                },
+                (error) => observer.error(error),
+                () => observer.complete()
+            );
+        });
+    }
+
+    public getTimeseriesData(apiUrl: string, params?: ParameterFilter): Observable<TimeseriesData[]> {
+        const url = this.createRequestUrl(apiUrl, 'timeseries/getData');
+        return new Observable<TimeseriesData[]>((observer: Observer<Object>) => {
+            this.requestApiTextedPost(url, params).subscribe(
+                (result) => {
+                    const timeseriesList: TimeseriesData[] = [];
+                    for (const id in result) {
+                        if (id) {
+                            timeseriesList.push(
+                                {
+                                    id: id,
+                                    url: apiUrl,
+                                    data: result[id].values
+                                }
+                            );
+                        }
+                    }
                     observer.next(timeseriesList);
                 },
                 (error) => observer.error(error),
@@ -260,6 +285,12 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         return this.httpservice.client().get(url, {
             params: this.prepareParams(params),
             responseType: 'text'
+        });
+    }
+
+    private requestApiTextedPost(url: string, params: ParameterFilter = {}): Observable<Object> {
+        return this.httpservice.client().post(url, params, {
+            responseType: 'json'
         });
     }
 
