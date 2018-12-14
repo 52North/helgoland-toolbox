@@ -1563,6 +1563,21 @@ export class D3TimeseriesGraphComponent
                 if (entry.ids) {
                     entry.ids.forEach((entryID) => {
                         let dataentry = this.preparedData.find(el => el.internalId === entryID);
+                        if (dataentry) {
+                            this.graph.append('circle')
+                                .attr('class', 'axisDots')
+                                .attr('id', 'axisdot-' + entry.id)
+                                .attr('stroke', dataentry.color)
+                                .attr('fill', dataentry.color)
+                                .attr('cx', startOfPoints.x)
+                                .attr('cy', startOfPoints.y - pointOffset)
+                                .attr('r', axisradius);
+                            pointOffset += axisradius * 3;
+                        }
+                    });
+                } else {
+                    let dataentry = this.preparedData.find(el => el.internalId === entry.id);
+                    if (dataentry) {
                         this.graph.append('circle')
                             .attr('class', 'axisDots')
                             .attr('id', 'axisdot-' + entry.id)
@@ -1571,18 +1586,7 @@ export class D3TimeseriesGraphComponent
                             .attr('cx', startOfPoints.x)
                             .attr('cy', startOfPoints.y - pointOffset)
                             .attr('r', axisradius);
-                        pointOffset += axisradius * 3;
-                    });
-                } else {
-                    let dataentry = this.preparedData.find(el => el.internalId === entry.id);
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('id', 'axisdot-' + entry.id)
-                        .attr('stroke', dataentry.color)
-                        .attr('fill', dataentry.color)
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', startOfPoints.y - pointOffset)
-                        .attr('r', axisradius);
+                    }
                 }
             }
 
