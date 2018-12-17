@@ -293,7 +293,7 @@ export class D3TimeseriesGraphComponent
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
             tsData.lines.lineWidth += this.addLineWidth;
-            tsData.lines.pointRadius += this.addLineWidth;
+            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius += this.addLineWidth : tsData.lines.pointRadius += 0;
             tsData.bars.lineWidth += this.addLineWidth;
 
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
@@ -330,7 +330,7 @@ export class D3TimeseriesGraphComponent
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
             tsData.lines.lineWidth -= this.addLineWidth;
-            tsData.lines.pointRadius -= this.addLineWidth;
+            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius -= this.addLineWidth : tsData.lines.pointRadius -= 0;
             tsData.bars.lineWidth -= this.addLineWidth;
 
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
@@ -452,7 +452,7 @@ export class D3TimeseriesGraphComponent
             },
             lines: {
                 lineWidth: styles.lineWidth,
-                pointRadius: 3 // styles.pointRadius
+                pointRadius: styles.pointRadius
             },
             bars: {
                 lineWidth: styles.lineWidth
@@ -485,7 +485,7 @@ export class D3TimeseriesGraphComponent
         // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
         if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
             dataEntry.lines.lineWidth += this.addLineWidth;
-            dataEntry.lines.pointRadius += this.addLineWidth;
+            dataEntry.lines.pointRadius > 0 ? dataEntry.lines.pointRadius += this.addLineWidth : dataEntry.lines.pointRadius += 0;
             dataEntry.bars.lineWidth += this.addLineWidth;
 
             if (styles.separateYAxis) {
@@ -734,24 +734,19 @@ export class D3TimeseriesGraphComponent
      * @param uom {String} String that is the uom of a dataset
      */
     private getyAxisRange(uom: string): MinMaxRange {
-
-        for (let i = 0; i <= this.yRangesEachUom.length; i++) {
-            if (this.yRangesEachUom[i].uom === uom) {
-                let range: MinMaxRange = this.yRangesEachUom[i].range;
-
-                // check for zero based y axis
-                // if (this.yRangesEachUom[i].zeroBased) {
-                //     if (this.yRangesEachUom[i].zeroBasedValue === 0) {
-                //         range.min = 0;
-                //     } else {
-                //         range.max = 0;
-                //     }
-                // }
-
-                return range;
-            }
+        let rangeObj = this.yRangesEachUom.find(el => el.uom === uom);
+        if (rangeObj) {
+            // check for zero based y axis
+            // if (rangeObj.zeroBased) {
+            //     if (rangeObj.zeroBasedValue === 0) {
+            //         range.min = 0;
+            //     } else {
+            //         range.max = 0;
+            //     }
+            // }
+            const range: MinMaxRange = rangeObj.range;
+            return range;
         }
-
         return null; // error: uom does not exist
     }
 
@@ -1015,8 +1010,8 @@ export class D3TimeseriesGraphComponent
             .attr('class', function (d, i) {
                 return 'path-' + i;
             });
-        pointPaths.exit().remove();
-        pointPaths
+        pointPaths.exit().remove();  // comment to avoid no hovering for only one graph
+        pointPaths   // comment to avoid no hovering for only one graph
             .attr('clip-path', function (d) {
                 if (d !== undefined) {
                     return 'url(#clip-' + d.data[5].internalId.substring(d.data[5].internalId.length - 2, d.data[5].internalId.length) + '-' + d[0] + ')';
@@ -1471,12 +1466,20 @@ export class D3TimeseriesGraphComponent
         let range;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
             let uomIdx = this.listOfUoms.findIndex((uom) => uom === entry.uom);
-            if (uomIdx >= 0) {
+            if (uomIdx >= 0 && entry.ids && entry.ids.length > 1) {
                 range = this.getyAxisRange(entry.uom);
+            } else if (entry.ids && entry.ids.length === 1) {
+                // if entry is grouped but has only one id => use range of this dataset
+                let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.ids[0]);
+                if (entryElem && entryElem.preRange) {
+                    range = entryElem.preRange;
+                } else { range = entryElem.range; }
             } else {
                 // if not entry.uom but separated id
                 let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
-                if (entryElem) { range = entryElem.range; }
+                if (entryElem && entryElem.preRange) {
+                    range = entryElem.preRange;
+                } else { range = entryElem.range; }
             }
 
         } else {
@@ -2080,7 +2083,8 @@ export class D3TimeseriesGraphComponent
     }
 
     protected getYaxisRange(entry: InternalDataEntry): YRanges {
-        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
+        // check if entry dataset should be separated or entry datasets should be grouped
+        if (!entry.axisOptions.separateYAxis && (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined)) {
             return this.yRangesEachUom.find((obj) => {
                 if (obj !== null && obj.uom === entry.axisOptions.uom) {
                     return true;
