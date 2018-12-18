@@ -887,6 +887,7 @@ export class D3TimeseriesGraphComponent
                 }
                 if (this.plotOptions.hoverStyle === HoveringStyle.point) {
                     // create voronoi net for point-hovering
+                    // important to call it twice to avoid no hovering with only one dataset or without interaction
                     this.createHoveringNet(this.preparedData);
                     this.createHoveringNet(this.preparedData);
                 } else {
@@ -964,6 +965,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to create a net of polygons overlaying the graphs to divide sections for hovering.
+     * @param inputData {Dataseries[]} array containing all datasets with their data and plot/graph options
+     */
     protected createHoveringNet(inputData): void {
         let data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
@@ -1003,6 +1008,8 @@ export class D3TimeseriesGraphComponent
             .extent([[left, top], [right, bottom]]);
         let diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
 
+        // to avoid no hovering for only one dataset without interaction the following lines are doubled
+        // this will create the paths, which can be updated later on (by the 'exit().remove()' function calls)
         let pointPaths = wrap.select('.point-paths').selectAll('path')
             .data(diffVoronoi2);
         pointPaths
@@ -1010,8 +1017,16 @@ export class D3TimeseriesGraphComponent
             .attr('class', function (d, i) {
                 return 'path-' + i;
             });
-        pointPaths.exit().remove();  // comment to avoid no hovering for only one graph
-        pointPaths   // comment to avoid no hovering for only one graph
+
+        pointPaths = wrap.select('.point-paths').selectAll('path')
+            .data(diffVoronoi2);
+        pointPaths
+            .enter().append('path')
+            .attr('class', function (d, i) {
+                return 'path-' + i;
+            });
+        pointPaths.exit().remove();
+        pointPaths
             .attr('clip-path', function (d) {
                 if (d !== undefined) {
                     return 'url(#clip-' + d.data[5].internalId.substring(d.data[5].internalId.length - 2, d.data[5].internalId.length) + '-' + d[0] + ')';

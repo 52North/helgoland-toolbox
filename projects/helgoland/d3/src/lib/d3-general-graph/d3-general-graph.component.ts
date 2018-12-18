@@ -348,6 +348,10 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
 
     }
 
+    /**
+     * Function to create a net of polygons overlaying the graphs to divide sections for hovering.
+     * @param inputData {D3GeneralDataset[]} data containing an array with all datapoints and an id for each dataset
+     */
     private createHoveringNet(inputData): void {
         let data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
@@ -389,17 +393,25 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         let gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
         gEnter.append('g').attr('class', 'point-paths');
 
-        // let wrap = this.rawSvg.append('svg:g').attr('class', 'point-paths');
-
+        // to avoid no hovering for only one dataset without interaction the following lines are doubled
+        // this will create the paths, which can be updated later on (by the 'exit().remove()' function calls)
         let pointPaths = wrap.select('.point-paths').selectAll('path')
             .data(diffVoronoi2);
         pointPaths
             .enter().append('path')
             .attr('class', function (d, i) {
                 return 'path-' + i;
-            })
-            // pointPaths.exit().remove();
-            // pointPaths
+            });
+
+        pointPaths = wrap.select('.point-paths').selectAll('path')
+            .data(diffVoronoi2);
+        pointPaths
+            .enter().append('path')
+            .attr('class', function (d, i) {
+                return 'path-' + i;
+            });
+        pointPaths.exit().remove();
+        pointPaths
             .attr('clip-path', function (d) {
                 if (d !== undefined) {
                     let datasetxCoordSplit = d.data[4].xCoord.toString().split('.')[0] + '-' + d.data[4].xCoord.toString().split('.')[1];
