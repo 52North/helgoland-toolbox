@@ -1488,7 +1488,9 @@ export class D3TimeseriesGraphComponent
                 let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.ids[0]);
                 if (entryElem && entryElem.preRange) {
                     range = entryElem.preRange;
-                } else { range = entryElem.range; }
+                } else {
+                    if (entryElem) { range = entryElem.range; }
+                }
             } else {
                 // if not entry.uom but separated id
                 let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
