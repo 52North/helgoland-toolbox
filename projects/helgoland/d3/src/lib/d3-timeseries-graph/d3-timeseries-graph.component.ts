@@ -16,10 +16,12 @@ import {
     DatasetOptions,
     DatasetPresenterComponent,
     IDataset,
+    InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
     Time,
     Timeseries,
+    TimeseriesData,
     Timespan,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -63,8 +65,9 @@ export interface InternalDataEntry {
         autoRangeSelection: boolean;
         separateYAxis: boolean;
         parameters?: {
-            station: String;
-            phenomenon: String;
+            feature: { id: String, label: String };
+            phenomenon: { id: String, label: String };
+            offering: { id: String, label: String };
         };
     };
     visible: boolean;
@@ -88,8 +91,9 @@ export interface YRanges {
     yScale?: d3.ScaleLinear<number, number>;
     offset?: number;
     parameters: {   // additional information for the y axis label
-        station: String;
-        phenomenon: String;
+        feature: { id: String, label: String };
+        phenomenon: { id: String, label: String };
+        offering: { id: String, label: String };
     };
 }
 
@@ -128,7 +132,7 @@ export class D3TimeseriesGraphComponent
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
     @Output()
-    public onClickDataPoint: EventEmitter<[DataEntry, InternalDataEntry]> = new EventEmitter();
+    public onClickDataPoint: EventEmitter<TimeseriesData[]> = new EventEmitter();
 
     @ViewChild('d3timeseries')
     public d3Elem: ElementRef;
@@ -289,7 +293,7 @@ export class D3TimeseriesGraphComponent
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
             tsData.lines.lineWidth += this.addLineWidth;
-            tsData.lines.pointRadius += this.addLineWidth;
+            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius += this.addLineWidth : tsData.lines.pointRadius += 0;
             tsData.bars.lineWidth += this.addLineWidth;
 
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
@@ -326,7 +330,7 @@ export class D3TimeseriesGraphComponent
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
             tsData.lines.lineWidth -= this.addLineWidth;
-            tsData.lines.pointRadius -= this.addLineWidth;
+            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius -= this.addLineWidth : tsData.lines.pointRadius -= 0;
             tsData.bars.lineWidth -= this.addLineWidth;
 
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
@@ -448,7 +452,7 @@ export class D3TimeseriesGraphComponent
             },
             lines: {
                 lineWidth: styles.lineWidth,
-                pointRadius: 3 // styles.pointRadius
+                pointRadius: styles.pointRadius
             },
             bars: {
                 lineWidth: styles.lineWidth
@@ -461,8 +465,9 @@ export class D3TimeseriesGraphComponent
                 autoRangeSelection: styles.autoRangeSelection,
                 separateYAxis: styles.separateYAxis,
                 parameters: {
-                    station: dataset.parameters.feature.label,
-                    phenomenon: dataset.parameters.phenomenon.label
+                    feature: dataset.parameters.feature,
+                    phenomenon: dataset.parameters.phenomenon,
+                    offering: dataset.parameters.offering
                 }
             },
             visible: styles.visible
@@ -480,7 +485,7 @@ export class D3TimeseriesGraphComponent
         // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
         if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
             dataEntry.lines.lineWidth += this.addLineWidth;
-            dataEntry.lines.pointRadius += this.addLineWidth;
+            dataEntry.lines.pointRadius > 0 ? dataEntry.lines.pointRadius += this.addLineWidth : dataEntry.lines.pointRadius += 0;
             dataEntry.bars.lineWidth += this.addLineWidth;
 
             if (styles.separateYAxis) {
@@ -729,24 +734,19 @@ export class D3TimeseriesGraphComponent
      * @param uom {String} String that is the uom of a dataset
      */
     private getyAxisRange(uom: string): MinMaxRange {
-
-        for (let i = 0; i <= this.yRangesEachUom.length; i++) {
-            if (this.yRangesEachUom[i].uom === uom) {
-                let range: MinMaxRange = this.yRangesEachUom[i].range;
-
-                // check for zero based y axis
-                // if (this.yRangesEachUom[i].zeroBased) {
-                //     if (this.yRangesEachUom[i].zeroBasedValue === 0) {
-                //         range.min = 0;
-                //     } else {
-                //         range.max = 0;
-                //     }
-                // }
-
-                return range;
-            }
+        let rangeObj = this.yRangesEachUom.find(el => el.uom === uom);
+        if (rangeObj) {
+            // check for zero based y axis
+            // if (rangeObj.zeroBased) {
+            //     if (rangeObj.zeroBasedValue === 0) {
+            //         range.min = 0;
+            //     } else {
+            //         range.max = 0;
+            //     }
+            // }
+            const range: MinMaxRange = rangeObj.range;
+            return range;
         }
-
         return null; // error: uom does not exist
     }
 
@@ -887,6 +887,7 @@ export class D3TimeseriesGraphComponent
                 }
                 if (this.plotOptions.hoverStyle === HoveringStyle.point) {
                     // create voronoi net for point-hovering
+                    // important to call it twice to avoid no hovering with only one dataset or without interaction
                     this.createHoveringNet(this.preparedData);
                     this.createHoveringNet(this.preparedData);
                 } else {
@@ -964,6 +965,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to create a net of polygons overlaying the graphs to divide sections for hovering.
+     * @param inputData {Dataseries[]} array containing all datasets with their data and plot/graph options
+     */
     protected createHoveringNet(inputData): void {
         let data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
@@ -974,11 +979,7 @@ export class D3TimeseriesGraphComponent
         });
 
         let x = d3.scaleLinear(), // d3.scale.linear(),
-            y = d3.scaleLinear(),
-            x0, y0;
-
-        x0 = x0 || x;
-        y0 = y0 || y;
+            y = d3.scaleLinear();
 
         let vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
             /**
@@ -1001,11 +1002,23 @@ export class D3TimeseriesGraphComponent
             right = this.background.node().getBBox().width + this.bufferSum, // + this.margin.left,
             bottom = this.margin.top + this.background.node().getBBox().height;
 
+        // filter dataset - delete all entries that are NaN
+        let verticesFiltered = vertices.filter(d => !isNaN(d[0]) || !isNaN(d[1]));
         let Diffvoronoi = d3.voronoi()
             .extent([[left, top], [right, bottom]]);
-        let diffVoronoi2 = Diffvoronoi.polygons(vertices);
+        let diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
 
+        // to avoid no hovering for only one dataset without interaction the following lines are doubled
+        // this will create the paths, which can be updated later on (by the 'exit().remove()' function calls)
         let pointPaths = wrap.select('.point-paths').selectAll('path')
+            .data(diffVoronoi2);
+        pointPaths
+            .enter().append('path')
+            .attr('class', function (d, i) {
+                return 'path-' + i;
+            });
+
+        pointPaths = wrap.select('.point-paths').selectAll('path')
             .data(diffVoronoi2);
         pointPaths
             .enter().append('path')
@@ -1173,9 +1186,51 @@ export class D3TimeseriesGraphComponent
             let dataset = d.data[4];
             let dist = this.calcDistanceHovering(dataset, coords);
             if (dist <= 8) {
-                this.onClickDataPoint.emit([d.data[4], d.data[5]]);
+                let dataEntry: DataEntry = d.data[4];
+                let internalDataEntry: InternalDataEntry = d.data[5];
+                const timepoint = dataEntry.timestamp;
+                const externalId: InternalDatasetId = this.datasetIdResolver.resolveInternalId(internalDataEntry.internalId);
+                const apiurl = externalId.url;
+                const timespan = this.parsePointToSpan(timepoint);
+
+                // request all timeseries that have data for the same offering and feature
+                this.api.getTimeseries(apiurl,
+                    {
+                        offering: internalDataEntry.axisOptions.parameters.offering.id,
+                        feature: internalDataEntry.axisOptions.parameters.feature.id
+                    }).subscribe(
+                        (tsArray) => {
+                            const timeseries = [];
+                            tsArray.forEach(ts => {
+                                timeseries.push(ts.id);
+                            });
+
+                            // request ts data by timeseries ID for specific offering and feature
+                            this.api.getTimeseriesData(apiurl, {
+                                timespan: timespan,
+                                timeseries: timeseries
+                            }).subscribe(
+                                (tsData) => {
+                                    this.onClickDataPoint.emit(tsData);
+                                },
+                                (error) => {
+                                    console.log(error);
+                                }
+                            );
+                        },
+                        (error) => {
+                            console.log(error);
+                        }
+                    );
+
             }
         }
+    }
+
+    private parsePointToSpan(timepoint) {
+        const timeDate: Date = new Date(timepoint);
+        return 'PT1s/' + timeDate.toISOString();
+        // return 'PT1h/' + timeDate.toISOString();
     }
 
     private addTimespanJumpButtons(): void {
@@ -1426,12 +1481,20 @@ export class D3TimeseriesGraphComponent
         let range;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
             let uomIdx = this.listOfUoms.findIndex((uom) => uom === entry.uom);
-            if (uomIdx >= 0) {
+            if (uomIdx >= 0 && entry.ids && entry.ids.length > 1) {
                 range = this.getyAxisRange(entry.uom);
+            } else if (entry.ids && entry.ids.length === 1) {
+                // if entry is grouped but has only one id => use range of this dataset
+                let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.ids[0]);
+                if (entryElem && entryElem.preRange) {
+                    range = entryElem.preRange;
+                } else { range = entryElem.range; }
             } else {
                 // if not entry.uom but separated id
                 let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
-                if (entryElem) { range = entryElem.range; }
+                if (entryElem && entryElem.preRange) {
+                    range = entryElem.preRange;
+                } else { range = entryElem.range; }
             }
 
         } else {
@@ -1477,8 +1540,8 @@ export class D3TimeseriesGraphComponent
                 .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text((entry.id ? ( entry.uom + ' @ ' + entry.parameters.station) : entry.uom));
-                // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
+                .text((entry.id ? (entry.uom + ' @ ' + entry.parameters.feature.label) : entry.uom));
+            // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
 
             this.graph.selectAll('.yaxisTextLabel')
                 .call(this.wrapText, (axis.node().getBBox().height - 10), this.height / 2);
@@ -2035,7 +2098,8 @@ export class D3TimeseriesGraphComponent
     }
 
     protected getYaxisRange(entry: InternalDataEntry): YRanges {
-        if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
+        // check if entry dataset should be separated or entry datasets should be grouped
+        if (!entry.axisOptions.separateYAxis && (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined)) {
             return this.yRangesEachUom.find((obj) => {
                 if (obj !== null && obj.uom === entry.axisOptions.uom) {
                     return true;
