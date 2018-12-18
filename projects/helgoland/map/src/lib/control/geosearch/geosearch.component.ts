@@ -10,14 +10,29 @@ import { MapCache } from '../../base/map-cache.service';
 })
 export class GeosearchControlComponent {
 
+    /**
+     * Connect map id.
+     */
     @Input()
     public mapId: string;
 
+    /**
+     * Additional search options.
+     */
     @Input()
     public options: GeoSearchOptions;
 
+    /**
+     * Returns the search result.
+     */
     @Output()
-    public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter<GeoSearchResult>();
+    public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
+
+    /**
+     * Informs, when the search is triggered.
+     */
+    @Output()
+    public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
     public result: GeoSearchResult;
 
@@ -33,6 +48,7 @@ export class GeosearchControlComponent {
     ) { }
 
     public triggerSearch() {
+        this.onSearchTriggered.emit();
         this.removeOldGeometry();
         if (this.searchTerm) {
             this.loading = true;
