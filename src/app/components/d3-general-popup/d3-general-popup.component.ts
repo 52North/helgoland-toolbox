@@ -9,14 +9,15 @@ import { D3GeneralDatasetInput } from '@helgoland/d3';
 export class D3GeneralPopupComponent {
 
     @Input()
-    public generalDatasetInput: D3GeneralDatasetInput;
+    public generalDatasetInput: D3GeneralDatasetInput[];
 
     constructor(
         public dialogRef: MatDialogRef<D3GeneralPopupComponent>,
         @Inject(MAT_DIALOG_DATA)
-        public dataset: D3GeneralDatasetInput
+        public dataset: D3GeneralDatasetInput[]
     ) {
         this.generalDatasetInput = dataset;
+        console.log(this.generalDatasetInput);
     }
 
     public onClose() {
