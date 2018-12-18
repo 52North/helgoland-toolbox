@@ -33,8 +33,8 @@ export interface D3GeneralGraphOptions {
 }
 
 export interface D3GeneralAxisOptions {
-    xScale?: d3.ScaleLinear<number, number>;
-    yScale?: d3.ScaleLinear<number, number>;
+    xScale?: ScaleLinear<number, number>;
+    yScale?: ScaleLinear<number, number>;
     xRange?: Range;
     yRange?: Range;
     date?: boolean;
