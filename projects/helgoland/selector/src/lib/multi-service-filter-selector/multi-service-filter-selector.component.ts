@@ -1,13 +1,21 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import {
-    DatasetApiInterface,
-    Filter,
-    FilteredProvider,
-    LanguageChangNotifier,
-    Parameter,
-    ParameterFilter,
-} from '@helgoland/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { DatasetApiInterface, Filter, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
+
+export interface MultiServiceFilter {
+    url: string;
+    filter?: ParameterFilter;
+}
+
+export enum MultiServiceFilterEndpoint {
+    offering = 'offering',
+    phenomenon = 'phenomenon',
+    procedure = 'procedure',
+    feature = 'feature',
+    category = 'category',
+    platform = 'platform',
+    dataset = 'dataset'
+}
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -19,10 +27,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
-    public endpoint: string;
+    public endpoint: MultiServiceFilterEndpoint;
 
     @Input()
-    public filterList: FilteredProvider[];
+    public filterList: MultiServiceFilter[];
 
     @Output()
     public onItemSelected: EventEmitter<FilteredParameter> = new EventEmitter<FilteredParameter>();
@@ -37,7 +45,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         super(translate);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges() {
         this.loadItems();
     }
 
@@ -54,45 +62,44 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.filterList.forEach((entry) => {
             this.loading++;
             const filter = entry.filter || {};
-            filter.service = entry.id;
             switch (this.endpoint) {
-                case 'offering':
+                case MultiServiceFilterEndpoint.offering:
                     this.apiInterface.getOfferings(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'phenomenon':
+                case MultiServiceFilterEndpoint.phenomenon:
                     this.apiInterface.getPhenomena(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'procedure':
+                case MultiServiceFilterEndpoint.procedure:
                     this.apiInterface.getProcedures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'feature':
+                case MultiServiceFilterEndpoint.feature:
                     this.apiInterface.getFeatures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'category':
+                case MultiServiceFilterEndpoint.category:
                     this.apiInterface.getCategories(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'platform':
+                case MultiServiceFilterEndpoint.platform:
                     this.apiInterface.getPlatforms(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
-                case 'dataset':
+                case MultiServiceFilterEndpoint.dataset:
                     this.apiInterface.getDatasets(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
