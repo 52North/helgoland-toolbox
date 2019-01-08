@@ -695,6 +695,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to set range to default interval, if min and max of range are not set.
+     * @param range {MinMaxRange} range to be set
+     */
     protected extendRange(range: MinMaxRange): void {
         if (range.min === range.max) {
             range.min = range.min - 1;
@@ -702,6 +706,12 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to check ranges for min and max range.
+     * @param idx {Number} Index of element
+     * @param obj {YRanges} new object to be compared with old
+     * @param pos {String} type of range (e.g. preRange, range, originRange)
+     */
     private checkCurrentLatest(idx, obj, pos): void {
         if (this.yRangesEachUom[idx][pos].min > obj[pos].min && !isNaN(obj[pos].min)) {
             this.yRangesEachUom[idx][pos].min = obj[pos].min;
@@ -711,6 +721,12 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    /**
+     * Function to set min and max range.
+     * @param idx {Number} Index of element
+     * @param obj {YRanges} new object
+     * @param pos {String} type of range (e.g. preRange, range, originRange)
+     */
     private takeLatest(idx, obj, pos): void {
         this.yRangesEachUom[idx][pos] = obj[pos];
     }
@@ -1480,28 +1496,25 @@ export class D3TimeseriesGraphComponent
         // check for y axis grouping
         let range;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
+        // grouped axis
             let uomIdx = this.listOfUoms.findIndex((uom) => uom === entry.uom);
             if (uomIdx >= 0 && entry.ids && entry.ids.length > 1) {
+                // grouped with more than ony datasets (if uom has more than one datasets)
                 range = this.getyAxisRange(entry.uom);
-            } else if (entry.ids && entry.ids.length === 1) {
-                // if entry is grouped but has only one id => use range of this dataset
-                let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.ids[0]);
-                if (entryElem && entryElem.preRange) {
-                    range = entryElem.preRange;
-                } else {
-                    if (entryElem) { range = entryElem.range; }
-                }
             } else {
-                // if not entry.uom but separated id
-                let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
-                if (entryElem && entryElem.preRange) {
-                    range = entryElem.preRange;
-                } else { range = entryElem.range; }
+                // separated id (if not entry.uom) OR grouped, but only one dataset (if entry is grouped but has only one id => use range of this dataset)
+                let entryElem = this.dataYranges.find((el) => el !== null && (entry.id ? el.id === entry.id : el.id === entry.ids[0]));
+                if (entryElem) {
+                    range = entryElem.range;
+                    // range = entryElem.preRange ? entryElem.preRange : entryElem.range;
+                }
             }
-
         } else {
+        // ungrouped axis
             let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
-            if (entryElem) { range = entryElem.range; }
+            if (entryElem) {
+                range = entryElem.preRange ? entryElem.preRange : entryElem.range;
+            }
         }
 
         let yMin = -1;
