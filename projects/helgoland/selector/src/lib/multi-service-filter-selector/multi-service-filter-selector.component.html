@@ -1,8 +1,6 @@
-<div style="text-align: center;" *ngIf="loading > 0">
-    <span class="glyphicon glyphicon-refresh icon-spin"></span>
-    <span translate="listSelection.loading"></span>
+<div *ngIf="loading > 0">
+    <span>loading...</span>
 </div>
-<!-- TODO: add label ordering -->
-<div class="selector-entry" *ngFor="let item of items" (click)="onSelectItem(item)">
-    <n52-label-mapper label="{{item.label}}"></n52-label-mapper>
+<div *ngFor="let item of items" (click)="onSelectItem(item)">
+    {{item.id}} - {{item.label}}
 </div>
