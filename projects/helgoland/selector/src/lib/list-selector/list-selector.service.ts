@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FilteredProvider } from '@helgoland/core';
+import { FilteredProvider, ParameterFilter } from '@helgoland/core';
 
 export interface ListSelectorParameter {
     header: string;
     type: string;
     isDisabled?: boolean;
     headerAddition?: string;
-    filterList?: any;
+    filterList?: ParameterFilter[];
 }
 
 @Injectable()

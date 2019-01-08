@@ -58,7 +58,7 @@ export class ListSelectorComponent implements OnChanges {
                 }
                 // create filterlist for first parameter entry
                 this.parameters[0].filterList = this.providerList.map((entry) => {
-                    entry.filter = this.filter;
+                    entry.filter = Object.assign({}, this.filter);
                     return entry;
                 });
                 this.listSelectorService.providerList = this.providerList;
@@ -78,10 +78,10 @@ export class ListSelectorComponent implements OnChanges {
             this.parameters[index].headerAddition = item.label;
             this.activePanel = this.selectorId + '-' + (index + 1);
             this.parameters[index + 1].isDisabled = false;
-            this.parameters[index + 1].filterList = item.filterList.map((entry) => {
-                entry.filter[this.parameters[index].type] = entry.itemId;
-                return entry;
-            });
+            // copy filter to new item
+            this.parameters[index + 1].filterList = JSON.parse(JSON.stringify(item.filterList));
+            // add filter for selected item to next
+            this.parameters[index + 1].filterList.forEach((entry) => entry.filter[this.parameters[index].type] = entry.itemId);
             for (let i = index + 2; i < this.parameters.length; i++) {
                 this.parameters[i].isDisabled = true;
             }
