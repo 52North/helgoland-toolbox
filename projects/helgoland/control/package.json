@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/control",
-  "version": "0.0.1-alpha.73",
+  "version": "0.0.1-alpha.74",
   "dependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
