@@ -13,6 +13,7 @@ import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
 import { MapCache } from '../base/map-cache.service';
+import { MarkerSelectorGenerator } from './model/marker-selector-generator';
 
 export abstract class MapSelectorComponent<T>
     extends CachedMapComponent
@@ -32,6 +33,9 @@ export abstract class MapSelectorComponent<T>
 
     @Input()
     public avoidZoomToSelection: boolean;
+
+    @Input()
+    public markerSelectorGenerator: MarkerSelectorGenerator;
 
     @Output()
     public onSelected: EventEmitter<T> = new EventEmitter<T>();

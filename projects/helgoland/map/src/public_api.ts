@@ -23,6 +23,7 @@ export * from './lib/control/zoom/zoom.component';
 export * from './lib/selector/module';
 export * from './lib/selector/map-selector.component';
 export * from './lib/selector/model/trajectory-result';
+export * from './lib/selector/model/marker-selector-generator';
 export * from './lib/selector/platform-map-selector/platform-map-selector.component';
 export * from './lib/selector/station-map-selector/station-map-selector.component';
 export * from './lib/selector/last-value-map-selector/last-value-map-selector.component';

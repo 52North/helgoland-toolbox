@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
-import { GeoSearchOptions, LastValuePresentation, LayerOptions } from '@helgoland/map';
-import { FitBoundsOptions, Marker, icon, tileLayer } from 'leaflet';
+import { GeoSearchOptions, LastValuePresentation, LayerOptions, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
+import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer } from 'leaflet';
 
 Marker.prototype.options.icon = icon({
     iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -38,7 +38,14 @@ export class MapSelectorComponent {
     public statusIntervals = false;
     public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
+    public markerSelectorGenerator: MarkerSelectorGenerator;
+    public mapId = 'mapid';
 
+    constructor(
+        private mapCache: MapCache,
+    ) {
+        this.markerSelectorGenerator = new MarkerSelectorGeneratorImpl(this.mapCache, this.mapId);
+    }
 
     public lastValueSeriesIDs = [
         'https://www.fluggs.de/sos2/api/v1/__51',
@@ -126,6 +133,58 @@ export class MapSelectorComponent {
 
     public timeseriesSelected(ts: Timeseries) {
         alert(`Clicked ${ts.label}`);
+    }
+
+}
+
+class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
+
+    constructor(
+        private mapCache: MapCache,
+        private mapId: string
+    ) { }
+
+    public createFilledMarker(station: Station, color: string): Layer {
+        let geometry: Layer;
+        if (station.geometry.type === 'Point') {
+            const point = station.geometry as GeoJSON.Point;
+            geometry = circleMarker([point.coordinates[1], point.coordinates[0]], {
+                color: '#000',
+                fillColor: color,
+                fillOpacity: 0.8,
+                radius: this.calculateRadius(),
+                weight: 2
+            });
+            this.mapCache.getMap(this.mapId).on('zoomend', () => {
+                (geometry as CircleMarker).setRadius(this.calculateRadius());
+            });
+        } else {
+            geometry = geoJSON(station.geometry, {
+                style: (feature) => {
+                    return {
+                        color: '#000',
+                        fillColor: color,
+                        fillOpacity: 0.8,
+                        weight: 2
+                    };
+                }
+            });
+        }
+        return geometry;
+    }
+
+    public createDefaultFilledMarker(station: Station): Layer {
+        return this.createFilledMarker(station, '#fff');
+    }
+
+    public createDefaultGeometry(station: Station): Layer {
+        return this.createFilledMarker(station, '#ff0000');
+    }
+
+    private calculateRadius(): number {
+        const currentZoom = this.mapCache.getMap(this.mapId).getZoom();
+        if (currentZoom <= 7) { return 6; }
+        return currentZoom;
     }
 
 }
