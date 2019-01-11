@@ -96,6 +96,9 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
                         }
                     }
                     if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
+                    marker.on('click', () => {
+                        this.onSelected.emit(ts.station);
+                    });
                     this.markerFeatureGroup.addLayer(marker);
                 });
             });
@@ -111,10 +114,16 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createColoredMarker(station: Station, color: string): Layer {
+        if (this.markerSelectorGenerator.createFilledMarker) {
+            return this.markerSelectorGenerator.createFilledMarker(station, color);
+        }
         return this.createFilledMarker(station, color, 10);
     }
 
     private createDefaultColoredMarker(station: Station): Layer {
+        if (this.markerSelectorGenerator.createDefaultFilledMarker) {
+            return this.markerSelectorGenerator.createDefaultFilledMarker(station);
+        }
         return this.createFilledMarker(station, '#000', 10);
     }
 
@@ -172,7 +181,10 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             });
     }
 
-    private createDefaultGeometry(station: Station) {
+    private createDefaultGeometry(station: Station): Layer {
+        if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultGeometry) {
+            return this.markerSelectorGenerator.createDefaultGeometry(station);
+        }
         if (station.geometry) {
             const geometry = L.geoJSON(station.geometry);
             geometry.on('click', () => this.onSelected.emit(station));
