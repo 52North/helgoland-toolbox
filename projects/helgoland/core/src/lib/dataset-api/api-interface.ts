@@ -55,7 +55,7 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
     public abstract getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]>;
     public abstract getStation(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station>;
     public abstract getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]>;
-    public abstract getTimeseriesData(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<TimeseriesData[]>;
+    public abstract getTimeseriesData(apiUrl: string, ids: string[], timespan: Timespan, options?: HttpRequestOptions): Observable<TimeseriesData[]>;
     public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     public abstract getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;

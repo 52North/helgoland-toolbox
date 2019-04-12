@@ -76,10 +76,10 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         return this.requestApi<Station>(url, params, options);
     }
 
-    public getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]> {
+    public getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
         const url = this.createRequestUrl(apiUrl, 'timeseries');
         return new Observable<Timeseries[]>((observer: Observer<Timeseries[]>) => {
-            this.requestApiTexted(url, params).subscribe(
+            this.requestApiTexted(url, params, options).subscribe(
                 (result) => {
                     const timeseriesList = deserializeArray<Timeseries>(Timeseries, result);
                     timeseriesList.forEach((entry) => {
@@ -94,10 +94,13 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         });
     }
 
-    public getTimeseriesData(apiUrl: string, params?: ParameterFilter): Observable<TimeseriesData[]> {
+    public getTimeseriesData(apiUrl: string, ids: string[], timespan: Timespan, options?: HttpRequestOptions): Observable<TimeseriesData[]> {
         const url = this.createRequestUrl(apiUrl, 'timeseries/getData');
         return new Observable<TimeseriesData[]>((observer: Observer<Object>) => {
-            this.requestApiTextedPost(url, params).subscribe(
+            this.requestApiTextedPost(url, {
+                timespan: this.createRequestTimespan(timespan),
+                timeseries: ids
+            }, options).subscribe(
                 (result) => {
                     const timeseriesList: TimeseriesData[] = [];
                     for (const id in result) {
@@ -281,14 +284,14 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     //     return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
     // }
 
-    private requestApiTexted(url: string, params: ParameterFilter = {}): Observable<string> {
-        return this.httpservice.client().get(url, {
+    private requestApiTexted(url: string, params: ParameterFilter = {}, options: HttpRequestOptions = {}): Observable<string> {
+        return this.httpservice.client(options).get(url, {
             params: this.prepareParams(params),
             responseType: 'text'
         });
     }
 
-    private requestApiTextedPost(url: string, params: ParameterFilter = {}): Observable<Object> {
+    private requestApiTextedPost(url: string, params: ParameterFilter = {}, options: HttpRequestOptions = {}): Observable<Object> {
         return this.httpservice.client().post(url, params, {
             responseType: 'json'
         });
