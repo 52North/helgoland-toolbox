@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -57,11 +57,12 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 
 });
 
-describe('D3TimeseriesGraphComponent - function', () => {
+fdescribe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'http://mudak-wrm.dev.52north.org/52n-sos-wv-webapp/api/v1/__17';
+  let datasetID1 = 'http://geo.irceline.be/sos/api/v1/__10604';
   let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -71,16 +72,21 @@ describe('D3TimeseriesGraphComponent - function', () => {
         TranslateTestingModule
       ],
       providers: [
-        DatasetApiInterfaceTesting
+        DatasetApiInterfaceTesting,
+        DefinedTimespanService
       ],
       declarations: [D3TimeseriesGraphComponent]
     }).compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {
     fixture = TestBed.createComponent(D3TimeseriesGraphComponent);
     (fixture.nativeElement as HTMLElement).style.height = '500px';
     component = fixture.componentInstance;
+    definedTimespanSrvc = service;
+  }));
+
+  it('should have a dataset', () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
     const option1 = new DatasetOptions(datasetID1, '#FF0000');
     option1.pointRadius = 4;
@@ -93,9 +99,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
-    const end = new Date(1900).getTime();
-    const diff = 100000000;
-    component.timeInterval = new Timespan(end - diff, end);
+    component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
@@ -103,10 +107,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
     });
-    setInterval(() => fixture.detectChanges(), 100);
-  });
-
-  it('should have a dataset', () => {
+    fixture.detectChanges();
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBeGreaterThan(0);

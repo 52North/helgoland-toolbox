@@ -7,6 +7,7 @@ import {
     OnChanges,
     Output,
     SimpleChanges,
+    OnDestroy,
 } from '@angular/core';
 import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
 
@@ -18,7 +19,7 @@ import { D3PlotOptions } from '../model/d3-plot-options';
     styleUrls: ['./d3-overview-timeseries-graph.component.scss']
 })
 @Mixin([HasLoadableContent])
-export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, HasLoadableContent {
+export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, HasLoadableContent, OnDestroy {
 
     @Input()
     public datasetIds: string[];
@@ -76,6 +77,10 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
         if (changes.timeInterval && this.init) {
             this.calculateOverviewRange();
         }
+    }
+
+    public ngOnDestroy(): void {
+        this.cd.detach();
     }
 
     public timeSpanChanged(timespan: Timespan) {

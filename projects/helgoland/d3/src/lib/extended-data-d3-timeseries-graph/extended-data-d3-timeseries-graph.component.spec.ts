@@ -7,7 +7,7 @@ import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-i
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { ExtendedDataD3TimeseriesGraphComponent } from './extended-data-d3-timeseries-graph.component';
 
-describe('D3TimeseriesGraphComponent - function', () => {
+describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
     let component: ExtendedDataD3TimeseriesGraphComponent;
     let fixture: ComponentFixture<ExtendedDataD3TimeseriesGraphComponent>;
 
@@ -29,12 +29,16 @@ describe('D3TimeseriesGraphComponent - function', () => {
         fixture = TestBed.createComponent(ExtendedDataD3TimeseriesGraphComponent);
         (fixture.nativeElement as HTMLElement).style.height = '500px';
         component = fixture.componentInstance;
+    });
+
+    it('should have a dataset', () => {
         const datasetOptions: Map<string, DatasetOptions> = new Map();
         setNewTimespan(component);
         component.datasetOptions = datasetOptions;
         const additionalDataOption = new DatasetOptions('horst', '#0000FF');
         additionalDataOption.pointRadius = 6;
         additionalDataOption.lineWidth = 3;
+        additionalDataOption.autoRangeSelection = true;
         component.additionalData = [
             {
                 yaxisLabel: 'random',
@@ -62,16 +66,21 @@ describe('D3TimeseriesGraphComponent - function', () => {
                 additionalData: new SimpleChange(null, component.additionalData, true)
             });
             setNewTimespan(component);
-            fixture.detectChanges();
+            if (!fixture['destroyed']) {
+                fixture.detectChanges();
+            }
         }, 1000);
 
-        fixture.detectChanges();
-    });
-
-    it('should have a dataset', () => {
+        if (!fixture['destroyed']) {
+            fixture.detectChanges();
+        }
         expect(component.datasetIds).toBeDefined();
         expect(component.datasetIds.length).toBeDefined();
-        // expect(component.datasetIds.length).toBeGreaterThan(0);
+        expect(typeof (component.datasetIds)).toBe('object');
+    });
+
+    it('should work without any data', () => {
+        fixture.detectChanges();
         expect(typeof (component.datasetIds)).toBe('object');
     });
 
