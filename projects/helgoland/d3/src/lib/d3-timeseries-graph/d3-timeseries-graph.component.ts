@@ -985,7 +985,8 @@ export class D3TimeseriesGraphComponent
      * Function to create a net of polygons overlaying the graphs to divide sections for hovering.
      * @param inputData {Dataseries[]} array containing all datasets with their data and plot/graph options
      */
-    protected createHoveringNet(inputData): void {
+    protected createHoveringNet(inputData: any[]) {
+        if (inputData.length === 0) { return; }
         let data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
                 point.series = i;
@@ -1204,10 +1205,9 @@ export class D3TimeseriesGraphComponent
             if (dist <= 8) {
                 let dataEntry: DataEntry = d.data[4];
                 let internalDataEntry: InternalDataEntry = d.data[5];
-                const timepoint = dataEntry.timestamp;
                 const externalId: InternalDatasetId = this.datasetIdResolver.resolveInternalId(internalDataEntry.internalId);
                 const apiurl = externalId.url;
-                const timespan = this.parsePointToSpan(timepoint);
+                const timespan: Timespan = { from: dataEntry.timestamp, to: dataEntry.timestamp };
 
                 // request all timeseries that have data for the same offering and feature
                 this.api.getTimeseries(apiurl,
@@ -1222,31 +1222,16 @@ export class D3TimeseriesGraphComponent
                             });
 
                             // request ts data by timeseries ID for specific offering and feature
-                            this.api.getTimeseriesData(apiurl, {
-                                timespan: timespan,
-                                timeseries: timeseries
-                            }).subscribe(
-                                (tsData) => {
-                                    this.onClickDataPoint.emit(tsData);
-                                },
-                                (error) => {
-                                    console.log(error);
-                                }
-                            );
+                            this.api.getTimeseriesData(apiurl, timeseries, timespan)
+                                .subscribe(
+                                    (tsData) => this.onClickDataPoint.emit(tsData),
+                                    (error) => console.error(error)
+                                );
                         },
-                        (error) => {
-                            console.log(error);
-                        }
+                        (error) => console.error(error)
                     );
-
             }
         }
-    }
-
-    private parsePointToSpan(timepoint) {
-        const timeDate: Date = new Date(timepoint);
-        return 'PT1s/' + timeDate.toISOString();
-        // return 'PT1h/' + timeDate.toISOString();
     }
 
     private addTimespanJumpButtons(): void {
@@ -1496,7 +1481,7 @@ export class D3TimeseriesGraphComponent
         // check for y axis grouping
         let range;
         if (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined) {
-        // grouped axis
+            // grouped axis
             let uomIdx = this.listOfUoms.findIndex((uom) => uom === entry.uom);
             if (uomIdx >= 0 && entry.ids && entry.ids.length > 1) {
                 // grouped with more than ony datasets (if uom has more than one datasets)
@@ -1510,7 +1495,7 @@ export class D3TimeseriesGraphComponent
                 }
             }
         } else {
-        // ungrouped axis
+            // ungrouped axis
             let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
             if (entryElem) {
                 range = entryElem.preRange ? entryElem.preRange : entryElem.range;
