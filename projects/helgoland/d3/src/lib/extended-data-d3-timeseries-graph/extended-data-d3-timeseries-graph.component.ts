@@ -11,7 +11,11 @@ import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, M
 import { TranslateService } from '@ngx-translate/core';
 import { extent } from 'd3';
 
-import { D3TimeseriesGraphComponent, InternalDataEntry } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import {
+  D3TimeseriesGraphComponent,
+  DataEntry,
+  InternalDataEntry,
+} from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 
 /**
@@ -85,9 +89,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   protected plotGraph() {
     this.prepareAdditionalData();
     super.plotGraph();
-    // execute twice to first create DOM elements and then add data
-    super.createHoveringNet(this.additionalPreparedData);
-    super.createHoveringNet(this.additionalPreparedData);
   }
 
   public ngAfterViewInit(): void {
@@ -130,9 +131,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx === -1) {
               dataEntry = {
                 internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
-                id: -1,
                 color: options.color,
-                data: options.visible ? entry.data.map(e => [e.timestamp, e.value]) as [number, number][] : [],
+                data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
                 points: {
                   fillColor: options.color
                 },
@@ -168,8 +168,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             }
 
             const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
-            const dataExtent = extent<[number, number], number>(dataEntry.data, (datum) => {
-              if (this.timespan.from <= datum[0] && this.timespan.to >= datum[0]) { return datum[1]; }
+            const dataExtent = extent<DataEntry, number>(dataEntry.data, (d) => {
+              if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
             });
             if (isFinite(dataExtent[0]) && isFinite(dataExtent[1])) {
               const range: MinMaxRange = { min: dataExtent[0], max: dataExtent[1] };
