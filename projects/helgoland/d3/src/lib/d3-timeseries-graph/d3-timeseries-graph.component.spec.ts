@@ -5,6 +5,7 @@ import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreM
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HoveringStyle } from '../model/d3-plot-options';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
 
 describe('D3TimeseriesGraphComponent - raw', () => {
@@ -99,7 +100,8 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
-    component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
+    component.presenterOptions.hoverStyle = HoveringStyle.point;
+    component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.CURRENT_WEEK);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
