@@ -1,6 +1,6 @@
 export interface HighlightOutput {
     timestamp: number;
-    ids: Array<HighlightValue>;
+    ids: Map<string, HighlightValue>;
 }
 
 export interface HighlightValue {
