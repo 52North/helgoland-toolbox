@@ -13,6 +13,13 @@ export class DatasetOptions {
     public internalId: string;
 
     /**
+     * type to display the data - line is default
+     *
+     * @memberof DatasetOptions
+     */
+    public type?: string = 'line';
+
+    /**
      * color of the dataset
      *
      * @memberof DatasetOptions
