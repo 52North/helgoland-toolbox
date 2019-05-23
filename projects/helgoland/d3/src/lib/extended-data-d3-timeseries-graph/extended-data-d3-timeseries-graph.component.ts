@@ -214,9 +214,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected drawAllGraphLines() {
-    super.drawAllGraphLines();
-    this.additionalPreparedData.forEach(e => this.drawGraphLine(e));
+  protected drawAllCharts() {
+    super.drawAllCharts();
+    this.additionalPreparedData.forEach(e => this.drawChart(e));
   }
 
 }
