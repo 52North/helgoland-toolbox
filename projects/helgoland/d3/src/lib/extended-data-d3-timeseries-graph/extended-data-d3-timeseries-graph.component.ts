@@ -140,6 +140,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   lineWidth: options.lineWidth,
                   pointRadius: options.pointRadius
                 },
+                chartType: options.type === 'bar' ? 'bar' : 'line',
                 bars: {
                   lineWidth: options.lineWidth
                 },
