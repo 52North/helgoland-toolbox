@@ -17,7 +17,7 @@ export class DatasetOptions {
      *
      * @memberof DatasetOptions
      */
-    public type?: string = 'line';
+    public type: 'line' | 'bar' = 'line';
 
     /**
      * color of the dataset

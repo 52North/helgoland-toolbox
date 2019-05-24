@@ -48,6 +48,7 @@ export interface InternalDataEntry {
     points: {
         fillColor: string
     };
+    chartType: 'line' | 'bar';
     lines?: {
         lineWidth?: number;
         pointRadius?: number;
@@ -431,7 +432,7 @@ export class D3TimeseriesGraphComponent
 
         this.datasetMap.get(dataset.internalId).data = data;
         const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-        const styles = this.datasetOptions.get(dataset.internalId);
+        const options = this.datasetOptions.get(dataset.internalId);
 
         // TODO: change uom for testing
         // if (this.preparedData.length > 0) {
@@ -439,47 +440,48 @@ export class D3TimeseriesGraphComponent
         // }
 
         // generate random color, if color is not defined
-        if (styles.color === undefined) {
-            styles.color = this.colorService.getColor();
+        if (options.color === undefined) {
+            options.color = this.colorService.getColor();
         }
 
         // end of check for datasets
         const dataEntry: InternalDataEntry = {
             internalId: dataset.internalId,
             id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
-            color: styles.color,
-            data: styles.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
+            color: options.color,
+            data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
+            chartType: options.type === 'bar' ? 'bar' : 'line',
             points: {
-                fillColor: styles.color
+                fillColor: options.color
             },
             lines: {
-                lineWidth: styles.lineWidth,
-                pointRadius: styles.pointRadius
+                lineWidth: options.lineWidth,
+                pointRadius: options.pointRadius
             },
             axisOptions: {
                 uom: dataset.uom,
                 label: dataset.label,
-                zeroBased: styles.zeroBasedYAxis,
-                yAxisRange: styles.yAxisRange,
-                autoRangeSelection: styles.autoRangeSelection,
-                separateYAxis: styles.separateYAxis,
+                zeroBased: options.zeroBasedYAxis,
+                yAxisRange: options.yAxisRange,
+                autoRangeSelection: options.autoRangeSelection,
+                separateYAxis: options.separateYAxis,
                 parameters: {
                     feature: dataset.parameters.feature,
                     phenomenon: dataset.parameters.phenomenon,
                     offering: dataset.parameters.offering
                 }
             },
-            visible: styles.visible
+            visible: options.visible
         };
 
-        if (styles.type === 'bar') {
+        if (options.type === 'bar') {
             dataEntry.bars = {
-                lineWidth: styles.lineWidth
+                lineWidth: options.lineWidth
             };
         }
 
         let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
-        if (styles.separateYAxis) {
+        if (options.separateYAxis) {
             if (separationIdx < 0) {
                 this.listOfSeparation.push(dataset.internalId);
             }
@@ -487,13 +489,13 @@ export class D3TimeseriesGraphComponent
             this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
         }
 
-        // alternative linewWidth = this.plotOptions.selected.includes(dataset.uom)
+        // alternative lineWidth = this.plotOptions.selected.includes(dataset.uom)
         if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
             dataEntry.lines.lineWidth += this.addLineWidth;
             dataEntry.lines.pointRadius > 0 ? dataEntry.lines.pointRadius += this.addLineWidth : dataEntry.lines.pointRadius += 0;
             dataEntry.bars.lineWidth += this.addLineWidth;
 
-            if (styles.separateYAxis) {
+            if (options.separateYAxis) {
                 this.checkYselector(dataEntry.internalId, dataEntry.axisOptions.uom);
                 if (this.yAxisSelect[dataEntry.internalId]) {
                     this.yAxisSelect[dataEntry.internalId].clicked = true;
@@ -504,7 +506,7 @@ export class D3TimeseriesGraphComponent
 
         // check selected datasets for highlighting
         if (this.yAxisSelect) {
-            if (styles.separateYAxis) {
+            if (options.separateYAxis) {
                 if (this.yAxisSelect[dataEntry.axisOptions.uom]) {
                     let idx = this.yAxisSelect[dataEntry.axisOptions.uom].ids.findIndex(el => el === dataEntry.internalId);
                     if (idx >= 0) {
@@ -532,7 +534,7 @@ export class D3TimeseriesGraphComponent
         } else {
             this.preparedData.push(dataEntry);
         }
-        this.addReferenceValueData(dataset.internalId, styles, data, dataset.uom);
+        this.addReferenceValueData(dataset.internalId, options, data, dataset.uom);
         this.processData(dataEntry);
     }
 
@@ -553,6 +555,7 @@ export class D3TimeseriesGraphComponent
                     internalId: 'ref' + internalId + refValue.id,
                     color: refValue.color,
                     visible: true,
+                    chartType: 'line',
                     data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] })),
                     points: {
                         fillColor: refValue.color
@@ -1650,7 +1653,7 @@ export class D3TimeseriesGraphComponent
                     .append('g')
                     .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
-                if (entry.bars) {
+                if (entry.chartType === 'bar') {
                     this.drawBarChart(entry, yScaleBase);
                 } else {
                     this.drawLineChart(entry, yScaleBase);
