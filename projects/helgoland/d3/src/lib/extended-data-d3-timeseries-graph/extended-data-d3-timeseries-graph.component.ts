@@ -7,7 +7,15 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, MinMaxRange, Time } from '@helgoland/core';
+import {
+  ColorService,
+  DatasetApiInterface,
+  DatasetOptions,
+  InternalIdHandler,
+  MinMaxRange,
+  SumValuesService,
+  Time,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { extent } from 'd3';
 
@@ -73,9 +81,10 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeSrvc: Time,
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    protected sumValues: SumValuesService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -170,7 +179,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
             const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
             const dataExtent = extent<DataEntry, number>(dataEntry.data, (d) => {
-              if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+              if (typeof d.value === 'number') {
+                if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+              }
             });
             if (isFinite(dataExtent[0]) && isFinite(dataExtent[1])) {
               const range: MinMaxRange = { min: dataExtent[0], max: dataExtent[1] };

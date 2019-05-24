@@ -19,10 +19,12 @@ import {
     InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
+    SumValuesService,
     Time,
     Timeseries,
     TimeseriesData,
     Timespan,
+    TimeValueTuple,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
@@ -34,7 +36,7 @@ import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 
 export interface DataEntry {
     timestamp: number;
-    value: number;
+    value: number | string;
     xDiagCoord?: number;
     yDiagCoord?: number;
 }
@@ -75,7 +77,7 @@ export interface InternalDataEntry {
 }
 
 export interface DataConst extends IDataset {
-    data?: Data<[number, number]>;
+    data?: Data<TimeValueTuple>;
 }
 
 export interface YRanges {
@@ -226,7 +228,8 @@ export class D3TimeseriesGraphComponent
         protected timeSrvc: Time,
         protected timeFormatLocaleService: D3TimeFormatLocaleService,
         protected colorService: ColorService,
-        protected translateService: TranslateService
+        protected translateService: TranslateService,
+        protected sumValues: SumValuesService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
@@ -424,7 +427,7 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareTsData(dataset: IDataset, data: Data<[number, number]>): void {
+    private prepareTsData(dataset: IDataset, data: Data<TimeValueTuple>): void {
 
         // add surrounding entries to the set
         if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
@@ -433,6 +436,10 @@ export class D3TimeseriesGraphComponent
         this.datasetMap.get(dataset.internalId).data = data;
         const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
         const options = this.datasetOptions.get(dataset.internalId);
+
+        if (options.type === 'bar') {
+            data.values = this.sumValues.sum(options.barStartOf, options.barPeriod, data.values);
+        }
 
         // TODO: change uom for testing
         // if (this.preparedData.length > 0) {
@@ -545,7 +552,7 @@ export class D3TimeseriesGraphComponent
      * @param data {Data} Array of Arrays containing the measurement-data of the dataset
      * @param uom {String} String with the uom of a dataset
      */
-    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<[number, number]>, uom: string): void {
+    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
         this.preparedData = this.preparedData.filter((entry) => {
             return !entry.internalId.startsWith('ref' + internalId);
         });
@@ -587,9 +594,7 @@ export class D3TimeseriesGraphComponent
         let autoDataExtent: boolean = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
-        const dataExtent = d3.extent<DataEntry, number>(dataEntry.data, (d) => {
-            return d.value;
-        });
+        const dataExtent = d3.extent<DataEntry, number>(dataEntry.data, (d) => (typeof d.value === 'number') ? d.value : null);
 
         calculatedOriginRange = { min: dataExtent[0], max: dataExtent[1] };
 
@@ -1021,13 +1026,13 @@ export class D3TimeseriesGraphComponent
         let laterTimestamp = null;
         if (this.plotOptions.requestBeforeAfterValues) {
             this.preparedData.forEach((entry: InternalDataEntry) => {
-                const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e.timestamp && this.timespan.to > e.timestamp) && isFinite(e.value));
+                const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e.timestamp && this.timespan.to > e.timestamp) && typeof e.value === 'number');
                 if (firstIdxInTimespan < 0) {
-                    const lastIdxInTimespan = entry.data.findIndex(e => (e.timestamp > this.timespan.from && e.timestamp > this.timespan.to) && isFinite(e.value));
+                    const lastIdxInTimespan = entry.data.findIndex(e => (e.timestamp > this.timespan.from && e.timestamp > this.timespan.to) && typeof e.value === 'number');
                     if (lastIdxInTimespan >= 0) {
                         laterTimestamp = entry.data[entry.data.length - 1].timestamp;
                     }
-                    const temp = entry.data.findIndex(e => (e.timestamp < this.timespan.from && e.timestamp < this.timespan.to) && isFinite(e.value));
+                    const temp = entry.data.findIndex(e => (e.timestamp < this.timespan.from && e.timestamp < this.timespan.to) && typeof e.value === 'number');
                     if (temp >= 0) {
                         formerTimestamp = entry.data[entry.data.length - 1].timestamp;
                     }
@@ -1852,7 +1857,7 @@ export class D3TimeseriesGraphComponent
             .attr('d', line);
         // draw line dots
         this.graphBody.selectAll('.graphDots')
-            .data(entry.data.filter((d) => !isNaN(d.value)))
+            .data(entry.data.filter((d) => typeof d.value === 'number'))
             .enter().append('circle')
             .attr('class', 'graphDots')
             .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.id)
@@ -1864,7 +1869,7 @@ export class D3TimeseriesGraphComponent
 
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
             this.graphBody.selectAll('.hoverDots')
-                .data(entry.data.filter((d) => !isNaN(d.value)))
+                .data(entry.data.filter((d) => typeof d.value === 'number'))
                 .enter().append('circle')
                 .attr('class', 'hoverDots')
                 .attr('id', (d: DataEntry) => 'hover-dot-' + d.timestamp + '-' + entry.id)
@@ -1882,6 +1887,7 @@ export class D3TimeseriesGraphComponent
     private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
         const paddingAfter = 5;
+        const periodInMs = this.datasetOptions.get(entry.internalId).barPeriod.asMilliseconds();
 
         const bars = this.graphBody.selectAll('.bar')
             .data(entry.data)
@@ -1892,17 +1898,15 @@ export class D3TimeseriesGraphComponent
             .style('stroke-width', entry.bars.lineWidth)
             .style('fill-opacity', 0.5)
             .attr('x', (d: DataEntry) => this.xScaleBase(d.timestamp) + paddingBefore)
-            .attr('width', (d: DataEntry, idx) => {
+            .attr('width', (d: DataEntry) => {
                 let width = 10;
-                if (!isNaN(d.value)) {
-                    if (entry.data[idx + 1]) {
-                        width = this.xScaleBase(entry.data[idx + 1].timestamp) - this.xScaleBase(d.timestamp);
-                    }
+                if (typeof d.value === 'number') {
+                    width = this.xScaleBase(d.timestamp + periodInMs) - this.xScaleBase(d.timestamp);
                 }
                 return width - paddingBefore - paddingAfter;
             })
-            .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
-            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
+            .attr('y', (d: DataEntry) => typeof d.value === 'number' ? yScaleBase(d.value) : 0)
+            .attr('height', (d: DataEntry) => (typeof d.value === 'number') ? this.height - yScaleBase(d.value) : 0);
 
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
             bars
@@ -2009,7 +2013,7 @@ export class D3TimeseriesGraphComponent
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
         return d3.line<DataEntry>()
-            .defined((d) => !isNaN(d.value))
+            .defined((d) => typeof d.value === 'number')
             .x((d) => {
                 const xDiagCoord = xScaleBase(d.timestamp);
                 if (!isNaN(xDiagCoord)) {
@@ -2018,10 +2022,12 @@ export class D3TimeseriesGraphComponent
                 }
             })
             .y((d) => {
-                const yDiagCoord = yScaleBase(d.value);
-                if (!isNaN(yDiagCoord)) {
-                    d.yDiagCoord = yDiagCoord;
-                    return yDiagCoord;
+                if (typeof d.value === 'number') {
+                    const yDiagCoord = yScaleBase(d.value);
+                    if (!isNaN(yDiagCoord)) {
+                        d.yDiagCoord = yDiagCoord;
+                        return yDiagCoord;
+                    }
                 }
             })
             .curve(d3.curveLinear);
@@ -2052,9 +2058,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private setHoveringLabel(value: number, timestamp: number, uom: string) {
+    private setHoveringLabel(value: number | string, timestamp: number, uom: string) {
+        let stringedValue = (typeof value === 'number') ? parseFloat(value.toPrecision(15)).toString() : value;
         this.highlightText
-            .text(`${value} ${uom} ${moment(timestamp).format('DD.MM.YY HH:mm')}`)
+            .text(`${stringedValue} ${uom} ${moment(timestamp).format('DD.MM.YY HH:mm')}`)
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
             .style('fill', 'black');
@@ -2073,17 +2080,11 @@ export class D3TimeseriesGraphComponent
     protected getYaxisRange(entry: InternalDataEntry): YRanges {
         // check if entry dataset should be separated or entry datasets should be grouped
         if (!entry.axisOptions.separateYAxis && (this.plotOptions.groupYaxis || this.plotOptions.groupYaxis === undefined)) {
-            return this.yRangesEachUom.find((obj) => {
-                if (obj !== null && obj.uom === entry.axisOptions.uom) {
-                    return true;
-                } // uom does exist in this.yRangesEachUom
-            });
+            // uom does exist in this.yRangesEachUom
+            return this.yRangesEachUom.find((obj) => obj !== null && obj.uom === entry.axisOptions.uom);
         } else {
-            return this.dataYranges.find((obj) => {
-                if (obj !== null && obj.id === entry.internalId) {
-                    return true;
-                } // id does exist in this.dataYranges
-            });
+            // id does exist in this.dataYranges
+            return this.dataYranges.find((obj) => obj !== null && obj.id === entry.internalId);
         }
     }
 
