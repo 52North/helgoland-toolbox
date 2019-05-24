@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * Options for each dataset.
  *
@@ -13,7 +15,8 @@ export class DatasetOptions {
     public internalId: string;
 
     /**
-     * type to display the data - line is default
+     * type to display the data
+     * default is 'line'
      *
      * @memberof DatasetOptions
      */
@@ -70,10 +73,27 @@ export class DatasetOptions {
 
     /**
      * radius of graphpoint
+     * default is 0
      *
      * @memberof DatasetOptions
      */
     public pointRadius: number = 0;
+
+    /**
+     * the start of, where to start with the bar chart
+     * See also: https://momentjs.com/docs/#/manipulating/start-of/
+     * default ist 'hour'
+     *
+     * @memberof DatasetOptions
+     */
+    public barStartOf: moment.unitOfTime.StartOf = 'hour';
+
+    /**
+     * period of the bars
+     *
+     * @memberof DatasetOptions
+     */
+    public barPeriod: moment.Duration = moment.duration(1, 'hour');
 
     /**
      * width of graphline
