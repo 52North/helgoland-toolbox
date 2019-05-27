@@ -140,19 +140,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx === -1) {
               dataEntry = {
                 internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
-                color: options.color,
+                options,
                 data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-                points: {
-                  fillColor: options.color
-                },
-                lines: {
-                  lineWidth: options.lineWidth,
-                  pointRadius: options.pointRadius
-                },
-                chartType: options.type === 'bar' ? 'bar' : 'line',
-                bars: {
-                  lineWidth: options.lineWidth
-                },
                 axisOptions: {
                   uom: dataset ? dataset.uom : entry.yaxisLabel,
                   label: dataset ? dataset.label : entry.yaxisLabel,

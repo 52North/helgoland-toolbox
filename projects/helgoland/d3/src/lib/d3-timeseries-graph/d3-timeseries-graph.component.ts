@@ -44,20 +44,9 @@ export interface DataEntry {
 export interface InternalDataEntry {
     internalId: string;
     id?: number;
-    color: string;
     data: DataEntry[];
     selected?: boolean;
-    points: {
-        fillColor: string
-    };
-    chartType: 'line' | 'bar';
-    lines?: {
-        lineWidth?: number;
-        pointRadius?: number;
-    };
-    bars?: {
-        lineWidth?: number;
-    };
+    options: DatasetOptions;
     axisOptions: {
         uom: string;
         label?: string;
@@ -298,10 +287,6 @@ export class D3TimeseriesGraphComponent
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         if (!tsData.selected || tsData.selected === undefined) {
             tsData.selected = true;
-            tsData.lines.lineWidth += this.addLineWidth;
-            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius += this.addLineWidth : tsData.lines.pointRadius += 0;
-            tsData.bars.lineWidth += this.addLineWidth;
-
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
                 this.checkYselector(tsData.internalId, tsData.axisOptions.uom);
                 if (this.yAxisSelect[internalId]) {
@@ -335,9 +320,6 @@ export class D3TimeseriesGraphComponent
         const tsData = this.preparedData.find((e) => e.internalId === internalId);
         if (tsData.selected || tsData.selected === undefined) {
             tsData.selected = false;
-            tsData.lines.lineWidth -= this.addLineWidth;
-            tsData.lines.pointRadius > 0 ? tsData.lines.pointRadius -= this.addLineWidth : tsData.lines.pointRadius -= 0;
-            tsData.bars.lineWidth -= this.addLineWidth;
 
             if (tsData.axisOptions.separateYAxis || !this.plotOptions.groupYaxis) {
                 this.checkYselector(tsData.internalId, tsData.axisOptions.uom);
@@ -455,16 +437,8 @@ export class D3TimeseriesGraphComponent
         const dataEntry: InternalDataEntry = {
             internalId: dataset.internalId,
             id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
-            color: options.color,
+            options,
             data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
-            chartType: options.type === 'bar' ? 'bar' : 'line',
-            points: {
-                fillColor: options.color
-            },
-            lines: {
-                lineWidth: options.lineWidth,
-                pointRadius: options.pointRadius
-            },
             axisOptions: {
                 uom: dataset.uom,
                 label: dataset.label,
@@ -481,12 +455,6 @@ export class D3TimeseriesGraphComponent
             visible: options.visible
         };
 
-        if (options.type === 'bar') {
-            dataEntry.bars = {
-                lineWidth: options.lineWidth
-            };
-        }
-
         let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
         if (options.separateYAxis) {
             if (separationIdx < 0) {
@@ -498,10 +466,6 @@ export class D3TimeseriesGraphComponent
 
         // alternative lineWidth = this.plotOptions.selected.includes(dataset.uom)
         if (this.selectedDatasetIds.indexOf(dataset.internalId) >= 0) {
-            dataEntry.lines.lineWidth += this.addLineWidth;
-            dataEntry.lines.pointRadius > 0 ? dataEntry.lines.pointRadius += this.addLineWidth : dataEntry.lines.pointRadius += 0;
-            dataEntry.bars.lineWidth += this.addLineWidth;
-
             if (options.separateYAxis) {
                 this.checkYselector(dataEntry.internalId, dataEntry.axisOptions.uom);
                 if (this.yAxisSelect[dataEntry.internalId]) {
@@ -558,18 +522,12 @@ export class D3TimeseriesGraphComponent
         });
         if (this.plotOptions.showReferenceValues) {
             styles.showReferenceValues.forEach((refValue) => {
+                const refId = 'ref' + internalId + refValue.id;
                 const refDataEntry: InternalDataEntry = {
-                    internalId: 'ref' + internalId + refValue.id,
-                    color: refValue.color,
+                    internalId: refId,
+                    options: new DatasetOptions(refId, refValue.color),
                     visible: true,
-                    chartType: 'line',
                     data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] })),
-                    points: {
-                        fillColor: refValue.color
-                    },
-                    lines: {
-                        lineWidth: 1
-                    },
                     axisOptions: {
                         uom: uom
                     }
@@ -981,7 +939,7 @@ export class D3TimeseriesGraphComponent
             entry.focusLabel = this.focusG.append('svg:text')
                 .attr('class', 'mouse-focus-label')
                 .style('pointer-events', 'none')
-                .style('fill', entry.color)
+                .style('fill', entry.options.color)
                 .style('font-weight', 'lighter');
             this.focuslabelTime = this.focusG.append('svg:text')
                 .style('pointer-events', 'none')
@@ -1371,8 +1329,8 @@ export class D3TimeseriesGraphComponent
                             this.graph.append('circle')
                                 .attr('class', 'axisDots')
                                 .attr('id', 'axisdot-' + entry.id)
-                                .attr('stroke', dataentry.color)
-                                .attr('fill', dataentry.color)
+                                .attr('stroke', dataentry.options.color)
+                                .attr('fill', dataentry.options.color)
                                 .attr('cx', startOfPoints.x)
                                 .attr('cy', startOfPoints.y - pointOffset)
                                 .attr('r', axisradius);
@@ -1385,8 +1343,8 @@ export class D3TimeseriesGraphComponent
                         this.graph.append('circle')
                             .attr('class', 'axisDots')
                             .attr('id', 'axisdot-' + entry.id)
-                            .attr('stroke', dataentry.color)
-                            .attr('fill', dataentry.color)
+                            .attr('stroke', dataentry.options.color)
+                            .attr('fill', dataentry.options.color)
                             .attr('cx', startOfPoints.x)
                             .attr('cy', startOfPoints.y - pointOffset)
                             .attr('r', axisradius);
@@ -1658,7 +1616,7 @@ export class D3TimeseriesGraphComponent
                     .append('g')
                     .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
-                if (entry.chartType === 'bar') {
+                if (entry.options.type === 'bar') {
                     this.drawBarChart(entry, yScaleBase);
                 } else {
                     this.drawLineChart(entry, yScaleBase);
@@ -1844,6 +1802,8 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawLineChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
+        const pointRadius = this.calculatePointRadius(entry);
+
         // create graph line
         let line = this.createLine(this.xScaleBase, yScaleBase);
         // draw line
@@ -1852,20 +1812,22 @@ export class D3TimeseriesGraphComponent
             .datum(entry.data)
             .attr('class', 'line')
             .attr('fill', 'none')
-            .attr('stroke', entry.color)
-            .attr('stroke-width', entry.lines.lineWidth)
+            .attr('stroke', entry.options.color)
+            .attr('stroke-width', this.calculateLineWidth(entry))
             .attr('d', line);
+
         // draw line dots
         this.graphBody.selectAll('.graphDots')
             .data(entry.data.filter((d) => typeof d.value === 'number'))
             .enter().append('circle')
             .attr('class', 'graphDots')
             .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.id)
-            .attr('stroke', entry.color)
-            .attr('fill', entry.color)
+            .attr('stroke', entry.options.pointBorderColor)
+            .attr('stroke-width', entry.options.pointBorderWidth)
+            .attr('fill', entry.options.color)
             .attr('cx', line.x())
             .attr('cy', line.y())
-            .attr('r', entry.lines.pointRadius);
+            .attr('r', pointRadius);
 
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
             this.graphBody.selectAll('.hoverDots')
@@ -1877,7 +1839,7 @@ export class D3TimeseriesGraphComponent
                 .attr('fill', 'transparent')
                 .attr('cx', line.x())
                 .attr('cy', line.y())
-                .attr('r', entry.lines.pointRadius + 3)
+                .attr('r', pointRadius + 3)
                 .on('mouseover', (d: DataEntry) => this.mouseOverPointHovering(d, entry))
                 .on('mouseout', (d: DataEntry) => this.mouseOutPointHovering(d, entry))
                 .on('mousedown', (d: DataEntry) => this.clickDataPoint(d, entry));
@@ -1893,9 +1855,9 @@ export class D3TimeseriesGraphComponent
             .data(entry.data)
             .enter().append('rect')
             .attr('class', 'bar')
-            .style('fill', entry.color)
-            .style('stroke', entry.color)
-            .style('stroke-width', entry.bars.lineWidth)
+            .style('fill', entry.options.color)
+            .style('stroke', entry.options.color)
+            .style('stroke-width', this.calculateLineWidth(entry))
             .style('fill-opacity', 0.5)
             .attr('x', (d: DataEntry) => this.xScaleBase(d.timestamp) + paddingBefore)
             .attr('width', (d: DataEntry) => {
@@ -1917,13 +1879,13 @@ export class D3TimeseriesGraphComponent
     }
 
     private hideHoveringLabel() {
-        this.highlightRect.style('visibility', 'hidden');
-        this.highlightText.style('visibility', 'hidden');
+        if (this.highlightRect) { this.highlightRect.style('visibility', 'hidden'); }
+        if (this.highlightText) { this.highlightText.style('visibility', 'hidden'); }
     }
 
     private showHoveringLabel() {
-        this.highlightRect.style('visibility', 'visible');
-        this.highlightText.style('visibility', 'visible');
+        if (this.highlightRect) { this.highlightRect.style('visibility', 'visible'); }
+        if (this.highlightText) { this.highlightText.style('visibility', 'visible'); }
     }
 
     private mouseoverBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
@@ -1934,13 +1896,13 @@ export class D3TimeseriesGraphComponent
             let rectBack = this.background.node().getBBox();
             if (xCoord >= 0 && xCoord <= rectBack.width && yCoord >= 0 && yCoord <= rectBack.height) {
                 // highlight bar
-                d3.select(rectElems[idx]).style('stroke-width', entry.bars.lineWidth + 2);
-                //
+                d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
+
                 this.showHoveringLabel();
 
                 this.setHoveringLabel(d.value, d.timestamp, entry.axisOptions.uom);
 
-                this.positioningHoverLabel(xCoord, yCoord, entry.color);
+                this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
                 // generate output of highlighted data
                 this.highlightOutput = {
                     timestamp: d.timestamp,
@@ -1957,7 +1919,7 @@ export class D3TimeseriesGraphComponent
             let coords = d3.mouse(this.background.node());
             let xCoord = coords[0];
             let yCoord = coords[1];
-            this.positioningHoverLabel(xCoord, yCoord, entry.color);
+            this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
         }
     }
 
@@ -1965,7 +1927,7 @@ export class D3TimeseriesGraphComponent
         if (d !== undefined) {
             // unhighlight hovered dot
             d3.select(rectElems[idx])
-                .style('stroke-width', entry.bars.lineWidth);
+                .style('stroke-width', this.calculateLineWidth(entry));
             // make label invisible
             this.hideHoveringLabel();
         }
@@ -2041,13 +2003,15 @@ export class D3TimeseriesGraphComponent
             let rectBack = this.background.node().getBBox();
             if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
                 // highlight hovered dot
-                d3.select('#dot-' + d.timestamp + '-' + entry.id).attr('opacity', 0.8).attr('r', '8px');
+                d3.select('#dot-' + d.timestamp + '-' + entry.id)
+                    .attr('opacity', 0.8)
+                    .attr('r', this.calculatePointRadius(entry) + 3);
 
                 this.showHoveringLabel();
 
                 this.setHoveringLabel(d.value, d.timestamp, entry.axisOptions.uom);
 
-                this.positioningHoverLabel(xCoord, yCoord, entry.color);
+                this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
 
                 this.highlightOutput = {
                     timestamp: d.timestamp,
@@ -2072,7 +2036,7 @@ export class D3TimeseriesGraphComponent
             // unhighlight hovered dot
             d3.select('#dot-' + d.timestamp + '-' + entry.id)
                 .attr('opacity', 1)
-                .attr('r', entry.lines.pointRadius);
+                .attr('r', this.calculatePointRadius(entry));
             this.hideHoveringLabel();
         }
     }
@@ -2419,4 +2383,20 @@ export class D3TimeseriesGraphComponent
         console.error(error);
     }
 
+    private calculateLineWidth(entry: InternalDataEntry) {
+        if (entry.selected) {
+            return entry.options.lineWidth + this.addLineWidth;
+        } else {
+            return entry.options.lineWidth;
+        }
+    }
+
+    private calculatePointRadius(entry: InternalDataEntry) {
+        if (entry.selected) {
+            return entry.options.pointRadius > 0 ? entry.options.pointRadius + this.addLineWidth : entry.options.pointRadius;
+        } else {
+            return entry.options.pointRadius;
+        }
+    }
 }
+
