@@ -94,6 +94,7 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option1.type = 'bar';
     option1.barPeriod = moment.duration(1, 'hour');
     option1.barStartOf = 'hour';
+    option1.lineDashArray = [5, 5];
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
@@ -102,6 +103,7 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option2.pointRadius = 4;
     option2.pointBorderWidth = 1;
     option2.pointBorderColor = 'black';
+    option2.lineDashArray = 5;
     option2.lineWidth = 2;
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);

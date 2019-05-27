@@ -1812,6 +1812,7 @@ export class D3TimeseriesGraphComponent
             .datum(entry.data)
             .attr('class', 'line')
             .attr('fill', 'none')
+            .attr('stroke-dasharray', entry.options.lineDashArray)
             .attr('stroke', entry.options.color)
             .attr('stroke-width', this.calculateLineWidth(entry))
             .attr('d', line);
@@ -1856,6 +1857,7 @@ export class D3TimeseriesGraphComponent
             .enter().append('rect')
             .attr('class', 'bar')
             .style('fill', entry.options.color)
+            .style('stroke-dasharray', entry.options.lineDashArray)
             .style('stroke', entry.options.color)
             .style('stroke-width', this.calculateLineWidth(entry))
             .style('fill-opacity', 0.5)
