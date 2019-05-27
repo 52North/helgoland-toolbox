@@ -103,6 +103,14 @@ export class DatasetOptions {
     public lineWidth: number = 1;
 
     /**
+     * dasharray to structure the line or bar chart border
+     * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+     *
+     * @memberof DatasetOptions
+     */
+    public lineDashArray: number | number[];
+
+    /**
      * color of the point border
      *
      * @memberof DatasetOptions
