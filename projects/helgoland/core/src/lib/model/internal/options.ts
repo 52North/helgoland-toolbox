@@ -103,6 +103,20 @@ export class DatasetOptions {
     public lineWidth: number = 1;
 
     /**
+     * color of the point border
+     *
+     * @memberof DatasetOptions
+     */
+    public pointBorderColor: string;
+
+    /**
+     * width of the point border
+     *
+     * @memberof DatasetOptions
+     */
+    public pointBorderWidth: number = 0;
+
+    /**
      * min and max range of y axis
      *
      * @memberof DatasetOptions

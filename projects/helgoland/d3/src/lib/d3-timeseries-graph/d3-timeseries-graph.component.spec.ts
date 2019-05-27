@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
+import moment from 'moment';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -90,18 +91,23 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
   it('should have a dataset', () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
     const option1 = new DatasetOptions(datasetID1, '#FF0000');
+    option1.type = 'bar';
+    option1.barPeriod = moment.duration(1, 'hour');
+    option1.barStartOf = 'hour';
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
     component.presenterOptions = { requestBeforeAfterValues: true };
     const option2 = new DatasetOptions(datasetID2, '#00FF00');
     option2.pointRadius = 4;
+    option2.pointBorderWidth = 1;
+    option2.pointBorderColor = 'black';
     option2.lineWidth = 2;
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
     component.presenterOptions.hoverStyle = HoveringStyle.point;
-    component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.CURRENT_WEEK);
+    component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
