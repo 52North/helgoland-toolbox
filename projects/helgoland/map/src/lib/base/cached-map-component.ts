@@ -86,10 +86,10 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     constructor(
         protected mapCache: MapCache,
-        protected differs: KeyValueDiffers
+        protected kvDiffers: KeyValueDiffers
     ) {
-        this._differOverlayMaps = this.differs.find({}).create();
-        this._differBaseMaps = this.differs.find({}).create();
+        this._differOverlayMaps = this.kvDiffers.find({}).create();
+        this._differBaseMaps = this.kvDiffers.find({}).create();
     }
 
     public ngOnInit(): void {

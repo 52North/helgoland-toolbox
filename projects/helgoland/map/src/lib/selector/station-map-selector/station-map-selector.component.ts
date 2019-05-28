@@ -55,10 +55,10 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         protected statusIntervalResolver: StatusIntervalResolverService,
         protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
-        protected differs: KeyValueDiffers,
+        protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
-        super(mapCache, differs, cd);
+        super(mapCache, kvDiffers, cd);
     }
 
     public ngOnChanges(changes: SimpleChanges) {

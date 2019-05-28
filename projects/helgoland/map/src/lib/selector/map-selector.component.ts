@@ -56,10 +56,10 @@ export abstract class MapSelectorComponent<T>
 
     constructor(
         protected mapCache: MapCache,
-        protected differs: KeyValueDiffers,
+        protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
-        super(mapCache, differs);
+        super(mapCache, kvDiffers);
     }
 
     public ngAfterViewInit() {

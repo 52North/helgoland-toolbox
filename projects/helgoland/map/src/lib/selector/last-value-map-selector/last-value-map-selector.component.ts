@@ -1,4 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, KeyValueDiffers } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  KeyValueDiffers,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   DatasetApiInterface,
   HasLoadableContent,
@@ -7,7 +18,7 @@ import {
   Timeseries,
   TimeseriesExtras,
 } from '@helgoland/core';
-import { circleMarker, featureGroup, geoJSON, Layer, marker } from 'leaflet';
+import { circleMarker, featureGroup, geoJSON, Layer, Marker, marker } from 'leaflet';
 import { forkJoin, Observable, Observer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -24,13 +35,13 @@ import { LastValueLabelGenerator, LastValuePresentation } from '../services/last
   styleUrls: ['../map-selector.component.scss']
 })
 @Mixin([HasLoadableContent])
-export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseries> implements AfterViewInit {
+export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseries> implements AfterViewInit, DoCheck, OnChanges {
 
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
   @Input()
-  public lastValueSeriesIDs: string[];
+  public lastValueSeriesIDs: string[] = [];
 
   /**
    * Presentation type how to display the series.
@@ -44,31 +55,52 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseri
   @Input()
   public ignoreStatusIntervalIfBeforeDuration = Infinity;
 
-  private markerFeatureGroup: L.FeatureGroup;
+  private _lastValueSeriesIDsDiff: IterableDiffer<string>;
+
+  private markerFeatureGroup: L.FeatureGroup = featureGroup();
 
   constructor(
     protected mapCache: MapCache,
-    protected differs: KeyValueDiffers,
+    protected kvDiffers: KeyValueDiffers,
+    protected iDiffers: IterableDiffers,
     protected cd: ChangeDetectorRef,
     protected apiInterface: DatasetApiInterface,
     protected lastValueLabelGenerator: LastValueLabelGenerator,
     protected statusIntervalResolver: StatusIntervalResolverService
   ) {
-    super(mapCache, differs, cd);
+    super(mapCache, kvDiffers, cd);
+    this._lastValueSeriesIDsDiff = this.iDiffers.find(this.lastValueSeriesIDs).create();
+  }
+
+  public ngDoCheck() {
+    super.ngDoCheck();
+    const changes = this._lastValueSeriesIDsDiff.diff(this.lastValueSeriesIDs);
+
+    if (changes && this.map) {
+
+      const ids = [];
+      changes.forEachAddedItem(record => {
+        ids.push(record.item);
+      });
+      this.createMarkersBySeriesIDs(ids);
+
+      changes.forEachRemovedItem(record => {
+        this.removeMarker(record.item);
+      });
+    }
   }
 
   protected drawGeometries(): void {
     this.isContentLoading(true);
     if (this.lastValueSeriesIDs && this.lastValueSeriesIDs.length) {
-      this.createMarkersBySeriesIDs();
+      this.createMarkersBySeriesIDs(this.lastValueSeriesIDs);
     }
   }
 
-  private createMarkersBySeriesIDs() {
-    this.markerFeatureGroup = featureGroup();
+  private createMarkersBySeriesIDs(ids: string[]) {
     const obsList: Array<Observable<any>> = [];
-    this.lastValueSeriesIDs.forEach(entry => {
-      const tsObs = this.apiInterface.getSingleTimeseriesByInternalId(entry);
+    ids.forEach(id => {
+      const tsObs = this.apiInterface.getSingleTimeseriesByInternalId(id);
       obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val).pipe(tap(res => {
         this.markerFeatureGroup.addLayer(res);
         res.on('click', () => this.onSelected.emit(val));
@@ -89,7 +121,6 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseri
 
   private finalizeMarkerObservables(obsList: Observable<any>[]) {
     forkJoin(obsList).subscribe(() => {
-      console.log('do zoom to bounds');
       if (this.map) {
         const bounds = this.markerFeatureGroup.getBounds();
         this.zoomToMarkerBounds(bounds);
@@ -117,6 +148,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseri
         if (!coloredMarker) {
           coloredMarker = this.createDefaultColoredMarker(ts);
         }
+        this.setId(coloredMarker, ts.internalId);
         observer.next(coloredMarker);
         observer.complete();
       });
@@ -144,14 +176,12 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseri
       });
     } else {
       geometry = geoJSON(ts.station.geometry, {
-        style: (feature) => {
-          return {
-            color: '#000',
-            fillColor: color,
-            fillOpacity: 0.8,
-            weight: 2
-          };
-        }
+        style: () => ({
+          color: '#000',
+          fillColor: color,
+          fillOpacity: 0.8,
+          weight: 2
+        })
       });
     }
     if (geometry) {
@@ -165,10 +195,33 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Timeseri
       const icon = this.lastValueLabelGenerator.createIconLabel(ts);
       if (ts.station.geometry.type === 'Point') {
         const point = ts.station.geometry as GeoJSON.Point;
-        observer.next(marker([point.coordinates[1], point.coordinates[0]], { icon }));
+        const genMarker = marker([point.coordinates[1], point.coordinates[0]], { icon });
+        this.setId(genMarker, ts.internalId);
+        observer.next(genMarker);
         observer.complete();
       }
     });
+  }
+
+  private setId(m: Marker, id: string) {
+    m.feature = {
+      id,
+      type: 'Feature',
+      properties: null,
+      geometry: null
+    };
+  }
+
+  private removeMarker(markerId: string) {
+    let searchedLayer;
+    this.markerFeatureGroup.eachLayer((layer: Marker) => {
+      if (layer.feature.id === markerId) {
+        searchedLayer = layer;
+      }
+    });
+    if (searchedLayer) {
+      this.markerFeatureGroup.removeLayer(searchedLayer);
+    }
   }
 
 }

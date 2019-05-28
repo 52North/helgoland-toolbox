@@ -98,13 +98,16 @@ export class MapSelectorComponent {
         private mapCache: MapCache,
     ) {
         this.markerSelectorGenerator = new MarkerSelectorGeneratorImpl(this.mapCache, this.mapId);
+
+        setTimeout(() => {
+            this.lastValueSeriesIDs.push('https://www.fluggs.de/sos2/api/v1/__54');
+        }, 2000);
     }
 
     public lastValueSeriesIDs = [
         'https://www.fluggs.de/sos2/api/v1/__51',
         'https://www.fluggs.de/sos2/api/v1/__78',
-        'https://www.fluggs.de/sos2/api/v1/__95',
-        'https://www.fluggs.de/sos2/api/v1/__54'
+        'https://www.fluggs.de/sos2/api/v1/__95'
     ];
     public lastValuePresentation = LastValuePresentation.Textual;
     public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };

@@ -39,9 +39,9 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
 
     constructor(
         protected mapCache: MapCache,
-        protected differs: KeyValueDiffers
+        protected kvDiffers: KeyValueDiffers
     ) {
-        super(mapCache, differs);
+        super(mapCache, kvDiffers);
     }
 
     public ngAfterViewInit() {

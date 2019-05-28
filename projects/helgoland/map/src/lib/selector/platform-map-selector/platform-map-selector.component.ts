@@ -24,9 +24,9 @@ export class PlatformMapSelectorComponent extends MapSelectorComponent<Platform>
         protected apiInterface: DatasetApiInterface,
         protected mapCache: MapCache,
         protected cd: ChangeDetectorRef,
-        protected differs: KeyValueDiffers
+        protected kvDiffers: KeyValueDiffers
     ) {
-        super(mapCache, differs, cd);
+        super(mapCache, kvDiffers, cd);
     }
 
     protected drawGeometries() {
