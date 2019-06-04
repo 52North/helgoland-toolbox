@@ -75,9 +75,7 @@ export interface DataConst extends IDataset {
 
 export interface YRanges {
     uom: string;
-    range?: MinMaxRange; // necessary if grouped by uom
-    preRange?: MinMaxRange; // necessary if grouped by uom
-    originRange?: MinMaxRange; // necessary if grouped by uom
+    range?: MinMaxRange;
     zeroBased: boolean;
     autoRange: boolean;
     outOfrange: boolean;
@@ -560,7 +558,6 @@ export class D3TimeseriesGraphComponent
     protected processData(dataEntry: InternalDataEntry): void {
         let calculatedRange: MinMaxRange;
         let calculatedPreRange: MinMaxRange;
-        let calculatedOriginRange: MinMaxRange;
         let predefinedRange: MinMaxRange;
         if (dataEntry.axisOptions.yAxisRange && dataEntry.axisOptions.yAxisRange.min !== dataEntry.axisOptions.yAxisRange.max) {
             predefinedRange = dataEntry.axisOptions.yAxisRange;
@@ -569,8 +566,6 @@ export class D3TimeseriesGraphComponent
 
         // get min and max value of data
         const dataExtent = d3.extent<DataEntry, number>(dataEntry.data, (d) => (typeof d.value === 'number') ? d.value : null);
-
-        calculatedOriginRange = { min: dataExtent[0], max: dataExtent[1] };
 
         let setDataExtent = false;
 
@@ -592,7 +587,7 @@ export class D3TimeseriesGraphComponent
 
         if (setDataExtent) {
             calculatedRange = { min: dataExtent[0], max: dataExtent[1] };
-            this.extendRange(calculatedRange);
+            this.bufferRange(calculatedRange, 0.1);
         }
 
         // if style option 'zero based y-axis' is checked,
@@ -623,8 +618,6 @@ export class D3TimeseriesGraphComponent
             };
             if (isFinite(calculatedRange.min) && isFinite(calculatedRange.max)) {
                 this.dataYranges[newDatasetIdx].range = calculatedRange;
-                this.dataYranges[newDatasetIdx].preRange = calculatedPreRange;
-                this.dataYranges[newDatasetIdx].originRange = calculatedOriginRange;
             }
         } else {
             this.dataYranges[newDatasetIdx] = null;
@@ -638,8 +631,6 @@ export class D3TimeseriesGraphComponent
                 let yrangeObj: YRanges = {
                     uom: yRange.uom,
                     range: yRange.range,
-                    preRange: yRange.preRange,
-                    originRange: yRange.originRange,
                     ids: [yRange.id],
                     zeroBased: yRange.zeroBased,
                     outOfrange: yRange.outOfrange,
@@ -648,25 +639,9 @@ export class D3TimeseriesGraphComponent
                 };
 
                 if (idx >= 0) {
-                    if (this.yRangesEachUom[idx].range) {
-                        if (yRange.range) {
-                            if (this.yRangesEachUom[idx].autoRange || yRange.autoRange) {
-                                if (yRange.preRange && this.yRangesEachUom[idx].preRange) {
-                                    this.checkCurrentLatest(idx, yRange, 'preRange');
-                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].preRange;
-                                } else {
-                                    this.checkCurrentLatest(idx, yRange, 'range');
-                                }
-                                this.yRangesEachUom[idx].autoRange = true;
-                            } else {
-                                if (yRange.outOfrange !== this.yRangesEachUom[idx].outOfrange) {
-                                    this.checkCurrentLatest(idx, yRange, 'originRange');
-                                    this.yRangesEachUom[idx].range = this.yRangesEachUom[idx].originRange;
-                                } else {
-                                    this.checkCurrentLatest(idx, yRange, 'range');
-                                }
-                            }
-                        }
+                    if (this.yRangesEachUom[idx].range && !this.yRangesEachUom[idx].id) {
+                        this.yRangesEachUom[idx].range.min = Math.min(yRange.range.min, this.yRangesEachUom[idx].range.min);
+                        this.yRangesEachUom[idx].range.max = Math.max(yRange.range.max, this.yRangesEachUom[idx].range.max);
                     } else {
                         this.takeLatest(idx, yRange, 'range');
                     }
@@ -684,14 +659,31 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
+     * Buffers the range with a given factor.
+     * @param range {MinMaxRange} range to be buffered
+     * @param factor {number}
+     */
+    protected bufferRange(range: MinMaxRange, factor: number): MinMaxRange {
+        const offset = (range.max - range.min) * factor;
+        range.max = range.max + offset;
+        range.min = range.min - offset;
+        return range;
+    }
+
+    /**
      * Function to set range to default interval, if min and max of range are not set.
      * @param range {MinMaxRange} range to be set
      */
-    protected extendRange(range: MinMaxRange): void {
-        if (range.min === range.max) {
-            range.min = range.min - 1;
-            range.max = range.max + 1;
+    protected extendRange(range: MinMaxRange): MinMaxRange {
+        let min = -1;
+        let max = 1;
+        if (range !== undefined && range !== null) {
+            if (range.min !== range.max) {
+                min = range.min;
+                max = range.max;
+            }
         }
+        return { min, max };
     }
 
     /**
@@ -1248,31 +1240,28 @@ export class D3TimeseriesGraphComponent
                 range = this.getyAxisRange(entry.uom);
             } else {
                 // separated id (if not entry.uom) OR grouped, but only one dataset (if entry is grouped but has only one id => use range of this dataset)
-                let entryElem = this.dataYranges.find((el) => el !== null && (entry.id ? el.id === entry.id : el.id === entry.ids[0]));
+                let entryElem = this.dataYranges.find((el) => {
+                    if (entry.ids && el.ids) {
+                        const found = entry.ids.findIndex(e => el.ids.indexOf(e) >= 0);
+                        if (found >= 0) {
+                            return true;
+                        }
+                    } else {
+                        return el !== null && (entry.id ? el.id === entry.id : el.id === entry.ids[0]);
+                    }
+                });
                 if (entryElem) {
                     range = entryElem.range;
                     // range = entryElem.preRange ? entryElem.preRange : entryElem.range;
                 }
             }
-        } else {
-            // ungrouped axis
-            let entryElem = this.dataYranges.find((el) => el !== null && el.id === entry.id);
-            if (entryElem) {
-                range = entryElem.preRange ? entryElem.preRange : entryElem.range;
-            }
         }
 
-        let yMin = -1;
-        let yMax = 1;
-        if (range !== undefined && range !== null) {
-            yMin = range.min;
-            yMax = range.max;
-        }
+        range = this.extendRange(range);
 
         // range for y axis scale
-        const rangeOffset = (yMax - yMin) * 0.10;
         const yScale = d3.scaleLinear()
-            .domain([yMin - rangeOffset, yMax + rangeOffset])
+            .domain([range.min, range.max])
             .range([this.height, 0]);
 
         let yAxisGen = d3.axisLeft(yScale).ticks(5);
@@ -1284,6 +1273,7 @@ export class D3TimeseriesGraphComponent
                 .tickFormat(() => '')
                 .tickSize(0);
         }
+        const label = entry.id ? (entry.uom + ' @ ' + entry.parameters.feature.label) : entry.uom;
 
         // draw y axis
         const axis = this.graph.append('svg:g')
@@ -1300,7 +1290,7 @@ export class D3TimeseriesGraphComponent
                 .style('font', '18px times')
                 .style('text-anchor', 'middle')
                 .style('fill', 'black')
-                .text((entry.id ? (entry.uom + ' @ ' + entry.parameters.feature.label) : entry.uom));
+                .text(label);
             // .text((entry.id ? (entry.parameters.station + ' (' + entry.uom + ' ' + entry.parameters.phenomenon + ')') : entry.uom));
 
             this.graph.selectAll('.yaxisTextLabel')

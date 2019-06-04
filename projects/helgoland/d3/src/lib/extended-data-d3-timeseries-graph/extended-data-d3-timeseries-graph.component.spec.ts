@@ -38,6 +38,10 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         const additionalDataOption = new DatasetOptions('horst', '#0000FF');
         additionalDataOption.pointRadius = 6;
         additionalDataOption.lineWidth = 3;
+        // additionalDataOption.yAxisRange = {
+        //     min: 0,
+        //     max: 2
+        // };
         additionalDataOption.autoRangeSelection = true;
         component.additionalData = [
             {
@@ -45,12 +49,44 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
                 datasetOptions: additionalDataOption,
                 data: [
                     {
-                        timestamp: new Date().getTime() - 1000,
+                        timestamp: new Date().getTime() - 10000,
+                        value: 1
+                    },
+                    {
+                        timestamp: new Date().getTime() - 9000,
+                        value: 2
+                    },
+                    {
+                        timestamp: new Date().getTime() - 8000,
+                        value: 1
+                    },
+                    {
+                        timestamp: new Date().getTime() - 7000,
                         value: 0
                     },
                     {
-                        timestamp: new Date().getTime(),
-                        value: Math.random()
+                        timestamp: new Date().getTime() - 6000,
+                        value: -0.5
+                    },
+                    {
+                        timestamp: new Date().getTime() - 5000,
+                        value: 0
+                    },
+                    {
+                        timestamp: new Date().getTime() - 4000,
+                        value: 1
+                    },
+                    {
+                        timestamp: new Date().getTime() - 3000,
+                        value: 1
+                    },
+                    {
+                        timestamp: new Date().getTime() - 2000,
+                        value: 1
+                    },
+                    {
+                        timestamp: new Date().getTime() - 1000,
+                        value: Math.random() * 2
                     }
                 ]
             }
@@ -59,7 +95,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         setInterval(() => {
             component.additionalData[0].data.push({
                 timestamp: new Date().getTime(),
-                value: Math.random()
+                value: Math.random() * 3
             });
             component.additionalData = Object.assign([], component.additionalData);
             component.ngOnChanges({

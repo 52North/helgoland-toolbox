@@ -59,7 +59,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 
 });
 
-fdescribe('D3TimeseriesGraphComponent - function', () => {
+describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
   let datasetID1 = 'http://geo.irceline.be/sos/api/v1/__10604';
@@ -91,10 +91,15 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
   it('should have a dataset', () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
     const option1 = new DatasetOptions(datasetID1, '#FF0000');
-    option1.type = 'bar';
+    // option1.type = 'bar';
     option1.barPeriod = 'PT1H';
     option1.barStartOf = 'hour';
     option1.lineDashArray = [5, 5];
+    option1.separateYAxis = false;
+    // option1.yAxisRange = {
+    //   min: -1,
+    //   max: 2
+    // };
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
@@ -104,6 +109,10 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option2.pointBorderWidth = 1;
     option2.pointBorderColor = 'black';
     option2.lineDashArray = 5;
+    // option2.yAxisRange = {
+    //   min: 0,
+    //   max: 10
+    // };
     option2.lineWidth = 2;
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
