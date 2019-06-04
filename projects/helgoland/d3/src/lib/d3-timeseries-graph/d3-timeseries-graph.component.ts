@@ -28,7 +28,7 @@ import {
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment from 'moment';
+import moment, { Duration, unitOfTime } from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { HighlightOutput } from '../model/d3-highlight';
@@ -47,6 +47,10 @@ export interface InternalDataEntry {
     data: DataEntry[];
     selected?: boolean;
     options: DatasetOptions;
+    bar?: {
+        startOf: unitOfTime.StartOf;
+        period: Duration;
+    };
     axisOptions: {
         uom: string;
         label?: string;
@@ -419,8 +423,19 @@ export class D3TimeseriesGraphComponent
         const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
         const options = this.datasetOptions.get(dataset.internalId);
 
+        let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; };
+
+        // summate values for bar chart visualization
         if (options.type === 'bar') {
-            data.values = this.sumValues.sum(options.barStartOf, options.barPeriod, data.values);
+            barConfig = {
+                startOf: options.barStartOf as unitOfTime.StartOf,
+                period: moment.duration(options.barPeriod)
+            };
+            if (barConfig.period.asMilliseconds() === 0) {
+                throw new Error(`${dataset.internalId} needs a valid barPeriod`);
+            }
+            data.values = this.sumValues.sum(barConfig.startOf, barConfig.period, data.values);
+            data.values.forEach(e => console.log(moment(e[0]).toISOString()));
         }
 
         // TODO: change uom for testing
@@ -452,7 +467,8 @@ export class D3TimeseriesGraphComponent
                     offering: dataset.parameters.offering
                 }
             },
-            visible: options.visible
+            visible: options.visible,
+            bar: barConfig
         };
 
         let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
@@ -1850,7 +1866,7 @@ export class D3TimeseriesGraphComponent
     private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
         const paddingAfter = 5;
-        const periodInMs = this.datasetOptions.get(entry.internalId).barPeriod.asMilliseconds();
+        const periodInMs = entry.bar.period.asMilliseconds();
 
         const bars = this.graphBody.selectAll('.bar')
             .data(entry.data)
