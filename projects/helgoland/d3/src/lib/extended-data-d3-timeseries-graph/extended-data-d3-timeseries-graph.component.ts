@@ -23,6 +23,7 @@ import {
   D3TimeseriesGraphComponent,
   DataEntry,
   InternalDataEntry,
+  YRanges,
 } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 
@@ -173,16 +174,20 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
               }
             });
             if (isFinite(dataExtent[0]) && isFinite(dataExtent[1])) {
-              const range: MinMaxRange = { min: dataExtent[0], max: dataExtent[1] };
-              this.extendRange(range);
+              let range: MinMaxRange;
+              if (options.yAxisRange) {
+                range = options.yAxisRange;
+                range = this.extendRange(range);
+              } else {
+                range = { min: dataExtent[0], max: dataExtent[1] };
+                range = this.bufferRange(range, 0.1);
+              }
               if (newDatasetIdx === -1) {
                 const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
-                const axisRange = {
+                const axisRange: YRanges = {
                   uom: entry.yaxisLabel,
                   range: range,
                   autoRange: options.autoRangeSelection,
-                  preRange: range,
-                  originRange: range,
                   zeroBased: options.zeroBasedYAxis,
                   outOfrange: false,
                   ids: [entry.yaxisLabel],
@@ -193,6 +198,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                 } else {
                   this.yRangesEachUom.push(axisRange);
                 }
+                this.dataYranges.push(axisRange);
               } else {
                 if (this.yRangesEachUom[newDatasetIdx].range) {
                   this.yRangesEachUom[newDatasetIdx].range.min = Math.min(range.min, this.yRangesEachUom[newDatasetIdx].range.min);
