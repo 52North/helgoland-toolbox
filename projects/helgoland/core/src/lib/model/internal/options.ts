@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 /**
  * Options for each dataset.
  *
@@ -82,18 +80,20 @@ export class DatasetOptions {
     /**
      * the start of, where to start with the bar chart
      * See also: https://momentjs.com/docs/#/manipulating/start-of/
-     * default ist 'hour'
+     * default is 'hour'
      *
      * @memberof DatasetOptions
      */
-    public barStartOf: moment.unitOfTime.StartOf = 'hour';
+    public barStartOf: string = 'hour';
 
     /**
      * period of the bars
-     *
+     * defined as moment.duration by a string
+     * See also: https://momentjs.com/docs/#/durations/
+     * default is 'PT1H' which means one hour duration
      * @memberof DatasetOptions
      */
-    public barPeriod: moment.Duration = moment.duration(1, 'hour');
+    public barPeriod: string = 'PT1H';
 
     /**
      * width of graphline
