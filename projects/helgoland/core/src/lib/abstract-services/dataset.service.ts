@@ -41,6 +41,10 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
         return this.datasetIds.length > 0;
     }
 
+    public hasDataset(id: string): boolean {
+        return this.datasetIds.indexOf(id) >= 0;
+    }
+
     public updateDatasetOptions(options: T, internalId: string) {
         this.datasetOptions.set(internalId, options);
         this.saveState();
