@@ -30,6 +30,7 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
     private addLoadedDataset(dataset: IDataset) {
         this.datasetIds.push(dataset.internalId);
         this.datasetOptions.set(dataset.internalId, this.createOptionsOfRenderingHints(dataset));
+        this.saveState();
     }
 
     private createOptionsOfRenderingHints(dataset: IDataset): T {
