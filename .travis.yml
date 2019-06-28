@@ -10,6 +10,7 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint
+  - npm run lib:build
   - npm test
 
 # deploy to registry ...
