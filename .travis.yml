@@ -10,4 +10,6 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint
-# - ng build --prod --base-href https://t-palmer.github.io/travis-demo/
+  - npm test
+
+# deploy to registry ...
