@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatasetApiInterface } from '@helgoland/core';
-import { Service } from '@helgoland/core';
-import { BlacklistedService } from '@helgoland/core';
-import { ParameterFilter } from '@helgoland/core';
+import { BlacklistedService, DatasetApiInterface, ParameterFilter, Service } from '@helgoland/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
@@ -23,11 +20,7 @@ export class ServiceSelectorService {
                 .subscribe(
                     (services) => {
                         if (services && services instanceof Array) {
-                            const usableServices = services.map((service) => {
-                                if (!this.isServiceBlacklisted(service.id, url, blacklist)) {
-                                    return service;
-                                }
-                            });
+                            const usableServices = services.filter((service) => !this.isServiceBlacklisted(service.id, url, blacklist));
                             observer.next(usableServices);
                             observer.complete();
                         }
