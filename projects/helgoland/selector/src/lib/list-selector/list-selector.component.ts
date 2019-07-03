@@ -48,10 +48,12 @@ export class ListSelectorComponent implements OnChanges {
             if (this.selectorId && this.listSelectorService.cache.has(this.selectorId)
                 && this.isEqual(this.providerList, this.listSelectorService.providerList)) {
                 this.parameters = this.listSelectorService.cache.get(this.selectorId);
-                const idx = this.parameters.findIndex((entry) => {
-                    return entry.isDisabled;
-                }) - 1;
-                this.activePanel = this.selectorId + '-' + idx;
+                let idx = this.parameters.findIndex((entry) => entry.isDisabled);
+                if (idx === -1) {
+                    idx = this.parameters.length;
+                }
+                this.activePanel = this.selectorId + '-' + (idx - 1);
+                this.parameters[idx - 1].filterList.forEach(e => delete e.filter[this.parameters[idx - 1].type]);
             } else {
                 if (this.selectorId) {
                     this.listSelectorService.cache.set(this.selectorId, this.parameters);
