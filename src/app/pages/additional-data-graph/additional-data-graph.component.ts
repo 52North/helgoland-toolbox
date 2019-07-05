@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
 import { AdditionalData, D3PlotOptions } from '@helgoland/d3';
 
