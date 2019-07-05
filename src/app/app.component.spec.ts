@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
-import { MatListModule, MatRadioModule, MatSidenavModule } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
