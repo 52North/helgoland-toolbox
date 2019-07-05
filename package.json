@@ -12,6 +12,9 @@
   "author": {
     "name": "Jan Schulte"
   },
+  "engines": {
+    "node": "=8.16.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/52North/helgoland-toolbox.git"
