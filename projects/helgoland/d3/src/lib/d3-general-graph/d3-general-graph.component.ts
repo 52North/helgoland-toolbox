@@ -1,23 +1,17 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnChanges,
-    ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
+import moment from 'moment';
+
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import {
+    D3GeneralAxisOptions,
     D3GeneralDataPoint,
     D3GeneralDataset,
+    D3GeneralGraphOptions,
     D3GeneralInput,
     D3GeneralPlotOptions,
-    D3GeneralAxisOptions,
     Range,
-    D3GeneralGraphOptions
 } from '../model/d3-general';
-import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
-import moment from 'moment';
 
 @Component({
     selector: 'n52-d3-general-graph',
@@ -26,7 +20,7 @@ import moment from 'moment';
 })
 export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild('d3general')
+    @ViewChild('d3general', { static: true })
     public d3Elem: ElementRef;
 
     @Input()

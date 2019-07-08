@@ -42,7 +42,7 @@ export class PlotlyProfileGraphComponent
     @Output()
     public onHighlight: EventEmitter<PresenterHighlight> = new EventEmitter();
 
-    @ViewChild('plotly')
+    @ViewChild('plotly', { static: true })
     public plotlyElem: ElementRef;
 
     private plotlyArea: any;
