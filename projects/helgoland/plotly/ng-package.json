@@ -3,7 +3,13 @@
   "dest": "../../../dist/helgoland/plotly",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "@ngx-translate/core": "@ngx-translate/core",
+      "d3": "d3",
+      "plotly.js": "plotly.js"
+    }
   },
   "whitelistedNonPeerDependencies": [""]
 }

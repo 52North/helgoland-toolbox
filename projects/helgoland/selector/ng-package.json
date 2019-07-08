@@ -3,7 +3,12 @@
   "dest": "../../../dist/helgoland/selector",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "@helgoland/depiction": "@helgoland/depiction",
+      "@ngx-translate/core": "@ngx-translate/core"
+    }
   },
   "whitelistedNonPeerDependencies": [""]
 }
