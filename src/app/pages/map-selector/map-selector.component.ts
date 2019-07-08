@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
 import { GeoSearchOptions, LastValuePresentation, LayerOptions, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
-import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer } from 'leaflet';
+import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, TileLayerOptions, WMSOptions } from 'leaflet';
 
 Marker.prototype.options.icon = icon({
     iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -131,7 +131,7 @@ export class MapSelectorComponent {
                     zIndex: -9998,
                     projection: 'EPSG:4326',
                     units: 'm'
-                })
+                } as WMSOptions)
             });
         this.overlayMaps.set('realtime:o3_station_max',
             {
@@ -147,7 +147,7 @@ export class MapSelectorComponent {
                     zIndex: -9997,
                     projection: 'EPSG:4326',
                     units: 'm'
-                })
+                } as WMSOptions)
             }
         );
     }

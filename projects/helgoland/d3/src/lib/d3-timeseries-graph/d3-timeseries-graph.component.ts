@@ -128,7 +128,7 @@ export class D3TimeseriesGraphComponent
     @Output()
     public onClickDataPoint: EventEmitter<TimeseriesData[]> = new EventEmitter();
 
-    @ViewChild('d3timeseries')
+    @ViewChild('d3timeseries', { static: true })
     public d3Elem: ElementRef;
 
     public highlightOutput: HighlightOutput;
