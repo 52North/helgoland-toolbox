@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -72,7 +69,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
+                        <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
             </p>
 
         <section>
@@ -117,7 +114,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>deliveryMethod:     <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
+                                        <code>deliveryMethod:         <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -125,7 +122,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
 
                                         </td>
                                     </tr>
@@ -146,7 +143,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>notification:     <code><a href="../interfaces/Notification.html" target="_self" >Notification</a></code>
+                                        <code>notification:         <code><a href="../interfaces/Notification.html" target="_self" >Notification</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -154,7 +151,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Notification.html" target="_self" >Notification</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/Notification.html" target="_self" >Notification</a></code>
 
                                         </td>
                                     </tr>
@@ -175,7 +172,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>user:     <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
+                                        <code>user:         <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -183,7 +180,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/Id.html" target="_self" >Id</a></code>
 
                                         </td>
                                     </tr>
@@ -214,6 +211,7 @@ export interface SubscriptionResults extends EventingEndpoint&lt;Subscription&gt
 </div>
 
 
+                   
 
 
 
@@ -240,7 +238,9 @@ export interface SubscriptionResults extends EventingEndpoint&lt;Subscription&gt
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

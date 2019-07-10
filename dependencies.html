@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -73,7 +70,7 @@
         <li>
             <b>@angular/router</b> : ^6.1.7</li>
         <li>
-            <b>@compodoc/compodoc</b> : ^1.1.5</li>
+            <b>@compodoc/compodoc</b> : ^1.1.10</li>
         <li>
             <b>@ngx-translate/core</b> : ^10.0.2</li>
         <li>
@@ -87,7 +84,7 @@
         <li>
             <b>@types/jquery</b> : ^3.3.6</li>
         <li>
-            <b>@types/leaflet</b> : ^1.2.10</li>
+            <b>@types/leaflet</b> : 1.2.13</li>
         <li>
             <b>@types/leaflet.markercluster</b> : ^1.0.3</li>
         <li>
@@ -132,6 +129,7 @@
             <b>zone.js</b> : ^0.8.26</li>
     </ul>
 
+                   
 
 
 
@@ -158,7 +156,9 @@
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <script src="./js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

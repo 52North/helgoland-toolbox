@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -46,6 +43,7 @@
 
 
 
+                   
 
 
 
@@ -96,7 +94,8 @@
 </ul>
 <h2 id="step-2-add-existing-timeseries-entry-component-to-app">Step 2: Add existing timeseries entry component to app</h2>
 <ul>
-<li>install <code>@helgoland/depiction</code> add <code>HelgolandDatasetlistModule</code> to import<ul>
+<li><p>install <code>@helgoland/depiction</code> add <code>HelgolandDatasetlistModule</code> to import</p>
+<ul>
 <li>do a<div><pre class="line-numbers"><code class="language-none">```bash
 npm i &#64;helgoland/depiction
 ```</code></pre></div></li>
@@ -108,7 +107,8 @@ npm i typescript&#64;~2.6
 ```</code></pre></div></li>
 </ul>
 </li>
-<li>add <code>SettingsService</code> to provider<ul>
+<li><p>add <code>SettingsService</code> to provider</p>
+<ul>
 <li>create an Injectable <code>ExtendedSettingsService</code> which will extend a <code>SettingsService</code> in your project and add the missing imports (<code>SettingsService</code>, <code>Settings</code> of <code>@helgoland/core</code> and <code>Injectable</code> of <code>@angular/core</code>)<div><pre class="line-numbers"><code class="language-none">```typescript
 &#64;Injectable()
 export class ExtendedSettingsService extends SettingsService&lt;Settings&gt; {
@@ -128,11 +128,13 @@ export class ExtendedSettingsService extends SettingsService&lt;Settings&gt; {
 ```</code></pre></div></li>
 </ul>
 </li>
-<li>add <code>n52-timeseries-entry</code> to <code>app.component.html</code> (integrate this in the previous created div with the class <code>left</code>)<div><pre class="line-numbers"><code class="language-html">  &lt;div&gt;Common timeseries entries&lt;/div&gt;
+<li><p>add <code>n52-timeseries-entry</code> to <code>app.component.html</code> (integrate this in the previous created div with the class <code>left</code>)</p>
+<div><pre class="line-numbers"><code class="language-html">  &lt;div&gt;Common timeseries entries&lt;/div&gt;
   &lt;div *ngFor=&quot;let id of datasetIdsMultiple&quot;&gt;
       &lt;n52-timeseries-entry [datasetId]=&quot;id&quot; [selected]=&quot;isSelected(id)&quot; [datasetOptions]=&quot;datasetOptionsMultiple.get(id)&quot; [timeInterval]=&quot;timespan&quot; (onSelectDataset)=&quot;selectDataset($event, id)&quot;&gt;&lt;/n52-timeseries-entry&gt;
   &lt;/div&gt;</code></pre></div></li>
-<li>add <code>selectDataset</code>-method to <code>AppComponent</code> class (handles the selection of a dataset triggered inside the timeseries-entry-component)<div><pre class="line-numbers"><code class="language-typescript">  public selectDataset(selected: boolean, id: string) {
+<li><p>add <code>selectDataset</code>-method to <code>AppComponent</code> class (handles the selection of a dataset triggered inside the timeseries-entry-component)</p>
+<div><pre class="line-numbers"><code class="language-typescript">  public selectDataset(selected: boolean, id: string) {
       if (selected) {
           this.selectedIds.push(id);
       } else {
@@ -216,7 +218,9 @@ npm i &#64;angular/cdk&#64;^5.0.0 &#64;angular/material&#64;^5.0.0
 
        <script src="../../js/libs/custom-elements.min.js"></script>
        <script src="../../js/libs/lit-html.js"></script>
-       <script src="../../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
 
        <script src="../../js/libs/bootstrap-native.js"></script>
 

@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -46,6 +43,7 @@
 
 
 
+                   
 
 
 
@@ -62,7 +60,7 @@
     &quot;url&quot;: &quot;https://url-to/api/v1/&quot;,
     &quot;basicAuth&quot;: true
   }
-]</code></pre></div><h3 id="by-registering-the-url-by-hand-">by registering the url by &#39;hand&#39;</h3>
+]</code></pre></div><h3 id="by-registering-the-url-by-hand">by registering the url by &#39;hand&#39;</h3>
 <p>Use an injected service <code>BasicAuthServiceMaintainer</code> and register the url in this way:</p>
 <div><pre class="line-numbers"><code class="language-typescript">this.basicAuthServiceMaintainer.registerService(&#39;https://url-to/api/v1/&#39;);</code></pre></div><h2 id="how-to-get-credentials-for-a-basic-auth">How to get credentials for a basic auth</h2>
 <p>Implement the <code>BasicAuthInformer</code> with the method <code>doBasicAuth</code>. Here you can provide the User a login mask (maybe a modal window), do the auth process. And fulfill the Observable in any case, if authencation was successful or not. See a simple example here:</p>
@@ -117,7 +115,9 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
 
        <script src="../../js/libs/custom-elements.min.js"></script>
        <script src="../../js/libs/lit-html.js"></script>
-       <script src="../../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
 
        <script src="../../js/libs/bootstrap-native.js"></script>
 

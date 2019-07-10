@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -46,6 +43,7 @@
 
 
 
+                   
 
 
 
@@ -129,7 +127,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }</code></pre></div><p>To fully add leaflet to the app, we need to make sure, that the tiles of the leaflet map are loaded. Therefore we will need to embed the leaflet styles into the main <code>styles.scss</code>:</p>
 <div><pre class="line-numbers"><code class="language-css">&#64;import &#39;~leaflet/dist/leaflet.css&#39;;</code></pre></div><h3 id="suggestions-for-error-handling">Suggestions for error handling</h3>
-<h4 id="redeclare-block-scoped-variable-ngdevmode-">redeclare block-scoped variable &#39;ngDevMode&#39;</h4>
+<h4 id="redeclare-block-scoped-variable-ngdevmode">redeclare block-scoped variable &#39;ngDevMode&#39;</h4>
 <div><pre class="line-numbers"><code class="language-none">ERROR in node_modules/&#64;angular/core/src/render3/ng_dev_mode.d.ts(9,11): error TS2451: Cannot redeclare block-scoped variable &#39;ngDevMode&#39;.</code></pre></div><p><strong>Solution:</strong> add to your main <code>tsconfig.json</code> the following code after <code>lib</code> (click <a href="https://github.com/angular/angular/issues/21670">here</a> for more information regarding this issue)</p>
 <div><pre class="line-numbers"><code class="language-json">,
 &quot;paths&quot;: {
@@ -293,7 +291,7 @@ import { HelgolandDatasetlistModule } from &#39;&#64;helgoland/depiction&#39;;</
 <p>Now, that we have added all dependencies and the code to access the functionality of the helgoland map you can start working on your app. If you did not run the app while following this tutorial you should now see the map by starting your app with <code>ng serve</code> and some more interaction possibilities below the map.</p>
 <h2 id="step-5-check-code">Step 5: check code</h2>
 <p>In the following the main app files can be viewed. If you would like to change the styling of your page, you might have a closer look at the <code>app.component.html</code>.</p>
-<h4 id="src-app-app-component-html"><code>src/app/app.component.html</code></h4>
+<h4 id="srcappappcomponenthtml"><code>src/app/app.component.html</code></h4>
 <div><pre class="line-numbers"><code class="language-html">&lt;h1&gt;How To: Integrate Helgoland Map&lt;/h1&gt;
 
 &lt;div style=&quot;display: flex; flex-direction: row;&quot;&gt;
@@ -314,7 +312,7 @@ import { HelgolandDatasetlistModule } from &#39;&#64;helgoland/depiction&#39;;</
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre></div><h4 id="src-app-app-component-ts"><code>src/app/app.component.ts</code></h4>
+&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre></div><h4 id="srcappappcomponentts"><code>src/app/app.component.ts</code></h4>
 <div><pre class="line-numbers"><code class="language-javascript">import { Component } from &#39;&#64;angular/core&#39;;
 
 import { ParameterFilter, Phenomenon, Station } from &#39;&#64;helgoland/core&#39;;
@@ -356,7 +354,7 @@ export class AppComponent {
     };
   }
 
-}</code></pre></div><h4 id="src-app-app-module-ts"><code>src/app/app.module.ts</code></h4>
+}</code></pre></div><h4 id="srcappappmodulets"><code>src/app/app.module.ts</code></h4>
 <div><pre class="line-numbers"><code class="language-javascript">import { BrowserModule } from &#39;&#64;angular/platform-browser&#39;;
 import { NgModule } from &#39;&#64;angular/core&#39;;
 
@@ -415,7 +413,7 @@ export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
-}</code></pre></div><h4 id="src-tsconfig-json"><code>src/tsconfig.json</code></h4>
+}</code></pre></div><h4 id="srctsconfigjson"><code>src/tsconfig.json</code></h4>
 <div><pre class="line-numbers"><code class="language-json">{
   &quot;compileOnSave&quot;: false,
   &quot;compilerOptions&quot;: {
@@ -463,7 +461,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 
        <script src="../../js/libs/custom-elements.min.js"></script>
        <script src="../../js/libs/lit-html.js"></script>
-       <script src="../../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
 
        <script src="../../js/libs/bootstrap-native.js"></script>
 

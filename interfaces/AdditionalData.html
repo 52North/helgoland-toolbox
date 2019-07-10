@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -125,7 +122,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>data:     <code><a href="../interfaces/DataEntry.html" target="_self" >AdditionalDataEntry[]</a></code>
+                                        <code>data:     <code>AdditionalDataEntry[]</code>
 </code>
                                     </td>
                                 </tr>
@@ -133,7 +130,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/DataEntry.html" target="_self" >AdditionalDataEntry[]</a></code>
+                                            <i>Type : </i>    <code>AdditionalDataEntry[]</code>
 
                                         </td>
                                     </tr>
@@ -160,7 +157,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>datasetOptions:     <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
+                                        <code>datasetOptions:         <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -168,7 +165,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/Data.html" target="_self" >DatasetOptions</a></code>
 
                                         </td>
                                     </tr>
@@ -200,7 +197,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>linkedDatasetId:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>linkedDatasetId:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -208,7 +205,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -240,7 +237,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>yaxisLabel:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>yaxisLabel:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -248,7 +245,7 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -284,11 +281,24 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
   SimpleChanges,
   ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
-import { ColorService, DatasetApiInterface, DatasetOptions, InternalIdHandler, MinMaxRange, Time } from &#x27;@helgoland/core&#x27;;
+import {
+  ColorService,
+  DatasetApiInterface,
+  DatasetOptions,
+  InternalIdHandler,
+  MinMaxRange,
+  SumValuesService,
+  Time,
+} from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { extent } from &#x27;d3&#x27;;
 
-import { D3TimeseriesGraphComponent, InternalDataEntry } from &#x27;../d3-timeseries-graph/d3-timeseries-graph.component&#x27;;
+import {
+  D3TimeseriesGraphComponent,
+  DataEntry,
+  InternalDataEntry,
+  YRanges,
+} from &#x27;../d3-timeseries-graph/d3-timeseries-graph.component&#x27;;
 import { D3TimeFormatLocaleService } from &#x27;../helper/d3-time-format-locale.service&#x27;;
 
 /**
@@ -346,9 +356,10 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeSrvc: Time,
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    protected sumValues: SumValuesService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -362,9 +373,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   protected plotGraph() {
     this.prepareAdditionalData();
     super.plotGraph();
-    // execute twice to first create DOM elements and then add data
-    super.createHoveringNet(this.additionalPreparedData);
-    super.createHoveringNet(this.additionalPreparedData);
   }
 
   public ngAfterViewInit(): void {
@@ -407,19 +415,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
               dataEntry &#x3D; {
                 internalId: entry.linkedDatasetId ? entry.linkedDatasetId + &#x27;add&#x27; : entry.yaxisLabel,
-                id: -1,
-                color: options.color,
-                data: options.visible ? entry.data.map(e &#x3D;&gt; [e.timestamp, e.value]) as [number, number][] : [],
-                points: {
-                  fillColor: options.color
-                },
-                lines: {
-                  lineWidth: options.lineWidth,
-                  pointRadius: options.pointRadius
-                },
-                bars: {
-                  lineWidth: options.lineWidth
-                },
+                options,
+                data: options.visible ? entry.data.map(e &#x3D;&gt; ({ timestamp: e.timestamp, value: e.value })) : [],
                 axisOptions: {
                   uom: dataset ? dataset.uom : entry.yaxisLabel,
                   label: dataset ? dataset.label : entry.yaxisLabel,
@@ -432,8 +429,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
               };
               if (dataset) {
                 dataEntry.axisOptions.parameters &#x3D; {
-                  station: dataset.parameters.feature.label,
-                  phenomenon: dataset.parameters.phenomenon.label
+                  feature: dataset.parameters.feature,
+                  phenomenon: dataset.parameters.phenomenon,
+                  offering: dataset.parameters.offering
                 };
               }
               this.additionalPreparedData.push(dataEntry);
@@ -444,20 +442,26 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             }
 
             const newDatasetIdx &#x3D; this.yRangesEachUom.findIndex((e) &#x3D;&gt; e.ids.indexOf(entry.linkedDatasetId) &gt; -1);
-            const dataExtent &#x3D; extent&lt;[number, number], number&gt;(dataEntry.data, (datum) &#x3D;&gt; {
-              if (this.timespan.from &lt;&#x3D; datum[0] &amp;&amp; this.timespan.to &gt;&#x3D; datum[0]) { return datum[1]; }
+            const dataExtent &#x3D; extent&lt;DataEntry, number&gt;(dataEntry.data, (d) &#x3D;&gt; {
+              if (typeof d.value &#x3D;&#x3D;&#x3D; &#x27;number&#x27;) {
+                if (this.timespan.from &lt;&#x3D; d.timestamp &amp;&amp; this.timespan.to &gt;&#x3D; d.timestamp) { return d.value; }
+              }
             });
             if (isFinite(dataExtent[0]) &amp;&amp; isFinite(dataExtent[1])) {
-              const range: MinMaxRange &#x3D; { min: dataExtent[0], max: dataExtent[1] };
-              this.extendRange(range);
+              let range: MinMaxRange;
+              if (options.yAxisRange) {
+                range &#x3D; options.yAxisRange;
+                range &#x3D; this.extendRange(range);
+              } else {
+                range &#x3D; { min: dataExtent[0], max: dataExtent[1] };
+                range &#x3D; this.bufferRange(range, 0.1);
+              }
               if (newDatasetIdx &#x3D;&#x3D;&#x3D; -1) {
                 const existingAxisIndex &#x3D; this.yRangesEachUom.findIndex(e &#x3D;&gt; e.ids.indexOf(entry.yaxisLabel) !&#x3D;&#x3D; -1);
-                const axisRange &#x3D; {
+                const axisRange: YRanges &#x3D; {
                   uom: entry.yaxisLabel,
                   range: range,
                   autoRange: options.autoRangeSelection,
-                  preRange: range,
-                  originRange: range,
                   zeroBased: options.zeroBasedYAxis,
                   outOfrange: false,
                   ids: [entry.yaxisLabel],
@@ -468,6 +472,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                 } else {
                   this.yRangesEachUom.push(axisRange);
                 }
+                this.dataYranges.push(axisRange);
               } else {
                 if (this.yRangesEachUom[newDatasetIdx].range) {
                   this.yRangesEachUom[newDatasetIdx].range.min &#x3D; Math.min(range.min, this.yRangesEachUom[newDatasetIdx].range.min);
@@ -490,9 +495,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected drawAllGraphLines() {
-    super.drawAllGraphLines();
-    this.additionalPreparedData.forEach(e &#x3D;&gt; this.drawGraphLine(e));
+  protected drawAllCharts() {
+    super.drawAllCharts();
+    this.additionalPreparedData.forEach(e &#x3D;&gt; this.drawChart(e));
   }
 
 }
@@ -501,6 +506,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 </div>
 
 
+                   
 
 
 
@@ -527,7 +533,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

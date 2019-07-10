@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -46,6 +43,7 @@
 
 
 
+                   
 
 
 
@@ -88,7 +86,7 @@ public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };</code><
   display: inherit;
 }</code></pre></div><h2 id="adjust-service">adjust service</h2>
 <p>To adjust the default <a href="../../../documentation/injectables/LastValueLabelGeneratorService.html">LastValueLabelGeneratorService</a> you can write your own service by extend <a href="../../../documentation/classes/LastValueLabelGenerator.html">LastValueLabelGenerator</a></p>
-<h3 id="add-service-to-module-in-your-app-module">add service to module in your app.module</h3>
+<h3 id="add-service-to-module-in-your-appmodule">add service to module in your app.module</h3>
 <div><pre class="line-numbers"><code class="language-javascript">&#64;NgModule({
   ...
   imports: [
@@ -123,7 +121,9 @@ export class AppModule { }</code></pre></div>
 
        <script src="../../js/libs/custom-elements.min.js"></script>
        <script src="../../js/libs/lit-html.js"></script>
-       <script src="../../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
 
        <script src="../../js/libs/bootstrap-native.js"></script>
 

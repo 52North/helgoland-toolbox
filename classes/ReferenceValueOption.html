@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -117,27 +114,20 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            color
-                            </b>
+                            color</b>
                             <a href="#color"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>color:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="96" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/options.ts:96</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/options.ts:145</a></div>
                             </td>
                         </tr>
 
@@ -152,27 +142,20 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            id
-                            </b>
+                            id</b>
                             <a href="#id"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>id:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/options.ts:95</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/options.ts:144</a></div>
                             </td>
                         </tr>
 
@@ -199,6 +182,14 @@
      * @memberof DatasetOptions
      */
     public internalId: string;
+
+    /**
+     * type to display the data
+     * default is &#x27;line&#x27;
+     *
+     * @memberof DatasetOptions
+     */
+    public type: &#x27;line&#x27; | &#x27;bar&#x27; &#x3D; &#x27;line&#x27;;
 
     /**
      * color of the dataset
@@ -251,10 +242,29 @@
 
     /**
      * radius of graphpoint
+     * default is 0
      *
      * @memberof DatasetOptions
      */
     public pointRadius: number &#x3D; 0;
+
+    /**
+     * the start of, where to start with the bar chart
+     * See also: https://momentjs.com/docs/#/manipulating/start-of/
+     * default is &#x27;hour&#x27;
+     *
+     * @memberof DatasetOptions
+     */
+    public barStartOf: string &#x3D; &#x27;hour&#x27;;
+
+    /**
+     * period of the bars
+     * defined as moment.duration by a string
+     * See also: https://momentjs.com/docs/#/durations/
+     * default is &#x27;PT1H&#x27; which means one hour duration
+     * @memberof DatasetOptions
+     */
+    public barPeriod: string &#x3D; &#x27;PT1H&#x27;;
 
     /**
      * width of graphline
@@ -262,6 +272,28 @@
      * @memberof DatasetOptions
      */
     public lineWidth: number &#x3D; 1;
+
+    /**
+     * dasharray to structure the line or bar chart border
+     * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+     *
+     * @memberof DatasetOptions
+     */
+    public lineDashArray: number | number[];
+
+    /**
+     * color of the point border
+     *
+     * @memberof DatasetOptions
+     */
+    public pointBorderColor: string;
+
+    /**
+     * width of the point border
+     *
+     * @memberof DatasetOptions
+     */
+    public pointBorderWidth: number &#x3D; 0;
 
     /**
      * min and max range of y axis
@@ -312,6 +344,7 @@ export class TimedDatasetOptions extends DatasetOptions {
 
 
 
+                   
 
 
 
@@ -338,7 +371,9 @@ export class TimedDatasetOptions extends DatasetOptions {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

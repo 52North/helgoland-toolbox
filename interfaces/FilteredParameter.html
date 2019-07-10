@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -72,7 +69,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code><a href="../interfaces/Parameter.html" target="_self" >Parameter</a></code>
+                        <code><a href="../interfaces/Parameter.html" target="_self" >Parameter</a></code>
             </p>
 
         <section>
@@ -112,7 +109,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>filterList:     <code><a href="../classes/Filter.html" target="_self" >Filter[]</a></code>
+                                        <code>filterList:         <code><a href="../classes/Filter.html" target="_self" >Filter[]</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -120,7 +117,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../classes/Filter.html" target="_self" >Filter[]</a></code>
+                                            <i>Type : </i>        <code><a href="../classes/Filter.html" target="_self" >Filter[]</a></code>
 
                                         </td>
                                     </tr>
@@ -141,16 +138,24 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
-import {
-    DatasetApiInterface,
-    Filter,
-    FilteredProvider,
-    LanguageChangNotifier,
-    Parameter,
-    ParameterFilter,
-} from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output } from &#x27;@angular/core&#x27;;
+import { DatasetApiInterface, Filter, LanguageChangNotifier, Parameter, ParameterFilter } from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+
+export interface MultiServiceFilter {
+    url: string;
+    filter?: ParameterFilter;
+}
+
+export enum MultiServiceFilterEndpoint {
+    offering &#x3D; &#x27;offering&#x27;,
+    phenomenon &#x3D; &#x27;phenomenon&#x27;,
+    procedure &#x3D; &#x27;procedure&#x27;,
+    feature &#x3D; &#x27;feature&#x27;,
+    category &#x3D; &#x27;category&#x27;,
+    platform &#x3D; &#x27;platform&#x27;,
+    dataset &#x3D; &#x27;dataset&#x27;
+}
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -162,10 +167,10 @@ import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
     @Input()
-    public endpoint: string;
+    public endpoint: MultiServiceFilterEndpoint;
 
     @Input()
-    public filterList: FilteredProvider[];
+    public filterList: MultiServiceFilter[];
 
     @Output()
     public onItemSelected: EventEmitter&lt;FilteredParameter&gt; &#x3D; new EventEmitter&lt;FilteredParameter&gt;();
@@ -180,7 +185,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         super(translate);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges() {
         this.loadItems();
     }
 
@@ -197,45 +202,44 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.filterList.forEach((entry) &#x3D;&gt; {
             this.loading++;
             const filter &#x3D; entry.filter || {};
-            filter.service &#x3D; entry.id;
             switch (this.endpoint) {
-                case &#x27;offering&#x27;:
+                case MultiServiceFilterEndpoint.offering:
                     this.apiInterface.getOfferings(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;phenomenon&#x27;:
+                case MultiServiceFilterEndpoint.phenomenon:
                     this.apiInterface.getPhenomena(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;procedure&#x27;:
+                case MultiServiceFilterEndpoint.procedure:
                     this.apiInterface.getProcedures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;feature&#x27;:
+                case MultiServiceFilterEndpoint.feature:
                     this.apiInterface.getFeatures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;category&#x27;:
+                case MultiServiceFilterEndpoint.category:
                     this.apiInterface.getCategories(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;platform&#x27;:
+                case MultiServiceFilterEndpoint.platform:
                     this.apiInterface.getPlatforms(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
-                case &#x27;dataset&#x27;:
+                case MultiServiceFilterEndpoint.dataset:
                     this.apiInterface.getDatasets(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
@@ -283,6 +287,7 @@ export interface FilteredParameter extends Parameter {
 </div>
 
 
+                   
 
 
 
@@ -309,7 +314,9 @@ export interface FilteredParameter extends Parameter {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

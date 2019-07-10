@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -44,7 +41,7 @@
 <p>This project contains <a href="https://angular.io/">Angular</a> based Modules, Components, Injectables to build a sensor observation service based client. </p>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="dependencies">Dependencies</h3>
-<h4 id="node-npm">Node/NPM</h4>
+<h4 id="nodenpm">Node/NPM</h4>
 <p>Install latest Node and NPM following the <a href="https://nodejs.org/en/download/">instructions</a>. Make sure you have Node version ≥ 7.0 and NPM ≥ 4.</p>
 <ul>
 <li><code>brew install node</code> for Mac.</li>
@@ -157,6 +154,7 @@ Now, once you update your library source code it will automatically be re-compil
 
 
 
+                   
 
 
 
@@ -183,7 +181,9 @@ Now, once you update your library source code it will automatically be re-compil
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <script src="./js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

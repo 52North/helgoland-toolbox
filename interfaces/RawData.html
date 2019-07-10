@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -111,7 +108,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>datas:     <code><a href="../interfaces/ProfileDataEntry.html" target="_self" >ProfileDataEntry[]</a></code>
+                                        <code>datas:     <code>ProfileDataEntry[]</code>
 </code>
                                     </td>
                                 </tr>
@@ -119,7 +116,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/ProfileDataEntry.html" target="_self" >ProfileDataEntry[]</a></code>
+                                            <i>Type : </i>    <code>ProfileDataEntry[]</code>
 
                                         </td>
                                     </tr>
@@ -140,7 +137,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>dataset:     <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                        <code>dataset:         <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -148,7 +145,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                            <i>Type : </i>        <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
 
                                         </td>
                                     </tr>
@@ -169,7 +166,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>options:     <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions[]</a></code>
+                                        <code>options:         <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions[]</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -177,7 +174,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions[]</a></code>
+                                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >TimedDatasetOptions[]</a></code>
 
                                         </td>
                                     </tr>
@@ -550,6 +547,7 @@ interface Layout extends Partial&lt;any&gt; {
 </div>
 
 
+                   
 
 
 
@@ -576,7 +574,9 @@ interface Layout extends Partial&lt;any&gt; {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

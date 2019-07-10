@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -72,7 +69,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code><a href="../interfaces/EventingFilter.html" target="_self" >EventingFilter</a></code>
+                        <code><a href="../interfaces/EventingFilter.html" target="_self" >EventingFilter</a></code>
             </p>
 
 
@@ -90,6 +87,7 @@ export interface SubscriptionFilter extends EventingFilter { }
 </div>
 
 
+                   
 
 
 
@@ -116,7 +114,9 @@ export interface SubscriptionFilter extends EventingFilter { }
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -71,6 +68,7 @@
             </p>
 
 
+
             <section>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
@@ -105,7 +103,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(settings: <a href="../interfaces/Settings.html">SettingsService<Settings></a>, basicAuthServices: <a href="../injectables/BasicAuthServiceMaintainer.html">BasicAuthServiceMaintainer</a>, basicAuthSrvc: <a href="../injectables/BasicAuthService.html">BasicAuthService</a>, receptor: <a href="../classes/BasicAuthInformer.html">BasicAuthInformer</a>)</code>
+<code>constructor(settings: <a href="../classes/SettingsService.html">SettingsService<Settings></a>, basicAuthServices: <a href="../injectables/BasicAuthServiceMaintainer.html">BasicAuthServiceMaintainer</a>, basicAuthSrvc: <a href="../injectables/BasicAuthService.html">BasicAuthService</a>, receptor: <a href="../classes/BasicAuthInformer.html">BasicAuthInformer</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -131,7 +129,7 @@
                                                         <td>settings</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../interfaces/Settings.html" target="_self" >SettingsService&lt;Settings&gt;</a></code>
+                                                                        <code><a href="../classes/SettingsService.html" target="_self" >SettingsService&lt;Settings&gt;</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -143,7 +141,7 @@
                                                         <td>basicAuthServices</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../injectables/BasicAuthServiceMaintainer.html" target="_self" >BasicAuthServiceMaintainer</a></code>
+                                                                        <code><a href="../injectables/BasicAuthServiceMaintainer.html" target="_self" >BasicAuthServiceMaintainer</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -155,7 +153,7 @@
                                                         <td>basicAuthSrvc</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../injectables/BasicAuthService.html" target="_self" >BasicAuthService</a></code>
+                                                                        <code><a href="../injectables/BasicAuthService.html" target="_self" >BasicAuthService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -167,7 +165,7 @@
                                                         <td>receptor</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../classes/BasicAuthInformer.html" target="_self" >BasicAuthInformer</a></code>
+                                                                        <code><a href="../classes/BasicAuthInformer.html" target="_self" >BasicAuthInformer</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -186,104 +184,104 @@
 
             <section>
     
-        <h3 id="methods">
-            Methods
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="intercept"></a>
-                        <span class="name">
-                            <b>
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="intercept"></a>
+                    <span class="name">
+                        <b>
                             intercept
-                            </b>
-                            <a href="#intercept"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                        </b>
+                        <a href="#intercept"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
 <code>intercept(req: HttpRequest<any>, options: <a href="../interfaces/HttpRequestOptions.html">Partial<HttpRequestOptions></a>, next: <a href="../injectables/HttpService.html">HttpServiceHandler</a>)</code>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:22</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:22</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>req</td>
-                                                        <td>
-                                                                    <code>HttpRequest&lt;any&gt;</code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>req</td>
+                                    <td>
+                                            <code>HttpRequest&lt;any&gt;</code>
+                                    </td>
 
-                                                </tr>
-                                                <tr>
-                                                        <td>options</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/HttpRequestOptions.html" target="_self" >Partial&lt;HttpRequestOptions&gt;</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                                    <td>
+                                        No
+                                    </td>
 
-                                                </tr>
-                                                <tr>
-                                                        <td>next</td>
-                                                        <td>
-                                                                    <code><a href="../injectables/HttpService.html" target="_self" >HttpServiceHandler</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../interfaces/Event.html" target="_self" >Observable&lt;HttpEvent&lt;any&gt;&gt;</a></code>
+                                </tr>
+                                <tr>
+                                    <td>options</td>
+                                    <td>
+                                                <code><a href="../interfaces/HttpRequestOptions.html" target="_self" >Partial&lt;HttpRequestOptions&gt;</a></code>
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>next</td>
+                                    <td>
+                                                <code><a href="../injectables/HttpService.html" target="_self" >HttpServiceHandler</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Event.html" target="_self" >Observable&lt;HttpEvent&lt;any&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
-
 
     </div>
 
@@ -367,6 +365,7 @@ export abstract class BasicAuthInformer {
 
 
 
+                   
 
 
 
@@ -393,7 +392,9 @@ export abstract class BasicAuthInformer {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

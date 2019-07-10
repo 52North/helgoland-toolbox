@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -71,16 +68,16 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                        <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
             </p>
 
             <p class="comment">
                 <h3>Implements</h3>
             </p>
             <p class="comment">
-                        <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
-                        <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
-                        <code><a href="../classes/HasLoadableContent.html" target="_self" >HasLoadableContent</a></code>
+                            <code><a href="https://angular.io/api/core/OnChanges" target="_blank" >OnChanges</a></code>
+                            <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                            <code><a href="../classes/HasLoadableContent.html" target="_self" >HasLoadableContent</a></code>
             </p>
 
 
@@ -235,6 +232,9 @@
                                 <a href="#fitBoundsMarkerOptions">fitBoundsMarkerOptions</a>
                             </li>
                             <li>
+                                <a href="#markerSelectorGenerator">markerSelectorGenerator</a>
+                            </li>
+                            <li>
                                 <a href="#serviceUrl">serviceUrl</a>
                             </li>
                         </ul>
@@ -274,12 +274,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(mapCache: <a href="../injectables/MapCache.html">MapCache</a>, differs: <a href="https://angular.io/api/core/KeyValueDiffers" target="_blank">KeyValueDiffers</a>, cd: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>)</code>
+<code>constructor(mapCache: <a href="../injectables/MapCache.html">MapCache</a>, kvDiffers: <a href="https://angular.io/api/core/KeyValueDiffers" target="_blank">KeyValueDiffers</a>, cd: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:55</a></div>
                             </td>
                         </tr>
 
@@ -300,7 +300,7 @@
                                                         <td>mapCache</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../injectables/MapCache.html" target="_self" >MapCache</a></code>
+                                                                        <code><a href="../injectables/MapCache.html" target="_self" >MapCache</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -309,10 +309,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>differs</td>
+                                                        <td>kvDiffers</td>
                                                   
                                                         <td>
-                                                                    <code><a href="https://angular.io/api/core/KeyValueDiffers" target="_blank" >KeyValueDiffers</a></code>
+                                                                        <code><a href="https://angular.io/api/core/KeyValueDiffers" target="_blank" >KeyValueDiffers</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -324,7 +324,7 @@
                                                         <td>cd</td>
                                                   
                                                         <td>
-                                                                    <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
+                                                                        <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -354,27 +354,20 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Public</span>
-                            isContentLoading
-                            </b>
+                            isContentLoading</b>
                             <a href="#isContentLoading"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>isContentLoading:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -389,33 +382,27 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            _baseMaps
-                            </b>
+                            _baseMaps</b>
                             <a href="#_baseMaps"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>_baseMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
+                            <i>Type : </i>        <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
 
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:84</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:84</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -430,33 +417,27 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            _differBaseMaps
-                            </b>
+                            _differBaseMaps</b>
                             <a href="#_differBaseMaps"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>_differBaseMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
+                            <i>Type : </i>        <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
 
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:85</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:85</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -471,33 +452,27 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            _differOverlayMaps
-                            </b>
+                            _differOverlayMaps</b>
                             <a href="#_differOverlayMaps"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>_differOverlayMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
+                            <i>Type : </i>        <code><a href="../interfaces/LayerOptions.html" target="_self" >KeyValueDiffer&lt;string | LayerOptions&gt;</a></code>
 
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:83</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:83</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -512,33 +487,27 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            _overlayMaps
-                            </b>
+                            _overlayMaps</b>
                             <a href="#_overlayMaps"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>_overlayMaps:     <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
-</code>
-                    </td>
-                </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
+                            <i>Type : </i>        <code><a href="../interfaces/LayerOptions.html" target="_self" >Map&lt;string | LayerOptions&gt;</a></code>
 
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:82</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:82</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -553,16 +522,9 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
-                            layerControl
-                            </b>
+                            layerControl</b>
                             <a href="#layerControl"><span class="icon ion-ios-link"></span></a>
                         </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>layerControl:     <code>L.Control.Layers</code>
-</code>
                     </td>
                 </tr>
                     <tr>
@@ -573,13 +535,14 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:79</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:79</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -594,16 +557,9 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
-                            map
-                            </b>
+                            map</b>
                             <a href="#map"><span class="icon ion-ios-link"></span></a>
                         </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>map:     <code>L.Map</code>
-</code>
                     </td>
                 </tr>
                     <tr>
@@ -614,13 +570,14 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:75</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:75</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -641,16 +598,9 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
-                            oldBaseLayer
-                            </b>
+                            oldBaseLayer</b>
                             <a href="#oldBaseLayer"><span class="icon ion-ios-link"></span></a>
                         </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>oldBaseLayer:     <code>L.Control.LayersObject</code>
-</code>
                     </td>
                 </tr>
                     <tr>
@@ -666,13 +616,14 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:78</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:78</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -687,16 +638,9 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
-                            oldOverlayLayer
-                            </b>
+                            oldOverlayLayer</b>
                             <a href="#oldOverlayLayer"><span class="icon ion-ios-link"></span></a>
                         </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>oldOverlayLayer:     <code>L.Control.LayersObject</code>
-</code>
                     </td>
                 </tr>
                     <tr>
@@ -712,13 +656,14 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:77</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:77</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -733,16 +678,9 @@
                         <span class="name">
                             <b>
                                 <span class="modifier">Protected</span>
-                            zoomControl
-                            </b>
+                            zoomControl</b>
                             <a href="#zoomControl"><span class="icon ion-ios-link"></span></a>
                         </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span><code>zoomControl:     <code>L.Control.Zoom</code>
-</code>
                     </td>
                 </tr>
                     <tr>
@@ -753,13 +691,14 @@
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
                                 </td>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:80</div>
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:80</a></code>
+</div>
                             </td>
                         </tr>
 
@@ -770,970 +709,985 @@
 
             <section>
     
-        <h3 id="methods">
-            Methods
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="drawGeometries"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
-                                <span class="modifier">Abstract</span>
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawGeometries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Abstract</span>
                             drawGeometries
-                            </b>
-                            <a href="#drawGeometries"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>drawGeometries()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#drawGeometries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drawGeometries()</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:85</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:89</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Draws the geometries</p>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Draws the geometries</p>
 </div>
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngAfterViewInit"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngAfterViewInit
-                            </b>
-                            <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngAfterViewInit()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngAfterViewInit()</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:61</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:65</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnChanges"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngOnChanges
-                            </b>
-                            <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:69</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:73</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>changes</td>
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="zoomToMarkerBounds"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomToMarkerBounds"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Protected</span>
                             zoomToMarkerBounds
-                            </b>
-                            <a href="#zoomToMarkerBounds"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>zoomToMarkerBounds(bounds: L.LatLngBoundsExpression)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#zoomToMarkerBounds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomToMarkerBounds(bounds: L.LatLngBoundsExpression)</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:94</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="98"
+                            class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:98</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Zooms to the given bounds</p>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Zooms to the given bounds</p>
 </div>
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                                    <td>Description</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>bounds</td>
-                                                        <td>
-                                                                    <code>L.LatLngBoundsExpression</code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>bounds</td>
+                                    <td>
+                                            <code>L.LatLngBoundsExpression</code>
+                                    </td>
 
-                                                        <td>
-                                                                <code><p>where to zoom</p>
-</code>
-                                                        </td>
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="addBaseMap"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+
+                                    <td>
+                                        <p>where to zoom</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addBaseMap"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             addBaseMap
-                            </b>
-                            <a href="#addBaseMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>addBaseMap(layerOptions?: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#addBaseMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addBaseMap(layerOptions?: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:180</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:180</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>layerOptions</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            Yes
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layerOptions</td>
+                                    <td>
+                                                <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        Yes
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="addOverlayMap"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addOverlayMap"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             addOverlayMap
-                            </b>
-                            <a href="#addOverlayMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>addOverlayMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#addOverlayMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addOverlayMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:164</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:164</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>layerOptions</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layerOptions</td>
+                                    <td>
+                                                <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="createMap"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Protected</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMap"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Protected</span>
                             createMap
-                            </b>
-                            <a href="#createMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>createMap()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#createMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMap()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:137</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:137</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="generateUUID"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateUUID"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             generateUUID
-                            </b>
-                            <a href="#generateUUID"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>generateUUID()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#generateUUID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateUUID()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:155</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:155</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngDoCheck"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngDoCheck"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngDoCheck
-                            </b>
-                            <a href="#ngDoCheck"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngDoCheck()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngDoCheck"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngDoCheck()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:112</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:112</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnChanges"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngOnChanges
-                            </b>
-                            <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:101</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:101</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>changes</td>
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnDestroy"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngOnDestroy
-                            </b>
-                            <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnDestroy()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnDestroy()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:131</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:131</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="ngOnInit"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             ngOnInit
-                            </b>
-                            <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>ngOnInit()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnInit()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:95</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:95</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="removeBaseMap"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeBaseMap"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             removeBaseMap
-                            </b>
-                            <a href="#removeBaseMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>removeBaseMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#removeBaseMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeBaseMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:198</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:198</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>layerOptions</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layerOptions</td>
+                                    <td>
+                                                <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="removeOverlayMap"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeOverlayMap"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             removeOverlayMap
-                            </b>
-                            <a href="#removeOverlayMap"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>removeOverlayMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#removeOverlayMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeOverlayMap(layerOptions: <a href="../interfaces/LayerOptions.html">LayerOptions</a>)</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:173</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:173</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>layerOptions</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layerOptions</td>
+                                    <td>
+                                                <code><a href="../interfaces/LayerOptions.html" target="_self" >LayerOptions</a></code>
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                    <td>
+                                        No
+                                    </td>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="updateLayerControl"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateLayerControl"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             updateLayerControl
-                            </b>
-                            <a href="#updateLayerControl"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>updateLayerControl()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#updateLayerControl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateLayerControl()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:205</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:205</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="updateZoomControl"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateZoomControl"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
                             updateZoomControl
-                            </b>
-                            <a href="#updateZoomControl"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>updateZoomControl()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#updateZoomControl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateZoomControl()</code>
+                </td>
+            </tr>
 
 
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Inherited from     <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Cache.html" target="_self" >CachedMapComponent</a></code>
 </div>
-                                </td>
-                            </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in CachedMapComponent:218</div>
-                            </td>
-                        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Cache.html#source" target="_self" >CachedMapComponent:218</a></code>
+</div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
-
 
             <section>
     <h3 id="inputs">Inputs</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="avoidZoomToSelection"></a>
-                        <code>avoidZoomToSelection</code>
+                        <b>avoidZoomToSelection</b>
                     </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
-                            </p>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:35</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1741,20 +1695,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="filter"></a>
-                        <code>filter</code>
+                        <b>filter</b>
                     </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
 
-                            </p>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:31</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:32</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1762,20 +1716,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="fitBoundsMarkerOptions"></a>
-                        <code>fitBoundsMarkerOptions</code>
+                        <b>fitBoundsMarkerOptions</b>
                     </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code>L.FitBoundsOptions</code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>L.FitBoundsOptions</code>
 
-                            </p>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:46</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:50</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1783,20 +1737,41 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
-                        <a name="serviceUrl"></a>
-                        <code>serviceUrl</code>
+                    <td class="col-md-4">
+                        <a name="markerSelectorGenerator"></a>
+                        <b>markerSelectorGenerator</b>
                     </td>
-                    <td class="col-md-10">
-                            <p>
-                            <em>Type :</em>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/MarkerSelectorGenerator.html" target="_self" >MarkerSelectorGenerator</a></code>
 
-                            </p>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:25</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="serviceUrl"></a>
+                        <b>serviceUrl</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:26</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1807,18 +1782,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="onContentLoading"></a>
-                        <code>onContentLoading</code>
+                        <b>onContentLoading</b>
                     </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:40</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:44</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1826,18 +1803,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="onNoResultsFound"></a>
-                        <code>onNoResultsFound</code>
+                        <b>onNoResultsFound</b>
                     </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:51</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:55</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1845,18 +1824,20 @@
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
-                    <td class="col-md-2">
+                    <td class="col-md-4">
                         <a name="onSelected"></a>
-                        <code>onSelected</code>
+                        <b>onSelected</b>
                     </td>
-                    <td class="col-md-10">
-                        <em><code>$event</code> Type:</em>    <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;T&gt;</a></code>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;T&gt;</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:37</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/helgoland/map/src/lib/selector/map-selector.component.ts:41</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1883,6 +1864,7 @@ import * as L from &#x27;leaflet&#x27;;
 
 import { CachedMapComponent } from &#x27;../base/cached-map-component&#x27;;
 import { MapCache } from &#x27;../base/map-cache.service&#x27;;
+import { MarkerSelectorGenerator } from &#x27;./model/marker-selector-generator&#x27;;
 
 export abstract class MapSelectorComponent&lt;T&gt;
     extends CachedMapComponent
@@ -1903,6 +1885,9 @@ export abstract class MapSelectorComponent&lt;T&gt;
     @Input()
     public avoidZoomToSelection: boolean;
 
+    @Input()
+    public markerSelectorGenerator: MarkerSelectorGenerator;
+
     @Output()
     public onSelected: EventEmitter&lt;T&gt; &#x3D; new EventEmitter&lt;T&gt;();
 
@@ -1922,10 +1907,10 @@ export abstract class MapSelectorComponent&lt;T&gt;
 
     constructor(
         protected mapCache: MapCache,
-        protected differs: KeyValueDiffers,
+        protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
-        super(mapCache, differs);
+        super(mapCache, kvDiffers);
     }
 
     public ngAfterViewInit() {
@@ -1974,6 +1959,7 @@ export abstract class MapSelectorComponent&lt;T&gt;
 
 
 
+                   
 
 
 
@@ -2000,7 +1986,9 @@ export abstract class MapSelectorComponent&lt;T&gt;
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -18,10 +18,7 @@
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search">
-</div>
-            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
@@ -85,7 +82,7 @@
                                         <a href="#data">data</a>
                                 </li>
                                 <li>
-                                        <a href="#plotOptions">plotOptions</a>
+                                        <a href="#id">id</a>
                                 </li>
                             </ul>
                         </td>
@@ -108,7 +105,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>data:     <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataPoint[]</a></code>
+                                        <code>data:     <code>D3GeneralDataPoint[]</code>
 </code>
                                     </td>
                                 </tr>
@@ -116,7 +113,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="../interfaces/Data.html" target="_self" >D3GeneralDataPoint[]</a></code>
+                                            <i>Type : </i>    <code>D3GeneralDataPoint[]</code>
 
                                         </td>
                                     </tr>
@@ -131,13 +128,13 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="plotOptions"></a>
-                                        <span class="name"><b>plotOptions</b><a href="#plotOptions"><span class="icon ion-ios-link"></span></a></span>
+                                        <a name="id"></a>
+                                        <span class="name"><b>id</b><a href="#id"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>plotOptions:     <code>literal type</code>
+                                        <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -145,7 +142,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>literal type</code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                                         </td>
                                     </tr>
@@ -161,32 +158,65 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface D3GeneralDatasetInput {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ScaleLinear } from &#x27;d3&#x27;;
+
+// input tyoe for d3-general-graph component
+export interface D3GeneralInput {
+    datasets: D3GeneralDatasetInput[];
+    plotOptions: D3GeneralPlotOptions;
+}
+
+export interface D3GeneralDatasetInput {
     data: D3GeneralDataPoint[];
-    xlabel: string;
-    ylabel: string;
+    id: string;
 }
 
 // dataset type inside d3-general-graph component
 export interface D3GeneralDataset {
     data: D3GeneralDataPoint[];
-    plotOptions: {
-        xlabel: string;
-        ylabel: string;
-        xScale?: d3.ScaleLinear&lt;number, number&gt;;
-        yScale?: d3.ScaleLinear&lt;number, number&gt;;
+    id: number;
+}
+
+export interface D3GeneralPlotOptions {
+    xlabel: string;
+    ylabel: string;
+    date: boolean;
+    graph?: D3GeneralGraphOptions;
+}
+
+export interface D3GeneralGraphOptions {
+    color: string;
+    lines: {
+        lineWidth: number;
+        pointRadius: number;
     };
+}
+
+export interface D3GeneralAxisOptions {
+    xScale?: ScaleLinear&lt;number, number&gt;;
+    yScale?: ScaleLinear&lt;number, number&gt;;
+    xRange?: Range;
+    yRange?: Range;
+    date?: boolean;
+}
+
+export interface Range {
+    min: number;
+    max: number;
 }
 
 export interface D3GeneralDataPoint {
     x: number;
     y: number;
+    xCoord?: number;
+    yCoord?: number;
 }
 </code></pre>
     </div>
 </div>
 
 
+                   
 
 
 
@@ -213,7 +243,9 @@ export interface D3GeneralDataPoint {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <script src="../js/menu-wc.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 
