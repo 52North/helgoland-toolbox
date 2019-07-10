@@ -26,6 +26,12 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     @Output()
     public onItemSelected: EventEmitter<Parameter> = new EventEmitter<Parameter>();
 
+    @Output()
+    public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<Parameter[]>();
+
+    @Output()
+    public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     public loading: boolean;
     public items: Parameter[];
 
@@ -52,6 +58,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     private loadItems() {
         this.loading = true;
+        this.onLoading.emit(true);
         switch (this.endpoint) {
             case 'offering':
                 this.apiInterface.getOfferings(this.serviceUrl, this.filter)
@@ -80,14 +87,18 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     private errorOnLoading(): void {
         this.loading = false;
+        this.onLoading.emit(false);
     }
 
     private setItems(res: Parameter[]): void {
         if (res instanceof Array) {
             this.items = res;
+            this.onItemsFound.emit(res);
         } else {
             this.items = [];
+            this.onItemsFound.emit([]);
         }
         this.loading = false;
+        this.onLoading.emit(false);
     }
 }
