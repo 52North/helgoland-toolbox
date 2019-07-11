@@ -1,67 +1,44 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { IdCache, Settings, SettingsService } from '@helgoland/core';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { IdCache } from '@helgoland/core';
+import { of } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { tap } from 'rxjs/operators';
 
-declare var $: any;
+export const LABEL_MAPPER_HANDLER = new InjectionToken<LabelMapperHandler>('LABEL_MAPPER_HANDLER');
 
-@Injectable()
+export interface LabelMapperHandler {
+  canHandle(label: string): boolean;
+  getMappedLabel(label: string): Observable<string>;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class LabelMapperService {
 
-    private cache: IdCache<string> = new IdCache();
+  private cache: IdCache<string> = new IdCache();
 
-    constructor(
-        protected httpClient: HttpClient,
-        protected settingsSrvc: SettingsService<Settings>
-    ) { }
+  constructor(
+    @Optional() @Inject(LABEL_MAPPER_HANDLER) protected handler: LabelMapperHandler[] | null
+  ) { }
 
-    public getMappedLabel(label: string): Observable<string> {
-        return new Observable<string>((observer: Observer<string>) => {
-            if (!this.settingsSrvc.getSettings().solveLabels) {
-                this.confirmLabel(observer, label);
-            } else {
-                const url = this.findUrl(label);
-                if (url) {
-                    if (this.cache.has(url)) {
-                        this.confirmLabel(observer, this.cache.get(url));
-                    } else {
-                        const labelUrl =
-                            this.settingsSrvc.getSettings().proxyUrl ? this.settingsSrvc.getSettings().proxyUrl + url : url;
-                        this.httpClient.get(labelUrl, { responseType: 'text' }).subscribe((res) => {
-                            try {
-                                const xml = $.parseXML(res);
-                                label = label.replace(url, $(xml).find('prefLabel').text());
-                            } catch (error) {
-                                // currently do nothing and use old label
-                            }
-                            this.cache.set(url, label);
-                            this.confirmLabel(observer, label);
-                        }, (error) => {
-                            const resolvedLabel = label.substring(label.lastIndexOf('/') + 1, label.length);
-                            this.cache.set(url, resolvedLabel);
-                            this.confirmLabel(observer, resolvedLabel);
-                        });
-                    }
-                } else {
-                    this.confirmLabel(observer, label);
-                }
-            }
-        });
+  public getMappedLabel(label: string): Observable<string> {
+    if (this.cache.has(label)) {
+      return of(this.cache.get(label));
     }
-
-    private confirmLabel(observer: Observer<string>, label: string) {
-        observer.next(label);
-        observer.complete();
-    }
-
-    private findUrl(label: string) {
-        const source = (label || '').toString();
-        const regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?&\/\/=]+)/g;
-        const matchArray = regexToken.exec(source);
-        if (matchArray !== null) {
-            return matchArray[0];
+    if (this.handler) {
+      for (let i = 0; i < this.handler.length; i++) {
+        const h = this.handler[i];
+        if (h.canHandle(label)) {
+          return h.getMappedLabel(label).pipe(tap(mapped => this.cache.set(label, mapped)));
         }
-        return null;
+      }
     }
+    return this.defaultLabel(label);
+  }
+
+  private defaultLabel(label: string): Observable<string> {
+    this.cache.set(label, label);
+    return of(label);
+  }
 }
