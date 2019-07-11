@@ -16,3 +16,5 @@ export * from './lib/dataset-table/module';
 export * from './lib/label-mapper/label-mapper.service';
 export * from './lib/label-mapper/label-mapper.component';
 export * from './lib/label-mapper/label-mapper.module';
+export * from './lib/label-mapper/vocab-nerc-label-mapper/vocab-nerc-label-mapper.service';
+export * from './lib/label-mapper/vocab-nerc-label-mapper/vocab-nerc-label-mapper.module';
