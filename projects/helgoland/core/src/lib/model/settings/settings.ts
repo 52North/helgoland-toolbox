@@ -3,7 +3,6 @@ import { Timespan } from './../internal/timeInterval';
 export interface Settings {
     datasetApis?: DatasetApi[];
     providerBlackList?: BlacklistedService[];
-    solveLabels?: boolean;
     proxyUrl?: string;
     timespanPresets?: TimespanPreset[];
     colorList?: string[];
