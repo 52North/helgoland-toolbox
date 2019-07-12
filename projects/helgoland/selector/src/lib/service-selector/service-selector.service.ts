@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BlacklistedService, DatasetApiInterface, ParameterFilter, Service } from '@helgoland/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class ServiceSelectorService {

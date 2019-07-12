@@ -1,5 +1,4 @@
 import 'leaflet.markercluster';
-import 'rxjs/add/observable/forkJoin';
 
 import {
     AfterViewInit,
@@ -22,7 +21,7 @@ import {
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import * as L from 'leaflet';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
