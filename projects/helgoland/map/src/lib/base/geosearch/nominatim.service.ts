@@ -1,12 +1,11 @@
-import 'rxjs/add/operator/map';
-
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@helgoland/core';
 import { Point } from 'geojson';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { GeoReverseOptions, GeoReverseResult, GeoSearch, GeoSearchOptions, GeoSearchResult } from './geosearch';
+import { map } from 'rxjs/operators';
 
 interface NominatimSearchResult {
     display_name: string;
@@ -79,7 +78,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         return this.http.client().get(
             this.serviceUrl + 'search',
             { params }
-        ).map((resArray: NominatimSearchResult[]) => {
+        ).pipe(map((resArray: NominatimSearchResult[]) => {
             if (resArray.length === 1) {
                 const result = resArray[0];
                 const name = result.display_name;
@@ -108,7 +107,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 if (result.address) { returnResult.address = result.address; }
                 return returnResult;
             }
-        });
+        }));
     }
 
     public reverse(point: Point, options: GeoReverseOptions = {}): Observable<GeoReverseResult> {
@@ -122,7 +121,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         return this.http.client().get(
             this.serviceUrl + 'reverse',
             { params }
-        ).map((res: NominatimReverseResult) => {
+        ).pipe(map((res: NominatimReverseResult) => {
             const result = {
                 lat: res.lat,
                 lon: res.lon,
@@ -146,7 +145,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 };
             }
             return result;
-        });
+        }));
     }
 
 }

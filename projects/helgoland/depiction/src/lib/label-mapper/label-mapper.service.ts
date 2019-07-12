@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { IdCache } from '@helgoland/core';
 import { of } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export const LABEL_MAPPER_HANDLER = new InjectionToken<LabelMapperHandler>('LABEL_MAPPER_HANDLER');

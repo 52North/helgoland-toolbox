@@ -1,6 +1,6 @@
 import { Point } from 'geojson';
 import { LatLngBoundsLiteral } from 'leaflet';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export interface GeoSearchResult {
     name: string;

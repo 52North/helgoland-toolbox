@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HelgolandLabelMapperModule } from './../../../../depiction/src/lib/label-mapper/label-mapper.module';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector.component';
 
 describe('DatasetByStationSelectorComponent', () => {
@@ -15,7 +16,8 @@ describe('DatasetByStationSelectorComponent', () => {
       imports: [
         HttpClientModule,
         TranslateTestingModule,
-        HelgolandCoreModule
+        HelgolandCoreModule,
+        HelgolandLabelMapperModule
       ],
       providers: [
         DatasetApiInterfaceTesting

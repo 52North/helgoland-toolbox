@@ -1,5 +1,3 @@
-import 'rxjs/operator/map';
-
 import { Injectable } from '@angular/core';
 
 import { IDataset } from '../model/dataset-api/dataset';
