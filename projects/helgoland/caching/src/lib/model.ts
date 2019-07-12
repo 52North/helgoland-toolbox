@@ -1,5 +1,5 @@
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 export abstract class HttpCache {
     /**
