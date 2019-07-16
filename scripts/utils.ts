@@ -13,5 +13,6 @@ export const modules = [
   'time',
   'time-range-slider',
   'd3',
-  'plotly'
+  'plotly',
+  'facet-search'
 ];
