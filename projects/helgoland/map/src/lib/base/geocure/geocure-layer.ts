@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { GeoJSON, GeoJSONOptions, LatLngBounds, LeafletEvent } from 'leaflet';
+import { GeoJSON, GeoJSONOptions, LatLngBounds, LeafletEvent, Map } from 'leaflet';
 
 export interface GeoCureGeoJSONOptions extends GeoJSONOptions {
     url: string;
@@ -28,13 +28,13 @@ export class GeoCureGeoJSON extends GeoJSON {
         return events;
     }
 
-    public onAdd(map: L.Map): this  {
+    public onAdd(map: Map): this {
         super.onAdd(map);
         this.fetchData(map);
         return this;
     }
 
-    private fetchData(map: L.Map) {
+    private fetchData(map: Map) {
         const matchMaxZoom = this.options.showOnMaxZoom ? map.getZoom() <= this.options.showOnMaxZoom : true;
         const matchMinZoom = this.options.showOnMinZoom ? map.getZoom() >= this.options.showOnMinZoom : true;
         if (matchMinZoom && matchMaxZoom) {
