@@ -111,6 +111,12 @@
       ],
       "@helgoland/eventing/*": [
         "dist/helgoland/eventing/*"
+      ],
+      "@helgoland/facet-search": [
+        "dist/helgoland/facet-search"
+      ],
+      "@helgoland/facet-search/*": [
+        "dist/helgoland/facet-search/*"
       ]
     }
   }
