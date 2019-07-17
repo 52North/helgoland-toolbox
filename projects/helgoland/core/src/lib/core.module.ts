@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ColorService } from './color/color.service';
 import { DatasetApiMapping } from './dataset-api/api-mapping.service';
 import { StatusIntervalResolverService } from './dataset-api/helper/status-interval-resolver.service';
+import { HttpService } from './dataset-api/http.service';
 import { InternalIdHandler } from './dataset-api/internal-id-handler.service';
 import { LocalStorage } from './local-storage/local-storage.service';
 import { NotifierService } from './notifier/notifier.service';
@@ -31,6 +32,7 @@ import { Time } from './time/time.service';
     NotifierService,
     StatusIntervalResolverService,
     SumValuesService,
+    HttpService,
     Time
   ]
 })
