@@ -1,5 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Timeseries, Timespan } from '@helgoland/core';
+import { Observable, ReplaySubject } from 'rxjs';
 
 import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } from './facet-search-model';
 
@@ -8,7 +9,7 @@ import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } f
 })
 export class FacetSearchService implements FacetSearch {
 
-  public onResultsChanged: EventEmitter<Timeseries[]>;
+  private onResultsChanged: ReplaySubject<Timeseries[]> = new ReplaySubject(1);
 
   private facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
@@ -18,13 +19,15 @@ export class FacetSearchService implements FacetSearch {
 
   private filteredTimeseries: Timeseries[];
 
-  constructor() {
-    this.onResultsChanged = new EventEmitter();
-  }
+  constructor() { }
 
   public setTimeseries(ts: Timeseries[]) {
     this.timeseries = ts;
     this.setFilteredTimeseries();
+  }
+
+  public getResults(): Observable<Timeseries[]> {
+    return this.onResultsChanged.asObservable();
   }
 
   public getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[] {
@@ -93,7 +96,7 @@ export class FacetSearchService implements FacetSearch {
     } else {
       this.filteredTimeseries = this.timeseries;
     }
-    this.onResultsChanged.emit(this.filteredTimeseries);
+    this.onResultsChanged.next(this.filteredTimeseries);
   }
 
   private checkTimespan(ts: Timeseries): boolean {

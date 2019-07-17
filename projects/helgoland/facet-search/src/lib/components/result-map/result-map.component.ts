@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
 import { Required, Timeseries } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
+import { Subscription } from 'rxjs';
 
 import { FacetSearch } from '../../facet-search-model';
 
@@ -16,9 +17,9 @@ L.Icon.Default.mergeOptions({
 @Component({
   selector: 'n52-result-map',
   templateUrl: './result-map.component.html',
-  styleUrls: ['./result-map.component.scss']
+  styleUrls: ['./result-map.component.scss'],
 })
-export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit {
+export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() @Required public facetSearchService: FacetSearch;
 
@@ -27,6 +28,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   @Output() public selected: EventEmitter<Timeseries> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
+  private resultsSubs: Subscription;
 
   constructor(
     protected mapCache: MapCache,
@@ -37,7 +39,12 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   ngOnInit() {
     super.ngOnInit();
-    this.facetSearchService.onResultsChanged.subscribe(ts => this.fetchResults(ts));
+    this.resultsSubs = this.facetSearchService.getResults().subscribe(ts => this.fetchResults(ts));
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    this.resultsSubs.unsubscribe();
   }
 
   ngAfterViewInit(): void {
