@@ -4,6 +4,7 @@
 
 export * from './lib/facet-search.service';
 export * from './lib/facet-search.module';
+export * from './lib/facet-search-model';
 
 export * from './lib/pipes/match-facet-parameter-label.pipe';
 
