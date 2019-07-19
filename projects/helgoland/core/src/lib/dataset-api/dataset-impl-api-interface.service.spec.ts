@@ -4,6 +4,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { DefinedTimespan, DefinedTimespanService } from '../time/defined-timespan.service';
 import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
+import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 
 fdescribe('DatasetImplApiInterface', () => {
@@ -16,7 +17,8 @@ fdescribe('DatasetImplApiInterface', () => {
             providers: [
                 DatasetImplApiInterface,
                 InternalIdHandler,
-                DefinedTimespanService
+                DefinedTimespanService,
+                HttpService
             ]
         });
     });
