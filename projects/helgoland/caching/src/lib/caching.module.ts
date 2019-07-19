@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HTTP_SERVICE_INTERCEPTORS } from '@helgoland/core';
+import { HTTP_SERVICE_INTERCEPTORS, HelgolandCoreModule } from '@helgoland/core';
 
 import { CachingInterceptor } from './cache-interceptor';
 import { LocalHttpCache } from './local-http-cache';
@@ -8,7 +8,9 @@ import { HttpCache, OnGoingHttpCache } from './model';
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [
+    HelgolandCoreModule
+  ],
   exports: [],
   providers: [
     {

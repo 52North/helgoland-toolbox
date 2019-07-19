@@ -56,19 +56,21 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   }
 
   private fetchResults(ts: Timeseries[]) {
-    if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
-    if (this.cluster) {
-      this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
-    } else {
-      this.markerFeatureGroup = L.featureGroup();
+    if (this.map) {
+      if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+      if (this.cluster) {
+        this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
+      } else {
+        this.markerFeatureGroup = L.featureGroup();
+      }
+      ts.forEach(e => {
+        const marker = this.createDefaultGeometry(e);
+        if (marker) { this.markerFeatureGroup.addLayer(marker); }
+      });
+      this.markerFeatureGroup.addTo(this.map);
+      this.map.fitBounds(this.markerFeatureGroup.getBounds());
+      this.map.invalidateSize();
     }
-    ts.forEach(e => {
-      const marker = this.createDefaultGeometry(e);
-      if (marker) { this.markerFeatureGroup.addLayer(marker); }
-    });
-    this.markerFeatureGroup.addTo(this.map);
-    this.map.fitBounds(this.markerFeatureGroup.getBounds());
-    this.map.invalidateSize();
   }
 
   private createDefaultGeometry(ts: Timeseries) {
