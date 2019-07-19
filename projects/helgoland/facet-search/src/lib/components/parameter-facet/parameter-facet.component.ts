@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Required } from '@helgoland/core';
+import { Subscription } from 'rxjs';
 
 import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } from '../../facet-search-model';
 
@@ -8,7 +9,7 @@ import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } f
   templateUrl: './parameter-facet.component.html',
   styleUrls: ['./parameter-facet.component.scss']
 })
-export class ParameterFacetComponent implements OnInit {
+export class ParameterFacetComponent implements OnInit, OnDestroy {
 
   @Input() @Required public facetSearchService: FacetSearch;
 
@@ -20,10 +21,16 @@ export class ParameterFacetComponent implements OnInit {
 
   public parameterList: FacetParameter[];
 
+  private resultSubs: Subscription;
+
   constructor() { }
 
   ngOnInit() {
-    this.facetSearchService.onResultsChanged.subscribe(() => this.fetchFacetParameter());
+    this.resultSubs = this.facetSearchService.getResults().subscribe(() => this.fetchFacetParameter());
+  }
+
+  ngOnDestroy(): void {
+    this.resultSubs.unsubscribe();
   }
 
   public toggleFacet(parameter: FacetParameter) {

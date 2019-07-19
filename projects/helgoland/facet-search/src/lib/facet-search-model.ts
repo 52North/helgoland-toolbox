@@ -1,8 +1,8 @@
-import { EventEmitter } from '@angular/core';
 import { Timeseries, Timespan } from '@helgoland/core';
+import { Observable } from 'rxjs';
 
 export interface FacetSearch {
-    onResultsChanged: EventEmitter<Timeseries[]>;
+    getResults(): Observable<Timeseries[]>;
     getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
     selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
     setTimeseries(timeseries: Timeseries[]);
