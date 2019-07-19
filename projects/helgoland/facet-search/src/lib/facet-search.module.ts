@@ -18,4 +18,4 @@ const COMPONENTS = [
   declarations: [COMPONENTS],
   exports: [COMPONENTS]
 })
-export class FacetSearchModule { }
+export class HelgolandFacetSearchModule { }
