@@ -1,17 +1,17 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { BasicAuthService } from '@helgoland/auth';
-import { HttpRequestOptions, Timespan } from '@helgoland/core';
+import { HelgolandCoreModule, HttpRequestOptions, Timespan } from '@helgoland/core';
 import moment from 'moment';
 
 import { EventingImplApiInterface } from './eventing-impl-api-interface.service';
 import { EventFilter } from './model/request/events';
-import { Event, EventResults } from './model/response/events';
-import { Subscription, SubscriptionResults } from './model/response/subscriptions';
-import { PublicationResults } from './model/response/publications';
-import { PublicationFilter } from './model/request/publications';
-import { NotificationResults } from './model/response/notifications';
 import { NotificationFilter } from './model/request/notifications';
+import { PublicationFilter } from './model/request/publications';
+import { Event, EventResults } from './model/response/events';
+import { NotificationResults } from './model/response/notifications';
+import { PublicationResults } from './model/response/publications';
+import { Subscription, SubscriptionResults } from './model/response/subscriptions';
 
 const testUrl = '/';
 
@@ -22,10 +22,11 @@ describe('EventingImplApiInterface', () => {
     TestBed.configureTestingModule({
       providers: [
         EventingImplApiInterface,
-        BasicAuthService
+        BasicAuthService,
       ],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        HelgolandCoreModule
       ]
     });
     httpTestingController = TestBed.get(HttpTestingController);

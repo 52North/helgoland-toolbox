@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { GeoSearch, GeoSearchResult } from '../../base/geosearch/geosearch';
 import { NominatimGeoSearchService } from '../../base/geosearch/nominatim.service';
@@ -22,7 +23,8 @@ describe('GeosearchComponent', () => {
       ],
       imports: [
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        HelgolandCoreModule
       ],
       declarations: [GeosearchControlComponent]
     }).compileComponents();
