@@ -6,6 +6,7 @@ sudo: required
 branches:
   only:
   - develop
+  - upgradeToNg8
 before_script:
   - npm install -g @angular/cli
 script:
