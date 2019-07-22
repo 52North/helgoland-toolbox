@@ -8,7 +8,10 @@ import {
     ParameterFilter,
 } from '@helgoland/core';
 
-import { FilteredParameter } from '../multi-service-filter-selector/multi-service-filter-selector.component';
+import {
+    FilteredParameter,
+    MultiServiceFilter,
+} from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorParameter, ListSelectorService } from './list-selector.service';
 
 /**
@@ -60,9 +63,11 @@ export class ListSelectorComponent implements OnChanges {
                 }
                 // create filterlist for first parameter entry
                 this.parameters[0].filterList = this.providerList.map((entry) => {
-                    entry.filter = Object.assign({}, this.filter);
-                    return entry;
-                });
+                    return {
+                        url: entry.url,
+                        filter: { service: entry.id }
+                    };
+                }) as MultiServiceFilter[];
                 this.listSelectorService.providerList = this.providerList;
                 // open first tab
                 this.activePanel = this.selectorId + '-0';
