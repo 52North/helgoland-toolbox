@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
-import { GeoSearchOptions, LastValuePresentation, LayerOptions, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
-import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer } from 'leaflet';
+import { GeoSearchOptions, LastValuePresentation, LayerMap, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
+import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, WMSOptions } from 'leaflet';
 
 Marker.prototype.options.icon = icon({
     iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -80,8 +80,8 @@ export class MapSelectorComponent {
     public fitBounds2: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
     public avoidZoomToSelection = false;
-    public baseMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
-    public overlayMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
+    public baseMaps: LayerMap = new Map();
+    public overlayMaps: LayerMap = new Map();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public cluster = false;
     public loadingStations: boolean;
@@ -114,7 +114,7 @@ export class MapSelectorComponent {
 
 
     public addOverlayMapLayer() {
-        this.overlayMaps = new Map<string, LayerOptions>();
+        this.overlayMaps = new Map();
         this.overlayMaps.set('pm10_24hmean_1x1',
             {
                 label: 'pm10_24hmean_1x1',
@@ -153,7 +153,7 @@ export class MapSelectorComponent {
     }
 
     public removeOverlayMapLayer() {
-        this.overlayMaps = new Map<string, LayerOptions>();
+        this.overlayMaps = new Map();
     }
 
     public showZoomControlsRight() {

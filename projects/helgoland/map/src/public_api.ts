@@ -4,6 +4,7 @@
 
 export * from './lib/base/map.module';
 export * from './lib/base/map-cache.service';
+export * from './lib/base/map-handler.service';
 export * from './lib/base/map-options';
 export * from './lib/base/cached-map-component';
 export * from './lib/base/geosearch/geosearch';
@@ -14,6 +15,7 @@ export * from './lib/view/module';
 export * from './lib/view/geometry-map-viewer/geometry-map-viewer.component';
 
 export * from './lib/control/module';
+export * from './lib/control/map-control-component';
 export * from './lib/control/extent/extent.component';
 export * from './lib/control/geosearch/geosearch.component';
 export * from './lib/control/locate/locate.component';

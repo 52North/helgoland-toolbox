@@ -3,18 +3,13 @@ import * as L from 'leaflet';
 
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
 import { MapCache } from '../../base/map-cache.service';
+import { MapControlComponent } from '../map-control-component';
 
 @Component({
     selector: 'n52-geosearch-control',
     templateUrl: './geosearch.component.html'
 })
-export class GeosearchControlComponent {
-
-    /**
-     * Connect map id.
-     */
-    @Input()
-    public mapId: string;
+export class GeosearchControlComponent extends MapControlComponent {
 
     /**
      * Additional search options.
@@ -45,7 +40,9 @@ export class GeosearchControlComponent {
     constructor(
         protected mapCache: MapCache,
         protected geosearch: GeoSearch
-    ) { }
+    ) {
+        super(mapCache);
+    }
 
     public triggerSearch() {
         this.onSearchTriggered.emit();
