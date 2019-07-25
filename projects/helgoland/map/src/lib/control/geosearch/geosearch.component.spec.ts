@@ -33,6 +33,7 @@ describe('GeosearchComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GeosearchControlComponent);
     component = fixture.componentInstance;
+    component.mapId = 'mapID';
     fixture.detectChanges();
   });
 
