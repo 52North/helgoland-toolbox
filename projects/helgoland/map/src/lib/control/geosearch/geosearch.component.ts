@@ -14,20 +14,17 @@ export class GeosearchControlComponent extends MapControlComponent {
     /**
      * Additional search options.
      */
-    @Input()
-    public options: GeoSearchOptions;
+    @Input() public options: GeoSearchOptions;
 
     /**
      * Returns the search result.
      */
-    @Output()
-    public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
+    @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
 
     /**
      * Informs, when the search is triggered.
      */
-    @Output()
-    public onSearchTriggered: EventEmitter<void> = new EventEmitter();
+    @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
     public result: GeoSearchResult;
 
@@ -57,7 +54,7 @@ export class GeosearchControlComponent extends MapControlComponent {
                     }
                     this.onResultChanged.emit(result);
                     this.result = result;
-                    if (this.mapId) {
+                    if (this.mapId && this.mapCache.getMap(this.mapId)) {
                         this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
                         if (result.bounds) {
                             this.mapCache.getMap(this.mapId).fitBounds(result.bounds);

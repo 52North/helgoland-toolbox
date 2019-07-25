@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
+import { inject, TestBed } from '@angular/core/testing';
 
-import { TestBed, async, inject } from '@angular/core/testing';
 import { MapHandlerService } from './map-handler.service';
+import { HelgolandMapModule } from './map.module';
 
 describe('Service: MapHandler', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MapHandlerService]
+      providers: [],
+      imports: [HelgolandMapModule]
     });
   });
 
