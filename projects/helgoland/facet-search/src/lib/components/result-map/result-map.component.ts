@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, Timeseries } from '@helgoland/core';
+import { Required, Station, Timeseries } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
@@ -25,7 +25,9 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public cluster = true;
 
-  @Output() public selected: EventEmitter<Timeseries> = new EventEmitter();
+  @Input() public aggregateToStations = false;
+
+  @Output() public selected: EventEmitter<Timeseries | { station: Station, url: string }> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
   private resultsSubs: Subscription;
@@ -63,17 +65,38 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       } else {
         this.markerFeatureGroup = L.featureGroup();
       }
-      ts.forEach(e => {
-        const marker = this.createDefaultGeometry(e);
-        if (marker) { this.markerFeatureGroup.addLayer(marker); }
-      });
+      if (this.aggregateToStations) {
+        const stations = new Map<string, { station: Station, url: string}>();
+        ts.forEach(e => {
+          if (!stations.has(e.station.id)) {
+            stations.set(e.station.id, { station: e.station, url: e.url });
+          }
+        });
+        stations.forEach(v => {
+          const station = this.createStationGeometry(v.station, v.url);
+          if (station) { this.markerFeatureGroup.addLayer(station); }
+        });
+      } else {
+        ts.forEach(e => {
+          const marker = this.createTsGeometry(e);
+          if (marker) { this.markerFeatureGroup.addLayer(marker); }
+        });
+      }
       this.markerFeatureGroup.addTo(this.map);
       this.map.fitBounds(this.markerFeatureGroup.getBounds());
       this.map.invalidateSize();
     }
   }
 
-  private createDefaultGeometry(ts: Timeseries) {
+  private createStationGeometry(station: Station, url: string): L.GeoJSON {
+    if (station) {
+      const geometry = geoJSON(station.geometry);
+      geometry.on('click', () => this.selected.emit({ station, url }));
+      return geometry;
+    }
+  }
+
+  private createTsGeometry(ts: Timeseries) {
     if (ts.station) {
       const geometry = geoJSON(ts.station.geometry);
       geometry.on('click', () => this.selected.emit(ts));
