@@ -13,7 +13,7 @@ import {
 import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
-import { LayerOptions } from './map-options';
+import { LayerOptions, LayerMap } from './map-options';
 
 const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
 const DEFAULT_BASE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -43,13 +43,13 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
      * Map, which holds all overlay map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
      */
     @Input()
-    public overlayMaps: Map<string, LayerOptions>;
+    public overlayMaps: LayerMap;
 
     /**
      * Map, which holds all base map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
      */
     @Input()
-    public baseMaps: Map<string, LayerOptions>;
+    public baseMaps: LayerMap;
 
     /**
      * Describes the the zoom options (see: https://leafletjs.com/reference-1.3.4.html#control-layers)
@@ -79,9 +79,9 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     protected layerControl: L.Control.Layers;
     protected zoomControl: L.Control.Zoom;
 
-    private _overlayMaps: Map<string, LayerOptions>;
+    private _overlayMaps: LayerMap;
     private _differOverlayMaps: KeyValueDiffer<string, LayerOptions>;
-    private _baseMaps: Map<string, LayerOptions>;
+    private _baseMaps: LayerMap;
     private _differBaseMaps: KeyValueDiffer<string, LayerOptions>;
 
     constructor(
