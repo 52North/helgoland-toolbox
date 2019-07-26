@@ -3,3 +3,5 @@ export interface LayerOptions {
     visible: boolean;
     layer: L.Layer;
 }
+
+export type LayerMap = Map<string, LayerOptions>;

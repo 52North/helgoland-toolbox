@@ -1,19 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { MapCache } from './../../base/map-cache.service';
+import { Component } from '@angular/core';
 
-import { MapCache } from '../../base/map-cache.service';
+import { MapControlComponent } from '../map-control-component';
 
 @Component({
   selector: 'n52-zoom-control',
   templateUrl: './zoom.component.html'
 })
-export class ZoomControlComponent {
-
-  @Input()
-  public mapId: string;
+export class ZoomControlComponent extends MapControlComponent {
 
   constructor(
     protected mapCache: MapCache
-  ) { }
+  ) {
+    super(mapCache);
+  }
 
   public zoomIn() {
     this.mapCache.getMap(this.mapId).zoomIn();

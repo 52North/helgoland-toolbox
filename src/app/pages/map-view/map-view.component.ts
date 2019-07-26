@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerOptions, MapCache } from '@helgoland/map';
+import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerMap, MapCache } from '@helgoland/map';
 import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOptions } from 'leaflet';
 
 @Component({
@@ -11,8 +11,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
     public fitBounds: L.LatLngBoundsExpression = [[50.945, 13.566], [51.161, 13.910]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
-    public overlayMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
-    public baseMaps: Map<string, LayerOptions> = new Map<string, LayerOptions>();
+    public overlayMaps: LayerMap = new Map();
+    public baseMaps: LayerMap = new Map();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public mapOptions: L.MapOptions = { dragging: true, zoomControl: true, boxZoom: true };
     public searchOptions: GeoSearchOptions = { countrycodes: [] };
@@ -175,7 +175,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     }
 
     public removeOverlayMapLayer() {
-        this.overlayMaps = new Map<string, LayerOptions>();
+        this.overlayMaps = new Map();
     }
 
     private addEmmissionSimulationGeoCureLayer() {

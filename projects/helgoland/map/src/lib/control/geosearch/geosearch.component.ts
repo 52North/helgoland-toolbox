@@ -3,36 +3,28 @@ import * as L from 'leaflet';
 
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
 import { MapCache } from '../../base/map-cache.service';
+import { MapControlComponent } from '../map-control-component';
 
 @Component({
     selector: 'n52-geosearch-control',
     templateUrl: './geosearch.component.html'
 })
-export class GeosearchControlComponent {
-
-    /**
-     * Connect map id.
-     */
-    @Input()
-    public mapId: string;
+export class GeosearchControlComponent extends MapControlComponent {
 
     /**
      * Additional search options.
      */
-    @Input()
-    public options: GeoSearchOptions;
+    @Input() public options: GeoSearchOptions;
 
     /**
      * Returns the search result.
      */
-    @Output()
-    public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
+    @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
 
     /**
      * Informs, when the search is triggered.
      */
-    @Output()
-    public onSearchTriggered: EventEmitter<void> = new EventEmitter();
+    @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
     public result: GeoSearchResult;
 
@@ -45,7 +37,9 @@ export class GeosearchControlComponent {
     constructor(
         protected mapCache: MapCache,
         protected geosearch: GeoSearch
-    ) { }
+    ) {
+        super(mapCache);
+    }
 
     public triggerSearch() {
         this.onSearchTriggered.emit();
@@ -60,7 +54,7 @@ export class GeosearchControlComponent {
                     }
                     this.onResultChanged.emit(result);
                     this.result = result;
-                    if (this.mapId) {
+                    if (this.mapId && this.mapCache.getMap(this.mapId)) {
                         this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
                         if (result.bounds) {
                             this.mapCache.getMap(this.mapId).fitBounds(result.bounds);

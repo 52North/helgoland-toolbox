@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { MapCache } from './map-cache.service';
+import { MapHandlerService } from './map-handler.service';
 
 const COMPONENTS = [
 ];
@@ -15,7 +16,8 @@ const COMPONENTS = [
     COMPONENTS
   ],
   providers: [
-    MapCache
+    MapCache,
+    MapHandlerService
   ]
 })
 export class HelgolandMapModule { }
