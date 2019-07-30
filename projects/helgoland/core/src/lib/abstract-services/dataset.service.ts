@@ -1,3 +1,6 @@
+import { EventEmitter } from '@angular/core';
+import { Observable, of } from 'rxjs';
+
 import { DatasetOptions } from '../model/internal/options';
 
 export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]> {
@@ -6,7 +9,16 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
 
     public datasetOptions: Map<string, T> = new Map();
 
-    public addDataset(internalId: string, options?: T) {
+    public datasetIdsChanged: EventEmitter<string[]> = new EventEmitter();
+
+    /**
+     * Adds the dataset to the selection
+     *
+     * @param internalId
+     * @param [options]
+     * @returns Successfull added the dataset.
+     */
+    public addDataset(internalId: string, options?: T): Observable<boolean> {
         if (this.datasetIds.indexOf(internalId) < 0) {
             this.datasetIds.push(internalId);
             if (options) {
@@ -20,11 +32,14 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
             options.forEach((e) => temp.push(e));
             this.saveState();
         }
+        this.datasetIdsChanged.emit(this.datasetIds);
+        return of(true);
     }
 
     public removeAllDatasets() {
         this.datasetIds.length = 0;
         this.datasetOptions.clear();
+        this.datasetIdsChanged.emit(this.datasetIds);
         this.saveState();
     }
 
@@ -34,6 +49,7 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
             this.datasetIds.splice(datasetIdx, 1);
             this.datasetOptions.delete(internalId);
         }
+        this.datasetIdsChanged.emit(this.datasetIds);
         this.saveState();
     }
 
