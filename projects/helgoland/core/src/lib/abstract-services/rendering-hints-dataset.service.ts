@@ -1,3 +1,5 @@
+import { Observable, Observer } from 'rxjs';
+
 import { DatasetApiInterface } from '../dataset-api/api-interface';
 import { BarRenderingHints, IDataset, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
@@ -11,25 +13,33 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         super();
     }
 
-    public addDataset(internalId: string, options?: T) {
-        if (options) {
-            this.datasetIds.push(internalId);
-            this.datasetOptions.set(internalId, options);
-        } else if (this.datasetIds.indexOf(internalId) < 0) {
-            this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
-                (timeseries) => this.addLoadedDataset(timeseries),
-                (error) => {
-                    this.api.getDatasetByInternalId(internalId).subscribe(
-                        (dataset) => this.addLoadedDataset(dataset),
-                    );
-                }
-            );
-        }
+    public addDataset(internalId: string, options?: T): Observable<boolean> {
+        return new Observable((observer: Observer<boolean>) => {
+            if (options) {
+                this.datasetIds.push(internalId);
+                this.datasetOptions.set(internalId, options);
+                observer.next(true);
+                observer.complete();
+                this.datasetIdsChanged.emit(this.datasetIds);
+            } else if (this.datasetIds.indexOf(internalId) < 0) {
+                this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
+                    (timeseries) => this.addLoadedDataset(timeseries, observer),
+                    (error) => {
+                        this.api.getDatasetByInternalId(internalId).subscribe(
+                            (dataset) => this.addLoadedDataset(dataset, observer)
+                        );
+                    }
+                );
+            }
+        });
     }
 
-    private addLoadedDataset(dataset: IDataset) {
+    private addLoadedDataset(dataset: IDataset, observer: Observer<boolean>) {
         this.datasetIds.push(dataset.internalId);
         this.datasetOptions.set(dataset.internalId, this.createOptionsOfRenderingHints(dataset));
+        observer.next(true);
+        observer.complete();
+        this.datasetIdsChanged.emit(this.datasetIds);
         this.saveState();
     }
 
