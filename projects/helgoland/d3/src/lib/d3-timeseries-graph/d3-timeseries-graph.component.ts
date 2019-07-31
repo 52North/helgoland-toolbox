@@ -387,6 +387,7 @@ export class D3TimeseriesGraphComponent
         if (dataset instanceof Timeseries) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
 
+            datasetOptions.loadData = true;
             this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
@@ -397,12 +398,13 @@ export class D3TimeseriesGraphComponent
             ).subscribe(
                 (result) => this.prepareTsData(dataset, result),
                 (error) => this.onError(error),
-                () => this.onCompleteLoadingData()
+                () => this.onCompleteLoadingData(datasetOptions)
             );
         }
     }
 
-    private onCompleteLoadingData(): void {
+    private onCompleteLoadingData(options: DatasetOptions): void {
+        options.loadData = false;
         this.loadingCounter--;
         if (this.loadingCounter === 0) { this.onContentLoading.emit(false); }
     }
