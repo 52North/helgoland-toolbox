@@ -19,6 +19,16 @@ export class Time {
         return new Timespan(from, to);
     }
 
+    public centerTimespanWithDuration(timespan: Timespan, duration: moment.Duration): Timespan {
+        const half = duration.asMilliseconds() / 2;
+        const center = this.getCenterOfTimespan(timespan);
+        return new Timespan(center - half, center + half);
+    }
+
+    public getCenterOfTimespan(timespan: Timespan): number {
+        return timespan.from + (timespan.to - timespan.from) / 2;
+    }
+
     public stepBack(timespan: Timespan): Timespan {
         const duration = this.getDuration(timespan);
         const from = moment(timespan.from).subtract(duration).unix() * 1000;
