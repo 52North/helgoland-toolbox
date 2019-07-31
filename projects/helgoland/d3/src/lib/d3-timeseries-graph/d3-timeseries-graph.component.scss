@@ -15,6 +15,10 @@
         shape-rendering: crispEdges;
     }
 
+    .grid.x-grid .domain{
+        stroke-width: 0;
+    }
+
     .graphDots .hover {
         stroke-width: 20px;
         stroke-opacity: .5;
