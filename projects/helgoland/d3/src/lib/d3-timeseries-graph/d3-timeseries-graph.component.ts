@@ -924,6 +924,7 @@ export class D3TimeseriesGraphComponent
                     this.mousedownBrush = true;
                 });
         }
+        this.drawBackground();
     }
 
     private createLineHovering() {
@@ -1193,7 +1194,7 @@ export class D3TimeseriesGraphComponent
             });
 
         this.graph.append('g')
-            .attr('class', 'x axis')
+            .attr('class', 'x axis bottom')
             .attr('transform', 'translate(0,' + this.height + ')')
             .call(xAxis)
             .selectAll('text')
@@ -1202,7 +1203,7 @@ export class D3TimeseriesGraphComponent
         if (this.plotOptions.grid) {
             // draw the x grid lines
             this.graph.append('svg:g')
-                .attr('class', 'grid')
+                .attr('class', 'grid x-grid')
                 .attr('transform', 'translate(0,' + this.height + ')')
                 .call(xAxis
                     .tickSize(-this.height)
@@ -1212,8 +1213,14 @@ export class D3TimeseriesGraphComponent
 
         // draw upper axis as border
         this.graph.append('svg:g')
-            .attr('class', 'x axis')
+            .attr('class', 'x axis top')
             .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
+
+        // draw right axis as border
+        this.graph.append('svg:g')
+            .attr('class', 'y axis right')
+            .attr('transform', 'translate(' + this.width + ',0)')
+            .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0));
 
         // text label for the x axis
         if (this.plotOptions.showTimeLabel) {
@@ -1418,7 +1425,7 @@ export class D3TimeseriesGraphComponent
         // draw the y grid lines
         if (this.yRangesEachUom.length === 1) {
             this.graph.append('svg:g')
-                .attr('class', 'grid')
+                .attr('class', 'grid y-grid')
                 .attr('transform', 'translate(' + buffer + ', 0)')
                 .call(d3.axisLeft(yScale)
                     .ticks(5)
@@ -1431,6 +1438,15 @@ export class D3TimeseriesGraphComponent
             buffer,
             yScale
         };
+    }
+
+    private drawBackground() {
+        this.background = this.graph.insert('svg:rect', ':first-child')
+            .attr('width', this.width - this.bufferSum)
+            .attr('height', this.height)
+            .attr('class', 'graph-background')
+            .attr('fill', 'none')
+            .attr('transform', 'translate(' + this.bufferSum + ', 0)');
     }
 
     /**
