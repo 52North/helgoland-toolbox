@@ -41,16 +41,16 @@
     "test": "./node_modules/ts-node/dist/bin.js scripts/test.ts"
   },
   "dependencies": {
-    "@angular/animations": "^8.1.0",
-    "@angular/cdk": "^8.0.2",
-    "@angular/common": "^8.1.0",
-    "@angular/compiler": "^8.1.0",
-    "@angular/core": "^8.1.0",
-    "@angular/forms": "^8.1.0",
-    "@angular/material": "^8.0.2",
-    "@angular/platform-browser": "^8.1.0",
-    "@angular/platform-browser-dynamic": "^8.1.0",
-    "@angular/router": "^8.1.0",
+    "@angular/animations": "^8.2.0",
+    "@angular/cdk": "^8.1.2",
+    "@angular/common": "^8.2.0",
+    "@angular/compiler": "^8.2.0",
+    "@angular/core": "^8.2.0",
+    "@angular/forms": "^8.2.0",
+    "@angular/material": "^8.1.2",
+    "@angular/platform-browser": "^8.2.0",
+    "@angular/platform-browser-dynamic": "^8.2.0",
+    "@angular/router": "^8.2.0",
     "@compodoc/compodoc": "^1.1.10",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
@@ -58,7 +58,7 @@
     "@types/d3": "^5.7.2",
     "@types/geojson": "^7946.0.7",
     "@types/jquery": "^3.3.30",
-    "@types/leaflet": "1.4.4",
+    "@types/leaflet": "^1.5.0",
     "@types/leaflet.markercluster": "^1.4.0",
     "@types/moment": "^2.13.0",
     "@types/plotly.js": "^1.44.9",
@@ -82,11 +82,11 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.801.0",
-    "@angular-devkit/build-ng-packagr": "~0.801.0",
-    "@angular/cli": "^8.1.0",
-    "@angular/compiler-cli": "^8.1.0",
-    "@angular/language-service": "^8.1.0",
+    "@angular-devkit/build-angular": "^0.802.0",
+    "@angular-devkit/build-ng-packagr": "^0.802.0",
+    "@angular/cli": "^8.2.0",
+    "@angular/compiler-cli": "^8.2.0",
+    "@angular/language-service": "^8.2.0",
     "@types/jasmine": "~3.3.13",
     "@types/jasminewd2": "~2.0.6",
     "@types/jsonfile": "^5.0.0",
@@ -106,6 +106,6 @@
     "tsickle": "^0.35.0",
     "tslib": "^1.9.0",
     "tslint": "^5.18.0",
-    "typescript": "~3.4.3"
+    "typescript": "^3.5.3"
   }
 }

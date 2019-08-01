@@ -76,7 +76,7 @@ export class Time {
     }
 
     public loadTimespan(param: string): Timespan {
-        const json = this.localStorage.load(param);
+        const json = this.localStorage.load<object>(param);
         if (json) {
             return plainToClass<Timespan, object>(Timespan, json);
         }
