@@ -1,16 +1,22 @@
 <div style="height: 500px;">
-  <n52-d3-timeseries-graph [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions"
-    [timeInterval]="timespan" [presenterOptions]="d3diagramOptions" [reloadForDatasets]="reloadForDatasets"
-    (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
-    (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)" #diagram></n52-d3-timeseries-graph>
+  <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+    [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
+    [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
+    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
+    (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)" #diagram>
+  </n52-d3-timeseries-graph>
 </div>
 <div>
-  Loading Graph: {{graphLoading}}
+  <span>Loading Graph: {{graphLoading}} </span>
+  <n52-export-image-button svgSelector=".diagram" title="Exported Diagram" [datasetOptions]="datasetOptions"
+    showLegend="true">
+  </n52-export-image-button>
 </div>
 <div style="height: 200px;">
   <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
     [presenterOptions]="d3overviewOptions" [reloadForDatasets]="reloadForDatasets" [timeInterval]="timespan"
-    (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)"></n52-d3-overview-timeseries-graph>
+    (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)">
+  </n52-d3-overview-timeseries-graph>
 </div>
 <div>
   Loading Overview: {{overviewLoading}}
@@ -26,7 +32,8 @@
     {{highlightedTime}}
 
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
-    <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)"></n52-timespan-shift-selector>
+    <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
+    </n52-timespan-shift-selector>
     <button (click)="refreshData()">reload Data</button>
   </div>
 
@@ -35,17 +42,19 @@
     <div *ngFor="let id of datasetIds">
       <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
-        (onShowGeometry)="showGeometry($event)" (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
+        (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
     </div>
   </div>
 
   <div>
     First last entries legend:
     <div *ngFor="let id of datasetIds">
-      <n52-first-latest-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [datasetOptions]="datasetOptions.get(id)"
-        [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
-        (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
+      <n52-first-latest-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
+        [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
         (onSelectDate)="dateChanged($event)"></n52-first-latest-timeseries-entry>
     </div>
   </div>
@@ -53,9 +62,11 @@
   <div>
     Configurable legend:
     <div *ngFor="let id of datasetIds">
-      <n52-configurable-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [datasetOptions]="datasetOptions.get(id)"
-        (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
-        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"></n52-configurable-timeseries-entry>
+      <n52-configurable-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
+        [datasetOptions]="datasetOptions.get(id)" (onDeleteDataset)="deleteTimeseries(id)"
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
+      </n52-configurable-timeseries-entry>
     </div>
   </div>
 
