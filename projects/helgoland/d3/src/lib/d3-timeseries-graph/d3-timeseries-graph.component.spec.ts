@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
-import moment from 'moment';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -63,7 +62,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
   let datasetID1 = 'http://geo.irceline.be/sos/api/v1/__10604';
-  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__10602';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {
@@ -97,8 +96,8 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
     // option1.yAxisRange = {
-    //   min: -1,
-    //   max: 2
+    //   min: 0.2,
+    //   max: 0.7
     // };
     option1.pointRadius = 4;
     option1.lineWidth = 2;
@@ -109,6 +108,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option2.pointBorderWidth = 1;
     option2.pointBorderColor = 'black';
     option2.lineDashArray = 5;
+    option2.separateYAxis = false;
     // option2.yAxisRange = {
     //   min: 0,
     //   max: 10
@@ -122,6 +122,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
+    component.selectedDatasetIds = [datasetID2];
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
@@ -131,6 +132,15 @@ describe('D3TimeseriesGraphComponent - function', () => {
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBeGreaterThan(0);
     expect(typeof (component.datasetIds)).toBe('object');
+
+    setTimeout(() => {
+      // component.datasetOptions.delete(datasetID1);
+      // component.datasetIds.shift();
+      component.selectedDatasetIds.push(datasetID1);
+      if (!fixture['destroyed']) {
+        fixture.detectChanges();
+      }
+    }, 5000);
   });
 
 });

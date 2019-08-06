@@ -32,12 +32,28 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
     });
 
     it('should have a dataset', () => {
+        const datasetID1 = 'http://geo.irceline.be/sos/api/v1/__6522';
         const datasetOptions: Map<string, DatasetOptions> = new Map();
         setNewTimespan(component);
+        const option1 = new DatasetOptions(datasetID1, '#FF0000');
+        option1.lineDashArray = [5, 5];
+        option1.separateYAxis = false;
+        option1.yAxisRange = {
+          min: -1,
+          max: 2
+        };
+        option1.pointRadius = 4;
+        option1.lineWidth = 2;
+        option1.visible = true;
+        datasetOptions.set(datasetID1, option1);
+        component.datasetIds = [datasetID1];
         component.datasetOptions = datasetOptions;
-        const additionalDataOption = new DatasetOptions('horst', '#0000FF');
+        const additionalDataOption = new DatasetOptions('test', '#0000FF');
         additionalDataOption.pointRadius = 6;
         additionalDataOption.lineWidth = 3;
+        component.presenterOptions = {
+            yaxis: true
+        };
         // additionalDataOption.yAxisRange = {
         //     min: 0,
         //     max: 2
@@ -45,67 +61,83 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         additionalDataOption.autoRangeSelection = true;
         component.additionalData = [
             {
-                yaxisLabel: 'random',
+                internalId: 'test',
+                yaxisLabel: 'µg/m³',
                 datasetOptions: additionalDataOption,
                 data: [
                     {
-                        timestamp: new Date().getTime() - 10000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 10,
                         value: 1
                     },
                     {
-                        timestamp: new Date().getTime() - 9000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 9,
                         value: 2
                     },
                     {
-                        timestamp: new Date().getTime() - 8000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 8,
                         value: 1
                     },
                     {
-                        timestamp: new Date().getTime() - 7000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 7,
                         value: 0
                     },
                     {
-                        timestamp: new Date().getTime() - 6000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 6,
                         value: -0.5
                     },
                     {
-                        timestamp: new Date().getTime() - 5000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 5,
                         value: 0
                     },
                     {
-                        timestamp: new Date().getTime() - 4000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 4,
                         value: 1
                     },
                     {
-                        timestamp: new Date().getTime() - 3000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 3,
                         value: 1
                     },
                     {
-                        timestamp: new Date().getTime() - 2000,
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 2,
                         value: 1
                     },
                     {
-                        timestamp: new Date().getTime() - 1000,
-                        value: Math.random() * 2
+                        timestamp: 1559858400000 - 1000 * 60 * 60 * 1,
+                        value: 1
+                    },
+                    {
+                        timestamp: 1559858400000,
+                        value: 5
                     }
                 ]
             }
         ];
 
-        setInterval(() => {
-            component.additionalData[0].data.push({
-                timestamp: new Date().getTime(),
-                value: Math.random() * 3
-            });
+        // setTimeout(() => {
+        //     component.additionalData[0].data.push({
+        //         timestamp: 1559858400000,
+        //         value: 5
+        //     });
+        //     component.additionalData = Object.assign([], component.additionalData);
+        //     component.ngOnChanges({
+        //         additionalData: new SimpleChange(null, component.additionalData, true)
+        //     });
+        //     // updateTimespan(component);
+        //     if (!fixture['destroyed']) {
+        //         fixture.detectChanges();
+        //     }
+        // }, 2000);
+
+        setTimeout(() => {
+            component.additionalData[0].data.pop();
             component.additionalData = Object.assign([], component.additionalData);
             component.ngOnChanges({
                 additionalData: new SimpleChange(null, component.additionalData, true)
             });
-            setNewTimespan(component);
             if (!fixture['destroyed']) {
                 fixture.detectChanges();
             }
-        }, 1000);
+        }, 2000);
 
         if (!fixture['destroyed']) {
             fixture.detectChanges();
@@ -123,11 +155,19 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
 });
 
 function setNewTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
-    const end = new Date().getTime();
-    const diff = 20000;
+    const end = 1559858400000  + 1000 * 60 * 60 * 1;
+    const diff = 1000 * 60 * 60 * 24;
     component.timeInterval = new Timespan(end - diff, end);
     component.ngOnChanges({
         timeInterval: new SimpleChange(null, component.timeInterval, true)
     });
 }
 
+function updateTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
+    const end = 1559858400000 + 1000 * 60 * 60 * 2;
+    const diff = 1000 * 60 * 60 * 24;
+    component.timeInterval = new Timespan(end - diff, end);
+    component.ngOnChanges({
+        timeInterval: new SimpleChange(null, component.timeInterval, true)
+    });
+}
