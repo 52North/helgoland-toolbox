@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/selector",
-  "version": "0.0.1-beta.2",
+  "version": "1.0.0-beta.1",
   "dependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
