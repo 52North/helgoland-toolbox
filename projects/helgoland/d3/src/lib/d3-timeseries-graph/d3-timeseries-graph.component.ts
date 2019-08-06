@@ -1854,7 +1854,7 @@ export class D3TimeseriesGraphComponent
             .attr('cy', line.y())
             .attr('r', pointRadius);
 
-        if (this.plotOptions.hoverStyle === HoveringStyle.point) {
+        if (this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
             this.graphBody.selectAll('.hoverDots')
                 .data(entry.data.filter((d) => typeof d.value === 'number'))
                 .enter().append('circle')
