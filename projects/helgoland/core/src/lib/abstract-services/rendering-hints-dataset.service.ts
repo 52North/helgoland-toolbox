@@ -1,5 +1,3 @@
-import { Observable, Observer } from 'rxjs';
-
 import { DatasetApiInterface } from '../dataset-api/api-interface';
 import { BarRenderingHints, IDataset, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
@@ -13,20 +11,19 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         super();
     }
 
-    public addDataset(internalId: string, options?: T): Observable<boolean> {
-        return new Observable((observer: Observer<boolean>) => {
+    public async addDataset(internalId: string, options?: T): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
             if (options) {
                 this.datasetIds.push(internalId);
                 this.datasetOptions.set(internalId, options);
-                observer.next(true);
-                observer.complete();
                 this.datasetIdsChanged.emit(this.datasetIds);
+                resolve(true);
             } else if (this.datasetIds.indexOf(internalId) < 0) {
                 this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
-                    (timeseries) => this.addLoadedDataset(timeseries, observer),
+                    (timeseries) => this.addLoadedDataset(timeseries, resolve),
                     (error) => {
                         this.api.getDatasetByInternalId(internalId).subscribe(
-                            (dataset) => this.addLoadedDataset(dataset, observer)
+                            (dataset) => this.addLoadedDataset(dataset, resolve)
                         );
                     }
                 );
@@ -34,13 +31,12 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         });
     }
 
-    private addLoadedDataset(dataset: IDataset, observer: Observer<boolean>) {
+    private async addLoadedDataset(dataset: IDataset, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
         this.datasetIds.push(dataset.internalId);
         this.datasetOptions.set(dataset.internalId, this.createOptionsOfRenderingHints(dataset));
-        observer.next(true);
-        observer.complete();
         this.datasetIdsChanged.emit(this.datasetIds);
         this.saveState();
+        resolve(true);
     }
 
     private createOptionsOfRenderingHints(dataset: IDataset): T {
