@@ -1,5 +1,4 @@
 import { EventEmitter } from '@angular/core';
-import { Observable, of } from 'rxjs';
 
 import { DatasetOptions } from '../model/internal/options';
 
@@ -18,7 +17,7 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
      * @param [options]
      * @returns Successfull added the dataset.
      */
-    public addDataset(internalId: string, options?: T): Observable<boolean> {
+    public async addDataset(internalId: string, options?: T): Promise<boolean> {
         if (this.datasetIds.indexOf(internalId) < 0) {
             this.datasetIds.push(internalId);
             if (options) {
@@ -33,7 +32,7 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
             this.saveState();
         }
         this.datasetIdsChanged.emit(this.datasetIds);
-        return of(true);
+        return true;
     }
 
     public removeAllDatasets() {
