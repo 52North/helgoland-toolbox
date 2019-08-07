@@ -33,6 +33,7 @@ import moment, { Duration, unitOfTime } from 'moment';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { RangeCalculationsService } from './../helper/range-calculations.service';
 
 export interface DataEntry {
     timestamp: number;
@@ -169,8 +170,6 @@ export class D3TimeseriesGraphComponent
     protected preparedAxes: Map<string, YAxisSettings> = new Map();
     protected datasetMap: Map<string, DataConst> = new Map();
     protected listOfUoms: string[] = [];
-    // protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
-    // protected dataYranges: YRanges[] = []; // y array of objects containing ranges of all datasets
     /** calculated y axes for the diagram */
     private yAxes: YAxis[] = [];
     private xAxisRange: Timespan; // x domain range
@@ -223,7 +222,8 @@ export class D3TimeseriesGraphComponent
         protected timeFormatLocaleService: D3TimeFormatLocaleService,
         protected colorService: ColorService,
         protected translateService: TranslateService,
-        protected sumValues: SumValuesService
+        protected sumValues: SumValuesService,
+        protected rangeCalc: RangeCalculationsService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
@@ -279,12 +279,12 @@ export class D3TimeseriesGraphComponent
         if (spliceIdx >= 0) {
             this.preparedData.splice(spliceIdx, 1);
             if (this.preparedData.length <= 0) {
-                this.plotGraph();
             } else {
                 this.preparedData.forEach((entry) => {
                     this.processData(entry);
                 });
             }
+            this.plotGraph();
         }
     }
 
@@ -445,6 +445,7 @@ export class D3TimeseriesGraphComponent
         }
         this.addReferenceValueData(dataset.internalId, options, data, dataset.uom);
         this.processData(dataEntry);
+        this.plotGraph();
     }
 
     /**
@@ -505,7 +506,7 @@ export class D3TimeseriesGraphComponent
                     min: dataExtent[0],
                     max: dataExtent[1]
                 };
-                visualRange = this.bufferRange(visualRange, 0.1);
+                visualRange = this.rangeCalc.bufferRange(visualRange);
             }
 
             // set out of zeroBasedAxis
@@ -523,49 +524,7 @@ export class D3TimeseriesGraphComponent
                 visualRange,
                 entry
             });
-
-            this.plotGraph();
         }
-    }
-
-    /**
-     * Buffers the range with a given factor.
-     * @param range {MinMaxRange} range to be buffered
-     * @param factor {number}
-     */
-    protected bufferRange(range: MinMaxRange, factor: number): MinMaxRange {
-        const offset = (range.max - range.min) * factor;
-        range.max = range.max + offset;
-        range.min = range.min - offset;
-        return range;
-    }
-
-    /**
-     * Merge two ranges to one
-     * @param rangeOne {MinMaxRange}
-     * @param rangeTwo {MinMaxRange}
-     */
-    protected mergeRanges(rangeOne: MinMaxRange, rangeTwo: MinMaxRange): MinMaxRange {
-        return {
-            min: Math.min(rangeOne.min, rangeTwo.min),
-            max: Math.max(rangeOne.max, rangeTwo.max)
-        };
-    }
-
-    /**
-     * Function to set range to default interval, if min and max of range are not set.
-     * @param range {MinMaxRange} range to be set
-     */
-    protected extendRange(range: MinMaxRange): MinMaxRange {
-        let min = -1;
-        let max = 1;
-        if (range !== undefined && range !== null) {
-            if (range.min !== range.max) {
-                min = range.min;
-                max = range.max;
-            }
-        }
-        return { min, max };
     }
 
     /**
@@ -609,51 +568,9 @@ export class D3TimeseriesGraphComponent
         // get range of x and y axis
         this.xAxisRange = this.timespan;
 
+        // reset y axes
         this.yAxes = [];
-        this.datasetIds.forEach(key => {
-            if (this.preparedAxes.has(key)) {
-                const axisSettings = this.preparedAxes.get(key);
-                if (axisSettings.entry.options.separateYAxis) {
-                    // create sepearte axis
-                    this.yAxes.push({
-                        uom: axisSettings.entry.axisOptions.uom,
-                        range: axisSettings.visualRange,
-                        rangeFixed: axisSettings.rangeFixed,
-                        selected: axisSettings.entry.selected,
-                        seperate: true,
-                        ids: [key],
-                        label: axisSettings.entry.axisOptions.parameters.feature.label
-                    });
-                } else {
-                    // find matching axis or add new
-                    const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
-                    if (axis) {
-                        // add id to axis
-                        axis.ids.push(key);
-                        // update range for axis
-                        if (axisSettings.rangeFixed && axis.rangeFixed) {
-                            axis.range = this.mergeRanges(axis.range, axisSettings.visualRange);
-                        } else if (axisSettings.rangeFixed) {
-                            axis.range = axisSettings.visualRange;
-                            axis.rangeFixed = true;
-                        } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
-                            axis.range = this.mergeRanges(axis.range, axisSettings.visualRange);
-                        }
-                        // update selection
-                        if (axis.selected) { axis.selected = axisSettings.entry.selected; }
-                    } else {
-                        this.yAxes.push({
-                            uom: axisSettings.entry.axisOptions.uom,
-                            range: axisSettings.visualRange,
-                            seperate: false,
-                            selected: axisSettings.entry.selected,
-                            rangeFixed: axisSettings.rangeFixed,
-                            ids: [key]
-                        });
-                    }
-                }
-            }
-        });
+        this.prepareYAxes();
 
         this.yAxes.forEach(axis => {
             axis.first = (this.yScaleBase === null);
@@ -782,6 +699,57 @@ export class D3TimeseriesGraphComponent
                 });
         }
         this.drawBackground();
+    }
+
+    protected prepareYAxes() {
+        this.datasetIds.forEach(key => this.createYAxisForId(key));
+    }
+
+    protected createYAxisForId(key: string) {
+        if (this.preparedAxes.has(key)) {
+            const axisSettings = this.preparedAxes.get(key);
+            if (axisSettings.entry.options.separateYAxis) {
+                // create sepearte axis
+                this.yAxes.push({
+                    uom: axisSettings.entry.axisOptions.uom,
+                    range: axisSettings.visualRange,
+                    rangeFixed: axisSettings.rangeFixed,
+                    selected: axisSettings.entry.selected,
+                    seperate: true,
+                    ids: [key],
+                    label: axisSettings.entry.axisOptions.parameters.feature.label
+                });
+            } else {
+                // find matching axis or add new
+                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+                if (axis) {
+                    // add id to axis
+                    axis.ids.push(key);
+                    // update range for axis
+                    if (axisSettings.rangeFixed && axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    } else if (axisSettings.rangeFixed) {
+                        axis.range = axisSettings.visualRange;
+                        axis.rangeFixed = true;
+                    } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    }
+                    // update selection
+                    if (axis.selected) {
+                        axis.selected = axisSettings.entry.selected;
+                    }
+                } else {
+                    this.yAxes.push({
+                        uom: axisSettings.entry.axisOptions.uom,
+                        range: axisSettings.visualRange,
+                        seperate: false,
+                        selected: axisSettings.entry.selected,
+                        rangeFixed: axisSettings.rangeFixed,
+                        ids: [key]
+                    });
+                }
+            }
+        }
     }
 
     private createLineHovering() {
@@ -1101,7 +1069,7 @@ export class D3TimeseriesGraphComponent
         // check for y axis grouping
         let range = axis.range;
 
-        range = this.extendRange(range);
+        range = this.rangeCalc.extendRange(range);
         const rangeMin = range.min;
         const rangeMax = range.max;
 

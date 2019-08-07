@@ -31,17 +31,17 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         component = fixture.componentInstance;
     });
 
-    it('should have a dataset', () => {
+    fit('should have a dataset', () => {
         const datasetID1 = 'http://geo.irceline.be/sos/api/v1/__6522';
         const datasetOptions: Map<string, DatasetOptions> = new Map();
         setNewTimespan(component);
         const option1 = new DatasetOptions(datasetID1, '#FF0000');
         option1.lineDashArray = [5, 5];
         option1.separateYAxis = false;
-        option1.yAxisRange = {
-          min: -1,
-          max: 2
-        };
+        // option1.yAxisRange = {
+        //   min: -1,
+        //   max: 2
+        // };
         option1.pointRadius = 4;
         option1.lineWidth = 2;
         option1.visible = true;
@@ -58,11 +58,12 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         //     min: 0,
         //     max: 2
         // };
-        additionalDataOption.autoRangeSelection = true;
+        // additionalDataOption.autoRangeSelection = true;
         component.additionalData = [
             {
                 internalId: 'test',
-                yaxisLabel: 'µg/m³',
+                // yaxisLabel: 'µg/m³',
+                yaxisLabel: 't',
                 datasetOptions: additionalDataOption,
                 data: [
                     {
@@ -104,29 +105,25 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
                     {
                         timestamp: 1559858400000 - 1000 * 60 * 60 * 1,
                         value: 1
-                    },
-                    {
-                        timestamp: 1559858400000,
-                        value: 5
                     }
                 ]
             }
         ];
 
-        // setTimeout(() => {
-        //     component.additionalData[0].data.push({
-        //         timestamp: 1559858400000,
-        //         value: 5
-        //     });
-        //     component.additionalData = Object.assign([], component.additionalData);
-        //     component.ngOnChanges({
-        //         additionalData: new SimpleChange(null, component.additionalData, true)
-        //     });
-        //     // updateTimespan(component);
-        //     if (!fixture['destroyed']) {
-        //         fixture.detectChanges();
-        //     }
-        // }, 2000);
+        setTimeout(() => {
+            component.additionalData[0].data.push({
+                timestamp: 1559858400000,
+                value: 5
+            });
+            component.additionalData = Object.assign([], component.additionalData);
+            component.ngOnChanges({
+                additionalData: new SimpleChange(null, component.additionalData, true)
+            });
+            // updateTimespan(component);
+            if (!fixture['destroyed']) {
+                fixture.detectChanges();
+            }
+        }, 2000);
 
         setTimeout(() => {
             component.additionalData[0].data.pop();
@@ -137,7 +134,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
             if (!fixture['destroyed']) {
                 fixture.detectChanges();
             }
-        }, 2000);
+        }, 4000);
 
         if (!fixture['destroyed']) {
             fixture.detectChanges();

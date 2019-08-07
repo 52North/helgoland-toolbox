@@ -12,7 +12,6 @@ import {
   DatasetApiInterface,
   DatasetOptions,
   InternalIdHandler,
-  MinMaxRange,
   SumValuesService,
   Time,
 } from '@helgoland/core';
@@ -25,6 +24,7 @@ import {
   InternalDataEntry,
 } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { RangeCalculationsService } from './../helper/range-calculations.service';
 
 /**
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
@@ -76,7 +76,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   @Input()
   public additionalData: AdditionalData[] = [];
 
-  private additionalPreparedData: InternalDataEntry[] = [];
+  // private additionalPreparedData: InternalDataEntry[] = [];
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -86,9 +86,10 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
     protected translateService: TranslateService,
-    protected sumValues: SumValuesService
+    protected sumValues: SumValuesService,
+    protected rangeCalc: RangeCalculationsService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -111,9 +112,18 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
+  protected prepareYAxes() {
+    super.prepareYAxes();
+    this.additionalData.forEach(entry => {
+      const id = this.generateAdditionalInternalId(entry);
+      this.createYAxisForId(id);
+    });
+  }
+
   private clearAdditionalData() {
+    // TODO: check removing additional dataset
     // this.additionalPreparedData.forEach(data => this.removeEntryOfyRanges(data));
-    this.additionalPreparedData = [];
+    // this.additionalPreparedData = [];
   }
 
   private prepareAdditionalData() {
@@ -123,11 +133,11 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
           let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
           let dataset = this.datasetMap.get(entry.linkedDatasetId);
-          const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
+          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId.startsWith(entry.yaxisLabel));
           let dataEntry: InternalDataEntry;
           if (prepDataIdx === -1) {
             dataEntry = {
-              internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
+              internalId: this.generateAdditionalInternalId(entry),
               options,
               data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
               axisOptions: {
@@ -147,62 +157,16 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                 offering: dataset.parameters.offering
               };
             }
-            this.additionalPreparedData.push(dataEntry);
+            this.preparedData.push(dataEntry);
           } else {
-            dataEntry = this.additionalPreparedData[prepDataIdx];
+            dataEntry = this.preparedData[prepDataIdx];
             dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
             dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
+            dataEntry.data = options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [];
           }
 
-          // const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
-          const horst = extent<DataEntry, number>(dataEntry.data, (d) => {
-            if (typeof d.value === 'number') {
-              if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-            }
-          });
-          const min = horst[0];
-          const max = horst[1];
-          console.log(`${min} - ${max}`);
-          if (isFinite(min) && isFinite(max)) {
-            let range: MinMaxRange;
-            if (options.yAxisRange) {
-              range = options.yAxisRange;
-              range = this.extendRange(range);
-            } else {
-              range = { min, max };
-              range = this.bufferRange(range, 0.1);
-            }
-            // if (newDatasetIdx === -1) {
-            //   // const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
-            //   const axisRange: YRanges = {
-            //     uom: entry.yaxisLabel,
-            //     range: range,
-            //     // autoRange: options.autoRangeSelection,
-            //     // zeroBased: options.zeroBasedYAxis,
-            //     outOfrange: false,
-            //     ids: [entry.yaxisLabel],
-            //     parameters: dataEntry.axisOptions.parameters
-            //   };
-            //   // if (existingAxisIndex > -1) {
-            //   //   this.yRangesEachUom[existingAxisIndex] = axisRange;
-            //   // } else {
-            //   this.yRangesEachUom.push(axisRange);
-            //   // }
-            //   // this.dataYranges.push(axisRange);
-            // } else {
-            //   if (this.yRangesEachUom[newDatasetIdx].range) {
-            //     this.yRangesEachUom[newDatasetIdx].range.min = Math.min(range.min, this.yRangesEachUom[newDatasetIdx].range.min);
-            //     this.yRangesEachUom[newDatasetIdx].range.max = Math.max(range.max, this.yRangesEachUom[newDatasetIdx].range.max);
-            //   } else {
-            //     this.yRangesEachUom[newDatasetIdx].range = range;
-            //   }
-            //   this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
-            // }
-            if (entry.yaxisLabel && !entry.linkedDatasetId) {
-              let idx = this.listOfUoms.indexOf(entry.yaxisLabel);
-              if (idx < 0) { this.listOfUoms.push(entry.yaxisLabel); }
-            }
-          }
+          this.processData(dataEntry);
+
         } else {
           console.warn('Please check the additional entry, it needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property and a \'data\' property: ', entry);
         }
@@ -210,9 +174,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected drawAllCharts() {
-    super.drawAllCharts();
-    this.additionalPreparedData.forEach(e => this.drawChart(e));
-  }
 
+  private generateAdditionalInternalId(entry: AdditionalData): string {
+    return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel + 'add';
+  }
 }
