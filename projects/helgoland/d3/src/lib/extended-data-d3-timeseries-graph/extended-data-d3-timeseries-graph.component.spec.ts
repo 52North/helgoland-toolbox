@@ -31,7 +31,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         component = fixture.componentInstance;
     });
 
-    fit('should have a dataset', () => {
+    it('should have a dataset', () => {
         const datasetID1 = 'http://geo.irceline.be/sos/api/v1/__6522';
         const datasetOptions: Map<string, DatasetOptions> = new Map();
         setNewTimespan(component);
@@ -110,31 +110,92 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
             }
         ];
 
-        setTimeout(() => {
-            component.additionalData[0].data.push({
-                timestamp: 1559858400000,
-                value: 5
-            });
-            component.additionalData = Object.assign([], component.additionalData);
-            component.ngOnChanges({
-                additionalData: new SimpleChange(null, component.additionalData, true)
-            });
-            // updateTimespan(component);
-            if (!fixture['destroyed']) {
-                fixture.detectChanges();
-            }
-        }, 2000);
+        // setTimeout(() => {
+        //     component.additionalData[0].data.push({
+        //         timestamp: 1559858400000,
+        //         value: 5
+        //     });
+        //     component.additionalData = Object.assign([], component.additionalData);
+        //     component.ngOnChanges({
+        //         additionalData: new SimpleChange(null, component.additionalData, true)
+        //     });
+        //     // updateTimespan(component);
+        //     if (!fixture['destroyed']) {
+        //         fixture.detectChanges();
+        //     }
+        // }, 2000);
 
-        setTimeout(() => {
-            component.additionalData[0].data.pop();
-            component.additionalData = Object.assign([], component.additionalData);
-            component.ngOnChanges({
-                additionalData: new SimpleChange(null, component.additionalData, true)
-            });
-            if (!fixture['destroyed']) {
-                fixture.detectChanges();
-            }
-        }, 4000);
+        // setTimeout(() => {
+        //     component.additionalData.pop();
+        //     component.additionalData = Object.assign([], component.additionalData);
+        //     component.ngOnChanges({
+        //         additionalData: new SimpleChange(null, component.additionalData, true)
+        //     });
+        //     if (!fixture['destroyed']) {
+        //         fixture.detectChanges();
+        //     }
+        // }, 2000);
+
+        // setTimeout(() => {
+        //     const option = new DatasetOptions('test2', '#00FFFF');
+        //     option.pointRadius = 6;
+        //     option.lineWidth = 3;
+        //     component.additionalData.push({
+        //         internalId: 'test2',
+        //         // yaxisLabel: 'µg/m³',
+        //         yaxisLabel: 't',
+        //         datasetOptions: option,
+        //         data: [
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 10,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 9,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 8,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 7,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 6,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 5,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 4,
+        //                 value: 0.5
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 3,
+        //                 value: 1
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 2,
+        //                 value: 1
+        //             },
+        //             {
+        //                 timestamp: 1559858400000 - 1000 * 60 * 60 * 1,
+        //                 value: 1
+        //             }
+        //         ]
+        //     });
+        //     component.additionalData = Object.assign([], component.additionalData);
+        //     component.ngOnChanges({
+        //         additionalData: new SimpleChange(null, component.additionalData, true)
+        //     });
+        //     if (!fixture['destroyed']) {
+        //         fixture.detectChanges();
+        //     }
+        // }, 2000);
 
         if (!fixture['destroyed']) {
             fixture.detectChanges();
@@ -152,7 +213,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
 });
 
 function setNewTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
-    const end = 1559858400000  + 1000 * 60 * 60 * 1;
+    const end = 1559858400000 + 1000 * 60 * 60 * 1;
     const diff = 1000 * 60 * 60 * 24;
     component.timeInterval = new Timespan(end - diff, end);
     component.ngOnChanges({
