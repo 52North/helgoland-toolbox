@@ -1,10 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DoCheck,
   Input,
+  IterableDiffer,
   IterableDiffers,
-  OnChanges,
-  SimpleChanges,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -16,13 +17,8 @@ import {
   Time,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
-import { extent } from 'd3';
 
-import {
-  D3TimeseriesGraphComponent,
-  DataEntry,
-  InternalDataEntry,
-} from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3TimeseriesGraphComponent, InternalDataEntry } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 
@@ -71,12 +67,11 @@ export interface AdditionalDataEntry {
   styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges, AfterViewInit {
+export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit, OnInit {
 
   @Input()
   public additionalData: AdditionalData[] = [];
-
-  // private additionalPreparedData: InternalDataEntry[] = [];
+  private additionalDataDiffer: IterableDiffer<AdditionalData>;
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -92,10 +87,21 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc);
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
-    super.ngOnChanges(changes);
-    if (changes.additionalData && this.additionalData && this.graph) {
-      this.clearAdditionalData();
+  public ngOnInit(): void {
+    this.additionalDataDiffer = this.iterableDiffers.find(this.additionalData).create();
+  }
+
+  public ngDoCheck() {
+    super.ngDoCheck();
+    const additionalDataChanges = this.additionalDataDiffer.diff(this.additionalData);
+    if (additionalDataChanges && this.additionalData && this.graph) {
+      additionalDataChanges.forEachRemovedItem((removedItem) => {
+        const id = this.generateAdditionalInternalId(removedItem.item);
+        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
+        if (spliceIdx >= 0) {
+          this.preparedData.splice(spliceIdx, 1);
+        }
+      });
       this.plotGraph();
     }
   }
@@ -120,12 +126,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     });
   }
 
-  private clearAdditionalData() {
-    // TODO: check removing additional dataset
-    // this.additionalPreparedData.forEach(data => this.removeEntryOfyRanges(data));
-    // this.additionalPreparedData = [];
-  }
-
   private prepareAdditionalData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry => {
@@ -133,7 +133,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
           let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
           let dataset = this.datasetMap.get(entry.linkedDatasetId);
-          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId.startsWith(entry.yaxisLabel));
+          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId) > -1 || e.internalId.indexOf(entry.internalId) > -1);
           let dataEntry: InternalDataEntry;
           if (prepDataIdx === -1) {
             dataEntry = {
@@ -176,6 +176,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
 
   private generateAdditionalInternalId(entry: AdditionalData): string {
-    return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel + 'add';
+    return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.internalId + 'add';
   }
 }
