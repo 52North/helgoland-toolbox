@@ -131,13 +131,6 @@ export class DatasetOptions {
      */
     public yAxisRange?: MinMaxRange;
 
-    /**
-     * marks if the a component loads data for this dataset
-     *
-     * @memberof DatasetOptions
-     */
-    loadData: boolean = false;
-
     constructor(
         internalId: string,
         color: string
