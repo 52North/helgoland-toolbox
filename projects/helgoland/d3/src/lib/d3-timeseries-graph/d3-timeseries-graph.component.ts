@@ -196,6 +196,7 @@ export class D3TimeseriesGraphComponent
     private maxLabelwidth = 0;
     private addLineWidth = 2; // value added to linewidth
     private loadingCounter = 0;
+    private loadingData: Set<string> = new Set();
     private currentTimeId: string;
 
     // default plot options
@@ -347,7 +348,8 @@ export class D3TimeseriesGraphComponent
         if (dataset instanceof Timeseries) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
 
-            datasetOptions.loadData = true;
+            this.loadingData.add(dataset.internalId);
+            this.dataLoaded.emit(this.loadingData);
             this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
@@ -358,13 +360,14 @@ export class D3TimeseriesGraphComponent
             ).subscribe(
                 (result) => this.prepareData(dataset, result),
                 (error) => this.onError(error),
-                () => this.onCompleteLoadingData(datasetOptions)
+                () => this.onCompleteLoadingData(dataset)
             );
         }
     }
 
-    private onCompleteLoadingData(options: DatasetOptions): void {
-        options.loadData = false;
+    private onCompleteLoadingData(dataset: IDataset): void {
+        this.loadingData.delete(dataset.internalId);
+        this.dataLoaded.emit(this.loadingData);
         this.loadingCounter--;
         if (this.loadingCounter === 0) { this.onContentLoading.emit(false); }
     }

@@ -23,7 +23,7 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     @Output()
     public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
 
-    public loading;
+    public loading: boolean;
 
     protected internalId: InternalDatasetId;
 
