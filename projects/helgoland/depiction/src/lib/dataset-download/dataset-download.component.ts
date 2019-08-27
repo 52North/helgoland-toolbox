@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Timespan, InternalDatasetId, DatasetApiMapping, DatasetApiVersion } from '@helgoland/core';
+import { Timespan, InternalDatasetId, DatasetApiMapping, DatasetApiVersion, LocatedTimeValueEntry } from '@helgoland/core';
 import moment from 'moment';
 import { D3SelectionRange } from '@helgoland/d3';
 
@@ -14,7 +14,7 @@ export class DatasetDownloadComponent implements OnChanges { // OnInit {
   public internalId: InternalDatasetId;
 
   @Input()
-  public data: any[];
+  public data: [String, LocatedTimeValueEntry[]][];
 
   @Input()
   public range: D3SelectionRange;
