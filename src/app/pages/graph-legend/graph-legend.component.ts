@@ -8,7 +8,7 @@ import {
     D3GeneralInput,
     D3PlotOptions,
     HighlightOutput,
-    HoveringStyle
+    HoveringStyle,
 } from '@helgoland/d3';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
@@ -39,6 +39,8 @@ export class GraphLegendComponent {
     public reloadForDatasets = [];
     public timespan;
     public plotLanguage;
+
+    public loadings: Set<string> = new Set();
 
     public d3diagramOptions: D3PlotOptions = {
         yaxis: true,
@@ -128,6 +130,10 @@ export class GraphLegendComponent {
 
     public onGraphLoading(loading: boolean) {
         this.graphLoading = loading;
+    }
+
+    public listLoadings() {
+        return Array.from(this.loadings);
     }
 
     public onOverviewLoading(loading: boolean) {
