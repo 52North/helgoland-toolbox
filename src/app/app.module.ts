@@ -24,7 +24,7 @@ import {
   StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule, HelgolandDatasetTableModule } from '@helgoland/depiction';
+import { HelgolandDatasetlistModule, HelgolandDatasetTableModule, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
@@ -156,7 +156,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandD3Module,
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule,
-    HelgolandBasicAuthModule
+    HelgolandBasicAuthModule,
+    HelgolandDatasetDownloadModule
   ],
   entryComponents: [
     StyleModificationComponent,
