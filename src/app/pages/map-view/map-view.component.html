@@ -6,6 +6,17 @@
           [overlayMaps]="overlayMaps" [baseMaps]="baseMaps" mapId="map-view"></n52-geometry-map-viewer>
       </div>
     </div>
+    <div>
+      <div *ngFor="let layer of overlayMaps | keyvalue">
+        Layername: {{layer.value.label}}
+        <div>
+          <n52-layer-visible-toggler [layeroptions]="layer.value" mapId="map-view"></n52-layer-visible-toggler>
+        </div>
+        <div>
+          <n52-layer-opacity-slider [layeroptions]="layer.value" mapId="map-view"></n52-layer-opacity-slider>
+        </div>
+      </div>
+    </div>
   </div>
   <div *ngIf="zoomLevel">Zoomlevel: {{zoomLevel}}</div>
   <div *ngIf="bounds">North: {{bounds.getNorth()|number:'1.3-3'}}, East: {{bounds.getEast()|number:'1.3-3'}}, South: {{bounds.getSouth()|number:'1.3-3'}},

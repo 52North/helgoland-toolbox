@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerMap, MapCache } from '@helgoland/map';
-import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOptions } from 'leaflet';
+import { GeoSearchOptions, LayerMap, MapCache, GeoCureGeoJSONOptions, GeoCureGeoJSON } from '@helgoland/map';
+import { LatLngBounds, LeafletEvent, tileLayer, WMSOptions, circleMarker, LayerEvent } from 'leaflet';
+
+// import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerMap, MapCache, WMSOptions } from '@helgoland/map';
+// import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer } from 'leaflet';
 
 @Component({
     templateUrl: './map-view.component.html',
@@ -9,7 +12,7 @@ import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOpt
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
 
-    public fitBounds: L.LatLngBoundsExpression = [[50.945, 13.566], [51.161, 13.910]];
+    public fitBounds: L.LatLngBoundsExpression = [[54, 7], [48, 14]];
     public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
     public overlayMaps: LayerMap = new Map();
     public baseMaps: LayerMap = new Map();
@@ -86,8 +89,46 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             })
         });
 
-        this.addEmmissionSimulationGeoCureLayer();
-        this.addWsfGeoCureLayer();
+        // this.addEmmissionSimulationGeoCureLayer();
+        // this.addWsfGeoCureLayer();
+
+        // this.overlayMaps.set('interpolated-emissions',
+        //     {
+        //         label: 'interpolated-emissions',
+        //         visible: true,
+        //         layer: tileLayer.wms('https://geoserver.colabis.de/geoserver/ckan/wms?', {
+        //             layers: 'ckan:_8e2bef33_248f_42b5_bd50_0f474a54d11f',
+        //             projection: 'EPSG:4326',
+        //             transparent: true
+        //         })
+        //     },
+        // );
+
+        this.overlayMaps.set('fx-product',
+            {
+                label: 'Radarvorhersage (Basis RX)',
+                visible: false,
+                layer: tileLayer.wms('https://maps.dwd.de/geoserver/ows?', {
+                    layers: 'dwd:FX-Produkt',
+                    format: 'image/png',
+                    srs: 'EPSG:4326',
+                    transparent: true
+                } as WMSOptions)
+            },
+        );
+
+        this.overlayMaps.set('rx-product',
+            {
+                label: 'Radarkomposit (RX)',
+                visible: false,
+                layer: tileLayer.wms('https://maps.dwd.de/geoserver/ows?', {
+                    layers: 'dwd:RX-Produkt',
+                    format: 'image/png',
+                    srs: 'EPSG:4326',
+                    transparent: true
+                } as WMSOptions)
+            },
+        );
     }
 
     public addOverlayMapLayer() {
