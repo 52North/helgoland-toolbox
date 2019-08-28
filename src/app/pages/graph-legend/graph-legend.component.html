@@ -37,6 +37,8 @@
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
         (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
         (onShowGeometry)="showGeometry($event)" (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
+      <n52-dataset-download [internalId]="internalIdHandler.resolveInternalId(id)" [timeInterval]="timespan"
+      [language]=""></n52-dataset-download>
     </div>
   </div>
 
