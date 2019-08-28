@@ -66,8 +66,13 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     }
 
     private zoomToGeometry() {
-        const geometry = L.geoJSON(this.zoomTo);
-        this.map.fitBounds(geometry.getBounds());
+        try {
+            const geometry = L.geoJSON(this.zoomTo);
+            this.map.fitBounds(geometry.getBounds());
+        } catch (err) {
+            console.error(err);
+            return;
+        }
     }
 
     private showHighlight() {
