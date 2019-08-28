@@ -22,6 +22,11 @@ export * from './lib/control/locate/locate.component';
 export * from './lib/control/locate/locate.service';
 export * from './lib/control/zoom/zoom.component';
 
+export * from './lib/layercontrols/module';
+export * from './lib/layercontrols/layer-control-component';
+export * from './lib/layercontrols/layer-opacity-slider/layer-opacity-slider.component';
+export * from './lib/layercontrols/layer-visible-toggler/layer-visible-toggler.component';
+
 export * from './lib/selector/module';
 export * from './lib/selector/map-selector.component';
 export * from './lib/selector/model/trajectory-result';
