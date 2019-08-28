@@ -1,23 +1,16 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Timespan, InternalDatasetId, DatasetApiMapping, DatasetApiVersion, LocatedTimeValueEntry } from '@helgoland/core';
+import { Timespan, InternalDatasetId, DatasetApiMapping, DatasetApiVersion } from '@helgoland/core';
 import moment from 'moment';
-import { D3SelectionRange } from '@helgoland/d3';
 
 @Component({
   selector: 'n52-dataset-download',
   templateUrl: './dataset-download.component.html',
   styleUrls: ['./dataset-download.component.css']
 })
-export class DatasetDownloadComponent implements OnChanges { // OnInit {
+export class DatasetDownloadComponent implements OnChanges {
 
   @Input()
   public internalId: InternalDatasetId;
-
-  @Input()
-  public data: [String, LocatedTimeValueEntry[]][];
-
-  @Input()
-  public range: D3SelectionRange;
 
   @Input()
   public timeInterval: Timespan;
@@ -32,26 +25,10 @@ export class DatasetDownloadComponent implements OnChanges { // OnInit {
     protected apiMapping: DatasetApiMapping,
   ) { }
 
-  // ngOnInit() {
-  //   if (!this._requestParams) {
-  //     this.prepareRequestParams();
-  //     this.createCsvLink(this.internalId.id, this.internalId.url);
-  //   }
-  // }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (!this._requestParams) {
       this.prepareRequestParams();
       this.createCsvLink(this.internalId.id, this.internalId.url);
-    }
-    if (changes.range && this.data && this.data.length > 0) {
-      const currData = this.data.find(el => el[0] === this.internalId.id);
-      if (currData && this.range) {
-        const from = currData[1][this.range.from].timestamp;
-        const to = this.range.to === currData[1].length ? this.timeInterval.to : currData[1][this.range.to].timestamp;
-        const timeInt = new Timespan(from, to);
-        this.prepareTimeSpan(timeInt);
-      }
     }
     if (changes.timeInterval) {
       if (this.internalId && this.timeInterval) {
