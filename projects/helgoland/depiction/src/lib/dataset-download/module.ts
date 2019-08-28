@@ -9,7 +9,7 @@ import { DatasetDownloadComponent } from './dataset-download.component';
   imports: [
     CommonModule,
     TranslateModule,
-    HelgolandCoreModule
+    HelgolandCoreModule,
   ],
   declarations: [
     DatasetDownloadComponent
