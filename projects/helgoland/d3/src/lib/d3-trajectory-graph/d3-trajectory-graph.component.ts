@@ -253,31 +253,33 @@ export class D3TrajectoryGraphComponent
             const datasetEntry = this.datasetMap.get(internalId);
             const firstEntry = this.baseValues.length === 0;
             let previous: DataEntry = null;
-            datasetEntry.data.forEach((elem, idx) => {
-                if (firstEntry) {
-                    const entry = this.createDataEntry(internalId, elem, previous, idx);
-                    if (this.selection) {
-                        if (idx >= this.selection.from && idx <= this.selection.to) {
+            if (datasetEntry && datasetEntry.data && datasetEntry.data.length >= 0) {
+                datasetEntry.data.forEach((elem, idx) => {
+                    if (firstEntry) {
+                        const entry = this.createDataEntry(internalId, elem, previous, idx);
+                        if (this.selection) {
+                            if (idx >= this.selection.from && idx <= this.selection.to) {
+                                this.baseValues.push(entry);
+                            }
+                        } else {
                             this.baseValues.push(entry);
                         }
+                        previous = entry;
                     } else {
-                        this.baseValues.push(entry);
-                    }
-                    previous = entry;
-                } else {
-                    if (this.selection) {
-                        if (idx >= this.selection.from && idx <= this.selection.to) {
-                            if (this.baseValues[idx - this.selection.from]) {
-                                this.baseValues[idx - this.selection.from][internalId] = elem.value;
+                        if (this.selection) {
+                            if (idx >= this.selection.from && idx <= this.selection.to) {
+                                if (this.baseValues[idx - this.selection.from]) {
+                                    this.baseValues[idx - this.selection.from][internalId] = elem.value;
+                                }
+                            }
+                        } else {
+                            if (this.baseValues[idx]) {
+                                this.baseValues[idx][internalId] = elem.value;
                             }
                         }
-                    } else {
-                        if (this.baseValues[idx]) {
-                            this.baseValues[idx][internalId] = elem.value;
-                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
