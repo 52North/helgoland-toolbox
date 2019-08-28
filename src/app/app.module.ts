@@ -33,6 +33,7 @@ import {
   HelgolandMapSelectorModule,
   HelgolandMapViewModule,
   NominatimGeoSearchService,
+  HelgolandLayerControlModule,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
@@ -149,6 +150,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandControlModule,
     HelgolandMapSelectorModule,
     HelgolandMapControlModule,
+    HelgolandLayerControlModule,
     HelgolandMapViewModule,
     HelgolandModificationModule,
     HelgolandDatasetlistModule,
