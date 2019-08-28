@@ -24,5 +24,14 @@
     "service-url": "Service-Url",
     "stations": "Stations",
     "timeseries": "Timeseries"
+  },
+  "timeseries": {
+    "diagram": {
+      "legend": {
+        "entry": {
+					"csv-download": "Data as CSV (Zip-Archive)"
+        }
+      }
+    }
   }
 }

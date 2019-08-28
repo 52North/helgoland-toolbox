@@ -24,7 +24,7 @@ import {
   StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule, HelgolandDatasetTableModule } from '@helgoland/depiction';
+import { HelgolandDatasetlistModule, HelgolandDatasetTableModule, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
@@ -33,6 +33,7 @@ import {
   HelgolandMapSelectorModule,
   HelgolandMapViewModule,
   NominatimGeoSearchService,
+  HelgolandLayerControlModule,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
@@ -149,6 +150,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandControlModule,
     HelgolandMapSelectorModule,
     HelgolandMapControlModule,
+    HelgolandLayerControlModule,
     HelgolandMapViewModule,
     HelgolandModificationModule,
     HelgolandDatasetlistModule,
@@ -156,7 +158,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandD3Module,
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule,
-    HelgolandBasicAuthModule
+    HelgolandBasicAuthModule,
+    HelgolandDatasetDownloadModule
   ],
   entryComponents: [
     StyleModificationComponent,
