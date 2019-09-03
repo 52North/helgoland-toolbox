@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
-import moment from 'moment';
+import moment, { duration, MomentInputObject } from 'moment';
 
 import { LocalStorage } from '../local-storage/local-storage.service';
 import { BufferedTime, TimeInterval, Timespan } from '../model/internal/timeInterval';
@@ -19,8 +19,8 @@ export class Time {
         return new Timespan(from, to);
     }
 
-    public centerTimespanWithDuration(timespan: Timespan, duration: moment.Duration): Timespan {
-        const half = duration.asMilliseconds() / 2;
+    public centerTimespanWithDuration(timespan: Timespan, d: moment.Duration): Timespan {
+        const half = d.asMilliseconds() / 2;
         const center = this.getCenterOfTimespan(timespan);
         return new Timespan(center - half, center + half);
     }
@@ -30,16 +30,16 @@ export class Time {
     }
 
     public stepBack(timespan: Timespan): Timespan {
-        const duration = this.getDuration(timespan);
-        const from = moment(timespan.from).subtract(duration).unix() * 1000;
-        const to = moment(timespan.to).subtract(duration).unix() * 1000;
+        const d = this.getDuration(timespan);
+        const from = moment(timespan.from).subtract(d).unix() * 1000;
+        const to = moment(timespan.to).subtract(d).unix() * 1000;
         return new Timespan(from, to);
     }
 
     public stepForward(timespan: Timespan): Timespan {
-        const duration = this.getDuration(timespan);
-        const from = moment(timespan.from).add(duration).unix() * 1000;
-        const to = moment(timespan.to).add(duration).unix() * 1000;
+        const d = this.getDuration(timespan);
+        const from = moment(timespan.from).add(d).unix() * 1000;
+        const to = moment(timespan.to).add(d).unix() * 1000;
         return new Timespan(from, to);
     }
 
@@ -55,9 +55,9 @@ export class Time {
         if (timeInterval instanceof Timespan) {
             return timeInterval;
         } else if (timeInterval instanceof BufferedTime) {
-            const duration = moment.duration(timeInterval.bufferInterval / 2);
-            const from = moment(timeInterval.timestamp).subtract(duration).unix() * 1000;
-            const to = moment(timeInterval.timestamp).add(duration).unix() * 1000;
+            const d = moment.duration(timeInterval.bufferInterval / 2);
+            const from = moment(timeInterval.timestamp).subtract(d).unix() * 1000;
+            const to = moment(timeInterval.timestamp).add(d).unix() * 1000;
             return new Timespan(from, to);
         } else {
             console.error('Wrong time interval!');
@@ -90,9 +90,25 @@ export class Time {
         return new Timespan(start, end);
     }
 
+    public generateTimespan(defaultTimeseriesTimeduration: MomentInputObject, align: 'start' | 'center' | 'end'): Timespan {
+        const now = new Date();
+        const d = duration(defaultTimeseriesTimeduration);
+        switch (align) {
+            case 'start':
+                return new Timespan(now.getTime(), now.getTime() + d.asMilliseconds());
+            case 'end':
+                return new Timespan(now.getTime() - d.asMilliseconds(), now.getTime());
+            case 'center':
+            default:
+                const half = d.asMilliseconds() / 2;
+                return new Timespan(now.getTime() - half, now.getTime() + half);
+        }
+    }
+
     private getDuration(timespan: Timespan): moment.Duration {
         const from = moment(timespan.from);
         const to = moment(timespan.to);
         return moment.duration(to.diff(from));
     }
+
 }
