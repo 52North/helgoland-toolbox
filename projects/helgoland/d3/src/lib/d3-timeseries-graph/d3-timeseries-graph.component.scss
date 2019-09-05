@@ -24,6 +24,29 @@
         stroke-opacity: .5;
     }
 
+    text.yaxisTextLabel {
+        fill: black;
+        font: 18px times;
+        text-anchor: middle;
+
+        &.selected {
+            font-weight: bold;
+        }
+    }
+
+    rect.y.axisDiv {
+        fill: grey;
+        opacity: 0.0;
+
+        &.selected {
+            opacity: 0.5;
+        }
+
+        &:hover {
+            opacity: 0.3;
+        }
+    }
+
     .formerButton,
     .laterButton {
         fill: grey;
