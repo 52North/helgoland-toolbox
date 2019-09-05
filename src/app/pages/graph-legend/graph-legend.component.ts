@@ -23,10 +23,11 @@ export class GraphLegendComponent {
 
     public datasetIds = [
         'http://www.fluggs.de/sos2/api/v1/__26',
+        'http://www.fluggs.de/sos2/api/v1/__49',
         'http://www.fluggs.de/sos2/api/v1/__51',
         'http://www.fluggs.de/sos2/api/v1/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
-        'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
+        // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__48',
         // 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
@@ -43,6 +44,7 @@ export class GraphLegendComponent {
     public loadings: Set<string> = new Set();
 
     public d3diagramOptions: D3PlotOptions = {
+        showReferenceValues: true,
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',
