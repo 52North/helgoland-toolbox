@@ -151,6 +151,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                   autoRangeSelection: options.autoRangeSelection,
                   separateYAxis: options.separateYAxis
                 },
+                referenceValueData: [],
                 visible: options.visible
               };
               if (dataset) {
