@@ -128,7 +128,7 @@ export class GraphLegendComponent {
     }
 
     public updateOptions(option: DatasetOptions) {
-        console.log('updateOptions' + JSON.stringify(option));
+        this.datasetOptions.set(option.internalId, option);
     }
 
     public onGraphLoading(loading: boolean) {
