@@ -64,6 +64,11 @@ export interface InternalDataEntry {
             offering?: { id: String, label: String };
         };
     };
+    referenceValueData: {
+        id: string;
+        color: string;
+        data: DataEntry[];
+    }[];
     visible: boolean;
     focusLabelRect?: any;
     focusLabel?: any;
@@ -159,7 +164,7 @@ export class D3TimeseriesGraphComponent
     private oldGroupYaxis: boolean;
 
     // data types
-    protected preparedData: InternalDataEntry[] = []; // : DataSeries[]
+    protected preparedData: InternalDataEntry[] = [];
     protected datasetMap: Map<string, DataConst> = new Map();
     protected listOfUoms: string[] = [];
     protected yRangesEachUom: YRanges[] = []; // y array of objects containing ranges for each uom
@@ -470,6 +475,7 @@ export class D3TimeseriesGraphComponent
                     offering: dataset.parameters.offering
                 }
             },
+            referenceValueData: [],
             visible: options.visible,
             bar: barConfig
         };
@@ -524,7 +530,7 @@ export class D3TimeseriesGraphComponent
         } else {
             this.preparedData.push(dataEntry);
         }
-        this.addReferenceValueData(dataset.internalId, options, data, dataset.uom);
+        this.addReferenceValueData(dataEntry, options, data, dataset.uom);
         this.processData(dataEntry);
     }
 
@@ -535,24 +541,13 @@ export class D3TimeseriesGraphComponent
      * @param data {Data} Array of Arrays containing the measurement-data of the dataset
      * @param uom {String} String with the uom of a dataset
      */
-    private addReferenceValueData(internalId: string, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
-        this.preparedData = this.preparedData.filter((entry) => {
-            return !entry.internalId.startsWith('ref' + internalId);
-        });
+    private addReferenceValueData(dataEntry: InternalDataEntry, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
         if (this.plotOptions.showReferenceValues) {
-            styles.showReferenceValues.forEach((refValue) => {
-                const refId = 'ref' + internalId + refValue.id;
-                const refDataEntry: InternalDataEntry = {
-                    internalId: refId,
-                    options: new DatasetOptions(refId, refValue.color),
-                    visible: true,
-                    data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] })),
-                    axisOptions: {
-                        uom: uom
-                    }
-                };
-                this.preparedData.push(refDataEntry);
-            });
+            dataEntry.referenceValueData = styles.showReferenceValues.map((refValue) => ({
+                id: refValue.id,
+                color: refValue.color,
+                data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] }))
+            }));
         }
     }
 
@@ -570,7 +565,15 @@ export class D3TimeseriesGraphComponent
         let autoDataExtent: boolean = dataEntry.axisOptions.autoRangeSelection;
 
         // get min and max value of data
-        const dataExtent = d3.extent<DataEntry, number>(dataEntry.data, (d) => (typeof d.value === 'number') ? d.value : null);
+        const baseDataExtent = d3.extent<DataEntry, number>(dataEntry.data, (d) => (typeof d.value === 'number') ? d.value : null);
+
+        const dataExtentRafValues = dataEntry.referenceValueData.map(e => {
+            return d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null);
+        });
+
+        const rangeMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+        const rangeMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+        const dataExtent = [rangeMin, rangeMax];
 
         let setDataExtent = false;
 
@@ -1646,6 +1649,9 @@ export class D3TimeseriesGraphComponent
                 if (entry.options.type === 'bar') {
                     this.drawBarChart(entry, yScaleBase);
                 } else {
+                    // draw ref value line
+                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, 1, yScaleBase));
+                    // draw base line
                     this.drawLineChart(entry, yScaleBase);
                 }
             }
@@ -1828,6 +1834,19 @@ export class D3TimeseriesGraphComponent
         this.resetDrag();
     }
 
+    private drawRefLineChart(data: DataEntry[], color: string, width: number,yScaleBase: d3.ScaleLinear<number, number>): void {
+        let line = this.createLine(this.xScaleBase, yScaleBase);
+
+        this.graphBody
+            .append('svg:path')
+            .datum(data)
+            .attr('class', 'line')
+            .attr('fill', 'none')
+            .attr('stroke', color)
+            .attr('stroke-width', width)
+            .attr('d', line);
+    }
+
     private drawLineChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
         const pointRadius = this.calculatePointRadius(entry);
 
@@ -1843,7 +1862,7 @@ export class D3TimeseriesGraphComponent
             .attr('stroke', entry.options.color)
             .attr('stroke-width', this.calculateLineWidth(entry))
             .attr('d', line);
-
+        
         // draw line dots
         this.graphBody.selectAll('.graphDots')
             .data(entry.data.filter((d) => typeof d.value === 'number'))
@@ -2412,7 +2431,7 @@ export class D3TimeseriesGraphComponent
         console.error(error);
     }
 
-    private calculateLineWidth(entry: InternalDataEntry) {
+    private calculateLineWidth(entry: InternalDataEntry): number {
         if (entry.selected) {
             return entry.options.lineWidth + this.addLineWidth;
         } else {

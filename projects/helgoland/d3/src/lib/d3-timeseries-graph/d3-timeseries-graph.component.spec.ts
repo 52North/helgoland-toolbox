@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
-import moment from 'moment';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -62,7 +61,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'http://geo.irceline.be/sos/api/v1/__10604';
+  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
   let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
@@ -96,6 +95,10 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option1.barStartOf = 'hour';
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
+    option1.showReferenceValues = [{
+      id: '239',
+      color: '#00FF00'
+    }];
     // option1.yAxisRange = {
     //   min: -1,
     //   max: 2
@@ -122,6 +125,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
+    component.presenterOptions = { showReferenceValues: true };
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
