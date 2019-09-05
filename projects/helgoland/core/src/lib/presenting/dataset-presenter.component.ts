@@ -166,7 +166,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             if (firstChange) { this.oldDatasetOptions = new Map(); }
             this.datasetOptions.forEach((value, key) => {
                 if (!equal(value, this.oldDatasetOptions.get(key))) {
-                    this.oldDatasetOptions.set(key, JSON.parse(JSON.stringify(this.datasetOptions.get(key))));
+                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions.get(key)));
                     this.datasetOptionsChanged(key, value, firstChange);
                 }
             });
