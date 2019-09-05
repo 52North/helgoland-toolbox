@@ -336,11 +336,11 @@ export class D3TrajectoryGraphComponent
     }
 
     private calculateHeight(): number {
-        return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
     private calculateWidth(): number {
-        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return (this.d3Elem.nativeElement as HTMLElement).clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     private getXValue(data: DataEntry) {
