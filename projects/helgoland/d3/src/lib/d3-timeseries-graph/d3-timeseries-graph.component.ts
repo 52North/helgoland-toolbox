@@ -28,7 +28,7 @@ import {
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { Duration, unitOfTime } from 'moment';
+import moment, { Duration, min, unitOfTime } from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { HighlightOutput } from '../model/d3-highlight';
@@ -147,8 +147,8 @@ export class D3TimeseriesGraphComponent
     public highlightOutput: HighlightOutput;
 
     // DOM elements
-    protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
-    protected graph: any;
+    protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
+    protected graph: d3.Selection<SVGSVGElement, any, any, any>;
     protected graphFocus: any;
     protected graphBody: any;
     private dragRect: any;
@@ -181,6 +181,8 @@ export class D3TimeseriesGraphComponent
     private xAxisRangeOrigin: any = []; // x domain range
     private xAxisRangePan: [number, number]; // x domain range
     private listOfSeparation = Array();
+
+    private adjustedRanges: Map<string, MinMaxRange> = new Map();
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
@@ -237,13 +239,13 @@ export class D3TimeseriesGraphComponent
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
 
-        this.rawSvg = d3.select(this.d3Elem.nativeElement)
-            .append('svg')
+        this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
+            .append<SVGSVGElement>('svg')
             .attr('width', '100%')
             .attr('height', '100%');
 
         this.graph = this.rawSvg
-            .append('g')
+            .append<SVGSVGElement>('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.graphFocus = this.rawSvg
@@ -1074,14 +1076,17 @@ export class D3TimeseriesGraphComponent
     private drawYaxis(axis: YAxis) {
         let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
         // check for y axis grouping
-        let range = axis.range;
+        let range;
 
-        range = this.rangeCalc.extendRange(range);
-        const rangeMin = range.min;
-        const rangeMax = range.max;
+        if (this.plotOptions.yAxisStepper && this.adjustedRanges.has(axis.uom)) {
+            range = this.adjustedRanges.get(axis.uom);
+        } else {
+            range = axis.range;
+            range = this.rangeCalc.extendRange(range);
+        }
 
         // range for y axis scale
-        const yScale = d3.scaleLinear().domain([rangeMin, rangeMax]).range([this.height, 0]);
+        const yScale = d3.scaleLinear().domain([range.min, range.max]).range([this.height, 0]);
 
         const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
         let buffer = 0;
@@ -1094,23 +1099,27 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw y axis
-        const axisElem = this.graph.append('svg:g')
+        const axisElem = this.graph.append<SVGSVGElement>('svg:g')
             .attr('class', 'y axis')
             .call(yAxisGen);
 
         // only if yAxis should be visible
         if (showAxis) {
+            const axisHeight = axisElem.node().getBBox().height;
             // draw y axis label
-            const text = this.graph.append('text')
+            const text = this.graph.append<SVGSVGElement>('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
-                .call(this.wrapText, (axisElem.node().getBBox().height - 10), this.height / 2);
+                .call(this.wrapText, axisHeight - 10, this.height / 2);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
+
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+
+            // console.log(`Axis size offset: ${buffer}, height: ${axisHeight}, width: ${axisWidth} with ${axis.uom}`);
             const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!axis.first) {
@@ -1138,9 +1147,9 @@ export class D3TimeseriesGraphComponent
                     x: textPosition.y + textHeight / 2 + axisradius / 2, // + 2 because radius === 4
                     y: Math.abs(textPosition.x + textWidth) - axisradius * 2
                 };
+                console.log(`Text position ${textPosition.x} ${textPosition.y}`);
                 let pointOffset = 0;
 
-                // if (entry.ids) {
                 axis.ids.forEach((entryID) => {
                     let dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
@@ -1155,26 +1164,117 @@ export class D3TimeseriesGraphComponent
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
                 });
+
+                const axisDiv = this.graph.append('rect')
+                    .attr('class', `y axisDiv ${axis.selected ? 'selected' : ''}`)
+                    .attr('width', axisWidthDiv)
+                    .attr('height', this.height)
+                    .on('mouseup', () => this.highlightLine(axis.ids));
+
+                if (!axis.first) {
+                    axisDiv.attr('x', axis.offset).attr('y', 0);
+                } else {
+                    axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
+                }
+
+                if (this.plotOptions.yAxisStepper && axis.range.min && axis.range.max) {
+                    const buttonSize = 7;
+                    // draw upper up button
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'green')
+                        .attr('fill', 'green')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', 0)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, 0, 1));
+                    // draw upper down button
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'red')
+                        .attr('fill', 'red')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', 2.5 * buttonSize)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, 0, -1));
+
+                    // draw reset button
+                    if (this.adjustedRanges.has(axis.uom)) {
+                        this.graph.append('circle')
+                            .attr('class', 'axisDots')
+                            .attr('stroke', 'black')
+                            .attr('fill', 'black')
+                            .attr('cx', startOfPoints.x)
+                            .attr('cy', 5 * buttonSize)
+                            .attr('r', buttonSize)
+                            .on('mouseup', () => {
+                                this.adjustedRanges.delete(axis.uom);
+                                this.plotGraph();
+                            });
+                    }
+
+                    // draw zoom buttons
+                    const diff = range.max - range.min;
+                    const step = diff / 10;
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'blue')
+                        .attr('fill', 'blue')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', 8 * buttonSize)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, -step, step));
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'blue')
+                        .attr('fill', 'blue')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', 10 * buttonSize)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, step, -step));
+
+
+                    // draw down up button
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'green')
+                        .attr('fill', 'green')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', axisHeight - 2.5 * buttonSize)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, 1, 0));
+                    // draw down down button
+                    this.graph.append('circle')
+                        .attr('class', 'axisDots')
+                        .attr('stroke', 'red')
+                        .attr('fill', 'red')
+                        .attr('cx', startOfPoints.x)
+                        .attr('cy', axisHeight)
+                        .attr('r', buttonSize)
+                        .on('mouseup', () => this.adjustAxisRange(axis, -1, 0));
+
+                }
             }
-
-            const axisDiv = this.graph.append('rect')
-                .attr('class', `y axisDiv ${axis.selected ? 'selected' : ''}`)
-                .attr('width', axisWidthDiv)
-                .attr('height', this.height)
-                .on('mouseup', () => this.highlightLine(axis.ids));
-
-            if (!axis.first) {
-                axisDiv.attr('x', axis.offset).attr('y', 0);
-            } else {
-                axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
-            }
-
         }
 
         return {
             buffer,
             yScale
         };
+    }
+
+    private adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
+        const key = axis.uom;
+        if (this.adjustedRanges.has(key)) {
+            this.adjustedRanges.get(key).min += adjustMin;
+            this.adjustedRanges.get(key).max += adjustMax;
+        } else {
+            this.adjustedRanges.set(key, {
+                min: axis.range.min + adjustMin,
+                max: axis.range.max + adjustMax
+            });
+        }
+        this.plotGraph();
     }
 
     private drawBackground() {
