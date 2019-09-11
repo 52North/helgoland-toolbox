@@ -41,6 +41,10 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                 end = moment(start).endOf('year');
             }
             return forkJoin(requests).pipe(map((entry) => {
+                const idxFrom = entry[0].values.findIndex(el => el[0] === timespan.from);
+                const idxTo = entry[entry.length - 1].values.findIndex(el => el[0] === timespan.to);
+                entry[0].values = entry[0].values.slice(idxFrom);
+                entry[entry.length - 1].values = entry[entry.length - 1].values.slice(0, idxTo + 1);
                 return entry.reduce((previous, current) => {
                     const next: Data<T> = {
                         referenceValues: {},
