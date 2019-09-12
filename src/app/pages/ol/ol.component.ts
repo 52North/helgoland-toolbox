@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Station } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
 import TileLayer from 'ol/layer/Tile';
 import { TileWMS } from 'ol/source';
@@ -23,6 +24,7 @@ export class OlComponent implements OnInit {
   ngOnInit() {
 
     this.layers.push(new TileLayer({
+      visible: false,
       source: new TileWMS({
         url: 'https://maps.dwd.de/geoserver/ows',
         params: {
@@ -32,6 +34,7 @@ export class OlComponent implements OnInit {
     }));
 
     this.layers.push(new TileLayer({
+      visible: false,
       source: new TileWMS({
         url: 'https://maps.dwd.de/geoserver/ows',
         params: {
@@ -80,6 +83,11 @@ export class OlComponent implements OnInit {
   public removeLayer(i: number) {
     const layer = this.layers.splice(i, 1);
     this.mapService.getMap(this.mapId).subscribe(map => map.removeLayer(layer[0]));
+  }
+
+  public stationSelected(station: Station) {
+    alert(station.properties.label);
+    console.log(station);
   }
 
 }

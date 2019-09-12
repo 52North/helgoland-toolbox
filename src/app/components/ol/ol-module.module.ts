@@ -17,6 +17,7 @@ import { OlLayerZoomExtentComponent } from './controls/legend/ol-layer-zoom-exte
 import { OlMousePositionComponent } from './controls/ol-mouse-position/ol-mouse-position.component';
 import { OlOverviewMapComponent } from './controls/ol-overview-map/ol-overview-map.component';
 import { OlLayerComponent } from './layers/ol-layer/ol-layer.component';
+import { OlStationSelectorLayerComponent } from './layers/ol-station-selector-layer/ol-station-selector-layer.component';
 import { OlMapComponent } from './ol-map/ol-map.component';
 
 const COMPONENTS = [
@@ -32,6 +33,7 @@ const COMPONENTS = [
   OlMapComponent,
   OlMousePositionComponent,
   OlOverviewMapComponent,
+  OlStationSelectorLayerComponent,
 ];
 
 @NgModule({
