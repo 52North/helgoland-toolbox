@@ -6,8 +6,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 
 @Component({
   selector: 'n52-ol-layer-legend-url',
-  templateUrl: './ol-layer-legend-url.component.html',
-  styleUrls: ['./ol-layer-legend-url.component.css']
+  templateUrl: './ol-layer-legend-url.component.html'
 })
 export class OlLayerLegendUrlComponent {
 
