@@ -7,8 +7,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 
 @Component({
   selector: 'n52-ol-layer-animate-time',
-  templateUrl: './ol-layer-animate-time.component.html',
-  styleUrls: ['./ol-layer-animate-time.component.css']
+  templateUrl: './ol-layer-animate-time.component.html'
 })
 export class OlLayerAnimateTimeComponent implements OnInit {
 

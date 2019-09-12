@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ol-layer-time-selector',
-  templateUrl: './ol-layer-time-selector.component.html',
-  styleUrls: ['./ol-layer-time-selector.component.css']
+  selector: 'n52-ol-layer-time-selector',
+  templateUrl: './ol-layer-time-selector.component.html'
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 

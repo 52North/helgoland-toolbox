@@ -6,8 +6,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 
 @Component({
   selector: 'n52-ol-layer-abstract',
-  templateUrl: './ol-layer-abstract.component.html',
-  styleUrls: ['./ol-layer-abstract.component.css']
+  templateUrl: './ol-layer-abstract.component.html'
 })
 export class OlLayerAbstractComponent implements OnInit {
 

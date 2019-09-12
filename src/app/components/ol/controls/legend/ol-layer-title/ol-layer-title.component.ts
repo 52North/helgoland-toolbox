@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Required } from '@helgoland/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -7,8 +6,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 
 @Component({
   selector: 'n52-ol-layer-title',
-  templateUrl: './ol-layer-title.component.html',
-  styleUrls: ['./ol-layer-title.component.css']
+  templateUrl: './ol-layer-title.component.html'
 })
 export class OlLayerTitleComponent implements OnInit {
 

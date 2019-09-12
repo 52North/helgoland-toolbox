@@ -3,8 +3,7 @@ import BaseLayer from 'ol/layer/Base';
 
 @Component({
   selector: 'n52-ol-layer-visibility-toggler',
-  templateUrl: './ol-layer-visibility-toggler.component.html',
-  styleUrls: ['./ol-layer-visibility-toggler.component.css']
+  templateUrl: './ol-layer-visibility-toggler.component.html'
 })
 export class OlLayerVisibilityTogglerComponent {
 

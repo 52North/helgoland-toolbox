@@ -11,8 +11,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 
 @Component({
   selector: 'n52-ol-layer-zoom-extent',
-  templateUrl: './ol-layer-zoom-extent.component.html',
-  styleUrls: ['./ol-layer-zoom-extent.component.css']
+  templateUrl: './ol-layer-zoom-extent.component.html'
 })
 export class OlLayerZoomExtentComponent implements OnInit {
 

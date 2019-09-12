@@ -3,8 +3,7 @@ import BaseLayer from 'ol/layer/Base';
 
 @Component({
   selector: 'n52-ol-layer-opacitiy-slider',
-  templateUrl: './ol-layer-opacitiy-slider.component.html',
-  styleUrls: ['./ol-layer-opacitiy-slider.component.css']
+  templateUrl: './ol-layer-opacitiy-slider.component.html'
 })
 export class OlLayerOpacitiySliderComponent implements OnInit, DoCheck {
 

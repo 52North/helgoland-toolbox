@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
 import { DatasetApiInterface, ParameterFilter, Required, Station } from '@helgoland/core';
 import { Feature, Map } from 'ol';
+import { unlistenByKey } from 'ol/events';
 import { click, pointerMove } from 'ol/events/condition';
 import { extend } from 'ol/extent';
 import { FeatureLike } from 'ol/Feature';
@@ -45,6 +46,8 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
   private map: Map;
 
+  private layer: VectorLayer;
+
   constructor(
     protected mapService: OlMapService,
     @Host() protected mapidService: OlMapId,
@@ -82,9 +85,8 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createLayer(features: Feature[]) {
-    let layer;
     if (this.cluster) {
-      layer = new VectorLayer({
+      this.layer = new VectorLayer({
         source: new Cluster({
           distance: 100,
           source: new VectorSource({
@@ -94,14 +96,14 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
         style: feature => this.styleClusterLayer(feature)
       });
     } else {
-      layer = new VectorLayer({
+      this.layer = new VectorLayer({
         source: new VectorSource({
           features
         }),
         style: () => this.createMarkerStyle(),
       });
     }
-    this.map.addLayer(layer);
+    this.map.addLayer(this.layer);
   }
 
   private createFeatureList(stations: Station[]) {
@@ -121,30 +123,32 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
   private createHoverInteraction() {
     if (this.cluster) {
-      const hover = new Select({
+      const hoverSelect = new Select({
         condition: pointerMove,
-        style: feature => this.styleClusterLayer(feature)
+        style: feature => this.styleClusterLayer(feature),
+        layers: [this.layer]
       });
-      hover.on('select', (evt => {
+
+      hoverSelect.on('select', (evt => {
         if (evt.selected.length >= 1) {
           console.log(`Hover start: ${evt.selected}`);
+          const temp = hoverSelect.getFeatures().on('remove', () => {
+            console.log(`Hover finished`);
+            unlistenByKey(temp);
+          });
         }
       }));
-      hover.un('select', (evt => {
-        if (evt.selected.length >= 1) {
-          console.log(`Hover finished: ${evt.selected}`);
-        }
-      }));
-      this.map.addInteraction(hover);
+      this.map.addInteraction(hoverSelect);
     }
   }
 
   private createClickInteraction() {
-    const selection = new Select({
+    const clickSelect = new Select({
       condition: click,
-      style: feature => this.cluster ? this.styleClusterLayer(feature) : this.createMarkerStyle()
+      style: feature => this.cluster ? this.styleClusterLayer(feature) : this.createMarkerStyle(),
+      layers: [this.layer]
     });
-    selection.on('select', (evt => {
+    clickSelect.on('select', (evt => {
       if (evt.selected.length >= 1) {
         if (evt.selected[0].getProperties().station) {
           this.onSelected.emit(evt.selected[0].getProperties().station);
@@ -152,7 +156,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
           const selectedFeatures = evt.selected[0].getProperties().features;
           console.log(selectedFeatures);
           if (selectedFeatures.length > 1) {
-            selection.getFeatures().clear();
+            clickSelect.getFeatures().clear();
             setTimeout(() => {
               this.zoomToFeatures(selectedFeatures);
             }, 10);
@@ -162,7 +166,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
         }
       }
     }));
-    this.map.addInteraction(selection);
+    this.map.addInteraction(clickSelect);
   }
 
   private styleClusterLayer(feature: FeatureLike): Style | Style[] {
