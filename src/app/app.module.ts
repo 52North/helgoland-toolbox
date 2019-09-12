@@ -22,16 +22,20 @@ import {
   StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule, HelgolandDatasetTableModule, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
+import {
+  HelgolandDatasetDownloadModule,
+  HelgolandDatasetlistModule,
+  HelgolandDatasetTableModule,
+} from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
   GeoSearch,
+  HelgolandLayerControlModule,
   HelgolandMapControlModule,
   HelgolandMapSelectorModule,
   HelgolandMapViewModule,
   NominatimGeoSearchService,
-  HelgolandLayerControlModule,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
@@ -47,6 +51,7 @@ import { ROUTES } from './app.routes';
 import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
+import { OlModule } from './components/ol/ol-module.module';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
@@ -56,6 +61,7 @@ import { GraphLegendComponent } from './pages/graph-legend/graph-legend.componen
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { MapViewComponent } from './pages/map-view/map-view.component';
+import { OlComponent } from './pages/ol/ol.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
@@ -108,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LocalSelectorImplComponent,
     MapSelectorComponent,
     MapViewComponent,
+    OlComponent,
     PermalinkComponent,
     PlotlyGraphComponent,
     ProfileEntryComponent,
@@ -138,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
+    OlModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule,

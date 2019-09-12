@@ -50,6 +50,7 @@ export class AdditionalDataGraphComponent {
         this.additionalData = [{
             // linkedDatasetId: this.datasetIds[0],
             yaxisLabel: 'random',
+            internalId: 'temp',
             datasetOptions: options,
             data: [
                 {
