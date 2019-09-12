@@ -4,6 +4,9 @@
             <n52-ol-map [mapId]="mapId" [zoom]="6" [lat]="51.2" [lon]="9.5" [showZoomControl]="true"
                 [showAttributionControl]="false">
                 <n52-ol-layer *ngFor="let layer of layers" [layer]="layer"></n52-ol-layer>
+                <n52-ol-station-selector-layer [serviceUrl]="'https://fluggs.wupperverband.de/sos2/api/v1/'"
+                    [zoomToResult]="false" (onSelected)="stationSelected($event)">
+                </n52-ol-station-selector-layer>
                 <n52-ol-overview-map [collased]="true"></n52-ol-overview-map>
             </n52-ol-map>
         </div>
@@ -32,7 +35,8 @@
                         <n52-ol-layer-zoom-extent [layer]="layer" [mapId]="mapId"></n52-ol-layer-zoom-extent>
                     </div>
                     <div>
-                        <n52-ol-layer-legend-url [layer]="layer" (legendUrl)="getLegendUrl($event)"></n52-ol-layer-legend-url>
+                        <n52-ol-layer-legend-url [layer]="layer" (legendUrl)="getLegendUrl($event)">
+                        </n52-ol-layer-legend-url>
                     </div>
                 </div>
             </div>
