@@ -5,6 +5,7 @@ import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreM
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { D3YAxisModifierComponent } from '../d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
 
@@ -76,7 +77,7 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
         DatasetApiInterfaceTesting,
         DefinedTimespanService
       ],
-      declarations: [D3TimeseriesGraphComponent]
+      declarations: [D3TimeseriesGraphComponent, D3YAxisModifierComponent]
     }).compileComponents();
   }));
 
