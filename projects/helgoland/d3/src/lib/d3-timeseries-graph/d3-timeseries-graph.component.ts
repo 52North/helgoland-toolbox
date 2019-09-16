@@ -119,6 +119,11 @@ interface HighlightDataset {
     change: boolean;
 }
 
+export interface D3GraphObserver {
+    adjustYAxis(axis: YAxis);
+    afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number);
+}
+
 const TICKS_COUNT_YAXIS = 5;
 
 @Component({
@@ -182,8 +187,6 @@ export class D3TimeseriesGraphComponent
     private xAxisRangePan: [number, number]; // x domain range
     private listOfSeparation = Array();
 
-    private adjustedRanges: Map<string, MinMaxRange> = new Map();
-
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
     // private dotsObjects: any[];
@@ -205,6 +208,8 @@ export class D3TimeseriesGraphComponent
     private loadingCounter = 0;
     private loadingData: Set<string> = new Set();
     private currentTimeId: string;
+
+    private observer: Set<D3GraphObserver> = new Set();
 
     // default plot options
     private plotOptions: D3PlotOptions = {
@@ -254,6 +259,18 @@ export class D3TimeseriesGraphComponent
 
         this.mousedownBrush = false;
         this.plotGraph();
+    }
+
+    public registerObserver(obs: D3GraphObserver) {
+        this.observer.add(obs);
+    }
+
+    public unregisterObserver(obs: D3GraphObserver) {
+        this.observer.delete(obs);
+    }
+
+    public getGraphElem() {
+        return this.graph;
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
@@ -384,8 +401,6 @@ export class D3TimeseriesGraphComponent
      * @param dataset {IDataset} Object of the whole dataset
      */
     private prepareData(dataset: IDataset, data: Data<TimeValueTuple>): void {
-
-        console.log(`Prepare data for ${dataset.internalId}`);
 
         // add surrounding entries to the set
         if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
@@ -554,7 +569,7 @@ export class D3TimeseriesGraphComponent
      * Function to plot the graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
-    protected plotGraph(): void {
+    public plotGraph(): void {
         if (!this.graph || !this.rawSvg || !this.datasetIds) { return; }
         this.highlightOutput = {
             timestamp: 0,
@@ -1075,18 +1090,14 @@ export class D3TimeseriesGraphComponent
      */
     private drawYaxis(axis: YAxis) {
         let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
-        // check for y axis grouping
-        let range;
 
-        if (this.plotOptions.yAxisStepper && this.adjustedRanges.has(axis.uom)) {
-            range = this.adjustedRanges.get(axis.uom);
-        } else {
-            range = axis.range;
-            range = this.rangeCalc.extendRange(range);
-        }
+        this.observer.forEach(e => e.adjustYAxis(axis));
+
+        // adjust to default extend
+        axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
 
         // range for y axis scale
-        const yScale = d3.scaleLinear().domain([range.min, range.max]).range([this.height, 0]);
+        const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
 
         const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
         let buffer = 0;
@@ -1147,7 +1158,6 @@ export class D3TimeseriesGraphComponent
                     x: textPosition.y + textHeight / 2 + axisradius / 2, // + 2 because radius === 4
                     y: Math.abs(textPosition.x + textWidth) - axisradius * 2
                 };
-                console.log(`Text position ${textPosition.x} ${textPosition.y}`);
                 let pointOffset = 0;
 
                 axis.ids.forEach((entryID) => {
@@ -1177,83 +1187,7 @@ export class D3TimeseriesGraphComponent
                     axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
                 }
 
-                if (this.plotOptions.yAxisStepper && axis.range.min && axis.range.max) {
-                    const buttonSize = 7;
-                    // draw upper up button
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'green')
-                        .attr('fill', 'green')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', 0)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, 0, 1));
-                    // draw upper down button
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'red')
-                        .attr('fill', 'red')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', 2.5 * buttonSize)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, 0, -1));
-
-                    // draw reset button
-                    if (this.adjustedRanges.has(axis.uom)) {
-                        this.graph.append('circle')
-                            .attr('class', 'axisDots')
-                            .attr('stroke', 'black')
-                            .attr('fill', 'black')
-                            .attr('cx', startOfPoints.x)
-                            .attr('cy', 5 * buttonSize)
-                            .attr('r', buttonSize)
-                            .on('mouseup', () => {
-                                this.adjustedRanges.delete(axis.uom);
-                                this.plotGraph();
-                            });
-                    }
-
-                    // draw zoom buttons
-                    const diff = range.max - range.min;
-                    const step = diff / 10;
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'blue')
-                        .attr('fill', 'blue')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', 8 * buttonSize)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, -step, step));
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'blue')
-                        .attr('fill', 'blue')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', 10 * buttonSize)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, step, -step));
-
-
-                    // draw down up button
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'green')
-                        .attr('fill', 'green')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', axisHeight - 2.5 * buttonSize)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, 1, 0));
-                    // draw down down button
-                    this.graph.append('circle')
-                        .attr('class', 'axisDots')
-                        .attr('stroke', 'red')
-                        .attr('fill', 'red')
-                        .attr('cx', startOfPoints.x)
-                        .attr('cy', axisHeight)
-                        .attr('r', buttonSize)
-                        .on('mouseup', () => this.adjustAxisRange(axis, -1, 0));
-
-                }
+                this.observer.forEach(e => e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth));
             }
         }
 
@@ -1261,20 +1195,6 @@ export class D3TimeseriesGraphComponent
             buffer,
             yScale
         };
-    }
-
-    private adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
-        const key = axis.uom;
-        if (this.adjustedRanges.has(key)) {
-            this.adjustedRanges.get(key).min += adjustMin;
-            this.adjustedRanges.get(key).max += adjustMax;
-        } else {
-            this.adjustedRanges.set(key, {
-                min: axis.range.min + adjustMin,
-                max: axis.range.max + adjustMax
-            });
-        }
-        this.plotGraph();
     }
 
     private drawBackground() {
