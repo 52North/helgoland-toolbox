@@ -1,10 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  DoCheck,
   Input,
+  IterableDiffer,
   IterableDiffers,
-  OnChanges,
-  SimpleChanges,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -12,20 +13,14 @@ import {
   DatasetApiInterface,
   DatasetOptions,
   InternalIdHandler,
-  MinMaxRange,
   SumValuesService,
   Time,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
-import { extent } from 'd3';
 
-import {
-  D3TimeseriesGraphComponent,
-  DataEntry,
-  InternalDataEntry,
-  YRanges,
-} from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3TimeseriesGraphComponent, InternalDataEntry } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { RangeCalculationsService } from './../helper/range-calculations.service';
 
 /**
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
@@ -44,6 +39,10 @@ export interface AdditionalData {
    * The dataset options, which describes the styling of the additional data.
    */
   datasetOptions?: DatasetOptions;
+  /**
+   * Internal Id connected with the dataset options
+   */
+  internalId: string;
   /**
    * The additional data arrey with tupels of timestamp and value.
    */
@@ -68,12 +67,11 @@ export interface AdditionalDataEntry {
   styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements OnChanges, AfterViewInit {
+export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit, OnInit {
 
   @Input()
   public additionalData: AdditionalData[] = [];
-
-  private additionalPreparedData: InternalDataEntry[] = [];
+  private additionalDataDiffer: IterableDiffer<AdditionalData>;
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -83,15 +81,27 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
     protected translateService: TranslateService,
-    protected sumValues: SumValuesService
+    protected sumValues: SumValuesService,
+    protected rangeCalc: RangeCalculationsService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc);
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
-    super.ngOnChanges(changes);
-    if (changes.additionalData && this.additionalData && this.graph) {
-      this.clearAdditionalData();
+  public ngOnInit(): void {
+    this.additionalDataDiffer = this.iterableDiffers.find(this.additionalData).create();
+  }
+
+  public ngDoCheck() {
+    super.ngDoCheck();
+    const additionalDataChanges = this.additionalDataDiffer.diff(this.additionalData);
+    if (additionalDataChanges && this.additionalData && this.graph) {
+      additionalDataChanges.forEachRemovedItem((removedItem) => {
+        const id = this.generateAdditionalInternalId(removedItem.item);
+        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
+        if (spliceIdx >= 0) {
+          this.preparedData.splice(spliceIdx, 1);
+        }
+      });
       this.plotGraph();
     }
   }
@@ -108,112 +118,56 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  private clearAdditionalData() {
-    this.additionalPreparedData.forEach(data => {
-      this.yRangesEachUom.forEach(e => {
-        const idx = e.ids.indexOf(data.internalId);
-        if (idx > -1) { e.ids.splice(idx, 1); }
-      });
+  protected prepareYAxes() {
+    super.prepareYAxes();
+    this.additionalData.forEach(entry => {
+      const id = this.generateAdditionalInternalId(entry);
+      this.createYAxisForId(id);
     });
-
-    if (this.yRangesEachUom) {
-      for (let i = this.yRangesEachUom.length - 1; i >= 0; i--) {
-        const element = this.yRangesEachUom[i];
-        if (element.ids.length === 0) {
-          this.yRangesEachUom.splice(i, 1);
-        }
-      }
-    }
-
-    this.additionalPreparedData = [];
   }
 
   private prepareAdditionalData() {
     if (this.additionalData) {
       this.additionalData.forEach(entry => {
-        if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data) {
+        if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data && entry.data.length > 0) {
 
-          if (entry.data.length > 0) {
-            let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-            let dataset = this.datasetMap.get(entry.linkedDatasetId);
-            const prepDataIdx = this.additionalPreparedData.findIndex(e => e.internalId.startsWith(entry.linkedDatasetId) || e.internalId === entry.yaxisLabel);
-            let dataEntry: InternalDataEntry;
-            if (prepDataIdx === -1) {
-              dataEntry = {
-                internalId: entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel,
-                options,
-                data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-                axisOptions: {
-                  uom: dataset ? dataset.uom : entry.yaxisLabel,
-                  label: dataset ? dataset.label : entry.yaxisLabel,
-                  zeroBased: options.zeroBasedYAxis,
-                  yAxisRange: options.yAxisRange,
-                  autoRangeSelection: options.autoRangeSelection,
-                  separateYAxis: options.separateYAxis
-                },
-                visible: options.visible
+          let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+          let dataset = this.datasetMap.get(entry.linkedDatasetId);
+          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId) > -1 || e.internalId.indexOf(entry.internalId) > -1);
+          let dataEntry: InternalDataEntry;
+          if (prepDataIdx === -1) {
+            dataEntry = {
+              internalId: this.generateAdditionalInternalId(entry),
+              options,
+              data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
+              axisOptions: {
+                uom: dataset ? dataset.uom : entry.yaxisLabel,
+                label: dataset ? dataset.label : entry.yaxisLabel,
+                zeroBased: options.zeroBasedYAxis,
+                yAxisRange: options.yAxisRange,
+                autoRangeSelection: options.autoRangeSelection,
+                separateYAxis: options.separateYAxis
+              },
+              referenceValueData: [],
+              visible: options.visible
+            };
+            if (dataset) {
+              dataEntry.axisOptions.parameters = {
+                feature: dataset.parameters.feature,
+                phenomenon: dataset.parameters.phenomenon,
+                offering: dataset.parameters.offering
               };
-              if (dataset) {
-                dataEntry.axisOptions.parameters = {
-                  feature: dataset.parameters.feature,
-                  phenomenon: dataset.parameters.phenomenon,
-                  offering: dataset.parameters.offering
-                };
-              }
-              this.additionalPreparedData.push(dataEntry);
-            } else {
-              dataEntry = this.additionalPreparedData[prepDataIdx];
-              dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
-              dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
             }
-
-            const newDatasetIdx = this.yRangesEachUom.findIndex((e) => e.ids.indexOf(entry.linkedDatasetId) > -1);
-            const dataExtent = extent<DataEntry, number>(dataEntry.data, (d) => {
-              if (typeof d.value === 'number') {
-                if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-              }
-            });
-            if (isFinite(dataExtent[0]) && isFinite(dataExtent[1])) {
-              let range: MinMaxRange;
-              if (options.yAxisRange) {
-                range = options.yAxisRange;
-                range = this.extendRange(range);
-              } else {
-                range = { min: dataExtent[0], max: dataExtent[1] };
-                range = this.bufferRange(range, 0.1);
-              }
-              if (newDatasetIdx === -1) {
-                const existingAxisIndex = this.yRangesEachUom.findIndex(e => e.ids.indexOf(entry.yaxisLabel) !== -1);
-                const axisRange: YRanges = {
-                  uom: entry.yaxisLabel,
-                  range: range,
-                  autoRange: options.autoRangeSelection,
-                  zeroBased: options.zeroBasedYAxis,
-                  outOfrange: false,
-                  ids: [entry.yaxisLabel],
-                  parameters: dataEntry.axisOptions.parameters
-                };
-                if (existingAxisIndex > -1) {
-                  this.yRangesEachUom[existingAxisIndex] = axisRange;
-                } else {
-                  this.yRangesEachUom.push(axisRange);
-                }
-                this.dataYranges.push(axisRange);
-              } else {
-                if (this.yRangesEachUom[newDatasetIdx].range) {
-                  this.yRangesEachUom[newDatasetIdx].range.min = Math.min(range.min, this.yRangesEachUom[newDatasetIdx].range.min);
-                  this.yRangesEachUom[newDatasetIdx].range.max = Math.max(range.max, this.yRangesEachUom[newDatasetIdx].range.max);
-                } else {
-                  this.yRangesEachUom[newDatasetIdx].range = range;
-                }
-                this.yRangesEachUom[newDatasetIdx].ids.push(entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.yaxisLabel);
-              }
-              if (entry.yaxisLabel && !entry.linkedDatasetId) {
-                let idx = this.listOfUoms.indexOf(entry.yaxisLabel);
-                if (idx < 0) { this.listOfUoms.push(entry.yaxisLabel); }
-              }
-            }
+            this.preparedData.push(dataEntry);
+          } else {
+            dataEntry = this.preparedData[prepDataIdx];
+            dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
+            dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
+            dataEntry.data = options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [];
           }
+
+          this.processData(dataEntry);
+
         } else {
           console.warn('Please check the additional entry, it needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property and a \'data\' property: ', entry);
         }
@@ -221,9 +175,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected drawAllCharts() {
-    super.drawAllCharts();
-    this.additionalPreparedData.forEach(e => this.drawChart(e));
-  }
 
+  private generateAdditionalInternalId(entry: AdditionalData): string {
+    return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.internalId + 'add';
+  }
 }
