@@ -765,6 +765,41 @@
           }
         }
       }
+    },
+    "@helgoland/open-layers": {
+      "projectType": "library",
+      "root": "projects/helgoland/open-layers",
+      "sourceRoot": "projects/helgoland/open-layers/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/helgoland/open-layers/tsconfig.lib.json",
+            "project": "projects/helgoland/open-layers/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/open-layers/src/test.ts",
+            "tsConfig": "projects/helgoland/open-layers/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/open-layers/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/helgoland/open-layers/tsconfig.lib.json",
+              "projects/helgoland/open-layers/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "helgoland-toolbox"

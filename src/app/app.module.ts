@@ -38,6 +38,7 @@ import {
   NominatimGeoSearchService,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
+import { HelgolandOpenLayersModule } from '@helgoland/open-layers';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
 import { HelgolandPlotlyModule } from '@helgoland/plotly';
 import { HelgolandSelectorModule } from '@helgoland/selector';
@@ -51,7 +52,6 @@ import { ROUTES } from './app.routes';
 import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
-import { OlModule } from './components/ol/ol-module.module';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
@@ -145,7 +145,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
-    OlModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule,
@@ -165,7 +164,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule,
     HelgolandBasicAuthModule,
-    HelgolandDatasetDownloadModule
+    HelgolandDatasetDownloadModule,
+    HelgolandOpenLayersModule
   ],
   entryComponents: [
     StyleModificationComponent,
