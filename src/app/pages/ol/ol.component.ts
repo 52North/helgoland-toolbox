@@ -24,7 +24,7 @@ export class OlComponent implements OnInit {
   ngOnInit() {
 
     this.layers.push(new TileLayer({
-      visible: false,
+      visible: true,
       source: new TileWMS({
         url: 'https://maps.dwd.de/geoserver/ows',
         params: {
