@@ -40,17 +40,18 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     }
 
     public toggleReferenceValue(refValue: ReferenceValue) {
-        const idx = this.datasetOptions.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
+        const options = JSON.parse(JSON.stringify(this.datasetOptions));
+        const idx = options.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
         const refValId = this.createRefValId(refValue.referenceValueId);
         if (idx > -1) {
             refValue.visible = false;
-            this.datasetOptions.showReferenceValues.splice(idx, 1);
+            options.showReferenceValues.splice(idx, 1);
         } else {
             refValue.visible = true;
-            this.datasetOptions.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
+            options.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
         }
         this.refValCache.get(refValId).visible = refValue.visible;
-        this.onUpdateOptions.emit(this.datasetOptions);
+        this.onUpdateOptions.emit(options);
     }
 
     protected setParameters() {

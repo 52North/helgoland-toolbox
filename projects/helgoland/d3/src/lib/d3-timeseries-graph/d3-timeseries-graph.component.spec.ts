@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
-import moment from 'moment';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -59,11 +58,11 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 
 });
 
-describe('D3TimeseriesGraphComponent - function', () => {
+fdescribe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'http://geo.irceline.be/sos/api/v1/__10604';
-  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
+  // let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {
@@ -96,32 +95,42 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option1.barStartOf = 'hour';
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
+    option1.showReferenceValues = [{
+      id: '239',
+      color: '#00FF00'
+    }, {
+      id: '240',
+      color: '#00FF00'
+    }];
     // option1.yAxisRange = {
-    //   min: -1,
-    //   max: 2
+    //   min: 0.2,
+    //   max: 0.7
     // };
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
     component.presenterOptions = { requestBeforeAfterValues: true };
-    const option2 = new DatasetOptions(datasetID2, '#00FF00');
-    option2.pointRadius = 4;
-    option2.pointBorderWidth = 1;
-    option2.pointBorderColor = 'black';
-    option2.lineDashArray = 5;
+    // const option2 = new DatasetOptions(datasetID2, '#00FF00');
+    // option2.pointRadius = 4;
+    // option2.pointBorderWidth = 1;
+    // option2.pointBorderColor = 'black';
+    // option2.lineDashArray = 5;
+    // option2.separateYAxis = false;
     // option2.yAxisRange = {
     //   min: 0,
     //   max: 10
     // };
-    option2.lineWidth = 2;
-    option2.visible = true;
+    // option2.lineWidth = 2;
+    // option2.visible = true;
     datasetOptions.set(datasetID1, option1);
-    datasetOptions.set(datasetID2, option2);
+    // datasetOptions.set(datasetID2, option2);
     component.presenterOptions.hoverStyle = HoveringStyle.point;
     component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
-    component.datasetIds = [datasetID1, datasetID2];
+    component.datasetIds = [datasetID1];
     component.datasetOptions = datasetOptions;
+    // component.selectedDatasetIds = [datasetID2];
+    component.presenterOptions = { showReferenceValues: true };
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
@@ -131,6 +140,15 @@ describe('D3TimeseriesGraphComponent - function', () => {
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBeGreaterThan(0);
     expect(typeof (component.datasetIds)).toBe('object');
+
+    // setTimeout(() => {
+    //   // component.datasetOptions.delete(datasetID1);
+    //   // component.datasetIds.shift();
+    //   component.selectedDatasetIds.push(datasetID1);
+    //   if (!fixture['destroyed']) {
+    //     fixture.detectChanges();
+    //   }
+    // }, 5000);
   });
 
 });
