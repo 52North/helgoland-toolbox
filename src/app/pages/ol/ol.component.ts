@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Station } from '@helgoland/core';
+import { OlMapService } from '@helgoland/open-layers';
 import BaseLayer from 'ol/layer/Base';
 import TileLayer from 'ol/layer/Tile';
 import { TileWMS } from 'ol/source';
-
-import { OlMapService } from '../../components/ol/services/map.service';
 
 @Component({
   selector: 'n52-ol',
