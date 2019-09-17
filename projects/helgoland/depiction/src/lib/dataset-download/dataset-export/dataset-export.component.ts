@@ -5,6 +5,9 @@ import moment from 'moment';
 
 type xlsxExport = any[][];
 
+/*
+metadata informing about the selected dataset, that can be visualized
+ */
 export interface ExportData {
   station: string;
   timezone: string;
@@ -18,6 +21,9 @@ export interface ExportData {
   };
 }
 
+/*
+  information that defines options for the export
+ */
 export interface ExportOptions {
   downloadType: string;
   timeperiod: {
@@ -40,15 +46,16 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   private timespan: Timespan;
   private timezone: string;
 
+  /* options to define the export parameters */
   @Input()
   public exportOptions: ExportOptions;
-
+  /* id of the dataset that should be downloaded */
   @Input()
   public inputId: string;
-
+  /* returns the metadata of the selected dataset to be visualized */
   @Output()
   public onMetadataChange: EventEmitter<ExportData> = new EventEmitter();
-
+  /* visualize loading process of file creation */
   @Output()
   public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -99,9 +106,13 @@ export class DatasetExportComponent implements OnInit, OnChanges {
       }
       if (changes.exportOptions.currentValue.timeperiod.from < this.dataset.firstValue.timestamp) {
         this.timespan.from = this.dataset.firstValue.timestamp;
+      } else if (changes.exportOptions.currentValue.timeperiod.from > this.dataset.lastValue.timestamp) {
+        this.timespan.from = this.dataset.lastValue.timestamp;
       }
       if (changes.exportOptions.currentValue.timeperiod.to > this.dataset.lastValue.timestamp) {
         this.timespan.to = this.dataset.lastValue.timestamp;
+      } else if (changes.exportOptions.currentValue.timeperiod.to < this.dataset.firstValue.timestamp) {
+        this.timespan.to = this.dataset.firstValue.timestamp;
       }
       if (changes.exportOptions.currentValue.downloadType === 'csv' || changes.exportOptions.currentValue.downloadType === 'xlsx') {
         this.onDownload(changes.exportOptions.currentValue.downloadType);
