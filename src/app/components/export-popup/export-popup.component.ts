@@ -18,6 +18,7 @@ export class ExportPopupComponent implements OnInit {
   public exportOptions: ExportOptions;
   public inputId: string;
   public loading = false;
+  // pre-define variable metadata to avoid errors (undefined)
   public metadata: ExportData = {
     phenomenon: null,
     uom: null,
@@ -48,6 +49,10 @@ export class ExportPopupComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * Function that triggers the download of the data based on the specified parameters.
+   * @param dwType {string} typy of the download file (csv or xlsx)
+   */
   public onDownload(dwType: string): void {
     this.exportOptions = {
       downloadType: dwType,
@@ -59,11 +64,19 @@ export class ExportPopupComponent implements OnInit {
     };
   }
 
+  /**
+   * Function that retrieves data about the selected dataset via inputId.
+   * @param metadata {ExportData} information about the dataset
+   */
   public onMetadata(metadata: ExportData): void {
     this.metadata = metadata;
     this.disabled = true;
   }
 
+  /**
+   * Function indicating the download status.
+   * @param loading {boolean} indicates loading of the download progress
+   */
   public onLoading(loading: boolean): void {
     this.loading = loading;
   }
