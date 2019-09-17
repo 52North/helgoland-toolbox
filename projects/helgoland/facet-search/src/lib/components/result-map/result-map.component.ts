@@ -66,7 +66,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         this.markerFeatureGroup = L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const stations = new Map<string, { station: Station, url: string}>();
+        const stations = new Map<string, { station: Station, url: string }>();
         ts.forEach(e => {
           if (!stations.has(e.station.id)) {
             stations.set(e.station.id, { station: e.station, url: e.url });
@@ -83,8 +83,12 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         });
       }
       this.markerFeatureGroup.addTo(this.map);
-      this.map.fitBounds(this.markerFeatureGroup.getBounds());
-      this.map.invalidateSize();
+
+      const bounds = this.markerFeatureGroup.getBounds();
+      if (bounds.isValid()) {
+        this.map.fitBounds(bounds);
+        this.map.invalidateSize();
+      }
     }
   }
 
