@@ -31,6 +31,9 @@ interface WMSLayer {
   EX_GeographicBoundingBox: number[];
 }
 
+// request Capabilities only all 5 minutes
+const WMS_CAPABILITIES_REQUEST_EXPIRATION = 1000 * 60 * 5;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -93,7 +96,7 @@ export class WmsCapabilitiesService {
 
   private getCapabilities(url: string): Observable<any> {
     if (!url.endsWith('?')) { url = url + '?'; }
-    return this.http.client().get(`${url}service=wms&version=1.3.0&request=GetCapabilities`, { responseType: 'text' })
+    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(`${url}service=wms&version=1.3.0&request=GetCapabilities`, { responseType: 'text' })
       .pipe(map(res => new WMSCapabilities().read(res)));
   }
 
