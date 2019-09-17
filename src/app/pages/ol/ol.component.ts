@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Station } from '@helgoland/core';
 import { OlMapService } from '@helgoland/open-layers';
+import { Layer } from 'ol/layer';
 import BaseLayer from 'ol/layer/Base';
 import TileLayer from 'ol/layer/Tile';
-import { TileWMS } from 'ol/source';
+import { OSM, TileWMS } from 'ol/source';
 
 @Component({
   selector: 'n52-ol',
   templateUrl: './ol.component.html',
-  styleUrls: ['./ol.component.css']
+  styleUrls: ['./ol.component.scss']
 })
 export class OlComponent implements OnInit {
 
   public layers: BaseLayer[] = [];
+
+  public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 
   public mapId = 'test-map';
 
