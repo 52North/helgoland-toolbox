@@ -80,6 +80,7 @@
     "plotly.js": "^1.40.1",
     "rxjs": "^6.3.2",
     "rxjs-compat": "^6.3.2",
+    "xlsx": "^0.15.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

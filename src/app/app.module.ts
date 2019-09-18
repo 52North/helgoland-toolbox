@@ -9,6 +9,8 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -68,6 +70,7 @@ import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 import { ExtendedSettingsService } from './settings/settings.service';
+import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 
 const APP_PROVIDERS = [
   StatusCheckService,
@@ -87,7 +90,8 @@ const APP_PROVIDERS = [
   {
     provide: EventingApiService,
     useClass: EventingImplApiInterface
-  }
+  },
+  MatDatepickerModule
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -119,7 +123,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     TimeComponent,
     TimeseriesGraphComponent,
-    TrajectoryComponent
+    TrajectoryComponent,
+    ExportPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -140,6 +145,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule,
@@ -164,7 +171,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     StyleModificationComponent,
     GeometryViewComponent,
-    D3GeneralPopupComponent
+    D3GeneralPopupComponent,
+    ExportPopupComponent
   ],
   providers: [
     APP_PROVIDERS,
