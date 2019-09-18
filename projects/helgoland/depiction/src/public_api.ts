@@ -19,5 +19,6 @@ export * from './lib/label-mapper/label-mapper.module';
 export * from './lib/label-mapper/vocab-nerc-label-mapper/vocab-nerc-label-mapper.service';
 export * from './lib/label-mapper/vocab-nerc-label-mapper/vocab-nerc-label-mapper.module';
 
-export * from './lib/dataset-download/dataset-download.component';
+export * from './lib/dataset-download/dataset-permalink-download/dataset-permalink-download.component';
+export * from './lib/dataset-download/dataset-export/dataset-export.component';
 export * from './lib/dataset-download/module';

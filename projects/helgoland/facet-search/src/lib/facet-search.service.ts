@@ -61,20 +61,31 @@ export class FacetSearchService implements FacetSearch {
     this.setFilteredTimeseries();
   }
 
-  public setTimespan(timespan: Timespan) {
-    this.selectedTimspan = timespan;
-    this.setFilteredTimeseries();
-  }
-
   public getFilteredResults(): Timeseries[] {
     return this.filteredTimeseries;
   }
 
-  public getTimespan(): Timespan {
+  public getCompleteTimespan(): Timespan {
+    return this.createTimespan(this.timeseries);
+  }
+
+  public setCurrentTimespan(timespan: Timespan) {
+    this.selectedTimspan = timespan;
+    this.setFilteredTimeseries();
+  }
+
+  public getCurrentTimespan(): Timespan {
+    if (this.selectedTimspan) {
+      return this.selectedTimspan;
+    }
+    return this.createTimespan(this.filteredTimeseries);
+  }
+
+  private createTimespan(timeseriesList: Timeseries[]): Timespan {
     let timespan: Timespan = null;
-    if (this.filteredTimeseries.length > 0) {
+    if (timeseriesList.length > 0) {
       timespan = { from: Infinity, to: 0 };
-      this.filteredTimeseries.forEach(e => {
+      timeseriesList.forEach(e => {
         if (e.firstValue.timestamp < timespan.from) { timespan.from = e.firstValue.timestamp; }
         if (e.lastValue.timestamp > timespan.to) { timespan.to = e.lastValue.timestamp; }
       });
