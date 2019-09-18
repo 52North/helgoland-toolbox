@@ -1942,8 +1942,8 @@ export class D3TimeseriesGraphComponent
         this.labelTimestamp[entryIdx] = item.timestamp;
         this.labelXCoord[entryIdx] = item.xDiagCoord;
         this.distLabelXCoord[entryIdx] = Math.abs(mouseCoord - item.xDiagCoord);
-        let min = d3.min(this.distLabelXCoord);
-        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === min);
+        let minXcoord = d3.min(this.distLabelXCoord);
+        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === minXcoord);
         let onLeftSide = this.checkLeftSide(item.xDiagCoord);
         let right = this.labelXCoord[idxOfMin] + 2;
         let left = this.labelXCoord[idxOfMin] - this.getDimensions(this.focuslabelTime.node()).w - 2;

@@ -1,14 +1,15 @@
-.zoom-button.zoom-in,
-.zoom-button.zoom-out {
-    stroke: blue;
-    fill: blue;
+.axis-button-line {
+    stroke: black;
+    fill: black;
+    stroke-width: 2;
+    stroke-linecap: round;
 }
-
-.shift-button.shift-up {
-    stroke: red;
-    fill: red;
+.axis-button-circle {
+    stroke: none;
+    fill: rgba($color: black, $alpha: 0.01);
 }
-.shift-button.shift-down {
-    stroke: green;
-    fill: green;
+.axis-button-circle.hover {
+    stroke-width: 2;
+    stroke: rgba($color: red, $alpha: 0.3); 
+    fill: rgba($color: black, $alpha: 0.3);
 }

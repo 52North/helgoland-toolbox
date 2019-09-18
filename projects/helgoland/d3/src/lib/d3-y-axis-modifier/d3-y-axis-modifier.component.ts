@@ -1,5 +1,6 @@
 import { Component, Host, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
+import * as d3 from 'd3';
 
 import { D3TimeseriesGraphComponent, YAxis } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphObserver } from './../d3-timeseries-graph/d3-timeseries-graph.component';
@@ -67,31 +68,89 @@ export class D3YAxisModifierComponent implements OnInit, OnDestroy, D3GraphObser
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
       const buffer = this.shift ? 7.5 : 0;
+      // zoom in horizontal line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line zoom-button zoom-in')
+        .attr('x1', xAlign - buttonSize)
+        .attr('y1', buttonSize * (1.0 + buffer))
+        .attr('x2', xAlign + buttonSize)
+        .attr('y2', buttonSize * (1.0 + buffer));
+      // zoom in vertical line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line zoom-button zoom-in')
+        .attr('x1', xAlign)
+        .attr('y1', buttonSize * (1.0 + buffer) - buttonSize)
+        .attr('x2', xAlign)
+        .attr('y2', buttonSize * (1.0 + buffer) + buttonSize);
+      // zoom in circle to increase are for mouse event
       this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'zoom-button zoom-in')
+        .attr('class', 'axis-button-circle zoom-button zoom-in zoom-circle')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * (1.0 + buffer))
         .attr('r', buttonSize)
-        .on('mouseup', () => this.adjustAxisRange(yaxis, step, -step));
+        .on('mouseup', () => this.adjustAxisRange(yaxis, step, -step))
+        .on('mouseover', function(d) {
+          d3.select(this).classed('hover', true);
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('hover', false);
+        });
+
+      // zoom out horizontal line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line zoom-button zoom-out')
+        .attr('x1', xAlign - buttonSize)
+        .attr('y1', buttonSize * (3.5 + buffer))
+        .attr('x2', xAlign + buttonSize)
+        .attr('y2', buttonSize * (3.5 + buffer));
+      // zoom out circle to increase are for mouse event
       this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'zoom-button zoom-out')
+        .attr('class', 'axis-button-circle zoom-button zoom-out zoom-circle')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * (3.5 + buffer))
         .attr('r', buttonSize)
-        .on('mouseup', () => this.adjustAxisRange(yaxis, -step, step));
+        .on('mouseup', () => this.adjustAxisRange(yaxis, -step, step))
+        .on('mouseover', function(d) {
+          d3.select(this).classed('hover', true);
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('hover', false);
+        });
     }
   }
 
   private drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (this.adjustedRanges.has(yaxis.uom)) {
+      // add a buffer of +/- 2 to fit element into transparent/hover circle
+      // reset button line left top to right bottom
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line reset-button reset-line')
+        .attr('x1', xAlign - buttonSize + 2)
+        .attr('y1', buttonSize * 6 - buttonSize + 2)
+        .attr('x2', xAlign + buttonSize - 2)
+        .attr('y2', buttonSize * 6 + buttonSize - 2);
+      // reset button line left bottom to right top
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line reset-button reset-line')
+        .attr('x1', xAlign - buttonSize + 2)
+        .attr('y1', buttonSize * 6 + buttonSize - 2)
+        .attr('x2', xAlign + buttonSize - 2)
+        .attr('y2', buttonSize * 6 - buttonSize + 2);
+      // reset button circle to increase area for mouse event
       this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axisDots')
+        .attr('class', 'axis-button-circle reset-button reset-circle')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 6)
         .attr('r', buttonSize)
         .on('mouseup', () => {
           this.adjustedRanges.delete(yaxis.uom);
           this.d3Graph.plotGraph();
+        })
+        .on('mouseover', function(d) {
+          d3.select(this).classed('hover', true);
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('hover', false);
         });
     }
   }
@@ -100,20 +159,63 @@ export class D3YAxisModifierComponent implements OnInit, OnDestroy, D3GraphObser
     if (this.shift) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
-      // draw up button
+      const shiftToCenter = 0.5 * buttonSize;
+      // add buffer of +/- 1 to fit element into transparent/hover circle
+      // draw up button left line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line shift-button shift-up')
+        .attr('x1', xAlign - buttonSize + 1)
+        .attr('y1', buttonSize * 1.0 + shiftToCenter - 1)
+        .attr('x2', xAlign)
+        .attr('y2', buttonSize * 1.0 - buttonSize + shiftToCenter);
+      // draw up button right line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line shift-button shift-up')
+        .attr('x1', xAlign)
+        .attr('y1', buttonSize * 1.0 - buttonSize + shiftToCenter)
+        .attr('x2', xAlign + buttonSize - 1)
+        .attr('y2', buttonSize * 1.0 + shiftToCenter - 1);
+      // draw up button circle to increase area for mouse event
       this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'shift-button shift-up')
+        .attr('class', 'axis-button-circle shift-button shift-up shift-circle')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 1.0)
         .attr('r', buttonSize)
-        .on('mouseup', () => this.adjustAxisRange(yaxis, step, step));
-      // draw down button
+        .on('mouseup', () => this.adjustAxisRange(yaxis, step, step))
+        .on('mouseover', function(d) {
+          d3.select(this).classed('hover', true);
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('hover', false);
+        });
+
+      // draw down button left line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line shift-button shift-down')
+        .attr('x1', xAlign - buttonSize + 1)
+        .attr('y1', buttonSize * 3.5 - buttonSize + shiftToCenter + 1)
+        .attr('x2', xAlign)
+        .attr('y2', buttonSize * 3.5 + shiftToCenter);
+      // draw down button right line
+      this.d3Graph.getGraphElem().append('line')
+        .attr('class', 'axis-button-line shift-button shift-down')
+        .attr('x1', xAlign)
+        .attr('y1', buttonSize * 3.5 + shiftToCenter)
+        .attr('x2', xAlign + buttonSize - 1)
+        .attr('y2', buttonSize * 3.5 - buttonSize + shiftToCenter + 1);
+      // draw down button circle to increase area for mouse event
       this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'shift-button shift-down')
+        .attr('class', 'axis-button-circle shift-button shift-down shift-circle')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 3.5)
         .attr('r', buttonSize)
-        .on('mouseup', () => this.adjustAxisRange(yaxis, -step, -step));
+        .on('mouseup', () => this.adjustAxisRange(yaxis, -step, -step))
+        .on('mouseover', function(d) {
+          d3.select(this).classed('hover', true);
+        })
+        .on('mouseout', function(d) {
+          d3.select(this).classed('hover', false);
+        });
     }
   }
 
