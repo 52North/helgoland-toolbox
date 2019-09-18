@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Download Dataset</h1>
+
+<div mat-dialog-content ng-if="disabled">
+  Measure Parameter - {{metadata.phenomenon}}
+  <br>
+  Unit - {{metadata.uom}}
+  <br>
+  First Value - {{metadata.firstvalue}}
+  <br>
+  Last ValueType - {{metadata.lastvalue}}
+  <br>
+  Timezone - UTCselection
+  <br>
+  <!-- check error with timezone adaption or add time selection -->
+  From - {{metadata.timeperiod.from}}
+  <br>
+  To - {{metadata.timeperiod.to}}
+  <br>
+  <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" [value]="metadata.timeperiod.from"
+    [(ngModel)]="metadata.timeperiod.from" ng-model-options="{timezone: 'utc'}">
+  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFrom></mat-datepicker>
+  <br>
+  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" [value]="metadata.timeperiod.to"
+    [(ngModel)]="metadata.timeperiod.to" ng-model-options="{timezone: 'utc'}">
+  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+  <mat-datepicker #pickerTo></mat-datepicker>
+  <br>
+  loading: {{loading}}
+</div>
+
+<n52-dataset-export [inputId]="inputId" [exportOptions]="exportOptions" (onDownloadChange)="onDownloadReset($event)"
+  (onMetadataChange)="onMetadata($event)" (onLoadingChange)="onLoading($event)"></n52-dataset-export>
+
+<div mat-dialog-actions style="float: left;">
+  <button mat-button (click)="onDownload('csv')">CSV</button>
+  <button mat-button (click)="onDownload('xlsx')">Excel</button>
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button mat-button (click)="onClose()">Close</button>
+</div>
