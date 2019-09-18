@@ -1,13 +1,14 @@
+
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Timespan, InternalDatasetId, DatasetApiMapping, DatasetApiVersion } from '@helgoland/core';
 import moment from 'moment';
 
 @Component({
-  selector: 'n52-dataset-download',
-  templateUrl: './dataset-download.component.html',
-  styleUrls: ['./dataset-download.component.css']
+  selector: 'n52-dataset-permalink-download',
+  templateUrl: './dataset-permalink-download.component.html',
+  styleUrls: ['./dataset-permalink-download.component.css']
 })
-export class DatasetDownloadComponent implements OnChanges {
+export class DatasetPermalinkDownloadComponent implements OnChanges {
 
   @Input()
   public internalId: InternalDatasetId;

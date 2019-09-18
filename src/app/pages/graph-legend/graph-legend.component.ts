@@ -14,6 +14,7 @@ import {
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
 
 @Component({
     templateUrl: './graph-legend.component.html',
@@ -246,6 +247,12 @@ export class GraphLegendComponent {
                     console.log(error);
                 }
             );
+    }
+
+    public openDownload(id: String) {
+        this.dialog.open(ExportPopupComponent, {
+            data: id
+        });
     }
 
 }

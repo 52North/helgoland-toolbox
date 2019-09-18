@@ -1,13 +1,17 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatListModule } from '@angular/material/list';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
+} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreloadAllModules, RouterModule } from '@angular/router';
@@ -22,16 +26,20 @@ import {
   StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule, HelgolandDatasetTableModule, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
+import {
+  HelgolandDatasetDownloadModule,
+  HelgolandDatasetlistModule,
+  HelgolandDatasetTableModule,
+} from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
   GeoSearch,
+  HelgolandLayerControlModule,
   HelgolandMapControlModule,
   HelgolandMapSelectorModule,
   HelgolandMapViewModule,
   NominatimGeoSearchService,
-  HelgolandLayerControlModule,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
@@ -45,6 +53,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
 import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
+import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
@@ -85,7 +94,8 @@ const APP_PROVIDERS = [
   {
     provide: EventingApiService,
     useClass: EventingImplApiInterface
-  }
+  },
+  MatDatepickerModule
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -117,7 +127,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     TimeComponent,
     TimeseriesGraphComponent,
-    TrajectoryComponent
+    TrajectoryComponent,
+    ExportPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -138,6 +149,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule,
@@ -162,7 +175,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     StyleModificationComponent,
     GeometryViewComponent,
-    D3GeneralPopupComponent
+    D3GeneralPopupComponent,
+    ExportPopupComponent
   ],
   providers: [
     APP_PROVIDERS,
