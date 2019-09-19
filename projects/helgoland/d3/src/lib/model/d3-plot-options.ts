@@ -6,6 +6,13 @@
 export interface D3PlotOptions {
 
     /**
+     * Show stepper for every Y-axis. This stepper allows to change the range of the axis.
+     *
+     * @memberof D3PlotOptions
+     */
+    yAxisStepper?: boolean;
+
+    /**
      * show reference values for a graph
      *
      * @memberof D3PlotOptions

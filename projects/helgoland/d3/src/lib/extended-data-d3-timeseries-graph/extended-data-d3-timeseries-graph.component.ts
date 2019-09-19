@@ -106,7 +106,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected plotGraph() {
+  public plotGraph() {
     this.prepareAdditionalData();
     super.plotGraph();
   }

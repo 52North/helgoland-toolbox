@@ -5,6 +5,7 @@ import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreM
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { D3YAxisModifierComponent } from '../d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
 
@@ -62,7 +63,7 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
   let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
-  // let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {
@@ -76,7 +77,7 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
         DatasetApiInterfaceTesting,
         DefinedTimespanService
       ],
-      declarations: [D3TimeseriesGraphComponent]
+      declarations: [D3TimeseriesGraphComponent, D3YAxisModifierComponent]
     }).compileComponents();
   }));
 
@@ -95,13 +96,13 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option1.barStartOf = 'hour';
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
-    option1.showReferenceValues = [{
-      id: '239',
-      color: '#00FF00'
-    }, {
-      id: '240',
-      color: '#00FF00'
-    }];
+    // option1.showReferenceValues = [{
+    //   id: '239',
+    //   color: '#00FF00'
+    // }, {
+    //   id: '240',
+    //   color: '#00FF00'
+    // }];
     // option1.yAxisRange = {
     //   min: 0.2,
     //   max: 0.7
@@ -110,27 +111,30 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     option1.lineWidth = 2;
     option1.visible = true;
     component.presenterOptions = { requestBeforeAfterValues: true };
-    // const option2 = new DatasetOptions(datasetID2, '#00FF00');
-    // option2.pointRadius = 4;
-    // option2.pointBorderWidth = 1;
-    // option2.pointBorderColor = 'black';
-    // option2.lineDashArray = 5;
-    // option2.separateYAxis = false;
+    const option2 = new DatasetOptions(datasetID2, '#00FF00');
+    option2.pointRadius = 4;
+    option2.pointBorderWidth = 1;
+    option2.pointBorderColor = 'black';
+    option2.lineDashArray = 5;
+    option2.separateYAxis = false;
     // option2.yAxisRange = {
     //   min: 0,
     //   max: 10
     // };
-    // option2.lineWidth = 2;
-    // option2.visible = true;
+    option2.lineWidth = 2;
+    option2.visible = true;
     datasetOptions.set(datasetID1, option1);
-    // datasetOptions.set(datasetID2, option2);
+    datasetOptions.set(datasetID2, option2);
     component.presenterOptions.hoverStyle = HoveringStyle.point;
     component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
-    component.datasetIds = [datasetID1];
+    component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
     // component.selectedDatasetIds = [datasetID2];
-    component.presenterOptions = { showReferenceValues: true };
+    component.presenterOptions = {
+      showReferenceValues: true,
+      yAxisStepper: true
+    };
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
