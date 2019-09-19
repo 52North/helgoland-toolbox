@@ -9,7 +9,7 @@
     fill: rgba($color: black, $alpha: 0.01);
 }
 .axis-button-circle.hover {
-    stroke-width: 2;
-    stroke: rgba($color: red, $alpha: 0.3); 
-    fill: rgba($color: black, $alpha: 0.3);
+    stroke-width: 0;
+    stroke: rgba($color: black, $alpha: 0.2); 
+    fill: rgba($color: black, $alpha: 0.2);
 }
