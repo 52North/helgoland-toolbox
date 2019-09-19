@@ -31,10 +31,10 @@ export class RangeCalculationsService {
   }
 
   /**
-   * Function to set range to default interval, if min and max of range are not set.
+   * Sets range to default interval of -1 to 1, if min and max of range are not set.
    * @param range {MinMaxRange} range to be set
    */
-  public extendRange(range: MinMaxRange): MinMaxRange {
+  public setDefaultExtendIfUndefined(range: MinMaxRange): MinMaxRange {
     let min = -1;
     let max = 1;
     if (range !== undefined && range !== null) {
