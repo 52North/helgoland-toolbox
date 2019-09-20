@@ -28,7 +28,7 @@ import {
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { Duration, unitOfTime } from 'moment';
+import moment, { Duration, min, unitOfTime } from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { HighlightOutput } from '../model/d3-highlight';
@@ -119,6 +119,11 @@ interface HighlightDataset {
     change: boolean;
 }
 
+export interface D3GraphObserver {
+    adjustYAxis(axis: YAxis);
+    afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number);
+}
+
 const TICKS_COUNT_YAXIS = 5;
 
 @Component({
@@ -147,8 +152,8 @@ export class D3TimeseriesGraphComponent
     public highlightOutput: HighlightOutput;
 
     // DOM elements
-    protected rawSvg: any; // d3.Selection<EnterElement, {}, null, undefined>;
-    protected graph: any;
+    protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
+    protected graph: d3.Selection<SVGSVGElement, any, any, any>;
     protected graphFocus: any;
     protected graphBody: any;
     private dragRect: any;
@@ -204,6 +209,8 @@ export class D3TimeseriesGraphComponent
     private loadingData: Set<string> = new Set();
     private currentTimeId: string;
 
+    private observer: Set<D3GraphObserver> = new Set();
+
     // default plot options
     private plotOptions: D3PlotOptions = {
         showReferenceValues: false,
@@ -237,13 +244,13 @@ export class D3TimeseriesGraphComponent
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
 
-        this.rawSvg = d3.select(this.d3Elem.nativeElement)
-            .append('svg')
+        this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
+            .append<SVGSVGElement>('svg')
             .attr('width', '100%')
             .attr('height', '100%');
 
         this.graph = this.rawSvg
-            .append('g')
+            .append<SVGSVGElement>('g')
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.graphFocus = this.rawSvg
@@ -252,6 +259,18 @@ export class D3TimeseriesGraphComponent
 
         this.mousedownBrush = false;
         this.plotGraph();
+    }
+
+    public registerObserver(obs: D3GraphObserver) {
+        this.observer.add(obs);
+    }
+
+    public unregisterObserver(obs: D3GraphObserver) {
+        this.observer.delete(obs);
+    }
+
+    public getGraphElem() {
+        return this.graph;
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
@@ -382,8 +401,6 @@ export class D3TimeseriesGraphComponent
      * @param dataset {IDataset} Object of the whole dataset
      */
     private prepareData(dataset: IDataset, data: Data<TimeValueTuple>): void {
-
-        console.log(`Prepare data for ${dataset.internalId}`);
 
         // add surrounding entries to the set
         if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
@@ -552,7 +569,7 @@ export class D3TimeseriesGraphComponent
      * Function to plot the graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
-    protected plotGraph(): void {
+    public plotGraph(): void {
         if (!this.graph || !this.rawSvg || !this.datasetIds) { return; }
         this.highlightOutput = {
             timestamp: 0,
@@ -1073,15 +1090,14 @@ export class D3TimeseriesGraphComponent
      */
     private drawYaxis(axis: YAxis) {
         let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
-        // check for y axis grouping
-        let range = axis.range;
 
-        range = this.rangeCalc.extendRange(range);
-        const rangeMin = range.min;
-        const rangeMax = range.max;
+        this.observer.forEach(e => e.adjustYAxis(axis));
+
+        // adjust to default extend
+        axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
 
         // range for y axis scale
-        const yScale = d3.scaleLinear().domain([rangeMin, rangeMax]).range([this.height, 0]);
+        const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
 
         const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
         let buffer = 0;
@@ -1094,23 +1110,27 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw y axis
-        const axisElem = this.graph.append('svg:g')
+        const axisElem = this.graph.append<SVGSVGElement>('svg:g')
             .attr('class', 'y axis')
             .call(yAxisGen);
 
         // only if yAxis should be visible
         if (showAxis) {
+            const axisHeight = axisElem.node().getBBox().height;
             // draw y axis label
-            const text = this.graph.append('text')
+            const text = this.graph.append<SVGSVGElement>('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
-                .call(this.wrapText, (axisElem.node().getBBox().height - 10), this.height / 2);
+                .call(this.wrapText, axisHeight - 10, this.height / 2);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
+
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+
+            // console.log(`Axis size offset: ${buffer}, height: ${axisHeight}, width: ${axisWidth} with ${axis.uom}`);
             const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!axis.first) {
@@ -1140,7 +1160,6 @@ export class D3TimeseriesGraphComponent
                 };
                 let pointOffset = 0;
 
-                // if (entry.ids) {
                 axis.ids.forEach((entryID) => {
                     let dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
@@ -1155,20 +1174,21 @@ export class D3TimeseriesGraphComponent
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
                 });
+
+                const axisDiv = this.graph.append('rect')
+                    .attr('class', `y axisDiv ${axis.selected ? 'selected' : ''}`)
+                    .attr('width', axisWidthDiv)
+                    .attr('height', this.height)
+                    .on('mouseup', () => this.highlightLine(axis.ids));
+
+                if (!axis.first) {
+                    axisDiv.attr('x', axis.offset).attr('y', 0);
+                } else {
+                    axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
+                }
+
+                this.observer.forEach(e => e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth));
             }
-
-            const axisDiv = this.graph.append('rect')
-                .attr('class', `y axisDiv ${axis.selected ? 'selected' : ''}`)
-                .attr('width', axisWidthDiv)
-                .attr('height', this.height)
-                .on('mouseup', () => this.highlightLine(axis.ids));
-
-            if (!axis.first) {
-                axisDiv.attr('x', axis.offset).attr('y', 0);
-            } else {
-                axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
-            }
-
         }
 
         return {
@@ -1922,8 +1942,8 @@ export class D3TimeseriesGraphComponent
         this.labelTimestamp[entryIdx] = item.timestamp;
         this.labelXCoord[entryIdx] = item.xDiagCoord;
         this.distLabelXCoord[entryIdx] = Math.abs(mouseCoord - item.xDiagCoord);
-        let min = d3.min(this.distLabelXCoord);
-        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === min);
+        let minXcoord = d3.min(this.distLabelXCoord);
+        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === minXcoord);
         let onLeftSide = this.checkLeftSide(item.xDiagCoord);
         let right = this.labelXCoord[idxOfMin] + 2;
         let left = this.labelXCoord[idxOfMin] - this.getDimensions(this.focuslabelTime.node()).w - 2;

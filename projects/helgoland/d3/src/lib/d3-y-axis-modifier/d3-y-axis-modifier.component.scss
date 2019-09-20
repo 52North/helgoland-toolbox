@@ -1,0 +1,15 @@
+.axis-button-line {
+    stroke: black;
+    fill: black;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+.axis-button-circle {
+    stroke: none;
+    fill: rgba($color: black, $alpha: 0.01);
+}
+.axis-button-circle.hover {
+    stroke-width: 0;
+    stroke: rgba($color: black, $alpha: 0.2); 
+    fill: rgba($color: black, $alpha: 0.2);
+}
