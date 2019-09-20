@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 export class LocalStorage {
 
     private localStorageEnabled = false;
+    private defaults = {};
 
     constructor() {
         if (typeof (Storage) !== 'undefined') {
@@ -22,7 +23,6 @@ export class LocalStorage {
      * @param key
      * @param object
      * @returns successfull saving
-     * @memberof LocalStorage
      */
     public save(key: string, object: any): boolean {
         if (this.localStorageEnabled) {
@@ -37,7 +37,6 @@ export class LocalStorage {
      *
      * @param key
      * @returns the object if exists, else null
-     * @memberof LocalStorage
      */
     public load<T>(key: string): T {
         if (this.localStorageEnabled) {
@@ -45,8 +44,8 @@ export class LocalStorage {
             if (result) {
                 return JSON.parse(result);
             }
-            return null;
         }
+        return this.defaults[key];
     }
 
     /**
@@ -54,7 +53,6 @@ export class LocalStorage {
      *
      * @param key
      * @returns the array of objects if exists, else null
-     * @memberof LocalStorage
      */
     public loadArray<T>(key: string): T[] {
         if (this.localStorageEnabled) {
@@ -62,8 +60,8 @@ export class LocalStorage {
             if (result) {
                 return JSON.parse(result);
             }
-            return null;
         }
+        return this.defaults[key];
     }
 
     /**
@@ -71,14 +69,44 @@ export class LocalStorage {
      *
      * @param key
      * @returns the string if exists, else null
-     * @memberof LocalStorage
      */
     public loadTextual(key: string): string {
         if (this.localStorageEnabled) {
             const result = localStorage.getItem(key);
-            if (result) { return result; }
+            if (result) {
+                return result;
+            }
         }
-        return null;
+        return this.defaults[key];
+    }
+
+    /**
+     * clears the complete local storage
+     */
+    public clearStorage() {
+        if (this.localStorageEnabled) {
+            localStorage.clear();
+        }
+    }
+
+    /**
+     * removes the item for the specified key
+     * @param key
+     */
+    public removeItem(key: string) {
+        if (this.localStorageEnabled) {
+            localStorage.removeItem(key);
+        }
+    }
+
+    /**
+     * sets a default value for the given key, which will be delivered, if nothing is stored in localstorage for the key
+     *
+     * @param key
+     * @param object
+     */
+    protected defineDefault(key: string, object: any) {
+        this.defaults[key] = object;
     }
 
 }
