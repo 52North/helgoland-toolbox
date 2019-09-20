@@ -16,7 +16,7 @@ export class AdditionalDataGraphComponent {
     ];
 
     public additionalData: AdditionalData[] = [];
-    public timespan;
+    public timespan: Timespan;
 
     public graphOptions: D3PlotOptions = {
         yaxis: true
@@ -117,6 +117,11 @@ export class AdditionalDataGraphComponent {
                 this.selectedIds.splice(this.selectedIds.findIndex((entry) => entry === id), 1);
             }
         }
+    }
+
+    public removeEntry(idx: number) {
+        this.additionalData[0].data.splice(idx, 1);
+        this.timespan = new Timespan(this.timespan.from, this.timespan.to);
     }
 
 
