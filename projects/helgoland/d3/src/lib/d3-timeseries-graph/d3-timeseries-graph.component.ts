@@ -731,46 +731,49 @@ export class D3TimeseriesGraphComponent
 
     protected createYAxisForId(key: string) {
         if (this.preparedAxes.has(key)) {
-            const axisSettings = this.preparedAxes.get(key);
-            if (axisSettings.entry.options.separateYAxis) {
-                // create sepearte axis
-                this.yAxes.push({
-                    uom: axisSettings.entry.axisOptions.uom,
-                    range: axisSettings.visualRange,
-                    rangeFixed: axisSettings.rangeFixed,
-                    selected: axisSettings.entry.selected,
-                    seperate: true,
-                    ids: [key],
-                    label: axisSettings.entry.axisOptions.parameters.feature.label
-                });
-            } else {
-                // find matching axis or add new
-                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
-                if (axis) {
-                    // add id to axis
-                    axis.ids.push(key);
-                    // update range for axis
-                    if (axisSettings.rangeFixed && axis.rangeFixed) {
-                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                    } else if (axisSettings.rangeFixed) {
-                        axis.range = axisSettings.visualRange;
-                        axis.rangeFixed = true;
-                    } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
-                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                    }
-                    // update selection
-                    if (axis.selected) {
-                        axis.selected = axisSettings.entry.selected;
-                    }
-                } else {
+            // only create axis for datsets with datapoints inside selected timespan
+            if (this.datasetMap.get(key).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
+                const axisSettings = this.preparedAxes.get(key);
+                if (axisSettings.entry.options.separateYAxis) {
+                    // create sepearte axis
                     this.yAxes.push({
                         uom: axisSettings.entry.axisOptions.uom,
                         range: axisSettings.visualRange,
-                        seperate: false,
-                        selected: axisSettings.entry.selected,
                         rangeFixed: axisSettings.rangeFixed,
-                        ids: [key]
+                        selected: axisSettings.entry.selected,
+                        seperate: true,
+                        ids: [key],
+                        label: axisSettings.entry.axisOptions.parameters.feature.label
                     });
+                } else {
+                    // find matching axis or add new
+                    const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+                    if (axis) {
+                        // add id to axis
+                        axis.ids.push(key);
+                        // update range for axis
+                        if (axisSettings.rangeFixed && axis.rangeFixed) {
+                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                        } else if (axisSettings.rangeFixed) {
+                            axis.range = axisSettings.visualRange;
+                            axis.rangeFixed = true;
+                        } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
+                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                        }
+                        // update selection
+                        if (axis.selected) {
+                            axis.selected = axisSettings.entry.selected;
+                        }
+                    } else {
+                        this.yAxes.push({
+                            uom: axisSettings.entry.axisOptions.uom,
+                            range: axisSettings.visualRange,
+                            seperate: false,
+                            selected: axisSettings.entry.selected,
+                            rangeFixed: axisSettings.rangeFixed,
+                            ids: [key]
+                        });
+                    }
                 }
             }
         }
@@ -1163,14 +1166,31 @@ export class D3TimeseriesGraphComponent
                 axis.ids.forEach((entryID) => {
                     let dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
-                        this.graph.append('circle')
-                            .attr('class', 'axisDots')
-                            .attr('id', 'axisdot-' + entryID)
-                            .attr('stroke', dataentry.options.color)
-                            .attr('fill', dataentry.options.color)
-                            .attr('cx', startOfPoints.x)
-                            .attr('cy', startOfPoints.y - pointOffset)
-                            .attr('r', axisradius + (dataentry.selected ? 2 : 0));
+                        if (dataentry.options.type) {
+                            const circleRadius = axisradius + (dataentry.selected ? 2 : 0);
+                            if (dataentry.options.lineWidth > 0) {
+                                this.graph.append('line')
+                                    .attr('class', 'y-axis-line')
+                                    .attr('id', 'axisdot-line-' + entryID)
+                                    .attr('stroke', dataentry.options.color)
+                                    .attr('fill', dataentry.options.color)
+                                    .attr('x1', startOfPoints.x - circleRadius * 2)
+                                    .attr('y1', startOfPoints.y - pointOffset)
+                                    .attr('x2', startOfPoints.x + circleRadius * 2)
+                                    .attr('y2', startOfPoints.y - pointOffset)
+                                    .attr('stroke-width', dataentry.options.lineWidth + (dataentry.selected ? 2 : 0));
+                            }
+                            if (dataentry.options.pointRadius > 0) {
+                                this.graph.append('circle')
+                                    .attr('class', 'y-axis-circle')
+                                    .attr('id', 'axisdot-circle-' + entryID)
+                                    .attr('stroke', dataentry.options.color)
+                                    .attr('fill', dataentry.options.color)
+                                    .attr('cx', startOfPoints.x)
+                                    .attr('cy', startOfPoints.y - pointOffset)
+                                    .attr('r', dataentry.options.pointRadius + (dataentry.selected ? 2 : 0));
+                            }
+                        }
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
                 });
@@ -1256,28 +1276,30 @@ export class D3TimeseriesGraphComponent
     protected drawChart(entry: InternalDataEntry): void {
         if (entry.data.length > 0) {
             const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.internalId) >= 0);
-            // create body to clip graph
-            // unique ID generated through the current time (current time when initialized)
-            let querySelectorClip = 'clip' + this.currentTimeId;
-            this.graph
-                .append('svg:clipPath')
-                .attr('id', querySelectorClip)
-                .append('svg:rect')
-                .attr('x', this.bufferSum)
-                .attr('y', 0)
-                .attr('width', this.width - this.bufferSum)
-                .attr('height', this.height);
-            // draw graph line
-            this.graphBody = this.graph
-                .append('g')
-                .attr('clip-path', 'url(#' + querySelectorClip + ')');
+            if (yaxis) {
+                // create body to clip graph
+                // unique ID generated through the current time (current time when initialized)
+                let querySelectorClip = 'clip' + this.currentTimeId;
+                this.graph
+                    .append('svg:clipPath')
+                    .attr('id', querySelectorClip)
+                    .append('svg:rect')
+                    .attr('x', this.bufferSum)
+                    .attr('y', 0)
+                    .attr('width', this.width - this.bufferSum)
+                    .attr('height', this.height);
+                // draw graph line
+                this.graphBody = this.graph
+                    .append('g')
+                    .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
-            if (entry.options.type === 'bar') {
-                this.drawBarChart(entry, yaxis.yScale);
-            } else {
-                // draw ref value line
-                entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
-                this.drawLineChart(entry, yaxis.yScale);
+                if (entry.options.type === 'bar') {
+                    this.drawBarChart(entry, yaxis.yScale);
+                } else {
+                    // draw ref value line
+                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
+                    this.drawLineChart(entry, yaxis.yScale);
+                }
             }
         }
     }
@@ -1647,7 +1669,7 @@ export class D3TimeseriesGraphComponent
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
         return d3.line<DataEntry>()
-            .defined((d) => typeof d.value === 'number')
+            .defined((d) => typeof d.timestamp === 'number' && typeof d.value === 'number')
             .x((d) => {
                 const xDiagCoord = xScaleBase(d.timestamp);
                 if (!isNaN(xDiagCoord)) {
@@ -1661,6 +1683,9 @@ export class D3TimeseriesGraphComponent
                     if (!isNaN(yDiagCoord)) {
                         d.yDiagCoord = yDiagCoord;
                         return yDiagCoord;
+                    } else {
+                        // return value to avoid error with NaN in linepath while drag and drop in Google Chrome
+                        return 0;
                     }
                 }
             })
