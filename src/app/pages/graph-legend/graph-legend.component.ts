@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColorService, DatasetOptions, Time, TimeseriesData, Timespan, InternalIdHandler } from '@helgoland/core';
+import { ColorService, DatasetOptions, InternalIdHandler, Time, TimeseriesData, Timespan } from '@helgoland/core';
 import {
     D3GeneralDataPoint,
     D3GeneralDatasetInput,

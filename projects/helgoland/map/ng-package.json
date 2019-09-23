@@ -3,7 +3,12 @@
   "dest": "../../../dist/helgoland/map",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "moment": "moment",
+      "leaflet": "leaflet"
+    }
   },
   "whitelistedNonPeerDependencies": [""]
 }

@@ -91,7 +91,7 @@ export class D3TrajectoryGraphComponent
     @Output()
     public onHoverHighlight: EventEmitter<number> = new EventEmitter();
 
-    @ViewChild('dthree')
+    @ViewChild('dthree', { static: true })
     public d3Elem: ElementRef;
 
     private datasetMap: Map<string, DatasetConstellation> = new Map();
