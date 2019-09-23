@@ -6,6 +6,7 @@ import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-gra
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TrajectoryGraphComponent } from './d3-trajectory-graph/d3-trajectory-graph.component';
 import { D3YAxisModifierComponent } from './d3-y-axis-modifier/d3-y-axis-modifier.component';
+import { ExportImageButtonComponent } from './export-image-button/export-image-button.component';
 import {
   ExtendedDataD3TimeseriesGraphComponent,
 } from './extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
@@ -17,6 +18,7 @@ const COMPONENTS = [
   D3OverviewTimeseriesGraphComponent,
   ExtendedDataD3TimeseriesGraphComponent,
   D3GeneralGraphComponent,
+  ExportImageButtonComponent,
   D3YAxisModifierComponent
 ];
 

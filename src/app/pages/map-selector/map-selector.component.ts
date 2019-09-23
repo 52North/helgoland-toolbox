@@ -131,7 +131,7 @@ export class MapSelectorComponent {
                     zIndex: -9998,
                     projection: 'EPSG:4326',
                     units: 'm'
-                })
+                } as WMSOptions)
             });
         this.overlayMaps.set('realtime:o3_station_max',
             {
@@ -147,7 +147,7 @@ export class MapSelectorComponent {
                     zIndex: -9997,
                     projection: 'EPSG:4326',
                     units: 'm'
-                })
+                } as WMSOptions)
             }
         );
     }

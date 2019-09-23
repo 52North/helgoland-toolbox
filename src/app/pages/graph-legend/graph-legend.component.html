@@ -10,6 +10,9 @@
 </div>
 <div>
   <span>Loading Graph: {{graphLoading}} - {{listLoadings()}}</span>
+  <n52-export-image-button svgSelector=".diagram" title="Exported Diagram" [datasetOptions]="datasetOptions"
+    showLegend="true">
+  </n52-export-image-button>
 </div>
 <div style="height: 200px;">
   <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
@@ -41,10 +44,11 @@
     <div *ngFor="let id of datasetIds">
       <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
-        (onShowGeometry)="showGeometry($event)" (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
+        (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
       <n52-dataset-permalink-download [internalId]="internalIdHandler.resolveInternalId(id)" [timeInterval]="timespan"
-      [language]=""></n52-dataset-permalink-download>
+        [language]=""></n52-dataset-permalink-download>
       <button (click)="openDownload(id)">Open Download</button>
     </div>
   </div>

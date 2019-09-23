@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { D3GeneralDatasetInput } from '@helgoland/d3';
 
 @Component({

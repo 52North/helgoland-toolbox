@@ -9,6 +9,7 @@ export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph
 export { D3YAxisModifierComponent } from './lib/d3-y-axis-modifier/d3-y-axis-modifier.component';
 export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
 export { AdditionalData, ExtendedDataD3TimeseriesGraphComponent } from './lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
+export { ExportImageButtonComponent } from './lib/export-image-button/export-image-button.component';
 export * from './lib/model/d3-graph-options';
 export * from './lib/model/d3-axis-type';
 export * from './lib/model/d3-highlight';
