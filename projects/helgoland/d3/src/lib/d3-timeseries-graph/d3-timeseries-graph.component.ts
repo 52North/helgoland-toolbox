@@ -28,100 +28,17 @@ import {
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { Duration, min, unitOfTime } from 'moment';
+import moment, { unitOfTime } from 'moment';
 
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
-
-export interface DataEntry {
-    timestamp: number;
-    value: number | string;
-    xDiagCoord?: number;
-    yDiagCoord?: number;
-}
-
-export interface InternalDataEntry {
-    internalId: string;
-    id?: number;
-    data: DataEntry[];
-    selected?: boolean;
-    options: DatasetOptions;
-    bar?: {
-        startOf: unitOfTime.StartOf;
-        period: Duration;
-    };
-    axisOptions: {
-        uom: string;
-        label?: string;
-        zeroBased?: boolean;
-        yAxisRange?: MinMaxRange;
-        autoRangeSelection?: boolean;
-        separateYAxis?: boolean;
-        parameters?: {
-            feature?: { id: string, label: string };
-            phenomenon?: { id: string, label: string };
-            offering?: { id: string, label: string };
-        };
-    };
-    referenceValueData: {
-        id: string;
-        color: string;
-        data: DataEntry[];
-    }[];
-    visible: boolean;
-    focusLabelRect?: any;
-    focusLabel?: any;
-}
-
-export interface DataConst extends IDataset {
-    data?: Data<TimeValueTuple>;
-}
-
-export interface YRanges {
-    uom: string;
-    range?: MinMaxRange;
-    outOfrange: boolean;
-    id?: string; // necessary if grouped by internalId
-    ids?: string[]; // necessary if grouped by uom
-    first?: boolean;
-    yScale?: d3.ScaleLinear<number, number>;
-    offset?: number;
-    parameters: {   // additional information for the y axis label
-        feature?: { id: String, label: String };
-        phenomenon?: { id: String, label: String };
-        offering?: { id: String, label: String };
-    };
-}
-
-export interface YAxis {
-    uom: string;
-    range: MinMaxRange;
-    rangeFixed: boolean;
-    ids: string[];
-    seperate: boolean;
-    selected: boolean;
-    label?: string;
-    first?: boolean;
-    offset?: number;
-    yScale?: d3.ScaleLinear<number, number>;
-}
-
-export interface YAxisSettings {
-    visualRange: MinMaxRange;
-    rangeFixed: boolean;
-    entry: InternalDataEntry;
-}
+import { InternalDataEntry, YAxisSettings, DataConst, YAxis, D3GraphObserver, DataEntry } from '../model/d3-general';
 
 interface HighlightDataset {
     id: string;
     change: boolean;
-}
-
-export interface D3GraphObserver {
-    adjustYAxis(axis: YAxis);
-    afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number);
 }
 
 const TICKS_COUNT_YAXIS = 5;

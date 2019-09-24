@@ -1,8 +1,8 @@
 import { Component, Host, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
 
-import { D3TimeseriesGraphComponent, YAxis } from '../d3-timeseries-graph/d3-timeseries-graph.component';
-import { D3GraphObserver } from './../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3GraphObserver, YAxis } from '../model/d3-general';
 
 @Component({
   selector: 'n52-d3-y-axis-modifier',
