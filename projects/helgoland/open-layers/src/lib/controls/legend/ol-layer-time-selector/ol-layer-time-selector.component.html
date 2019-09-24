@@ -1,0 +1,4 @@
+<span *ngIf="loading">loading ...</span>
+<select *ngIf="!loading" [ngModel]="currentTime" [compareWith]="compareFn" (ngModelChange)="onSelect($event)">
+    <option *ngFor="let time of timeDimensions" [ngValue]="time">{{time | date: 'medium'}}</option>
+</select>
