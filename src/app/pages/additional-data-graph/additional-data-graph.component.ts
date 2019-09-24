@@ -49,7 +49,7 @@ export class AdditionalDataGraphComponent {
         options.lineWidth = 3;
         this.additionalData = [{
             // linkedDatasetId: this.datasetIds[0],
-            internalId: '',
+            internalId: 'temp',
             yaxisLabel: 'random',
             datasetOptions: options,
             data: [

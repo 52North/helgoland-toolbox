@@ -42,6 +42,7 @@ import {
   NominatimGeoSearchService,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
+import { HelgolandOpenLayersModule } from '@helgoland/open-layers';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
 import { HelgolandPlotlyModule } from '@helgoland/plotly';
 import { HelgolandSelectorModule } from '@helgoland/selector';
@@ -65,6 +66,7 @@ import { GraphLegendComponent } from './pages/graph-legend/graph-legend.componen
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
 import { MapSelectorComponent } from './pages/map-selector/map-selector.component';
 import { MapViewComponent } from './pages/map-view/map-view.component';
+import { OlComponent } from './pages/ol/ol.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
@@ -118,6 +120,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LocalSelectorImplComponent,
     MapSelectorComponent,
     MapViewComponent,
+    OlComponent,
     PermalinkComponent,
     PlotlyGraphComponent,
     ProfileEntryComponent,
@@ -170,7 +173,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule,
     HelgolandBasicAuthModule,
-    HelgolandDatasetDownloadModule
+    HelgolandDatasetDownloadModule,
+    HelgolandOpenLayersModule
   ],
   entryComponents: [
     StyleModificationComponent,

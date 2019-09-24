@@ -1,0 +1,58 @@
+.ol-upperright-overviewmap,
+.ol-upperright-overviewmap.ol-uncollapsible {
+    bottom: auto;
+    left: auto;
+    right: .5em;
+    top: .5em;
+}
+
+.ol-upperright-overviewmap:not(.ol-collapsed) button {
+    bottom: auto;
+    left: auto;
+    right: 1px;
+    top: 1px;
+}
+
+.ol-upperleft-overviewmap,
+.ol-upperleft-overviewmap.ol-uncollapsible {
+    bottom: auto;
+    left: .5em;
+    right: auto;
+    top: .5em;
+}
+
+.ol-upperleft-overviewmap:not(.ol-collapsed) button {
+    bottom: auto;
+    left: 1px;
+    right: auto;
+    top: 1px;
+}
+
+.ol-bottomright-overviewmap,
+.ol-bottomright-overviewmap.ol-uncollapsible {
+    bottom: .5em;
+    left: auto;
+    right: .5em;
+    top: auto;
+}
+
+.ol-bottomright-overviewmap:not(.ol-collapsed) button {
+    bottom: 1px;
+    left: auto;
+    right: 1px;
+    top: auto;
+}
+
+.ol-custom-overviewmap:not(.ol-collapsed) {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.ol-custom-overviewmap .ol-overviewmap-box {
+    border: 2px solid red;
+}
+
+.ol-rotate {
+    top: 170px;
+    right: 0;
+}
