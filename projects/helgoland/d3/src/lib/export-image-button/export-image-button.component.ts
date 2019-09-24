@@ -19,6 +19,13 @@ export class ExportImageButtonComponent {
 
   @Input() showLegend: boolean;
 
+  @Input() showFirstLastDate: boolean;
+
+  // @Input() firstLastDate: [Date, Date];
+
+  public firstDate = '2019-09-05';
+  public lastDate = '2019-09-28';
+
   constructor(
     private api: DatasetApiInterface
   ) { }
@@ -28,12 +35,19 @@ export class ExportImageButtonComponent {
     const clone = svgElem.cloneNode(true) as SVGSVGElement;
     document.body.appendChild(clone);
 
+    // remove filling (black) for y axis
+    clone.querySelectorAll<SVGSVGElement>('.y.axisDiv').forEach(el => {
+      el.style.fill = 'none';
+    });
+    Array.from(clone.getElementsByClassName('y-axis-modifier-button')).map(n => n && n.remove());
     const width = svgElem.width.baseVal.value;
     let height = svgElem.height.baseVal.value;
 
     if (this.title) {
       height = this.addTitle(clone, this.title, width, height);
     }
+
+    this.addFirstLastDate(clone, width, height);
 
     if (this.showLegend) {
       this.addLegend(clone, width, height).subscribe(updatedHeight => {
@@ -42,6 +56,19 @@ export class ExportImageButtonComponent {
     } else {
       this.createCanvas(clone, width, height);
     }
+  }
+
+  private addFirstLastDate(element: SVGSVGElement, width: number, height: number) {
+    const selection = d3.select(element);
+    const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
+
+    const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(this.firstDate.toString());
+    const firstDateWidth = firstDate.node().getBBox().width;
+    firstDate.attr('x', (width - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y',  (height));
+
+    const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(this.lastDate.toString());
+    const lastDateWidth = lastDate.node().getBBox().width;
+    lastDate.attr('x', (width - lastDateWidth)).attr('y', (height));
   }
 
   private addLegend(element: SVGSVGElement, width: number, height: number): Observable<number> {

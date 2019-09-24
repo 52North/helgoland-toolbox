@@ -582,7 +582,7 @@ export class D3TimeseriesGraphComponent
         });
 
         this.height = this.calculateHeight();
-        this.width = this.calculateWidth();
+        this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
         this.graph.selectAll('*').remove();
         this.graphFocus.selectAll('*').remove();
 
@@ -1022,7 +1022,7 @@ export class D3TimeseriesGraphComponent
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
             .domain([new Date(this.xAxisRange.from), new Date(this.xAxisRange.to)])
-            .range([bufferXrange, this.width]);
+            .range([bufferXrange, this.width]); // .nice(); // function which makes the "beautiful" (not used here, because the ticks are inconsistent with this function)
 
         let xAxis = d3.axisBottom(this.xScaleBase)
             .tickFormat(d => {
@@ -1125,7 +1125,7 @@ export class D3TimeseriesGraphComponent
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
-                .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
+                .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom + ' - hello this is mr and mrs checktest and we would like to check some stuff just in case this is too long to be visualized')
                 .call(this.wrapText, axisHeight - 10, this.height / 2);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
