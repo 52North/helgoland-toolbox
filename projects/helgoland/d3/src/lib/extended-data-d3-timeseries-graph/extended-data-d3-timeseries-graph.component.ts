@@ -18,8 +18,9 @@ import {
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { D3TimeseriesGraphComponent, InternalDataEntry } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { InternalDataEntry } from '../model/d3-general';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 
 /**
