@@ -40,10 +40,12 @@ export class D3YAxisModifierComponent implements OnInit, OnDestroy, D3GraphObser
 
   public ngOnInit() {
     this.d3Graph.registerObserver(this);
+    this.d3Graph.plotGraph();
   }
 
   public ngOnDestroy(): void {
     this.d3Graph.unregisterObserver(this);
+    this.d3Graph.plotGraph();
   }
 
   public adjustYAxis(axis: YAxis) {
