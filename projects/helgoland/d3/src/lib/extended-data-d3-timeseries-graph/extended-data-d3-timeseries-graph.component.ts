@@ -19,6 +19,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 
 import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { InternalDataEntry } from '../model/d3-general';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
@@ -83,9 +84,10 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected colorService: ColorService,
     protected translateService: TranslateService,
     protected sumValues: SumValuesService,
-    protected rangeCalc: RangeCalculationsService
+    protected rangeCalc: RangeCalculationsService,
+    protected graphHelper: D3GraphHelperService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc);
+    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc, graphHelper);
   }
 
   public ngOnInit(): void {

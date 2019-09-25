@@ -1,4 +1,4 @@
-import { Data, DatasetOptions, IDataset, MinMaxRange, TimeValueTuple } from '@helgoland/core';
+import { Data, DatasetOptions, IDataset, MinMaxRange, Timespan, TimeValueTuple } from '@helgoland/core';
 import { ScaleLinear } from 'd3';
 import { Duration, unitOfTime } from 'moment';
 
@@ -52,24 +52,6 @@ export interface D3GeneralDataPoint {
     y: number;
     xCoord?: number;
     yCoord?: number;
-}
-
-export interface YAxis {
-    uom: string;
-    range: MinMaxRange;
-    rangeFixed: boolean;
-    ids: string[];
-    seperate: boolean;
-    selected: boolean;
-    label?: string;
-    first?: boolean;
-    offset?: number;
-    yScale?: d3.ScaleLinear<number, number>;
-}
-
-export interface D3GraphObserver {
-    adjustYAxis(axis: YAxis);
-    afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number);
 }
 
 export interface DataEntry {
