@@ -1,8 +1,8 @@
-import { Component, Host, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
 
-import { D3TimeseriesGraphComponent, YAxis } from '../d3-timeseries-graph/d3-timeseries-graph.component';
-import { D3GraphObserver } from './../d3-timeseries-graph/d3-timeseries-graph.component';
+import { YAxis } from '../../../model/d3-general';
+import { D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 
 @Component({
   selector: 'n52-d3-y-axis-modifier',
@@ -10,7 +10,7 @@ import { D3GraphObserver } from './../d3-timeseries-graph/d3-timeseries-graph.co
   styleUrls: ['./d3-y-axis-modifier.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3YAxisModifierComponent implements OnInit, OnDestroy, D3GraphObserver {
+export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnInit, OnDestroy {
 
   /**
    * Should the shift buttons be usable.
@@ -34,16 +34,15 @@ export class D3YAxisModifierComponent implements OnInit, OnDestroy, D3GraphObser
 
   private adjustedRanges: Map<string, MinMaxRange> = new Map();
 
-  constructor(
-    @Host() private d3Graph: D3TimeseriesGraphComponent
-  ) { }
-
   public ngOnInit() {
-    this.d3Graph.registerObserver(this);
+    super.ngOnInit();
+    this.d3Graph.plotGraph();
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.d3Graph.unregisterObserver(this);
+    this.d3Graph.plotGraph();
   }
 
   public adjustYAxis(axis: YAxis) {

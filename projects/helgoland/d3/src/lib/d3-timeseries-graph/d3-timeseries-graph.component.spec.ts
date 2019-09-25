@@ -5,8 +5,12 @@ import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreM
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { D3YAxisModifierComponent } from '../d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { HoveringStyle } from '../model/d3-plot-options';
+import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
+import {
+  D3GraphPanZoomInteractionComponent,
+} from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
+import { D3YAxisModifierComponent } from './controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
 
 describe('D3TimeseriesGraphComponent - raw', () => {
@@ -77,7 +81,12 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
         DatasetApiInterfaceTesting,
         DefinedTimespanService
       ],
-      declarations: [D3TimeseriesGraphComponent, D3YAxisModifierComponent]
+      declarations: [
+        D3TimeseriesGraphComponent,
+        D3YAxisModifierComponent,
+        D3GraphPanZoomInteractionComponent,
+        D3GraphCopyrightComponent
+      ]
     }).compileComponents();
   }));
 
@@ -132,8 +141,14 @@ fdescribe('D3TimeseriesGraphComponent - function', () => {
     component.datasetOptions = datasetOptions;
     // component.selectedDatasetIds = [datasetID2];
     component.presenterOptions = {
+      togglePanZoom: true,
       showReferenceValues: true,
-      yAxisStepper: true
+      yAxisStepper: true,
+      copyright: {
+        label: 'Copyright goes here',
+        positionX: 'right',
+        positionY: 'bottom'
+      }
     };
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;

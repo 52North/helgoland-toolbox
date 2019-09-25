@@ -12,9 +12,9 @@ import {
 } from '@helgoland/d3';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
+import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
-import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
 
 @Component({
     templateUrl: './graph-legend.component.html',
@@ -41,11 +41,13 @@ export class GraphLegendComponent {
     public reloadForDatasets = [];
     public timespan;
     public plotLanguage;
+    public yaxisModifier = true;
 
     public loadings: Set<string> = new Set();
 
     public d3diagramOptions: D3PlotOptions = {
         showReferenceValues: true,
+        togglePanZoom: true,
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',

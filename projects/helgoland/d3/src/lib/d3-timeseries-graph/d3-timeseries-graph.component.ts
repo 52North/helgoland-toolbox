@@ -28,100 +28,19 @@ import {
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { Duration, min, unitOfTime } from 'moment';
+import moment, { unitOfTime } from 'moment';
 
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
-import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { D3Copyright, D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
-
-export interface DataEntry {
-    timestamp: number;
-    value: number | string;
-    xDiagCoord?: number;
-    yDiagCoord?: number;
-}
-
-export interface InternalDataEntry {
-    internalId: string;
-    id?: number;
-    data: DataEntry[];
-    selected?: boolean;
-    options: DatasetOptions;
-    bar?: {
-        startOf: unitOfTime.StartOf;
-        period: Duration;
-    };
-    axisOptions: {
-        uom: string;
-        label?: string;
-        zeroBased?: boolean;
-        yAxisRange?: MinMaxRange;
-        autoRangeSelection?: boolean;
-        separateYAxis?: boolean;
-        parameters?: {
-            feature?: { id: string, label: string };
-            phenomenon?: { id: string, label: string };
-            offering?: { id: string, label: string };
-        };
-    };
-    referenceValueData: {
-        id: string;
-        color: string;
-        data: DataEntry[];
-    }[];
-    visible: boolean;
-    focusLabelRect?: any;
-    focusLabel?: any;
-}
-
-export interface DataConst extends IDataset {
-    data?: Data<TimeValueTuple>;
-}
-
-export interface YRanges {
-    uom: string;
-    range?: MinMaxRange;
-    outOfrange: boolean;
-    id?: string; // necessary if grouped by internalId
-    ids?: string[]; // necessary if grouped by uom
-    first?: boolean;
-    yScale?: d3.ScaleLinear<number, number>;
-    offset?: number;
-    parameters: {   // additional information for the y axis label
-        feature?: { id: String, label: String };
-        phenomenon?: { id: String, label: String };
-        offering?: { id: String, label: String };
-    };
-}
-
-export interface YAxis {
-    uom: string;
-    range: MinMaxRange;
-    rangeFixed: boolean;
-    ids: string[];
-    seperate: boolean;
-    selected: boolean;
-    label?: string;
-    first?: boolean;
-    offset?: number;
-    yScale?: d3.ScaleLinear<number, number>;
-}
-
-export interface YAxisSettings {
-    visualRange: MinMaxRange;
-    rangeFixed: boolean;
-    entry: InternalDataEntry;
-}
+import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 
 interface HighlightDataset {
     id: string;
     change: boolean;
-}
-
-export interface D3GraphObserver {
-    adjustYAxis(axis: YAxis);
-    afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number);
 }
 
 const TICKS_COUNT_YAXIS = 5;
@@ -156,10 +75,8 @@ export class D3TimeseriesGraphComponent
     protected graph: d3.Selection<SVGSVGElement, any, any, any>;
     protected graphFocus: any;
     protected graphBody: any;
-    private dragRect: any;
-    private dragRectG: any;
-    private background: any;
-    private copyright: any;
+    private background: d3.Selection<SVGSVGElement, any, any, any>;
+
     private focusG: any;
     private highlightFocus: any;
     private highlightRect: any;
@@ -167,12 +84,6 @@ export class D3TimeseriesGraphComponent
     private focuslabelTime: any;
 
     // options for interaction
-    private dragging: boolean;
-    private dragStart: [number, number];
-    private dragCurrent: [number, number];
-    private draggingMove: boolean;
-    private dragMoveStart: number;
-    private dragMoveRange: [number, number];
     private mousedownBrush: boolean;
 
     // data types
@@ -182,9 +93,6 @@ export class D3TimeseriesGraphComponent
     protected listOfUoms: string[] = [];
     /** calculated y axes for the diagram */
     private yAxes: YAxis[] = [];
-    private xAxisRange: Timespan; // x domain range
-    private xAxisRangeOrigin: any = []; // x domain range
-    private xAxisRangePan: [number, number]; // x domain range
     private listOfSeparation = Array();
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
@@ -193,7 +101,7 @@ export class D3TimeseriesGraphComponent
     private labelTimestamp: number[];
     private labelXCoord: number[];
     private distLabelXCoord: number[];
-    private bufferSum: number;
+    private leftOffset: number;
 
     private height: number;
     private width: number;
@@ -212,7 +120,7 @@ export class D3TimeseriesGraphComponent
     private observer: Set<D3GraphObserver> = new Set();
 
     // default plot options
-    private plotOptions: D3PlotOptions = {
+    public plotOptions: D3PlotOptions = {
         showReferenceValues: false,
         generalizeAllways: true,
         togglePanZoom: true,
@@ -236,7 +144,8 @@ export class D3TimeseriesGraphComponent
         protected colorService: ColorService,
         protected translateService: TranslateService,
         protected sumValues: SumValuesService,
-        protected rangeCalc: RangeCalculationsService
+        protected rangeCalc: RangeCalculationsService,
+        protected graphHelper: D3GraphHelperService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
@@ -297,7 +206,6 @@ export class D3TimeseriesGraphComponent
     }
 
     protected removeDataset(internalId: string): void {
-        this.xAxisRangeOrigin = [];
         this.datasetMap.delete(internalId);
         this.preparedAxes.delete(internalId);
         let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
@@ -354,7 +262,7 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(centeredTimespan);
     }
 
-    private changeTime(from: number, to: number): void {
+    public changeTime(from: number, to: number): void {
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
@@ -566,6 +474,13 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
+     * Just sets the timespan, which is used for the diagram visualisation
+     */
+    public setTimespan(timespan: Timespan) {
+        this.timespan = timespan;
+    }
+
+    /**
      * Function to plot the graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
@@ -586,26 +501,24 @@ export class D3TimeseriesGraphComponent
         this.graph.selectAll('*').remove();
         this.graphFocus.selectAll('*').remove();
 
-        this.bufferSum = 0;
+        this.leftOffset = 0;
         this.yScaleBase = null;
-
-        // get range of x and y axis
-        this.xAxisRange = this.timespan;
 
         // reset y axes
         this.yAxes = [];
         this.prepareYAxes();
 
         this.yAxes.forEach(axis => {
+            // debugger;
             axis.first = (this.yScaleBase === null);
-            axis.offset = this.bufferSum;
+            axis.offset = this.leftOffset;
 
             let yAxisResult = this.drawYaxis(axis);
             if (this.yScaleBase === null) {
                 this.yScaleBase = yAxisResult.yScale;
-                this.bufferSum = yAxisResult.buffer;
+                this.leftOffset = yAxisResult.buffer;
             } else {
-                this.bufferSum = yAxisResult.buffer;
+                this.leftOffset = yAxisResult.buffer;
             }
             axis.yScale = yAxisResult.yScale;
         });
@@ -614,10 +527,10 @@ export class D3TimeseriesGraphComponent
         if (this.yAxes.length === 1 && this.plotOptions.grid) {
             this.graph.append('svg:g')
                 .attr('class', 'grid y-grid')
-                .attr('transform', 'translate(' + this.bufferSum + ', 0)')
+                .attr('transform', 'translate(' + this.leftOffset + ', 0)')
                 .call(d3.axisLeft(this.yAxes[0].yScale)
                     .ticks(TICKS_COUNT_YAXIS)
-                    .tickSize(-this.width + this.bufferSum)
+                    .tickSize(-this.width + this.leftOffset)
                     .tickFormat(() => '')
                 );
         }
@@ -627,17 +540,17 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw x axis
-        this.drawXaxis(this.bufferSum);
+        this.drawXaxis(this.leftOffset);
 
         // create background as rectangle providing panning
-        this.background = this.graph.append('svg:rect')
-            .attr('width', this.width - this.bufferSum)
+        this.background = this.graph.append<SVGSVGElement>('svg:rect')
+            .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('id', 'backgroundRect')
             .attr('fill', 'none')
             .attr('stroke', 'none')
             .attr('pointer-events', 'all')
-            .attr('transform', 'translate(' + this.bufferSum + ', 0)');
+            .attr('transform', 'translate(' + this.leftOffset + ', 0)');
 
         this.drawAllCharts();
         this.addTimespanJumpButtons();
@@ -654,22 +567,17 @@ export class D3TimeseriesGraphComponent
                 }
             }
 
-            if (this.plotOptions.togglePanZoom === false) {
-                this.background
-                    .call(d3.zoom()
-                        .on('start', this.zoomStartHandler)
-                        .on('zoom', this.zoomHandler)
-                        .on('end', this.zoomEndHandler)
-                    );
-            } else {
-                this.background
-                    .call(d3.drag()
-                        .on('start', this.panStartHandler)
-                        .on('drag', this.panMoveHandler)
-                        .on('end', this.panEndHandler));
-            }
-
-            this.createCopyrightLabel();
+            this.observer.forEach(e => {
+                if (e.adjustBackground) {
+                    const graphExtent: D3GraphExtent = {
+                        width: this.width,
+                        height: this.height,
+                        leftOffset: this.leftOffset,
+                        margin: this.margin
+                    };
+                    e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan);
+                }
+            });
         } else {
             // execute when it is overview diagram
             let interval: [number, number] = this.getXDomainByTimestamp();
@@ -688,7 +596,7 @@ export class D3TimeseriesGraphComponent
                 });
 
             // add brush to svg
-            this.background = this.graph.append('g')
+            this.background = this.graph.append<SVGSVGElement>('g')
                 .attr('width', this.width)
                 .attr('height', this.height)
                 .attr('pointer-events', 'all')
@@ -871,19 +779,19 @@ export class D3TimeseriesGraphComponent
                     .attr('class', 'formerButton')
                     .attr('width', buttonWidth + 'px')
                     .attr('height', this.height + 'px')
-                    .attr('transform', 'translate(' + this.bufferSum + ', 0)')
+                    .attr('transform', 'translate(' + this.leftOffset + ', 0)')
                     .on('click', () => this.centerTime(formerTimestamp));
                 g.append('line')
                     .attr('class', 'arrow')
-                    .attr('x1', 0 + this.bufferSum + leftRight + 'px')
+                    .attr('x1', 0 + this.leftOffset + leftRight + 'px')
                     .attr('y1', this.height / 2 + 'px')
-                    .attr('x2', 0 + this.bufferSum + (buttonWidth - leftRight) + 'px')
+                    .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
                     .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
                 g.append('line')
                     .attr('class', 'arrow')
-                    .attr('x1', 0 + this.bufferSum + leftRight + 'px')
+                    .attr('x1', 0 + this.leftOffset + leftRight + 'px')
                     .attr('y1', this.height / 2 + 'px')
-                    .attr('x2', 0 + this.bufferSum + (buttonWidth - leftRight) + 'px')
+                    .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
                     .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
             }
             if (laterTimestamp) {
@@ -907,39 +815,6 @@ export class D3TimeseriesGraphComponent
                     .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
                     .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
             }
-        }
-    }
-
-    private createCopyrightLabel(): void {
-        if (this.plotOptions.copyright) {
-            let background = this.getDimensions(this.background.node());
-            // default = top left
-            let x = 0; // left
-            let y = 0; // + this.margin.top; // top
-            this.copyright = this.graph.append('g');
-            let copyrightLabel = this.copyright.append('svg:text')
-                .text(this.plotOptions.copyright.label)
-                .attr('class', 'copyright')
-                .style('pointer-events', 'none')
-                .style('fill', 'grey');
-            if (this.plotOptions.copyright.positionX === 'right') {
-                x = background.w - this.margin.right - this.getDimensions(copyrightLabel.node()).w;
-            }
-            if (this.plotOptions.copyright.positionY === 'bottom') {
-                y = background.h - this.margin.top * 2;
-            }
-            let yTransform = y + this.getDimensions(copyrightLabel.node()).h - 3;
-            let xTransform = this.bufferSum + x;
-            copyrightLabel
-                .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
-            this.copyright.append('svg:rect')
-                .attr('class', 'copyright')
-                .style('fill', 'none')
-                .style('stroke', 'none')
-                .style('pointer-events', 'none')
-                .attr('width', this.getDimensions(copyrightLabel.node()).w)
-                .attr('height', this.getDimensions(copyrightLabel.node()).h)
-                .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
         }
     }
 
@@ -1021,7 +896,7 @@ export class D3TimeseriesGraphComponent
     private drawXaxis(bufferXrange: number): void {
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
-            .domain([new Date(this.xAxisRange.from), new Date(this.xAxisRange.to)])
+            .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
             .range([bufferXrange, this.width]);
 
         let xAxis = d3.axisBottom(this.xScaleBase)
@@ -1094,7 +969,7 @@ export class D3TimeseriesGraphComponent
     private drawYaxis(axis: YAxis) {
         let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
 
-        this.observer.forEach(e => e.adjustYAxis(axis));
+        this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // adjust to default extend
         axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
@@ -1128,7 +1003,7 @@ export class D3TimeseriesGraphComponent
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
                 .call(this.wrapText, axisHeight - 10, this.height / 2);
 
-            const axisWidth = axisElem.node().getBBox().width + 10 + this.getDimensions(text.node()).h;
+            const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
@@ -1143,7 +1018,7 @@ export class D3TimeseriesGraphComponent
                 axisElem.attr('transform', 'translate(' + buffer + ', 0)');
             }
 
-            let textOff = - (this.bufferSum);
+            let textOff = - (this.leftOffset);
             if (axis.first) {
                 textOff = this.margin.left;
             }
@@ -1207,7 +1082,7 @@ export class D3TimeseriesGraphComponent
                     axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
                 }
 
-                this.observer.forEach(e => e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth));
+                this.observer.forEach(e => { if (e.afterYAxisDrawn) { e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth); } });
             }
         }
 
@@ -1218,12 +1093,12 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawBackground() {
-        this.background = this.graph.insert('svg:rect', ':first-child')
-            .attr('width', this.width - this.bufferSum)
+        this.background = this.graph.insert<SVGSVGElement>('svg:rect', ':first-child')
+            .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('class', 'graph-background')
             .attr('fill', 'none')
-            .attr('transform', 'translate(' + this.bufferSum + ', 0)');
+            .attr('transform', 'translate(' + this.leftOffset + ', 0)');
     }
 
     /**
@@ -1284,9 +1159,9 @@ export class D3TimeseriesGraphComponent
                     .append('svg:clipPath')
                     .attr('id', querySelectorClip)
                     .append('svg:rect')
-                    .attr('x', this.bufferSum)
+                    .attr('x', this.leftOffset)
                     .attr('y', 0)
-                    .attr('width', this.width - this.bufferSum)
+                    .attr('width', this.width - this.leftOffset)
                     .attr('height', this.height);
                 // draw graph line
                 this.graphBody = this.graph
@@ -1313,7 +1188,7 @@ export class D3TimeseriesGraphComponent
         this.labelXCoord = [];
         this.distLabelXCoord = [];
         this.preparedData.forEach((entry, entryIdx) => {
-            const idx = this.getItemForX(coords[0] + this.bufferSum, entry.data);
+            const idx = this.getItemForX(coords[0] + this.leftOffset, entry.data);
             this.showDiagramIndicator(entry, idx, coords[0], entryIdx);
         });
 
@@ -1393,91 +1268,6 @@ export class D3TimeseriesGraphComponent
      */
     private mouseoutHandler = (): void => {
         this.hideDiagramIndicator();
-    }
-
-    /**
-     * Function starting the drag handling for the diagram.
-     */
-    private panStartHandler = (): void => {
-        this.draggingMove = false;
-        this.dragMoveStart = d3.event.x;
-        this.dragMoveRange = [this.xAxisRange.from, this.xAxisRange.to];
-    }
-
-    /**
-     * Function that controlls the panning (dragging) of the graph.
-     */
-    private panMoveHandler = (): void => {
-        this.draggingMove = true;
-        if (this.dragMoveStart && this.draggingMove) {
-            let diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
-            let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
-            let ratioTimestampDiagCoord = amountTimestamp / this.width;
-            let newTimeMin = this.dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
-            let newTimeMax = this.dragMoveRange[1] + (ratioTimestampDiagCoord * diff);
-
-            this.xAxisRangePan = [newTimeMin, newTimeMax];
-            this.timespan = { from: this.xAxisRangePan[0], to: this.xAxisRangePan[1] };
-            this.plotGraph();
-        }
-    }
-
-    /**
-     * Function that ends the dragging control.
-     */
-    private panEndHandler = (): void => {
-        if (this.xAxisRangePan) {
-            this.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-            this.plotGraph();
-            this.dragMoveStart = null;
-            this.draggingMove = false;
-            this.xAxisRangePan = null;
-        }
-    }
-
-    /**
-     * Function that starts the zoom handling.
-     */
-    private zoomStartHandler = (): void => {
-        this.dragging = false;
-        // dependent on point or line hovering
-        this.dragStart = d3.mouse(this.background.node());
-        this.xAxisRangeOrigin.push([this.xAxisRange.from, this.xAxisRange.to]);
-    }
-
-    /**
-     * Function that draws a rectangle when zoom is started and the mouse is moving.
-     */
-    private zoomHandler = (): void => {
-        this.dragging = true;
-        this.drawDragRectangle();
-    }
-
-    /**
-     * Function that ends the zoom handling and calculates the via zoom selected time interval.
-     */
-    private zoomEndHandler = (): void => {
-        if (!this.dragStart || !this.dragging) {
-            if (this.xAxisRangeOrigin[0]) {
-                // back to origin range (from - to)
-                this.changeTime(this.xAxisRangeOrigin[0][0], this.xAxisRangeOrigin[0][1]);
-                this.xAxisRangeOrigin = [];
-                this.plotGraph();
-            }
-        } else {
-            let xDomainRange;
-            if (this.dragStart[0] <= this.dragCurrent[0]) {
-                xDomainRange = this.getxDomain(this.dragStart[0], this.dragCurrent[0]);
-            } else {
-                xDomainRange = this.getxDomain(this.dragCurrent[0], this.dragStart[0]);
-            }
-            this.xAxisRange = { from: xDomainRange[0], to: xDomainRange[1] };
-            this.changeTime(this.xAxisRange.from, this.xAxisRange.to);
-            this.plotGraph();
-        }
-        this.dragStart = null;
-        this.dragging = false;
-        this.resetDrag();
     }
 
     private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
@@ -1629,13 +1419,13 @@ export class D3TimeseriesGraphComponent
 
     private positioningHoverLabel(x: number, y: number, color: string) {
         let onLeftSide = false;
-        if ((this.background.node().getBBox().width + this.bufferSum) / 2 > x) {
+        if ((this.background.node().getBBox().width + this.leftOffset) / 2 > x) {
             onLeftSide = true;
         }
         let rectX: number = x + 15;
         let rectY: number = y;
-        let rectW: number = this.getDimensions(this.highlightText.node()).w + 8;
-        let rectH: number = this.getDimensions(this.highlightText.node()).h;
+        let rectW: number = this.graphHelper.getDimensions(this.highlightText.node()).w + 8;
+        let rectH: number = this.graphHelper.getDimensions(this.highlightText.node()).h;
         if (!onLeftSide) {
             rectX = x - 15 - rectW;
             rectY = y;
@@ -1655,10 +1445,10 @@ export class D3TimeseriesGraphComponent
             .attr('height', rectH)
             .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
         let labelX: number = x + 4 + 15;
-        let labelY: number = y + this.getDimensions(dotRectangle.node()).h - 4;
+        let labelY: number = y + this.graphHelper.getDimensions(dotRectangle.node()).h - 4;
         if (!onLeftSide) {
             labelX = x - rectW + 4 - 15;
-            labelY = y + this.getDimensions(dotRectangle.node()).h - 4;
+            labelY = y + this.graphHelper.getDimensions(dotRectangle.node()).h - 4;
         }
         if ((y + rectH + 4) > this.background.node().getBBox().height) {
             labelY = labelY - rectH;
@@ -1739,98 +1529,6 @@ export class D3TimeseriesGraphComponent
     }
 
     /**
-     * Function that returns the timestamp of provided x diagram coordinates.
-     * @param start {Number} Number with the minimum diagram coordinate.
-     * @param end {Number} Number with the maximum diagram coordinate.
-     */
-    private getxDomain(start: number, end: number): [number, number] {
-        let domMinArr = [];
-        let domMaxArr = [];
-        let domMin: number;
-        let domMax: number;
-        let tmp;
-        let lowestMin = Number.POSITIVE_INFINITY;
-        let lowestMax = Number.POSITIVE_INFINITY;
-
-        start += this.bufferSum;
-        end += this.bufferSum;
-
-        this.preparedData.forEach((entry) => {
-            domMinArr.push(entry.data.find((elem, index, array) => {
-                if (elem.xDiagCoord) {
-                    if (elem.xDiagCoord >= start) {
-                        return array[index] !== undefined;
-                    }
-                }
-            }));
-            domMaxArr.push(entry.data.find((elem, index, array) => {
-                if (elem.xDiagCoord >= end) {
-                    return array[index] !== undefined;
-                }
-            }));
-        });
-
-        for (let i = 0; i <= domMinArr.length - 1; i++) {
-            if (domMinArr[i] != null) {
-                tmp = domMinArr[i].xDiagCoord;
-                if (tmp < lowestMin) {
-                    lowestMin = tmp;
-                    domMin = domMinArr[i].timestamp;
-                }
-            }
-        }
-        for (let j = 0; j <= domMaxArr.length - 1; j++) {
-            if (domMaxArr[j] != null) {
-                tmp = domMaxArr[j].xDiagCoord;
-                if (tmp < lowestMax) {
-                    lowestMax = tmp;
-                    domMax = domMaxArr[j].timestamp;
-                }
-            }
-        }
-        return [domMin, domMax];
-    }
-
-    /**
-     * Function that configurates and draws the rectangle.
-     */
-    private drawDragRectangle(): void {
-        if (!this.dragStart) { return; }
-        this.dragCurrent = d3.mouse(this.background.node());
-
-        const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
-        const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);
-
-        if (!this.dragRect && !this.dragRectG) {
-
-            this.dragRectG = this.graph.append('g')
-                .style('fill-opacity', .2)
-                .style('fill', 'blue');
-
-            this.dragRect = this.dragRectG.append('rect')
-                .attr('width', x2 - x1)
-                .attr('height', this.height)
-                .attr('x', x1 + this.bufferSum)
-                .attr('class', 'mouse-drag')
-                .style('pointer-events', 'none');
-        } else {
-            this.dragRect.attr('width', x2 - x1)
-                .attr('x', x1 + this.bufferSum);
-        }
-    }
-
-    /**
-     * Function that disables the drawing rectangle control.
-     */
-    private resetDrag(): void {
-        if (this.dragRectG) {
-            this.dragRectG.remove();
-            this.dragRectG = null;
-            this.dragRect = null;
-        }
-    }
-
-    /**
      * Function that returns the metadata of a specific entry in the dataset.
      * @param x {Number} Coordinates of the mouse inside the diagram.
      * @param data {DataEntry} Array with the data of each dataset entry.
@@ -1868,7 +1566,7 @@ export class D3TimeseriesGraphComponent
             // show label if data available for time
             this.chVisLabel(entry, true, entryIdx);
 
-            let xMouseAndBuffer = xCoordMouse + this.bufferSum;
+            let xMouseAndBuffer = xCoordMouse + this.leftOffset;
             let labelBuffer = ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001)
                 * ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001);
 
@@ -1877,7 +1575,7 @@ export class D3TimeseriesGraphComponent
             this.showLabelValues(entry, item);
             this.showTimeIndicatorLabel(item, entryIdx, xMouseAndBuffer);
 
-            if (item.xDiagCoord >= this.background.node().getBBox().width + this.bufferSum || xMouseAndBuffer < item.xDiagCoord - labelBuffer) {
+            if (item.xDiagCoord >= this.background.node().getBBox().width + this.leftOffset || xMouseAndBuffer < item.xDiagCoord - labelBuffer) {
                 this.chVisLabel(entry, false, entryIdx);
             }
 
@@ -1890,8 +1588,8 @@ export class D3TimeseriesGraphComponent
                     this.chVisLabel(entry, true, entryIdx);
 
                     // check for graph width and range between data point and mouse
-                    if (entry.data[idx - 1].xDiagCoord >= this.background.node().getBBox().width + this.bufferSum
-                        || entry.data[idx - 1].xDiagCoord <= this.bufferSum
+                    if (entry.data[idx - 1].xDiagCoord >= this.background.node().getBBox().width + this.leftOffset
+                        || entry.data[idx - 1].xDiagCoord <= this.leftOffset
                         || entry.data[idx - 1].xDiagCoord + labelBuffer < xMouseAndBuffer) {
                         this.chVisLabel(entry, false, entryIdx);
                     }
@@ -1938,15 +1636,15 @@ export class D3TimeseriesGraphComponent
         if (entry.focusLabel) {
             entry.focusLabel.text(item.value + (entry.axisOptions.uom ? entry.axisOptions.uom : ''));
             const entryX: number = onLeftSide ?
-                item.xDiagCoord + 4 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w + 4;
+                item.xDiagCoord + 4 : item.xDiagCoord - this.graphHelper.getDimensions(entry.focusLabel.node()).w + 4;
             entry.focusLabel
                 .attr('x', entryX)
                 .attr('y', item.yDiagCoord);
             entry.focusLabelRect
                 .attr('x', entryX)
-                .attr('y', item.yDiagCoord - this.getDimensions(entry.focusLabel.node()).h + 3)
-                .attr('width', this.getDimensions(entry.focusLabel.node()).w)
-                .attr('height', this.getDimensions(entry.focusLabel.node()).h);
+                .attr('y', item.yDiagCoord - this.graphHelper.getDimensions(entry.focusLabel.node()).h + 3)
+                .attr('width', this.graphHelper.getDimensions(entry.focusLabel.node()).w)
+                .attr('height', this.graphHelper.getDimensions(entry.focusLabel.node()).h);
 
             this.highlightOutput.ids[entry.internalId] = {
                 'timestamp': item.timestamp,
@@ -1971,7 +1669,7 @@ export class D3TimeseriesGraphComponent
         let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === minXcoord);
         let onLeftSide = this.checkLeftSide(item.xDiagCoord);
         let right = this.labelXCoord[idxOfMin] + 2;
-        let left = this.labelXCoord[idxOfMin] - this.getDimensions(this.focuslabelTime.node()).w - 2;
+        let left = this.labelXCoord[idxOfMin] - this.graphHelper.getDimensions(this.focuslabelTime.node()).w - 2;
         this.focuslabelTime.text(moment(this.labelTimestamp[idxOfMin]).format('DD.MM.YY HH:mm'));
         this.focuslabelTime
             .attr('x', onLeftSide ? right : left)
@@ -1990,7 +1688,7 @@ export class D3TimeseriesGraphComponent
      * @param itemCoord {number} x coordinate of the value (e.g. mouse) to be checked
      */
     private checkLeftSide(itemCoord: number): boolean {
-        return ((this.background.node().getBBox().width + this.bufferSum) / 2 > itemCoord) ? true : false;
+        return ((this.background.node().getBBox().width + this.leftOffset) / 2 > itemCoord) ? true : false;
     }
 
     /**
@@ -2023,26 +1721,6 @@ export class D3TimeseriesGraphComponent
                 }
             }
         });
-    }
-
-    /**
-     * Function that returns the boundings of a html element.
-     * @param el {Object} Object of the html element.
-     */
-    private getDimensions(el: any): { w: number, h: number } {
-        let w = 0;
-        let h = 0;
-        if (el) {
-            const dimensions = el.getBBox();
-            w = dimensions.width;
-            h = dimensions.height;
-        } else {
-            console.log('error: getDimensions() ' + el + ' not found.');
-        }
-        return {
-            w,
-            h
-        };
     }
 
     /**
