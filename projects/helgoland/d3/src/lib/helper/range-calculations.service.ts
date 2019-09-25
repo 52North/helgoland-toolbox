@@ -11,7 +11,7 @@ export class RangeCalculationsService {
    * @param range {MinMaxRange} range to be buffered
    * @param factor {number}
    */
-  public bufferRange(range: MinMaxRange, factor = 0.1): MinMaxRange {
+  public bufferRange(range: MinMaxRange, factor: number = 0.1): MinMaxRange {
     const offset = (range.max - range.min) * factor;
     range.max = range.max + offset;
     range.min = range.min - offset;

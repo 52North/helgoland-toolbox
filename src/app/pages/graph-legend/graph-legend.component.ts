@@ -47,6 +47,7 @@ export class GraphLegendComponent {
 
     public d3diagramOptions: D3PlotOptions = {
         showReferenceValues: true,
+        togglePanZoom: true,
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',
