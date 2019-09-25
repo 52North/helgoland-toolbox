@@ -34,7 +34,7 @@ import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
-import { D3Copyright, D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 
@@ -497,7 +497,7 @@ export class D3TimeseriesGraphComponent
         });
 
         this.height = this.calculateHeight();
-        this.width = this.calculateWidth();
+        this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
         this.graph.selectAll('*').remove();
         this.graphFocus.selectAll('*').remove();
 
@@ -897,7 +897,7 @@ export class D3TimeseriesGraphComponent
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
             .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
-            .range([bufferXrange, this.width]);
+            .range([bufferXrange, this.width]); // .nice(); // function which makes the "beautiful" (not used here, because the ticks are inconsistent with this function)
 
         let xAxis = d3.axisBottom(this.xScaleBase)
             .tickFormat(d => {
