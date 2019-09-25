@@ -68,21 +68,21 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
       const buffer = this.shift ? 7.5 : 0;
       // zoom in horizontal line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line zoom-button zoom-in')
+        .attr('class', 'axis-button-line zoom-button zoom-in y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize)
         .attr('y1', buttonSize * (1.0 + buffer))
         .attr('x2', xAlign + buttonSize)
         .attr('y2', buttonSize * (1.0 + buffer));
       // zoom in vertical line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line zoom-button zoom-in')
+        .attr('class', 'axis-button-line zoom-button zoom-in y-axis-modifier-button')
         .attr('x1', xAlign)
         .attr('y1', buttonSize * (1.0 + buffer) - buttonSize)
         .attr('x2', xAlign)
         .attr('y2', buttonSize * (1.0 + buffer) + buttonSize);
       // zoom in circle to increase are for mouse event
       const zoomInHover = this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axis-button-circle zoom-button zoom-in zoom-circle')
+        .attr('class', 'axis-button-circle zoom-button zoom-in zoom-circle y-axis-modifier-button')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * (1.0 + buffer))
         .attr('r', buttonSize * 1.5)
@@ -92,14 +92,14 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
 
       // zoom out horizontal line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line zoom-button zoom-out')
+        .attr('class', 'axis-button-line zoom-button zoom-out y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize)
         .attr('y1', buttonSize * (3.5 + buffer))
         .attr('x2', xAlign + buttonSize)
         .attr('y2', buttonSize * (3.5 + buffer));
       // zoom out circle to increase are for mouse event
       const zoomOutHover = this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axis-button-circle zoom-button zoom-out zoom-circle')
+        .attr('class', 'axis-button-circle zoom-button zoom-out zoom-circle y-axis-modifier-button')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * (3.5 + buffer))
         .attr('r', buttonSize * 1.5)
@@ -114,21 +114,21 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
       // add a buffer of +/- 2 to fit element into transparent/hover circle
       // reset button line left top to right bottom
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line reset-button reset-line')
+        .attr('class', 'axis-button-line reset-button reset-line y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize + 2)
         .attr('y1', buttonSize * 6 - buttonSize + 2)
         .attr('x2', xAlign + buttonSize - 2)
         .attr('y2', buttonSize * 6 + buttonSize - 2);
       // reset button line left bottom to right top
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line reset-button reset-line')
+        .attr('class', 'axis-button-line reset-button reset-line y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize + 2)
         .attr('y1', buttonSize * 6 + buttonSize - 2)
         .attr('x2', xAlign + buttonSize - 2)
         .attr('y2', buttonSize * 6 - buttonSize + 2);
       // reset button circle to increase area for mouse event
       const resetHover = this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axis-button-circle reset-button reset-circle')
+        .attr('class', 'axis-button-circle reset-button reset-circle y-axis-modifier-button')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 6)
         .attr('r', buttonSize * 1.5)
@@ -149,21 +149,21 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
       // add buffer of +/- 1 to fit element into transparent/hover circle
       // draw up button left line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line shift-button shift-up')
+        .attr('class', 'axis-button-line shift-button shift-up y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize + 1)
         .attr('y1', buttonSize * 1.0 + shiftToCenter - 1)
         .attr('x2', xAlign)
         .attr('y2', buttonSize * 1.0 - buttonSize + shiftToCenter);
       // draw up button right line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line shift-button shift-up')
+        .attr('class', 'axis-button-line shift-button shift-up y-axis-modifier-button')
         .attr('x1', xAlign)
         .attr('y1', buttonSize * 1.0 - buttonSize + shiftToCenter)
         .attr('x2', xAlign + buttonSize - 1)
         .attr('y2', buttonSize * 1.0 + shiftToCenter - 1);
       // draw up button circle to increase area for mouse event
       const shiftUpHover = this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axis-button-circle shift-button shift-up shift-circle')
+        .attr('class', 'axis-button-circle shift-button shift-up shift-circle y-axis-modifier-button')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 1.0)
         .attr('r', buttonSize * 1.5)
@@ -173,21 +173,21 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
 
       // draw down button left line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line shift-button shift-down')
+        .attr('class', 'axis-button-line shift-button shift-down y-axis-modifier-button')
         .attr('x1', xAlign - buttonSize + 1)
         .attr('y1', buttonSize * 3.5 - buttonSize + shiftToCenter + 1)
         .attr('x2', xAlign)
         .attr('y2', buttonSize * 3.5 + shiftToCenter);
       // draw down button right line
       this.d3Graph.getGraphElem().append('line')
-        .attr('class', 'axis-button-line shift-button shift-down')
+        .attr('class', 'axis-button-line shift-button shift-down y-axis-modifier-button')
         .attr('x1', xAlign)
         .attr('y1', buttonSize * 3.5 + shiftToCenter)
         .attr('x2', xAlign + buttonSize - 1)
         .attr('y2', buttonSize * 3.5 - buttonSize + shiftToCenter + 1);
       // draw down button circle to increase area for mouse event
       const shiftDownHover = this.d3Graph.getGraphElem().append('circle')
-        .attr('class', 'axis-button-circle shift-button shift-down shift-circle')
+        .attr('class', 'axis-button-circle shift-button shift-down shift-circle y-axis-modifier-button')
         .attr('cx', xAlign)
         .attr('cy', buttonSize * 3.5)
         .attr('r', buttonSize * 1.5)
