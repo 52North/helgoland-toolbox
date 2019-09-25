@@ -5,7 +5,7 @@
     (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
     (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)"
     (dataLoaded)="loadings = $event" #diagram>
-    <n52-d3-y-axis-modifier [zoom]="false" [shift]="true"></n52-d3-y-axis-modifier>
+    <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="false" [shift]="true"></n52-d3-y-axis-modifier>
   </n52-d3-timeseries-graph>
 </div>
 <div>
@@ -32,6 +32,8 @@
     <button (click)="changeHovering('point')">point</button>
     <button (click)="changeHovering('line')">line</button>
     {{highlightedTime}}
+
+    <button (click)="yaxisModifier = !yaxisModifier">Y Axis Modifier</button>
 
     <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
