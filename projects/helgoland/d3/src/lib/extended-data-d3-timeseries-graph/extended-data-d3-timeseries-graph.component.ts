@@ -105,19 +105,19 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
           this.preparedData.splice(spliceIdx, 1);
         }
       });
-      this.plotGraph();
+      this.redrawCompleteGraph();
     }
   }
 
-  public plotGraph() {
+  public redrawCompleteGraph() {
     this.prepareAdditionalData();
-    super.plotGraph();
+    super.redrawCompleteGraph();
   }
 
   public ngAfterViewInit(): void {
     super.ngAfterViewInit();
     if (this.additionalData) {
-      setTimeout(() => this.plotGraph(), 0);
+      setTimeout(() => this.redrawCompleteGraph(), 0);
     }
   }
 

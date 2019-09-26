@@ -167,7 +167,7 @@ export class D3TimeseriesGraphComponent
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     public registerObserver(obs: D3GraphObserver) {
@@ -183,7 +183,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     public reloadDataForDatasets(datasetIds: string[]): void {
@@ -217,20 +217,20 @@ export class D3TimeseriesGraphComponent
                     this.processData(entry);
                 });
             }
-            this.plotGraph();
+            this.redrawCompleteGraph();
         }
     }
 
     protected setSelectedId(internalId: string): void {
         const internalEntry = this.preparedData.find((e) => e.internalId === internalId);
         if (internalEntry) { internalEntry.selected = true; }
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     protected removeSelectedId(internalId: string): void {
         const internalEntry = this.preparedData.find((e) => e.internalId === internalId);
         if (internalEntry) { internalEntry.selected = false; }
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     protected presenterOptionsChanged(options: D3PlotOptions): void {
@@ -238,7 +238,7 @@ export class D3TimeseriesGraphComponent
             d3.select('g.d3line').attr('visibility', 'visible');
         }
         Object.assign(this.plotOptions, options);
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean): void {
@@ -254,7 +254,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected onResize(): void {
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     public centerTime(timestamp: number): void {
@@ -330,7 +330,6 @@ export class D3TimeseriesGraphComponent
                 throw new Error(`${dataset.internalId} needs a valid barPeriod`);
             }
             data.values = this.sumValues.sum(barConfig.startOf, barConfig.period, data.values);
-            data.values.forEach(e => console.log(moment(e[0]).toISOString()));
         }
 
         // generate random color, if color is not defined
@@ -379,7 +378,7 @@ export class D3TimeseriesGraphComponent
         }
         this.addReferenceValueData(dataEntry, options, data, dataset.uom);
         this.processData(dataEntry);
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     /**
@@ -420,7 +419,9 @@ export class D3TimeseriesGraphComponent
                 // calculate default range
                 const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
                     if (typeof d.value === 'number') {
-                        if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                        // with timespan restriction, it only selects values inside the selected timespan
+                        // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                        return d.value;
                     } else {
                         return null;
                     }
@@ -438,7 +439,6 @@ export class D3TimeseriesGraphComponent
                     min: dataExtent[0],
                     max: dataExtent[1]
                 };
-                visualRange = this.rangeCalc.bufferRange(visualRange);
             }
 
             // set out of zeroBasedAxis
@@ -480,11 +480,30 @@ export class D3TimeseriesGraphComponent
         this.timespan = timespan;
     }
 
+    public drawBaseGraph(): void {
+        this.drawYGridLines();
+        this.drawXaxis(this.leftOffset);
+        this.drawAllCharts();
+    }
+
+    private drawYGridLines() {
+        this.graph.selectAll('.grid.y-grid').remove();
+        if (this.yAxes.length === 1 && this.plotOptions.grid) {
+            this.graph.append('svg:g')
+                .attr('class', 'grid y-grid')
+                .attr('transform', 'translate(' + this.leftOffset + ', 0)')
+                .call(d3.axisLeft(this.yAxes[0].yScale)
+                    .ticks(TICKS_COUNT_YAXIS)
+                    .tickSize(-this.width + this.leftOffset)
+                    .tickFormat(() => ''));
+        }
+    }
+
     /**
-     * Function to plot the graph and its dependencies
+     * Function to plot the whole graph and its dependencies
      * (graph line, graph axes, event handlers)
      */
-    public plotGraph(): void {
+    public redrawCompleteGraph(): void {
         if (!this.graph || !this.rawSvg || !this.datasetIds) { return; }
         this.highlightOutput = {
             timestamp: 0,
@@ -523,24 +542,7 @@ export class D3TimeseriesGraphComponent
             axis.yScale = yAxisResult.yScale;
         });
 
-        // draw the y grid lines
-        if (this.yAxes.length === 1 && this.plotOptions.grid) {
-            this.graph.append('svg:g')
-                .attr('class', 'grid y-grid')
-                .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-                .call(d3.axisLeft(this.yAxes[0].yScale)
-                    .ticks(TICKS_COUNT_YAXIS)
-                    .tickSize(-this.width + this.leftOffset)
-                    .tickFormat(() => '')
-                );
-        }
-
-        if (!this.yScaleBase) {
-            return;
-        }
-
-        // draw x axis
-        this.drawXaxis(this.leftOffset);
+        if (!this.yScaleBase) { return; }
 
         // create background as rectangle providing panning
         this.background = this.graph.append<SVGSVGElement>('svg:rect')
@@ -552,7 +554,8 @@ export class D3TimeseriesGraphComponent
             .attr('pointer-events', 'all')
             .attr('transform', 'translate(' + this.leftOffset + ', 0)');
 
-        this.drawAllCharts();
+        this.drawBaseGraph();
+
         this.addTimespanJumpButtons();
 
         // create background rect
@@ -719,7 +722,6 @@ export class D3TimeseriesGraphComponent
     }
 
     private clickDataPoint(d: DataEntry, entry: InternalDataEntry) {
-        console.log('click point');
         if (d !== undefined) {
             const externalId: InternalDatasetId = this.datasetIdResolver.resolveInternalId(entry.internalId);
             const apiurl = externalId.url;
@@ -822,6 +824,7 @@ export class D3TimeseriesGraphComponent
      * Draws for every preprared data entry the chart.
      */
     protected drawAllCharts(): void {
+        this.graph.selectAll('.diagram-path').remove();
         this.focusG = this.graphFocus.append('g');
         if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
             // create label for point hovering
@@ -922,6 +925,8 @@ export class D3TimeseriesGraphComponent
                 return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
             });
 
+        // update x axis
+        this.graph.selectAll('.x.axis.bottom').remove();
         this.graph.append('g')
             .attr('class', 'x axis bottom')
             .attr('transform', 'translate(0,' + this.height + ')')
@@ -929,6 +934,8 @@ export class D3TimeseriesGraphComponent
             .selectAll('text')
             .style('text-anchor', 'middle');
 
+        // draw x grid lines
+        this.graph.selectAll('.grid.x-grid').remove();
         if (this.plotOptions.grid) {
             // draw the x grid lines
             this.graph.append('svg:g')
@@ -941,19 +948,23 @@ export class D3TimeseriesGraphComponent
         }
 
         // draw upper axis as border
+        this.graph.selectAll('.x.axis.top').remove();
         this.graph.append('svg:g')
             .attr('class', 'x axis top')
             .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
 
         // draw right axis as border
+        this.graph.selectAll('.y.axis.right').remove();
         this.graph.append('svg:g')
             .attr('class', 'y axis right')
             .attr('transform', 'translate(' + this.width + ',0)')
             .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0));
 
         // text label for the x axis
+        this.graph.selectAll('.x.axis.label').remove();
         if (this.plotOptions.showTimeLabel) {
             this.graph.append('text')
+                .attr('class', 'x axis label')
                 .attr('x', (this.width + bufferXrange) / 2)
                 .attr('y', this.height + this.margin.bottom - 5)
                 .style('text-anchor', 'middle')
@@ -973,6 +984,8 @@ export class D3TimeseriesGraphComponent
 
         // adjust to default extend
         axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
+
+        if (!axis.rangeFixed) { axis.range = this.rangeCalc.bufferRange(axis.range); }
 
         // range for y axis scale
         const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
@@ -1008,7 +1021,6 @@ export class D3TimeseriesGraphComponent
             // if yAxis should not be visible, buffer will be set to 0
             buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
 
-            // console.log(`Axis size offset: ${buffer}, height: ${axisHeight}, width: ${axisWidth} with ${axis.uom}`);
             const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
             if (!axis.first) {
@@ -1119,7 +1131,7 @@ export class D3TimeseriesGraphComponent
         }
 
         this.onDatasetSelected.emit(this.selectedDatasetIds);
-        this.plotGraph();
+        this.redrawCompleteGraph();
     }
 
     /**
@@ -1135,6 +1147,7 @@ export class D3TimeseriesGraphComponent
                 let querySelectorClip = 'clip' + this.currentTimeId;
                 this.graph
                     .append('svg:clipPath')
+                    .attr('class', 'diagram-path')
                     .attr('id', querySelectorClip)
                     .append('svg:rect')
                     .attr('x', this.leftOffset)
@@ -1144,6 +1157,7 @@ export class D3TimeseriesGraphComponent
                 // draw graph line
                 this.graphBody = this.graph
                     .append('g')
+                    .attr('class', 'diagram-path')
                     .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
                 if (entry.options.type === 'bar') {
