@@ -78,7 +78,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
 
         this.xAxisRangePan = [newTimeMin, newTimeMax];
         this.d3Graph.setTimespan({ from: this.xAxisRangePan[0], to: this.xAxisRangePan[1] });
-        this.d3Graph.plotGraph();
+        this.d3Graph.drawBaseGraph();
         this.plotWhileDrag = false;
       }
     }
@@ -90,7 +90,6 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   private panEndHandler() {
     if (this.xAxisRangePan) {
       this.d3Graph.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-      this.d3Graph.plotGraph();
       this.dragMoveStart = null;
       this.draggingMove = false;
       this.xAxisRangePan = null;
@@ -125,7 +124,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
         // back to origin range (from - to)
         this.d3Graph.changeTime(this.xAxisRangeOrigin[0][0], this.xAxisRangeOrigin[0][1]);
         this.xAxisRangeOrigin = [];
-        this.d3Graph.plotGraph();
+        this.d3Graph.redrawCompleteGraph();
       }
     } else {
       let xDomainRange;
@@ -135,7 +134,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
         xDomainRange = this.getxDomain(this.dragCurrent[0], this.dragStart[0], graphExtent, preparedData);
       }
       this.d3Graph.changeTime(timespan.from, timespan.to);
-      this.d3Graph.plotGraph();
+      this.d3Graph.redrawCompleteGraph();
     }
     this.dragStart = null;
     this.dragging = false;
