@@ -35,7 +35,11 @@ const COMPONENTS = [
   ],
   exports: COMPONENTS,
   providers: [
-    D3TimeFormatLocaleService
+    D3TimeFormatLocaleService,
+    D3TimeseriesGraphComponent,
+  ],
+  entryComponents: [
+    D3TimeseriesGraphComponent,
   ]
 })
 export class HelgolandD3Module { }

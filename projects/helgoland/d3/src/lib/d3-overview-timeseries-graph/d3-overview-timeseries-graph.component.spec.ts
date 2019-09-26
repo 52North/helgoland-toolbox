@@ -3,7 +3,7 @@ import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { HelgolandD3Module } from '../d3.module';
 import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-graph.component';
 
 describe('D3OverviewTimeseriesGraphComponent', () => {
@@ -17,11 +17,8 @@ describe('D3OverviewTimeseriesGraphComponent', () => {
       ],
       imports: [
         HelgolandCoreModule,
+        HelgolandD3Module,
         TranslateTestingModule
-      ],
-      declarations: [
-        D3OverviewTimeseriesGraphComponent,
-        D3TimeseriesGraphComponent
       ]
     }).compileComponents();
   }));
