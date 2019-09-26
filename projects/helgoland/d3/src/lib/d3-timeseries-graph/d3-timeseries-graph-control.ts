@@ -29,6 +29,17 @@ export interface D3GraphExtent {
     };
 }
 
+/**
+ * Abstract class represents an instance of a timeseries graph control component.
+ * Registers and unregister an observer in the corresponding timeseries graph control.
+ *
+ * Every implementation of this abstract class can be configured to the corresponding timeseries component in this way:
+ *
+ * @example
+ * <n52-d3-timeseries-graph>
+ *      <implementation-selector></implementation-selector>
+ * </n52-d3-timeseries-graph>
+ */
 export abstract class D3TimeseriesGraphControl implements OnInit, OnDestroy, D3GraphObserver {
 
     constructor(
