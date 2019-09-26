@@ -41,6 +41,9 @@ export class RangeCalculationsService {
       if (range.min !== range.max) {
         min = range.min;
         max = range.max;
+      } else {
+        min += range.min;
+        max += range.max;
       }
     }
     return { min, max };

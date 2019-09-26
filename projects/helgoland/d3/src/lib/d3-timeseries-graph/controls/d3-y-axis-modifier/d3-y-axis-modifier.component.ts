@@ -36,13 +36,13 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
 
   public ngOnInit() {
     super.ngOnInit();
-    this.d3Graph.plotGraph();
+    this.d3Graph.redrawCompleteGraph();
   }
 
   public ngOnDestroy(): void {
     super.ngOnDestroy();
     this.d3Graph.unregisterObserver(this);
-    this.d3Graph.plotGraph();
+    this.d3Graph.redrawCompleteGraph();
   }
 
   public adjustYAxis(axis: YAxis) {
@@ -134,7 +134,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
         .attr('r', buttonSize * 1.5)
         .on('mouseup', () => {
           this.adjustedRanges.delete(yaxis.uom);
-          this.d3Graph.plotGraph();
+          this.d3Graph.redrawCompleteGraph();
         })
         .on('mouseover', () => resetHover.classed('hover', true))
         .on('mouseout', () => resetHover.classed('hover', false));
@@ -208,7 +208,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
         max: axis.range.max + adjustMax
       });
     }
-    this.d3Graph.plotGraph();
+    this.d3Graph.redrawCompleteGraph();
   }
 
 }
