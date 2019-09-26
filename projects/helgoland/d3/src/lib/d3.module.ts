@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -31,7 +32,8 @@ const COMPONENTS = [
 @NgModule({
   declarations: COMPONENTS,
   imports: [
-    HelgolandCoreModule
+    HelgolandCoreModule,
+    CommonModule
   ],
   exports: COMPONENTS,
   providers: [
