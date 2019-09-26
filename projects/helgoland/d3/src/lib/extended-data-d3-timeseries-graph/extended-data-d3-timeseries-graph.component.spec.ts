@@ -5,6 +5,7 @@ import { DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HelgolandD3Module } from '../d3.module';
 import { ExtendedDataD3TimeseriesGraphComponent } from './extended-data-d3-timeseries-graph.component';
 
 describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
@@ -16,12 +17,13 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
             imports: [
                 HttpClientModule,
                 HelgolandCoreModule,
-                TranslateTestingModule
+                TranslateTestingModule,
+                HelgolandD3Module
             ],
             providers: [
                 DatasetApiInterfaceTesting
             ],
-            declarations: [ExtendedDataD3TimeseriesGraphComponent]
+            declarations: []
         }).compileComponents();
     }));
 

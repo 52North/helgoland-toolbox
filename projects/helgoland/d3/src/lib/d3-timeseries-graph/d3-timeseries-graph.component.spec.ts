@@ -5,6 +5,7 @@ import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreM
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HelgolandD3Module } from '../d3.module';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
 import {
@@ -22,12 +23,12 @@ describe('D3TimeseriesGraphComponent - raw', () => {
       imports: [
         HttpClientModule,
         HelgolandCoreModule,
+        HelgolandD3Module,
         TranslateTestingModule
       ],
       providers: [
         DatasetApiInterfaceTesting
       ],
-      declarations: [D3TimeseriesGraphComponent]
     }).compileComponents();
   }));
 
@@ -63,7 +64,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 
 });
 
-fdescribe('D3TimeseriesGraphComponent - function', () => {
+describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
   let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';

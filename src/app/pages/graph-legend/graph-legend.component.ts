@@ -86,11 +86,13 @@ export class GraphLegendComponent {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
             option.generalize = true;
+            option.lineWidth = 2;
+            option.pointRadius = 4;
             this.datasetOptions.set(entry, option);
         });
 
-        const end = 1491200000000;
-        const diff = 2000000000;
+        const end = new Date().valueOf();
+        const diff = 10000000;
         this.timespan = new Timespan(end - diff, end);
     }
 

@@ -638,7 +638,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected createYAxisForId(key: string) {
-        if (this.preparedAxes.has(key)) {
+        if (this.preparedAxes.has(key) && this.datasetMap.get(key)) {
             // only create axis for datsets with datapoints inside selected timespan
             if (this.datasetMap.get(key).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
                 const axisSettings = this.preparedAxes.get(key);
@@ -1042,29 +1042,7 @@ export class D3TimeseriesGraphComponent
                     let dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
                         if (dataentry.options.type) {
-                            const circleRadius = axisradius + (dataentry.selected ? 2 : 0);
-                            if (dataentry.options.lineWidth > 0) {
-                                this.graph.append('line')
-                                    .attr('class', 'y-axis-line')
-                                    .attr('id', 'axisdot-line-' + entryID)
-                                    .attr('stroke', dataentry.options.color)
-                                    .attr('fill', dataentry.options.color)
-                                    .attr('x1', startOfPoints.x - circleRadius * 2)
-                                    .attr('y1', startOfPoints.y - pointOffset)
-                                    .attr('x2', startOfPoints.x + circleRadius * 2)
-                                    .attr('y2', startOfPoints.y - pointOffset)
-                                    .attr('stroke-width', dataentry.options.lineWidth + (dataentry.selected ? 2 : 0));
-                            }
-                            if (dataentry.options.pointRadius > 0) {
-                                this.graph.append('circle')
-                                    .attr('class', 'y-axis-circle')
-                                    .attr('id', 'axisdot-circle-' + entryID)
-                                    .attr('stroke', dataentry.options.color)
-                                    .attr('fill', dataentry.options.color)
-                                    .attr('cx', startOfPoints.x)
-                                    .attr('cy', startOfPoints.y - pointOffset)
-                                    .attr('r', dataentry.options.pointRadius + (dataentry.selected ? 2 : 0));
-                            }
+                            this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
                         }
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
