@@ -1,120 +1,208 @@
-import { Component, Input } from '@angular/core';
-import { DatasetApiInterface, DatasetOptions, Required } from '@helgoland/core';
+import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { DatasetApiInterface, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3TimeseriesGraphComponent } from './../d3-timeseries-graph/d3-timeseries-graph.component';
 
 @Component({
   selector: 'n52-export-image-button',
   templateUrl: './export-image-button.component.html',
-  styleUrls: ['./export-image-button.component.css']
+  styleUrls: ['./export-image-button.component.scss']
 })
 export class ExportImageButtonComponent {
 
-  @Input() @Required public svgSelector: string;
+  /**
+   * List of datasetIds, similiar to the timeseries component
+   */
+  @Input() datasetIds: string[];
 
-  @Input() title: string;
-
+  /**
+   * Map of datasetOptions, similiar to the timeseries component
+   */
   @Input() datasetOptions: Map<string, DatasetOptions>;
 
-  @Input() showLegend: boolean;
+  /**
+   * Timespan, similiar to the timeseries component
+   */
+  @Input() timespan: Timespan;
 
+  /**
+   * Height (as number) in px for the diagram extent, default is 300
+   */
+  @Input() height = 300;
+
+  /**
+   * Width (as number) in px for the diagram extent, default is 600
+   */
+  @Input() width = 600;
+
+  /**
+   * Filename for the exported file, default is 'export'
+   */
+  @Input() fileName = 'export';
+
+  /**
+   * Filetype for the export, currently png and svg are possible, default is 'png'
+   */
+  @Input() exportType: 'png' | 'svg' = 'png';
+
+  /**
+   * Optional title in the picture of the exported file
+   */
+  @Input() title: string;
+
+  /**
+   * Option to show a simple legend in th exported picture
+   */
+  @Input() showLegend = false;
+
+  /**
+   * Option to show first and last date at the bottom edges of the exported picture
+   */
   @Input() showFirstLastDate: boolean;
 
-  // @Input() firstLastDate: [Date, Date];
+  public loading: boolean;
 
-  public firstDate = '2019-09-05';
-  public lastDate = '2019-09-28';
+  @ViewChild('diagram', { read: ViewContainerRef, static: true }) diagram: ViewContainerRef;
 
   constructor(
-    private api: DatasetApiInterface
+    private api: DatasetApiInterface,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private timeSrvc: Time,
+    private graphHelper: D3GraphHelperService
   ) { }
 
   public exportImage() {
-    const svgElem = document.querySelector<SVGSVGElement>(this.prepareSelector(this.svgSelector));
-    const clone = svgElem.cloneNode(true) as SVGSVGElement;
-    document.body.appendChild(clone);
-
-    // remove filling (black) for y axis
-    clone.querySelectorAll<SVGSVGElement>('.y.axisDiv').forEach(el => el.style.fill = 'none');
-    Array.from(clone.getElementsByClassName('y-axis-modifier-button')).map(n => n && n.remove());
-
-    const width = svgElem.width.baseVal.value;
-    let height = svgElem.height.baseVal.value;
-
-    if (this.title) {
-      height = this.addTitle(clone, this.title, width, height);
-    }
-
-    this.addFirstLastDate(clone, width, height);
-
-    if (this.showLegend) {
-      this.addLegend(clone, width, height).subscribe(updatedHeight => {
-        this.createCanvas(clone, width, updatedHeight);
-      });
-    } else {
-      this.createCanvas(clone, width, height);
-    }
+    this.createDiagramElem();
   }
 
-  private addFirstLastDate(element: SVGSVGElement, width: number, height: number) {
-    const selection = d3.select(element);
-    const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
+  private createDiagramElem() {
+    this.loading = true;
+    const wrapper = document.querySelector('.export-diagram-wrapper') as HTMLElement;
+    wrapper.style.height = `${this.height}px`;
+    wrapper.style.width = `${this.width}px`;
 
-    const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(this.firstDate.toString());
-    const firstDateWidth = firstDate.node().getBBox().width;
-    firstDate.attr('x', (width - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (height));
+    const compFactory = this.componentFactoryResolver.resolveComponentFactory(D3TimeseriesGraphComponent);
 
-    const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(this.lastDate.toString());
-    const lastDateWidth = lastDate.node().getBBox().width;
-    lastDate.attr('x', (width - lastDateWidth)).attr('y', (height));
-  }
+    const comp = compFactory.create(this.diagram.injector);
 
-  private addLegend(element: SVGSVGElement, width: number, height: number): Observable<number> {
-    const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
-    const selection = d3.select(element);
-    this.datasetOptions.forEach((v, k) => {
-      obs.push(this.api.getSingleTimeseriesByInternalId(k).pipe(map(ts => {
-        const label = selection.append('g')
-          .attr('class', 'legend-entry');
-        label.append('circle')
-          .attr('class', 'axisDots')
-          .attr('stroke', v.color)
-          .attr('fill', v.color)
-          .attr('cx', -10)
-          .attr('cy', -5)
-          .attr('r', 4);
-        const titleElem = label.append<SVGGraphicsElement>('svg:text').text(ts.label);
-        height += 25;
-        return {
-          label,
-          xPos: height - 10
-        };
-      })));
+    comp.instance.datasetIds = this.datasetIds;
+    comp.instance.datasetOptions = this.datasetOptions;
+    comp.instance.setTimespan(this.timespan);
+    comp.instance.plotOptions = {
+      showTimeLabel: false,
+      grid: true
+    };
+
+    const diagramRef = this.diagram.insert(comp.hostView);
+
+    comp.instance.onContentLoading.subscribe(loadFinished => {
+      if (loadFinished) {
+        setTimeout(() => {
+          const svgElem = document.querySelector<SVGSVGElement>(this.prepareSelector('.export-diagram-wrapper n52-d3-timeseries-graph'));
+          this.diagramAdjustments(svgElem).subscribe(() => {
+            switch (this.exportType) {
+              case 'svg':
+                this.createSvgDownload(svgElem);
+                break;
+              case 'png':
+              default:
+                this.createPngImageDownload(svgElem);
+                break;
+            }
+            diagramRef.destroy();
+            this.loading = false;
+          });
+        }, 1000);
+      }
     });
-    return forkJoin(obs).pipe(map(elem => {
-      const maxWidth = Math.max(...elem.map(e => e.label.node().getBBox().width));
-      elem.forEach(e => e.label.attr('transform', `translate(${(width - maxWidth) / 2},${e.xPos})`));
-      return height;
-    }));
   }
 
-  private addTitle(element: SVGSVGElement, title: string, width: number, height: number) {
-    const addedHeight = 20;
+  private diagramAdjustments(svgElem: SVGSVGElement): Observable<void> {
+    // adjust y axis fill out
+    svgElem.querySelectorAll<SVGSVGElement>('.y.axisDiv').forEach(el => el.style.fill = 'none');
 
-    height += addedHeight;
+    // adjust grid lines
+    d3.selectAll('.d3 .grid .tick line').style('stroke', '#d3d3d3');
 
-    const selection = d3.select(element);
+    this.addTitle(svgElem);
 
-    const graph = selection.select<SVGGraphicsElement>('g');
+    this.addFirstLastDate(svgElem);
 
-    this.moveDown(graph, addedHeight);
+    return this.addLegend(svgElem);
+  }
 
-    const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(title);
-    const titleWidth = titleElem.node().getBBox().width;
-    titleElem.attr('x', (width - titleWidth) / 2).attr('y', '15');
+  private addFirstLastDate(element: SVGSVGElement) {
+    if (this.showFirstLastDate) {
+      this.height += 20;
+      const selection = d3.select(element);
+      const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
 
-    return height;
+      const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.from).toLocaleDateString());
+      const firstDateWidth = firstDate.node().getBBox().width;
+      firstDate.attr('x', (this.width - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (this.height));
+
+      const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.to).toLocaleDateString());
+      const lastDateWidth = lastDate.node().getBBox().width;
+      lastDate.attr('x', (this.width - lastDateWidth)).attr('y', (this.height));
+    }
+  }
+
+  private addLegend(element: SVGSVGElement): Observable<void> {
+    if (this.showLegend) {
+      const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
+      const selection = d3.select(element);
+      this.datasetOptions.forEach((option, k) => {
+        obs.push(this.api.getSingleTimeseriesByInternalId(k).pipe(map(ts => {
+          if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+            const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+            this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+            label.append<SVGGraphicsElement>('svg:text').text(ts.label);
+            this.height += 25;
+            return {
+              label,
+              xPos: this.height - 10
+            };
+          } else {
+            return {
+              label: null,
+              xPos: 0
+            };
+          }
+        })));
+      });
+      return forkJoin(obs).pipe(map(elem => {
+        const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
+        elem.forEach(e => {
+          if (e.label) {
+            e.label.attr('transform', `translate(${(this.width - maxWidth) / 2},${e.xPos})`);
+          }
+        });
+      }));
+    } else {
+      return of(null);
+    }
+  }
+
+  private addTitle(element: SVGSVGElement) {
+    if (this.title) {
+      const addedHeight = 20;
+
+      this.height += addedHeight;
+
+      const selection = d3.select(element);
+
+      const graph = selection.select<SVGGraphicsElement>('g');
+
+      this.moveDown(graph, addedHeight);
+
+      const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
+      const titleWidth = titleElem.node().getBBox().width;
+      titleElem.attr('x', (this.width - titleWidth) / 2).attr('y', '15');
+    }
   }
 
   private moveDown(graph: d3.Selection<SVGGraphicsElement, any, null, undefined>, sizeToMove: number) {
@@ -126,26 +214,26 @@ export class ExportImageButtonComponent {
     graph.attr('transform', `matrix(${matrixArray.join(',')})`);
   }
 
-  private createCanvas(element: SVGSVGElement, width: number, height: number) {
-    console.log(`Generate Picture with width: ${width} and height: ${height}`);
+  private createPngImageDownload(element: SVGSVGElement) {
+    console.log(`Generate PNG file with width: ${this.width} and height: ${this.height}`);
     const svgString = new XMLSerializer().serializeToString(element);
     const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = this.width;
+    canvas.height = this.height;
     const ctx = canvas.getContext('2d');
     const image = new Image();
     const svg = new Blob([svgString], { type: 'image/svg+xml;base64;' });
     const url = window.URL.createObjectURL(svg);
-    image.onload = function () {
+    image.onload = () => {
       ctx.drawImage(image, 0, 0);
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(svg, 'report.png');
+        window.navigator.msSaveOrOpenBlob(svg, `${this.fileName}.png`);
       } else {
         const png = canvas.toDataURL('image/png');
         const a = document.createElement('a');
         const downloadAttrSupport = typeof a.download !== 'undefined';
         if (downloadAttrSupport) {
-          a.download = 'report.png';
+          a.download = `${this.fileName}.png`;
           a.href = png;
           a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
         }
@@ -153,7 +241,27 @@ export class ExportImageButtonComponent {
       }
     };
     image.src = url;
-    element.remove();
+  }
+
+  private createSvgDownload(element: SVGSVGElement) {
+    console.log(`Generate SVG file with width: ${this.width} and height: ${this.height}`);
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(element);
+    if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    }
+    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+    const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = svgUrl;
+    downloadLink.download = `${this.fileName}.svg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 
   private prepareSelector(selector: string): string {
