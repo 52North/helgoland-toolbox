@@ -12,6 +12,9 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-gra
 })
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
 
+  /**
+   * Toggle to decide if the graph component should support panning or zooming of the graph
+   */
   @Input() public togglePanZoom: boolean;
 
   private dragging: boolean;
@@ -127,14 +130,13 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
         this.d3Graph.redrawCompleteGraph();
       }
     } else {
-      let xDomainRange;
+      let newTimespan: [number, number];
       if (this.dragStart[0] <= this.dragCurrent[0]) {
-        xDomainRange = this.getxDomain(this.dragStart[0], this.dragCurrent[0], graphExtent, preparedData);
+        newTimespan = this.getxDomain(this.dragStart[0], this.dragCurrent[0], graphExtent, preparedData);
       } else {
-        xDomainRange = this.getxDomain(this.dragCurrent[0], this.dragStart[0], graphExtent, preparedData);
+        newTimespan = this.getxDomain(this.dragCurrent[0], this.dragStart[0], graphExtent, preparedData);
       }
-      this.d3Graph.changeTime(timespan.from, timespan.to);
-      this.d3Graph.redrawCompleteGraph();
+      this.d3Graph.changeTime(newTimespan[0], newTimespan[1]);
     }
     this.dragStart = null;
     this.dragging = false;

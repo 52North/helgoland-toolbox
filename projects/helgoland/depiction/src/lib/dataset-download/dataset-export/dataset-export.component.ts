@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import * as XLSX from 'xlsx';
-import { DatasetApiInterface, IDataset, Timeseries, Data, TimeValueTuple, Time, Timespan, FirstLastValue } from '@helgoland/core';
+import { Data, DatasetApiInterface, IDataset, Time, Timeseries, Timespan, TimeValueTuple } from '@helgoland/core';
 import moment from 'moment';
+import * as XLSX from 'xlsx';
 
 type xlsxExport = any[][];
 
-/*
-metadata informing about the selected dataset, that can be visualized
+/**
+ * metadata informing about the selected dataset, that can be visualized
  */
 export interface ExportData {
   station: string;
@@ -21,8 +21,8 @@ export interface ExportData {
   };
 }
 
-/*
-  information that defines options for the export
+/**
+ * information that defines options for the export
  */
 export interface ExportOptions {
   downloadType: string;
@@ -46,18 +46,25 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   private timespan: Timespan;
   private timezone: string;
 
-  /* options to define the export parameters */
-  @Input()
-  public exportOptions: ExportOptions;
-  /* id of the dataset that should be downloaded */
-  @Input()
-  public inputId: string;
-  /* returns the metadata of the selected dataset to be visualized */
-  @Output()
-  public onMetadataChange: EventEmitter<ExportData> = new EventEmitter();
-  /* visualize loading process of file creation */
-  @Output()
-  public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
+  /**
+   * options to define the export parameters
+   */
+  @Input() public exportOptions: ExportOptions;
+
+  /**
+   * id of the dataset that should be downloaded
+   */
+  @Input() public inputId: string;
+
+  /**
+   * returns the metadata of the selected dataset to be visualized
+   */
+  @Output() public onMetadataChange: EventEmitter<ExportData> = new EventEmitter();
+
+  /**
+   * Output to inform the loading status, while file is created
+   */
+  @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     protected api: DatasetApiInterface,

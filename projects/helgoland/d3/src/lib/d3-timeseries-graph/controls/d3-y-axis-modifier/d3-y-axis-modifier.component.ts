@@ -13,22 +13,22 @@ import { D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnInit, OnDestroy {
 
   /**
-   * Should the shift buttons be usable.
+   * Enables shift buttons for every y axis in the corresponding timeseries graph component.
    */
   @Input() shift = true;
 
   /**
-   * Should the zoom buttons be usable.
+   * Enables zoom buttons for every y axis in the corresponding timeseries graph component.
    */
   @Input() zoom = true;
 
   /**
-   * The factor, which will be added or subtract on both sides of the range.
+   * The factor, which is used to zoom in or out on the y axis range.
    */
   @Input() zoomFactor = 0.1;
 
   /**
-   * The factor, which will be added or subtract on one of the range sides, while shifting.
+   * The factor, which is used to shift up or down on the y axis range.
    */
   @Input() shiftFactor = 0.2;
 
