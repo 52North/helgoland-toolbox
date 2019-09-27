@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/time-range-slider",
-  "version": "0.0.1-beta.4",
+  "version": "0.0.1-beta.5",
   "dependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
