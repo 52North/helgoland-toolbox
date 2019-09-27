@@ -1,18 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { NgModule } from '@angular/core';
 import { HelgolandCoreModule } from '@helgoland/core';
-import { MatDialogModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download/dataset-permalink-download.component';
 import { DatasetExportComponent } from './dataset-export/dataset-export.component';
+import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download/dataset-permalink-download.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     HelgolandCoreModule,
-    MatDialogModule,
   ],
   declarations: [
     DatasetExportComponent,
