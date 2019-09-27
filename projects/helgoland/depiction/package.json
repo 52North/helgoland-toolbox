@@ -4,6 +4,7 @@
   "dependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
-    "@types/geojson": "^7946.0.7"
+    "@types/geojson": "^7946.0.7",
+    "xlsx": "^0.15.1"
   }
 }
