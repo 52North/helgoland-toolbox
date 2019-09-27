@@ -7,6 +7,9 @@ import { OlBaseComponent } from '../../ol-base.component';
 import { OlMapService } from '../../services/map.service';
 import { OlMapId } from '../../services/mapid.service';
 
+/**
+ * Control component to show the coordinates at the mouse position
+ */
 @Component({
   selector: 'n52-ol-mouse-position',
   template: '',

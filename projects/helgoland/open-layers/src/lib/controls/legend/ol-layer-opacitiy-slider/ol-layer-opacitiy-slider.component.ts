@@ -1,6 +1,9 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import BaseLayer from 'ol/layer/Base';
 
+/**
+ * Legend component handle the opacity of the layer
+ */
 @Component({
   selector: 'n52-ol-layer-opacitiy-slider',
   templateUrl: './ol-layer-opacitiy-slider.component.html'

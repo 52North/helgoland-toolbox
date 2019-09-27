@@ -16,6 +16,14 @@ import { OlBaseComponent } from '../../ol-base.component';
 import { OlMapService } from '../../services/map.service';
 import { OlMapId } from '../../services/mapid.service';
 
+/**
+ * Component to display station based on the input parameters. The component must be embedded as seen in the example:
+ *
+ * @example
+ * <n52-ol-map>
+ *     <n52-ol-station-selector-layer [serviceUrl]="serviceUrl" [filter]="filter"></n52-ol-station-selector-layer>
+ * </n52-ol-map>
+ */
 @Component({
   selector: 'n52-ol-station-selector-layer',
   template: '',
@@ -23,25 +31,38 @@ import { OlMapId } from '../../services/mapid.service';
 export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
   /**
-   * @input The serviceUrl, where the selection should be loaded.
+   * The serviceUrl, where the selection should be loaded.
    */
   @Required @Input() public serviceUrl: string;
 
   /**
-   * @input The filter which should be used, while fetching the selection.
+   * The filter which should be used, while fetching the selection.
    */
   @Input() public filter: ParameterFilter;
 
+  /**
+   * Zoom to the stations after collected and displayed
+   */
   @Input() public zoomToResult = true;
 
+  /**
+   * Cluster stations
+   */
   @Input() public cluster = true;
 
+  /**
+   * Inform, when a station is selected
+   */
   @Output() public onSelected: EventEmitter<Station> = new EventEmitter<Station>();
 
+  /**
+   * Inform, while stations are loaded
+   */
   @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
-  // public isContentLoading: (loading: boolean) => void;
-
+  /**
+   * Inform, when no stations are found
+   */
   @Output() public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
   private map: Map;

@@ -5,6 +5,9 @@ import { TileWMS } from 'ol/source';
 
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 
+/**
+ * Legend component to display the title, gathered by the WMS capabilities
+ */
 @Component({
   selector: 'n52-ol-layer-title',
   templateUrl: './ol-layer-title.component.html'

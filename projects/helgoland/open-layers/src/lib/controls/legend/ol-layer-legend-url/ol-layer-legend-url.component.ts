@@ -4,6 +4,9 @@ import { TileWMS } from 'ol/source';
 
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 
+/**
+ * Legend component to ascertain the legend url, gathered by the WMS capabilities
+ */
 @Component({
   selector: 'n52-ol-layer-legend-url',
   templateUrl: './ol-layer-legend-url.component.html'
@@ -12,6 +15,9 @@ export class OlLayerLegendUrlComponent {
 
   @Input() layer: Layer;
 
+  /**
+   * Returns the legend url
+   */
   @Output() legendUrl: EventEmitter<string> = new EventEmitter();
 
   constructor(

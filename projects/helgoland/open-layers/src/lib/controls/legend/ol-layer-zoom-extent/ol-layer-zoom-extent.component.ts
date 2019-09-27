@@ -9,6 +9,9 @@ import { TileWMS } from 'ol/source';
 import { OlMapService } from '../../../services/map.service';
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 
+/**
+ * Legend component to gather the layer extent by the WMS capabilities and provide the ability to zoom to the extent
+ */
 @Component({
   selector: 'n52-ol-layer-zoom-extent',
   templateUrl: './ol-layer-zoom-extent.component.html'
@@ -17,6 +20,9 @@ export class OlLayerZoomExtentComponent implements OnInit {
 
   @Required @Input() layer: BaseLayer;
 
+  /**
+   * corresponding map id
+   */
   @Required @Input() mapId: string;
 
   private url: string;
