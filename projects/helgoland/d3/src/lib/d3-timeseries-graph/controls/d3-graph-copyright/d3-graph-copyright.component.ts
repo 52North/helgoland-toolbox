@@ -13,6 +13,9 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-gra
 })
 export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl {
 
+  /**
+   * Copyright, which should be shown on the graph
+   */
   @Input() copyright: D3Copyright;
 
   public adjustBackground(
