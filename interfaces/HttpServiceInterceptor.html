@@ -209,9 +209,7 @@ export interface HttpServiceInterceptor {
     intercept(req: HttpRequest&lt;any&gt;, options: Partial&lt;HttpRequestOptions&gt;, next: HttpServiceHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;;
 }
 
-@Injectable({
-    providedIn: &#x27;root&#x27;
-})
+@Injectable()
 export class HttpService {
 
     private handler: HttpServiceHandler;

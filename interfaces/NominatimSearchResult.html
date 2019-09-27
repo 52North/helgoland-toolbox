@@ -298,15 +298,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import &#x27;rxjs/add/operator/map&#x27;;
-
-import { HttpParams } from &#x27;@angular/common/http&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpParams } from &#x27;@angular/common/http&#x27;;
 import { Injectable } from &#x27;@angular/core&#x27;;
 import { HttpService } from &#x27;@helgoland/core&#x27;;
 import { Point } from &#x27;geojson&#x27;;
-import { Observable } from &#x27;rxjs/Observable&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
 
 import { GeoReverseOptions, GeoReverseResult, GeoSearch, GeoSearchOptions, GeoSearchResult } from &#x27;./geosearch&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
 
 interface NominatimSearchResult {
     display_name: string;
@@ -379,7 +378,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         return this.http.client().get(
             this.serviceUrl + &#x27;search&#x27;,
             { params }
-        ).map((resArray: NominatimSearchResult[]) &#x3D;&gt; {
+        ).pipe(map((resArray: NominatimSearchResult[]) &#x3D;&gt; {
             if (resArray.length &#x3D;&#x3D;&#x3D; 1) {
                 const result &#x3D; resArray[0];
                 const name &#x3D; result.display_name;
@@ -408,7 +407,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 if (result.address) { returnResult.address &#x3D; result.address; }
                 return returnResult;
             }
-        });
+        }));
     }
 
     public reverse(point: Point, options: GeoReverseOptions &#x3D; {}): Observable&lt;GeoReverseResult&gt; {
@@ -422,7 +421,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         return this.http.client().get(
             this.serviceUrl + &#x27;reverse&#x27;,
             { params }
-        ).map((res: NominatimReverseResult) &#x3D;&gt; {
+        ).pipe(map((res: NominatimReverseResult) &#x3D;&gt; {
             const result &#x3D; {
                 lat: res.lat,
                 lon: res.lon,
@@ -446,7 +445,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 };
             }
             return result;
-        });
+        }));
     }
 
 }

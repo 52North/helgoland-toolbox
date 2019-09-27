@@ -1,0 +1,1096 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>OlMapComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Basic open layers map component, which creates a map with an OSM layer as first base layer.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                                <code><a href="../injectables/OlMapId.html" target="_self" >OlMapId</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-ol-map</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>../../../../../../node_modules/ol/ol.css,<br>ol-map.component.scss</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;map&quot; [attr.id]&#x3D;&quot;mapId&quot;&gt;&lt;/div&gt;</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#map">map</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#generateUUID">generateUUID</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#lat">lat</a>
+                            </li>
+                            <li>
+                                <a href="#lon">lon</a>
+                            </li>
+                            <li>
+                                <a href="#mapId">mapId</a>
+                            </li>
+                            <li>
+                                <a href="#projection">projection</a>
+                            </li>
+                            <li>
+                                <a href="#showAttributionControl">showAttributionControl</a>
+                            </li>
+                            <li>
+                                <a href="#showZoomControl">showZoomControl</a>
+                            </li>
+                            <li>
+                                <a href="#zoom">zoom</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(mapService: <a href="../injectables/OlMapService.html">OlMapService</a>, mapid: <a href="../injectables/OlMapId.html">OlMapId</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>mapService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OlMapService.html" target="_self" >OlMapService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>mapid</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OlMapId.html" target="_self" >OlMapId</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="lat"></a>
+                        <b>lat</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:40</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Latitude to center the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="lon"></a>
+                        <b>lon</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:35</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Longitude to center the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mapId"></a>
+                        <b>mapId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:30</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The map id, to reference this map outside of this component. If no id is given, a unique one is generated</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projection"></a>
+                        <b>projection</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;EPSG:3857&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:50</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Projection of the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showAttributionControl"></a>
+                        <b>showAttributionControl</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:60</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Should the attribution label be visible on the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showZoomControl"></a>
+                        <b>showZoomControl</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:55</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Should the zoom controls be visible on the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="zoom"></a>
+                        <b>zoom</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:45</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Zoom level of the map</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateUUID"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            generateUUID
+                        </b>
+                        <a href="#generateUUID"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>generateUUID()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="94"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:94</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="75"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:75</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="map"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            map</b>
+                            <a href="#map"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Map</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/open-layers/src/lib/ol-map/ol-map.component.ts:62</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from &#x27;@angular/core&#x27;;
+import { View } from &#x27;ol&#x27;;
+import { Attribution, Control, Zoom } from &#x27;ol/control&#x27;;
+import TileLayer from &#x27;ol/layer/Tile&#x27;;
+import Map from &#x27;ol/Map.js&#x27;;
+import { fromLonLat } from &#x27;ol/proj&#x27;;
+import { OSM } from &#x27;ol/source&#x27;;
+
+import { OlMapService } from &#x27;../services/map.service&#x27;;
+import { OlMapId } from &#x27;../services/mapid.service&#x27;;
+
+/**
+ * Basic open layers map component, which creates a map with an OSM layer as first base layer.
+ */
+@Component({
+  selector: &#x27;n52-ol-map&#x27;,
+  template: &#x27;&lt;div class&#x3D;&quot;map&quot; [attr.id]&#x3D;&quot;mapId&quot;&gt;&lt;/div&gt;&#x27;,
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: [
+    &#x27;../../../../../../node_modules/ol/ol.css&#x27;,
+    &#x27;ol-map.component.scss&#x27;
+  ],
+  providers: [OlMapId]
+})
+export class OlMapComponent implements OnInit, AfterViewInit {
+
+  /**
+   * The map id, to reference this map outside of this component. If no id is given, a unique one is generated
+   */
+  @Input() mapId: string;
+
+  /**
+   * Longitude to center the map
+   */
+  @Input() lon &#x3D; 0;
+
+  /**
+   * Latitude to center the map
+   */
+  @Input() lat &#x3D; 0;
+
+  /**
+   * Zoom level of the map
+   */
+  @Input() zoom &#x3D; 1;
+
+  /**
+   * Projection of the map
+   */
+  @Input() projection &#x3D; &#x27;EPSG:3857&#x27;;
+
+  /**
+   * Should the zoom controls be visible on the map
+   */
+  @Input() showZoomControl &#x3D; true;
+
+  /**
+   * Should the attribution label be visible on the map
+   */
+  @Input() showAttributionControl &#x3D; true;
+
+  private map: Map;
+
+  constructor(
+    private mapService: OlMapService,
+    private mapid: OlMapId,
+  ) { }
+
+  ngOnInit() {
+    if (this.mapId &#x3D;&#x3D;&#x3D; undefined || this.mapId &#x3D;&#x3D;&#x3D; null) {
+      this.mapId &#x3D; this.generateUUID();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    const controls: Control[] &#x3D; [];
+    if (this.showZoomControl) { controls.push(new Zoom()); }
+    if (this.showAttributionControl) { controls.push(new Attribution()); }
+
+    this.map &#x3D; new Map({
+      layers: [new TileLayer({ source: new OSM() })],
+      controls: controls,
+      target: this.mapId,
+      view: new View({
+        projection: this.projection,
+        center: fromLonLat([this.lon, this.lat]),
+        zoom: this.zoom
+      })
+    });
+    this.mapService.setMap(this.mapId, this.map);
+    this.mapid.setId(this.mapId);
+  }
+
+  private generateUUID(): string {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + &#x27;-&#x27; + s4() + &#x27;-&#x27; + s4() + &#x27;-&#x27; + s4() + &#x27;-&#x27; + s4() + s4() + s4();
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>../../../../../../node_modules/ol/ol.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.ol-box {
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 2px solid blue;
+}
+
+.ol-mouse-position {
+  top: 8px;
+  right: 8px;
+  position: absolute;
+}
+
+.ol-scale-line {
+  background: rgba(0,60,136,0.3);
+  border-radius: 4px;
+  bottom: 8px;
+  left: 8px;
+  padding: 2px;
+  position: absolute;
+}
+.ol-scale-line-inner {
+  border: 1px solid #eee;
+  border-top: none;
+  color: #eee;
+  font-size: 10px;
+  text-align: center;
+  margin: 1px;
+  will-change: contents, width;
+}
+.ol-overlay-container {
+  will-change: left,right,top,bottom;
+}
+
+.ol-unsupported {
+  display: none;
+}
+.ol-viewport, .ol-unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.ol-selectable {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.ol-grabbing {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}
+.ol-grab {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+}
+.ol-control {
+  position: absolute;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 4px;
+  padding: 2px;
+}
+.ol-control:hover {
+  background-color: rgba(255,255,255,0.6);
+}
+.ol-zoom {
+  top: .5em;
+  left: .5em;
+}
+.ol-rotate {
+  top: .5em;
+  right: .5em;
+  transition: opacity .25s linear, visibility 0s linear;
+}
+.ol-rotate.ol-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s linear, visibility 0s linear .25s;
+}
+.ol-zoom-extent {
+  top: 4.643em;
+  left: .5em;
+}
+.ol-full-screen {
+  right: .5em;
+  top: .5em;
+}
+@media print {
+  .ol-control {
+    display: none;
+  }
+}
+
+.ol-control button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: white;
+  font-size: 1.14em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: .4em;
+  background-color: rgba(0,60,136,0.5);
+  border: none;
+  border-radius: 2px;
+}
+.ol-control button::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+.ol-zoom-extent button {
+  line-height: 1.4em;
+}
+.ol-compass {
+  display: block;
+  font-weight: normal;
+  font-size: 1.2em;
+  will-change: transform;
+}
+.ol-touch .ol-control button {
+  font-size: 1.5em;
+}
+.ol-touch .ol-zoom-extent {
+  top: 5.5em;
+}
+.ol-control button:hover,
+.ol-control button:focus {
+  text-decoration: none;
+  background-color: rgba(0,60,136,0.7);
+}
+.ol-zoom .ol-zoom-in {
+  border-radius: 2px 2px 0 0;
+}
+.ol-zoom .ol-zoom-out {
+  border-radius: 0 0 2px 2px;
+}
+
+
+.ol-attribution {
+  text-align: right;
+  bottom: .5em;
+  right: .5em;
+  max-width: calc(100% - 1.3em);
+}
+
+.ol-attribution ul {
+  margin: 0;
+  padding: 0 .5em;
+  font-size: .7rem;
+  line-height: 1.375em;
+  color: #000;
+  text-shadow: 0 0 2px #fff;
+}
+.ol-attribution li {
+  display: inline;
+  list-style: none;
+  line-height: inherit;
+}
+.ol-attribution li:not(:last-child):after {
+  content: &quot; &quot;;
+}
+.ol-attribution img {
+  max-height: 2em;
+  max-width: inherit;
+  vertical-align: middle;
+}
+.ol-attribution ul, .ol-attribution button {
+  display: inline-block;
+}
+.ol-attribution.ol-collapsed ul {
+  display: none;
+}
+.ol-attribution:not(.ol-collapsed) {
+  background: rgba(255,255,255,0.8);
+}
+.ol-attribution.ol-uncollapsible {
+  bottom: 0;
+  right: 0;
+  border-radius: 4px 0 0;
+  height: 1.1em;
+  line-height: 1em;
+}
+.ol-attribution.ol-uncollapsible img {
+  margin-top: -.2em;
+  max-height: 1.6em;
+}
+.ol-attribution.ol-uncollapsible button {
+  display: none;
+}
+
+.ol-zoomslider {
+  top: 4.5em;
+  left: .5em;
+  height: 200px;
+}
+.ol-zoomslider button {
+  position: relative;
+  height: 10px;
+}
+
+.ol-touch .ol-zoomslider {
+  top: 5.5em;
+}
+
+.ol-overviewmap {
+  left: 0.5em;
+  bottom: 0.5em;
+}
+.ol-overviewmap.ol-uncollapsible {
+  bottom: 0;
+  left: 0;
+  border-radius: 0 4px 0 0;
+}
+.ol-overviewmap .ol-overviewmap-map,
+.ol-overviewmap button {
+  display: inline-block;
+}
+.ol-overviewmap .ol-overviewmap-map {
+  border: 1px solid #7b98bc;
+  height: 150px;
+  margin: 2px;
+  width: 150px;
+}
+.ol-overviewmap:not(.ol-collapsed) button{
+  bottom: 1px;
+  left: 2px;
+  position: absolute;
+}
+.ol-overviewmap.ol-collapsed .ol-overviewmap-map,
+.ol-overviewmap.ol-uncollapsible button {
+  display: none;
+}
+.ol-overviewmap:not(.ol-collapsed) {
+  background: rgba(255,255,255,0.8);
+}
+.ol-overviewmap-box {
+  border: 2px dotted rgba(0,60,136,0.7);
+}
+
+.ol-overviewmap .ol-overviewmap-box:hover {
+  cursor: move;
+}
+</code></pre>
+                <p class="comment">
+                    <code>ol-map.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.map {
+  width: 100%;
+  height: 100%;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="map" [attr.id]="mapId"></div></div>'
+    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'OlMapComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'OlMapComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

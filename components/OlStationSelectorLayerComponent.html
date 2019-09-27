@@ -1,0 +1,1716 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>OlStationSelectorLayerComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Component to display station based on the input parameters. The component must be embedded as seen in the example:</p>
+
+    </p>
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../classes/OlBaseComponent.html" target="_self" >OlBaseComponent</a></code>
+    </p>
+
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+                <div>
+                    <pre class="line-numbers"><code class="language-html">&lt;n52-ol-map&gt;
+&lt;n52-ol-station-selector-layer [serviceUrl]=&quot;serviceUrl&quot; [filter]=&quot;filter&quot;&gt;&lt;/n52-ol-station-selector-layer&gt;
+&lt;/n52-ol-map&gt;</code></pre>
+                </div>
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-ol-station-selector-layer</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#layer">layer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#map">map</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createClickInteraction">createClickInteraction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createClusterStyle">createClusterStyle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFeatureList">createFeatureList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createHoverInteraction">createHoverInteraction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createLayer">createLayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createMarkerStyle">createMarkerStyle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createStationGeometries">createStationGeometries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawGeometries">drawGeometries</a>
+                            </li>
+                            <li>
+                                <a href="#mapInitialized">mapInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#styleClusterLayer">styleClusterLayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#zoomToFeatures">zoomToFeatures</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#mapInitialized">mapInitialized</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cluster">cluster</a>
+                            </li>
+                            <li>
+                                <a href="#filter">filter</a>
+                            </li>
+                            <li>
+                                <a href="#serviceUrl">serviceUrl</a>
+                            </li>
+                            <li>
+                                <a href="#zoomToResult">zoomToResult</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onContentLoading">onContentLoading</a>
+                            </li>
+                            <li>
+                                <a href="#onNoResultsFound">onNoResultsFound</a>
+                            </li>
+                            <li>
+                                <a href="#onSelected">onSelected</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(mapService: <a href="../injectables/OlMapService.html">OlMapService</a>, mapidService: <a href="../injectables/OlMapId.html">OlMapId</a>, apiInterface: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:70</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>mapService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OlMapService.html" target="_self" >OlMapService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>mapidService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OlMapId.html" target="_self" >OlMapId</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>apiInterface</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cluster"></a>
+                        <b>cluster</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:51</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Cluster stations</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filter"></a>
+                        <b>filter</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:41</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The filter which should be used, while fetching the selection.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="serviceUrl"></a>
+                        <b>serviceUrl</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:36</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The serviceUrl, where the selection should be loaded.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="zoomToResult"></a>
+                        <b>zoomToResult</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:46</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Zoom to the stations after collected and displayed</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onContentLoading"></a>
+                        <b>onContentLoading</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:61</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Inform, while stations are loaded</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onNoResultsFound"></a>
+                        <b>onNoResultsFound</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;boolean&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:66</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Inform, when no stations are found</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onSelected"></a>
+                        <b>onSelected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Event.html" target="_self" >EventEmitter&lt;Station&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:56</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Inform, when a station is selected</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createClickInteraction"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createClickInteraction
+                        </b>
+                        <a href="#createClickInteraction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createClickInteraction()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:164</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createClusterStyle"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createClusterStyle
+                        </b>
+                        <a href="#createClusterStyle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createClusterStyle(size: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="199"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:199</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>size</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFeatureList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createFeatureList
+                        </b>
+                        <a href="#createFeatureList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFeatureList(stations: <a href="../classes/Station.html">Station[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:130</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>stations</td>
+                                    <td>
+                                                <code><a href="../classes/Station.html" target="_self" >Station[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createHoverInteraction"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createHoverInteraction
+                        </b>
+                        <a href="#createHoverInteraction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createHoverInteraction()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createLayer"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createLayer
+                        </b>
+                        <a href="#createLayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createLayer(features: <a href="../interfaces/Feature.html">Feature[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>features</td>
+                                    <td>
+                                                <code><a href="../interfaces/Feature.html" target="_self" >Feature[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createMarkerStyle"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createMarkerStyle
+                        </b>
+                        <a href="#createMarkerStyle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createMarkerStyle()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="237"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:237</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Style</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createStationGeometries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createStationGeometries
+                        </b>
+                        <a href="#createStationGeometries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createStationGeometries()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:91</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawGeometries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            drawGeometries
+                        </b>
+                        <a href="#drawGeometries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drawGeometries()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:85</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mapInitialized"></a>
+                    <span class="name">
+                        <b>
+                            mapInitialized
+                        </b>
+                        <a href="#mapInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mapInitialized(map: Map)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>map</td>
+                                    <td>
+                                            <code>Map</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="styleClusterLayer"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            styleClusterLayer
+                        </b>
+                        <a href="#styleClusterLayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>styleClusterLayer(feature: <a href="../interfaces/Feature.html">FeatureLike</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="190"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:190</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>feature</td>
+                                    <td>
+                                                <code><a href="../interfaces/Feature.html" target="_self" >FeatureLike</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Style | []</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomToFeatures"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            zoomToFeatures
+                        </b>
+                        <a href="#zoomToFeatures"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomToFeatures(features: <a href="../interfaces/Feature.html">Feature[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="229"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:229</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>features</td>
+                                    <td>
+                                                <code><a href="../interfaces/Feature.html" target="_self" >Feature[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mapInitialized"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Abstract</span>
+                            mapInitialized
+                        </b>
+                        <a href="#mapInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mapInitialized(map: Map)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/OlBaseComponent.html" target="_self" >OlBaseComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/OlBaseComponent.html#source" target="_self" >OlBaseComponent:33</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>This method will be triggered, when the corrsponding map is initialized.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>map</td>
+                                    <td>
+                                            <code>Map</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the created map</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/OlBaseComponent.html" target="_self" >OlBaseComponent</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/OlBaseComponent.html#source" target="_self" >OlBaseComponent:24</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Subscribes for the initialization of the map after view is initialized</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="layer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            layer</b>
+                            <a href="#layer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>VectorLayer</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:70</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="map"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            map</b>
+                            <a href="#map"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Map</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">projects/helgoland/open-layers/src/lib/layers/ol-station-selector-layer/ol-station-selector-layer.component.ts:68</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Host, Input, Output } from &#x27;@angular/core&#x27;;
+import { DatasetApiInterface, ParameterFilter, Required, Station } from &#x27;@helgoland/core&#x27;;
+import { Feature, Map } from &#x27;ol&#x27;;
+import { unlistenByKey } from &#x27;ol/events&#x27;;
+import { click, pointerMove } from &#x27;ol/events/condition&#x27;;
+import { extend } from &#x27;ol/extent&#x27;;
+import { FeatureLike } from &#x27;ol/Feature&#x27;;
+import Point from &#x27;ol/geom/Point&#x27;;
+import { Select } from &#x27;ol/interaction.js&#x27;;
+import VectorLayer from &#x27;ol/layer/Vector&#x27;;
+import { Cluster } from &#x27;ol/source&#x27;;
+import VectorSource from &#x27;ol/source/Vector&#x27;;
+import { Circle, Fill, Stroke, Style, Text } from &#x27;ol/style.js&#x27;;
+
+import { OlBaseComponent } from &#x27;../../ol-base.component&#x27;;
+import { OlMapService } from &#x27;../../services/map.service&#x27;;
+import { OlMapId } from &#x27;../../services/mapid.service&#x27;;
+
+/**
+ * Component to display station based on the input parameters. The component must be embedded as seen in the example:
+ *
+ * @example
+ * &lt;n52-ol-map&gt;
+ *     &lt;n52-ol-station-selector-layer [serviceUrl]&#x3D;&quot;serviceUrl&quot; [filter]&#x3D;&quot;filter&quot;&gt;&lt;/n52-ol-station-selector-layer&gt;
+ * &lt;/n52-ol-map&gt;
+ */
+@Component({
+  selector: &#x27;n52-ol-station-selector-layer&#x27;,
+  template: &#x27;&#x27;,
+})
+export class OlStationSelectorLayerComponent extends OlBaseComponent {
+
+  /**
+   * The serviceUrl, where the selection should be loaded.
+   */
+  @Required @Input() public serviceUrl: string;
+
+  /**
+   * The filter which should be used, while fetching the selection.
+   */
+  @Input() public filter: ParameterFilter;
+
+  /**
+   * Zoom to the stations after collected and displayed
+   */
+  @Input() public zoomToResult &#x3D; true;
+
+  /**
+   * Cluster stations
+   */
+  @Input() public cluster &#x3D; true;
+
+  /**
+   * Inform, when a station is selected
+   */
+  @Output() public onSelected: EventEmitter&lt;Station&gt; &#x3D; new EventEmitter&lt;Station&gt;();
+
+  /**
+   * Inform, while stations are loaded
+   */
+  @Output() public onContentLoading: EventEmitter&lt;boolean&gt; &#x3D; new EventEmitter();
+
+  /**
+   * Inform, when no stations are found
+   */
+  @Output() public onNoResultsFound: EventEmitter&lt;boolean&gt; &#x3D; new EventEmitter();
+
+  private map: Map;
+
+  private layer: VectorLayer;
+
+  constructor(
+    protected mapService: OlMapService,
+    @Host() protected mapidService: OlMapId,
+    protected apiInterface: DatasetApiInterface
+  ) {
+    super(mapService, mapidService);
+  }
+
+  mapInitialized(map: Map) {
+    this.map &#x3D; map;
+    this.drawGeometries();
+  }
+
+  private drawGeometries() {
+    // TODO: on filter changes
+    // TODO: draw marker for results
+    this.createStationGeometries();
+  }
+
+  private createStationGeometries() {
+    this.apiInterface.getStations(this.serviceUrl, this.filter)
+      .subscribe((stations) &#x3D;&gt; {
+        const features: Feature[] &#x3D; this.createFeatureList(stations);
+
+        this.createLayer(features);
+
+        this.createHoverInteraction();
+
+        this.createClickInteraction();
+
+        if (this.zoomToResult) {
+          this.zoomToFeatures(features);
+        }
+      });
+  }
+
+  private createLayer(features: Feature[]) {
+    if (this.cluster) {
+      this.layer &#x3D; new VectorLayer({
+        source: new Cluster({
+          distance: 100,
+          source: new VectorSource({
+            features
+          })
+        }),
+        style: feature &#x3D;&gt; this.styleClusterLayer(feature)
+      });
+    } else {
+      this.layer &#x3D; new VectorLayer({
+        source: new VectorSource({
+          features
+        }),
+        style: () &#x3D;&gt; this.createMarkerStyle(),
+      });
+    }
+    this.map.addLayer(this.layer);
+  }
+
+  private createFeatureList(stations: Station[]) {
+    const features: Feature[] &#x3D; [];
+    stations.forEach(st &#x3D;&gt; {
+      // TODO: add to service
+      if (st.geometry.type &#x3D;&#x3D;&#x3D; &#x27;Point&#x27;) {
+        const point &#x3D; new Point(st.geometry.coordinates);
+        point.transform(&#x27;EPSG:4326&#x27;, this.map.getView().getProjection());
+        const feature &#x3D; new Feature(point);
+        feature.set(&#x27;station&#x27;, st, true);
+        features.push(feature);
+      }
+    });
+    return features;
+  }
+
+  private createHoverInteraction() {
+    if (this.cluster) {
+      const hoverSelect &#x3D; new Select({
+        condition: pointerMove,
+        style: feature &#x3D;&gt; this.styleClusterLayer(feature),
+        layers: [this.layer]
+      });
+
+      hoverSelect.on(&#x27;select&#x27;, (evt &#x3D;&gt; {
+        if (evt.selected.length &gt;&#x3D; 1) {
+          const temp &#x3D; hoverSelect.getFeatures().on(&#x27;remove&#x27;, () &#x3D;&gt; {
+            unlistenByKey(temp);
+          });
+        }
+      }));
+      this.map.addInteraction(hoverSelect);
+    }
+  }
+
+  private createClickInteraction() {
+    const clickSelect &#x3D; new Select({
+      condition: click,
+      style: feature &#x3D;&gt; this.cluster ? this.styleClusterLayer(feature) : this.createMarkerStyle(),
+      layers: [this.layer]
+    });
+    clickSelect.on(&#x27;select&#x27;, (evt &#x3D;&gt; {
+      if (evt.selected.length &gt;&#x3D; 1) {
+        if (evt.selected[0].getProperties().station) {
+          this.onSelected.emit(evt.selected[0].getProperties().station);
+        } else {
+          const selectedFeatures &#x3D; evt.selected[0].getProperties().features;
+          if (selectedFeatures.length &gt; 1) {
+            clickSelect.getFeatures().clear();
+            setTimeout(() &#x3D;&gt; {
+              this.zoomToFeatures(selectedFeatures);
+            }, 10);
+          } else if (selectedFeatures.length &#x3D;&#x3D;&#x3D; 1) {
+            this.onSelected.emit(selectedFeatures[0].getProperties().station);
+          }
+        }
+      }
+    }));
+    this.map.addInteraction(clickSelect);
+  }
+
+  private styleClusterLayer(feature: FeatureLike): Style | Style[] {
+    const size &#x3D; feature.get(&#x27;features&#x27;).length;
+    if (size &gt; 1) {
+      return this.createClusterStyle(size);
+    } else {
+      return this.createMarkerStyle();
+    }
+  }
+
+  private createClusterStyle(size: number) {
+    const color &#x3D; size &gt; 25 ? &#x27;248, 128, 0&#x27; : size &gt; 8 ? &#x27;248, 192, 0&#x27; : &#x27;128, 192, 64&#x27;;
+    const radius &#x3D; Math.max(8, Math.min(size * 0.75, 20));
+    return [
+      new Style({
+        image: new Circle({
+          radius: radius + 2,
+          stroke: new Stroke({
+            color: &#x27;rgba(&#x27; + color + &#x27;,0.3)&#x27;,
+            width: 4
+          })
+        })
+      }),
+      new Style({
+        image: new Circle({
+          radius: radius,
+          fill: new Fill({
+            color: &#x27;rgba(&#x27; + color + &#x27;,0.6)&#x27;
+          })
+        }),
+        text: new Text({
+          text: size.toString(),
+          fill: new Fill({
+            color: &#x27;#000&#x27;
+          })
+        })
+      })
+    ];
+  }
+
+  private zoomToFeatures(features: Feature[]) {
+    if (features.length &gt; 0) {
+      const extent &#x3D; features[0].getGeometry().getExtent().slice(0);
+      features.forEach(f &#x3D;&gt; extend(extent, f.getGeometry().getExtent()));
+      this.map.getView().fit(extent, { duration: 300 });
+    }
+  }
+
+  private createMarkerStyle(): Style {
+    return new Style({
+      image: new Circle({
+        radius: 6,
+        fill: new Fill({
+          color: &#x27;blue&#x27;,
+        })
+      })
+    });
+  }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div></div>'
+    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'OlStationSelectorLayerComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'OlStationSelectorLayerComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -132,7 +132,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sum(startOf: <a href="../injectables/Time.html">moment.unitOfTime.StartOf</a>, period: moment.Duration, data: <a href="../injectables/Time.html">TimeValueTuple[]</a>)</code>
+                    <code>sum(startOf: <a href="../injectables/Time.html">unitOfTime.StartOf</a>, period: Duration, data: <a href="../injectables/Time.html">TimeValueTuple[]</a>)</code>
                 </td>
             </tr>
 
@@ -162,7 +162,7 @@
                                 <tr>
                                     <td>startOf</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >moment.unitOfTime.StartOf</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >unitOfTime.StartOf</a></code>
                                     </td>
 
                                     <td>
@@ -174,7 +174,7 @@
                                 <tr>
                                     <td>period</td>
                                     <td>
-                                            <code>moment.Duration</code>
+                                            <code>Duration</code>
                                     </td>
 
                                     <td>
@@ -218,7 +218,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import moment from &#x27;moment&#x27;;
+import moment, { unitOfTime, Duration } from &#x27;moment&#x27;;
 
 import { TimeValueTuple } from &#x27;../model/dataset-api/data&#x27;;
 
@@ -227,7 +227,7 @@ export class SumValuesService {
 
   constructor() { }
 
-  public sum(startOf: moment.unitOfTime.StartOf, period: moment.Duration, data: TimeValueTuple[]): TimeValueTuple[] {
+  public sum(startOf: unitOfTime.StartOf, period: Duration, data: TimeValueTuple[]): TimeValueTuple[] {
     const result: TimeValueTuple[] &#x3D; [];
 
     if (data.length &#x3D;&#x3D;&#x3D; 0) { return result; }

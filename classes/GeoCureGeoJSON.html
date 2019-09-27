@@ -235,7 +235,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchData(map: L.Map)</code>
+                    <code>fetchData(map: Map)</code>
                 </td>
             </tr>
 
@@ -265,7 +265,7 @@
                                 <tr>
                                     <td>map</td>
                                     <td>
-                                            <code>L.Map</code>
+                                            <code>Map</code>
                                     </td>
 
                                     <td>
@@ -420,7 +420,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>onAdd(map: L.Map)</code>
+                    <code>onAdd(map: Map)</code>
                 </td>
             </tr>
 
@@ -450,7 +450,7 @@
                                 <tr>
                                     <td>map</td>
                                     <td>
-                                            <code>L.Map</code>
+                                            <code>Map</code>
                                     </td>
 
                                     <td>
@@ -479,7 +479,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
-import { GeoJSON, GeoJSONOptions, LatLngBounds, LeafletEvent } from &#x27;leaflet&#x27;;
+import { GeoJSON, GeoJSONOptions, LatLngBounds, LeafletEvent, Map } from &#x27;leaflet&#x27;;
 
 export interface GeoCureGeoJSONOptions extends GeoJSONOptions {
     url: string;
@@ -508,13 +508,13 @@ export class GeoCureGeoJSON extends GeoJSON {
         return events;
     }
 
-    public onAdd(map: L.Map): this  {
+    public onAdd(map: Map): this {
         super.onAdd(map);
         this.fetchData(map);
         return this;
     }
 
-    private fetchData(map: L.Map) {
+    private fetchData(map: Map) {
         const matchMaxZoom &#x3D; this.options.showOnMaxZoom ? map.getZoom() &lt;&#x3D; this.options.showOnMaxZoom : true;
         const matchMinZoom &#x3D; this.options.showOnMinZoom ? map.getZoom() &gt;&#x3D; this.options.showOnMinZoom : true;
         if (matchMinZoom &amp;&amp; matchMaxZoom) {

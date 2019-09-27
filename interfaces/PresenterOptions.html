@@ -168,6 +168,12 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
     @Output()
     public onContentLoading: EventEmitter&lt;boolean&gt; &#x3D; new EventEmitter();
 
+    /**
+     * Event, which triggers list of datasets where data is currently loaded.
+     */
+    @Output()
+    public dataLoaded: EventEmitter&lt;Set&lt;string&gt;&gt; &#x3D; new EventEmitter();
+
     public isContentLoading: (loading: boolean) &#x3D;&gt; void;
 
     protected timespan: Timespan;

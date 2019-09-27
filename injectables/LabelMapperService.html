@@ -92,11 +92,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#confirmLabel">confirmLabel</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#findUrl">findUrl</a>
+                                <a href="#defaultLabel">defaultLabel</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -120,12 +116,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(httpClient: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, settingsSrvc: <a href="../classes/SettingsService.html">SettingsService<Settings></a>)</code>
+<code>constructor(handler: <a href="../interfaces/LabelMapperHandler.html">LabelMapperHandler[] | null</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -143,22 +139,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>httpClient</td>
+                                                        <td>handler</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>settingsSrvc</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../classes/SettingsService.html" target="_self" >SettingsService&lt;Settings&gt;</a></code>
+                                                                        <code><a href="../interfaces/LabelMapperHandler.html" target="_self" >LabelMapperHandler[] | null</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -184,112 +168,28 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="confirmLabel"></a>
+                    <a name="defaultLabel"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Private</span>
-                            confirmLabel
+                            defaultLabel
                         </b>
-                        <a href="#confirmLabel"><span class="icon ion-ios-link"></span></a>
+                        <a href="#defaultLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>confirmLabel(observer: Observer<string>, label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>defaultLabel(label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:53</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>observer</td>
-                                    <td>
-                                            <code>Observer&lt;string&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>label</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findUrl"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Private</span>
-                            findUrl
-                        </b>
-                        <a href="#findUrl"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findUrl(label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="58"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:58</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:40</a></div>
                 </td>
             </tr>
 
@@ -326,7 +226,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -360,8 +260,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:19</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:25</a></div>
                 </td>
             </tr>
 
@@ -440,7 +340,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/helgoland/depiction/src/lib/label-mapper/label-mapper.service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -453,72 +353,49 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
-import { Injectable } from &#x27;@angular/core&#x27;;
-import { IdCache, Settings, SettingsService } from &#x27;@helgoland/core&#x27;;
-import { Observable } from &#x27;rxjs/Observable&#x27;;
-import { Observer } from &#x27;rxjs/Observer&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, InjectionToken, Optional } from &#x27;@angular/core&#x27;;
+import { IdCache } from &#x27;@helgoland/core&#x27;;
+import { of } from &#x27;rxjs&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { tap } from &#x27;rxjs/operators&#x27;;
 
-declare var $: any;
+export const LABEL_MAPPER_HANDLER &#x3D; new InjectionToken&lt;LabelMapperHandler&gt;(&#x27;LABEL_MAPPER_HANDLER&#x27;);
 
-@Injectable()
+export interface LabelMapperHandler {
+  canHandle(label: string): boolean;
+  getMappedLabel(label: string): Observable&lt;string&gt;;
+}
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
 export class LabelMapperService {
 
-    private cache: IdCache&lt;string&gt; &#x3D; new IdCache();
+  private cache: IdCache&lt;string&gt; &#x3D; new IdCache();
 
-    constructor(
-        protected httpClient: HttpClient,
-        protected settingsSrvc: SettingsService&lt;Settings&gt;
-    ) { }
+  constructor(
+    @Optional() @Inject(LABEL_MAPPER_HANDLER) protected handler: LabelMapperHandler[] | null
+  ) { }
 
-    public getMappedLabel(label: string): Observable&lt;string&gt; {
-        return new Observable&lt;string&gt;((observer: Observer&lt;string&gt;) &#x3D;&gt; {
-            if (!this.settingsSrvc.getSettings().solveLabels) {
-                this.confirmLabel(observer, label);
-            } else {
-                const url &#x3D; this.findUrl(label);
-                if (url) {
-                    if (this.cache.has(url)) {
-                        this.confirmLabel(observer, this.cache.get(url));
-                    } else {
-                        const labelUrl &#x3D;
-                            this.settingsSrvc.getSettings().proxyUrl ? this.settingsSrvc.getSettings().proxyUrl + url : url;
-                        this.httpClient.get(labelUrl, { responseType: &#x27;text&#x27; }).subscribe((res) &#x3D;&gt; {
-                            try {
-                                const xml &#x3D; $.parseXML(res);
-                                label &#x3D; label.replace(url, $(xml).find(&#x27;prefLabel&#x27;).text());
-                            } catch (error) {
-                                // currently do nothing and use old label
-                            }
-                            this.cache.set(url, label);
-                            this.confirmLabel(observer, label);
-                        }, (error) &#x3D;&gt; {
-                            const resolvedLabel &#x3D; label.substring(label.lastIndexOf(&#x27;/&#x27;) + 1, label.length);
-                            this.cache.set(url, resolvedLabel);
-                            this.confirmLabel(observer, resolvedLabel);
-                        });
-                    }
-                } else {
-                    this.confirmLabel(observer, label);
-                }
-            }
-        });
+  public getMappedLabel(label: string): Observable&lt;string&gt; {
+    if (this.cache.has(label)) {
+      return of(this.cache.get(label));
     }
-
-    private confirmLabel(observer: Observer&lt;string&gt;, label: string) {
-        observer.next(label);
-        observer.complete();
-    }
-
-    private findUrl(label: string) {
-        const source &#x3D; (label || &#x27;&#x27;).toString();
-        const regexToken &#x3D; /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?&amp;\/\/&#x3D;]+)/g;
-        const matchArray &#x3D; regexToken.exec(source);
-        if (matchArray !&#x3D;&#x3D; null) {
-            return matchArray[0];
+    if (this.handler) {
+      for (let i &#x3D; 0; i &lt; this.handler.length; i++) {
+        const h &#x3D; this.handler[i];
+        if (h.canHandle(label)) {
+          return h.getMappedLabel(label).pipe(tap(mapped &#x3D;&gt; this.cache.set(label, mapped)));
         }
-        return null;
+      }
     }
+    return this.defaultLabel(label);
+  }
+
+  private defaultLabel(label: string): Observable&lt;string&gt; {
+    this.cache.set(label, label);
+    return of(label);
+  }
 }
 </code></pre>
     </div>

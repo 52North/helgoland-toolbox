@@ -169,73 +169,53 @@
 
     /**
      * internal dataset id
-     *
-     * @memberof DatasetOptions
      */
     public internalId: string;
 
     /**
      * type to display the data
      * default is &#x27;line&#x27;
-     *
-     * @memberof DatasetOptions
      */
     public type: &#x27;line&#x27; | &#x27;bar&#x27; &#x3D; &#x27;line&#x27;;
 
     /**
      * color of the dataset
-     *
-     * @memberof DatasetOptions
      */
     public color: string;
 
     /**
      * show or hide in the graph
-     *
-     * @memberof DatasetOptions
      */
     public visible: boolean &#x3D; true;
 
     /**
      * separate y axis of datasets with same unit
-     *
-     * @memberof DatasetOptions
      */
     public separateYAxis?: boolean &#x3D; false;
 
     /**
      * align graph that zero y axis is visible
-     *
-     * @memberof DatasetOptions
      */
     public zeroBasedYAxis?: boolean &#x3D; false;
 
     /**
      * auto zoom when range selection
-     *
-     * @memberof DatasetOptions
      */
     autoRangeSelection?: boolean &#x3D; false;
 
     /**
      * marker to request dataset data generalized
-     *
-     * @memberof DatasetOptions
      */
     public generalize?: boolean &#x3D; false;
 
     /**
      * list of visible reference values
-     *
-     * @memberof DatasetOptions
      */
     public showReferenceValues: ReferenceValueOption[] &#x3D; [];
 
     /**
      * radius of graphpoint
      * default is 0
-     *
-     * @memberof DatasetOptions
      */
     public pointRadius: number &#x3D; 0;
 
@@ -243,8 +223,6 @@
      * the start of, where to start with the bar chart
      * See also: https://momentjs.com/docs/#/manipulating/start-of/
      * default is &#x27;hour&#x27;
-     *
-     * @memberof DatasetOptions
      */
     public barStartOf: string &#x3D; &#x27;hour&#x27;;
 
@@ -253,43 +231,32 @@
      * defined as moment.duration by a string
      * See also: https://momentjs.com/docs/#/durations/
      * default is &#x27;PT1H&#x27; which means one hour duration
-     * @memberof DatasetOptions
      */
     public barPeriod: string &#x3D; &#x27;PT1H&#x27;;
 
     /**
      * width of graphline
-     *
-     * @memberof DatasetOptions
      */
     public lineWidth: number &#x3D; 1;
 
     /**
      * dasharray to structure the line or bar chart border
      * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
-     *
-     * @memberof DatasetOptions
      */
     public lineDashArray: number | number[];
 
     /**
      * color of the point border
-     *
-     * @memberof DatasetOptions
      */
     public pointBorderColor: string;
 
     /**
      * width of the point border
-     *
-     * @memberof DatasetOptions
      */
     public pointBorderWidth: number &#x3D; 0;
 
     /**
      * min and max range of y axis
-     *
-     * @memberof DatasetOptions
      */
     public yAxisRange?: MinMaxRange;
 

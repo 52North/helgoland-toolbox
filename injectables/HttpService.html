@@ -117,7 +117,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -196,8 +196,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:37</a></div>
                 </td>
             </tr>
 
@@ -275,7 +275,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/http.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -304,9 +304,7 @@ export interface HttpServiceInterceptor {
     intercept(req: HttpRequest&lt;any&gt;, options: Partial&lt;HttpRequestOptions&gt;, next: HttpServiceHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;;
 }
 
-@Injectable({
-    providedIn: &#x27;root&#x27;
-})
+@Injectable()
 export class HttpService {
 
     private handler: HttpServiceHandler;

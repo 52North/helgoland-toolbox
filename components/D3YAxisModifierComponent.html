@@ -1,0 +1,1546 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>D3YAxisModifierComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-d3-y-axis-modifier</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./d3-y-axis-modifier.component.scss</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#adjustedRanges">adjustedRanges</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#adjustAxisRange">adjustAxisRange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#adjustYAxis">adjustYAxis</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#afterYAxisDrawn">afterYAxisDrawn</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawResetButton">drawResetButton</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawShiftButtons">drawShiftButtons</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawZoomButtons">drawZoomButtons</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#adjustYAxis">adjustYAxis</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#shift">shift</a>
+                            </li>
+                            <li>
+                                <a href="#shiftFactor">shiftFactor</a>
+                            </li>
+                            <li>
+                                <a href="#zoom">zoom</a>
+                            </li>
+                            <li>
+                                <a href="#zoomFactor">zoomFactor</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="shift"></a>
+                        <b>shift</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:18</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Enables shift buttons for every y axis in the corresponding timeseries graph component.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="shiftFactor"></a>
+                        <b>shiftFactor</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.2</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:33</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The factor, which is used to shift up or down on the y axis range.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="zoom"></a>
+                        <b>zoom</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:23</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Enables zoom buttons for every y axis in the corresponding timeseries graph component.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="zoomFactor"></a>
+                        <b>zoomFactor</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.1</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:28</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The factor, which is used to zoom in or out on the y axis range.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adjustAxisRange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            adjustAxisRange
+                        </b>
+                        <a href="#adjustAxisRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adjustAxisRange(axis: <a href="../interfaces/YAxis.html">YAxis</a>, adjustMin: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, adjustMax: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:200</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>axis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>adjustMin</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>adjustMax</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adjustYAxis"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            adjustYAxis
+                        </b>
+                        <a href="#adjustYAxis"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adjustYAxis(axis: <a href="../interfaces/YAxis.html">YAxis</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:48</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>axis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="afterYAxisDrawn"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            afterYAxisDrawn
+                        </b>
+                        <a href="#afterYAxisDrawn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>afterYAxisDrawn(yaxis: <a href="../interfaces/YAxis.html">YAxis</a>, startX: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, axisHeight: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, axisWidth: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>yaxis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>startX</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>axisHeight</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>axisWidth</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawResetButton"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            drawResetButton
+                        </b>
+                        <a href="#drawResetButton"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drawResetButton(yaxis: <a href="../interfaces/YAxis.html">YAxis</a>, buttonSize: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, xAlign: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="112"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:112</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>yaxis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>buttonSize</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>xAlign</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawShiftButtons"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            drawShiftButtons
+                        </b>
+                        <a href="#drawShiftButtons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drawShiftButtons(yaxis: <a href="../interfaces/YAxis.html">YAxis</a>, buttonSize: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, xAlign: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>yaxis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>buttonSize</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>xAlign</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drawZoomButtons"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            drawZoomButtons
+                        </b>
+                        <a href="#drawZoomButtons"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drawZoomButtons(yaxis: <a href="../interfaces/YAxis.html">YAxis</a>, buttonSize: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, xAlign: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>yaxis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>buttonSize</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>xAlign</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adjustYAxis"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Optional</span>
+                            adjustYAxis
+                        </b>
+                        <a href="#adjustYAxis"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adjustYAxis(axis: <a href="../interfaces/YAxis.html">YAxis</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:58</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>axis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:54</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:50</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="adjustedRanges"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            adjustedRanges</b>
+                            <a href="#adjustedRanges"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Map&lt;string | MinMaxRange&gt;</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Map()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from &#x27;@angular/core&#x27;;
+import { MinMaxRange } from &#x27;@helgoland/core&#x27;;
+
+import { YAxis } from &#x27;../../../model/d3-general&#x27;;
+import { D3TimeseriesGraphControl } from &#x27;../../d3-timeseries-graph-control&#x27;;
+
+@Component({
+  selector: &#x27;n52-d3-y-axis-modifier&#x27;,
+  template: &#x27;&#x27;,
+  styleUrls: [&#x27;./d3-y-axis-modifier.component.scss&#x27;],
+  encapsulation: ViewEncapsulation.None
+})
+export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnInit, OnDestroy {
+
+  /**
+   * Enables shift buttons for every y axis in the corresponding timeseries graph component.
+   */
+  @Input() shift &#x3D; true;
+
+  /**
+   * Enables zoom buttons for every y axis in the corresponding timeseries graph component.
+   */
+  @Input() zoom &#x3D; true;
+
+  /**
+   * The factor, which is used to zoom in or out on the y axis range.
+   */
+  @Input() zoomFactor &#x3D; 0.1;
+
+  /**
+   * The factor, which is used to shift up or down on the y axis range.
+   */
+  @Input() shiftFactor &#x3D; 0.2;
+
+  private adjustedRanges: Map&lt;string, MinMaxRange&gt; &#x3D; new Map();
+
+  public ngOnInit() {
+    super.ngOnInit();
+    this.d3Graph.redrawCompleteGraph();
+  }
+
+  public ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.d3Graph.unregisterObserver(this);
+    this.d3Graph.redrawCompleteGraph();
+  }
+
+  public adjustYAxis(axis: YAxis) {
+    if ((this.shift || this.zoom) &amp;&amp; this.adjustedRanges.has(axis.uom)) {
+      axis.range &#x3D; this.adjustedRanges.get(axis.uom);
+    }
+  }
+
+  public afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number) {
+    if (yaxis.range.min &amp;&amp; yaxis.range.max) {
+      const buttonSize &#x3D; 7;
+      const xAlign &#x3D; startX + buttonSize * 2;
+      this.drawShiftButtons(yaxis, buttonSize, xAlign);
+      this.drawResetButton(yaxis, buttonSize, xAlign);
+      this.drawZoomButtons(yaxis, buttonSize, xAlign);
+    }
+  }
+
+  private drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
+    if (this.zoom) {
+      const diff &#x3D; yaxis.range.max - yaxis.range.min;
+      const step &#x3D; diff * this.zoomFactor;
+      const buffer &#x3D; this.shift ? 7.5 : 0;
+      // zoom in horizontal line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line zoom-button zoom-in y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize)
+        .attr(&#x27;y1&#x27;, buttonSize * (1.0 + buffer))
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize)
+        .attr(&#x27;y2&#x27;, buttonSize * (1.0 + buffer));
+      // zoom in vertical line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line zoom-button zoom-in y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign)
+        .attr(&#x27;y1&#x27;, buttonSize * (1.0 + buffer) - buttonSize)
+        .attr(&#x27;x2&#x27;, xAlign)
+        .attr(&#x27;y2&#x27;, buttonSize * (1.0 + buffer) + buttonSize);
+      // zoom in circle to increase are for mouse event
+      const zoomInHover &#x3D; this.d3Graph.getGraphElem().append(&#x27;circle&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-circle zoom-button zoom-in zoom-circle y-axis-modifier-button&#x27;)
+        .attr(&#x27;cx&#x27;, xAlign)
+        .attr(&#x27;cy&#x27;, buttonSize * (1.0 + buffer))
+        .attr(&#x27;r&#x27;, buttonSize * 1.5)
+        .on(&#x27;mouseup&#x27;, () &#x3D;&gt; this.adjustAxisRange(yaxis, step, -step))
+        .on(&#x27;mouseover&#x27;, () &#x3D;&gt; zoomInHover.classed(&#x27;hover&#x27;, true))
+        .on(&#x27;mouseout&#x27;, () &#x3D;&gt; zoomInHover.classed(&#x27;hover&#x27;, false));
+
+      // zoom out horizontal line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line zoom-button zoom-out y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize)
+        .attr(&#x27;y1&#x27;, buttonSize * (3.5 + buffer))
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize)
+        .attr(&#x27;y2&#x27;, buttonSize * (3.5 + buffer));
+      // zoom out circle to increase are for mouse event
+      const zoomOutHover &#x3D; this.d3Graph.getGraphElem().append(&#x27;circle&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-circle zoom-button zoom-out zoom-circle y-axis-modifier-button&#x27;)
+        .attr(&#x27;cx&#x27;, xAlign)
+        .attr(&#x27;cy&#x27;, buttonSize * (3.5 + buffer))
+        .attr(&#x27;r&#x27;, buttonSize * 1.5)
+        .on(&#x27;mouseup&#x27;, () &#x3D;&gt; this.adjustAxisRange(yaxis, -step, step))
+        .on(&#x27;mouseover&#x27;, () &#x3D;&gt; zoomOutHover.classed(&#x27;hover&#x27;, true))
+        .on(&#x27;mouseout&#x27;, () &#x3D;&gt; zoomOutHover.classed(&#x27;hover&#x27;, false));
+    }
+  }
+
+  private drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
+    if (this.adjustedRanges.has(yaxis.uom)) {
+      // add a buffer of +/- 2 to fit element into transparent/hover circle
+      // reset button line left top to right bottom
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line reset-button reset-line y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize + 2)
+        .attr(&#x27;y1&#x27;, buttonSize * 6 - buttonSize + 2)
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize - 2)
+        .attr(&#x27;y2&#x27;, buttonSize * 6 + buttonSize - 2);
+      // reset button line left bottom to right top
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line reset-button reset-line y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize + 2)
+        .attr(&#x27;y1&#x27;, buttonSize * 6 + buttonSize - 2)
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize - 2)
+        .attr(&#x27;y2&#x27;, buttonSize * 6 - buttonSize + 2);
+      // reset button circle to increase area for mouse event
+      const resetHover &#x3D; this.d3Graph.getGraphElem().append(&#x27;circle&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-circle reset-button reset-circle y-axis-modifier-button&#x27;)
+        .attr(&#x27;cx&#x27;, xAlign)
+        .attr(&#x27;cy&#x27;, buttonSize * 6)
+        .attr(&#x27;r&#x27;, buttonSize * 1.5)
+        .on(&#x27;mouseup&#x27;, () &#x3D;&gt; {
+          this.adjustedRanges.delete(yaxis.uom);
+          this.d3Graph.redrawCompleteGraph();
+        })
+        .on(&#x27;mouseover&#x27;, () &#x3D;&gt; resetHover.classed(&#x27;hover&#x27;, true))
+        .on(&#x27;mouseout&#x27;, () &#x3D;&gt; resetHover.classed(&#x27;hover&#x27;, false));
+    }
+  }
+
+  private drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
+    if (this.shift) {
+      const diff &#x3D; yaxis.range.max - yaxis.range.min;
+      const step &#x3D; diff * this.shiftFactor;
+      const shiftToCenter &#x3D; 0.5 * buttonSize;
+      // add buffer of +/- 1 to fit element into transparent/hover circle
+      // draw up button left line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line shift-button shift-up y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize + 1)
+        .attr(&#x27;y1&#x27;, buttonSize * 1.0 + shiftToCenter - 1)
+        .attr(&#x27;x2&#x27;, xAlign)
+        .attr(&#x27;y2&#x27;, buttonSize * 1.0 - buttonSize + shiftToCenter);
+      // draw up button right line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line shift-button shift-up y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign)
+        .attr(&#x27;y1&#x27;, buttonSize * 1.0 - buttonSize + shiftToCenter)
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize - 1)
+        .attr(&#x27;y2&#x27;, buttonSize * 1.0 + shiftToCenter - 1);
+      // draw up button circle to increase area for mouse event
+      const shiftUpHover &#x3D; this.d3Graph.getGraphElem().append(&#x27;circle&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-circle shift-button shift-up shift-circle y-axis-modifier-button&#x27;)
+        .attr(&#x27;cx&#x27;, xAlign)
+        .attr(&#x27;cy&#x27;, buttonSize * 1.0)
+        .attr(&#x27;r&#x27;, buttonSize * 1.5)
+        .on(&#x27;mouseup&#x27;, () &#x3D;&gt; this.adjustAxisRange(yaxis, step, step))
+        .on(&#x27;mouseover&#x27;, () &#x3D;&gt; shiftUpHover.classed(&#x27;hover&#x27;, true))
+        .on(&#x27;mouseout&#x27;, () &#x3D;&gt; shiftUpHover.classed(&#x27;hover&#x27;, false));
+
+      // draw down button left line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line shift-button shift-down y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign - buttonSize + 1)
+        .attr(&#x27;y1&#x27;, buttonSize * 3.5 - buttonSize + shiftToCenter + 1)
+        .attr(&#x27;x2&#x27;, xAlign)
+        .attr(&#x27;y2&#x27;, buttonSize * 3.5 + shiftToCenter);
+      // draw down button right line
+      this.d3Graph.getGraphElem().append(&#x27;line&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-line shift-button shift-down y-axis-modifier-button&#x27;)
+        .attr(&#x27;x1&#x27;, xAlign)
+        .attr(&#x27;y1&#x27;, buttonSize * 3.5 + shiftToCenter)
+        .attr(&#x27;x2&#x27;, xAlign + buttonSize - 1)
+        .attr(&#x27;y2&#x27;, buttonSize * 3.5 - buttonSize + shiftToCenter + 1);
+      // draw down button circle to increase area for mouse event
+      const shiftDownHover &#x3D; this.d3Graph.getGraphElem().append(&#x27;circle&#x27;)
+        .attr(&#x27;class&#x27;, &#x27;axis-button-circle shift-button shift-down shift-circle y-axis-modifier-button&#x27;)
+        .attr(&#x27;cx&#x27;, xAlign)
+        .attr(&#x27;cy&#x27;, buttonSize * 3.5)
+        .attr(&#x27;r&#x27;, buttonSize * 1.5)
+        .on(&#x27;mouseup&#x27;, () &#x3D;&gt; this.adjustAxisRange(yaxis, -step, -step))
+        .on(&#x27;mouseover&#x27;, () &#x3D;&gt; shiftDownHover.classed(&#x27;hover&#x27;, true))
+        .on(&#x27;mouseout&#x27;, () &#x3D;&gt; shiftDownHover.classed(&#x27;hover&#x27;, false));
+    }
+  }
+
+  private adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
+    const key &#x3D; axis.uom;
+    if (this.adjustedRanges.has(key)) {
+      this.adjustedRanges.get(key).min +&#x3D; adjustMin;
+      this.adjustedRanges.get(key).max +&#x3D; adjustMax;
+    } else {
+      this.adjustedRanges.set(key, {
+        min: axis.range.min + adjustMin,
+        max: axis.range.max + adjustMax
+      });
+    }
+    this.d3Graph.redrawCompleteGraph();
+  }
+
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./d3-y-axis-modifier.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.axis-button-line {
+    stroke: black;
+    fill: black;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+.axis-button-circle {
+    stroke: none;
+    fill: rgba($color: black, $alpha: 0.01);
+}
+.axis-button-circle.hover {
+    stroke-width: 0;
+    stroke: rgba($color: black, $alpha: 0.2); 
+    fill: rgba($color: black, $alpha: 0.2);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div></div>'
+    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'D3YAxisModifierComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'D3YAxisModifierComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

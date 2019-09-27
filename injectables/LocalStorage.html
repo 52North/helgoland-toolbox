@@ -88,6 +88,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
+                                <a href="#defaults">defaults</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#localStorageEnabled">localStorageEnabled</a>
                             </li>
                         </ul>
@@ -104,6 +108,14 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#clearStorage">clearStorage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#defineDefault">defineDefault</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#load">load</a>
                             </li>
                             <li>
@@ -113,6 +125,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#loadTextual">loadTextual</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeItem">removeItem</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -141,7 +157,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -154,6 +170,135 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearStorage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            clearStorage
+                        </b>
+                        <a href="#clearStorage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearStorage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:86</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>clears the complete local storage</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="defineDefault"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Protected</span>
+                            defineDefault
+                        </b>
+                        <a href="#defineDefault"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>defineDefault(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, object: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>sets a default value for the given key, which will be delivered, if nothing is stored in localstorage for the key</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -178,8 +323,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:41</a></div>
                 </td>
             </tr>
 
@@ -261,8 +406,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="59"
-                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:59</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:57</a></div>
                 </td>
             </tr>
 
@@ -344,8 +489,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="76"
-                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:76</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:73</a></div>
                 </td>
             </tr>
 
@@ -390,6 +535,80 @@
                     <div class="io-description">
                         <p>the string if exists, else null</p>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeItem"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            removeItem
+                        </b>
+                        <a href="#removeItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeItem(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>removes the item for the specified key</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -492,6 +711,39 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="defaults"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            defaults</b>
+                            <a href="#defaults"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{}</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/helgoland/core/src/lib/local-storage/local-storage.service.ts:12</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="localStorageEnabled"></a>
                         <span class="name">
                             <b>
@@ -532,6 +784,7 @@
 export class LocalStorage {
 
     private localStorageEnabled &#x3D; false;
+    private defaults &#x3D; {};
 
     constructor() {
         if (typeof (Storage) !&#x3D;&#x3D; &#x27;undefined&#x27;) {
@@ -545,7 +798,6 @@ export class LocalStorage {
      * @param key
      * @param object
      * @returns successfull saving
-     * @memberof LocalStorage
      */
     public save(key: string, object: any): boolean {
         if (this.localStorageEnabled) {
@@ -560,7 +812,6 @@ export class LocalStorage {
      *
      * @param key
      * @returns the object if exists, else null
-     * @memberof LocalStorage
      */
     public load&lt;T&gt;(key: string): T {
         if (this.localStorageEnabled) {
@@ -568,8 +819,8 @@ export class LocalStorage {
             if (result) {
                 return JSON.parse(result);
             }
-            return null;
         }
+        return this.defaults[key];
     }
 
     /**
@@ -577,7 +828,6 @@ export class LocalStorage {
      *
      * @param key
      * @returns the array of objects if exists, else null
-     * @memberof LocalStorage
      */
     public loadArray&lt;T&gt;(key: string): T[] {
         if (this.localStorageEnabled) {
@@ -585,8 +835,8 @@ export class LocalStorage {
             if (result) {
                 return JSON.parse(result);
             }
-            return null;
         }
+        return this.defaults[key];
     }
 
     /**
@@ -594,14 +844,44 @@ export class LocalStorage {
      *
      * @param key
      * @returns the string if exists, else null
-     * @memberof LocalStorage
      */
     public loadTextual(key: string): string {
         if (this.localStorageEnabled) {
             const result &#x3D; localStorage.getItem(key);
-            if (result) { return result; }
+            if (result) {
+                return result;
+            }
         }
-        return null;
+        return this.defaults[key];
+    }
+
+    /**
+     * clears the complete local storage
+     */
+    public clearStorage() {
+        if (this.localStorageEnabled) {
+            localStorage.clear();
+        }
+    }
+
+    /**
+     * removes the item for the specified key
+     * @param key
+     */
+    public removeItem(key: string) {
+        if (this.localStorageEnabled) {
+            localStorage.removeItem(key);
+        }
+    }
+
+    /**
+     * sets a default value for the given key, which will be delivered, if nothing is stored in localstorage for the key
+     *
+     * @param key
+     * @param object
+     */
+    protected defineDefault(key: string, object: any) {
+        this.defaults[key] &#x3D; object;
     }
 
 }

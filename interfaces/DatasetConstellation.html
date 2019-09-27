@@ -415,7 +415,7 @@ export class D3TrajectoryGraphComponent
     @Output()
     public onHoverHighlight: EventEmitter&lt;number&gt; &#x3D; new EventEmitter();
 
-    @ViewChild(&#x27;dthree&#x27;)
+    @ViewChild(&#x27;dthree&#x27;, { static: true })
     public d3Elem: ElementRef;
 
     private datasetMap: Map&lt;string, DatasetConstellation&gt; &#x3D; new Map();
@@ -577,31 +577,33 @@ export class D3TrajectoryGraphComponent
             const datasetEntry &#x3D; this.datasetMap.get(internalId);
             const firstEntry &#x3D; this.baseValues.length &#x3D;&#x3D;&#x3D; 0;
             let previous: DataEntry &#x3D; null;
-            datasetEntry.data.forEach((elem, idx) &#x3D;&gt; {
-                if (firstEntry) {
-                    const entry &#x3D; this.createDataEntry(internalId, elem, previous, idx);
-                    if (this.selection) {
-                        if (idx &gt;&#x3D; this.selection.from &amp;&amp; idx &lt;&#x3D; this.selection.to) {
+            if (datasetEntry &amp;&amp; datasetEntry.data &amp;&amp; datasetEntry.data.length &gt;&#x3D; 0) {
+                datasetEntry.data.forEach((elem, idx) &#x3D;&gt; {
+                    if (firstEntry) {
+                        const entry &#x3D; this.createDataEntry(internalId, elem, previous, idx);
+                        if (this.selection) {
+                            if (idx &gt;&#x3D; this.selection.from &amp;&amp; idx &lt;&#x3D; this.selection.to) {
+                                this.baseValues.push(entry);
+                            }
+                        } else {
                             this.baseValues.push(entry);
                         }
+                        previous &#x3D; entry;
                     } else {
-                        this.baseValues.push(entry);
-                    }
-                    previous &#x3D; entry;
-                } else {
-                    if (this.selection) {
-                        if (idx &gt;&#x3D; this.selection.from &amp;&amp; idx &lt;&#x3D; this.selection.to) {
-                            if (this.baseValues[idx - this.selection.from]) {
-                                this.baseValues[idx - this.selection.from][internalId] &#x3D; elem.value;
+                        if (this.selection) {
+                            if (idx &gt;&#x3D; this.selection.from &amp;&amp; idx &lt;&#x3D; this.selection.to) {
+                                if (this.baseValues[idx - this.selection.from]) {
+                                    this.baseValues[idx - this.selection.from][internalId] &#x3D; elem.value;
+                                }
+                            }
+                        } else {
+                            if (this.baseValues[idx]) {
+                                this.baseValues[idx][internalId] &#x3D; elem.value;
                             }
                         }
-                    } else {
-                        if (this.baseValues[idx]) {
-                            this.baseValues[idx][internalId] &#x3D; elem.value;
-                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -658,11 +660,11 @@ export class D3TrajectoryGraphComponent
     }
 
     private calculateHeight(): number {
-        return this.rawSvg.node().height.baseVal.value - this.margin.top - this.margin.bottom;
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
     private calculateWidth(): number {
-        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return (this.d3Elem.nativeElement as HTMLElement).clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     private getXValue(data: DataEntry) {
