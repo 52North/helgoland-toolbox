@@ -5,6 +5,9 @@ import { Layer } from 'ol/layer';
 
 import { OlBaseComponent } from '../../ol-base.component';
 
+/**
+ * Control component for an overview map
+ */
 @Component({
   selector: 'n52-ol-overview-map',
   template: '',
@@ -13,12 +16,24 @@ import { OlBaseComponent } from '../../ol-base.component';
 })
 export class OlOverviewMapComponent extends OlBaseComponent {
 
+  /**
+   * Collapsed on startup
+   */
   @Input() collased = true;
 
+  /**
+   * Can be collapsed
+   */
   @Input() collapsible = true;
 
+  /**
+   * Layers, which are shown in the overview map
+   */
   @Input() layers: Layer[];
 
+  /**
+   * position of the overview map
+   */
   @Input() position: 'upperleft' | 'upperright' | 'bottomleft' | 'bottomright' = 'bottomleft';
 
   mapInitialized(map: Map) {

@@ -3,6 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer-time-selector.component';
 
+/**
+ * Legend component to animate time dependend layers, the time information is gathered by the WMS capabilities
+ */
 @Component({
   selector: 'n52-ol-layer-animate-time',
   templateUrl: './ol-layer-animate-time.component.html'

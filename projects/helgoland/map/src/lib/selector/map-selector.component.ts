@@ -84,7 +84,6 @@ export abstract class MapSelectorComponent<T>
      *
      * @protected
      * @abstract
-     * @memberof MapSelectorComponent
      */
     protected abstract drawGeometries(): void;
 
@@ -93,7 +92,6 @@ export abstract class MapSelectorComponent<T>
      *
      * @protected
      * @param bounds where to zoom
-     * @memberof MapSelectorComponent
      */
     protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
         if (!this.avoidZoomToSelection) {

@@ -34,6 +34,9 @@ interface WMSLayer {
 // request Capabilities only all 5 minutes
 const WMS_CAPABILITIES_REQUEST_EXPIRATION = 1000 * 60 * 5;
 
+/**
+ * Handler for WMS capabilities
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -43,14 +46,35 @@ export class WmsCapabilitiesService {
     private http: HttpService
   ) { }
 
+  /**
+   * Returns the layer title of the capabilities as observable
+   *
+   * @param layerName
+   * @param wmsurl
+   * @returns layer title as string observable
+   */
   public getTitle(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => layer.Title));
   }
 
+  /**
+   * Returns the layer abstract of the capabilities as observable
+   *
+   * @param layerName
+   * @param wmsurl
+   * @returns layer abstract as string observable
+   */
   public getAbstract(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => layer.Abstract));
   }
 
+  /**
+   * Returns a date array as observable for the given layername, if available
+   *
+   * @param layerName
+   * @param wmsurl
+   * @returns
+   */
   public getTimeDimensionArray(layerName: string, wmsurl: string): Observable<Date[]> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       const timeDimension = layer.Dimension.find(e => e.name = 'time');
@@ -62,6 +86,13 @@ export class WmsCapabilitiesService {
     }));
   }
 
+  /**
+   * Returns a legend url as observable, if available
+   *
+   * @param layerName
+   * @param wmsurl
+   * @returns
+   */
   public getLegendUrl(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       let legendUrl = '';
@@ -70,6 +101,13 @@ export class WmsCapabilitiesService {
     }));
   }
 
+  /**
+   * Returns the default date as observable for the given layername, if available
+   *
+   * @param layerName
+   * @param wmsurl
+   * @returns
+   */
   public getDefaultTimeDimension(layerName: string, wmsurl: string): Observable<Date> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       const timeDimension = layer.Dimension.find(e => e.name = 'time');
@@ -86,6 +124,14 @@ export class WmsCapabilitiesService {
     }));
   }
 
+  /**
+   * Returns the extent as observable for the given layername and epsg code, if available
+   *
+   * @param layerName
+   * @param wmsurl
+   * @param epsgCode
+   * @returns
+   */
   public getExtent(layerName: string, wmsurl: string, epsgCode: string): Observable<{ crs: string, extent: number[] }> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       const match = layer.BoundingBox.find(e => e.crs === epsgCode);
