@@ -5,6 +5,7 @@
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
     "@types/geojson": "^7946.0.7",
+    "@types/d3": "^5.7.2",
     "d3": "^5.9.7",
     "moment": "^2.24.0"
   }
