@@ -59,6 +59,9 @@ export class D3TimeseriesGraphComponent
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
     public mainTimeInterval: Timespan;
 
+    @Input()
+    public yaxisModifier: boolean;
+
     @Output()
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
@@ -1013,8 +1016,8 @@ export class D3TimeseriesGraphComponent
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
-                .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
-                .call(this.wrapText, axisHeight - 10, this.height / 2);
+                .text(axis.label ? (axis.uom + ' @ ' + axis.label + 'a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1') : axis.uom)
+                .call(this.wrapText, axisHeight - 10, this.height / 2, this.yaxisModifier);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
@@ -1689,7 +1692,7 @@ export class D3TimeseriesGraphComponent
      * @param width {Number} width of the axis which must not be crossed
      * @param xposition {Number} position to center the label in the middle
      */
-    private wrapText(textObj: any, width: number, xposition: number): void {
+    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean): void {
         textObj.each(function (u: any, i: number, d: NodeList) {
             let text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
@@ -1704,7 +1707,10 @@ export class D3TimeseriesGraphComponent
                 line.push(word);
                 tspan.text(line.join(' '));
                 let node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
-                let hasGreaterWidth: boolean = node.getComputedTextLength() > width;
+                let hasGreaterWidth: boolean = node.getComputedTextLength() > (yaxisModifier ? width - 180 : width);
+                xposition = width / 2;
+                let xyposition = xposition + (node.getComputedTextLength() / 2);
+                node.setAttribute('x', '-' + '' + xyposition);
                 if (hasGreaterWidth) {
                     line.pop();
                     tspan.text(line.join(' '));
@@ -1712,6 +1718,7 @@ export class D3TimeseriesGraphComponent
                     tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', lineHeight + dy + 'em').text(word);
                 }
             }
+            console.log(tspan);
         });
     }
 
