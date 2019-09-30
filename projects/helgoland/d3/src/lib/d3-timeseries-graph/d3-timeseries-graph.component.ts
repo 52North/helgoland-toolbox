@@ -1016,7 +1016,7 @@ export class D3TimeseriesGraphComponent
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
-                .text(axis.label ? (axis.uom + ' @ ' + axis.label + 'a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1') : axis.uom)
+                .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
                 .call(this.wrapText, axisHeight - 10, this.height / 2, this.yaxisModifier);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
