@@ -114,7 +114,13 @@
       ],
       "@helgoland/facet-search/*": [
         "dist/helgoland/facet-search/*"
-      ]
+      ],
+      "@helgoland/sensorml": [
+        "dist/helgoland/sensorml"
+      ],
+      "@helgoland/sensorml/*": [
+        "dist/helgoland/sensorml/*"
+      ],
     }
   }
 }

@@ -16,6 +16,7 @@ import { TableComponent } from './pages/table/table.component';
 import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
+import { SensormlComponent } from './pages/sensorml/sensorml.component';
 
 export const ROUTES: Routes = [
   { path: 'eventing', component: EventingComponent },
@@ -34,5 +35,6 @@ export const ROUTES: Routes = [
   { path: 'time', component: TimeComponent },
   { path: 'timeseries-graph', component: TimeseriesGraphComponent },
   { path: 'trajectory', component: TrajectoryComponent },
+  { path: 'sensorml', component: SensormlComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];

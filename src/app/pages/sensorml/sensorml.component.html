@@ -1,0 +1,29 @@
+<div>
+
+  <h1>Import</h1>
+
+  <div>
+    <div>
+      Import description by file:
+    </div>
+    <div>
+      <input type="file" (change)="changeListener($event)">
+    </div>
+  </div>
+
+  <div class="content">
+    <div *ngIf="error" class="error">
+      <div class="alert alert-danger text-center" role="alert">
+        {{error}}
+      </div>
+    </div>
+  </div>
+
+</div>
+<div>
+
+  <h1>Export</h1>
+
+  <button (click)="openInEditor()">log JSON</button>
+
+</div>
