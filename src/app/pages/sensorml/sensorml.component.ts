@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractProcess, EditorService, SensorMLXmlService } from '@helgoland/sensorml';
+import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
 
 @Component({
   selector: 'n52-sensorml',
@@ -12,9 +12,7 @@ export class SensormlComponent implements OnInit {
   public error: string;
   public description: AbstractProcess;
 
-  constructor(
-    protected editorService: EditorService
-  ) { }
+  constructor( ) { }
 
   ngOnInit() { }
 
