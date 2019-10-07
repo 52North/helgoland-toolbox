@@ -73,7 +73,7 @@ import { ExtendedSettingsService } from './settings/settings.service';
 import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 import { SensormlComponent } from './pages/sensorml/sensorml.component';
 
-import { DescriptionConfigService, DescriptionRepository, DynamicGUIService, EditorService, SensorMLXmlService, XmlService } from '@helgoland/sensorml';
+import { SensorMLXmlService, XmlService } from '@helgoland/sensorml';
 
 const APP_PROVIDERS = [
   StatusCheckService,
@@ -95,10 +95,6 @@ const APP_PROVIDERS = [
     useClass: EventingImplApiInterface
   },
   MatDatepickerModule,
-  DescriptionConfigService,
-  DescriptionRepository,
-  DynamicGUIService,
-  EditorService,
   SensorMLXmlService,
   XmlService
 ];
