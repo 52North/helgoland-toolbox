@@ -1010,14 +1010,19 @@ export class D3TimeseriesGraphComponent
 
         // only if yAxis should be visible
         if (showAxis) {
-            const axisHeight = axisElem.node().getBBox().height;
+            let diagramHeight = this.height;
+            let axisHeight = axisElem.node().getBBox().height;
+            if (this.yaxisModifier) {
+                axisHeight -= 180;
+            }
+
             // draw y axis label
             const text = this.graph.append<SVGSVGElement>('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
-                .call(this.wrapText, axisHeight - 10, this.height / 2, this.yaxisModifier);
+                .call(this.wrapText, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
@@ -1692,8 +1697,9 @@ export class D3TimeseriesGraphComponent
      * @param width {Number} width of the axis which must not be crossed
      * @param xposition {Number} position to center the label in the middle
      */
-    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean): void {
+    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
         textObj.each(function (u: any, i: number, d: NodeList) {
+            const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
             let text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
                 word,
@@ -1707,15 +1713,17 @@ export class D3TimeseriesGraphComponent
                 line.push(word);
                 tspan.text(line.join(' '));
                 let node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
-                let hasGreaterWidth: boolean = node.getComputedTextLength() > (yaxisModifier ? width - 180 : width);
-                xposition = width / 2;
+                let hasGreaterWidth: boolean = node.getComputedTextLength() > width;
                 let xyposition = xposition + (node.getComputedTextLength() / 2);
-                node.setAttribute('x', '-' + '' + xyposition);
+                node.setAttribute('x', '-' + '' + (xyposition + bufferYaxisModifier));
                 if (hasGreaterWidth) {
                     line.pop();
                     tspan.text(line.join(' '));
                     line = [word];
                     tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', lineHeight + dy + 'em').text(word);
+                    let nodeGreater: SVGTSpanElement = <SVGTSpanElement>tspan.node();
+                    let xpositionGreater = xposition + (nodeGreater.getComputedTextLength());
+                    nodeGreater.setAttribute('x', '-' + '' + (xpositionGreater + bufferYaxisModifier));
                 }
             }
             console.log(tspan);

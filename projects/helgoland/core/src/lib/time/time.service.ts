@@ -43,7 +43,11 @@ export class Time {
         return new Timespan(from, to);
     }
 
-    // increase timespan by custom interval
+    /**
+     * Increase timespan by custom interval
+     * @param timespan
+     * @param interval
+     */
     public stepForwardCustom(timespan: Timespan, interval: number): Timespan {
         const from = moment(timespan.from).add(interval).unix() * 1000;
         const to = moment(timespan.to).add(interval).unix() * 1000;
