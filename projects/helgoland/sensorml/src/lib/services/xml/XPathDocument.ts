@@ -3,6 +3,7 @@ import { SensorMLNamespaceResolver } from './SensorMLNamespaceResolver';
 export class XPathDocument {
 
     private static MEDIA_TYPE = 'application/xml';
+    // private static MEDIA_TYPE: SupportedType = 'application/xml';
 
     public static parse(xml: string): XPathDocument {
         const parser = new DOMParser();
