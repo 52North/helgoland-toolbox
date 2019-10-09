@@ -1,21 +1,30 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Time, Timespan } from '@helgoland/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Required, Time, Timespan } from '@helgoland/core';
 
 @Component({
   selector: 'n52-auto-update-timespan',
   templateUrl: './auto-update-timespan.component.html',
   styleUrls: ['./auto-update-timespan.component.css']
 })
-export class AutoUpdateTimespanComponent implements OnInit {
+export class AutoUpdateTimespanComponent {
 
+  /**
+   * optional timeinterval in seconds to be added to current timespan. If not set, the refreshInterval is selected.
+   */
   @Input()
-  public timeInterval: number; // timeinterval in milliseconds to be added to current timespan
+  public timeInterval: number;
 
+  /**
+   * current Timespan to calculate new timespan
+   */
   @Input()
-  public currentTimespan: Timespan; // current Timespan to calculate new timespan
+  public currentTimespan: Timespan;
 
-  @Input()
-  public refreshInterval: number; // refresh interval in seconds
+  /**
+   * refresh interval in seconds
+   */
+  @Required @Input()
+  public refreshInterval: number;
 
   @Output()
   public onChangeTimespan: EventEmitter<Timespan> = new EventEmitter();
@@ -27,16 +36,14 @@ export class AutoUpdateTimespanComponent implements OnInit {
     protected timeSrvc: Time
   ) { }
 
-  ngOnInit() {
-  }
-
   public toggleUpdateTimeinterval() {
     this.toggleAutoUpdate = !this.toggleAutoUpdate;
     this.startTimer();
   }
 
   public updateTimespan() {
-    this.onChangeTimespan.emit(this.timeSrvc.stepForwardCustom(this.currentTimespan, this.timeInterval));
+    const stepSeconds = this.timeInterval || this.refreshInterval;
+    this.onChangeTimespan.emit(this.timeSrvc.stepForwardCustom(this.currentTimespan, stepSeconds * 1000));
   }
 
   private startTimer() {
