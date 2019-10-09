@@ -8,6 +8,7 @@ import {
     Output,
     ViewChild,
     ViewEncapsulation,
+    OnDestroy,
 } from '@angular/core';
 import {
     ColorService,
@@ -35,6 +36,8 @@ import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.servi
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { D3GraphId } from './../helper/d3-graph-id.service';
+import { D3Graphs } from './../helper/d3-graphs.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 
@@ -49,11 +52,12 @@ const TICKS_COUNT_YAXIS = 5;
     selector: 'n52-d3-timeseries-graph',
     templateUrl: './d3-timeseries-graph.component.html',
     styleUrls: ['./d3-timeseries-graph.component.scss'],
+    providers: [D3GraphId],
     encapsulation: ViewEncapsulation.None
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     @Input()
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
@@ -145,13 +149,18 @@ export class D3TimeseriesGraphComponent
         protected translateService: TranslateService,
         protected sumValues: SumValuesService,
         protected rangeCalc: RangeCalculationsService,
-        protected graphHelper: D3GraphHelperService
+        protected graphHelper: D3GraphHelperService,
+        protected graphService: D3Graphs,
+        protected graphId: D3GraphId
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
+
+        this.graphId.setId(this.currentTimeId);
+        this.graphService.setGraph(this.currentTimeId, this);
 
         this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
             .append<SVGSVGElement>('svg')
@@ -168,6 +177,11 @@ export class D3TimeseriesGraphComponent
 
         this.mousedownBrush = false;
         this.redrawCompleteGraph();
+    }
+
+    public ngOnDestroy() {
+        super.ngOnDestroy();
+        this.graphService.removeGraph(this.currentTimeId);
     }
 
     public registerObserver(obs: D3GraphObserver) {
@@ -640,11 +654,11 @@ export class D3TimeseriesGraphComponent
         this.datasetIds.forEach(key => this.createYAxisForId(key));
     }
 
-    protected createYAxisForId(key: string) {
-        if (this.preparedAxes.has(key) && this.datasetMap.get(key)) {
+    protected createYAxisForId(id: string) {
+        if (this.preparedAxes.has(id)) {
             // only create axis for datsets with datapoints inside selected timespan
-            if (this.datasetMap.get(key).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
-                const axisSettings = this.preparedAxes.get(key);
+            if (this.datasetMap.get(id) && this.datasetMap.get(id).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
+                const axisSettings = this.preparedAxes.get(id);
                 if (axisSettings.entry.options.separateYAxis) {
                     // create sepearte axis
                     this.yAxes.push({
@@ -653,7 +667,7 @@ export class D3TimeseriesGraphComponent
                         rangeFixed: axisSettings.rangeFixed,
                         selected: axisSettings.entry.selected,
                         seperate: true,
-                        ids: [key],
+                        ids: [id],
                         label: axisSettings.entry.axisOptions.parameters.feature.label
                     });
                 } else {
@@ -661,7 +675,7 @@ export class D3TimeseriesGraphComponent
                     const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
                     if (axis) {
                         // add id to axis
-                        axis.ids.push(key);
+                        axis.ids.push(id);
                         // update range for axis
                         if (axisSettings.rangeFixed && axis.rangeFixed) {
                             axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
@@ -682,7 +696,7 @@ export class D3TimeseriesGraphComponent
                             seperate: false,
                             selected: axisSettings.entry.selected,
                             rangeFixed: axisSettings.rangeFixed,
-                            ids: [key]
+                            ids: [id]
                         });
                     }
                 }
