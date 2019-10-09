@@ -43,6 +43,17 @@ export class Time {
         return new Timespan(from, to);
     }
 
+    /**
+     * Increase timespan by custom interval
+     * @param timespan
+     * @param interval
+     */
+    public stepForwardCustom(timespan: Timespan, interval: number): Timespan {
+        const from = moment(timespan.from).add(interval).unix() * 1000;
+        const to = moment(timespan.to).add(interval).unix() * 1000;
+        return new Timespan(from, to);
+    }
+
     public overlaps(timeInterval: TimeInterval, from: number, to: number): boolean {
         const timespan = this.createTimespanOfInterval(timeInterval);
         if (timespan.from <= to && timespan.to >= from) {
