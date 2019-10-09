@@ -2,16 +2,8 @@ import { Observable } from 'rxjs';
 
 import { HttpRequestOptions } from '../../model/internal/http-requests';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './datasetreams';
-import {
-  FeatureOfInterest,
-  FeatureOfInterestExpandParams,
-  FeatureOfInterestSelectParams,
-} from './features-of-interest';
-import {
-  HistoricalLocation,
-  HistoricalLocationExpandParams,
-  HistoricalLocationSelectParams,
-} from './historical-locations';
+import { FeatureOfInterest, FeatureOfInterestExpandParams, FeatureOfInterestSelectParams } from './features-of-interest';
+import { HistoricalLocation, HistoricalLocationExpandParams, HistoricalLocationSelectParams } from './historical-locations';
 import { Location, LocationExpandParams, LocationSelectParams } from './locations';
 import { Observation, ObservationExpandParams, ObservationSelectParams } from './observations';
 import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from './observed-properties';
@@ -50,7 +42,9 @@ export interface StaExpandParams { }
 
 export interface StaFilter<S extends StaSelectParams, E extends StaExpandParams> {
   $select?: S;
-  $expand?: E;
+  $expand?: E | string;
+  $orderby?: string;
+  $filter?: string;
 }
 
 export interface StaReadInterface {

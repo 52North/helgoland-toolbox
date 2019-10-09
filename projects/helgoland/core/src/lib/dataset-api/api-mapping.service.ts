@@ -23,11 +23,13 @@ export class DatasetApiMapping {
             } else {
                 this.http.get<any[]>(apiUrl).subscribe((result) => {
                     let version = DatasetApiVersion.V1;
-                    result.forEach((entry) => {
-                        if (entry.id === 'platforms') {
-                            version = DatasetApiVersion.V2;
-                        }
-                    });
+                    if (result instanceof Array) {
+                        result.forEach((entry) => {
+                            if (entry.id === 'platforms') {
+                                version = DatasetApiVersion.V2;
+                            }
+                        });
+                    }
                     this.cache.set(apiUrl, version);
                     this.confirmVersion(observer, version);
                 });
