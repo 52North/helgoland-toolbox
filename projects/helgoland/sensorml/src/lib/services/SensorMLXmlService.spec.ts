@@ -1,13 +1,12 @@
-const physicalComponentInstance = require('../../examples/physicalComponentInstance.xml');
-const physicalComponentType = require('../../examples/physicalComponentType.xml');
-const physicalSystemInstance = require('../../examples/physicalSystemInstance.xml');
-const physicalSystemType = require('../../examples/physicalSystemType.xml');
-const allinone = require('../../examples/lisaInstance.xml');
+const physicalComponentInstance = require('!raw-loader!../examples/physicalComponentInstance.xml');
+const physicalComponentType = require('!raw-loader!../examples/physicalComponentType.xml');
+const physicalSystemInstance = require('!raw-loader!../examples/physicalSystemInstance.xml');
+const physicalSystemType = require('!raw-loader!../examples/physicalSystemType.xml');
+const allinone = require('!raw-loader!../examples/lisaInstance.xml');
 
 import { PhysicalSystem } from '../model/sml';
 import { SensorMLXmlService } from './SensorMLXmlService';
 import { XPathDocument } from './xml/XPathDocument';
-
 describe('SensorMLXmlService', () => {
 
     const service = new SensorMLXmlService();
@@ -25,8 +24,8 @@ describe('SensorMLXmlService', () => {
         const description = service.deserialize(xml);
         const xmlSerialized = service.serialize(description);
         const descriptionDeserialized = service.deserialize(xmlSerialized);
-        console.log(JSON.stringify(description.contacts, null, 2));
-        console.log(JSON.stringify(descriptionDeserialized.contacts, null, 2));
+        // console.log(JSON.stringify(description.contacts, null, 2));
+        // console.log(JSON.stringify(descriptionDeserialized.contacts, null, 2));
         expect(description.contacts).toEqual(descriptionDeserialized.contacts);
     });
 
