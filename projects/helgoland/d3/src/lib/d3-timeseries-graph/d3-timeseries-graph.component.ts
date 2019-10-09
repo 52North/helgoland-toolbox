@@ -1737,7 +1737,6 @@ export class D3TimeseriesGraphComponent
                     nodeGreater.setAttribute('x', '-' + '' + (xpositionGreater + bufferYaxisModifier));
                 }
             }
-            console.log(tspan);
         });
     }
 
