@@ -5,10 +5,10 @@ import {
     EventEmitter,
     Input,
     IterableDiffers,
+    OnDestroy,
     Output,
     ViewChild,
     ViewEncapsulation,
-    OnDestroy,
 } from '@angular/core';
 import {
     ColorService,
@@ -656,49 +656,46 @@ export class D3TimeseriesGraphComponent
 
     protected createYAxisForId(id: string) {
         if (this.preparedAxes.has(id)) {
-            // only create axis for datsets with datapoints inside selected timespan
-            if (this.datasetMap.get(id) && this.datasetMap.get(id).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
-                const axisSettings = this.preparedAxes.get(id);
-                if (axisSettings.entry.options.separateYAxis) {
-                    // create sepearte axis
+            const axisSettings = this.preparedAxes.get(id);
+            if (axisSettings.entry.options.separateYAxis) {
+                // create sepearte axis
+                this.yAxes.push({
+                    uom: axisSettings.entry.axisOptions.uom,
+                    range: axisSettings.visualRange,
+                    rangeFixed: axisSettings.rangeFixed,
+                    selected: axisSettings.entry.selected,
+                    seperate: true,
+                    ids: [id],
+                    label: axisSettings.entry.axisOptions.parameters.feature.label
+                });
+            } else {
+                // find matching axis or add new
+                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+                if (axis) {
+                    // add id to axis
+                    axis.ids.push(id);
+                    // update range for axis
+                    if (axisSettings.rangeFixed && axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    } else if (axisSettings.rangeFixed) {
+                        axis.range = axisSettings.visualRange;
+                        axis.rangeFixed = true;
+                    } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    }
+                    // update selection
+                    if (axis.selected) {
+                        axis.selected = axisSettings.entry.selected;
+                    }
+                } else {
                     this.yAxes.push({
                         uom: axisSettings.entry.axisOptions.uom,
                         range: axisSettings.visualRange,
-                        rangeFixed: axisSettings.rangeFixed,
+                        seperate: false,
                         selected: axisSettings.entry.selected,
-                        seperate: true,
-                        ids: [id],
-                        label: axisSettings.entry.axisOptions.parameters.feature.label
+                        rangeFixed: axisSettings.rangeFixed,
+                        ids: [id]
                     });
-                } else {
-                    // find matching axis or add new
-                    const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
-                    if (axis) {
-                        // add id to axis
-                        axis.ids.push(id);
-                        // update range for axis
-                        if (axisSettings.rangeFixed && axis.rangeFixed) {
-                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                        } else if (axisSettings.rangeFixed) {
-                            axis.range = axisSettings.visualRange;
-                            axis.rangeFixed = true;
-                        } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
-                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                        }
-                        // update selection
-                        if (axis.selected) {
-                            axis.selected = axisSettings.entry.selected;
-                        }
-                    } else {
-                        this.yAxes.push({
-                            uom: axisSettings.entry.axisOptions.uom,
-                            range: axisSettings.visualRange,
-                            seperate: false,
-                            selected: axisSettings.entry.selected,
-                            rangeFixed: axisSettings.rangeFixed,
-                            ids: [id]
-                        });
-                    }
                 }
             }
         }
