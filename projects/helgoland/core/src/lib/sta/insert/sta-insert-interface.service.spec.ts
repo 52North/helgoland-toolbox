@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import moment from 'moment';
 
 import { DatasetApiInterface } from '../../dataset-api/api-interface';
 import { HttpService } from '../../dataset-api/http.service';
@@ -42,7 +43,7 @@ describe('StaInsertInterfaceService', () => {
         const insert: StaInsertInterfaceService = TestBed.get(StaInsertInterfaceService);
         const datasetApi: DatasetApiInterface = TestBed.get(SplittedDataDatasetApiInterface);
         // clearAll(read, del);
-        addCompleteThing(insert, read);
+        // setTimeout(() => addCompleteThing(insert, read), 1000);
         // addFluggsLocations(datasetApi, insert);
         // addSingleDataStream(insert);
         expect(read).toBeTruthy();
@@ -94,27 +95,26 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
         read.getThing(staUrl, insThing['@iot.id'], { $select: { Datastreams: true }, $expand: { Datastreams: true } }).subscribe(
             getThing => {
                 const datastreamId = getThing.Datastreams[0]['@iot.id'];
-                for (let i = 0; i < 20; i++) {
+                let counter = 0;
+                const interval = setInterval(() => {
                     const observation = {
-                        phenomenonTime: `2019-09-02T15:${10 + i}:02-01:00`,
+                        phenomenonTime: moment().format(),
                         result: Math.random() * 20,
                         Datastream: {
                             '@iot.id': datastreamId
                         }
                     };
                     insert.insertObservation(staUrl, observation).subscribe(
-                        res => {
-                            debugger;
-                        },
-                        error => {
-                            console.error(error.error);
-                        }
+                        res => console.log(`insert value at ${observation.phenomenonTime}: ${JSON.stringify(res)}`),
+                        error => console.error(error.error)
                     );
-                }
+                    counter++;
+                    if (counter > 1) {
+                        clearInterval(interval);
+                    }
+                }, 1000);
             });
-    }, error => {
-        debugger;
-    });
+    }, error => console.error(error));
 }
 
 function addSingleDataStream(insert: StaInsertInterfaceService) {

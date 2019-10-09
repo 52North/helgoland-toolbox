@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 
@@ -23,6 +24,7 @@ import { Location } from './model/locations';
 import { Observation } from './model/observations';
 import { ObservedProperty } from './model/observed-properties';
 import { Sensor } from './model/sensors';
+import { Thing } from './model/things';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
 enum ServiceType {
@@ -45,32 +47,32 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]> {
         return this.handleService<Platform[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getPlatforms(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getPlatforms(apiUrl, params, options)
         );
     }
 
     getPlatform(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform> {
         return this.handleService<Platform>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getPlatform(id, apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getPlatform(id, apiUrl, params, options)
         );
     }
 
     getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]> {
         return this.handleService<Dataset[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getDatasets(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getDatasets(apiUrl, params, options)
         );
     }
 
     getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset> {
         return this.handleService<Dataset>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getDataset(id, apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getDataset(id, apiUrl, params, options)
         );
     }
 
@@ -78,192 +80,195 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         const resolvedId = this.internalDatasetId.resolveInternalId(internalId);
         return this.handleService<Dataset>(
             resolvedId.url,
-            this.notImplemented(),
-            this.rest.getDatasetByInternalId(internalId, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getDatasetByInternalId(internalId, params, options)
         );
     }
 
     getData<T extends IDataEntry>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>> {
         return this.handleService<Data<T>>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getData(id, apiUrl, timespan, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getData(id, apiUrl, timespan, params, options)
         );
     }
 
     getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
         return this.handleService<Service[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getServices(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getServices(apiUrl, params, options)
         );
     }
 
     getService(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service> {
         return this.handleService<Service>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getService(id, apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getService(id, apiUrl, params, options)
         );
     }
 
     getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         return this.handleService<Station[]>(
             apiUrl,
-            this.sta.getLocations(apiUrl)
+            () => this.sta.getLocations(apiUrl)
                 .pipe(map(locs => locs.value.map(e => this.createStation(e)))),
-            this.rest.getStations(apiUrl, params, options)
+            () => this.rest.getStations(apiUrl, params, options)
         );
     }
 
     getStation(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station> {
         return this.handleService<Station>(
             apiUrl,
-            this.sta.getLocation(apiUrl, id).pipe(map(loc => this.createStation(loc))),
-            this.rest.getStation(id, apiUrl, params)
+            () => this.sta.getLocation(apiUrl, id).pipe(map(loc => this.createStation(loc))),
+            () => this.rest.getStation(id, apiUrl, params)
         );
     }
 
     getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
         return this.handleService<Timeseries[]>(
             apiUrl,
-            this.sta.getDatastreams(apiUrl).pipe(map(ds => ds.value.map(d => this.createTimeseries(d, apiUrl)))),
-            this.rest.getTimeseries(apiUrl, params, options)
+            () => this.sta.getDatastreams(apiUrl, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => ds.value.map(d => this.createTimeseries(d, apiUrl)))),
+            () => this.rest.getTimeseries(apiUrl, params, options)
         );
     }
 
     getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries> {
         return this.handleService<Timeseries>(
             apiUrl,
-            this.sta.getDatastream(apiUrl, id).pipe(map(ds => this.createTimeseries(ds, apiUrl))),
-            this.rest.getSingleTimeseries(id, apiUrl, params)
+            () => this.sta.getDatastream(apiUrl, id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => this.createTimeseries(ds, apiUrl))),
+            () => this.rest.getSingleTimeseries(id, apiUrl, params)
         );
     }
 
     getTimeseriesData(apiUrl: string, ids: string[], timespan: Timespan, options?: HttpRequestOptions): Observable<TimeseriesData[]> {
         return this.handleService<TimeseriesData[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getTimeseriesData(apiUrl, ids, timespan, options)
+            () => this.notImplemented(),
+            () => this.rest.getTimeseriesData(apiUrl, ids, timespan, options)
         );
     }
 
     getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries> {
-        const resolvedId = this.internalDatasetId.resolveInternalId(internalId);
+        const intId = this.internalDatasetId.resolveInternalId(internalId);
         return this.handleService<Timeseries>(
-            resolvedId.url,
-            this.notImplemented(),
-            this.rest.getSingleTimeseriesByInternalId(internalId, params)
+            intId.url,
+            () => this.sta.getDatastream(intId.url, intId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => this.createTimeseries(ds, intId.url))),
+            () => this.rest.getSingleTimeseriesByInternalId(internalId, params)
         );
     }
 
     getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras> {
         return this.handleService<TimeseriesExtras>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getTimeseriesExtras(id, apiUrl)
+            () => this.notImplemented(),
+            () => this.rest.getTimeseriesExtras(id, apiUrl)
         );
     }
 
     getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>> {
         return this.handleService<Data<T>>(
             apiUrl,
-            this.sta.getDatastream(apiUrl, id, { $select: { Observations: true }, $expand: { Observations: true } })
-                .pipe(map(obs => this.createData<T>(obs.Observations, params))),
-            this.rest.getTsData(id, apiUrl, timespan, params, options)
+            () => this.sta.getDatastreamObservationsRelation(apiUrl, id, { $orderby: 'phenomenonTime', $filter: this.createPhenomenonTimeFilter(timespan) })
+                .pipe(map(res => this.createData<T>(res.value, params))),
+            () => this.rest.getTsData(id, apiUrl, timespan, params, options)
         );
+    }
+
+    createPhenomenonTimeFilter(timespan: Timespan): string {
+        // TODO: implement to complete timespan: phenomenonTime ge 2019-09-02T16:20:02.000Z and phenomenonTime le 2019-09-02T16:14:02.000Z
+        return `phenomenonTime ge ${moment(timespan.from).format()}`;
     }
 
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
         return this.handleService<Category[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getCategories(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getCategories(apiUrl, params, options)
         );
     }
 
     getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category> {
         return this.handleService<Category>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getCategory(id, apiUrl, params)
+            () => this.notImplemented(),
+            () => this.rest.getCategory(id, apiUrl, params)
         );
     }
 
     getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {
         return this.handleService<Phenomenon[]>(
             apiUrl,
-            this.sta.getObservedProperties(apiUrl)
+            () => this.sta.getObservedProperties(apiUrl)
                 .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
-            this.rest.getPhenomena(apiUrl, params, options)
+            () => this.rest.getPhenomena(apiUrl, params, options)
         );
     }
 
     getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon> {
         return this.handleService<Phenomenon>(
             apiUrl,
-            this.sta.getObservedProperty(apiUrl, id)
+            () => this.sta.getObservedProperty(apiUrl, id)
                 .pipe(map(prop => this.createPhenomenon(prop))),
-            this.rest.getPhenomenon(id, apiUrl, params)
+            () => this.rest.getPhenomenon(id, apiUrl, params)
         );
     }
 
     getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]> {
         return this.handleService<Offering[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getOfferings(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getOfferings(apiUrl, params, options)
         );
     }
 
     getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering> {
         return this.handleService<Offering>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getOffering(id, apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getOffering(id, apiUrl, params, options)
         );
     }
 
     getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]> {
         return this.handleService<Feature[]>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getFeatures(apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getFeatures(apiUrl, params, options)
         );
     }
 
     getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature> {
         return this.handleService<Feature>(
             apiUrl,
-            this.notImplemented(),
-            this.rest.getFeature(id, apiUrl, params, options)
+            () => this.notImplemented(),
+            () => this.rest.getFeature(id, apiUrl, params, options)
         );
     }
 
     getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure[]> {
         return this.handleService<Procedure[]>(
             apiUrl,
-            this.sta.getSensors(apiUrl)
-                .pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
-            this.rest.getProcedures(apiUrl, params, options)
+            () => this.sta.getSensors(apiUrl).pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
+            () => this.rest.getProcedures(apiUrl, params, options)
         );
     }
 
     getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure> {
         return this.handleService<Procedure>(
             apiUrl,
-            this.sta.getSensor(apiUrl, id)
-                .pipe(map(sensor => this.createProcedure(sensor))),
-            this.rest.getProcedure(id, apiUrl, params)
+            () => this.sta.getSensor(apiUrl, id).pipe(map(sensor => this.createProcedure(sensor))),
+            () => this.rest.getProcedure(id, apiUrl, params)
         );
     }
 
-    private handleService<T>(apiUrl: string, staMethod: Observable<T>, seriesMethod: Observable<T>): Observable<T> {
+    private handleService<T>(apiUrl: string, staMethod: () => Observable<T>, seriesMethod: () => Observable<T>): Observable<T> {
         return this.checkService(apiUrl).pipe(flatMap(res => {
             if (res === ServiceType.STA) {
-                return staMethod;
+                return staMethod();
             } else {
-                return seriesMethod;
+                return seriesMethod();
             }
         }));
     }
@@ -278,14 +283,6 @@ export class MultiDatasetInterface implements DatasetApiV2 {
                     return this.serviceMap[url];
                 }));
         }
-    }
-
-    private createPhenomenon(obsProp: ObservedProperty): Phenomenon {
-        return { id: obsProp['@iot.id'], label: obsProp.name };
-    }
-
-    private createProcedure(sensor: Sensor): Procedure {
-        return { id: sensor['@iot.id'], label: sensor.name };
     }
 
     private createTimeseries(ds: Datastream, url: string): Timeseries {
@@ -304,34 +301,19 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             value: 123 // TODO: adjust
         };
         ts.referenceValues = [];
-        ts.station = null; // TODO: adjust
+        ts.station = this.createStation(ds.Thing.Locations[0]);
         ts.parameters = {
+            // TODO: adjust
             service: {
                 id: 'serviceId',
                 label: 'service label'
             },
-            offering: {
-                id: 'offeringId',
-                label: 'offering label'
-            },
-            feature: {
-                id: 'featureId',
-                label: 'feature label'
-            },
-            procedure: {
-                id: 'procedureId',
-                label: 'procedure label'
-            },
-            phenomenon: {
-                id: 'phenomenonId',
-                label: 'phenomenon label'
-            },
-            category: {
-                id: 'categoryId',
-                label: 'category label'
-            }
-        }; // TODO: adjust
-        ts.renderingHints = null; // TODO: adjust
+            offering: this.createOffering(ds.Thing),
+            feature: this.createFeature(ds.Thing.Locations[0]),
+            procedure: this.createProcedure(ds.Sensor),
+            phenomenon: this.createPhenomenon(ds.ObservedProperty),
+            category: this.createCategory(ds.ObservedProperty)
+        };
         return ts;
     }
 
@@ -353,6 +335,26 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             }),
             referenceValues: null
         };
+    }
+
+    private createFeature(loc: Location): Feature {
+        return { id: loc['@iot.id'], label: loc.name };
+    }
+
+    private createOffering(thing: Thing): Offering {
+        return { id: thing['@iot.id'], label: thing.name };
+    }
+
+    private createPhenomenon(obsProp: ObservedProperty): Phenomenon {
+        return { id: obsProp['@iot.id'], label: obsProp.name };
+    }
+
+    private createCategory(obsProp: ObservedProperty): Category {
+        return { id: obsProp['@iot.id'], label: obsProp.name };
+    }
+
+    private createProcedure(sensor: Sensor): Procedure {
+        return { id: sensor['@iot.id'], label: sensor.name };
     }
 
     private createStation(loc: Location): Station {
