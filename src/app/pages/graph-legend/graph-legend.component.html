@@ -1,10 +1,10 @@
 <div style="height: 500px;">
   <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
     [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-    [reloadForDatasets]="reloadForDatasets" (onTimespanChanged)="timespanChanged($event)"
-    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
-    (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)"
-    (dataLoaded)="loadings = $event" #diagram>
+    [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
+    (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
+    (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
+    (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
     <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
   </n52-d3-timeseries-graph>
 </div>
@@ -39,6 +39,10 @@
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
     </n52-timespan-shift-selector>
     <button (click)="refreshData()">reload Data</button>
+
+    <n52-auto-update-timespan [timeInterval]="timeIntervalUpdateTimespan" [currentTimespan]="timespan"
+      [refreshInterval]="refreshIntervalUpdateTimespan" (onChangeTimespan)="timespanChanged($event)">
+    </n52-auto-update-timespan>
   </div>
 
   <div>

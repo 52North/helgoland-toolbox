@@ -5,6 +5,7 @@ import {
     EventEmitter,
     Input,
     IterableDiffers,
+    OnDestroy,
     Output,
     ViewChild,
     ViewEncapsulation,
@@ -35,6 +36,8 @@ import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.servi
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { D3GraphId } from './../helper/d3-graph-id.service';
+import { D3Graphs } from './../helper/d3-graphs.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 
@@ -49,15 +52,19 @@ const TICKS_COUNT_YAXIS = 5;
     selector: 'n52-d3-timeseries-graph',
     templateUrl: './d3-timeseries-graph.component.html',
     styleUrls: ['./d3-timeseries-graph.component.scss'],
+    providers: [D3GraphId],
     encapsulation: ViewEncapsulation.None
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
-    implements AfterViewInit {
+    implements AfterViewInit, OnDestroy {
 
     @Input()
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
     public mainTimeInterval: Timespan;
+
+    @Input()
+    public yaxisModifier: boolean;
 
     @Output()
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
@@ -145,13 +152,18 @@ export class D3TimeseriesGraphComponent
         protected translateService: TranslateService,
         protected sumValues: SumValuesService,
         protected rangeCalc: RangeCalculationsService,
-        protected graphHelper: D3GraphHelperService
+        protected graphHelper: D3GraphHelperService,
+        protected graphService: D3Graphs,
+        protected graphId: D3GraphId
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
         this.currentTimeId = this.uuidv4();
+
+        this.graphId.setId(this.currentTimeId);
+        this.graphService.setGraph(this.currentTimeId, this);
 
         this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
             .append<SVGSVGElement>('svg')
@@ -168,6 +180,11 @@ export class D3TimeseriesGraphComponent
 
         this.mousedownBrush = false;
         this.redrawCompleteGraph();
+    }
+
+    public ngOnDestroy() {
+        super.ngOnDestroy();
+        this.graphService.removeGraph(this.currentTimeId);
     }
 
     public registerObserver(obs: D3GraphObserver) {
@@ -640,51 +657,48 @@ export class D3TimeseriesGraphComponent
         this.datasetIds.forEach(key => this.createYAxisForId(key));
     }
 
-    protected createYAxisForId(key: string) {
-        if (this.preparedAxes.has(key) && this.datasetMap.get(key)) {
-            // only create axis for datsets with datapoints inside selected timespan
-            if (this.datasetMap.get(key).data.values.findIndex(el => el[0] >= this.timespan.from && el[0] <= this.timespan.to) >= 0) {
-                const axisSettings = this.preparedAxes.get(key);
-                if (axisSettings.entry.options.separateYAxis) {
-                    // create sepearte axis
+    protected createYAxisForId(id: string) {
+        if (this.preparedAxes.has(id)) {
+            const axisSettings = this.preparedAxes.get(id);
+            if (axisSettings.entry.options.separateYAxis) {
+                // create sepearte axis
+                this.yAxes.push({
+                    uom: axisSettings.entry.axisOptions.uom,
+                    range: axisSettings.visualRange,
+                    rangeFixed: axisSettings.rangeFixed,
+                    selected: axisSettings.entry.selected,
+                    seperate: true,
+                    ids: [id],
+                    label: axisSettings.entry.axisOptions.parameters.feature.label
+                });
+            } else {
+                // find matching axis or add new
+                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+                if (axis) {
+                    // add id to axis
+                    axis.ids.push(id);
+                    // update range for axis
+                    if (axisSettings.rangeFixed && axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    } else if (axisSettings.rangeFixed) {
+                        axis.range = axisSettings.visualRange;
+                        axis.rangeFixed = true;
+                    } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
+                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    }
+                    // update selection
+                    if (axis.selected) {
+                        axis.selected = axisSettings.entry.selected;
+                    }
+                } else {
                     this.yAxes.push({
                         uom: axisSettings.entry.axisOptions.uom,
                         range: axisSettings.visualRange,
-                        rangeFixed: axisSettings.rangeFixed,
+                        seperate: false,
                         selected: axisSettings.entry.selected,
-                        seperate: true,
-                        ids: [key],
-                        label: axisSettings.entry.axisOptions.parameters.feature.label
+                        rangeFixed: axisSettings.rangeFixed,
+                        ids: [id]
                     });
-                } else {
-                    // find matching axis or add new
-                    const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
-                    if (axis) {
-                        // add id to axis
-                        axis.ids.push(key);
-                        // update range for axis
-                        if (axisSettings.rangeFixed && axis.rangeFixed) {
-                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                        } else if (axisSettings.rangeFixed) {
-                            axis.range = axisSettings.visualRange;
-                            axis.rangeFixed = true;
-                        } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
-                            axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                        }
-                        // update selection
-                        if (axis.selected) {
-                            axis.selected = axisSettings.entry.selected;
-                        }
-                    } else {
-                        this.yAxes.push({
-                            uom: axisSettings.entry.axisOptions.uom,
-                            range: axisSettings.visualRange,
-                            seperate: false,
-                            selected: axisSettings.entry.selected,
-                            rangeFixed: axisSettings.rangeFixed,
-                            ids: [key]
-                        });
-                    }
                 }
             }
         }
@@ -1007,14 +1021,19 @@ export class D3TimeseriesGraphComponent
 
         // only if yAxis should be visible
         if (showAxis) {
-            const axisHeight = axisElem.node().getBBox().height;
+            let diagramHeight = this.height;
+            let axisHeight = axisElem.node().getBBox().height;
+            if (this.yaxisModifier) {
+                axisHeight -= 180;
+            }
+
             // draw y axis label
             const text = this.graph.append<SVGSVGElement>('text')
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
-                .call(this.wrapText, axisHeight - 10, this.height / 2);
+                .call(this.wrapText, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
@@ -1689,8 +1708,9 @@ export class D3TimeseriesGraphComponent
      * @param width {Number} width of the axis which must not be crossed
      * @param xposition {Number} position to center the label in the middle
      */
-    private wrapText(textObj: any, width: number, xposition: number): void {
+    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
         textObj.each(function (u: any, i: number, d: NodeList) {
+            const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
             let text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
                 word,
@@ -1705,11 +1725,16 @@ export class D3TimeseriesGraphComponent
                 tspan.text(line.join(' '));
                 let node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
                 let hasGreaterWidth: boolean = node.getComputedTextLength() > width;
+                let xyposition = xposition + (node.getComputedTextLength() / 2);
+                node.setAttribute('x', '-' + '' + (xyposition + bufferYaxisModifier));
                 if (hasGreaterWidth) {
                     line.pop();
                     tspan.text(line.join(' '));
                     line = [word];
                     tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', lineHeight + dy + 'em').text(word);
+                    let nodeGreater: SVGTSpanElement = <SVGTSpanElement>tspan.node();
+                    let xpositionGreater = xposition + (nodeGreater.getComputedTextLength());
+                    nodeGreater.setAttribute('x', '-' + '' + (xpositionGreater + bufferYaxisModifier));
                 }
             }
         });
