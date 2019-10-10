@@ -74,6 +74,10 @@ export class GraphLegendComponent {
     public hoverstyle: HoveringStyle;
     public highlightedTime: Date;
 
+    // parameters to auto update timespan on click
+    public timeIntervalUpdateTimespan = 100000; // milliseconds of time
+    public refreshIntervalUpdateTimespan = 2; // seconds to refresh again
+
     constructor(
         private color: ColorService,
         private cdr: ChangeDetectorRef,
