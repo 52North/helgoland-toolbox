@@ -1,9 +1,13 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 
+import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
+import { D3GraphId } from '../../../helper/d3-graph-id.service';
+import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
+import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -17,6 +21,16 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl {
    * Copyright, which should be shown on the graph
    */
   @Input() copyright: D3Copyright;
+
+  constructor(
+    protected graphId: D3GraphId,
+    protected graphs: D3Graphs,
+    protected graphHelper: D3GraphHelperService
+  ) {
+    super(graphId, graphs, graphHelper);
+  }
+
+  public graphInitialized(graph: D3TimeseriesGraphComponent) { }
 
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
