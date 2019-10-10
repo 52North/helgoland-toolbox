@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
+
 import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
-import { Subject, of, Observable } from 'rxjs';
 
 /**
  * Service which holds all generated graphs and their ids
