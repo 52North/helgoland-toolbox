@@ -158,6 +158,12 @@ export class StaReadInterfaceService implements StaReadInterface {
     if (filter.$filter) {
       httpParams = httpParams.set('$filter', filter.$filter);
     }
+    if (filter.$count) {
+      httpParams = httpParams.set('$count', 'true');
+    }
+    if (filter.$top !== undefined) {
+      httpParams = httpParams.set('$top', filter.$top.toString());
+    }
     return httpParams;
   }
 

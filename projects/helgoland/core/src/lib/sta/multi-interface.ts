@@ -32,6 +32,9 @@ enum ServiceType {
     SERIES = 'SERIES'
 }
 
+const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
+const DEFAULT_SERVICE_ID = '1';
+
 @Injectable()
 export class MultiDatasetInterface implements DatasetApiV2 {
 
@@ -96,7 +99,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
         return this.handleService<Service[]>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.createServices(apiUrl),
             () => this.rest.getServices(apiUrl, params, options)
         );
     }
@@ -330,11 +333,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         ts.internalId = this.internalDatasetId.createInternalId(url, ds['@iot.id']);
         ts.station = this.createStation(ds.Thing.Locations[0]);
         ts.parameters = {
-            // TODO: adjust
-            service: {
-                id: 'serviceId',
-                label: 'service label'
-            },
+            service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
             offering: this.createOffering(ds.Thing),
             feature: this.createFeature(ds.Thing.Locations[0]),
             procedure: this.createProcedure(ds.Sensor),
@@ -390,6 +389,38 @@ export class MultiDatasetInterface implements DatasetApiV2 {
 
     private createProcedure(sensor: Sensor): Procedure {
         return { id: sensor['@iot.id'], label: sensor.name };
+    }
+
+    private createServices(url: string): Observable<Service[]> {
+        const filter = { $count: true, $top: 1 };
+        const locationsReq = this.sta.getLocations(url, filter);
+        const obPropsReq = this.sta.getObservedProperties(url, filter);
+        const thingsReq = this.sta.getThings(url, filter);
+        const sensorsReq = this.sta.getSensors(url, filter);
+        const datastreamsReq = this.sta.getDatastreams(url, filter);
+        return forkJoin([locationsReq, obPropsReq, thingsReq, sensorsReq, datastreamsReq]).pipe(map(res => {
+            const service: Service = {
+                id: DEFAULT_SERVICE_ID,
+                href: '',
+                label: DEFAULT_SERVICE_LABEL,
+                version: '1.0',
+                extras: [],
+                type: 'STA',
+                apiUrl: url,
+                quantities: {
+                    categories: res[1]['@iot.count'],
+                    features: res[0]['@iot.count'],
+                    offerings: res[2]['@iot.count'],
+                    phenomena: res[1]['@iot.count'],
+                    procedures: res[3]['@iot.count'],
+                    stations: res[0]['@iot.count'],
+                    timeseries: res[4]['@iot.count'],
+                    platforms: res[0]['@iot.count'],
+                    datasets: res[4]['@iot.count']
+                }
+            };
+            return [service];
+        }));
     }
 
     private createStation(loc: Location): Station {
