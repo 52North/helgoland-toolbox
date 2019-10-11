@@ -30,8 +30,9 @@ describe('HttpService', () => {
 
     fit('should be created', inject([MultiDatasetInterface], (service: MultiDatasetInterface) => {
         const url = staUrl;
-        service.getTimeseries(url).subscribe(
+        service.getTimeseries(url, { expanded: false }).subscribe(
             series => {
+                console.log(JSON.stringify(series, null, 2));
                 if (series.length > 0) {
                     const id = series[0].id;
                     const timespan = new Timespan(new Date(2019, 9, 11, 9, 18).valueOf(), new Date(2019, 9, 11, 10, 26).valueOf());

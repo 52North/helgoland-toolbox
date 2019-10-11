@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { Observable, of } from 'rxjs';
+import { EMPTY, forkJoin, Observable, of } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../dataset-api/http.service';
@@ -9,7 +9,7 @@ import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
 import { Category } from '../model/dataset-api/category';
 import { Data, IDataEntry } from '../model/dataset-api/data';
-import { Dataset, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
+import { Dataset, FirstLastValue, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
@@ -129,7 +129,16 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
         return this.handleService<Timeseries[]>(
             apiUrl,
-            () => this.sta.getDatastreams(apiUrl, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => ds.value.map(d => this.createTimeseries(d, apiUrl)))),
+            () => this.sta.getDatastreams(apiUrl, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
+                .pipe(flatMap(ds => {
+                    return forkJoin(ds.value.map(d => {
+                        if (params && params.expanded) {
+                            return this.requestExpandedTimeseries(d, apiUrl);
+                        } else {
+                            return of(this.createTimeseries(d, apiUrl));
+                        }
+                    }));
+                })),
             () => this.rest.getTimeseries(apiUrl, params, options)
         );
     }
@@ -137,9 +146,28 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries> {
         return this.handleService<Timeseries>(
             apiUrl,
-            () => this.sta.getDatastream(apiUrl, id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => this.createTimeseries(ds, apiUrl))),
+            () => this.sta.getDatastream(apiUrl, id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
+                .pipe(flatMap(ds => this.requestExpandedTimeseries(ds, apiUrl))),
             () => this.rest.getSingleTimeseries(id, apiUrl, params)
         );
+    }
+
+    private requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable<Timeseries> {
+        // get first and last timestamp
+        if (ds.phenomenonTime && ds.phenomenonTime.indexOf('/')) {
+            const firstLastDates = ds.phenomenonTime.split('/');
+            // request for first and last timestamp the values
+            const firstReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $filter: this.createTimeFilter(firstLastDates[0]) });
+            const lastReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $filter: this.createTimeFilter(firstLastDates[1]) });
+            return forkJoin([firstReq, lastReq]).pipe(map(res => {
+                const first: FirstLastValue = this.createFirstLastValue(res[0].value[0]);
+                const last: FirstLastValue = this.createFirstLastValue(res[1].value[0]);
+                // create extended timeseries
+                return this.createExpandedTimeseries(ds, first, last, apiUrl);
+            }));
+        } else {
+            return EMPTY;
+        }
     }
 
     getTimeseriesData(apiUrl: string, ids: string[], timespan: Timespan, options?: HttpRequestOptions): Observable<TimeseriesData[]> {
@@ -154,7 +182,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         const intId = this.internalDatasetId.resolveInternalId(internalId);
         return this.handleService<Timeseries>(
             intId.url,
-            () => this.sta.getDatastream(intId.url, intId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' }).pipe(map(ds => this.createTimeseries(ds, intId.url))),
+            () => this.sta.getDatastream(intId.url, intId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
+                .pipe(flatMap(ds => this.requestExpandedTimeseries(ds, intId.url))),
             () => this.rest.getSingleTimeseriesByInternalId(internalId, params)
         );
     }
@@ -176,8 +205,16 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         );
     }
 
-    createTimespanFilter(timespan: Timespan): string {
+    private createTimespanFilter(timespan: Timespan): string {
         return `phenomenonTime ge ${moment(timespan.from).format()} and phenomenonTime le ${moment(timespan.to).format()}`;
+    }
+
+    private createTimeFilter(time: string): string {
+        return `phenomenonTime eq ${time}`;
+    }
+
+    private createFirstLastValue(obs: Observation): FirstLastValue {
+        return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
     }
 
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
@@ -291,15 +328,6 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         ts.url = url;
         ts.uom = ds.unitOfMeasurement.symbol;
         ts.internalId = this.internalDatasetId.createInternalId(url, ds['@iot.id']);
-        ts.firstValue = {
-            timestamp: 123, // TODO: adjust
-            value: 123 // TODO: adjust
-        };
-        ts.lastValue = {
-            timestamp: 123, // TODO: adjust
-            value: 123 // TODO: adjust
-        };
-        ts.referenceValues = [];
         ts.station = this.createStation(ds.Thing.Locations[0]);
         ts.parameters = {
             // TODO: adjust
@@ -313,6 +341,14 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             phenomenon: this.createPhenomenon(ds.ObservedProperty),
             category: this.createCategory(ds.ObservedProperty)
         };
+        return ts;
+    }
+
+    private createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): Timeseries {
+        const ts = this.createTimeseries(ds, url);
+        ts.firstValue = first;
+        ts.lastValue = last;
+        ts.referenceValues = [];
         return ts;
     }
 

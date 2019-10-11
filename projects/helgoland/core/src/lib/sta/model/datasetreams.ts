@@ -16,7 +16,7 @@ export interface Datastream extends StaObject {
     unitOfMeasurement?: UnitOfMeasurement;
     observationType?: string;
     observedArea?: GeoJSON.GeometryObject;
-    // phenomenonTime: TimeInterval;
+    phenomenonTime?: string;
     // resultTime: TimeInterval;
     'Thing@iot.navigationLink'?: string;
     Thing?: Thing;
