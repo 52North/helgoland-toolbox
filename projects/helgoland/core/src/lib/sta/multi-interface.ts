@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { EMPTY, forkJoin, Observable, of } from 'rxjs';
+import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../dataset-api/http.service';
@@ -10,6 +10,7 @@ import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-ap
 import { Category } from '../model/dataset-api/category';
 import { Data, IDataEntry } from '../model/dataset-api/data';
 import { Dataset, FirstLastValue, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
+import { PlatformTypes } from '../model/dataset-api/enums';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
@@ -50,7 +51,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]> {
         return this.handleService<Platform[]>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getLocations(apiUrl).pipe(map(locs => locs.value.map(l => this.createPlatform(l)))),
             () => this.rest.getPlatforms(apiUrl, params, options)
         );
     }
@@ -58,7 +59,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPlatform(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform> {
         return this.handleService<Platform>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getLocation(apiUrl, id).pipe(map(loc => this.createPlatform(loc))),
             () => this.rest.getPlatform(id, apiUrl, params, options)
         );
     }
@@ -223,7 +224,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
         return this.handleService<Category[]>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getObservedProperties(apiUrl).pipe(map(obProps => obProps.value.map(e => this.createCategory(e)))),
             () => this.rest.getCategories(apiUrl, params, options)
         );
     }
@@ -231,7 +232,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category> {
         return this.handleService<Category>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getObservedProperty(apiUrl, id).pipe(map(prop => this.createCategory(prop))),
             () => this.rest.getCategory(id, apiUrl, params)
         );
     }
@@ -239,8 +240,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {
         return this.handleService<Phenomenon[]>(
             apiUrl,
-            () => this.sta.getObservedProperties(apiUrl)
-                .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
+            () => this.sta.getObservedProperties(apiUrl).pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
             () => this.rest.getPhenomena(apiUrl, params, options)
         );
     }
@@ -248,8 +248,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon> {
         return this.handleService<Phenomenon>(
             apiUrl,
-            () => this.sta.getObservedProperty(apiUrl, id)
-                .pipe(map(prop => this.createPhenomenon(prop))),
+            () => this.sta.getObservedProperty(apiUrl, id).pipe(map(prop => this.createPhenomenon(prop))),
             () => this.rest.getPhenomenon(id, apiUrl, params)
         );
     }
@@ -257,7 +256,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]> {
         return this.handleService<Offering[]>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getThings(apiUrl).pipe(map(things => things.value.map(t => this.createOffering(t)))),
             () => this.rest.getOfferings(apiUrl, params, options)
         );
     }
@@ -265,7 +264,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering> {
         return this.handleService<Offering>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getThing(apiUrl, id).pipe(map(t => this.createOffering(t))),
             () => this.rest.getOffering(id, apiUrl, params, options)
         );
     }
@@ -273,7 +272,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]> {
         return this.handleService<Feature[]>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getLocations(apiUrl).pipe(map(locs => locs.value.map(l => this.createFeature(l)))),
             () => this.rest.getFeatures(apiUrl, params, options)
         );
     }
@@ -281,7 +280,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature> {
         return this.handleService<Feature>(
             apiUrl,
-            () => this.notImplemented(),
+            () => this.sta.getLocation(apiUrl, id).pipe(map(loc => this.createFeature(loc))),
             () => this.rest.getFeature(id, apiUrl, params, options)
         );
     }
@@ -428,15 +427,25 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             id: loc['@iot.id'],
             geometry: loc.location,
             properties: {
-                id: 'id', // TODO: adjust
+                id: loc['@iot.id'],
                 label: loc.name,
                 timeseries: {} // TODO: adjust
             }
         };
     }
 
+    private createPlatform(loc: Location): Platform {
+        return {
+            id: loc['@iot.id'],
+            label: loc.name,
+            platformType: PlatformTypes.stationary,
+            datasets: [],
+            geometry: loc.location as GeoJSON.Point,
+        };
+    }
+
     private notImplemented(): Observable<any> {
-        throw new Error('Needs to be implemented'); // TODO: remove
+        return throwError('Needs to be implemented'); // TODO: remove
     }
 
 }
