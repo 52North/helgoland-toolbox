@@ -35,6 +35,7 @@ export interface StaSelectParams {
 }
 
 export interface StaValueListResponse<T extends StaObject> {
+  '@iot.count': number;
   value: T[];
 }
 
@@ -45,6 +46,8 @@ export interface StaFilter<S extends StaSelectParams, E extends StaExpandParams>
   $expand?: E | string;
   $orderby?: string;
   $filter?: string;
+  $count?: boolean;
+  $top?: number;
 }
 
 export interface StaReadInterface {
