@@ -99,7 +99,7 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
                 const interval = setInterval(() => {
                     const observation = {
                         phenomenonTime: moment().format(),
-                        result: Math.random() * 20,
+                        result: (Math.random() * 20).toString(),
                         Datastream: {
                             '@iot.id': datastreamId
                         }

@@ -3,7 +3,7 @@ import { InsertDatastream } from './datasetreams';
 
 export interface Observation extends StaObject {
     phenomenonTime?: string;
-    result?: string | number;
+    result?: string;
     resultTime?: Date;
     'Datastream@iot.navigationLink'?: string;
     'FeatureOfInterest@iot.navigationLink'?: string;
@@ -11,7 +11,7 @@ export interface Observation extends StaObject {
 
 export interface InsertObservation extends Observation {
     phenomenonTime: string;
-    result: string | number;
+    result: string;
     Datastream: (InsertDatastream | InsertId);
 }
 
