@@ -170,15 +170,14 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>> {
         return this.handleService<Data<T>>(
             apiUrl,
-            () => this.sta.getDatastreamObservationsRelation(apiUrl, id, { $orderby: 'phenomenonTime', $filter: this.createPhenomenonTimeFilter(timespan) })
+            () => this.sta.getDatastreamObservationsRelation(apiUrl, id, { $orderby: 'phenomenonTime', $filter: this.createTimespanFilter(timespan) })
                 .pipe(map(res => this.createData<T>(res.value, params))),
             () => this.rest.getTsData(id, apiUrl, timespan, params, options)
         );
     }
 
-    createPhenomenonTimeFilter(timespan: Timespan): string {
-        // TODO: implement to complete timespan: phenomenonTime ge 2019-09-02T16:20:02.000Z and phenomenonTime le 2019-09-02T16:14:02.000Z
-        return `phenomenonTime ge ${moment(timespan.from).format()}`;
+    createTimespanFilter(timespan: Timespan): string {
+        return `phenomenonTime ge ${moment(timespan.from).format()} and phenomenonTime le ${moment(timespan.to).format()}`;
     }
 
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {

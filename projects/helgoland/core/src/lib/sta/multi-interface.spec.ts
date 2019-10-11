@@ -34,16 +34,14 @@ describe('HttpService', () => {
             series => {
                 if (series.length > 0) {
                     const id = series[0].id;
-                    const timespan = new Timespan(new Date(2019, 9, 4, 10, 24).valueOf(), new Date().valueOf());
+                    const timespan = new Timespan(new Date(2019, 9, 11, 9, 18).valueOf(), new Date(2019, 9, 11, 10, 26).valueOf());
                     service.getTsData(id, url, timespan).subscribe(
                         ts => console.log(JSON.stringify(ts, null, 2)),
                         error => console.error(error)
                     );
                 }
             },
-            error => {
-                console.error(error);
-            }
+            error => console.error(error)
         );
         // testStations(service, url);
         expect(service).toBeDefined();
