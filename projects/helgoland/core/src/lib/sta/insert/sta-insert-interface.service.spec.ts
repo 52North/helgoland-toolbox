@@ -109,7 +109,7 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
                         error => console.error(error.error)
                     );
                     counter++;
-                    if (counter > 1) {
+                    if (counter > 5) {
                         clearInterval(interval);
                     }
                 }, 1000);
