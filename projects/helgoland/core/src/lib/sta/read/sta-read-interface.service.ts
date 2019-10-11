@@ -168,14 +168,18 @@ export class StaReadInterfaceService implements StaReadInterface {
   }
 
   protected createRequestUrl(url: string, endpoint: string, id?: string, relation?: string) {
-    // TODO: Check whether url ends with slash
-    if (id !== null && id !== undefined && relation !== null && relation !== undefined) {
-      return `${url}${endpoint}('${id}')/${relation}`;
-    } else if (id !== null && id !== undefined) {
-      return `${url}${endpoint}('${id}')`;
-    } else {
-      return `${url}${endpoint}`;
+    let requestStub = `${url}${endpoint}`;
+    if (id !== null && id !== undefined) {
+      if (isNaN(Number(id))) {
+        requestStub += `('${id}')`;
+      } else {
+        requestStub += `(${id})`;
+      }
+      if (relation !== undefined) {
+        requestStub += `/${relation}`;
+      }
     }
+    return requestStub;
   }
 
 }
