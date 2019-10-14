@@ -7,12 +7,14 @@ import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selec
 import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
 import { TimespanButtonComponent } from './timespan-button/timespan-button.component';
 import { TimespanShiftSelectorComponent } from './timespan-shift-selector/timespan-shift-selector.component';
+import { AutoUpdateTimespanComponent } from './auto-update-timespan/auto-update-timespan.component';
 
 const COMPONENTS = [
   PredefinedTimespanSelectorComponent,
   TimeListSelectorComponent,
   TimespanShiftSelectorComponent,
-  TimespanButtonComponent
+  TimespanButtonComponent,
+  AutoUpdateTimespanComponent
 ];
 
 @NgModule({
