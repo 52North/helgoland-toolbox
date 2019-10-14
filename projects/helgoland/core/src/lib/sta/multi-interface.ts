@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { EMPTY, forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../dataset-api/http.service';
@@ -183,11 +183,16 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             return forkJoin([firstReq, lastReq]).pipe(map(res => {
                 const first: FirstLastValue = this.createFirstLastValue(res[0].value[0]);
                 const last: FirstLastValue = this.createFirstLastValue(res[1].value[0]);
-                // create extended timeseries
                 return this.createExpandedTimeseries(ds, first, last, apiUrl);
             }));
         } else {
-            return of(this.createTimeseries(ds, apiUrl));
+            const firstReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $orderby: 'phenomenonTime', $top: 1 });
+            const lastReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $orderby: 'phenomenonTime desc', $top: 1 });
+            return forkJoin([firstReq, lastReq]).pipe(map(res => {
+                const first: FirstLastValue = this.createFirstLastValue(res[0].value[0]);
+                const last: FirstLastValue = this.createFirstLastValue(res[1].value[0]);
+                return this.createExpandedTimeseries(ds, first, last, apiUrl);
+            }));
         }
     }
 
