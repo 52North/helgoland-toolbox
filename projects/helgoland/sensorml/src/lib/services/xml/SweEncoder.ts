@@ -739,7 +739,6 @@ export class SweEncoder {
 
 
     public encodeAbstractSwe(node: Element, component: AbstractSWE, document: Document): void {
-
         if (component.id) {
             node.setAttribute('id', component.id);
         }
