@@ -9,7 +9,14 @@ import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
 import { Category } from '../model/dataset-api/category';
 import { Data, IDataEntry } from '../model/dataset-api/data';
-import { Dataset, FirstLastValue, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
+import {
+    Dataset,
+    FirstLastValue,
+    ParameterConstellation,
+    Timeseries,
+    TimeseriesData,
+    TimeseriesExtras,
+} from '../model/dataset-api/dataset';
 import { PlatformTypes } from '../model/dataset-api/enums';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
@@ -21,10 +28,11 @@ import { Station } from '../model/dataset-api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { Datastream } from './model/datasetreams';
-import { Location } from './model/locations';
+import { Location, LocationExpandParams, LocationSelectParams } from './model/locations';
 import { Observation } from './model/observations';
 import { ObservedProperty } from './model/observed-properties';
 import { Sensor } from './model/sensors';
+import { StaFilter } from './model/sta-interface';
 import { Thing } from './model/things';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
@@ -116,16 +124,25 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         return this.handleService<Station[]>(
             apiUrl,
-            () => this.sta.getLocations(apiUrl)
+            () => this.sta.getLocations(apiUrl, this.createStationFilter(params))
                 .pipe(map(locs => locs.value.map(e => this.createStation(e)))),
             () => this.rest.getStations(apiUrl, params, options)
         );
     }
 
+    private createStationFilter(params?: ParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+        if (params) {
+            if (params.phenomenon) {
+                return { $filter: `Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}` };
+            }
+        }
+    }
+
     getStation(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station> {
         return this.handleService<Station>(
             apiUrl,
-            () => this.sta.getLocation(apiUrl, id).pipe(map(loc => this.createStation(loc))),
+            () => this.sta.getLocation(apiUrl, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
+                .pipe(map(loc => this.createExtendedStation(loc))),
             () => this.rest.getStation(id, apiUrl, params)
         );
     }
@@ -170,7 +187,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
                 return this.createExpandedTimeseries(ds, first, last, apiUrl);
             }));
         } else {
-            return EMPTY;
+            return of(this.createTimeseries(ds, apiUrl));
         }
     }
 
@@ -331,15 +348,19 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         ts.uom = ds.unitOfMeasurement.symbol;
         ts.internalId = this.internalDatasetId.createInternalId(url, ds['@iot.id']);
         ts.station = this.createStation(ds.Thing.Locations[0]);
-        ts.parameters = {
-            service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
-            offering: this.createOffering(ds.Thing),
-            feature: this.createFeature(ds.Thing.Locations[0]),
-            procedure: this.createProcedure(ds.Sensor),
-            phenomenon: this.createPhenomenon(ds.ObservedProperty),
-            category: this.createCategory(ds.ObservedProperty)
-        };
+        ts.parameters = this.createTsParameter(ds, ds.Thing, ds.Sensor, ds.ObservedProperty);
         return ts;
+    }
+
+    private createTsParameter(ds: Datastream, thing: Thing, sensor: Sensor, obsProp: ObservedProperty): ParameterConstellation {
+        return {
+            service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
+            offering: this.createOffering(thing),
+            feature: this.createFeature(thing.Locations[0]),
+            procedure: this.createProcedure(sensor),
+            phenomenon: this.createPhenomenon(obsProp),
+            category: this.createCategory(obsProp)
+        };
     }
 
     private createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): Timeseries {
@@ -429,9 +450,19 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             properties: {
                 id: loc['@iot.id'],
                 label: loc.name,
-                timeseries: {} // TODO: adjust
+                timeseries: {}
             }
         };
+    }
+
+    private createExtendedStation(loc: Location): any {
+        const station = this.createStation(loc);
+        loc.Things.forEach(thing => {
+            thing.Datastreams.forEach(ds => {
+                station.properties.timeseries[ds['@iot.id']] = this.createTsParameter(ds, thing, ds.Sensor, ds.ObservedProperty);
+            });
+        });
+        return station;
     }
 
     private createPlatform(loc: Location): Platform {
