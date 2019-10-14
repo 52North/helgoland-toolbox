@@ -181,15 +181,16 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createDefaultGeometry(station: Station): Layer {
+        let layer: Layer;
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultGeometry) {
-            return this.markerSelectorGenerator.createDefaultGeometry(station);
-        }
-        if (station.geometry) {
-            const geometry = L.geoJSON(station.geometry);
-            geometry.on('click', () => this.onSelected.emit(station));
-            return geometry;
+            layer = this.markerSelectorGenerator.createDefaultGeometry(station);
+        } else if (station.geometry) {
+            layer = L.geoJSON(station.geometry);
         } else {
             console.error(station.id + ' has no geometry');
         }
+        // register click event
+        if (layer) { layer.on('click', () => this.onSelected.emit(station)); }
+        return layer;
     }
 }
