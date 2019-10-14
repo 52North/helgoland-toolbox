@@ -7,6 +7,7 @@ const allinone = require('!raw-loader!../examples/lisaInstance.xml');
 import { PhysicalSystem } from '../model/sml';
 import { SensorMLXmlService } from './SensorMLXmlService';
 import { XPathDocument } from './xml/XPathDocument';
+
 describe('SensorMLXmlService', () => {
 
     const service = new SensorMLXmlService();

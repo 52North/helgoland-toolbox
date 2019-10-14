@@ -324,7 +324,6 @@ export class SensorMLEncoder {
     }
 
     public encodeDescribedObject(node: Element, object: DescribedObject, document: Document): void {
-
         this.gmlEncoder.encodeAbstractFeature(node, object, document);
 
         if (object.extension && object.extension.length > 0) {
@@ -423,7 +422,6 @@ export class SensorMLEncoder {
     }
 
     public encodeAbstractProcess(node: Element, object: AbstractProcess, document: Document): void {
-
         this.encodeDescribedObject(node, object, document);
 
         if (object.typeOf) {
@@ -786,6 +784,11 @@ export class SensorMLEncoder {
                 if (component.name) {
                     componentNode.setAttribute('name', component.name);
                 }
+                if (component.href) {
+                    componentNode.setAttribute('href', component.href);
+                    componentNode.setAttributeNS(NAMESPACES.XLINK, 'xlink:href', component.href);
+                    node.appendChild(componentNode);
+                }
                 if (component.abstractProcess) {
                     componentNode.appendChild(this.createAbstractProcess(component.abstractProcess, document));
                 }
@@ -810,7 +813,6 @@ export class SensorMLEncoder {
     }
 
     public encodeAbstractPhysicalProcess(node: Element, object: AbstractPhysicalProcess, document: Document): void {
-
         this.encodeAbstractProcess(node, object, document);
 
         if (object.attachedTo) {
