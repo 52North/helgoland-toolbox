@@ -59,7 +59,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   }
 
   private checkDataInTimespan() {
-    if (this.timeInterval && this.dataset) {
+    if (this.timeInterval && this.dataset && this.dataset.firstValue && this.dataset.lastValue) {
       this.hasData = this.timeSrvc.overlaps(
         this.timeInterval,
         this.dataset.firstValue.timestamp,

@@ -1,10 +1,10 @@
 <div style="height: 500px;">
   <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
     [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-    [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier" (onTimespanChanged)="timespanChanged($event)"
-    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)"
-    (onHighlightChanged)="highlightChanged($event)" (onClickDataPoint)="clickedDataPoint($event)"
-    (dataLoaded)="loadings = $event" #diagram>
+    [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
+    (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
+    (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
+    (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
     <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
   </n52-d3-timeseries-graph>
 </div>
@@ -36,6 +36,10 @@
     <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
     </n52-timespan-shift-selector>
     <button (click)="refreshData()">reload Data</button>
+
+    <n52-auto-update-timespan [timeInterval]="timeIntervalUpdateTimespan" [currentTimespan]="timespan"
+      [refreshInterval]="refreshIntervalUpdateTimespan" (onChangeTimespan)="timespanChanged($event)">
+    </n52-auto-update-timespan>
   </div>
 
   <div>
@@ -43,10 +47,11 @@
     <div *ngFor="let id of datasetIds">
       <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
-        (onShowGeometry)="showGeometry($event)" (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
+        (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
       <n52-dataset-permalink-download [internalId]="internalIdHandler.resolveInternalId(id)" [timeInterval]="timespan"
-      [language]=""></n52-dataset-permalink-download>
+        [language]=""></n52-dataset-permalink-download>
       <button (click)="openDownload(id)">Open Download</button>
     </div>
   </div>
