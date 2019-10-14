@@ -57,7 +57,7 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
         encodingType: 'application/vnd.geo+json',
         location: {
             type: 'Point',
-            coordinates: [52.9, 8.2]
+            coordinates: [7.2, 52.9]
         }
     };
     const thing: InsertThing = {

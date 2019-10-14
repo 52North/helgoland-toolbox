@@ -1,5 +1,6 @@
+import { HistoricalLocation } from './historical-locations';
 import { StaExpandParams, StaObject, StaSelectParams, InsertId } from './sta-interface';
-import { InsertThing } from './things';
+import { InsertThing, Thing } from './things';
 
 export interface Location extends StaObject {
     name?: string;
@@ -7,7 +8,9 @@ export interface Location extends StaObject {
     encodingType?: string;
     location?: GeoJSON.GeometryObject;
     'Things@iot.navigationLink'?: string;
+    Things?: Thing[];
     'HistoricalLocations@iot.navigationLink'?: string;
+    HistoricalLocations?: HistoricalLocation[];
 }
 
 export interface InsertLocation extends Location {

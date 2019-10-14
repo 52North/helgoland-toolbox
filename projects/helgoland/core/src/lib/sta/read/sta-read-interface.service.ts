@@ -117,6 +117,7 @@ export class StaReadInterfaceService implements StaReadInterface {
     filter: StaFilter<StaSelectParams, StaExpandParams> = {},
     options: HttpRequestOptions = {}
   ): Observable<T> {
+    console.log(`STA-Read: ${url}?${decodeURIComponent(this.prepareParams(params, filter).toString())}`);
     return this.httpService.client(options).get<T>(url,
       {
         params: this.prepareParams(params, filter)
