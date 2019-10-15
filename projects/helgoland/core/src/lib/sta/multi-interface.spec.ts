@@ -4,13 +4,13 @@ import { inject, TestBed } from '@angular/core/testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandCoreModule } from '../core.module';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
-import { Timespan } from '../model/internal/timeInterval';
 import { MultiDatasetInterface } from './multi-interface';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
 describe('HttpService', () => {
 
-    const staUrl = 'http://docker.srv.int.52north.org:8081/sta/';
+    // const staUrl = 'http://docker.srv.int.52north.org:8081/sta/';
+    const staUrl = 'https://calgary-aq-sta.sensorup.com/v1.0/';
     const apiUrl = 'https://www.fluggs.de/sos2/api/v1/';
 
     beforeEach(() => {
@@ -45,8 +45,17 @@ describe('HttpService', () => {
         //     error => console.error(error)
         // );
         // testStations(service, url);
-        testServices(service, staUrl);
+        // testServices(service, staUrl);
+        // service.getTimeseries(staUrl).subscribe(series => {
+        //     service.getSingleTimeseries(series[0].id, staUrl).subscribe(res => {
+        //         console.log(JSON.stringify(res, null, 2));
+        //     });
+        // });
         expect(service).toBeDefined();
+
+        service.getTimeseries(staUrl, { procedure: '1', phenomenon: '5', category: '5', feature: '325' }).subscribe(res => {
+            console.log(JSON.stringify(res, null, 2));
+        });
     }));
 
 });
