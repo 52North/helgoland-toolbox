@@ -27,13 +27,14 @@ import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
-import { Datastream } from './model/datasetreams';
+import { StaSelectParams } from './../../../../../../dist/helgoland/core/lib/sta/model/sta-interface.d';
+import { Datastream, DatastreamSelectParams, DatastreamExpandParams } from './model/datasetreams';
 import { Location, LocationExpandParams, LocationSelectParams } from './model/locations';
 import { Observation } from './model/observations';
-import { ObservedProperty } from './model/observed-properties';
-import { Sensor } from './model/sensors';
-import { StaFilter } from './model/sta-interface';
-import { Thing } from './model/things';
+import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from './model/observed-properties';
+import { Sensor, SensorExpandParams, SensorSelectParams } from './model/sensors';
+import { StaExpandParams, StaFilter } from './model/sta-interface';
+import { Thing, ThingExpandParams, ThingSelectParams } from './model/things';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
 enum ServiceType {
@@ -150,7 +151,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
         return this.handleService<Timeseries[]>(
             apiUrl,
-            () => this.sta.getDatastreams(apiUrl, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
+            () => this.sta.getDatastreams(apiUrl, this.createDatastreamFilter(params))
                 .pipe(flatMap(ds => {
                     return forkJoin(ds.value.map(d => {
                         if (params && params.expanded) {
@@ -162,6 +163,28 @@ export class MultiDatasetInterface implements DatasetApiV2 {
                 })),
             () => this.rest.getTimeseries(apiUrl, params, options)
         );
+    }
+
+    private createDatastreamFilter(params?: ParameterFilter): StaFilter<DatastreamSelectParams, DatastreamExpandParams> {
+        let filter: StaFilter<StaSelectParams, StaExpandParams> = {};
+        if (params) {
+            const filterList = [];
+            if (params.phenomenon) {
+                filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
+            }
+            if (params.category) {
+                filterList.push(`ObservedProperty/id eq ${params.category}`);
+            }
+            if (params.procedure) {
+                filterList.push(`Sensor/id eq ${params.procedure}`);
+            }
+            if (params.feature) {
+                filterList.push(`Thing/Locations/id eq ${params.feature}`);
+            }
+            filter = this.createFilter(filterList);
+        }
+        filter.$expand = 'Thing,Thing/Locations,ObservedProperty,Sensor';
+        return filter;
     }
 
     getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries> {
@@ -246,9 +269,25 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
         return this.handleService<Category[]>(
             apiUrl,
-            () => this.sta.getObservedProperties(apiUrl).pipe(map(obProps => obProps.value.map(e => this.createCategory(e)))),
+            () => this.sta.getObservedProperties(apiUrl, this.createCategoriesFilter(params)).pipe(map(obProps => obProps.value.map(e => this.createCategory(e)))),
             () => this.rest.getCategories(apiUrl, params, options)
         );
+    }
+
+    private createCategoriesFilter(params: ParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+        if (params) {
+            const filterList = [];
+            if (params.phenomenon) {
+                filterList.push(`id eq ${params.phenomenon}`);
+            }
+            if (params.feature) {
+                filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+            }
+            if (params.procedure) {
+                filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+            }
+            return this.createFilter(filterList);
+        }
     }
 
     getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category> {
@@ -262,9 +301,22 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {
         return this.handleService<Phenomenon[]>(
             apiUrl,
-            () => this.sta.getObservedProperties(apiUrl).pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
+            () => this.sta.getObservedProperties(apiUrl, this.createPhenomenaFilter(params)).pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
             () => this.rest.getPhenomena(apiUrl, params, options)
         );
+    }
+
+    private createPhenomenaFilter(params: ParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+        if (params) {
+            const filterList = [];
+            if (params.category) {
+                filterList.push(`id eq ${params.category}`);
+            }
+            if (params.feature) {
+                filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+            }
+            return this.createFilter(filterList);
+        }
     }
 
     getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon> {
@@ -278,9 +330,16 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]> {
         return this.handleService<Offering[]>(
             apiUrl,
-            () => this.sta.getThings(apiUrl).pipe(map(things => things.value.map(t => this.createOffering(t)))),
+            () => this.sta.getThings(apiUrl, this.createOfferingsFilter(params)).pipe(map(things => things.value.map(t => this.createOffering(t)))),
             () => this.rest.getOfferings(apiUrl, params, options)
         );
+    }
+
+    private createOfferingsFilter(params: ParameterFilter): StaFilter<ThingSelectParams, ThingExpandParams> {
+        if (params) {
+            const filterList = [];
+            return this.createFilter(filterList);
+        }
     }
 
     getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering> {
@@ -294,9 +353,25 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]> {
         return this.handleService<Feature[]>(
             apiUrl,
-            () => this.sta.getLocations(apiUrl).pipe(map(locs => locs.value.map(l => this.createFeature(l)))),
+            () => this.sta.getLocations(apiUrl, this.createFeaturesFilter(params)).pipe(map(locs => locs.value.map(l => this.createFeature(l)))),
             () => this.rest.getFeatures(apiUrl, params, options)
         );
+    }
+
+    private createFeaturesFilter(params: ParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+        if (params) {
+            const filterList = [];
+            if (params.category) {
+                filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.category}`);
+            }
+            if (params.phenomenon) {
+                filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
+            }
+            if (params.procedure) {
+                filterList.push(`Things/Datastreams/Sensor/id eq ${params.procedure}`);
+            }
+            return this.createFilter(filterList);
+        }
     }
 
     getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature> {
@@ -310,9 +385,26 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure[]> {
         return this.handleService<Procedure[]>(
             apiUrl,
-            () => this.sta.getSensors(apiUrl).pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
+            () => this.sta.getSensors(apiUrl, this.createProceduresFilter(params)).pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
             () => this.rest.getProcedures(apiUrl, params, options)
         );
+    }
+
+    private createProceduresFilter(params: ParameterFilter): StaFilter<SensorSelectParams, SensorExpandParams> {
+        if (params) {
+            const filterList = [];
+            if (params.category) {
+                filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+            }
+            // if (params.feature) {
+            //     filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+            // }
+            if (params.phenomenon) {
+                filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+            }
+            return this.createFilter(filterList);
+        }
+        return {};
     }
 
     getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure> {
@@ -478,6 +570,12 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             datasets: [],
             geometry: loc.location as GeoJSON.Point,
         };
+    }
+
+    private createFilter(filterList: any[]): StaFilter<StaSelectParams, StaExpandParams> {
+        if (filterList.length > 0) {
+            return { $filter: filterList.join(' and ') };
+        }
     }
 
     private notImplemented(): Observable<any> {
