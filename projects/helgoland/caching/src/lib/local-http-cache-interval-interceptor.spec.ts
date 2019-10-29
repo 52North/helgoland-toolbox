@@ -44,35 +44,4 @@ describe('LocalHttpCacheIntervalInterceptor', () => {
     }, 2000);
   }));
 
-  it('should exec requests ', inject([LocalHttpCacheIntervalInterceptor, HttpService], (service: LocalHttpCacheIntervalInterceptor, httpService: HttpService) => {
-
-    const currentTimespan = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
-
-    const datasetID1 = {
-      id: '72',
-      url: 'http://www.fluggs.de/sos2/api/v1/timeseries/72/getData'
-    };
-    const datasetID2 = {
-      id: '26',
-      url: 'http://www.fluggs.de/sos2/api/v1/timeseries/26/getData'
-    };
-    const buffer = currentTimespan; // timeSrvc.getBufferedTimespan(currentTimespan, 0.2);
-
-    apiSrvc.getTsData<[number, number]>(datasetID1.id, datasetID1.url, buffer,
-      {
-        format: 'flot',
-        expanded: false,
-        generalize: true
-      },
-      { forceUpdate: false }
-    ).subscribe(
-      (result) => console.log(result),
-      (error) => console.log(error),
-      () => console.log('complete')
-    );
-
-
-    // # TODO check updated GET request
-
-  }));
 });
