@@ -72,3 +72,5 @@ export * from './lib/time/time.service';
 export * from './lib/processing/sum-values.service';
 
 export * from './lib/decorators/required';
+
+export * from './lib/interceptor/cors-proxy-interceptor';
