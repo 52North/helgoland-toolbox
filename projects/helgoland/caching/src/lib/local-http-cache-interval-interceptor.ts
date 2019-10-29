@@ -34,12 +34,12 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     const reqTimespan = this.decodeTimespan(req.params.get('timespan'));
     const requestTime = new Date();
     // check inside cache
-    const existsInCache = this.cache.getIntersection(req.url, reqTimespan);
+    const intersectedCache = this.cache.getIntersection(req.url, reqTimespan);
 
-    if (existsInCache && !existsInCache.timespans) {
-      // requested timespan is covered by one existing cachedObject
+    if (intersectedCache && !intersectedCache.timespans) {
+      // requested timespan is covered by existing cachedObject
       return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-        observer.next(existsInCache.cachedObjects[0].httpEvent);
+        observer.next(intersectedCache.cachedObjects[0].httpEvent);
         observer.complete();
       });
     } else {
@@ -52,10 +52,10 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       let customReq = req.clone({});
       const reqOptions = [];
 
-      if (existsInCache && existsInCache.timespans) {
-        // requested timespan is not fully covered by existing cachedObjects
+      if (intersectedCache && intersectedCache.timespans) {
+        // customize request, if requested timespan is not fully covered by existing cachedObjects
 
-        if (existsInCache.timespans.length < 2) {
+        if (intersectedCache.timespans.length < 2) {
           customReq = this.updateRequest(customReq);
           reqOptions.push([new Timespan(1, 2), null]);
 
@@ -63,7 +63,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           console.log(customReq.params.get('timespan'));
           console.log(metadata);
 
-          customReq.params.set('timespan', this.createRequestTimespan(existsInCache.timespans[0]));
+          customReq.params.set('timespan', this.createRequestTimespan(intersectedCache.timespans[0]));
           console.log(customReq);
           console.log(customReq.params.get('timespan'));
         }
@@ -71,7 +71,8 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       }
 
 
-
+      // use origin request for not covereed timespans
+      // or use custom request for not fully covered timespans
       return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
         const shared = next.handle(customReq, metadata).pipe(share());
         shared.subscribe((res) => {
