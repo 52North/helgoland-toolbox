@@ -4,6 +4,7 @@ export interface Settings {
     datasetApis?: DatasetApi[];
     providerBlackList?: BlacklistedService[];
     proxyUrl?: string;
+    proxyUrlsStartWith?: string[];
     timespanPresets?: TimespanPreset[];
     colorList?: string[];
     languages?: [{ label: string, code: string }];
