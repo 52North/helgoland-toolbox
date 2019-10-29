@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 import { UriParameterCoder } from '../../dataset-api/api-interface';
 import { HttpService } from '../../dataset-api/http.service';
@@ -109,6 +109,29 @@ export class StaReadInterfaceService implements StaReadInterface {
     url: string, id: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
   ): Observable<StaValueListResponse<Observation>> {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, 'Observations'), {}, params, options);
+  }
+
+  public aggregatePaging<T>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {
+    return new Observable((observer: Observer<StaValueListResponse<T>>) => {
+      request.subscribe(
+        res => {
+          if (res['@iot.nextLink']) {
+            this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(`https://cors-anywhere.herokuapp.com/${res['@iot.nextLink']}`)).subscribe(nextPage => {
+              res.value.push(...nextPage.value);
+              delete res['@iot.nextLink'];
+              observer.next(res);
+              observer.complete();
+            });
+          } else {
+            observer.next(res);
+            observer.complete();
+          }
+        },
+        error => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
   }
 
   protected requestApi<T>(
