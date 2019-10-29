@@ -17,7 +17,6 @@ export class CorsProxyInterceptor implements HttpServiceInterceptor {
     public intercept(
         req: HttpRequest<any>, metadata: HttpRequestOptions, next: HttpServiceHandler
     ): Observable<HttpEvent<any>> {
-        debugger;
         const settings = this.settingsSrvc.getSettings();
         if (settings && settings.proxyUrl && settings.proxyUrlsStartWith) {
             const startWith = settings.proxyUrlsStartWith.find(e => req.url.startsWith(e));
