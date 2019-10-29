@@ -1,9 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandCoreModule } from '../core.module';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
+import { CorsProxyInterceptorProvider } from '../interceptor/cors-proxy-interceptor';
 import { MultiDatasetInterface } from './multi-interface';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
@@ -23,7 +25,9 @@ describe('HttpService', () => {
             providers: [
                 MultiDatasetInterface,
                 SplittedDataDatasetApiInterface,
-                StaReadInterfaceService
+                SettingsServiceTestingProvider,
+                StaReadInterfaceService,
+                CorsProxyInterceptorProvider
             ]
         });
     });

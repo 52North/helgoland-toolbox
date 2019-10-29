@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { catchError, flatMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../dataset-api/http.service';
 import { DatasetApiV2 } from '../dataset-api/interfaces/api-v2.interface';
@@ -27,13 +27,12 @@ import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
-import { StaSelectParams } from './../../../../../../dist/helgoland/core/lib/sta/model/sta-interface.d';
-import { Datastream, DatastreamSelectParams, DatastreamExpandParams } from './model/datasetreams';
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './model/datasetreams';
 import { Location, LocationExpandParams, LocationSelectParams } from './model/locations';
 import { Observation } from './model/observations';
 import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from './model/observed-properties';
 import { Sensor, SensorExpandParams, SensorSelectParams } from './model/sensors';
-import { StaExpandParams, StaFilter } from './model/sta-interface';
+import { StaExpandParams, StaFilter, StaSelectParams } from './model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from './model/things';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
@@ -60,7 +59,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPlatforms(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Platform[]> {
         return this.handleService<Platform[]>(
             apiUrl,
-            () => this.sta.getLocations(apiUrl).pipe(map(locs => locs.value.map(l => this.createPlatform(l)))),
+            () => this.sta.aggregatePaging(this.sta.getLocations(apiUrl))
+                .pipe(map(locs => locs.value.map(l => this.createPlatform(l)))),
             () => this.rest.getPlatforms(apiUrl, params, options)
         );
     }
@@ -125,7 +125,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         return this.handleService<Station[]>(
             apiUrl,
-            () => this.sta.getLocations(apiUrl, this.createStationFilter(params))
+            () => this.sta.aggregatePaging(this.sta.getLocations(apiUrl, this.createStationFilter(params)))
                 .pipe(map(locs => locs.value.map(e => this.createStation(e)))),
             () => this.rest.getStations(apiUrl, params, options)
         );
@@ -151,7 +151,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
         return this.handleService<Timeseries[]>(
             apiUrl,
-            () => this.sta.getDatastreams(apiUrl, this.createDatastreamFilter(params))
+            () => this.sta.aggregatePaging(this.sta.getDatastreams(apiUrl, this.createDatastreamFilter(params)))
                 .pipe(flatMap(ds => {
                     return forkJoin(ds.value.map(d => {
                         if (params && params.expanded) {
@@ -248,8 +248,9 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>> {
         return this.handleService<Data<T>>(
             apiUrl,
-            () => this.sta.getDatastreamObservationsRelation(apiUrl, id, { $orderby: 'phenomenonTime', $filter: this.createTimespanFilter(timespan) })
-                .pipe(map(res => this.createData<T>(res.value, params))),
+            () => this.sta.aggregatePaging(
+                this.sta.getDatastreamObservationsRelation(apiUrl, id, { $orderby: 'phenomenonTime', $filter: this.createTimespanFilter(timespan), $top: 200 })
+            ).pipe(map(res => this.createData<T>(res.value, params))),
             () => this.rest.getTsData(id, apiUrl, timespan, params, options)
         );
     }
@@ -269,7 +270,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]> {
         return this.handleService<Category[]>(
             apiUrl,
-            () => this.sta.getObservedProperties(apiUrl, this.createCategoriesFilter(params)).pipe(map(obProps => obProps.value.map(e => this.createCategory(e)))),
+            () => this.sta.aggregatePaging(this.sta.getObservedProperties(apiUrl, this.createCategoriesFilter(params)))
+                .pipe(map(obProps => obProps.value.map(e => this.createCategory(e)))),
             () => this.rest.getCategories(apiUrl, params, options)
         );
     }
@@ -301,7 +303,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {
         return this.handleService<Phenomenon[]>(
             apiUrl,
-            () => this.sta.getObservedProperties(apiUrl, this.createPhenomenaFilter(params)).pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
+            () => this.sta.aggregatePaging(this.sta.getObservedProperties(apiUrl, this.createPhenomenaFilter(params)))
+                .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e)))),
             () => this.rest.getPhenomena(apiUrl, params, options)
         );
     }
@@ -330,7 +333,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Offering[]> {
         return this.handleService<Offering[]>(
             apiUrl,
-            () => this.sta.getThings(apiUrl, this.createOfferingsFilter(params)).pipe(map(things => things.value.map(t => this.createOffering(t)))),
+            () => this.sta.aggregatePaging(this.sta.getThings(apiUrl, this.createOfferingsFilter(params)))
+                .pipe(map(things => things.value.map(t => this.createOffering(t)))),
             () => this.rest.getOfferings(apiUrl, params, options)
         );
     }
@@ -353,7 +357,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Feature[]> {
         return this.handleService<Feature[]>(
             apiUrl,
-            () => this.sta.getLocations(apiUrl, this.createFeaturesFilter(params)).pipe(map(locs => locs.value.map(l => this.createFeature(l)))),
+            () => this.sta.aggregatePaging(this.sta.getLocations(apiUrl, this.createFeaturesFilter(params)))
+                .pipe(map(locs => locs.value.map(l => this.createFeature(l)))),
             () => this.rest.getFeatures(apiUrl, params, options)
         );
     }
@@ -385,7 +390,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Procedure[]> {
         return this.handleService<Procedure[]>(
             apiUrl,
-            () => this.sta.getSensors(apiUrl, this.createProceduresFilter(params)).pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
+            () => this.sta.aggregatePaging(this.sta.getSensors(apiUrl, this.createProceduresFilter(params)))
+                .pipe(map(sensors => sensors.value.map(s => this.createProcedure(s)))),
             () => this.rest.getProcedures(apiUrl, params, options)
         );
     }
@@ -416,13 +422,9 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     }
 
     private handleService<T>(apiUrl: string, staMethod: () => Observable<T>, seriesMethod: () => Observable<T>): Observable<T> {
-        return this.checkService(apiUrl).pipe(flatMap(res => {
-            if (res === ServiceType.STA) {
-                return staMethod();
-            } else {
-                return seriesMethod();
-            }
-        }));
+        return this.checkService(apiUrl).pipe(
+            flatMap(res => res === ServiceType.STA ? staMethod() : seriesMethod())
+        );
     }
 
     private checkService(url: string): Observable<ServiceType> {
@@ -430,10 +432,20 @@ export class MultiDatasetInterface implements DatasetApiV2 {
             return of(this.serviceMap[url]);
         } else {
             return this.httpService.client().get(url)
-                .pipe(map(res => {
-                    this.serviceMap[url] = res['value'] ? ServiceType.STA : ServiceType.SERIES;
-                    return this.serviceMap[url];
-                }));
+                .pipe(
+                    map(res => {
+                        this.serviceMap[url] = res['value'] ? ServiceType.STA : ServiceType.SERIES;
+                        return this.serviceMap[url];
+                    }),
+                    catchError(() => {
+                        return this.sta.getThings(url, { $top: 1 }).pipe(
+                            map(res2 => {
+                                this.serviceMap[url] = res2['value'] ? ServiceType.STA : ServiceType.SERIES;
+                                return this.serviceMap[url];
+                            })
+                        );
+                    })
+                );
         }
     }
 
