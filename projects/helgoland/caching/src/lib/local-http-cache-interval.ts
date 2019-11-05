@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpCacheInterval } from './model';
 import { Timespan, TimeValueTuple, Data } from '@helgoland/core';
+import * as lodash from 'lodash';
 
 export interface CachedObject {
     values: Data<TimeValueTuple>;
@@ -77,7 +78,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param ts
      */
     private identifyCachedIntersection(objs: CachedObject[], ts: Timespan): CachedIntersection | null {
-        // # TODO implement intersection of cached objects
+        // # DONE implement intersection of cached objects
         // # TODO check expiration of specific timespans
 
         const intersectedObjs = [];
@@ -89,15 +90,16 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                 const cachedTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
                 // intersectedIntervals.push(new Timespan(Math.max(cachedTs.from, ts.from), Math.min(cachedTs.to, ts.to)));
 
+                // a) checked timespan ends before cached timespan
                 if (cachedTs.from > ts.to) {
-                    // not necessary to continue with current cached item
                     differedIntervals.push(ts);
-                    // no current cached object existing
                     return {
                         cachedObjects: intersectedObjs,
                         timespans: differedIntervals
                     };
                 }
+
+                // b) checked timespan starts after cached timespan
                 if (cachedTs.to < ts.from) {
                     if (i < objs.length - 1) {
                         continue;
@@ -105,7 +107,6 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         if (differedIntervals.length < 1) {
                             differedIntervals.push(ts);
                         }
-                        // no current cached object existing
                         return {
                             cachedObjects: intersectedObjs,
                             timespans: differedIntervals
@@ -113,29 +114,66 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                     }
                 }
 
-                if (ts.from < cachedTs.from) {
-                    // left difference exists
-                    const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
-                    differedIntervals.push(diffTs);
-                    intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'left'));
+                let lastLeftRight = false;
+
+                // c) checked timespan starts before or on cached timespan
+                // left difference exists
+                if (ts.from <= cachedTs.from) {
+                    if (ts.from === cachedTs.from) {
+                        intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                    } else {
+                        lastLeftRight = true;
+                        const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
+                        differedIntervals.push(diffTs);
+                        intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'left'));
+                    }
                 }
-                if (ts.to > cachedTs.to && i >= objs.length - 1) {
-                    // right difference exists - check for last element only
-                    const diffTs = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
-                    differedIntervals.push(diffTs);
-                    intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'right'));
+
+                // d) checked timespan ends on ending or after cached timespan
+                // right difference exists - check for last element only
+                if (ts.to >= cachedTs.to && i >= objs.length - 1) {
+                    if (ts.to === cachedTs.to) {
+                        intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                    } else {
+                        const diffTs = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
+                        differedIntervals.push(diffTs);
+                        if (!lastLeftRight) {
+                            intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'right'));
+                            return {
+                                cachedObjects: intersectedObjs,
+                                timespans: differedIntervals
+                            };
+                        }
+                    }
                 }
-                // if current cached item is inside or below current cached item
+
+                // e) checked timespan is completely inside or half inside cached item
+                if (cachedTs.from < ts.from && ts.from <= cachedTs.to) {
+                    intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                    if (cachedTs.to > ts.to) {
+                        // if completely inside cached item
+                        return {
+                            cachedObjects: intersectedObjs,
+                            timespans: differedIntervals
+                        };
+                    }
+                }
+
+                // f) checked timespan ends inside cached item
                 if (cachedTs.to >= ts.to) {
                     return {
                         cachedObjects: intersectedObjs,
                         timespans: differedIntervals
                     };
                 }
+
                 ts.from = Math.min(ts.to, cachedTs.to) + 1; // check if ts is negative now
-                if (ts.from >= ts.to) {
-                    console.log('negative or equal timestamp');
-                    // # TODO: check
+
+                if (ts.from > ts.to) {
+                    return {
+                        cachedObjects: intersectedObjs,
+                        timespans: differedIntervals
+                    };
                 }
             }
         }
@@ -146,14 +184,18 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
     }
 
     private getCachedInterval(obj: CachedObject, tsDiff: Timespan, ts: Timespan, pos: string): CachedObject {
+        const clonedObj = lodash.cloneDeep(obj);
         if (pos === 'left') {
-            obj.values.values = obj.values.values.filter(el => el[0] <= ts.to && el[0] >= tsDiff.to);
+            clonedObj.values.values = obj.values.values.filter(el => el[0] <= ts.to && el[0] >= tsDiff.to);
         }
         if (pos === 'right') {
-            obj.values.values = obj.values.values.filter(el => el[0] >= ts.from  && el[0] <= tsDiff.from);
+            clonedObj.values.values = obj.values.values.filter(el => el[0] >= ts.from && el[0] <= tsDiff.from);
         }
-        // # TODO: check referenceValues of obj.values.###
-        return obj;
+        if (pos === 'inside') {
+            clonedObj.values.values = obj.values.values.filter(el => el[0] >= ts.from && el[0] <= ts.to);
+        }
+        // # TODO: check referenceValues, valueAfterTimespan, valueBeforeTimespan of obj.values.###
+        return clonedObj;
     }
 
 

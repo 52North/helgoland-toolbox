@@ -278,20 +278,22 @@ describe('LocalHttpCacheInterval', () => {
         expect(service.get(url1)).toContain(el3);
         expect(service.get(url1)).toEqual([el1, el11, el2, el21, el3]);
 
+        // test new Timespan(0, 50)
         const result1: CachedIntersection = {
             cachedObjects: [],
             timespans: [new Timespan(0, 50)]
         };
+        // test new Timespan(0, 100)
         const result2: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
-                        [100, 1]
-                    ]
+                        [100, 1]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             }],
             timespans: [new Timespan(0, 99)]
         };
+        // test new Timespan(1100, 1300)
         const result3: CachedIntersection = {
             cachedObjects: [{
                 values: {
@@ -302,23 +304,11 @@ describe('LocalHttpCacheInterval', () => {
             }],
             timespans: [new Timespan(1101, 1300)]
         };
+        // test new Timespan(101, 299)
         const result4: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
-                        [150, 2],
-                        [200, 3],
-                        [250, 4]
-                    ]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
-            }],
-            timespans: []
-        };
-        const result5: CachedIntersection = {
-            cachedObjects: [{
-                values: {
-                    referenceValues: {}, values: [
-                        [100, 1],
                         [150, 2],
                         [200, 3],
                         [250, 4]]
@@ -326,26 +316,80 @@ describe('LocalHttpCacheInterval', () => {
             }],
             timespans: []
         };
+        // test new Timespan(100, 300)
+        const result5: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [100, 1],
+                        [150, 2],
+                        [200, 3],
+                        [250, 4],
+                        [300, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            }],
+            timespans: []
+        };
+        // test new Timespan(100, 301)
+        const result51: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [100, 1],
+                        [150, 2],
+                        [200, 3],
+                        [250, 4],
+                        [300, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [301, 1]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            }],
+            timespans: []
+        };
+        // test new Timespan(99, 301)
+        const result52: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [100, 1],
+                        [150, 2],
+                        [200, 3],
+                        [250, 4],
+                        [300, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [301, 1]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            }],
+            timespans: [new Timespan(99, 99)]
+        };
+        // test new Timespan(550, 650)
         const result6: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
                         [550, 2],
                         [600, 3],
-                        [650, 4]
-                    ]
+                        [650, 4]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             }],
             timespans: []
         };
+        // test new Timespan(200, 600)
         const result7: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
                         [200, 3],
                         [250, 4],
-                        [300, 5]
-                    ]
+                        [300, 5]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -353,8 +397,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [301, 1],
                         [325, 2],
-                        [350, 3]
-                    ]
+                        [350, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -362,20 +405,19 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [500, 1],
                         [550, 2],
-                        [600, 3]
-                    ]
+                        [600, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             }],
             timespans: [new Timespan(351, 499)]
         };
+        // test new Timespan(200, 800)
         const result8: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
                         [200, 3],
                         [250, 4],
-                        [300, 5]
-                    ]
+                        [300, 5]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -383,8 +425,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [301, 1],
                         [325, 2],
-                        [350, 3]
-                    ]
+                        [350, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -394,8 +435,7 @@ describe('LocalHttpCacheInterval', () => {
                         [550, 2],
                         [600, 3],
                         [650, 4],
-                        [700, 5]
-                    ]
+                        [700, 5]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -403,12 +443,39 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [701, 1],
                         [725, 2],
-                        [750, 3]
-                    ]
+                        [750, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             }],
             timespans: [new Timespan(351, 499), new Timespan(751, 800)]
         };
+        // test new Timespan(310, 710)
+        const result81: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [325, 2],
+                        [350, 3]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [500, 1],
+                        [550, 2],
+                        [600, 3],
+                        [650, 4],
+                        [700, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [701, 1]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            }],
+            timespans: [new Timespan(351, 499)]
+        };
+        // test new Timespan(0, 1400)
         const result9: CachedIntersection = {
             cachedObjects: [{
                 values: {
@@ -417,8 +484,7 @@ describe('LocalHttpCacheInterval', () => {
                         [150, 2],
                         [200, 3],
                         [250, 4],
-                        [300, 5]
-                    ]
+                        [300, 5]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -426,8 +492,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [301, 1],
                         [325, 2],
-                        [350, 3]
-                    ]
+                        [350, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -437,8 +502,7 @@ describe('LocalHttpCacheInterval', () => {
                         [550, 2],
                         [600, 3],
                         [650, 4],
-                        [700, 5]
-                    ]
+                        [700, 5]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -446,8 +510,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [701, 1],
                         [725, 2],
-                        [750, 3]
-                    ]
+                        [750, 3]]
                 }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
             },
             {
@@ -462,16 +525,63 @@ describe('LocalHttpCacheInterval', () => {
             }],
             timespans: [new Timespan(0, 99), new Timespan(351, 499), new Timespan(751, 899), new Timespan(1101, 1400)]
         };
+        // test new Timespan(300, 950)
+        const result10: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [300, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [301, 1],
+                        [325, 2],
+                        [350, 3]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [500, 1],
+                        [550, 2],
+                        [600, 3],
+                        [650, 4],
+                        [700, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [701, 1],
+                        [725, 2],
+                        [750, 3]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            },
+            {
+                values: {
+                    referenceValues: {}, values: [
+                        [900, 1],
+                        [950, 2]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+            }],
+            timespans: [new Timespan(351, 499), new Timespan(751, 899)]
+        };
 
         expect(service.getIntersection(url1, new Timespan(0, 50))).toEqual(result1, 'should be: outside range');
         expect(service.getIntersection(url1, new Timespan(0, 100))).toEqual(result2, 'should be: intersection by 1 element before first cached item');
         expect(service.getIntersection(url1, new Timespan(1100, 1300))).toEqual(result3, 'should be: intersection by 1 element after first cached item');
-        // expect(service.getIntersection(url1, new Timespan(101, 299))).toEqual(result4, 'should be: no difference = complete intersection');
-        // expect(service.getIntersection(url1, new Timespan(100, 300))).toEqual(result5, 'should be: no difference = complete intersection');
-        // expect(service.getIntersection(url1, new Timespan(550, 650))).toEqual(result6, 'should be: no difference = complete intersection');
-        // expect(service.getIntersection(url1, new Timespan(200, 600))).toEqual(result7, 'should be: intersection inbetween two elements');
-        // expect(service.getIntersection(url1, new Timespan(200, 800))).toEqual(result8, 'should be: intersection inbetween three elements');
-        // expect(service.getIntersection(url1, new Timespan(0, 1400))).toEqual(result9, 'should be: intersection in three elements with outside range');
+        expect(service.getIntersection(url1, new Timespan(101, 299))).toEqual(result4, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(100, 300))).toEqual(result5, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(100, 301))).toEqual(result51, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(99, 301))).toEqual(result52, 'should be: no intersection by 1 element before first cached item, intersection inbetween two elements');
+        expect(service.getIntersection(url1, new Timespan(550, 650))).toEqual(result6, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(200, 600))).toEqual(result7, 'should be: intersection inbetween two elements');
+        expect(service.getIntersection(url1, new Timespan(200, 800))).toEqual(result8, 'should be: intersection inbetween four elements');
+        expect(service.getIntersection(url1, new Timespan(310, 710))).toEqual(result81, 'should be: intersection inbetween three elements');
+        expect(service.getIntersection(url1, new Timespan(0, 1400))).toEqual(result9, 'should be: intersection in five elements with outside range');
+        expect(service.getIntersection(url1, new Timespan(300, 950))).toEqual(result10, 'should be: intersection in four elements, endings inside intersection');
     }));
 
 
