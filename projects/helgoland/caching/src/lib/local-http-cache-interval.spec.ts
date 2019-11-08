@@ -39,7 +39,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: new Date(),
             expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
+            httpResponse: new HttpResponse()
         };
         service.put(url, el);
 
@@ -63,7 +63,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: new Date(),
             expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
+            httpResponse: new HttpResponse()
         };
         const url2 = 'uniqueID2';
         const el2: CachedObject = {
@@ -76,8 +76,10 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: new Date(),
             expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
+            httpResponse: new HttpResponse()
         };
+
+        service.clearCache();
 
         service.put(url2, el2);
         expect(service.get(url2)).toBeTruthy();
@@ -85,115 +87,22 @@ describe('LocalHttpCacheInterval', () => {
         expect(service.get(url2)).toContain(el2);
         expect(service.get(url2)).toEqual([el2]);
 
-
         service.put(url1, el1);
         service.put(url1, el2);
         expect(service.get(url1)).toBeTruthy();
         expect(service.get(url1)).toBeDefined();
         expect(service.get(url1)).toContain(el1);
         expect(service.get(url1)).toContain(el2);
-        expect(service.get(url1)).toEqual([el1, el2]);
-    }));
-
-    it('should get intersection correctly - test cases just for timespans', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
-        // const ts1 = defTsSrvc.getInterval(DefinedTimespan.TODAY);
-        // const ts2 = defTsSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
-        const url1 = 'uniqueID1';
-        const el1: CachedObject = {
-            values: {
-                referenceValues: {},
-                values: [
-                    [100, 1],
-                    [300, 2]
-                ]
-            },
-            requestTime: new Date(),
-            expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
-        };
-        const el11: CachedObject = {
-            values: {
-                referenceValues: {},
-                values: [
-                    [301, 1],
-                    [350, 2]
-                ]
-            },
-            requestTime: new Date(),
-            expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
-        };
-        const el2: CachedObject = {
-            values: {
-                referenceValues: {},
-                values: [
-                    [500, 1],
-                    [700, 2]
-                ]
-            },
-            requestTime: new Date(),
-            expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
-        };
-        const el21: CachedObject = {
-            values: {
-                referenceValues: {},
-                values: [
-                    [701, 1],
-                    [750, 2]
-                ]
-            },
-            requestTime: new Date(),
-            expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
-        };
-        const el3: CachedObject = {
-            values: {
-                referenceValues: {},
-                values: [
-                    [900, 1],
-                    [1100, 2]
-                ]
-            },
-            requestTime: new Date(),
-            expirationAtMs: 3000,
-            httpEvent: new HttpResponse()
-        };
-
-        service.put(url1, el1);
-        service.put(url1, el11);
-        service.put(url1, el2);
-        service.put(url1, el21);
-        service.put(url1, el3);
-        expect(service.get(url1)).toBeTruthy();
-        expect(service.get(url1)).toBeDefined();
-        expect(service.get(url1)).toContain(el1);
-        expect(service.get(url1)).toContain(el2);
-        expect(service.get(url1)).toContain(el3);
-        expect(service.get(url1)).toEqual([el1, el11, el2, el21, el3]);
-
-        expect(service.testGetIntersection(url1, new Timespan(0, 50))).toEqual([new Timespan(0, 50)], 'should be: outside range');
-        expect(service.testGetIntersection(url1, new Timespan(0, 100))).toEqual([new Timespan(0, 99)], 'should be: intersection by 1 element before first cached item');
-        expect(service.testGetIntersection(url1, new Timespan(1100, 1300))).toEqual([new Timespan(1101, 1300)], 'should be: intersection by 1 element after first cached item');
-        expect(service.testGetIntersection(url1, new Timespan(101, 299))).toEqual(null, 'should be: no difference = complete intersection');
-        expect(service.testGetIntersection(url1, new Timespan(100, 300))).toEqual(null, 'should be: no difference = complete intersection');
-        expect(service.testGetIntersection(url1, new Timespan(550, 650))).toEqual(null, 'should be: no difference = complete intersection');
-        expect(service.testGetIntersection(url1, new Timespan(200, 600))).toEqual([new Timespan(351, 499)], 'should be: intersection inbetween two elements');
-        expect(service.testGetIntersection(url1, new Timespan(200, 800))).toEqual([new Timespan(351, 499), new Timespan(751, 800)], 'should be: intersection inbetween three elements');
-        expect(service.testGetIntersection(url1, new Timespan(0, 1400))).toEqual([new Timespan(0, 99), new Timespan(351, 499), new Timespan(751, 899), new Timespan(1101, 1400)],
-            'should be: intersection in three elements with outside range');
+        expect(service.get(url1)).toEqual([el2, el1]);
     }));
 
     it('should get intersection correctly', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
-        // const ts1 = defTsSrvc.getInterval(DefinedTimespan.TODAY);
-        // const ts2 = defTsSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
-
         const requestDate = new Date();
         const expirationAtMs = 3000;
         const httpEvent = new HttpResponse();
-
-
         const url1 = 'uniqueID1';
+        const url2 = 'uniqueID2';
+
         const el1: CachedObject = {
             values: {
                 referenceValues: {},
@@ -207,7 +116,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: requestDate,
             expirationAtMs: expirationAtMs,
-            httpEvent: httpEvent
+            httpResponse: httpEvent
         };
         const el11: CachedObject = {
             values: {
@@ -220,7 +129,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: requestDate,
             expirationAtMs: expirationAtMs,
-            httpEvent: httpEvent
+            httpResponse: httpEvent
         };
         const el2: CachedObject = {
             values: {
@@ -235,7 +144,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: requestDate,
             expirationAtMs: expirationAtMs,
-            httpEvent: httpEvent
+            httpResponse: httpEvent
         };
         const el21: CachedObject = {
             values: {
@@ -248,7 +157,7 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: requestDate,
             expirationAtMs: expirationAtMs,
-            httpEvent: httpEvent
+            httpResponse: httpEvent
         };
         const el3: CachedObject = {
             values: {
@@ -263,20 +172,8 @@ describe('LocalHttpCacheInterval', () => {
             },
             requestTime: requestDate,
             expirationAtMs: expirationAtMs,
-            httpEvent: httpEvent
+            httpResponse: httpEvent
         };
-
-        service.put(url1, el1);
-        service.put(url1, el11);
-        service.put(url1, el2);
-        service.put(url1, el21);
-        service.put(url1, el3);
-        expect(service.get(url1)).toBeTruthy();
-        expect(service.get(url1)).toBeDefined();
-        expect(service.get(url1)).toContain(el1);
-        expect(service.get(url1)).toContain(el2);
-        expect(service.get(url1)).toContain(el3);
-        expect(service.get(url1)).toEqual([el1, el11, el2, el21, el3]);
 
         // test new Timespan(0, 50)
         const result1: CachedIntersection = {
@@ -289,7 +186,7 @@ describe('LocalHttpCacheInterval', () => {
                 values: {
                     referenceValues: {}, values: [
                         [100, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(0, 99)]
         };
@@ -300,7 +197,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [1100, 5]
                     ]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(1101, 1300)]
         };
@@ -312,7 +209,7 @@ describe('LocalHttpCacheInterval', () => {
                         [150, 2],
                         [200, 3],
                         [250, 4]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -326,7 +223,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -340,13 +237,13 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [301, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -360,13 +257,13 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [301, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(99, 99)]
         };
@@ -378,7 +275,7 @@ describe('LocalHttpCacheInterval', () => {
                         [550, 2],
                         [600, 3],
                         [650, 4]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -390,7 +287,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -398,7 +295,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -406,7 +303,7 @@ describe('LocalHttpCacheInterval', () => {
                         [500, 1],
                         [550, 2],
                         [600, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499)]
         };
@@ -418,7 +315,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -426,7 +323,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -436,7 +333,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -444,7 +341,7 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499), new Timespan(751, 800)]
         };
@@ -455,7 +352,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -465,13 +362,13 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [701, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499)]
         };
@@ -485,7 +382,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -493,7 +390,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -503,7 +400,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -511,7 +408,7 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -521,7 +418,7 @@ describe('LocalHttpCacheInterval', () => {
                         [1000, 3],
                         [1050, 4],
                         [1100, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(0, 99), new Timespan(351, 499), new Timespan(751, 899), new Timespan(1101, 1400)]
         };
@@ -531,7 +428,7 @@ describe('LocalHttpCacheInterval', () => {
                 values: {
                     referenceValues: {}, values: [
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -539,7 +436,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -549,7 +446,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -557,31 +454,82 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [900, 1],
                         [950, 2]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpEvent: httpEvent
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499), new Timespan(751, 899)]
         };
 
+        const elURL2: CachedObject = {
+            values: {
+                referenceValues: {},
+                values: [
+                    [100, 1]
+                ]
+            },
+            requestTime: requestDate,
+            expirationAtMs: expirationAtMs,
+            httpResponse: httpEvent
+        };
+        const resultURL2: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [100, 1]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+            }],
+            timespans: []
+        };
+        const result11: CachedIntersection = {
+            cachedObjects: [{
+                values: {
+                    referenceValues: {}, values: [
+                        [1100, 5]]
+                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+            }],
+            timespans: []
+        };
+
+        service.clearCache();
+
+        service.put(url1, el1);
+        service.put(url1, el11);
+        service.put(url1, el2);
+        service.put(url1, el21);
+        service.put(url1, el3);
+        expect(service.get(url1)).toBeTruthy();
+        expect(service.get(url1)).toBeDefined();
+        expect(service.get(url1)).toContain(el1);
+        expect(service.get(url1)).toContain(el2);
+        expect(service.get(url1)).toContain(el3);
+        expect(service.get(url1)).toEqual([el1, el11, el2, el21, el3]);
+
+        service.put(url2, elURL2);
+        expect(service.get(url2)).toBeTruthy();
+        expect(service.get(url2)).toBeDefined();
+        expect(service.get(url2)).toContain(elURL2);
+
+        expect(service.getIntersection(url2, new Timespan(100, 100))).toEqual(resultURL2, 'should be: complete intersection with 1 element of 1 timeperiod');
         expect(service.getIntersection(url1, new Timespan(0, 50))).toEqual(result1, 'should be: outside range');
-        expect(service.getIntersection(url1, new Timespan(0, 100))).toEqual(result2, 'should be: intersection by 1 element before first cached item');
-        expect(service.getIntersection(url1, new Timespan(1100, 1300))).toEqual(result3, 'should be: intersection by 1 element after first cached item');
+        expect(service.getIntersection(url1, new Timespan(0, 100))).toEqual(result2, 'should be: intersection by 1 timeperiod before first cached item');
+        expect(service.getIntersection(url1, new Timespan(1100, 1300))).toEqual(result3, 'should be: intersection by 1 timeperiod after first cached item');
         expect(service.getIntersection(url1, new Timespan(101, 299))).toEqual(result4, 'should be: no difference = complete intersection');
         expect(service.getIntersection(url1, new Timespan(100, 300))).toEqual(result5, 'should be: no difference = complete intersection');
         expect(service.getIntersection(url1, new Timespan(100, 301))).toEqual(result51, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(99, 301))).toEqual(result52, 'should be: no intersection by 1 element before first cached item, intersection inbetween two elements');
+        expect(service.getIntersection(url1, new Timespan(99, 301))).toEqual(result52, 'should be: no intersection by 1 timeperiod before first cached item, intersection inbetween two elements');
         expect(service.getIntersection(url1, new Timespan(550, 650))).toEqual(result6, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(200, 600))).toEqual(result7, 'should be: intersection inbetween two elements');
-        expect(service.getIntersection(url1, new Timespan(200, 800))).toEqual(result8, 'should be: intersection inbetween four elements');
-        expect(service.getIntersection(url1, new Timespan(310, 710))).toEqual(result81, 'should be: intersection inbetween three elements');
-        expect(service.getIntersection(url1, new Timespan(0, 1400))).toEqual(result9, 'should be: intersection in five elements with outside range');
-        expect(service.getIntersection(url1, new Timespan(300, 950))).toEqual(result10, 'should be: intersection in four elements, endings inside intersection');
+        expect(service.getIntersection(url1, new Timespan(200, 600))).toEqual(result7, 'should be: intersection inbetween two timeperiods');
+        expect(service.getIntersection(url1, new Timespan(200, 800))).toEqual(result8, 'should be: intersection inbetween four timeperiods');
+        expect(service.getIntersection(url1, new Timespan(310, 710))).toEqual(result81, 'should be: intersection inbetween three timeperiods');
+        expect(service.getIntersection(url1, new Timespan(0, 1400))).toEqual(result9, 'should be: intersection in five timeperiods with outside range');
+        expect(service.getIntersection(url1, new Timespan(300, 950))).toEqual(result10, 'should be: intersection in four timeperiods, endings inside intersection');
+        expect(service.getIntersection(url1, new Timespan(1100, 1100))).toEqual(result11, 'should be: complete intersection with element of 1 timeperiod');
     }));
 
 
