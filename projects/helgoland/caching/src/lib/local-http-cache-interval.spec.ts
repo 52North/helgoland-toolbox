@@ -95,7 +95,7 @@ describe('LocalHttpCacheInterval', () => {
         expect(service.get(url1)).toEqual([el1, el2]);
     }));
 
-    it('should get intersection correctly', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
+    it('should get intersection correctly - test cases just for timespans', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
         // const ts1 = defTsSrvc.getInterval(DefinedTimespan.TODAY);
         // const ts2 = defTsSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
         const url1 = 'uniqueID1';
