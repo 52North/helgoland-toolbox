@@ -156,7 +156,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
-    HelgolandCachingModule,
+    HelgolandCachingModule.forRoot({
+      cachingDurationInMilliseconds: 300000
+    }),
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandFavoriteModule,

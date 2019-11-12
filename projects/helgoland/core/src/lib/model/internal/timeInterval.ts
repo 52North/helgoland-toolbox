@@ -8,17 +8,10 @@ export class Timespan extends TimeInterval {
 
     public to: number;
 
-    constructor(
-        from: number,
-        to?: number
-    ) {
+    constructor(from: number | Date, to?: number | Date) {
         super();
-        this.from = from;
-        if (to) {
-            this.to = to;
-        } else {
-            this.to = from;
-        }
+        this.from = from instanceof Date ? from.valueOf() : from;
+        this.to = to ? (to instanceof Date ? to.valueOf() : to) : this.from;
     }
 
 }
