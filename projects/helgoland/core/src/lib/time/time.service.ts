@@ -75,10 +75,14 @@ export class Time {
         }
     }
 
-    public getBufferedTimespan(timespan: Timespan, factor: number): Timespan {
+    public getBufferedTimespan(timespan: Timespan, factor: number, maxBufferInMs?: number): Timespan {
         const durationMillis = this.getDuration(timespan).asMilliseconds();
-        const from = moment(timespan.from).subtract(durationMillis * factor).unix() * 1000;
-        const to = moment(timespan.to).add(durationMillis * factor).unix() * 1000;
+        let buffer = durationMillis * factor;
+        if (maxBufferInMs && buffer > maxBufferInMs) {
+            buffer = maxBufferInMs;
+        }
+        const from = timespan.from - buffer;
+        const to = timespan.to + buffer;
         return new Timespan(from, to);
     }
 
