@@ -41,11 +41,17 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                 end = moment(start).endOf('year');
             }
             return forkJoin(requests).pipe(map((entry) => {
-                const idxFrom = entry[0].values.findIndex(el => el[0] >= timespan.from);
-                let idxTo = entry[entry.length - 1].values.findIndex(el => el[0] >= timespan.to);
-                entry[0].values = entry[0].values.slice(idxFrom); // slice array including timespan.from
-                idxTo = entry[entry.length - 1].values[idxTo][0] > timespan.to ? idxTo - 1 : idxTo;
-                entry[entry.length - 1].values = entry[entry.length - 1].values.slice(0, idxTo + 1); // slice array including timespan.to, but excluding bigger timespan
+                if (entry[0].values && entry[0].values.length > 0) {
+                    const idxFrom = entry[0].values.findIndex(el => el[0] >= timespan.from);
+                    entry[0].values = entry[0].values.slice(idxFrom); // slice array including timespan.from
+                }
+                if (entry[entry.length - 1].values && entry[entry.length - 1].values.length > 0) {
+                    let idxTo = entry[entry.length - 1].values.findIndex(el => el[0] >= timespan.to);
+                    if (idxTo >= 0) {
+                        idxTo = entry[entry.length - 1].values[idxTo][0] > timespan.to ? idxTo - 1 : idxTo;
+                        entry[entry.length - 1].values = entry[entry.length - 1].values.slice(0, idxTo + 1); // slice array including timespan.to, but excluding bigger timespan
+                    }
+                }
                 return entry.reduce((previous, current) => {
                     const next: Data<T> = {
                         referenceValues: {},
