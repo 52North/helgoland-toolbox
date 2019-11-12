@@ -7,9 +7,10 @@ import * as lodash from 'lodash';
 
 export interface CachedObject {
     values: Data<TimeValueTuple>;
-    requestTime: Date;
+    expirationDate: Date;
     expirationAtMs: number;
     httpResponse: HttpResponse<any>;
+    requestTs?: Timespan;
 }
 
 export interface CachedIntersection {
@@ -28,7 +29,15 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      */
     public get(url: string): CachedObject[] {
         const objs = this.cache.get(url);
-        return objs;
+        if (objs) {
+            const filteredObjs = objs.filter(el => {
+                return (new Date() < el.expirationDate);
+            });
+            this.cache.set(url, filteredObjs);
+            return filteredObjs;
+        } else {
+            return objs;
+        }
     }
 
     /**
@@ -38,7 +47,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param timespan
      */
     public getIntersection(url: string, timespan: Timespan): CachedIntersection | null {
-        const objs = this.cache.get(url);
+        const objs = this.get(url);
         if (objs && objs.length > 0) {
             return this.identifyCachedIntersection(objs, timespan);
         }
@@ -50,13 +59,19 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param url
      * @param obj
      */
-    public put(url: string, obj: CachedObject) {
+    public put(url: string, obj: CachedObject, originReq?: boolean) {
         if (this.cache.has(url)) {
             // add new obj to current key
-            const newObj = this.cache.get(url);
-            newObj.push(obj);
+            let cachedObjs = this.cache.get(url);
+            if (originReq) {
+                // update timespan boundaries with incoming forceUpdate or origin request
+                cachedObjs = cachedObjs.filter(el => {
+                    return el.values.values[0][0] > obj.values.values[obj.values.values.length - 1][0] || el.values.values[el.values.values.length - 1][0] < obj.values.values[0][0];
+                });
+            }
+            cachedObjs.push(obj);
             // sort by timespan
-            const objsSorted = newObj.sort((a, b) => (a.values.values[0][0] > b.values.values[0][0]) ? 1 : ((b.values.values[0][0] > a.values.values[0][0]) ? -1 : 0));
+            const objsSorted = cachedObjs.sort((a, b) => (a.values.values[0][0] > b.values.values[0][0]) ? 1 : ((b.values.values[0][0] > a.values.values[0][0]) ? -1 : 0));
             this.cache.set(url, objsSorted);
         } else {
             // set new key containing obj
@@ -77,17 +92,16 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param ts
      */
     private identifyCachedIntersection(objs: CachedObject[], ts: Timespan): CachedIntersection | null {
-        // # TODO check expiration of specific timespans
-
         const intersectedObjs = [];
         const differedIntervals = [];
 
         for (let i = 0; i < objs.length; i++) { // const el of objs) {
             const el = objs[i];
             if (el) {
-                const cachedTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
-                // intersectedIntervals.push(new Timespan(Math.max(cachedTs.from, ts.from), Math.min(cachedTs.to, ts.to)));
-
+                let cachedTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
+                if (el.requestTs) {
+                    cachedTs = new Timespan(el.requestTs.from, el.requestTs.to);
+                }
                 // a) checked timespan ends before cached timespan
                 if (cachedTs.from > ts.to) {
                     differedIntervals.push(ts);
@@ -96,7 +110,6 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         timespans: differedIntervals
                     };
                 }
-
                 // b) checked timespan starts after cached timespan
                 if (cachedTs.to < ts.from) {
                     if (i < objs.length - 1) {
@@ -111,34 +124,45 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         };
                     }
                 }
-
                 let lastLeftRight = false;
-
                 // c) checked timespan starts before or on cached timespan
                 // left difference exists
                 if (ts.from <= cachedTs.from) {
                     if (ts.from === cachedTs.from) {
-                        intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                        const intVals = this.getCachedInterval(el, null, ts, 'inside');
+                        if (intVals.values.values.length > 0) {
+                            intersectedObjs.push(intVals);
+                        }
                     } else {
                         lastLeftRight = true;
                         const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
                         differedIntervals.push(diffTs);
-                        intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'left'));
+                        const intVals = this.getCachedInterval(el, diffTs, ts, 'left');
+                        if (intVals.values.values.length > 0) {
+                            intersectedObjs.push(intVals);
+                        }
                     }
                 }
-
+                let pushedInside = false;
                 // d) checked timespan ends on ending or after cached timespan
                 // right difference exists - check for last element only
                 if (ts.to >= cachedTs.to && i >= objs.length - 1) {
                     if (ts.to === cachedTs.to) {
                         if (ts.from !== cachedTs.from) {
-                            intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                            pushedInside = true;
+                            const intVals = this.getCachedInterval(el, null, ts, 'inside');
+                            if (intVals.values.values.length > 0) {
+                                intersectedObjs.push(intVals);
+                            }
                         }
                     } else {
                         const diffTs = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
                         differedIntervals.push(diffTs);
                         if (!lastLeftRight) {
-                            intersectedObjs.push(this.getCachedInterval(el, diffTs, ts, 'right'));
+                            const intVals = this.getCachedInterval(el, diffTs, ts, 'right');
+                            if (intVals.values.values.length > 0) {
+                                intersectedObjs.push(intVals);
+                            }
                             return {
                                 cachedObjects: intersectedObjs,
                                 timespans: differedIntervals
@@ -146,10 +170,14 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         }
                     }
                 }
-
                 // e) checked timespan is completely inside or half inside cached item
                 if (cachedTs.from < ts.from && ts.from <= cachedTs.to) {
-                    intersectedObjs.push(this.getCachedInterval(el, null, ts, 'inside'));
+                    if (!pushedInside) {
+                        const intVals = this.getCachedInterval(el, null, ts, 'inside');
+                        if (intVals.values.values.length > 0) {
+                            intersectedObjs.push(intVals);
+                        }
+                    }
                     if (cachedTs.to > ts.to) {
                         // if completely inside cached item
                         return {
@@ -158,7 +186,6 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         };
                     }
                 }
-
                 // f) checked timespan ends inside cached item
                 if (cachedTs.to >= ts.to) {
                     return {
@@ -183,6 +210,13 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         };
     }
 
+    /**
+     * Function to filter cached values by given timespan.
+     * @param obj {CachedObject} cached object with values
+     * @param tsDiff {Timespan} updated timespan for different cached objects and time periods
+     * @param ts {Timespan} requested timespan
+     * @param pos {string} indicates point in time where values should be taken from
+     */
     private getCachedInterval(obj: CachedObject, tsDiff: Timespan, ts: Timespan, pos: string): CachedObject {
         const clonedObj = lodash.cloneDeep(obj);
         if (pos === 'left') {
@@ -194,7 +228,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         if (pos === 'inside') {
             clonedObj.values.values = obj.values.values.filter(el => el[0] >= ts.from && el[0] <= ts.to);
         }
-        // # TODO: check referenceValues, valueAfterTimespan, valueBeforeTimespan of obj.values.###
+        // # TODO: check referenceValues
         return clonedObj;
     }
 }
