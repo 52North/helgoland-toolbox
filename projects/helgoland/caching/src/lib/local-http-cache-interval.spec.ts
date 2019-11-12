@@ -4,6 +4,7 @@ import { HttpService, Timespan, DefinedTimespanService, DefinedTimespan } from '
 
 import { LocalHttpCacheInterval, CachedObject, CachedIntersection } from './local-http-cache-interval';
 import { HelgolandCachingModule } from './caching.module';
+import moment = require('moment');
 
 describe('LocalHttpCacheInterval', () => {
     let defTsSrvc: DefinedTimespanService;
@@ -37,10 +38,12 @@ describe('LocalHttpCacheInterval', () => {
                     [currTimespan.to, 2]
                 ]
             },
-            requestTime: new Date(),
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
             expirationAtMs: 3000,
             httpResponse: new HttpResponse()
         };
+
+        service.clearCache();
         service.put(url, el);
 
         expect(service.get(url)).toBeTruthy();
@@ -61,7 +64,7 @@ describe('LocalHttpCacheInterval', () => {
                     [currTimespan1.to, 2]
                 ]
             },
-            requestTime: new Date(),
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
             expirationAtMs: 3000,
             httpResponse: new HttpResponse()
         };
@@ -74,7 +77,7 @@ describe('LocalHttpCacheInterval', () => {
                     [currTimespan2.to, 2]
                 ]
             },
-            requestTime: new Date(),
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
             expirationAtMs: 3000,
             httpResponse: new HttpResponse()
         };
@@ -97,7 +100,7 @@ describe('LocalHttpCacheInterval', () => {
     }));
 
     it('should get intersection correctly', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
-        const requestDate = new Date();
+        const expirationDate = moment(new Date()).add(2, 'hours').toDate();
         const expirationAtMs = 3000;
         const httpEvent = new HttpResponse();
         const url1 = 'uniqueID1';
@@ -113,10 +116,7 @@ describe('LocalHttpCacheInterval', () => {
                     [250, 4],
                     [300, 5]
                 ]
-            },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
         const el11: CachedObject = {
             values: {
@@ -126,10 +126,7 @@ describe('LocalHttpCacheInterval', () => {
                     [325, 2],
                     [350, 3]
                 ]
-            },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
         const el2: CachedObject = {
             values: {
@@ -141,10 +138,7 @@ describe('LocalHttpCacheInterval', () => {
                     [650, 4],
                     [700, 5]
                 ]
-            },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
         const el21: CachedObject = {
             values: {
@@ -155,9 +149,7 @@ describe('LocalHttpCacheInterval', () => {
                     [750, 3]
                 ]
             },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
         const el3: CachedObject = {
             values: {
@@ -170,9 +162,7 @@ describe('LocalHttpCacheInterval', () => {
                     [1100, 5]
                 ]
             },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
 
         // test new Timespan(0, 50)
@@ -186,7 +176,7 @@ describe('LocalHttpCacheInterval', () => {
                 values: {
                     referenceValues: {}, values: [
                         [100, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(0, 99)]
         };
@@ -197,7 +187,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [1100, 5]
                     ]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(1101, 1300)]
         };
@@ -209,7 +199,7 @@ describe('LocalHttpCacheInterval', () => {
                         [150, 2],
                         [200, 3],
                         [250, 4]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -223,7 +213,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -237,13 +227,13 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [301, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -257,13 +247,13 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [301, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(99, 99)]
         };
@@ -275,7 +265,7 @@ describe('LocalHttpCacheInterval', () => {
                         [550, 2],
                         [600, 3],
                         [650, 4]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -287,7 +277,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -295,7 +285,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -303,7 +293,7 @@ describe('LocalHttpCacheInterval', () => {
                         [500, 1],
                         [550, 2],
                         [600, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499)]
         };
@@ -315,7 +305,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -323,7 +313,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -333,7 +323,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -341,7 +331,7 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499), new Timespan(751, 800)]
         };
@@ -352,7 +342,7 @@ describe('LocalHttpCacheInterval', () => {
                     referenceValues: {}, values: [
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -362,13 +352,13 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [701, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499)]
         };
@@ -382,7 +372,7 @@ describe('LocalHttpCacheInterval', () => {
                         [200, 3],
                         [250, 4],
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -390,7 +380,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -400,7 +390,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -408,7 +398,7 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -418,7 +408,7 @@ describe('LocalHttpCacheInterval', () => {
                         [1000, 3],
                         [1050, 4],
                         [1100, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(0, 99), new Timespan(351, 499), new Timespan(751, 899), new Timespan(1101, 1400)]
         };
@@ -428,7 +418,7 @@ describe('LocalHttpCacheInterval', () => {
                 values: {
                     referenceValues: {}, values: [
                         [300, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -436,7 +426,7 @@ describe('LocalHttpCacheInterval', () => {
                         [301, 1],
                         [325, 2],
                         [350, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -446,7 +436,7 @@ describe('LocalHttpCacheInterval', () => {
                         [600, 3],
                         [650, 4],
                         [700, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
@@ -454,14 +444,14 @@ describe('LocalHttpCacheInterval', () => {
                         [701, 1],
                         [725, 2],
                         [750, 3]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             },
             {
                 values: {
                     referenceValues: {}, values: [
                         [900, 1],
                         [950, 2]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: [new Timespan(351, 499), new Timespan(751, 899)]
         };
@@ -472,17 +462,14 @@ describe('LocalHttpCacheInterval', () => {
                 values: [
                     [100, 1]
                 ]
-            },
-            requestTime: requestDate,
-            expirationAtMs: expirationAtMs,
-            httpResponse: httpEvent
+            }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
         };
         const resultURL2: CachedIntersection = {
             cachedObjects: [{
                 values: {
                     referenceValues: {}, values: [
                         [100, 1]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };
@@ -491,7 +478,7 @@ describe('LocalHttpCacheInterval', () => {
                 values: {
                     referenceValues: {}, values: [
                         [1100, 5]]
-                }, requestTime: requestDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
+                }, expirationDate: expirationDate, expirationAtMs: expirationAtMs, httpResponse: httpEvent
             }],
             timespans: []
         };

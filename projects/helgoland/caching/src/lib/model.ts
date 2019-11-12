@@ -34,5 +34,9 @@ export abstract class HttpCacheInterval {
      * if any, or null, if only one cached object covers the requested timespan.
      */
     public abstract getIntersection(url: string, timespan: Timespan): CachedIntersection | null;
-    public abstract put(url: string, obj: CachedObject): void;
+    /**
+     * Saves new object into cache.
+     * 'originReq' indicates, if the request is the original request (e.g. forceUpdate), so the cache can be filtered
+     */
+    public abstract put(url: string, obj: CachedObject, originReq?: boolean): void;
 }
