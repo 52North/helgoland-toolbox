@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import {
   MatButtonModule,
   MatCheckboxModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatListModule,
+  MatNativeDateModule,
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,16 +26,20 @@ import {
   StatusCheckService,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule, HelgolandDatasetTableModule, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
+import {
+  HelgolandDatasetDownloadModule,
+  HelgolandDatasetlistModule,
+  HelgolandDatasetTableModule,
+} from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
   GeoSearch,
+  HelgolandLayerControlModule,
   HelgolandMapControlModule,
   HelgolandMapSelectorModule,
   HelgolandMapViewModule,
   NominatimGeoSearchService,
-  HelgolandLayerControlModule,
 } from '@helgoland/map';
 import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
@@ -49,6 +53,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
 import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
+import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
@@ -70,7 +75,6 @@ import { TimeComponent } from './pages/time/time.component';
 import { TimeseriesGraphComponent } from './pages/timeseries-graph/timeseries-graph.component';
 import { TrajectoryComponent } from './pages/trajectory/trajectory.component';
 import { ExtendedSettingsService } from './settings/settings.service';
-import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 
 const APP_PROVIDERS = [
   StatusCheckService,
@@ -149,7 +153,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
-    HelgolandCachingModule,
+    HelgolandCachingModule.forRoot({
+      cachingDurationInMilliseconds: 300000
+    }),
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandFavoriteModule,
