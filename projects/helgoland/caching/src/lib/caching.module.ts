@@ -32,7 +32,7 @@ const PROVIDERS = [
     provide: OnGoingHttpCache,
     useClass: LocalOngoingHttpCache
   }
-]
+];
 
 @NgModule({
   declarations: [],
