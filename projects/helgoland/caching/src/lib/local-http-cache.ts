@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
 
-import { CacheConfig, CacheConfigService } from './caching.module';
+import { CacheConfig, CacheConfigService } from './config';
 import { HttpCache } from './model';
 
 interface CachedItem {
