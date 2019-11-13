@@ -1,11 +1,21 @@
-import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  EmbeddedViewRef,
+  Injector,
+  Input,
+} from '@angular/core';
 import { DatasetApiInterface, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3TimeseriesGraphComponent } from './../d3-timeseries-graph/d3-timeseries-graph.component';
+
+const wrapperClassName = 'export-diagram-wrapper';
 
 @Component({
   selector: 'n52-export-image-button',
@@ -66,13 +76,13 @@ export class ExportImageButtonComponent {
 
   public loading: boolean;
 
-  @ViewChild('diagram', { read: ViewContainerRef, static: true }) diagram: ViewContainerRef;
-
   private internalHeight: number;
   private internalWidth: number;
 
   constructor(
     private api: DatasetApiInterface,
+    private applicationRef: ApplicationRef,
+    private injector: Injector,
     private componentFactoryResolver: ComponentFactoryResolver,
     private timeSrvc: Time,
     private graphHelper: D3GraphHelperService
@@ -84,15 +94,11 @@ export class ExportImageButtonComponent {
 
   private createDiagramElem() {
     this.loading = true;
-    const wrapper = document.querySelector('.export-diagram-wrapper') as HTMLElement;
+
     this.internalHeight = this.height;
     this.internalWidth = this.width;
-    wrapper.style.height = `${this.internalHeight}px`;
-    wrapper.style.width = `${this.internalWidth}px`;
 
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory(D3TimeseriesGraphComponent);
-
-    const comp = compFactory.create(this.diagram.injector);
+    const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
@@ -102,12 +108,11 @@ export class ExportImageButtonComponent {
       grid: true
     };
 
-    const diagramRef = this.diagram.insert(comp.hostView);
-
     comp.instance.onContentLoading.subscribe(loadFinished => {
       if (loadFinished) {
         setTimeout(() => {
-          const svgElem = document.querySelector<SVGSVGElement>(this.prepareSelector('.export-diagram-wrapper n52-d3-timeseries-graph'));
+          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+          const svgElem = document.querySelector<SVGSVGElement>(temp);
           if (svgElem) {
             this.diagramAdjustments(svgElem).subscribe(() => {
               switch (this.exportType) {
@@ -119,7 +124,7 @@ export class ExportImageButtonComponent {
                   this.createPngImageDownload(svgElem);
                   break;
               }
-              diagramRef.destroy();
+              this.removeComponentFromBody(comp);
               this.loading = false;
             });
           }
@@ -276,6 +281,38 @@ export class ExportImageButtonComponent {
       return selector;
     }
     return `${selector} svg`;
+  }
+
+  private appendComponentToBody(component: any) {
+    // create component ref
+    const componentRef = this.componentFactoryResolver.resolveComponentFactory(component)
+      .create(this.injector);
+
+    // attach component to the appRef.
+    this.applicationRef.attachView(componentRef.hostView);
+
+    // get DOM element from component
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+      .rootNodes[0] as HTMLElement;
+
+    // create wrapper to set position and size
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'absolute';
+    wrapper.style.top = `${-this.internalHeight * 2}px`;
+    wrapper.className = wrapperClassName;
+    wrapper.style.height = `${this.internalHeight}px`;
+    wrapper.style.width = `${this.internalWidth}px`;
+    wrapper.appendChild(domElem);
+
+    document.body.appendChild(wrapper);
+
+    return componentRef;
+  }
+
+  private removeComponentFromBody(componentRef: ComponentRef<any>) {
+    this.applicationRef.detachView(componentRef.hostView);
+    document.querySelector(`.${wrapperClassName}`).remove();
+    componentRef.destroy();
   }
 
 }
