@@ -6,6 +6,8 @@ import {
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
   MatListModule,
   MatNativeDateModule,
   MatRadioModule,
@@ -60,6 +62,8 @@ import { LocalSelectorImplComponent } from './components/local-selector/local-se
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
+import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
+import { NoDataEntryComponent } from './pages/diagram-export/no-data-entry/no-data-entry.component';
 import { EventingComponent } from './pages/eventing/eventing.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
@@ -131,7 +135,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimeComponent,
     TimeseriesGraphComponent,
     TrajectoryComponent,
-    ExportPopupComponent
+    ExportPopupComponent,
+    DiagramExportComponent,
+    NoDataEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -150,6 +156,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatRadioModule,
     MatSelectModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatCheckboxModule,
     MatDialogModule,
     MatDatepickerModule,
