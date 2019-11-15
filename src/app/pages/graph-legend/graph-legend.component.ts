@@ -259,7 +259,10 @@ export class GraphLegendComponent {
 
     public openDownload(id: String) {
         this.dialog.open(ExportPopupComponent, {
-            data: id
+            data: {
+                id,
+                timespan: this.timespan
+            }
         });
     }
 

@@ -1,66 +1,47 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ExportData, ExportOptions } from '@helgoland/depiction';
-import { FormControl } from '@angular/forms';
-
-interface TimePeriod {
-  from: Date;
-  to: Date;
-}
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { IDataset, Timespan } from '@helgoland/core';
+import { DownloadType, ExportOptions } from '@helgoland/depiction';
 
 @Component({
   selector: 'n52-export-popup',
   templateUrl: './export-popup.component.html',
   styleUrls: ['./export-popup.component.css']
 })
-export class ExportPopupComponent implements OnInit {
+export class ExportPopupComponent {
 
   public exportOptions: ExportOptions;
   public inputId: string;
   public loading = false;
   // pre-define variable metadata to avoid errors (undefined)
-  public metadata: ExportData = {
-    phenomenon: null,
-    uom: null,
-    firstvalue: null,
-    lastvalue: null,
-    timeperiod: {
-      from: new Date(),
-      to: new Date()
-    },
-    timezone: null,
-    station: null
-  };
-  public timeperiod: TimePeriod;
-  public timezone: string;
+  public dataset: IDataset;
   public disabled = false;
 
-  public dateFrom = new FormControl(new Date());
-  public dateTo = new FormControl(new Date());
+  public selectedStart: Date;
+  public selectedEnd: Date;
 
   constructor(
     public dialogRef: MatDialogRef<ExportPopupComponent>,
 
     @Inject(MAT_DIALOG_DATA)
-    public id: string
+    public data: { id: string, timespan: Timespan }
   ) {
-    this.inputId = id;
-  }
+    this.inputId = data.id;
 
-  ngOnInit() { }
+    if (data.timespan) {
+      this.selectedStart = new Date(data.timespan.from);
+      this.selectedEnd = new Date(data.timespan.to);
+    }
+  }
 
   /**
    * Function that triggers the download of the data based on the specified parameters.
    * @param dwType {string} typy of the download file (csv or xlsx)
    */
-  public onDownload(dwType: string): void {
+  public onDownload(dwType: DownloadType): void {
     this.exportOptions = {
       downloadType: dwType,
-      timeperiod: {
-        from: this.metadata.timeperiod.from,
-        to: this.metadata.timeperiod.to
-      },
-      timezone: this.metadata.timezone
+      timeperiod: new Timespan(this.selectedStart, this.selectedEnd)
     };
   }
 
@@ -68,8 +49,14 @@ export class ExportPopupComponent implements OnInit {
    * Function that retrieves data about the selected dataset via inputId.
    * @param metadata {ExportData} information about the dataset
    */
-  public onMetadata(metadata: ExportData): void {
-    this.metadata = metadata;
+  public onMetadata(dataset: IDataset): void {
+    if (!this.selectedStart) {
+      this.selectedStart = new Date(dataset.firstValue.timestamp);
+    }
+    if (!this.selectedEnd) {
+      this.selectedEnd = new Date(dataset.lastValue.timestamp);
+    }
+    this.dataset = dataset;
     this.disabled = true;
   }
 
