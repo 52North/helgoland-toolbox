@@ -302,7 +302,7 @@ export class D3TimeseriesGraphComponent
             this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
-                    expanded: true, // this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
+                    expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 },
                 { forceUpdate: force }
