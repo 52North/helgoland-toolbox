@@ -6,31 +6,16 @@ import * as XLSX from 'xlsx';
 type xlsxExport = any[][];
 
 /**
- * metadata informing about the selected dataset, that can be visualized
- */
-export interface ExportData {
-  station: string;
-  timezone: string;
-  phenomenon: string;
-  uom: string;
-  firstvalue: string;
-  lastvalue: string;
-  timeperiod: {
-    from: Date;
-    to: Date;
-  };
-}
-
-/**
  * information that defines options for the export
  */
 export interface ExportOptions {
-  downloadType: string;
-  timeperiod: {
-    from: Date;
-    to: Date;
-  };
-  timezone: string;
+  downloadType: DownloadType;
+  timeperiod: Timespan;
+}
+
+export enum DownloadType {
+  XSLX = 'xslx',
+  CSV = 'csv'
 }
 
 @Component({
@@ -44,7 +29,6 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   private dataset: Timeseries;
   private fileName = 'timeseries';
   private timespan: Timespan;
-  private timezone: string;
 
   /**
    * options to define the export parameters
@@ -59,7 +43,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * returns the metadata of the selected dataset to be visualized
    */
-  @Output() public onMetadataChange: EventEmitter<ExportData> = new EventEmitter();
+  @Output() public onMetadataChange: EventEmitter<IDataset> = new EventEmitter();
 
   /**
    * Output to inform the loading status, while file is created
@@ -80,19 +64,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
         this.dataset = timeseries;
         this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
 
-        const exportData: ExportData = {
-          station: timeseries.parameters.feature.label,
-          timezone: null,
-          phenomenon: timeseries.parameters.phenomenon.label,
-          uom: timeseries.uom,
-          firstvalue: moment(timeseries.firstValue.timestamp).format(),
-          lastvalue: moment(timeseries.lastValue.timestamp).format(),
-          timeperiod: {
-            from: this.parseUnixToDate(this.timespan.from),
-            to: this.parseUnixToDate(this.timespan.to)
-          }
-        };
-        this.onMetadataChange.emit(exportData);
+        this.onMetadataChange.emit(timeseries);
       },
       (error) => {
         this.onError(error);
@@ -101,9 +73,8 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.exportOptions && changes.exportOptions.currentValue) {
-      this.timezone = changes.exportOptions.currentValue.timezone;
-      this.timespan = new Timespan(this.parseDateToUnix(changes.exportOptions.currentValue.timeperiod.from), this.parseDateToUnix(changes.exportOptions.currentValue.timeperiod.to));
+    if (changes.exportOptions && this.exportOptions) {
+      this.timespan = this.exportOptions.timeperiod;
       // check if timespan is inside range
       if (this.timespan.from > this.timespan.to) {
         this.timespan = {
@@ -111,30 +82,30 @@ export class DatasetExportComponent implements OnInit, OnChanges {
           to: this.timespan.from
         };
       }
-      if (changes.exportOptions.currentValue.timeperiod.from < this.dataset.firstValue.timestamp) {
+      if (this.exportOptions.timeperiod.from < this.dataset.firstValue.timestamp) {
         this.timespan.from = this.dataset.firstValue.timestamp;
-      } else if (changes.exportOptions.currentValue.timeperiod.from > this.dataset.lastValue.timestamp) {
+      } else if (this.exportOptions.timeperiod.from > this.dataset.lastValue.timestamp) {
         this.timespan.from = this.dataset.lastValue.timestamp;
       }
-      if (changes.exportOptions.currentValue.timeperiod.to > this.dataset.lastValue.timestamp) {
+      if (this.exportOptions.timeperiod.to > this.dataset.lastValue.timestamp) {
         this.timespan.to = this.dataset.lastValue.timestamp;
-      } else if (changes.exportOptions.currentValue.timeperiod.to < this.dataset.firstValue.timestamp) {
+      } else if (this.exportOptions.timeperiod.to < this.dataset.firstValue.timestamp) {
         this.timespan.to = this.dataset.firstValue.timestamp;
       }
-      if (changes.exportOptions.currentValue.downloadType === 'csv' || changes.exportOptions.currentValue.downloadType === 'xlsx') {
-        this.onDownload(changes.exportOptions.currentValue.downloadType);
+      if (this.exportOptions.downloadType) {
+        this.onDownload(this.exportOptions.downloadType);
       }
     }
   }
 
-  public onDownload(downloadType: string): void {
+  public onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
     if (this.dataset && this.dataset instanceof Timeseries) {
       this.loadData(this.dataset, downloadType);
     }
   }
 
-  private loadData(dataset: Timeseries, dwType: string): void {
+  private loadData(dataset: Timeseries, dwType: DownloadType): void {
     console.log('Loading data ...');
     // get dataset data
     if (dataset instanceof Timeseries) {
@@ -154,7 +125,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
       );
     }
   }
-  private prepareData(dataset: Timeseries, result: Data<TimeValueTuple>, dwType: string): void {
+  private prepareData(dataset: Timeseries, result: Data<TimeValueTuple>, dwType: DownloadType): void {
     console.log('Preparing data ...');
     const valueHeader = dataset.parameters.phenomenon.label + '_(' + dataset.uom + ')';
     let exportData: xlsxExport = [
@@ -170,7 +141,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     this.downloadData(exportData, dwType);
   }
 
-  private downloadData(data: xlsxExport, dwType: string): void {
+  private downloadData(data: xlsxExport, dwType: DownloadType): void {
     console.log('Downloading data ...');
     /* generate worksheet */
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);

@@ -1,28 +1,21 @@
 <h1 mat-dialog-title>Download Dataset</h1>
 
-<div mat-dialog-content ng-if="disabled">
-  Measure Parameter - {{metadata.phenomenon}}
+<div mat-dialog-content ng-if="disabled" *ngIf="dataset">
+  Measure Parameter - {{dataset.parameters.phenomenon.label}}
   <br>
-  Unit - {{metadata.uom}}
+  Unit - {{dataset.uom}}
   <br>
-  First Value - {{metadata.firstvalue}}
+  First Value - {{dataset.firstValue.timestamp | date}} - {{dataset.firstValue.value}}
   <br>
-  Last ValueType - {{metadata.lastvalue}}
+  Last Value - {{dataset.lastValue.timestamp | date}} - {{dataset.lastValue.value}}
   <br>
-  Timezone - UTCselection
-  <br>
-  <!-- check error with timezone adaption or add time selection -->
-  From - {{metadata.timeperiod.from}}
-  <br>
-  To - {{metadata.timeperiod.to}}
-  <br>
-  <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" [value]="metadata.timeperiod.from"
-    [(ngModel)]="metadata.timeperiod.from" ng-model-options="{timezone: 'utc'}">
+  <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" ng-model-options="{timezone: 'utc'}"
+    [(ngModel)]="selectedStart">
   <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
   <mat-datepicker #pickerFrom></mat-datepicker>
   <br>
-  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" [value]="metadata.timeperiod.to"
-    [(ngModel)]="metadata.timeperiod.to" ng-model-options="{timezone: 'utc'}">
+  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" 
+    [(ngModel)]="selectedEnd" ng-model-options="{timezone: 'utc'}">
   <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
   <mat-datepicker #pickerTo></mat-datepicker>
   <br>
