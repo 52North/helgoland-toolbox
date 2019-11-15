@@ -295,7 +295,7 @@ export class D3TimeseriesGraphComponent
         this.loadingCounter++;
 
         if (dataset instanceof Timeseries) {
-            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
+            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2, moment.duration(1, 'day').asMilliseconds());
 
             this.loadingData.add(dataset.internalId);
             this.dataLoaded.emit(this.loadingData);
