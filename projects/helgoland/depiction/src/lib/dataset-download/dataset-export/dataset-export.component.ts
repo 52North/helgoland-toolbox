@@ -60,7 +60,6 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     // e.g. http://www.fluggs.de/sos2/api/v1/__26
     this.api.getSingleTimeseriesByInternalId(this.inputId).subscribe(
       (timeseries) => {
-        this.fileName = this.fileName + '_' + this.inputId;
         this.dataset = timeseries;
         this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
 
@@ -100,6 +99,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
 
   public onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
+    this.fileName = this.inputId;
     if (this.dataset && this.dataset instanceof Timeseries) {
       this.loadData(this.dataset, downloadType);
     }
@@ -132,7 +132,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
       ['Station', dataset.parameters.feature.label],
       ['Lat', dataset.station.geometry['coordinates'][1]],
       ['Lon', dataset.station.geometry['coordinates'][0]],
-      ['Timezone', 'input'],
+      // ['Timezone', ''],
       ['TIME', valueHeader],
     ];
 
