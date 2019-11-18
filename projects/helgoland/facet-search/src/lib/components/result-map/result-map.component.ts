@@ -27,6 +27,8 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public aggregateToStations = false;
 
+  @Input() public selectSingleStation = false;
+
   @Output() public selected: EventEmitter<Timeseries | { station: Station, url: string }> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
@@ -68,14 +70,19 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       if (this.aggregateToStations) {
         const stations = new Map<string, { station: Station, url: string }>();
         ts.forEach(e => {
-          if (!stations.has(e.station.id)) {
-            stations.set(e.station.id, { station: e.station, url: e.url });
+          const id = `${e.station.id}-${e.url}`;
+          if (!stations.has(id)) {
+            stations.set(id, { station: e.station, url: e.url });
           }
         });
         stations.forEach(v => {
           const station = this.createStationGeometry(v.station, v.url);
           if (station) { this.markerFeatureGroup.addLayer(station); }
         });
+        if (stations.size === 1 && this.selectSingleStation) {
+          const entry = stations.get(stations.keys().next().value);
+          this.selected.emit({ station: entry.station, url: entry.url });
+        }
       } else {
         ts.forEach(e => {
           const marker = this.createTsGeometry(e);
