@@ -7,8 +7,8 @@ export interface FacetSearch {
     selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
     setTimeseries(timeseries: Timeseries[]);
     getFilteredResults(): Timeseries[];
-    setCurrentTimespan(timespan: Timespan);
-    getCurrentTimespan(): Timespan;
+    setSelectedTimespan(timespan: Timespan);
+    getSelectedTimespan(): Timespan;
     getCompleteTimespan(): Timespan;
 }
 
