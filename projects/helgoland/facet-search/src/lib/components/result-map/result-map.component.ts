@@ -70,8 +70,9 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       if (this.aggregateToStations) {
         const stations = new Map<string, { station: Station, url: string }>();
         ts.forEach(e => {
-          if (!stations.has(e.station.id)) {
-            stations.set(e.station.id, { station: e.station, url: e.url });
+          const id = `${e.station.id}-${e.url}`;
+          if (!stations.has(id)) {
+            stations.set(id, { station: e.station, url: e.url });
           }
         });
         stations.forEach(v => {

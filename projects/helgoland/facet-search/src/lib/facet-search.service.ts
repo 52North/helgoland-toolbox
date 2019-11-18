@@ -15,7 +15,7 @@ export class FacetSearchService implements FacetSearch {
 
   private timeseries: Timeseries[];
 
-  private selectedTimspan: Timespan;
+  private selectedTimespan: Timespan;
 
   private filteredTimeseries: Timeseries[];
 
@@ -61,6 +61,10 @@ export class FacetSearchService implements FacetSearch {
     this.setFilteredTimeseries();
   }
 
+  public areFacetsSelected(): boolean {
+    return this.facets.size > 0 || !!this.selectedTimespan;
+  }
+
   public getFilteredResults(): Timeseries[] {
     return this.filteredTimeseries;
   }
@@ -69,16 +73,22 @@ export class FacetSearchService implements FacetSearch {
     return this.createTimespan(this.timeseries);
   }
 
-  public setCurrentTimespan(timespan: Timespan) {
-    this.selectedTimspan = timespan;
+  public setSelectedTimespan(timespan: Timespan) {
+    this.selectedTimespan = timespan;
     this.setFilteredTimeseries();
   }
 
-  public getCurrentTimespan(): Timespan {
-    if (this.selectedTimspan) {
-      return this.selectedTimspan;
+  public getSelectedTimespan(): Timespan {
+    if (this.selectedTimespan) {
+      return this.selectedTimespan;
     }
     return this.createTimespan(this.filteredTimeseries);
+  }
+
+  public resetAllFacets() {
+    this.facets.clear();
+    this.selectedTimespan = null;
+    this.setFilteredTimeseries();
   }
 
   private createTimespan(timeseriesList: Timeseries[]): Timespan {
@@ -94,7 +104,7 @@ export class FacetSearchService implements FacetSearch {
   }
 
   private setFilteredTimeseries() {
-    if (this.facets.size > 0 || this.selectedTimspan) {
+    if (this.facets.size > 0 || this.selectedTimespan) {
       this.filteredTimeseries = this.timeseries.filter(e => {
         const matchCategory = this.checkFacet(ParameterFacetType.category, e.parameters.category.label);
         const matchFeature = this.checkFacet(ParameterFacetType.feature, e.parameters.feature.label);
@@ -111,8 +121,8 @@ export class FacetSearchService implements FacetSearch {
   }
 
   private checkTimespan(ts: Timeseries): boolean {
-    if (this.selectedTimspan) {
-      const checkfrom = this.selectedTimspan.from <= ts.lastValue.timestamp && this.selectedTimspan.to >= ts.firstValue.timestamp;
+    if (this.selectedTimespan) {
+      const checkfrom = this.selectedTimespan.from <= ts.lastValue.timestamp && this.selectedTimespan.to >= ts.firstValue.timestamp;
       return checkfrom;
     }
     return true;
