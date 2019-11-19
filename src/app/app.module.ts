@@ -32,6 +32,7 @@ import {
   HelgolandDatasetTableModule,
 } from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
+import { HelgolandFacetSearchModule } from '@helgoland/facet-search';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
   GeoSearch,
@@ -60,6 +61,7 @@ import { StyleModificationComponent } from './components/style-modification/styl
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { EventingComponent } from './pages/eventing/eventing.component';
+import { FacetSearchComponent } from './pages/facet-search/facet-search.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
@@ -128,7 +130,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimeComponent,
     TimeseriesGraphComponent,
     TrajectoryComponent,
-    ExportPopupComponent
+    ExportPopupComponent,
+    FacetSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -162,6 +165,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandPermalinkModule,
     HelgolandControlModule,
     HelgolandMapSelectorModule,
+    HelgolandFacetSearchModule,
     HelgolandMapControlModule,
     HelgolandLayerControlModule,
     HelgolandMapViewModule,
