@@ -27,7 +27,6 @@ export class GraphLegendComponent {
         'http://www.fluggs.de/sos2/api/v1/__49',
         'http://www.fluggs.de/sos2/api/v1/__51',
         'http://www.fluggs.de/sos2/api/v1/__72',
-
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
