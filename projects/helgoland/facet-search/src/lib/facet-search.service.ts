@@ -79,9 +79,10 @@ export class FacetSearchService implements FacetSearch {
   }
 
   public getSelectedTimespan(): Timespan {
-    if (this.selectedTimespan) {
-      return this.selectedTimespan;
-    }
+    return this.selectedTimespan;
+  }
+
+  public getFilteredTimespan(): Timespan {
     return this.createTimespan(this.filteredTimeseries);
   }
 
