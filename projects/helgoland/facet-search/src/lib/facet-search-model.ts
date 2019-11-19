@@ -9,6 +9,7 @@ export interface FacetSearch {
     getFilteredResults(): Timeseries[];
     setSelectedTimespan(timespan: Timespan);
     getSelectedTimespan(): Timespan;
+    getFilteredTimespan(): Timespan;
     getCompleteTimespan(): Timespan;
 }
 
