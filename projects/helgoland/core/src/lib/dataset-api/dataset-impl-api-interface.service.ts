@@ -83,6 +83,9 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
                     timeseriesList.forEach((entry) => {
                         entry.url = apiUrl;
                         this.internalDatasetId.generateInternalId(entry);
+                        if (!entry.station.id) {
+                            entry.station.id = entry.station.properties.id;
+                        }
                     });
                     observer.next(timeseriesList);
                 },
