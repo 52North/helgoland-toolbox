@@ -21,8 +21,8 @@ const PROVIDERS = [
   },
   {
     provide: HTTP_SERVICE_INTERCEPTORS,
-    useClass: LocalHttpCacheIntervalInterceptor,
-    // useClass: CachingInterceptor,
+    useClass: CachingInterceptor,
+    // useClass: LocalHttpCacheIntervalInterceptor,
     multi: true
   },
   {
