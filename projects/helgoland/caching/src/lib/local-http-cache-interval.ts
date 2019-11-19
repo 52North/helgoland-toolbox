@@ -10,7 +10,7 @@ export interface CachedObject {
     expirationDate: Date;
     expirationAtMs: number;
     httpResponse: HttpResponse<any>;
-    requestTs?: Timespan;
+    requestTs: Timespan;
 }
 
 export interface CachedIntersection {
@@ -63,15 +63,47 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         if (this.cache.has(url)) {
             // add new obj to current key
             let cachedObjs = this.cache.get(url);
+            const cachedObjsManip: CachedObject[] = [];
             if (originReq) {
                 // update timespan boundaries with incoming forceUpdate or origin request
-                cachedObjs = cachedObjs.filter(el => {
-                    return el.values.values[0][0] > obj.values.values[obj.values.values.length - 1][0] || el.values.values[el.values.values.length - 1][0] < obj.values.values[0][0];
+                const objTs = new Timespan(obj.values.values[0][0], obj.values.values[obj.values.values.length - 1][0]);
+                // filter cachedObjs without any intersection
+                cachedObjs.forEach(el => {
+                    // const elTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
+                    const elTs = new Timespan(el.requestTs.from, el.requestTs.to);
+                    if (elTs.from > objTs.to) {
+                        // el right of obj
+                        cachedObjsManip.push(el);
+                    } else if (elTs.to < objTs.from) {
+                        // el left of obj
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from > objTs.from && elTs.to >= objTs.to) {
+                        // el partly right of obj
+                        el.values.values = el.values.values.filter(val => val[0] > objTs.to);
+                        el.requestTs = new Timespan(objTs.to + 1, el.requestTs.to);
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from <= objTs.from && elTs.to < objTs.to) {
+                        // el partly left of obj
+                        el.values.values = el.values.values.filter(val => val[0] < objTs.from);
+                        el.requestTs = new Timespan(el.requestTs.from, objTs.from - 1);
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from <= objTs.from && elTs.to >= objTs.to) {
+                        // el over obj # do partly right and partly left
+                        const elLeft = lodash.cloneDeep(el);
+                        elLeft.values.values = elLeft.values.values.filter(val => val[0] < objTs.from);
+                        el.requestTs = new Timespan(el.requestTs.from, objTs.from - 1);
+                        cachedObjsManip.push(elLeft);
+                        el.values.values = el.values.values.filter(val => val[0] > objTs.to);
+                        el.requestTs = new Timespan(objTs.to + 1, el.requestTs.to);
+                        cachedObjsManip.push(el);
+                    }
                 });
+                cachedObjs = cachedObjsManip;
             }
             cachedObjs.push(obj);
             // sort by timespan
-            const objsSorted = cachedObjs.sort((a, b) => (a.values.values[0][0] > b.values.values[0][0]) ? 1 : ((b.values.values[0][0] > a.values.values[0][0]) ? -1 : 0));
+            // const objsSorted = cachedObjs.sort((a, b) => (a.values.values[0][0] > b.values.values[0][0]) ? 1 : ((b.values.values[0][0] > a.values.values[0][0]) ? -1 : 0));
+            const objsSorted = cachedObjs.sort((a, b) => (a.requestTs.from > b.requestTs.from) ? 1 : ((b.requestTs.from > a.requestTs.from) ? -1 : 0));
             this.cache.set(url, objsSorted);
         } else {
             // set new key containing obj
@@ -98,10 +130,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         for (let i = 0; i < objs.length; i++) { // const el of objs) {
             const el = objs[i];
             if (el) {
-                let cachedTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
-                if (el.requestTs) {
-                    cachedTs = new Timespan(el.requestTs.from, el.requestTs.to);
-                }
+                const cachedTs = new Timespan(el.requestTs.from, el.requestTs.to);
                 // a) checked timespan ends before cached timespan
                 if (cachedTs.from > ts.to) {
                     differedIntervals.push(ts);

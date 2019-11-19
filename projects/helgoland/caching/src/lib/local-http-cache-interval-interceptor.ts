@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timespan, HttpServiceInterceptor, HttpRequestOptions, HttpServiceHandler, TimeValueTuple, Data, ReferenceValues } from '@helgoland/core';
 import { HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { HttpCacheInterval } from './model';
 import { CachedObject, CachedIntersection } from './local-http-cache-interval';
@@ -45,16 +45,15 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     const customReqs = [];
     const reqOptions = [];
 
-    let intersectedCache;
+    let intersectedCache: CachedIntersection | null;
 
     if (!metadata.forceUpdate) {
       const reqTimespan = this.decodeTimespan(req.params.get('timespan'));
       // check cache for existing timespans
       intersectedCache = this.cache.getIntersection(req.url, reqTimespan);
 
-      if (intersectedCache && intersectedCache.timespans.length === 0) {
+      if (intersectedCache && (intersectedCache.timespans.length === 0 || (Math.floor(intersectedCache.timespans[0].from / 1000) === Math.floor(intersectedCache.timespans[0].to / 1000)))) {
         if (intersectedCache.cachedObjects[0]) {
-
           // requested timespan is covered by existing cachedObject
           return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
             const httpResponse = intersectedCache.cachedObjects[0].httpResponse;
@@ -64,7 +63,22 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           });
         } else {
           // case that there is intersection with cache, but the requested time interval contains no data values
-          return next.handle(req, metadata);
+          return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
+            const body = {};
+            body[urlID] = {
+              values: [],
+              referenceValues: []
+            };
+            observer.next(new HttpResponse({
+              body: !expanded ? { values: [], referenceValues: [] } : body,
+              // headers: ,
+              status: 200,
+              statusText: 'OK',
+              url: req.url
+            }));
+            observer.complete();
+          });
+          // return next.handle(req, metadata);
         }
       } else {
         // requested timespan is not or not fully covered by existing cachedObjects
