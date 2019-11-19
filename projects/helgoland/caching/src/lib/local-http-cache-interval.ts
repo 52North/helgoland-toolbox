@@ -102,7 +102,6 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
             }
             cachedObjs.push(obj);
             // sort by timespan
-            // const objsSorted = cachedObjs.sort((a, b) => (a.values.values[0][0] > b.values.values[0][0]) ? 1 : ((b.values.values[0][0] > a.values.values[0][0]) ? -1 : 0));
             const objsSorted = cachedObjs.sort((a, b) => (a.requestTs.from > b.requestTs.from) ? 1 : ((b.requestTs.from > a.requestTs.from) ? -1 : 0));
             this.cache.set(url, objsSorted);
         } else {
@@ -124,114 +123,73 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param ts
      */
     private identifyCachedIntersection(objs: CachedObject[], ts: Timespan): CachedIntersection | null {
-        const intersectedObjs = [];
-        const differedIntervals = [];
+        const intersectedObjs: CachedObject[] = [];
+        const differedIntervals: Timespan[] = [];
 
-        for (let i = 0; i < objs.length; i++) { // const el of objs) {
+        for (let i = 0; i < objs.length; i++) {
             const el = objs[i];
-            if (el) {
-                const cachedTs = new Timespan(el.requestTs.from, el.requestTs.to);
-                // a) checked timespan ends before cached timespan
-                if (cachedTs.from > ts.to) {
+            const cachedTs = new Timespan(el.requestTs.from, el.requestTs.to);
+
+            if (ts.from > cachedTs.to) {
+                // ts right of cached # no overlapping
+                if (i === objs.length - 1) {
                     differedIntervals.push(ts);
-                    return {
-                        cachedObjects: intersectedObjs,
-                        timespans: differedIntervals
-                    };
                 }
-                // b) checked timespan starts after cached timespan
-                if (cachedTs.to < ts.from) {
-                    if (i < objs.length - 1) {
-                        continue;
-                    } else {
-                        if (differedIntervals.length < 1) {
-                            differedIntervals.push(ts);
-                        }
-                        return {
-                            cachedObjects: intersectedObjs,
-                            timespans: differedIntervals
-                        };
+                continue;
+            } else if (ts.to < cachedTs.from) {
+                // ts left of cached # no overlapping
+                differedIntervals.push(ts);
+                break;
+            } else if (ts.from >= cachedTs.from && ts.to <= cachedTs.to) {
+                // ts inside cached # cached completely overlaps ts
+                const intVals = this.getCachedInterval(el, null, ts, 'inside');
+                if (intVals.values.values.length > 0) { intersectedObjs.push(intVals); }
+                break;
+            } else if (ts.from > cachedTs.from && ts.to >= cachedTs.to) {
+                // ts partly right of cached # ts and cached overlap, ts ends after cached
+                const diffTs = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
+                if (i === objs.length - 1) {
+                    differedIntervals.push(ts);
+                }
+                const intVals = this.getCachedInterval(el, diffTs, ts, 'right');
+                if (intVals.values.values.length > 0) { intersectedObjs.push(intVals); }
+            } else if (ts.from <= cachedTs.from && ts.to < cachedTs.to) {
+                // ts partly left of cached # ts and cached overlap, cached ends after ts
+                const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
+                differedIntervals.push(diffTs);
+                const intVals = this.getCachedInterval(el, diffTs, ts, 'left');
+                if (intVals.values.values.length > 0) { intersectedObjs.push(intVals); }
+                break;
+            } else if (ts.from <= cachedTs.from && ts.to >= cachedTs.to) {
+                // ts over cached # ts completely overlaps cached
+                let pushedLeft = false;
+                // partly left
+                if (ts.from < cachedTs.from) {
+                    const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
+                    differedIntervals.push(diffTs);
+                    const intVals = this.getCachedInterval(el, diffTs, ts, 'left');
+                    if (intVals.values.values.length > 0) { intersectedObjs.push(intVals); }
+                    pushedLeft = true;
+                } else {
+                    // completely inside
+                    const intVals = this.getCachedInterval(el, null, ts, 'inside');
+                    if (intVals.values.values.length > 0) { intersectedObjs.push(intVals); }
+                    pushedLeft = true;
+                }
+                // partly right
+                if (i === objs.length - 1) {
+                    const diffTsRight = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
+                    differedIntervals.push(diffTsRight);
+                    if (!pushedLeft) {
+                        const intValsRight = this.getCachedInterval(el, diffTsRight, ts, 'right');
+                        if (intValsRight.values.values.length > 0) { intersectedObjs.push(intValsRight); }
                     }
-                }
-                let lastLeftRight = false;
-                // c) checked timespan starts before or on cached timespan
-                // left difference exists
-                if (ts.from <= cachedTs.from) {
-                    if (ts.from === cachedTs.from) {
-                        const intVals = this.getCachedInterval(el, null, ts, 'inside');
-                        if (intVals.values.values.length > 0) {
-                            intersectedObjs.push(intVals);
-                        }
-                    } else {
-                        lastLeftRight = true;
-                        const diffTs = new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
-                        differedIntervals.push(diffTs);
-                        const intVals = this.getCachedInterval(el, diffTs, ts, 'left');
-                        if (intVals.values.values.length > 0) {
-                            intersectedObjs.push(intVals);
-                        }
-                    }
-                }
-                let pushedInside = false;
-                // d) checked timespan ends on ending or after cached timespan
-                // right difference exists - check for last element only
-                if (ts.to >= cachedTs.to && i >= objs.length - 1) {
-                    if (ts.to === cachedTs.to) {
-                        if (ts.from !== cachedTs.from) {
-                            pushedInside = true;
-                            const intVals = this.getCachedInterval(el, null, ts, 'inside');
-                            if (intVals.values.values.length > 0) {
-                                intersectedObjs.push(intVals);
-                            }
-                        }
-                    } else {
-                        const diffTs = new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
-                        differedIntervals.push(diffTs);
-                        if (!lastLeftRight) {
-                            const intVals = this.getCachedInterval(el, diffTs, ts, 'right');
-                            if (intVals.values.values.length > 0) {
-                                intersectedObjs.push(intVals);
-                            }
-                            return {
-                                cachedObjects: intersectedObjs,
-                                timespans: differedIntervals
-                            };
-                        }
-                    }
-                }
-                // e) checked timespan is completely inside or half inside cached item
-                if (cachedTs.from < ts.from && ts.from <= cachedTs.to) {
-                    if (!pushedInside) {
-                        const intVals = this.getCachedInterval(el, null, ts, 'inside');
-                        if (intVals.values.values.length > 0) {
-                            intersectedObjs.push(intVals);
-                        }
-                    }
-                    if (cachedTs.to > ts.to) {
-                        // if completely inside cached item
-                        return {
-                            cachedObjects: intersectedObjs,
-                            timespans: differedIntervals
-                        };
-                    }
-                }
-                // f) checked timespan ends inside cached item
-                if (cachedTs.to >= ts.to) {
-                    return {
-                        cachedObjects: intersectedObjs,
-                        timespans: differedIntervals
-                    };
-                }
-
-                ts.from = Math.min(ts.to, cachedTs.to) + 1; // check if ts is negative now
-
-                if (ts.from > ts.to) {
-                    return {
-                        cachedObjects: intersectedObjs,
-                        timespans: differedIntervals
-                    };
+                    break;
                 }
             }
+            ts.from = Math.min(ts.to, cachedTs.to) + 1;
+            // break if ts is negative now
+            if (ts.from > ts.to) { break; }
         }
         return {
             cachedObjects: intersectedObjs,
@@ -247,7 +205,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param pos {string} indicates point in time where values should be taken from
      */
     private getCachedInterval(obj: CachedObject, tsDiff: Timespan, ts: Timespan, pos: string): CachedObject {
-        const clonedObj = lodash.cloneDeep(obj);
+        const clonedObj: CachedObject = lodash.cloneDeep(obj);
         if (pos === 'left') {
             clonedObj.values.values = obj.values.values.filter(el => el[0] <= ts.to && el[0] >= tsDiff.to);
         }
@@ -257,7 +215,17 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         if (pos === 'inside') {
             clonedObj.values.values = obj.values.values.filter(el => el[0] >= ts.from && el[0] <= ts.to);
         }
-        // # TODO: check referenceValues
+        // set valueBeforeTimespan and valueAfterTimespan, if possible
+        if (clonedObj.values.values.length > 0 && obj.values.values.length > 0) {
+            const idx = obj.values.values.findIndex(el => el[0] === clonedObj.values.values[0][0]);
+            if (idx > 0 && obj.values.values[idx - 1]) {
+                clonedObj.values.valueBeforeTimespan = obj.values.values[idx - 1];
+            }
+            const idxj = obj.values.values.findIndex(el => el[0] === clonedObj.values.values[clonedObj.values.values.length - 1][0]);
+            if (idxj >= 0 && obj.values.values[idxj + 1]) {
+                clonedObj.values.valueAfterTimespan = obj.values.values[idxj + 1];
+            }
+        }
         return clonedObj;
     }
 }

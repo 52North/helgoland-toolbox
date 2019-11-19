@@ -10,7 +10,7 @@ import moment from 'moment';
 @Injectable()
 export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor {
 
-  private expirationAtMs = 60000;
+  private expirationAtMs = 10000;
 
   constructor(
     protected cache: HttpCacheInterval
@@ -168,7 +168,10 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       if (newObjValuesTimespan.to <= resObj.values[0][0]) {
         resObj.values = newCachedObject.values.values.concat(resObj.values);
         resObj.referenceValues = this.concatReferenceValues(resObj, newCachedObject.values);
+        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, newCachedObject.values);
+        resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, newCachedObject.values);
       }
+
     }
     for (let i = 1; i < intersected.cachedObjects.length; i++) {
       const currVal = intersected.cachedObjects[i].values;
@@ -176,6 +179,8 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       if (newCachedObject && newObjValuesTimespan.from >= resObj.values[resObj.values.length - 1][0] && newObjValuesTimespan.to <= currVal.values[0][0]) {
         resObj.values = resObj.values.concat(newCachedObject.values.values);
         resObj.referenceValues = this.concatReferenceValues(newCachedObject.values, resObj);
+        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, newCachedObject.values);
+        resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, newCachedObject.values);
       }
       resObj.values = resObj.values.concat(currVal.values);
       resObj.referenceValues = this.concatReferenceValues(currVal, resObj);
@@ -184,14 +189,9 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
         resObj.values = resObj.values.concat(newCachedObject.values.values);
         resObj.referenceValues = this.concatReferenceValues(newCachedObject.values, resObj);
       }
-    }
-
-    // resObj.values = resObj.values.filter((el, idx, array) => {
-    //   const arr = Array.from(array);
-    //   return (array.length - 1 - arr.reverse().findIndex(elR => el[0] === elR[0])) === idx;
-    // });
-    // resObj.values = resObj.values.sort((a, b) => (a[0] > b[0]) ? 1 : ((b[0] > a[0]) ? -1 : 0));
-
+      resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, currVal);
+      resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, currVal);
+  }
     if (resObj.valueBeforeTimespan && resObj.valueBeforeTimespan[0] > resObj.values[0][0]) {
       resObj.valueBeforeTimespan = resObj.values[0];
     }
@@ -260,10 +260,52 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     return (moment(timespan.from).format() + '/' + moment(timespan.to).format());
   }
 
+  /**
+   * Get id from request url.
+   * @param url {string} url
+   */
   private decodeID(url: string): string | number {
     const idx = url.indexOf('/getData');
     const start = url.substring(0, idx);
     const idxID = start.lastIndexOf('/') + 1;
     return start.substring(idxID);
+  }
+
+  /**
+   * Function to determine valueBeforeTimespan based on existing values.
+   * @param el1 {Data<TimeValueTuple>}
+   * @param el2 {Data<TimeValueTuple>}
+   */
+  private selectValueBeforeTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple {
+    if (el1.valueBeforeTimespan) {
+      if (el2.valueBeforeTimespan) {
+        return el1.valueBeforeTimespan[0] < el2.valueBeforeTimespan[0] ? el1.valueBeforeTimespan : el2.valueBeforeTimespan;
+      } else {
+        return el1.valueBeforeTimespan;
+      }
+    }
+    if (el2.valueBeforeTimespan) {
+      return el2.valueBeforeTimespan;
+    }
+    return undefined;
+  }
+
+  /**
+   * Function to determine valueAfterTimespan based on existing values.
+   * @param el1 {Data<TimeValueTuple>}
+   * @param el2 {Data<TimeValueTuple>}
+   */
+  private selectValueAfterTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple {
+    if (el1.valueAfterTimespan) {
+      if (el2.valueAfterTimespan) {
+        return el1.valueAfterTimespan[0] < el2.valueAfterTimespan[0] ? el1.valueAfterTimespan : el2.valueAfterTimespan;
+      } else {
+        return el1.valueAfterTimespan;
+      }
+    }
+    if (el2.valueAfterTimespan) {
+      return el2.valueAfterTimespan;
+    }
+    return undefined;
   }
 }
