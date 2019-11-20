@@ -40,7 +40,7 @@ export class FacetSearchComponent {
     forkJoin([
       this.api.getTimeseries('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true }),
       // this.api.getTimeseries('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true }),
-      // this.api.getTimeseries('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/', { expanded: true }),
+      // this.api.getTimeseries('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/', { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156' }),
       // this.api.getTimeseries('http://geo.irceline.be/sos/api/v1/', { expanded: true }),
       // this.api.getTimeseries('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true }),
     ]).subscribe(res => {
@@ -77,9 +77,11 @@ export class FacetSearchComponent {
   }
 
   private fetchTime() {
-    const timespan = this.facetSearch.getSelectedTimespan();
-    this.selectedStart = new Date(timespan.from);
-    this.selectedEnd = new Date(timespan.to);
+    const timespan = this.facetSearch.getFilteredTimespan();
+    if (timespan) {
+      this.selectedStart = new Date(timespan.from);
+      this.selectedEnd = new Date(timespan.to);
+    }
   }
 
 }

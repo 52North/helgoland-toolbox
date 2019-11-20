@@ -55,7 +55,7 @@
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="offeringType"
                 [textualFilter]="offeringAutocomplete"></n52-parameter-facet>
         </div>
-        <div class="facet">
+        <div class="facet" *ngIf="selectedStart && selectedEnd">
             <div class="facet-header">
                 <div class="facet-header-label">Timeframe</div>
             </div>
