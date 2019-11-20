@@ -1,20 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Timespan, HttpServiceInterceptor, HttpRequestOptions, HttpServiceHandler, TimeValueTuple, Data, ReferenceValues } from '@helgoland/core';
-import { HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, Observer, observable } from 'rxjs';
-import { share } from 'rxjs/operators';
-import { HttpCacheInterval } from './model';
-import { CachedObject, CachedIntersection } from './local-http-cache-interval';
+import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+  Data,
+  HttpRequestOptions,
+  HttpServiceHandler,
+  HttpServiceInterceptor,
+  ReferenceValues,
+  Timespan,
+  TimeValueTuple,
+} from '@helgoland/core';
 import moment from 'moment';
+import { Observable, Observer } from 'rxjs';
+import { share } from 'rxjs/operators';
+
+import { CacheConfig, CacheConfigService } from './config';
+import { CachedIntersection, CachedObject } from './local-http-cache-interval';
+import { HttpCacheInterval } from './model';
 
 @Injectable()
 export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor {
 
-  private expirationAtMs = 10000;
+  private expirationAtMs = 30000;
 
   constructor(
-    protected cache: HttpCacheInterval
-  ) { }
+    protected cache: HttpCacheInterval,
+    @Optional() @Inject(CacheConfigService) config: CacheConfig
+  ) {
+    if (config && config.cachingDurationInMilliseconds) { this.expirationAtMs = config.cachingDurationInMilliseconds; }
+  }
 
   /**
    * Interceptor for caching data for specific time intervals.
