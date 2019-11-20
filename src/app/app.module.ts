@@ -168,7 +168,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule.forRoot({
-      cachingDurationInMilliseconds: 300000
+      cachingDurationInMilliseconds: 300000,
+      getDataCacheActive: true
     }),
     HelgolandCoreModule,
     HelgolandTimeModule,

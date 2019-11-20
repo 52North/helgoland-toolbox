@@ -4,7 +4,7 @@ import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor } from '
 import { Observable, Observer, of } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-import { HttpCache, OnGoingHttpCache } from './model';
+import { HttpCache, OnGoingHttpCache } from '../model';
 
 @Injectable()
 export class CachingInterceptor implements HttpServiceInterceptor {
