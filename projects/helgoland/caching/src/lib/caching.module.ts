@@ -5,7 +5,10 @@ import { CachingInterceptor } from './cache-interceptor';
 import { CacheConfig, CacheConfigService } from './config';
 import { LocalHttpCache } from './local-http-cache';
 import { LocalOngoingHttpCache } from './local-ongoing-http-cache';
-import { HttpCache, OnGoingHttpCache } from './model';
+import { HttpCacheInterval, HttpCache, OnGoingHttpCache } from './model';
+
+import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
+import { LocalHttpCacheInterval } from './local-http-cache-interval';
 
 const PROVIDERS = [
   {
@@ -13,8 +16,13 @@ const PROVIDERS = [
     useClass: LocalHttpCache
   },
   {
+    provide: HttpCacheInterval,
+    useClass: LocalHttpCacheInterval
+  },
+  {
     provide: HTTP_SERVICE_INTERCEPTORS,
     useClass: CachingInterceptor,
+    // useClass: LocalHttpCacheIntervalInterceptor,
     multi: true
   },
   {
