@@ -1,11 +1,21 @@
-import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  EmbeddedViewRef,
+  Injector,
+  Input,
+} from '@angular/core';
 import { DatasetApiInterface, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3TimeseriesGraphComponent } from './../d3-timeseries-graph/d3-timeseries-graph.component';
+
+const wrapperClassName = 'export-diagram-wrapper';
 
 @Component({
   selector: 'n52-export-image-button',
@@ -66,10 +76,13 @@ export class ExportImageButtonComponent {
 
   public loading: boolean;
 
-  @ViewChild('diagram', { read: ViewContainerRef, static: true }) diagram: ViewContainerRef;
+  private internalHeight: number;
+  private internalWidth: number;
 
   constructor(
     private api: DatasetApiInterface,
+    private applicationRef: ApplicationRef,
+    private injector: Injector,
     private componentFactoryResolver: ComponentFactoryResolver,
     private timeSrvc: Time,
     private graphHelper: D3GraphHelperService
@@ -81,13 +94,11 @@ export class ExportImageButtonComponent {
 
   private createDiagramElem() {
     this.loading = true;
-    const wrapper = document.querySelector('.export-diagram-wrapper') as HTMLElement;
-    wrapper.style.height = `${this.height}px`;
-    wrapper.style.width = `${this.width}px`;
 
-    const compFactory = this.componentFactoryResolver.resolveComponentFactory(D3TimeseriesGraphComponent);
+    this.internalHeight = this.height;
+    this.internalWidth = this.width;
 
-    const comp = compFactory.create(this.diagram.injector);
+    const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
@@ -97,25 +108,26 @@ export class ExportImageButtonComponent {
       grid: true
     };
 
-    const diagramRef = this.diagram.insert(comp.hostView);
-
     comp.instance.onContentLoading.subscribe(loadFinished => {
       if (loadFinished) {
         setTimeout(() => {
-          const svgElem = document.querySelector<SVGSVGElement>(this.prepareSelector('.export-diagram-wrapper n52-d3-timeseries-graph'));
-          this.diagramAdjustments(svgElem).subscribe(() => {
-            switch (this.exportType) {
-              case 'svg':
-                this.createSvgDownload(svgElem);
-                break;
-              case 'png':
-              default:
-                this.createPngImageDownload(svgElem);
-                break;
-            }
-            diagramRef.destroy();
-            this.loading = false;
-          });
+          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+          const svgElem = document.querySelector<SVGSVGElement>(temp);
+          if (svgElem) {
+            this.diagramAdjustments(svgElem).subscribe(() => {
+              switch (this.exportType) {
+                case 'svg':
+                  this.createSvgDownload(svgElem);
+                  break;
+                case 'png':
+                default:
+                  this.createPngImageDownload(svgElem);
+                  break;
+              }
+              this.removeComponentFromBody(comp);
+              this.loading = false;
+            });
+          }
         }, 1000);
       }
     });
@@ -137,17 +149,17 @@ export class ExportImageButtonComponent {
 
   private addFirstLastDate(element: SVGSVGElement) {
     if (this.showFirstLastDate) {
-      this.height += 20;
+      this.internalHeight += 20;
       const selection = d3.select(element);
       const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
 
       const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.from).toLocaleDateString());
       const firstDateWidth = firstDate.node().getBBox().width;
-      firstDate.attr('x', (this.width - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (this.height));
+      firstDate.attr('x', (this.internalWidth - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (this.internalHeight));
 
       const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.to).toLocaleDateString());
       const lastDateWidth = lastDate.node().getBBox().width;
-      lastDate.attr('x', (this.width - lastDateWidth)).attr('y', (this.height));
+      lastDate.attr('x', (this.internalWidth - lastDateWidth)).attr('y', (this.internalHeight));
     }
   }
 
@@ -161,10 +173,10 @@ export class ExportImageButtonComponent {
             const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
             this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
             label.append<SVGGraphicsElement>('svg:text').text(ts.label);
-            this.height += 25;
+            this.internalHeight += 25;
             return {
               label,
-              xPos: this.height - 10
+              xPos: this.internalHeight - 10
             };
           } else {
             return {
@@ -178,7 +190,7 @@ export class ExportImageButtonComponent {
         const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
         elem.forEach(e => {
           if (e.label) {
-            e.label.attr('transform', `translate(${(this.width - maxWidth) / 2},${e.xPos})`);
+            e.label.attr('transform', `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`);
           }
         });
       }));
@@ -191,7 +203,7 @@ export class ExportImageButtonComponent {
     if (this.title) {
       const addedHeight = 20;
 
-      this.height += addedHeight;
+      this.internalHeight += addedHeight;
 
       const selection = d3.select(element);
 
@@ -201,7 +213,7 @@ export class ExportImageButtonComponent {
 
       const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
       const titleWidth = titleElem.node().getBBox().width;
-      titleElem.attr('x', (this.width - titleWidth) / 2).attr('y', '15');
+      titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
     }
   }
 
@@ -215,11 +227,11 @@ export class ExportImageButtonComponent {
   }
 
   private createPngImageDownload(element: SVGSVGElement) {
-    console.log(`Generate PNG file with width: ${this.width} and height: ${this.height}`);
+    console.log(`Generate PNG file with width: ${this.internalWidth} and height: ${this.internalHeight}`);
     const svgString = new XMLSerializer().serializeToString(element);
     const canvas = document.createElement('canvas');
-    canvas.width = this.width;
-    canvas.height = this.height;
+    canvas.width = this.internalWidth;
+    canvas.height = this.internalHeight;
     const ctx = canvas.getContext('2d');
     const image = new Image();
     const svg = new Blob([svgString], { type: 'image/svg+xml;base64;' });
@@ -244,7 +256,7 @@ export class ExportImageButtonComponent {
   }
 
   private createSvgDownload(element: SVGSVGElement) {
-    console.log(`Generate SVG file with width: ${this.width} and height: ${this.height}`);
+    console.log(`Generate SVG file with width: ${this.internalWidth} and height: ${this.internalHeight}`);
     const serializer = new XMLSerializer();
     let source = serializer.serializeToString(element);
     if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
@@ -269,6 +281,38 @@ export class ExportImageButtonComponent {
       return selector;
     }
     return `${selector} svg`;
+  }
+
+  private appendComponentToBody(component: any) {
+    // create component ref
+    const componentRef = this.componentFactoryResolver.resolveComponentFactory(component)
+      .create(this.injector);
+
+    // attach component to the appRef.
+    this.applicationRef.attachView(componentRef.hostView);
+
+    // get DOM element from component
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+      .rootNodes[0] as HTMLElement;
+
+    // create wrapper to set position and size
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'absolute';
+    wrapper.style.top = `${-this.internalHeight * 2}px`;
+    wrapper.className = wrapperClassName;
+    wrapper.style.height = `${this.internalHeight}px`;
+    wrapper.style.width = `${this.internalWidth}px`;
+    wrapper.appendChild(domElem);
+
+    document.body.appendChild(wrapper);
+
+    return componentRef;
+  }
+
+  private removeComponentFromBody(componentRef: ComponentRef<any>) {
+    this.applicationRef.detachView(componentRef.hostView);
+    document.querySelector(`.${wrapperClassName}`).remove();
+    componentRef.destroy();
   }
 
 }

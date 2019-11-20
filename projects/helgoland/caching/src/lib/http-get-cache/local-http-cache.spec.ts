@@ -2,8 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import { HttpService } from '@helgoland/core';
 
+import { HelgolandCachingModule } from '../caching.module';
 import { LocalHttpCache } from './local-http-cache';
-import { HelgolandCachingModule } from './caching.module';
 
 describe('LocalHttpCache', () => {
 

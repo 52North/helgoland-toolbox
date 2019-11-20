@@ -40,13 +40,8 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                 start = end.add(1, 'millisecond');
                 end = moment(start).endOf('year');
             }
-            return forkJoin(requests).pipe(map((entry) => {
-                const idxFrom = entry[0].values.findIndex(el => el[0] >= timespan.from);
-                let idxTo = entry[entry.length - 1].values.findIndex(el => el[0] >= timespan.to);
-                entry[0].values = entry[0].values.slice(idxFrom); // slice array including timespan.from
-                idxTo = entry[entry.length - 1].values[idxTo][0] > timespan.to ? idxTo - 1 : idxTo;
-                entry[entry.length - 1].values = entry[entry.length - 1].values.slice(0, idxTo + 1); // slice array including timespan.to, but excluding bigger timespan
-                return entry.reduce((previous, current) => {
+            return forkJoin(requests).pipe(map((e) => {
+                const mergedResult = e.reduce((previous, current) => {
                     const next: Data<T> = {
                         referenceValues: {},
                         values: previous.values.concat(current.values)
@@ -58,6 +53,15 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                     }
                     return next;
                 });
+                if (mergedResult.values && mergedResult.values.length > 0) {
+                    // cut first
+                    const fromIdx = mergedResult.values.findIndex(el => el[0] >= timespan.from);
+                    mergedResult.values = mergedResult.values.slice(fromIdx);
+                    // cut last
+                    const toIdx = mergedResult.values.findIndex(el => el[0] >= timespan.to);
+                    if (toIdx >= 0) { mergedResult.values = mergedResult.values.slice(0, toIdx + 1); }
+                }
+                return mergedResult;
             }));
         } else {
             return super.getTsData<T>(id, apiUrl, timespan, params, options);

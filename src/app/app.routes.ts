@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
 
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
+import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
 import { EventingComponent } from './pages/eventing/eventing.component';
+import { FacetSearchComponent } from './pages/facet-search/facet-search.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { GraphLegendComponent } from './pages/graph-legend/graph-legend.component';
 import { ListSelectionComponent } from './pages/list-selection/list-selection.component';
@@ -36,5 +38,7 @@ export const ROUTES: Routes = [
   { path: 'timeseries-graph', component: TimeseriesGraphComponent },
   { path: 'trajectory', component: TrajectoryComponent },
   { path: 'ol', component: OlComponent },
+  { path: 'diagram-export', component: DiagramExportComponent },
+  { path: 'facet-search', component: FacetSearchComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];

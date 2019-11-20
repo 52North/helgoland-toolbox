@@ -1,7 +1,8 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 
-import { HttpCache } from './model';
+import { CacheConfig, CacheConfigService } from '../config';
+import { HttpCache } from '../model';
 
 interface CachedItem {
     expirationAtMs: number;
@@ -16,6 +17,18 @@ interface Cache {
 export class LocalHttpCache extends HttpCache {
 
     private cache: Cache = {};
+
+    /**
+     * Default caching duration
+     */
+    private cachingDuration = 30000;
+
+    constructor(
+        @Optional() @Inject(CacheConfigService) config: CacheConfig
+    ) {
+        super();
+        if (config && config.cachingDurationInMilliseconds) { this.cachingDuration = config.cachingDurationInMilliseconds; }
+    }
 
     public get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> {
         const key = req.urlWithParams;
@@ -38,7 +51,7 @@ export class LocalHttpCache extends HttpCache {
 
     public put(req: HttpRequest<any>, resp: HttpResponse<any>, expirationAtMs?: number) {
         this.cache[req.urlWithParams] = {
-            expirationAtMs: expirationAtMs || new Date().getTime() + 30000,
+            expirationAtMs: expirationAtMs || new Date().getTime() + this.cachingDuration,
             response: resp
         };
     }
