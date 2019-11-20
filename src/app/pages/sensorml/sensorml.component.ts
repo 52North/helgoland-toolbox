@@ -8,7 +8,7 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
 })
 export class SensormlComponent implements OnInit {
 
-  public readerResult: string | ArrayBuffer;
+  public readerResult: string;
   public error: string;
   public description: AbstractProcess;
 
@@ -29,8 +29,8 @@ export class SensormlComponent implements OnInit {
       try {
         console.log(e);
         console.log(myReader.result);
-        this.readerResult = myReader.result;
-        this.description = new SensorMLXmlService().deserialize(myReader.result);
+        this.readerResult = myReader.result as string;
+        this.description = new SensorMLXmlService().deserialize(this.readerResult);
       } catch (error) {
         this.error = error.message;
       }
