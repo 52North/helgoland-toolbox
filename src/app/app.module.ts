@@ -46,6 +46,7 @@ import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandPermalinkModule } from '@helgoland/permalink';
 import { HelgolandPlotlyModule } from '@helgoland/plotly';
 import { HelgolandSelectorModule } from '@helgoland/selector';
+import { SensorMLXmlService, XmlService } from '@helgoland/sensorml';
 import { HelgolandTimeModule } from '@helgoland/time';
 import { HelgolandTimeRangeSliderModule } from '@helgoland/time-range-slider';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -70,6 +71,7 @@ import { MapViewComponent } from './pages/map-view/map-view.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
+import { SensormlComponent } from './pages/sensorml/sensorml.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
 import { TableComponent } from './pages/table/table.component';
@@ -97,7 +99,9 @@ const APP_PROVIDERS = [
     provide: EventingApiService,
     useClass: EventingImplApiInterface
   },
-  MatDatepickerModule
+  MatDatepickerModule,
+  SensorMLXmlService,
+  XmlService
 ];
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -131,7 +135,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimeseriesGraphComponent,
     TrajectoryComponent,
     ExportPopupComponent,
-    FacetSearchComponent
+    FacetSearchComponent,
+    SensormlComponent
   ],
   imports: [
     BrowserModule,
@@ -177,7 +182,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelgolandDatasetTableModule,
     HelgolandPlotlyModule,
     HelgolandBasicAuthModule,
-    HelgolandDatasetDownloadModule
+    HelgolandDatasetDownloadModule,
   ],
   entryComponents: [
     StyleModificationComponent,
