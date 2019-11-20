@@ -1,11 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed, inject } from '@angular/core/testing';
-import { HelgolandCoreModule, HttpService, DefinedTimespanService, DefinedTimespan, DatasetImplApiInterface } from '@helgoland/core';
-
-import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
-import { HttpCacheInterval } from './model';
-import { HelgolandCachingModule } from './caching.module';
+import { inject, TestBed } from '@angular/core/testing';
+import { DatasetImplApiInterface, DefinedTimespanService, HelgolandCoreModule, HttpService } from '@helgoland/core';
 import { TranslateTestingModule } from 'projects/testing/translate.testing.module';
+
+import { HelgolandCachingModule } from '../caching.module';
+import { HttpCacheInterval } from '../model';
+import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
 
 describe('LocalHttpCacheIntervalInterceptor', () => {
   let definedTimespanSrvc: DefinedTimespanService;
