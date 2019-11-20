@@ -4,25 +4,31 @@ import { HelgolandCoreModule, HTTP_SERVICE_INTERCEPTORS } from '@helgoland/core'
 import { CachingInterceptor } from './cache-interceptor';
 import { CacheConfig, CacheConfigService } from './config';
 import { LocalHttpCache } from './local-http-cache';
-import { LocalOngoingHttpCache } from './local-ongoing-http-cache';
-import { HttpCacheInterval, HttpCache, OnGoingHttpCache } from './model';
-
-import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
 import { LocalHttpCacheInterval } from './local-http-cache-interval';
+import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
+import { LocalOngoingHttpCache } from './local-ongoing-http-cache';
+import { HttpCache, HttpCacheInterval, OnGoingHttpCache } from './model';
 
-const PROVIDERS = [
+const GET_DATA_CACHE_PROVIDERS = [
+  {
+    provide: HTTP_SERVICE_INTERCEPTORS,
+    useClass: LocalHttpCacheIntervalInterceptor,
+    multi: true
+  },
+  {
+    provide: HttpCacheInterval,
+    useClass: LocalHttpCacheInterval
+  }
+];
+
+const HTTP_GET_PROVIDERS = [
   {
     provide: HttpCache,
     useClass: LocalHttpCache
   },
   {
-    provide: HttpCacheInterval,
-    useClass: LocalHttpCacheInterval
-  },
-  {
     provide: HTTP_SERVICE_INTERCEPTORS,
     useClass: CachingInterceptor,
-    // useClass: LocalHttpCacheIntervalInterceptor,
     multi: true
   },
   {
@@ -37,14 +43,17 @@ const PROVIDERS = [
     HelgolandCoreModule
   ],
   exports: [],
-  providers: PROVIDERS
+  providers: [HTTP_GET_PROVIDERS]
 })
 export class HelgolandCachingModule {
 
   static forRoot(config: CacheConfig): ModuleWithProviders {
+    const providers = [];
+    if (config.getDataCacheActive) { providers.push(GET_DATA_CACHE_PROVIDERS); }
     return {
       ngModule: HelgolandCachingModule,
       providers: [
+        ...providers,
         {
           provide: CacheConfigService,
           useValue: config

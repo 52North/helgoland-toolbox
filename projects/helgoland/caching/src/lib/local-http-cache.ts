@@ -27,9 +27,7 @@ export class LocalHttpCache extends HttpCache {
         @Optional() @Inject(CacheConfigService) config: CacheConfig
     ) {
         super();
-        if (config) {
-            this.cachingDuration = config.cachingDurationInMilliseconds;
-        }
+        if (config && config.cachingDurationInMilliseconds) { this.cachingDuration = config.cachingDurationInMilliseconds; }
     }
 
     public get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> {
