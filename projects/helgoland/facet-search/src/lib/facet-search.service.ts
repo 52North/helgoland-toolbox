@@ -97,11 +97,15 @@ export class FacetSearchService implements FacetSearch {
     if (timeseriesList.length > 0) {
       timespan = { from: Infinity, to: 0 };
       timeseriesList.forEach(e => {
-        if (e.firstValue.timestamp < timespan.from) { timespan.from = e.firstValue.timestamp; }
-        if (e.lastValue.timestamp > timespan.to) { timespan.to = e.lastValue.timestamp; }
+        if (e.firstValue && e.lastValue) {
+          if (e.firstValue.timestamp < timespan.from) { timespan.from = e.firstValue.timestamp; }
+          if (e.lastValue.timestamp > timespan.to) { timespan.to = e.lastValue.timestamp; }
+        }
       });
     }
-    return timespan;
+    if (timespan.from !== Infinity && timespan.to !== 0) {
+      return timespan;
+    }
   }
 
   private setFilteredTimeseries() {

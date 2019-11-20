@@ -2,7 +2,7 @@ import { Timespan } from './../internal/timeInterval';
 
 export interface Settings {
     datasetApis?: DatasetApi[];
-    defaultService: {
+    defaultService?: {
         serviceId: string;
         apiUrl: string;
     };
