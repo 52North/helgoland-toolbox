@@ -13,9 +13,9 @@ import moment from 'moment';
 import { Observable, Observer } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-import { CacheConfig, CacheConfigService } from './config';
+import { CacheConfig, CacheConfigService } from '../config';
+import { HttpCacheInterval } from '../model';
 import { CachedIntersection, CachedObject } from './local-http-cache-interval';
-import { HttpCacheInterval } from './model';
 
 @Injectable()
 export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor {
@@ -204,7 +204,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       }
       resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, currVal);
       resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, currVal);
-  }
+    }
     if (resObj.valueBeforeTimespan && resObj.valueBeforeTimespan[0] > resObj.values[0][0]) {
       resObj.valueBeforeTimespan = resObj.values[0];
     }

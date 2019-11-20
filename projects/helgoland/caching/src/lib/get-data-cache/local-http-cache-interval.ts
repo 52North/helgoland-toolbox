@@ -1,9 +1,9 @@
-import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { HttpCacheInterval } from './model';
-import { Timespan, TimeValueTuple, Data } from '@helgoland/core';
+import { Data, Timespan, TimeValueTuple } from '@helgoland/core';
 import * as lodash from 'lodash';
+
+import { HttpCacheInterval } from '../model';
 
 export interface CachedObject {
     values: Data<TimeValueTuple>;
