@@ -81,6 +81,7 @@
     "plotly.js": "^1.50.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
+    "typescript-logging": "^0.6.3",
     "xlsx": "^0.15.1",
     "zone.js": "~0.10.2"
   },

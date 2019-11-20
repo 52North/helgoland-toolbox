@@ -123,7 +123,13 @@
       ],
       "@helgoland/open-layers/*": [
         "dist/helgoland/open-layers/*"
-      ]
+      ],
+      "@helgoland/sensorml": [
+        "dist/helgoland/sensorml"
+      ],
+      "@helgoland/sensorml/*": [
+        "dist/helgoland/sensorml/*"
+      ],
     }
   }
 }
