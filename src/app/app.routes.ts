@@ -11,6 +11,7 @@ import { MapViewComponent } from './pages/map-view/map-view.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
+import { SensormlComponent } from './pages/sensorml/sensorml.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
 import { TableComponent } from './pages/table/table.component';
@@ -36,5 +37,6 @@ export const ROUTES: Routes = [
   { path: 'timeseries-graph', component: TimeseriesGraphComponent },
   { path: 'trajectory', component: TrajectoryComponent },
   { path: 'facet-search', component: FacetSearchComponent },
+  { path: 'sensorml', component: SensormlComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
