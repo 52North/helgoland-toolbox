@@ -15,5 +15,6 @@ export const modules = [
   'd3',
   'plotly',
   'facet-search',
-  'open-layers'
+  'open-layers',
+  'sensorml'
 ];
