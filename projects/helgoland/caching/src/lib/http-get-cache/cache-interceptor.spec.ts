@@ -1,7 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 
+import { HttpCache, OnGoingHttpCache } from '../model';
 import { CachingInterceptor } from './cache-interceptor';
-import { HttpCache, OnGoingHttpCache } from './model';
 
 describe('CachingInterceptor', () => {
 

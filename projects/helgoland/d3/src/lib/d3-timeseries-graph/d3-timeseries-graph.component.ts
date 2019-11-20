@@ -295,7 +295,7 @@ export class D3TimeseriesGraphComponent
         this.loadingCounter++;
 
         if (dataset instanceof Timeseries) {
-            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
+            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2, moment.duration(1, 'day').asMilliseconds());
 
             this.loadingData.add(dataset.internalId);
             this.dataLoaded.emit(this.loadingData);
@@ -521,7 +521,8 @@ export class D3TimeseriesGraphComponent
      * (graph line, graph axes, event handlers)
      */
     public redrawCompleteGraph(): void {
-        if (!this.graph || !this.rawSvg || !this.datasetIds) { return; }
+        if (this.isNotDrawable()) { return; }
+
         this.highlightOutput = {
             timestamp: 0,
             ids: new Map()
@@ -651,6 +652,21 @@ export class D3TimeseriesGraphComponent
                 });
         }
         this.drawBackground();
+    }
+
+    private isNotDrawable() {
+        try {
+            // tslint:disable-next-line: no-unused-expression
+            this.rawSvg.node().width.baseVal.value;
+            // tslint:disable-next-line: no-unused-expression
+            this.rawSvg.node().height.baseVal.value;
+        } catch (error) {
+            return true;
+        }
+        return !this.graph
+            || !this.rawSvg
+            || !this.rawSvg.node()
+            || !this.datasetIds;
     }
 
     protected prepareYAxes() {

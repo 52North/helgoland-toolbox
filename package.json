@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -73,6 +73,7 @@
     "jsonfile": "^5.0.0",
     "leaflet": "^1.5.1",
     "leaflet.markercluster": "^1.4.1",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ngx-clipboard": "^12.2.1",
     "ngx-color-picker": "^8.2.0",
