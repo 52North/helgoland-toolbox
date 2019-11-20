@@ -2,6 +2,10 @@ import { Timespan } from './../internal/timeInterval';
 
 export interface Settings {
     datasetApis?: DatasetApi[];
+    defaultService: {
+        serviceId: string;
+        apiUrl: string;
+    };
     providerBlackList?: BlacklistedService[];
     proxyUrl?: string;
     timespanPresets?: TimespanPreset[];
