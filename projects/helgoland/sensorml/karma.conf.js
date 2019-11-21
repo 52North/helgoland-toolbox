@@ -20,6 +20,12 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
+    files: [
+      { pattern: './src/examples/**', watched: false, included:false, nocache:false, served:true }
+    ],
+    proxies: {
+      '/examples/': '/base/src/examples/'
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
