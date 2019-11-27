@@ -157,7 +157,7 @@ export class WmsCapabilitiesService {
   }
 
   /**
-   * Removes every request parameter of the url an returns this cleand url. 
+   * Removes every request parameter of the url an returns this cleand url.
    */
   public cleanUpWMSUrl(url: string): string {
     let wmsRequesturl = url;
