@@ -4,11 +4,11 @@ import WMSCapabilities from 'ol/format/WMSCapabilities';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface WMSLayer {
+interface InternalWMSLayer {
   Name: string;
   Title: string;
   Abstract: string;
-  Layer: WMSLayer[];
+  Layer: InternalWMSLayer[];
   Dimension: {
     name: string;
     default: string;
@@ -29,6 +29,13 @@ interface WMSLayer {
     }[]
   }[];
   EX_GeographicBoundingBox: number[];
+}
+
+export interface WMSLayer {
+  name: string;
+  title: string;
+  abstract: string;
+  childLayer: WMSLayer[];
 }
 
 // request Capabilities only all 5 minutes
@@ -145,13 +152,37 @@ export class WmsCapabilitiesService {
     }));
   }
 
+  public getLayerTree(wmsurl: string): Observable<WMSLayer> {
+    return this.getCapabilities(wmsurl).pipe(map(res => this.createLayer(res.Capability.Layer)));
+  }
+
+  /**
+   * Removes every request parameter of the url an returns this cleand url. 
+   */
+  public cleanUpWMSUrl(url: string): string {
+    let wmsRequesturl = url;
+    if (wmsRequesturl.indexOf('?') !== -1) {
+      wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf('?'));
+    }
+    return wmsRequesturl;
+  }
+
+  private createLayer(layer: InternalWMSLayer): WMSLayer {
+    return {
+      name: layer.Name,
+      title: layer.Title,
+      abstract: layer.Abstract,
+      childLayer: layer.Layer ? layer.Layer.map(l => this.createLayer(l)) : []
+    };
+  }
+
   private getCapabilities(url: string): Observable<any> {
-    if (!url.endsWith('?')) { url = url + '?'; }
-    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(`${url}service=wms&version=1.3.0&request=GetCapabilities`, { responseType: 'text' })
+    const wmsRequesturl = this.cleanUpWMSUrl(url) + '?request=GetCapabilities&service=wms&version=1.3.0';
+    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(wmsRequesturl, { responseType: 'text' })
       .pipe(map(res => new WMSCapabilities().read(res)));
   }
 
-  private findLayerByName(name: string, layerList: WMSLayer[]): WMSLayer {
+  private findLayerByName(name: string, layerList: InternalWMSLayer[]): InternalWMSLayer {
     let layer = layerList.find(e => e.Name === name);
     if (layer) {
       return layer;
@@ -167,7 +198,7 @@ export class WmsCapabilitiesService {
     }
   }
 
-  private getLayerInfo(layerName, url): Observable<WMSLayer> {
+  private getLayerInfo(layerName, url): Observable<InternalWMSLayer> {
     return this.getCapabilities(url).pipe(
       map(caps => this.findLayerByName(layerName, caps.Capability.Layer.Layer))
     );
