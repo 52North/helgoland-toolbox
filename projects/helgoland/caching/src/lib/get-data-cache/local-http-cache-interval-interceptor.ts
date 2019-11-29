@@ -39,8 +39,9 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     req: HttpRequest<any>, metadata: HttpRequestOptions, next: HttpServiceHandler
   ): Observable<HttpEvent<any>> {
 
-    let urlID;
-    let expanded;
+    const urlID = this.decodeID(req.url);
+    let expanded = false;
+    let generalize = false;
 
     // handle GET and getData requests only
     if (req.method !== 'GET') {
@@ -51,7 +52,9 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     }
     if (req.urlWithParams.includes('expanded=true')) {
       expanded = true;
-      urlID = this.decodeID(req.url);
+    }
+    if (req.urlWithParams.includes('generalize=true')) {
+      generalize = true;
     }
 
     // adapt request if necessary
@@ -63,7 +66,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     if (!metadata.forceUpdate) {
       const reqTimespan = this.decodeTimespan(req.params.get('timespan'));
       // check cache for existing timespans
-      intersectedCache = this.cache.getIntersection(req.url, reqTimespan);
+      intersectedCache = this.cache.getIntersection(req.url, reqTimespan, generalize);
 
       if (intersectedCache && (intersectedCache.timespans.length === 0 || (Math.floor(intersectedCache.timespans[0].from / 1000) === Math.floor(intersectedCache.timespans[0].to / 1000)))) {
         if (intersectedCache.cachedObjects[0]) {
@@ -146,7 +149,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           };
           if (cachedItem.values.values.length > 0) {
             // update cache
-            this.cache.put(resultUrl, cachedItem, originReq);
+            this.cache.put(resultUrl, cachedItem, generalize, originReq);
           }
           if (!originReq && intersectedCache && intersectedCache.cachedObjects.length > 0) {
             if (cachedItem.values.values.length > 0) {
@@ -262,7 +265,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     const idx = ts.indexOf('/');
     const start = ts.substring(0, idx);
     const end = ts.substring(idx + 1);
-    return new Timespan(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000);
+    return new Timespan(Math.min(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000), Math.max(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000));
   }
 
   /**
@@ -277,7 +280,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * Get id from request url.
    * @param url {string} url
    */
-  private decodeID(url: string): string | number {
+  private decodeID(url: string): string {
     const idx = url.indexOf('/getData');
     const start = url.substring(0, idx);
     const idxID = start.lastIndexOf('/') + 1;
