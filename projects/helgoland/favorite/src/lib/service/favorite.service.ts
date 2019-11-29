@@ -1,5 +1,31 @@
 import { Injectable } from '@angular/core';
-import { IDataset, LocalStorage } from '@helgoland/core';
+import { DatasetOptions, IDataset, LocalStorage } from '@helgoland/core';
+import { Observable, ReplaySubject } from 'rxjs';
+
+export interface Favorite {
+  id: string;
+  label: string;
+}
+
+export interface SingleFavorite extends Favorite {
+  favorite: IDataset;
+  options: DatasetOptions;
+}
+
+function isSingleFavorite(object: any): object is SingleFavorite {
+  return 'favorite' in object;
+}
+
+export interface GroupFavorite extends Favorite {
+  favorites: {
+    dataset: IDataset,
+    options: DatasetOptions
+  }[];
+}
+
+function isGroupFavorite(object: any): object is GroupFavorite {
+  return 'favorites' in object;
+}
 
 const CACHE_PARAM_FAVORITES_SINGLE = 'SingleFavorites';
 const CACHE_PARAM_FAVORITES_GROUP = 'GroupFavorites';
@@ -11,18 +37,21 @@ export class FavoriteService {
   private groupFavs: Map<string, GroupFavorite>;
   private groupCounter = 0;
 
+  private favoriteCountChanged: ReplaySubject<number> = new ReplaySubject();
+
   constructor(
     protected localStorage: LocalStorage
   ) {
     this.loadFavorites();
   }
 
-  public addFavorite(dataset: IDataset, label?: string): boolean {
+  public addFavorite(dataset: IDataset, options: DatasetOptions, label?: string): boolean {
     if (!this.singleFavs.has(dataset.internalId)) {
       this.singleFavs.set(dataset.internalId, {
         id: dataset.internalId,
         label: label ? label : dataset.label,
-        favorite: dataset
+        favorite: dataset,
+        options
       });
       this.saveFavorites();
       return true;
@@ -30,8 +59,18 @@ export class FavoriteService {
     return false;
   }
 
+  public getFavoriteCountChanged(): Observable<number> {
+    return this.favoriteCountChanged;
+  }
+
   public hasFavorite(dataset: IDataset): boolean {
     return this.singleFavs.has(dataset.internalId);
+  }
+
+  public setFavorites(singles: Map<string, SingleFavorite>, groups: Map<string, GroupFavorite>) {
+    this.groupFavs = groups;
+    this.singleFavs = singles;
+    this.saveFavorites();
   }
 
   public getFavorites(): SingleFavorite[] {
@@ -52,7 +91,7 @@ export class FavoriteService {
     return false;
   }
 
-  public addFavoriteGroup(datasets: IDataset[], label?: string): boolean {
+  public addFavoriteGroup(datasets: { dataset: IDataset, options: DatasetOptions }[], label?: string): boolean {
     const id = 'Group' + this.groupCounter++;
     this.groupFavs.set(id, {
       id,
@@ -84,6 +123,7 @@ export class FavoriteService {
   private saveFavorites(): void {
     this.localStorage.save(CACHE_PARAM_FAVORITES_SINGLE, this.getFavorites());
     this.localStorage.save(CACHE_PARAM_FAVORITES_GROUP, this.getFavoriteGroups());
+    this.updateFavoriteCount();
   }
 
   private loadFavorites(): void {
@@ -97,26 +137,10 @@ export class FavoriteService {
     if (loadedGroupFavs) {
       loadedGroupFavs.forEach((entry) => this.groupFavs.set(entry.id, entry));
     }
+    this.updateFavoriteCount();
   }
-}
 
-export interface Favorite {
-  id: string;
-  label: string;
-}
-
-export interface SingleFavorite extends Favorite {
-  favorite: IDataset;
-}
-
-function isSingleFavorite(object: any): object is SingleFavorite {
-  return 'favorite' in object;
-}
-
-export interface GroupFavorite extends Favorite {
-  favorites: IDataset[];
-}
-
-function isGroupFavorite(object: any): object is GroupFavorite {
-  return 'favorites' in object;
+  private updateFavoriteCount() {
+    this.favoriteCountChanged.next(this.singleFavs.size + this.groupFavs.size);
+  }
 }
