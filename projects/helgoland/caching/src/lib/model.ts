@@ -28,16 +28,16 @@ export abstract class HttpCacheInterval {
     /**
      * Returns a cached response, if any, or null, if not present.
      */
-    public abstract get(url: string): CachedObject[] | null;
+    public abstract get(url: string, generalized: boolean): CachedObject[] | null;
     /**
      * Returns a cached response with intersecting timespans, if any, or null, if not present.
      * Further returns an array of timespans that need to be requested (not covered by cached timespans),
      * if any, or null, if only one cached object covers the requested timespan.
      */
-    public abstract getIntersection(url: string, timespan: Timespan): CachedIntersection | null;
+    public abstract getIntersection(url: string, timespan: Timespan, generalized: boolean): CachedIntersection | null;
     /**
      * Saves new object into cache.
      * 'originReq' indicates, if the request is the original request (e.g. forceUpdate), so the cache can be filtered
      */
-    public abstract put(url: string, obj: CachedObject, originReq?: boolean): void;
+    public abstract put(url: string, obj: CachedObject, generalized: boolean, originReq?: boolean): void;
 }
