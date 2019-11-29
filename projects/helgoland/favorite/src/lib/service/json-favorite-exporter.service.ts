@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
-import { FavoriteService, SingleFavorite } from './favorite.service';
+import { FavoriteService, GroupFavorite, SingleFavorite } from './favorite.service';
 
 @Injectable()
 export class JsonFavoriteExporterService {
@@ -12,7 +12,10 @@ export class JsonFavoriteExporterService {
 
   public exportFavorites() {
     const filename = 'favorites.json';
-    const json = JSON.stringify(this.favoriteSrvc.getFavorites());
+    const json = {
+      singles: this.favoriteSrvc.getFavorites(),
+      groups: this.favoriteSrvc.getFavoriteGroups()
+    };
     // if (window.navigator.msSaveBlob) {
     //     // IE version >= 10
     //     const blob = new Blob([json], {
@@ -22,7 +25,7 @@ export class JsonFavoriteExporterService {
     // } else {
     // FF, Chrome ...
     const a = document.createElement('a');
-    a.href = 'data:application/json,' + encodeURIComponent(json);
+    a.href = 'data:application/json,' + encodeURIComponent(JSON.stringify(json));
     a.target = '_blank';
     a.download = filename;
     document.body.appendChild(a);
@@ -42,10 +45,12 @@ export class JsonFavoriteExporterService {
         };
         reader.onload = (e: any) => {
           const result = e.target.result;
-          const favorites = JSON.parse(result) as SingleFavorite[];
-          favorites.forEach((entry) => {
-            this.favoriteSrvc.addFavorite(entry.favorite, entry.label);
-          });
+          const json = JSON.parse(result);
+          const singles = new Map<string, SingleFavorite>();
+          json.singles.forEach((single: SingleFavorite) => singles.set(single.id, single));
+          const groups = new Map<string, GroupFavorite>();
+          json.groups.forEach((group: GroupFavorite) => groups.set(group.id, group));
+          this.favoriteSrvc.setFavorites(singles, groups);
           observer.next(true);
           observer.complete();
         };
