@@ -13,20 +13,23 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
 
     public async addDataset(internalId: string, options?: T): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
-            if (options) {
-                this.datasetIds.push(internalId);
-                this.datasetOptions.set(internalId, options);
-                this.datasetIdsChanged.emit(this.datasetIds);
-                resolve(true);
-            } else if (this.datasetIds.indexOf(internalId) < 0) {
-                this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
-                    (timeseries) => this.addLoadedDataset(timeseries, resolve),
-                    (error) => {
-                        this.api.getDatasetByInternalId(internalId).subscribe(
-                            (dataset) => this.addLoadedDataset(dataset, resolve)
-                        );
-                    }
-                );
+            if (this.datasetIds.indexOf(internalId) < 0) {
+                if (options) {
+                    this.datasetIds.push(internalId);
+                    this.datasetOptions.set(internalId, options);
+                    this.datasetIdsChanged.emit(this.datasetIds);
+                    this.saveState();
+                    resolve(true);
+                } else {
+                    this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
+                        (timeseries) => this.addLoadedDataset(timeseries, resolve),
+                        (error) => {
+                            this.api.getDatasetByInternalId(internalId).subscribe(
+                                (dataset) => this.addLoadedDataset(dataset, resolve)
+                            );
+                        }
+                    );
+                }
             }
         });
     }
