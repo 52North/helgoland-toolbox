@@ -24,9 +24,12 @@ export class RangeCalculationsService {
    * @param rangeTwo {MinMaxRange}
    */
   public mergeRanges(rangeOne: MinMaxRange, rangeTwo: MinMaxRange): MinMaxRange {
+    const calcMin = Math.min(rangeOne.min !== undefined ? rangeOne.min : Number.POSITIVE_INFINITY, rangeTwo.min !== undefined ? rangeTwo.min : Number.POSITIVE_INFINITY);
+    const calcMax = Math.max(rangeOne.max !== undefined ? rangeOne.max : Number.NEGATIVE_INFINITY, rangeTwo.max !== undefined ? rangeTwo.max : Number.NEGATIVE_INFINITY);
+
     return {
-      min: Math.min(rangeOne.min, rangeTwo.min),
-      max: Math.max(rangeOne.max, rangeTwo.max)
+      min: calcMin === Number.POSITIVE_INFINITY ? undefined : calcMin,
+      max: calcMax === Number.NEGATIVE_INFINITY ? undefined : calcMax
     };
   }
 

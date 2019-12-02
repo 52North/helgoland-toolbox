@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IDataset, NotifierService } from '@helgoland/core';
+import { DatasetOptions, IDataset, NotifierService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FavoriteService } from '../service/favorite.service';
@@ -10,8 +10,9 @@ import { FavoriteService } from '../service/favorite.service';
 })
 export class FavoriteTogglerComponent implements OnChanges {
 
-  @Input()
-  public dataset: IDataset;
+  @Input() public dataset: IDataset;
+  @Input() public options: DatasetOptions;
+
   public isFavorite: boolean;
 
   constructor(
@@ -35,7 +36,7 @@ export class FavoriteTogglerComponent implements OnChanges {
       });
     } else {
       this.isFavorite = true;
-      this.favSrvc.addFavorite(this.dataset);
+      this.favSrvc.addFavorite(this.dataset, this.options);
       this.translate.get('favorite.notifier.add-favorite').subscribe((translation) => {
         this.notifier.notify(translation + ': ' + this.dataset.label);
       });

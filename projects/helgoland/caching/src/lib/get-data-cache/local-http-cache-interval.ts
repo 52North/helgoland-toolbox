@@ -22,19 +22,35 @@ export interface CachedIntersection {
 export class LocalHttpCacheInterval extends HttpCacheInterval {
 
     private cache: Map<string, CachedObject[]> = new Map();
+    private generalizedCache: Map<string, CachedObject[]> = new Map();
 
     /**
      * Get all objects cached with a given key (url).
-     * @param url
+     * @param url {string} key
+     * @param generalize {boolean} indicate if request has parameter generalized true or false to safe to different caches
      */
-    public get(url: string): CachedObject[] {
-        const objs = this.cache.get(url);
+    public get(url: string, generalize: boolean): CachedObject[] {
+        if (generalize) {
+            return this.getByCache(this.generalizedCache, url);
+        } else {
+            return this.getByCache(this.cache, url);
+        }
+    }
+
+    /**
+     * Get all objects from cache.
+     * @param selectedCache {Map<string, CachedObject[]>} selected cache (generalized or not generalized)
+     * @param url {string} key
+     */
+    private getByCache(selectedCache: Map<string, CachedObject[]>, url: string): CachedObject[] {
+        const objs = selectedCache.get(url);
         if (objs) {
             const filteredObjs = objs.filter(el => {
                 return (new Date() < el.expirationDate);
             });
-            this.cache.set(url, filteredObjs);
-            return filteredObjs;
+            const newCachedObjs = this.tidyUpCache(filteredObjs);
+            selectedCache.set(url, newCachedObjs);
+            return newCachedObjs;
         } else {
             return objs;
         }
@@ -43,11 +59,12 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
     /**
      * Get all objects intersecting with a given timespan.
      * Further return all timespans that are not covered.
-     * @param url
-     * @param timespan
+     * @param url {string} key
+     * @param timespan {Timespan} timespan
+     * @param generalize {boolean} generalized or not
      */
-    public getIntersection(url: string, timespan: Timespan): CachedIntersection | null {
-        const objs = this.get(url);
+    public getIntersection(url: string, timespan: Timespan, generalize: boolean): CachedIntersection | null {
+        const objs = this.get(url, generalize);
         if (objs && objs.length > 0) {
             return this.identifyCachedIntersection(objs, timespan);
         }
@@ -56,22 +73,41 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
 
     /**
      * Cache a new object under a given key (url).
-     * @param url
-     * @param obj
+     * @param url {string} key
+     * @param obj {CachedObject} object to be cached
+     * @param generalize {boolean} generalized or not
+     * @param originReq {boolean} indicating if original request or manipulated
      */
-    public put(url: string, obj: CachedObject, originReq?: boolean) {
-        if (this.cache.has(url)) {
+    public put(url: string, obj: CachedObject, generalize: boolean, originReq?: boolean) {
+        if (generalize) {
+            this.putByCache(this.generalizedCache, url, obj, originReq);
+        } else {
+            this.putByCache(this.cache, url, obj, originReq);
+        }
+    }
+
+    /**
+     * Check for intersection before putting a new object into cache.
+     * @param selectedCache {Map<string, CachedObject[]>} current cached objects
+     * @param url {string} key
+     * @param obj {CachedObject} object to be put into cache
+     * @param originReq {boolean} indicating if original request or manipulated
+     */
+    private putByCache(selectedCache: Map<string, CachedObject[]>, url: string, obj: CachedObject, originReq?: boolean) {
+        if (selectedCache.has(url)) {
+            let cachedObjs = selectedCache.get(url);
             // add new obj to current key
-            let cachedObjs = this.cache.get(url);
             const cachedObjsManip: CachedObject[] = [];
             if (originReq) {
                 // update timespan boundaries with incoming forceUpdate or origin request
-                const objTs = new Timespan(obj.values.values[0][0], obj.values.values[obj.values.values.length - 1][0]);
+                const objTs = new Timespan(obj.requestTs.from, obj.requestTs.to);
                 // filter cachedObjs without any intersection
                 cachedObjs.forEach(el => {
-                    // const elTs = new Timespan(el.values.values[0][0], el.values.values[el.values.values.length - 1][0]);
                     const elTs = new Timespan(el.requestTs.from, el.requestTs.to);
-                    if (elTs.from > objTs.to) {
+
+                    if (elTs.from >= objTs.from && elTs.to <= objTs.to) {
+                        // do not push cached element into new cache - cached obj completely covered by new element
+                    } else if (elTs.from > objTs.to) {
                         // el right of obj
                         cachedObjsManip.push(el);
                     } else if (elTs.to < objTs.from) {
@@ -91,7 +127,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
                         // el over obj # do partly right and partly left
                         const elLeft = lodash.cloneDeep(el);
                         elLeft.values.values = elLeft.values.values.filter(val => val[0] < objTs.from);
-                        el.requestTs = new Timespan(el.requestTs.from, objTs.from - 1);
+                        elLeft.requestTs = new Timespan(elLeft.requestTs.from, objTs.from - 1);
                         cachedObjsManip.push(elLeft);
                         el.values.values = el.values.values.filter(val => val[0] > objTs.to);
                         el.requestTs = new Timespan(objTs.to + 1, el.requestTs.to);
@@ -103,10 +139,9 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
             cachedObjs.push(obj);
             // sort by timespan
             const objsSorted = cachedObjs.sort((a, b) => (a.requestTs.from > b.requestTs.from) ? 1 : ((b.requestTs.from > a.requestTs.from) ? -1 : 0));
-            this.cache.set(url, objsSorted);
+            selectedCache.set(url, objsSorted);
         } else {
-            // set new key containing obj
-            this.cache.set(url, [obj]);
+            selectedCache.set(url, [obj]);
         }
     }
 
@@ -115,12 +150,13 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      */
     public clearCache() {
         this.cache.clear();
+        this.generalizedCache.clear();
     }
 
     /**
-     * Identify relevant objects inside cache and return timespans that are not covered with data
-     * @param objs
-     * @param ts
+     * Identify relevant objects inside cache and return timespans that are not covered with data.
+     * @param objs {CachedObject[]} objects to be checked
+     * @param ts {Timespan} timespan that might be intersected
      */
     private identifyCachedIntersection(objs: CachedObject[], ts: Timespan): CachedIntersection | null {
         const intersectedObjs: CachedObject[] = [];
@@ -228,4 +264,19 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
         }
         return clonedObj;
     }
+
+    /**
+     * Filter cached objects and remove duplicates.
+     * @param filteredObjs {CachedObject[]} objects to be filtered
+     */
+    private tidyUpCache(filteredObjs: CachedObject[]): CachedObject[] {
+        // tidy up to avoid duplicate timespans in cache
+        for (let i = 0; i < filteredObjs.length - 1; i++) {
+            const obj = filteredObjs[i];
+            filteredObjs = filteredObjs.filter(el => !(el.requestTs.from >= obj.requestTs.from && el.requestTs.to <= obj.requestTs.to));
+            filteredObjs.splice(i, 0, obj);
+        }
+        return filteredObjs;
+    }
+
 }

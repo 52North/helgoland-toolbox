@@ -14,20 +14,20 @@
   <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
   <mat-datepicker #pickerFrom></mat-datepicker>
   <br>
-  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" 
-    [(ngModel)]="selectedEnd" ng-model-options="{timezone: 'utc'}">
+  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" [(ngModel)]="selectedEnd"
+    ng-model-options="{timezone: 'utc'}">
   <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
   <mat-datepicker #pickerTo></mat-datepicker>
   <br>
   loading: {{loading}}
 </div>
 
-<n52-dataset-export [inputId]="inputId" [exportOptions]="exportOptions" (onDownloadChange)="onDownloadReset($event)"
-  (onMetadataChange)="onMetadata($event)" (onLoadingChange)="onLoading($event)"></n52-dataset-export>
+<n52-dataset-export [inputId]="inputId" [exportOptions]="exportOptions" (onMetadataChange)="onMetadata($event)"
+  (onLoadingChange)="onLoading($event)"></n52-dataset-export>
 
 <div mat-dialog-actions style="float: left;">
-  <button mat-button (click)="onDownload('csv')">CSV</button>
-  <button mat-button (click)="onDownload('xlsx')">Excel</button>
+  <button mat-button (click)="onCSVDownload()">CSV</button>
+  <button mat-button (click)="onXSLXDownload()">Excel</button>
 </div>
 <div mat-dialog-actions style="float: right;">
   <button mat-button (click)="onClose()">Close</button>
