@@ -29,6 +29,7 @@ describe('LocalHttpCacheInterval', () => {
 
     it('should cache', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
         const currTimespan = defTsSrvc.getInterval(DefinedTimespan.TODAY);
+        const generalize = false;
         const url = 'uniqueID';
         const el: CachedObject = {
             values: {
@@ -45,17 +46,72 @@ describe('LocalHttpCacheInterval', () => {
         };
 
         service.clearCache();
-        service.put(url, el);
+        service.put(url, el, generalize);
 
-        expect(service.get(url)).toBeTruthy();
-        expect(service.get(url)).toBeDefined();
-        expect(service.get(url)).toContain(el);
-        expect(service.get(url)).toEqual([el]);
+        expect(service.get(url, generalize)).toBeTruthy();
+        expect(service.get(url, generalize)).toBeDefined();
+        expect(service.get(url, generalize)).toContain(el);
+        expect(service.get(url, generalize)).toEqual([el]);
     }));
 
-    it('should cache two objects', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
+    it('should cache for generalized and not generalized data', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
+        const currTimespanToday = defTsSrvc.getInterval(DefinedTimespan.TODAY);
+        const currTimespanYesterday = defTsSrvc.getInterval(DefinedTimespan.YESTERDAY);
+        const url = 'uniqueID';
+        const el: CachedObject = {
+            values: {
+                referenceValues: {},
+                values: [
+                    [currTimespanToday.from, 1],
+                    [currTimespanToday.to, 2]
+                ]
+            },
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
+            expirationAtMs: 3000,
+            requestTs: new Timespan(currTimespanToday.from, currTimespanToday.to),
+            httpResponse: new HttpResponse()
+        };
+        const el2: CachedObject = {
+            values: {
+                referenceValues: {},
+                values: [
+                    [currTimespanYesterday.from, 1],
+                    [currTimespanYesterday.to, 2]
+                ]
+            },
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
+            expirationAtMs: 3000,
+            requestTs: new Timespan(currTimespanYesterday.from, currTimespanYesterday.to),
+            httpResponse: new HttpResponse()
+        };
+
+        service.clearCache();
+        service.put(url, el, true);
+
+        expect(service.get(url, true)).toBeTruthy();
+        expect(service.get(url, true)).toBeDefined();
+        expect(service.get(url, true)).toContain(el);
+        expect(service.get(url, true)).toEqual([el]);
+
+        expect(service.get(url, false)).not.toBeDefined();
+        expect(service.get(url, false)).not.toEqual([el]);
+
+        service.put(url, el2, false);
+
+        expect(service.get(url, false)).toBeTruthy();
+        expect(service.get(url, false)).toBeDefined();
+        expect(service.get(url, false)).toContain(el2);
+        expect(service.get(url, false)).toEqual([el2]);
+
+        expect(service.get(url, true)).toBeDefined();
+        expect(service.get(url, true)).not.toEqual([el2]);
+        expect(service.get(url, true)).toEqual([el]);
+    }));
+
+    it('should cache two objects in correct order (ordered by start time)', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
         const currTimespan1 = defTsSrvc.getInterval(DefinedTimespan.TODAY);
-        const currTimespan2 = defTsSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
+        const currTimespan2 = defTsSrvc.getInterval(DefinedTimespan.YESTERDAY);
+        const generalize = false;
         const url1 = 'uniqueID1';
         const el1: CachedObject = {
             values: {
@@ -87,25 +143,77 @@ describe('LocalHttpCacheInterval', () => {
 
         service.clearCache();
 
-        service.put(url2, el2);
-        expect(service.get(url2)).toBeTruthy();
-        expect(service.get(url2)).toBeDefined();
-        expect(service.get(url2)).toContain(el2);
-        expect(service.get(url2)).toEqual([el2]);
+        service.put(url2, el2, generalize);
+        expect(service.get(url2, generalize)).toBeTruthy();
+        expect(service.get(url2, generalize)).toBeDefined();
+        expect(service.get(url2, generalize)).toContain(el2);
+        expect(service.get(url2, generalize)).toEqual([el2]);
 
-        service.put(url1, el1);
-        service.put(url1, el2);
-        expect(service.get(url1)).toBeTruthy();
-        expect(service.get(url1)).toBeDefined();
-        expect(service.get(url1)).toContain(el1);
-        expect(service.get(url1)).toContain(el2);
-        expect(service.get(url1)).toEqual([el2, el1]);
+        service.put(url1, el1, generalize);
+        service.put(url1, el2, generalize);
+        expect(service.get(url1, generalize)).toBeTruthy();
+        expect(service.get(url1, generalize)).toBeDefined();
+        expect(service.get(url1, generalize)).toContain(el1);
+        expect(service.get(url1, generalize)).toContain(el2);
+        expect(service.get(url1, generalize)).toEqual([el2, el1]);
+    }));
+
+    it('should avoid caching objects with same timespans', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
+        const currTimespan1 = defTsSrvc.getInterval(DefinedTimespan.TODAY);
+        const currTimespan2 = defTsSrvc.getInterval(DefinedTimespan.TODAY_YESTERDAY);
+        const generalize = false;
+        const url1 = 'uniqueID1';
+        const el1: CachedObject = {
+            values: {
+                referenceValues: {},
+                values: [
+                    [currTimespan1.from, 1],
+                    [currTimespan1.to, 2]
+                ]
+            },
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
+            expirationAtMs: 3000,
+            requestTs: new Timespan(currTimespan1.from, currTimespan1.to),
+            httpResponse: new HttpResponse()
+        };
+        const url2 = 'uniqueID2';
+        const el2: CachedObject = {
+            values: {
+                referenceValues: {},
+                values: [
+                    [currTimespan2.from, 1],
+                    [currTimespan2.to, 2]
+                ]
+            },
+            expirationDate: moment(new Date()).add(2, 'hours').toDate(),
+            expirationAtMs: 3000,
+            requestTs: new Timespan(currTimespan2.from, currTimespan2.to),
+            httpResponse: new HttpResponse()
+        };
+
+        service.clearCache();
+
+        service.put(url2, el2, generalize);
+        expect(service.get(url2, generalize)).toBeTruthy();
+        expect(service.get(url2, generalize)).toBeDefined();
+        expect(service.get(url2, generalize)).toContain(el2);
+        expect(service.get(url2, generalize)).toEqual([el2]);
+
+        service.put(url1, el1, generalize);
+        service.put(url1, el2, generalize);
+        expect(service.get(url1, generalize)).toBeTruthy();
+        expect(service.get(url1, generalize)).toBeDefined();
+        expect(service.get(url1, generalize)).not.toContain(el1);
+        expect(service.get(url1, generalize)).toContain(el2);
+        expect(service.get(url1, generalize)).toEqual([el2]);
+        expect(service.get(url1, generalize)).not.toEqual([el2, el1]);
     }));
 
     it('should get intersection correctly', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {
         const expirationDate = moment(new Date()).add(2, 'hours').toDate();
         const expirationAtMs = 3000;
         const httpEvent = new HttpResponse();
+        const generalize = false;
         const url1 = 'uniqueID1';
         const url2 = 'uniqueID2';
 
@@ -487,38 +595,39 @@ describe('LocalHttpCacheInterval', () => {
 
         service.clearCache();
 
-        service.put(url1, el1);
-        service.put(url1, el11);
-        service.put(url1, el2);
-        service.put(url1, el21);
-        service.put(url1, el3);
-        expect(service.get(url1)).toBeTruthy();
-        expect(service.get(url1)).toBeDefined();
-        expect(service.get(url1)).toContain(el1);
-        expect(service.get(url1)).toContain(el2);
-        expect(service.get(url1)).toContain(el3);
-        expect(service.get(url1)).toEqual([el1, el11, el2, el21, el3]);
+        service.put(url1, el1, generalize);
+        service.put(url1, el11, generalize);
+        service.put(url1, el2, generalize);
+        service.put(url1, el21, generalize);
+        service.put(url1, el3, generalize);
+        expect(service.get(url1, generalize)).toBeTruthy();
+        expect(service.get(url1, generalize)).toBeDefined();
+        expect(service.get(url1 , generalize)).toContain(el1);
+        expect(service.get(url1 , generalize)).toContain(el2);
+        expect(service.get(url1 , generalize)).toContain(el3);
+        expect(service.get(url1 , generalize)).toEqual([el1, el11, el2, el21, el3]);
 
-        service.put(url2, elURL2);
-        expect(service.get(url2)).toBeTruthy();
-        expect(service.get(url2)).toBeDefined();
-        expect(service.get(url2)).toContain(elURL2);
+        service.put(url2, elURL2, generalize);
+        expect(service.get(url2, generalize)).toBeTruthy();
+        expect(service.get(url2, generalize)).toBeDefined();
+        expect(service.get(url2, generalize)).toContain(elURL2);
 
-        expect(service.getIntersection(url2, new Timespan(100, 100))).toEqual(resultURL2, 'should be: complete intersection with 1 element of 1 timeperiod');
-        expect(service.getIntersection(url1, new Timespan(0, 50))).toEqual(result1, 'should be: outside range');
-        expect(service.getIntersection(url1, new Timespan(0, 100))).toEqual(result2, 'should be: intersection by 1 timeperiod before first cached item');
-        expect(service.getIntersection(url1, new Timespan(1100, 1300))).toEqual(result3, 'should be: intersection by 1 timeperiod after first cached item');
-        expect(service.getIntersection(url1, new Timespan(101, 299))).toEqual(result4, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(100, 300))).toEqual(result5, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(100, 301))).toEqual(result51, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(99, 301))).toEqual(result52, 'should be: no intersection by 1 timeperiod before first cached item, intersection inbetween two elements');
-        expect(service.getIntersection(url1, new Timespan(550, 650))).toEqual(result6, 'should be: no difference = complete intersection');
-        expect(service.getIntersection(url1, new Timespan(200, 600))).toEqual(result7, 'should be: intersection inbetween two timeperiods');
-        expect(service.getIntersection(url1, new Timespan(200, 800))).toEqual(result8, 'should be: intersection inbetween four timeperiods');
-        expect(service.getIntersection(url1, new Timespan(310, 710))).toEqual(result81, 'should be: intersection inbetween three timeperiods');
-        expect(service.getIntersection(url1, new Timespan(0, 1400))).toEqual(result9, 'should be: intersection in five timeperiods with outside range');
-        expect(service.getIntersection(url1, new Timespan(300, 950))).toEqual(result10, 'should be: intersection in four timeperiods, endings inside intersection');
-        expect(service.getIntersection(url1, new Timespan(1100, 1100))).toEqual(result11, 'should be: complete intersection with element of 1 timeperiod');
+        expect(service.getIntersection(url2, new Timespan(100, 100), generalize)).toEqual(resultURL2, 'should be: complete intersection with 1 element of 1 timeperiod');
+        expect(service.getIntersection(url1, new Timespan(0, 50), generalize)).toEqual(result1, 'should be: outside range');
+        expect(service.getIntersection(url1, new Timespan(0, 100), generalize)).toEqual(result2, 'should be: intersection by 1 timeperiod before first cached item');
+        expect(service.getIntersection(url1, new Timespan(1100, 1300), generalize)).toEqual(result3, 'should be: intersection by 1 timeperiod after first cached item');
+        expect(service.getIntersection(url1, new Timespan(101, 299), generalize)).toEqual(result4, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(100, 300), generalize)).toEqual(result5, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(100, 301), generalize)).toEqual(result51, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(99, 301), generalize)).toEqual(result52,
+            'should be: no intersection by 1 timeperiod before first cached item, intersection inbetween two elements');
+        expect(service.getIntersection(url1, new Timespan(550, 650), generalize)).toEqual(result6, 'should be: no difference = complete intersection');
+        expect(service.getIntersection(url1, new Timespan(200, 600), generalize)).toEqual(result7, 'should be: intersection inbetween two timeperiods');
+        expect(service.getIntersection(url1, new Timespan(200, 800), generalize)).toEqual(result8, 'should be: intersection inbetween four timeperiods');
+        expect(service.getIntersection(url1, new Timespan(310, 710), generalize)).toEqual(result81, 'should be: intersection inbetween three timeperiods');
+        expect(service.getIntersection(url1, new Timespan(0, 1400), generalize)).toEqual(result9, 'should be: intersection in five timeperiods with outside range');
+        expect(service.getIntersection(url1, new Timespan(300, 950), generalize)).toEqual(result10, 'should be: intersection in four timeperiods, endings inside intersection');
+        expect(service.getIntersection(url1, new Timespan(1100, 1100), generalize)).toEqual(result11, 'should be: complete intersection with element of 1 timeperiod');
     }));
 
 
