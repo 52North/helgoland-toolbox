@@ -1194,7 +1194,7 @@ export class D3TimeseriesGraphComponent
                     this.drawBarChart(entry, yaxis.yScale);
                 } else {
                     // draw ref value line
-                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
+                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale));
                     this.drawLineChart(entry, yaxis.yScale);
                 }
             }

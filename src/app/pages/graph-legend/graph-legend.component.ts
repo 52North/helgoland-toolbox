@@ -48,6 +48,7 @@ export class GraphLegendComponent {
     public d3diagramOptions: D3PlotOptions = {
         showReferenceValues: true,
         togglePanZoom: true,
+        generalizeAllways: false,
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',
@@ -89,7 +90,7 @@ export class GraphLegendComponent {
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
-            option.generalize = true;
+            option.generalize = false;
             option.lineWidth = 2;
             option.pointRadius = 4;
             this.datasetOptions.set(entry, option);

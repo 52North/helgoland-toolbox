@@ -16,7 +16,7 @@ export class FavoriteComponent {
     private api: DatasetApiInterface
   ) {
     this.api.getSingleTimeseries('26', 'http://www.fluggs.de/sos2/api/v1/').subscribe(dataset => {
-      this.favoriteSrvc.addFavorite(dataset);
+      this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });
   }
@@ -47,7 +47,7 @@ export class FavoriteComponent {
         label: entry.label,
         favorite: entry.favorite,
         timespan,
-        option: new Map([[entry.favorite.internalId, option]])
+        options: option
       });
     });
   }
@@ -55,5 +55,5 @@ export class FavoriteComponent {
 
 interface ExtendedSingleFavorite extends SingleFavorite {
   timespan: Timespan;
-  option: Map<string, DatasetOptions>;
+  // option: Map<string, DatasetOptions>;
 }
