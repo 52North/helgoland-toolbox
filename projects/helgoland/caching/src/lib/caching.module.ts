@@ -48,12 +48,10 @@ const HTTP_GET_PROVIDERS = [
 export class HelgolandCachingModule {
 
   static forRoot(config: CacheConfig): ModuleWithProviders {
-    const providers = [];
-    if (config.getDataCacheActive) { providers.push(GET_DATA_CACHE_PROVIDERS); }
     return {
       ngModule: HelgolandCachingModule,
       providers: [
-        ...providers,
+        ...(config.getDataCacheActive ? GET_DATA_CACHE_PROVIDERS : []),
         {
           provide: CacheConfigService,
           useValue: config
