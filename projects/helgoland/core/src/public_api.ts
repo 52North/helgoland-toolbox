@@ -24,6 +24,20 @@ export {
     HttpServiceHandler
 } from './lib/dataset-api/http.service';
 
+export * from './lib/sta/multi-interface';
+export * from './lib/sta/read/sta-read-interface.service';
+export * from './lib/sta/delete/sta-delete-interface.service';
+export * from './lib/sta/insert/sta-insert-interface.service';
+export * from './lib/sta/model/datasetreams';
+export * from './lib/sta/model/features-of-interest';
+export * from './lib/sta/model/historical-locations';
+export * from './lib/sta/model/locations';
+export * from './lib/sta/model/observations';
+export * from './lib/sta/model/observed-properties';
+export * from './lib/sta/model/sensors';
+export * from './lib/sta/model/sta-interface';
+export * from './lib/sta/model/things';
+
 export { Language } from './lib/language/model/language';
 export { LanguageChangNotifier } from './lib/language/language-changer';
 export { LocalSelectorComponent } from './lib/language/locale-selector';

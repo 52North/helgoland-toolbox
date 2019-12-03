@@ -40,6 +40,10 @@
             "url": "http://monalisasos.eurac.edu/sos/api/v1/"
         },
         {
+            "name": "STA-Test",
+            "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
+        },
+        {
             "name": "BasicAuth-API",
             "url": "",
             "basicAuth": true
