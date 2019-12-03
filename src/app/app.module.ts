@@ -26,6 +26,7 @@ import {
   SettingsService,
   SplittedDataDatasetApiInterface,
   StatusCheckService,
+  MultiDatasetInterface,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import {
@@ -90,8 +91,9 @@ const APP_PROVIDERS = [
   StatusCheckService,
   {
     provide: DatasetApiInterface,
-    useClass: SplittedDataDatasetApiInterface
+    useClass: MultiDatasetInterface
   },
+  SplittedDataDatasetApiInterface,
   {
     provide: SettingsService,
     useClass: ExtendedSettingsService
