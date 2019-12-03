@@ -3,6 +3,8 @@
   "version": "1.0.0-beta.7",
   "peerDependencies": {
     "@angular/common": "^8.2.0",
-    "@angular/core": "^8.2.0"
+    "@angular/core": "^8.2.0",
+    "ol": "^6.0.1",
+    "@types/ol": "^5.3.5"
   }
 }

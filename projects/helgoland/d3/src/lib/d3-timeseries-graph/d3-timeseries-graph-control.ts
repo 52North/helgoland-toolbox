@@ -52,8 +52,9 @@ export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestr
 
     public ngAfterViewInit(): void {
         this.graphId.getId().subscribe(graphId => this.graphs.getGraph(graphId).subscribe(graph => {
-            this.graphInitialized(graph);
+            // needs to be registered first, to react then on the callbacks
             graph.registerObserver(this);
+            this.graphInitialized(graph);
         }));
     }
 

@@ -1,8 +1,5 @@
-const physicalComponentInstance = require('!raw-loader!../examples/physicalComponentInstance.xml');
-const physicalComponentType = require('!raw-loader!../examples/physicalComponentType.xml');
-const physicalSystemInstance = require('!raw-loader!../examples/physicalSystemInstance.xml');
-const physicalSystemType = require('!raw-loader!../examples/physicalSystemType.xml');
-const allinone = require('!raw-loader!../examples/lisaInstance.xml');
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { PhysicalSystem } from '../model/sml';
 import { SensorMLXmlService } from './SensorMLXmlService';
@@ -12,46 +9,74 @@ describe('SensorMLXmlService', () => {
 
     const service = new SensorMLXmlService();
 
-    it('should parse the physicalComponentInstance', () => {
-        const xml = physicalComponentInstance;
-        const description = service.deserialize(xml);
-        const xmlSerialized = service.serialize(description);
-        const descriptionDeserialized = service.deserialize(xmlSerialized);
-        expect(description).toEqual(descriptionDeserialized);
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule
+            ]
+        });
     });
 
-    it('should parse the physicalComponentType', () => {
-        const xml = physicalComponentType;
-        const description = service.deserialize(xml);
-        const xmlSerialized = service.serialize(description);
-        const descriptionDeserialized = service.deserialize(xmlSerialized);
-        // console.log(JSON.stringify(description.contacts, null, 2));
-        // console.log(JSON.stringify(descriptionDeserialized.contacts, null, 2));
-        expect(description.contacts).toEqual(descriptionDeserialized.contacts);
+    it('should parse the physicalComponentInstance', (done) => {
+        inject([HttpClient], (http: HttpClient) => {
+            http.get('../examples/physicalComponentInstance.xml', { responseType: 'text' }).subscribe(xml => {
+                const description = service.deserialize(xml);
+                const xmlSerialized = service.serialize(description);
+                const descriptionDeserialized = service.deserialize(xmlSerialized);
+                expect(description).toEqual(descriptionDeserialized);
+                done();
+            });
+        })();
     });
 
-    it('should parse the physicalSystemInstance', () => {
-        const xml = physicalSystemInstance;
-        const description = service.deserialize(xml);
-        const xmlSerialized = service.serialize(description);
-        const descriptionDeserialized = service.deserialize(xmlSerialized);
-        expect(description).toEqual(descriptionDeserialized);
+    it('should parse the physicalComponentType', (done) => {
+        inject([HttpClient], (http: HttpClient) => {
+            http.get('../examples/physicalComponentType.xml', { responseType: 'text' }).subscribe(xml => {
+                const description = service.deserialize(xml);
+                const xmlSerialized = service.serialize(description);
+                const descriptionDeserialized = service.deserialize(xmlSerialized);
+                // console.log(JSON.stringify(description.contacts, null, 2));
+                // console.log(JSON.stringify(descriptionDeserialized.contacts, null, 2));
+                expect(description.contacts).toEqual(descriptionDeserialized.contacts);
+                done();
+            });
+        })();
     });
 
-    it('should parse the physicalSystemType', () => {
-        const xml = physicalSystemType;
-        const description = service.deserialize(xml);
-        const xmlSerialized = service.serialize(description);
-        const descriptionDeserialized = service.deserialize(xmlSerialized);
-        expect(description).toEqual(descriptionDeserialized);
+    it('should parse the physicalSystemInstance', (done) => {
+        inject([HttpClient], (http: HttpClient) => {
+            http.get('../examples/physicalSystemInstance.xml', { responseType: 'text' }).subscribe(xml => {
+                const description = service.deserialize(xml);
+                const xmlSerialized = service.serialize(description);
+                const descriptionDeserialized = service.deserialize(xmlSerialized);
+                expect(description).toEqual(descriptionDeserialized);
+                done();
+            });
+        })();
     });
 
-    it('should parse the allInOn', () => {
-        const xml = allinone;
-        const description = service.deserialize(xml);
-        const xmlSerialized = service.serialize(description);
-        const descriptionDeserialized = service.deserialize(xmlSerialized);
-        expect(description).toEqual(descriptionDeserialized);
+    it('should parse the physicalSystemType', (done) => {
+        inject([HttpClient], (http: HttpClient) => {
+            http.get('../examples/physicalSystemType.xml', { responseType: 'text' }).subscribe(xml => {
+                const description = service.deserialize(xml);
+                const xmlSerialized = service.serialize(description);
+                const descriptionDeserialized = service.deserialize(xmlSerialized);
+                expect(description).toEqual(descriptionDeserialized);
+                done();
+            });
+        })();
+    });
+
+    it('should parse the allInOn (liseInstance.xml)', (done) => {
+        inject([HttpClient], (http: HttpClient) => {
+            http.get('../examples/lisaInstance.xml', { responseType: 'text' }).subscribe(xml => {
+                const description = service.deserialize(xml);
+                const xmlSerialized = service.serialize(description);
+                const descriptionDeserialized = service.deserialize(xmlSerialized);
+                expect(description).toEqual(descriptionDeserialized);
+                done();
+            });
+        })();
     });
 
     it('should serialize the document', () => {

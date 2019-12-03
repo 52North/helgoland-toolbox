@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Map } from 'ol';
 import BaseLayer from 'ol/layer/Base';
 
@@ -16,17 +16,29 @@ import { OlBaseComponent } from '../../ol-base.component';
   selector: 'n52-ol-layer',
   template: '',
 })
-export class OlLayerComponent extends OlBaseComponent implements AfterViewInit {
+export class OlLayerComponent extends OlBaseComponent implements AfterViewInit, OnChanges {
 
   /**
    * Configured layer
    */
   @Input() layer: BaseLayer;
 
-  mapInitialized(map: Map) {
-    if (this.layer) {
-      map.addLayer(this.layer);
+  private map: Map;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes && this.layer) {
+      this.addLayer();
     }
   }
 
+  public mapInitialized(map: Map) {
+    this.map = map;
+    this.addLayer();
+  }
+
+  private addLayer() {
+    if (this.map && this.layer) {
+      this.map.addLayer(this.layer);
+    }
+  }
 }

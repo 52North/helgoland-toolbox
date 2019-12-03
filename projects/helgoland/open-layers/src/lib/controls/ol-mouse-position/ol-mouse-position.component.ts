@@ -1,6 +1,6 @@
-import { Component, ElementRef, Host } from '@angular/core';
+import { Component, ElementRef, Host, Input } from '@angular/core';
 import { Map } from 'ol';
-import MousePosition from 'ol/control/MousePosition';
+import { MousePosition } from 'ol/control';
 import { createStringXY } from 'ol/coordinate';
 
 import { OlBaseComponent } from '../../ol-base.component';
@@ -16,6 +16,8 @@ import { OlMapId } from '../../services/mapid.service';
 })
 export class OlMousePositionComponent extends OlBaseComponent {
 
+  @Input() projection = 'EPSG:3857';
+
   constructor(
     protected mapService: OlMapService,
     @Host() protected mapidService: OlMapId,
@@ -28,7 +30,7 @@ export class OlMousePositionComponent extends OlBaseComponent {
     const target = this.elementRef.nativeElement.parentElement ? this.elementRef.nativeElement : null;
     const ctrl = new MousePosition({
       coordinateFormat: createStringXY(4),
-      projection: 'EPSG:4326',
+      projection: this.projection,
       undefinedHTML: '&nbsp;',
       target: target
     });
