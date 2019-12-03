@@ -30,6 +30,7 @@ import {
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment, { unitOfTime } from 'moment';
+import { Subscription } from 'rxjs';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
@@ -125,6 +126,8 @@ export class D3TimeseriesGraphComponent
     private currentTimeId: string;
 
     private observer: Set<D3GraphObserver> = new Set();
+
+    private runningDataRequests: Map<string, Subscription> = new Map();
 
     // default plot options
     public plotOptions: D3PlotOptions = {
@@ -230,9 +233,7 @@ export class D3TimeseriesGraphComponent
             this.preparedData.splice(spliceIdx, 1);
             if (this.preparedData.length <= 0) {
             } else {
-                this.preparedData.forEach((entry) => {
-                    this.processData(entry);
-                });
+                this.preparedData.forEach((entry) => this.processData(entry));
             }
             this.redrawCompleteGraph();
         }
@@ -265,9 +266,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected timeIntervalChanges(): void {
-        this.datasetMap.forEach((dataset) => {
-            this.loadDatasetData(dataset, false);
-        });
+        this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset, false));
     }
 
     protected onResize(): void {
@@ -294,12 +293,16 @@ export class D3TimeseriesGraphComponent
         if (this.loadingCounter === 0) { this.onContentLoading.emit(true); }
         this.loadingCounter++;
 
-        if (dataset instanceof Timeseries) {
+        if (dataset instanceof Timeseries && this.timespan) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2, moment.duration(1, 'day').asMilliseconds());
 
             this.loadingData.add(dataset.internalId);
             this.dataLoaded.emit(this.loadingData);
-            this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+            if (this.runningDataRequests.has(dataset.id)) {
+                this.runningDataRequests.get(dataset.id).unsubscribe();
+                this.onCompleteLoadingData(dataset);
+            }
+            const request = this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
                 {
                     format: 'flot',
                     expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
@@ -311,10 +314,12 @@ export class D3TimeseriesGraphComponent
                 (error) => this.onError(error),
                 () => this.onCompleteLoadingData(dataset)
             );
+            this.runningDataRequests.set(dataset.id, request);
         }
     }
 
     private onCompleteLoadingData(dataset: IDataset): void {
+        this.runningDataRequests.delete(dataset.id);
         this.loadingData.delete(dataset.internalId);
         this.dataLoaded.emit(this.loadingData);
         this.loadingCounter--;
@@ -444,9 +449,7 @@ export class D3TimeseriesGraphComponent
                     }
                 });
 
-                const dataExtentRafValues = entry.referenceValueData.map(e => {
-                    return d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null);
-                });
+                const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
                 const rangeMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
                 const rangeMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
@@ -634,9 +637,7 @@ export class D3TimeseriesGraphComponent
              */
             this.background.selectAll('.selection')
                 .attr('stroke', 'none')
-                .on('mousedown', () => {
-                    this.mousedownBrush = true;
-                });
+                .on('mousedown', () => this.mousedownBrush = true);
 
             // do not allow clear selection
             this.background.selectAll('.overlay')
@@ -647,9 +648,7 @@ export class D3TimeseriesGraphComponent
                 .style('fill', 'red')
                 .style('opacity', 0.3)
                 .attr('stroke', 'none')
-                .on('mousedown', () => {
-                    this.mousedownBrush = true;
-                });
+                .on('mousedown', () => this.mousedownBrush = true);
         }
         this.drawBackground();
     }
@@ -765,9 +764,7 @@ export class D3TimeseriesGraphComponent
                 }).subscribe(
                     (tsArray) => {
                         const timeseries = [];
-                        tsArray.forEach(ts => {
-                            timeseries.push(ts.id);
-                        });
+                        tsArray.forEach(ts => timeseries.push(ts.id));
 
                         // request ts data by timeseries ID for specific offering and feature
                         this.api.getTimeseriesData(apiurl, timeseries, timespan)
@@ -861,9 +858,7 @@ export class D3TimeseriesGraphComponent
             this.highlightRect = this.focusG.append('svg:rect');
             this.highlightText = this.focusG.append('svg:text');
         }
-        this.preparedData.forEach((entry) => {
-            this.drawChart(entry);
-        });
+        this.preparedData.forEach((entry) => this.drawChart(entry));
     }
 
     /**
@@ -1199,7 +1194,7 @@ export class D3TimeseriesGraphComponent
                     this.drawBarChart(entry, yaxis.yScale);
                 } else {
                     // draw ref value line
-                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
+                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale));
                     this.drawLineChart(entry, yaxis.yScale);
                 }
             }
@@ -1293,9 +1288,7 @@ export class D3TimeseriesGraphComponent
     /**
      * Function that hides the labeling inside the graph.
      */
-    private mouseoutHandler = (): void => {
-        this.hideDiagramIndicator();
-    }
+    private mouseoutHandler = (): void => this.hideDiagramIndicator();
 
     private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
         let line = this.createLine(this.xScaleBase, yScaleBase);

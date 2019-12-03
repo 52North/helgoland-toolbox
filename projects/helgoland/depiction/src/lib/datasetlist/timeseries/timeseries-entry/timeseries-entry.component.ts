@@ -1,5 +1,5 @@
 import { Component, Injectable, OnChanges, ViewEncapsulation } from '@angular/core';
-import { ColorService, DatasetApiInterface, IdCache, InternalIdHandler, ReferenceValue, Time } from '@helgoland/core';
+import { ColorService, DatasetApiInterface, IdCache, InternalIdHandler, ReferenceValue, Time, DatasetOptions } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
@@ -40,7 +40,7 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     }
 
     public toggleReferenceValue(refValue: ReferenceValue) {
-        const options = JSON.parse(JSON.stringify(this.datasetOptions));
+        const options = JSON.parse(JSON.stringify(this.datasetOptions)) as DatasetOptions;
         const idx = options.showReferenceValues.findIndex((entry) => entry.id === refValue.referenceValueId);
         const refValId = this.createRefValId(refValue.referenceValueId);
         if (idx > -1) {
