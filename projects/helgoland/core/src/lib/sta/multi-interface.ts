@@ -264,7 +264,10 @@ export class MultiDatasetInterface implements DatasetApiV2 {
     }
 
     private createFirstLastValue(obs: Observation): FirstLastValue {
-        return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
+        if (obs && obs.phenomenonTime && obs.result) {
+            return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
+        }
+        return null;
     }
 
     getCategories(apiUrl: string, params: ParameterFilter = {}, options: HttpRequestOptions = {}): Observable<Category[]> {
@@ -474,8 +477,8 @@ export class MultiDatasetInterface implements DatasetApiV2 {
 
     private createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): Timeseries {
         const ts = this.createTimeseries(ds, url);
-        ts.firstValue = first;
-        ts.lastValue = last;
+        if (first) { ts.firstValue = first; }
+        if (last) { ts.lastValue = last; }
         ts.referenceValues = [];
         return ts;
     }
