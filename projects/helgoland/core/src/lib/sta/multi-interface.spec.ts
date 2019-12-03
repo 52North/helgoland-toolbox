@@ -8,6 +8,7 @@ import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-ap
 import { CorsProxyInterceptorProvider } from '../interceptor/cors-proxy-interceptor';
 import { MultiDatasetInterface } from './multi-interface';
 import { StaReadInterfaceService } from './read/sta-read-interface.service';
+import { Timespan } from '../model/internal/timeInterval';
 
 describe('HttpService', () => {
 
@@ -55,8 +56,6 @@ describe('HttpService', () => {
         //         console.log(JSON.stringify(res, null, 2));
         //     });
         // });
-        expect(service).toBeDefined();
-
         service.getTimeseries(staUrl, { procedure: '1', phenomenon: '5', category: '5', feature: '325' }).subscribe(res => {
             console.log(JSON.stringify(res, null, 2));
         });

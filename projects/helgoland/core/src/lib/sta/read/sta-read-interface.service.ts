@@ -116,7 +116,7 @@ export class StaReadInterfaceService implements StaReadInterface {
       request.subscribe(
         res => {
           if (res['@iot.nextLink']) {
-            this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(`https://cors-anywhere.herokuapp.com/${res['@iot.nextLink']}`)).subscribe(nextPage => {
+            this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(res['@iot.nextLink'])).subscribe(nextPage => {
               res.value.push(...nextPage.value);
               delete res['@iot.nextLink'];
               observer.next(res);
