@@ -16,11 +16,21 @@ export interface InternalDatasetId {
 export class InternalIdHandler {
 
   /**
-   * Generates an internal id for the given dataset.
+   * Generates and set an internal id for the given dataset.
    * @param dataset The dataset for which the internal id will be generated and saved.
    */
   public generateInternalId(dataset: IDataset) {
     dataset.internalId = dataset.url + INTERNAL_ID_SEPERATOR + dataset.id;
+  }
+
+  /**
+   * Creates an internal id out of the parameters
+   * @param url - service url
+   * @param id - service specific id
+   * @returns - the internal id
+   */
+  public createInternalId(url: string, id: string): string {
+    return url + INTERNAL_ID_SEPERATOR + id;
   }
 
   /**

@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -35,7 +35,7 @@
     "lint": "ng lint",
     "ng": "ng",
     "preversion": "npm run lint",
-    "version": "npm run lib:bumpVersion && npm run lib:build && git add -A .",
+    "version": "npm run lib:bumpVersion && npm run lib:build && npm test && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "start": "ng serve",
     "test": "./node_modules/ts-node/dist/bin.js scripts/test.ts"
