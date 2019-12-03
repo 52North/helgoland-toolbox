@@ -129,10 +129,10 @@ function addSingleDataStream(insert: StaInsertInterfaceService) {
         }
     }).subscribe(
         res => {
-            debugger;
+            // TODO: implement
         },
         error => {
-            debugger;
+            // TODO: implement
         }
     );
 }
