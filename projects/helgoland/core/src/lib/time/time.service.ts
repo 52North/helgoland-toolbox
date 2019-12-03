@@ -64,7 +64,7 @@ export class Time {
 
     public containsIn(timeInterval: TimeInterval, timestamp: number) {
         const timespan = this.createTimespanOfInterval(timeInterval);
-        return timespan.from <= timestamp && timestamp <= timespan.from;
+        return timespan.from <= timestamp && timestamp <= timespan.to;
     }
 
     public createTimespanOfInterval(timeInterval: TimeInterval): Timespan {
