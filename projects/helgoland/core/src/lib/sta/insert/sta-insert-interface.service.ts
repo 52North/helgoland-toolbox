@@ -53,7 +53,6 @@ export class StaInsertInterfaceService implements StaInsertInterface {
 
   protected createRequestUrl(apiUrl: string, endpoint: string, id?: string) {
     // TODO: Check whether apiUrl ends with slash
-    // apiUrl = 'https://cors-anywhere.herokuapp.com/' + apiUrl;
     if (id !== null && id !== undefined) {
       return `${apiUrl}${endpoint}('${id}')`;
     } else {
