@@ -23,6 +23,9 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     @Input()
     public avoidZoomToGeometry: boolean;
 
+    @Input()
+    public customMarkerIcon: L.Icon;
+
     private highlightGeometry: L.GeoJSON;
 
     private defaultStyle: L.PathOptions = {
@@ -92,7 +95,11 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
         if (this.geometry) {
             const geojson = L.geoJSON(this.geometry, {
                 pointToLayer: (feature, latlng) => {
-                    return L.circleMarker(latlng, this.defaultStyle);
+                    if (this.customMarkerIcon) {
+                        return L.marker(latlng, {icon: this.customMarkerIcon});
+                    } else {
+                        return L.circleMarker(latlng, this.defaultStyle);
+                    }
                 }
             });
 
