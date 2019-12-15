@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
+import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -120,7 +120,6 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
-    component.presenterOptions = { requestBeforeAfterValues: true };
     const option2 = new DatasetOptions(datasetID2, '#00FF00');
     option2.pointRadius = 4;
     option2.pointBorderWidth = 1;
@@ -135,7 +134,6 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
-    component.presenterOptions.hoverStyle = HoveringStyle.point;
     component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
@@ -145,11 +143,13 @@ describe('D3TimeseriesGraphComponent - function', () => {
       togglePanZoom: true,
       showReferenceValues: true,
       yAxisStepper: true,
+      hoverStyle: HoveringStyle.point,
       copyright: {
         label: 'Copyright goes here',
         positionX: 'right',
         positionY: 'bottom'
-      }
+      },
+      timespanBufferFactor: 0
     };
     component.onTimespanChanged.subscribe(timespan => {
       component.timeInterval = timespan;
