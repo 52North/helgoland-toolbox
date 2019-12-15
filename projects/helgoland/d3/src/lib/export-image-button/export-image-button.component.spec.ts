@@ -38,7 +38,7 @@ describe('ExportImageButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should work', () => {
+  it('should work', () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
 
     const option1 = new DatasetOptions(datasetID1, '#FF0000');
