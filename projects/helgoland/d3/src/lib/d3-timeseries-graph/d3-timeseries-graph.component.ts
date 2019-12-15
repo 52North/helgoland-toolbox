@@ -140,7 +140,9 @@ export class D3TimeseriesGraphComponent
         yaxis: true,
         overview: false,
         showTimeLabel: true,
-        requestBeforeAfterValues: false
+        requestBeforeAfterValues: false,
+        timespanBufferFactor: 0.2,
+        sendDataRequestOnlyIfDatasetTimespanCovered: true
     };
 
     private lastHoverPositioning: number;
@@ -294,27 +296,37 @@ export class D3TimeseriesGraphComponent
         this.loadingCounter++;
 
         if (dataset instanceof Timeseries && this.timespan) {
-            const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2, moment.duration(1, 'day').asMilliseconds());
-
-            this.loadingData.add(dataset.internalId);
-            this.dataLoaded.emit(this.loadingData);
-            if (this.runningDataRequests.has(dataset.id)) {
-                this.runningDataRequests.get(dataset.id).unsubscribe();
-                this.onCompleteLoadingData(dataset);
+            if (!this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
+                && dataset.firstValue
+                && dataset.lastValue
+                && this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+                const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
+                this.loadingData.add(dataset.internalId);
+                this.dataLoaded.emit(this.loadingData);
+                if (this.runningDataRequests.has(dataset.id)) {
+                    this.runningDataRequests.get(dataset.id).unsubscribe();
+                    this.onCompleteLoadingData(dataset);
+                }
+                const request = this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+                    {
+                        format: 'flot',
+                        expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
+                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                    },
+                    { forceUpdate: force }
+                ).subscribe(
+                    (result) => this.prepareData(dataset, result),
+                    (error) => this.onError(error),
+                    () => this.onCompleteLoadingData(dataset)
+                );
+                this.runningDataRequests.set(dataset.id, request);
+            } else {
+                const empty: Data<TimeValueTuple> = {
+                    values: [],
+                    referenceValues: {}
+                };
+                this.prepareData(dataset, empty);
             }
-            const request = this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
-                {
-                    format: 'flot',
-                    expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
-                    generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                },
-                { forceUpdate: force }
-            ).subscribe(
-                (result) => this.prepareData(dataset, result),
-                (error) => this.onError(error),
-                () => this.onCompleteLoadingData(dataset)
-            );
-            this.runningDataRequests.set(dataset.id, request);
         }
     }
 
@@ -412,7 +424,9 @@ export class D3TimeseriesGraphComponent
      */
     private addReferenceValueData(dataEntry: InternalDataEntry, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
         if (this.plotOptions.showReferenceValues) {
-            dataEntry.referenceValueData = styles.showReferenceValues.map((refValue) => ({
+            dataEntry.referenceValueData = styles.showReferenceValues
+            .filter(refValue => data.referenceValues && data.referenceValues[refValue.id])
+            .map((refValue) => ({
                 id: refValue.id,
                 color: refValue.color,
                 data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] }))
