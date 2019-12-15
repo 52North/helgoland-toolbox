@@ -43,16 +43,18 @@ export class GeosearchControlComponent extends MapControlComponent {
 
     public triggerSearch() {
         this.onSearchTriggered.emit();
-        this.removeOldGeometry();
+        if (this.resultGeometry) {
+            this.resultGeometry.remove();
+        }
         if (this.searchTerm) {
             this.loading = true;
             this.geosearch.searchTerm(this.searchTerm, this.options).subscribe(
                 (result) => {
                     if (!result) {
                         this.searchTerm = '';
+                        this.onResultChanged.emit(null);
                         return;
                     }
-                    this.onResultChanged.emit(result);
                     this.result = result;
                     if (this.mapId && this.mapCache.getMap(this.mapId)) {
                         this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
@@ -62,9 +64,13 @@ export class GeosearchControlComponent extends MapControlComponent {
                             this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
                         }
                     }
+                    this.onResultChanged.emit(result);
                 },
-                (error) => this.searchTerm = 'error occurred',
-                () => { this.loading = false; }
+                (error) => {
+                    this.searchTerm = 'error occurred';
+                    this.onResultChanged.emit(null);
+                },
+                () => this.loading = false
             );
         }
     }
