@@ -74,6 +74,15 @@ export interface D3PlotOptions {
     */
     requestBeforeAfterValues?: boolean;
 
+    /**
+     * Buffering factor for the get Data requests, which will be added before and after the timespan for every get data request.
+     */
+    timespanBufferFactor?: number;
+
+    /**
+     * Sends request only, when the corresponding dataset has values inside the request timespan. So the first and last values must cover the timespan.
+     */
+    sendDataRequestOnlyIfDatasetTimespanCovered?: boolean;
 }
 
 export interface D3Copyright {
