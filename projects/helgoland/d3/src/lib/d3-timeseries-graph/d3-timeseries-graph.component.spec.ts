@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Timespan } from '@helgoland/core';
+import { DatasetOptions, DefinedTimespanService, HelgolandCoreModule, Timespan, DefinedTimespan } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -67,7 +67,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
+  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__26';
   let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
@@ -131,19 +131,21 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option2.pointBorderColor = 'black';
     option2.lineDashArray = 5;
     option2.separateYAxis = false;
+    // option2.showReferenceValues = [{
+    //   id: '602',
+    //   color: '#FF0000'
+    // }];
     // option2.yAxisRange = {
     //   min: 0,
     //   max: 10
     // };
     option2.lineWidth = 2;
     option2.visible = true;
-    datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
     component.datasetIds.push(datasetID2);
 
     component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
-    component.datasetIds = [datasetID1, datasetID2];
     component.datasetOptions = datasetOptions;
     // component.selectedDatasetIds = [datasetID2];
     component.presenterOptions = {

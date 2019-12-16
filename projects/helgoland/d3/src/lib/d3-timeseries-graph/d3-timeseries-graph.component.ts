@@ -429,9 +429,24 @@ export class D3TimeseriesGraphComponent
                 .map((refValue) => ({
                     id: refValue.id,
                     color: refValue.color,
-                    data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] }))
+                    data: this.createReferenceValueData(data, refValue.id)
                 }));
         }
+    }
+
+    // adjust reference values with new structure to old one
+    private createReferenceValueData(data: Data<TimeValueTuple>, refId: string): { timestamp: number; value: string | number; }[] {
+        let refValues = data.referenceValues[refId] as any;
+        if (!(refValues instanceof Array)) {
+            if (refValues.valueBeforeTimespan) {
+                refValues.values.unshift(refValues.valueBeforeTimespan);
+            }
+            if (refValues.valueAfterTimespan) {
+                refValues.values.push(refValues.valueAfterTimespan);
+            }
+            refValues = refValues.values;
+        }
+        return refValues.map(d => ({ timestamp: d[0], value: d[1] }));
     }
 
     /**
