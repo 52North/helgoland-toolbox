@@ -296,15 +296,21 @@ export class D3TimeseriesGraphComponent
         this.loadingCounter++;
 
         if (dataset instanceof Timeseries && this.timespan) {
-            if (!this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
+            if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
                 && dataset.firstValue
                 && dataset.lastValue
-                && this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+                && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+                const empty: Data<TimeValueTuple> = {
+                    values: [],
+                    referenceValues: {}
+                };
+                this.prepareData(dataset, empty);
+            } else {
                 const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
                 this.loadingData.add(dataset.internalId);
                 this.dataLoaded.emit(this.loadingData);
-                if (this.runningDataRequests.has(dataset.id)) {
-                    this.runningDataRequests.get(dataset.id).unsubscribe();
+                if (this.runningDataRequests.has(dataset.internalId)) {
+                    this.runningDataRequests.get(dataset.internalId).unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
                 const request = this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
@@ -319,19 +325,13 @@ export class D3TimeseriesGraphComponent
                     (error) => this.onError(error),
                     () => this.onCompleteLoadingData(dataset)
                 );
-                this.runningDataRequests.set(dataset.id, request);
-            } else {
-                const empty: Data<TimeValueTuple> = {
-                    values: [],
-                    referenceValues: {}
-                };
-                this.prepareData(dataset, empty);
+                this.runningDataRequests.set(dataset.internalId, request);
             }
         }
     }
 
     private onCompleteLoadingData(dataset: IDataset): void {
-        this.runningDataRequests.delete(dataset.id);
+        this.runningDataRequests.delete(dataset.internalId);
         this.loadingData.delete(dataset.internalId);
         this.dataLoaded.emit(this.loadingData);
         this.loadingCounter--;
@@ -425,12 +425,12 @@ export class D3TimeseriesGraphComponent
     private addReferenceValueData(dataEntry: InternalDataEntry, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
         if (this.plotOptions.showReferenceValues) {
             dataEntry.referenceValueData = styles.showReferenceValues
-            .filter(refValue => data.referenceValues && data.referenceValues[refValue.id])
-            .map((refValue) => ({
-                id: refValue.id,
-                color: refValue.color,
-                data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] }))
-            }));
+                .filter(refValue => data.referenceValues && data.referenceValues[refValue.id])
+                .map((refValue) => ({
+                    id: refValue.id,
+                    color: refValue.color,
+                    data: data.referenceValues[refValue.id].map(d => ({ timestamp: d[0], value: d[1] }))
+                }));
         }
     }
 

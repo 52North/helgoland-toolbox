@@ -100,6 +100,8 @@ describe('D3TimeseriesGraphComponent - function', () => {
 
   it('should have a dataset', () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
+    component.datasetIds = [];
+
     const option1 = new DatasetOptions(datasetID1, '#FF0000');
     // option1.type = 'bar';
     option1.barPeriod = 'PT1H';
@@ -120,6 +122,9 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option1.pointRadius = 4;
     option1.lineWidth = 2;
     option1.visible = true;
+    datasetOptions.set(datasetID1, option1);
+    component.datasetIds.push(datasetID1);
+
     const option2 = new DatasetOptions(datasetID2, '#00FF00');
     option2.pointRadius = 4;
     option2.pointBorderWidth = 1;
@@ -134,6 +139,8 @@ describe('D3TimeseriesGraphComponent - function', () => {
     option2.visible = true;
     datasetOptions.set(datasetID1, option1);
     datasetOptions.set(datasetID2, option2);
+    component.datasetIds.push(datasetID2);
+
     component.timeInterval = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.ngOnChanges({ timeInterval: new SimpleChange(null, component.timeInterval, true) });
     component.datasetIds = [datasetID1, datasetID2];
@@ -155,6 +162,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
       component.timeInterval = timespan;
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
     });
+
     fixture.detectChanges();
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
