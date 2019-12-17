@@ -113,14 +113,14 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createColoredMarker(station: Station, color: string): Layer {
-        if (this.markerSelectorGenerator.createFilledMarker) {
+        if (this.markerSelectorGenerator && this.markerSelectorGenerator.createFilledMarker) {
             return this.markerSelectorGenerator.createFilledMarker(station, color);
         }
         return this.createFilledMarker(station, color, 10);
     }
 
     private createDefaultColoredMarker(station: Station): Layer {
-        if (this.markerSelectorGenerator.createDefaultFilledMarker) {
+        if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultFilledMarker) {
             return this.markerSelectorGenerator.createDefaultFilledMarker(station);
         }
         return this.createFilledMarker(station, '#000', 10);
