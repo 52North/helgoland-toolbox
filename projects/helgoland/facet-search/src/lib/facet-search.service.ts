@@ -32,22 +32,24 @@ export class FacetSearchService implements FacetSearch {
 
   public getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[] {
     const params = [];
-    switch (type) {
-      case ParameterFacetType.category:
-        this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.parameters.category.label));
-        break;
-      case ParameterFacetType.feature:
-        this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.parameters.feature.label));
-        break;
-      case ParameterFacetType.offering:
-        this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.parameters.offering.label));
-        break;
-      case ParameterFacetType.phenomenon:
-        this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.parameters.phenomenon.label));
-        break;
-      case ParameterFacetType.procedure:
-        this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.parameters.procedure.label));
-        break;
+    if (this.filteredTimeseries) {
+      switch (type) {
+        case ParameterFacetType.category:
+          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.parameters.category.label));
+          break;
+        case ParameterFacetType.feature:
+          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.parameters.feature.label));
+          break;
+        case ParameterFacetType.offering:
+          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.parameters.offering.label));
+          break;
+        case ParameterFacetType.phenomenon:
+          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.parameters.phenomenon.label));
+          break;
+        case ParameterFacetType.procedure:
+          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.parameters.procedure.label));
+          break;
+      }
     }
     return this.sortParameters(params, sort);
   }
@@ -122,7 +124,9 @@ export class FacetSearchService implements FacetSearch {
     } else {
       this.filteredTimeseries = this.timeseries;
     }
-    this.onResultsChanged.next(this.filteredTimeseries);
+    if (this.filteredTimeseries) {
+      this.onResultsChanged.next(this.filteredTimeseries);
+    }
   }
 
   private checkTimespan(ts: Timeseries): boolean {
