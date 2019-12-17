@@ -39,7 +39,7 @@ export class ExportPopupComponent {
   }
 
   public onXSLXDownload() {
-    this.onDownload(DownloadType.XSLX);
+    this.onDownload(DownloadType.XLSX);
   }
 
   /**
