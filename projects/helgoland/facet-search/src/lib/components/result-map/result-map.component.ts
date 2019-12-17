@@ -1,5 +1,3 @@
-import 'leaflet.markercluster';
-
 import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
 import { Required, Station, Timeseries } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
