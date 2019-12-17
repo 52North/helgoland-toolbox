@@ -14,7 +14,7 @@ export interface ExportOptions {
 }
 
 export enum DownloadType {
-  XSLX = 'xslx',
+  XLSX = 'xlsx',
   CSV = 'csv'
 }
 
