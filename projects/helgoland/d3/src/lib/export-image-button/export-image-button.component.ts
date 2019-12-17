@@ -103,7 +103,7 @@ export class ExportImageButtonComponent {
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
     comp.instance.setTimespan(this.timespan);
-    comp.instance.plotOptions = {
+    comp.instance.presenterOptions = {
       showTimeLabel: false,
       grid: true
     };

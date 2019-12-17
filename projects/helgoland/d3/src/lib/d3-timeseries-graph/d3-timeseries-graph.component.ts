@@ -578,7 +578,6 @@ export class D3TimeseriesGraphComponent
         this.prepareYAxes();
 
         this.yAxes.forEach(axis => {
-            // debugger;
             axis.first = (this.yScaleBase === null);
             axis.offset = this.leftOffset;
 
