@@ -33,7 +33,7 @@ describe('HttpService', () => {
         });
     });
 
-    fit('should be created', inject([MultiDatasetInterface], (service: MultiDatasetInterface) => {
+    it('should be created', inject([MultiDatasetInterface], (service: MultiDatasetInterface) => {
         const url = staUrl;
         // service.getTimeseries(url, { expanded: false }).subscribe(
         //     series => {
