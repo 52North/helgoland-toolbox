@@ -37,7 +37,7 @@ describe('StaInsertInterfaceService', () => {
         expect(service).toBeTruthy();
     });
 
-    fit('should fetch things', () => {
+    it('should fetch things', () => {
         const read: StaReadInterfaceService = TestBed.get(StaReadInterfaceService);
         const del: StaDeleteInterfaceService = TestBed.get(StaDeleteInterfaceService);
         const insert: StaInsertInterfaceService = TestBed.get(StaInsertInterfaceService);
