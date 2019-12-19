@@ -145,11 +145,7 @@
           "options": {
             "main": "projects/helgoland/core/src/test.ts",
             "tsConfig": "projects/helgoland/core/tsconfig.spec.json",
-            "karmaConfig": "projects/helgoland/core/karma.conf.js",
-            "codeCoverage": true,
-            "codeCoverageExclude": [
-              "**/test.ts"
-            ]
+            "karmaConfig": "projects/helgoland/core/karma.conf.js"
           }
         },
         "lint": {
