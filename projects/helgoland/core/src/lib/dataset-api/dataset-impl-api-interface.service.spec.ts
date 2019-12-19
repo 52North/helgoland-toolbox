@@ -7,7 +7,7 @@ import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
 import { HttpService } from './http.service';
 import { InternalIdHandler } from './internal-id-handler.service';
 
-fdescribe('DatasetImplApiInterface', () => {
+describe('DatasetImplApiInterface', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [

@@ -7,7 +7,7 @@ import { TranslateTestingModule } from '../../../../../testing/translate.testing
 import { ServiceSelectorComponent } from './service-selector.component';
 import { ServiceSelectorService } from './service-selector.service';
 
-fdescribe('ServiceSelectorComponent', () => {
+describe('ServiceSelectorComponent', () => {
   let component: ServiceSelectorComponent;
   let fixture: ComponentFixture<ServiceSelectorComponent>;
 
