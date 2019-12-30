@@ -22,11 +22,15 @@ import { HelgolandCachingModule } from '@helgoland/caching';
 import { HelgolandControlModule } from '@helgoland/control';
 import {
   DatasetApiInterface,
+  DatasetApiV1Service,
+  DatasetApiV3Service,
+  HELGOLAND_SERVICE_CONNECTOR_HANDLER,
   HelgolandCoreModule,
+  MultiDatasetInterface,
   SettingsService,
   SplittedDataDatasetApiInterface,
+  StaApiV1Service,
   StatusCheckService,
-  MultiDatasetInterface,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import {
@@ -209,6 +213,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: BasicAuthInformer,
       useClass: BasicAuthInformerImplService
+    },
+    {
+      provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+      useClass: DatasetApiV1Service,
+      multi: true
+    },
+    {
+      provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+      useClass: DatasetApiV3Service,
+      multi: true
+    },
+    {
+      provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+      useClass: StaApiV1Service,
+      multi: true
     }
   ]
 })

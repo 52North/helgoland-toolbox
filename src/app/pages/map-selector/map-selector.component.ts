@@ -73,7 +73,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
 })
 export class MapSelectorComponent {
 
-    public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+    public providerUrl = 'https://mudak-wrm.dev.52north.org/sanepar-sos/api/';
     // public providerUrl = 'http://mudak-wrm.dev.52north.org/sos/api/';
 
     public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];

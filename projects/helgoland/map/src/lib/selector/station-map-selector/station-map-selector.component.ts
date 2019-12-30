@@ -18,6 +18,7 @@ import {
     StatusIntervalResolverService,
     Timeseries,
     TimeseriesExtras,
+    HelgolandServicesHandlerService
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import * as L from 'leaflet';
@@ -53,6 +54,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     constructor(
         protected statusIntervalResolver: StatusIntervalResolverService,
         protected apiInterface: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected mapCache: MapCache,
         protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
@@ -158,7 +160,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
     }
 
     private createStationGeometries() {
-        this.apiInterface.getStations(this.serviceUrl, this.filter)
+        this.servicesHandler.getStations(this.serviceUrl, this.filter)
             .subscribe((res) => {
                 if (this.cluster) {
                     this.markerFeatureGroup = L.markerClusterGroup({ animate: true });

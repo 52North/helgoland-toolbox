@@ -38,6 +38,12 @@ export * from './lib/sta/model/sensors';
 export * from './lib/sta/model/sta-interface';
 export * from './lib/sta/model/things';
 
+export * from './lib/api-communication/connectors/dataset-api-v1/dataset-api-v1.service';
+export * from './lib/api-communication/connectors/dataset-api-v3/dataset-api-v3.service';
+export * from './lib/api-communication/connectors/dataset-api-v3/api-v3-interface.service';
+export * from './lib/api-communication/connectors/sta-api-v1/sta-api-v1.service';
+export * from './lib/api-communication/helgoland-services-handler.service';
+
 export { Language } from './lib/language/model/language';
 export { LanguageChangNotifier } from './lib/language/language-changer';
 export { LocalSelectorComponent } from './lib/language/locale-selector';
