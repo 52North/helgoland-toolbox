@@ -57,7 +57,7 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));
   }
 
-  public getStation(url: string, id: string, filter: ParameterFilter): Observable<Station> {
+  public getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.sta.getLocation(url, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
       .pipe(map(loc => this.createExtendedStation(loc)));
   }
@@ -74,6 +74,7 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return {
       id: loc['@iot.id'],
       geometry: loc.location,
+      label: loc.name,
       properties: {
         id: loc['@iot.id'],
         label: loc.name,

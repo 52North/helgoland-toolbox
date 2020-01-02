@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DatasetApiInterface, Station, Timeseries } from '@helgoland/core';
+import { DatasetApiInterface, Station, Timeseries, HelgolandServicesHandlerService } from '@helgoland/core';
 
 export class ExtendedTimeseries extends Timeseries {
     public selected: boolean;
@@ -32,13 +32,14 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public counter: number;
 
     constructor(
-        protected apiInterface: DatasetApiInterface
+        protected apiInterface: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService
     ) { }
 
     public ngOnInit() {
         if (this.station) {
             const stationId = this.station.properties && this.station.properties.id ? this.station.properties.id : this.station.id;
-            this.apiInterface.getStation(stationId, this.url)
+            this.servicesHandler.getStation(stationId, this.url)
                 .subscribe((station) => {
                     this.station = station;
                     this.counter = 0;

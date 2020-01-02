@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     Dataset,
     DatasetApiInterface,
+    HelgolandServicesHandlerService,
     InternalIdHandler,
     LocatedProfileDataEntry,
     ParameterFilter,
@@ -45,6 +46,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
     constructor(
         protected api: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected internalIdHandler: InternalIdHandler,
         protected translateSrvc: TranslateService
     ) {
@@ -85,9 +87,8 @@ export class ProfileEntryComponent extends ListEntryComponent {
                 }
             });
         } else {
-            this.api.getPlatform(this.dataset.parameters.platform.id, internalId.url).subscribe((platform) => {
-                this.onShowGeometry.emit(platform.geometry);
-            });
+            this.servicesHandler.getStation(this.dataset.parameters.platform.id, internalId.url)
+                .subscribe((station) => this.onShowGeometry.emit(station.geometry));
         }
     }
 

@@ -36,7 +36,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.api.getStations(url, filter);
   }
 
-  public getStation(url: string, id: string, filter: ParameterFilter): Observable<Station> {
+  public getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.api.getStation(id, url, filter);
   }
 

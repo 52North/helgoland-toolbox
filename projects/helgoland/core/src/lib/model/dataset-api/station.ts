@@ -1,8 +1,9 @@
 import { ParameterConstellation, Timeseries } from './dataset';
 import { Parameter } from './parameter';
 
-export class Station {
+export class Station implements Parameter {
     public id: string;
+    public label: string;
     public geometry: GeoJSON.GeometryObject;
     public properties: StationProperties;
 }

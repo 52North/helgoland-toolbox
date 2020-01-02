@@ -2,9 +2,9 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
-import { ParameterFilter } from '../model/internal/http-requests';
 import { Station } from '../model/dataset-api/station';
+import { ParameterFilter } from '../model/internal/http-requests';
+import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -23,8 +23,8 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return this.getHandler(url).pipe(flatMap(e => e.getStations(url, filter)));
   }
 
-  public getStation(url: string, id: string, filter: ParameterFilter = {}): Observable<Station> {
-    return this.getHandler(url).pipe(flatMap(e => e.getStation(url, id, filter)));
+  public getStation(id: string, url: string, filter: ParameterFilter = {}): Observable<Station> {
+    return this.getHandler(url).pipe(flatMap(e => e.getStation(id, url, filter)));
   }
 
   private getHandler(url: string): Observable<IHelgolandServiceConnectorHandler> {

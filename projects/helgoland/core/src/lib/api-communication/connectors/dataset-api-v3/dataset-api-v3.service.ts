@@ -36,7 +36,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
   }
 
-  getStation(url: string, id: string, filter: ParameterFilter): Observable<Station> {
+  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
   }
 
@@ -50,6 +50,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return {
       id: feature.id,
       geometry: feature.geometry,
+      label: feature.properties.label,
       properties: {
         id: feature.id,
         label: feature.properties.label,

@@ -559,6 +559,7 @@ export class MultiDatasetInterface implements DatasetApiV2 {
         return {
             id: loc['@iot.id'],
             geometry: loc.location,
+            label: loc.name,
             properties: {
                 id: loc['@iot.id'],
                 label: loc.name,

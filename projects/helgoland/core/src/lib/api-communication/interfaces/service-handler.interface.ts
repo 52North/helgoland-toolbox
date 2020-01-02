@@ -5,7 +5,7 @@ import { ParameterFilter } from '../../model/internal/http-requests';
 
 export interface IHelgolandServiceConnector {
     getStations(url: string, filter: ParameterFilter): Observable<Station[]>;
-    getStation(url: string, id: string, filter: ParameterFilter): Observable<Station>;
+    getStation(id: string, url: string, filter: ParameterFilter): Observable<Station>;
 }
 
 export interface IHelgolandServiceConnectorHandler extends IHelgolandServiceConnector {

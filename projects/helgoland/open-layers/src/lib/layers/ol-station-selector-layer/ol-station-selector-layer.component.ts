@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { DatasetApiInterface, ParameterFilter, Required, Station } from '@helgoland/core';
+import { HelgolandServicesHandlerService, ParameterFilter, Required, Station } from '@helgoland/core';
 import { Feature, Map } from 'ol';
 import { unlistenByKey } from 'ol/events';
 import { click, pointerMove } from 'ol/events/condition';
@@ -72,7 +72,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   constructor(
     protected mapService: OlMapService,
     @Host() protected mapidService: OlMapId,
-    protected apiInterface: DatasetApiInterface
+    protected servicesHandler: HelgolandServicesHandlerService,
   ) {
     super(mapService, mapidService);
   }
@@ -89,7 +89,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createStationGeometries() {
-    this.apiInterface.getStations(this.serviceUrl, this.filter)
+    this.servicesHandler.getStations(this.serviceUrl, this.filter)
       .subscribe((stations) => {
         const features: Feature[] = this.createFeatureList(stations);
 
