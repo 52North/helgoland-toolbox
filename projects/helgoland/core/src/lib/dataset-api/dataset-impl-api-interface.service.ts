@@ -165,10 +165,8 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     }
 
     public getCategory(id: string, apiUrl: string, params?: ParameterFilter): Observable<Category> {
-        // const url = this.createRequestUrl(apiUrl, 'categories', id);
-        throw new Error('Not implemented');
-        // return this.requestApi(url, params)
-        //     .map(this.extractData);
+        const url = this.createRequestUrl(apiUrl, 'categories', id);
+        return this.requestApi(url, params);
     }
 
     public getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]> {

@@ -2,6 +2,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
+import { Category } from '../model/dataset-api/category';
 import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
@@ -21,15 +22,23 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
   ) { }
 
   public getServices(url: string, filter: ParameterFilter = {}): Observable<Service[]> {
-    return this.getHandler(url).pipe(flatMap(e => e.getServices(url, filter)));
+    return this.getHandler(url).pipe(flatMap(h => h.getServices(url, filter)));
+  }
+
+  public getCategories(url: string, filter: ParameterFilter = {}): Observable<Category[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getCategories(url, filter)));
+  }
+
+  public getCategory(id: string, url: string, filter: ParameterFilter = {}): Observable<Category> {
+    return this.getHandler(url).pipe(flatMap(h => h.getCategory(id, url, filter)));
   }
 
   public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {
-    return this.getHandler(url).pipe(flatMap(e => e.getStations(url, filter)));
+    return this.getHandler(url).pipe(flatMap(h => h.getStations(url, filter)));
   }
 
   public getStation(id: string, url: string, filter: ParameterFilter = {}): Observable<Station> {
-    return this.getHandler(url).pipe(flatMap(e => e.getStation(id, url, filter)));
+    return this.getHandler(url).pipe(flatMap(h => h.getStation(id, url, filter)));
   }
 
   private getHandler(url: string): Observable<IHelgolandServiceConnectorHandler> {

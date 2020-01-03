@@ -10,8 +10,11 @@ import { HttpService } from '../../../dataset-api/http.service';
 import { Service } from '../../../model/dataset-api/service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
 
-export interface ApiV3Feature {
+export interface ApiV3Parameter {
   id: string;
+}
+
+export interface ApiV3Feature extends ApiV3Parameter {
   properties: {
     label: string;
     href: string;
@@ -19,6 +22,12 @@ export interface ApiV3Feature {
   };
   type: string;
   geometry: GeoJSON.GeometryObject;
+}
+
+export interface ApiV3Category extends ApiV3Parameter {
+  href: string;
+  domainId: string;
+  label: string;
 }
 
 @Injectable({
@@ -35,6 +44,16 @@ export class ApiV3InterfaceService extends ApiInterface {
     const url = this.createRequestUrl(apiUrl, 'services');
     return this.requestApi<Service[]>(url, params, options)
       .pipe(map(res => res.map(e => this.createService(e, apiUrl))));
+  }
+
+  public getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category[]> {
+    const url = this.createRequestUrl(apiUrl, 'categories');
+    return this.requestApi<ApiV3Category[]>(url, params, options);
+  }
+
+  public getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category> {
+    const url = this.createRequestUrl(apiUrl, 'categories', id);
+    return this.requestApi<ApiV3Category>(url, params, options);
   }
 
   public getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature[]> {

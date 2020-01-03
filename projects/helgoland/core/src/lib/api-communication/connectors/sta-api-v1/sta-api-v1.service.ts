@@ -17,7 +17,11 @@ import { DataParameterFilter, ParameterFilter } from '../../../model/internal/ht
 import { Datastream } from '../../../sta/model/datasetreams';
 import { Location, LocationExpandParams, LocationSelectParams } from '../../../sta/model/locations';
 import { Observation } from '../../../sta/model/observations';
-import { ObservedProperty } from '../../../sta/model/observed-properties';
+import {
+  ObservedProperty,
+  ObservedPropertyExpandParams,
+  ObservedPropertySelectParams,
+} from '../../../sta/model/observed-properties';
 import { Sensor } from '../../../sta/model/sensors';
 import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
 import { Thing } from '../../../sta/model/things';
@@ -56,6 +60,15 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.createServices(apiUrl);
   }
 
+  public getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
+    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createCategoriesFilter(filter)))
+      .pipe(map(obProps => obProps.value.map(e => this.createCategory(e))));
+  }
+
+  public getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
+    return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createCategory(prop)));
+  }
+
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));
@@ -64,6 +77,22 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
   public getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.sta.getLocation(url, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
       .pipe(map(loc => this.createExtendedStation(loc)));
+  }
+
+  private createCategoriesFilter(params: ParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+    if (params) {
+      const filterList = [];
+      if (params.phenomenon) {
+        filterList.push(`id eq ${params.phenomenon}`);
+      }
+      if (params.feature) {
+        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+      }
+      if (params.procedure) {
+        filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+      }
+      return this.createFilter(filterList);
+    }
   }
 
   private createStationFilter(filter: ParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
