@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BlacklistedService, DatasetApiInterface, ParameterFilter, Service } from '@helgoland/core';
+import { BlacklistedService, HelgolandServicesHandlerService, ParameterFilter, Service } from '@helgoland/core';
 import { Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class ServiceSelectorService {
 
     constructor(
-        protected apiInterface: DatasetApiInterface
+        protected servicesHandler: HelgolandServicesHandlerService
     ) { }
 
     public fetchServicesOfAPI(
@@ -15,7 +15,7 @@ export class ServiceSelectorService {
         filter: ParameterFilter
     ): Observable<Service[]> {
         return new Observable<Service[]>((observer: Observer<Service[]>) => {
-            this.apiInterface.getServices(url, filter)
+            this.servicesHandler.getServices(url, filter)
                 .subscribe(
                     (services) => {
                         if (services && services instanceof Array) {

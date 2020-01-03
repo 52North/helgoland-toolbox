@@ -52,6 +52,10 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
+  public getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
+    return this.createServices(apiUrl);
+  }
+
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));

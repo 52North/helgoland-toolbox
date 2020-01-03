@@ -1,11 +1,14 @@
 import { Observable } from 'rxjs';
 
+import { Service } from '../../model/dataset-api/service';
 import { Station } from '../../model/dataset-api/station';
 import { ParameterFilter } from '../../model/internal/http-requests';
 
 export interface IHelgolandServiceConnector {
     getStations(url: string, filter: ParameterFilter): Observable<Station[]>;
     getStation(id: string, url: string, filter: ParameterFilter): Observable<Station>;
+
+    getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]>;
 }
 
 export interface IHelgolandServiceConnectorHandler extends IHelgolandServiceConnector {

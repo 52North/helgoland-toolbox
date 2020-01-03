@@ -2,10 +2,12 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ApiInterface } from '../../../abstract-services/api-interface';
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
+import { Service } from '../../../model/dataset-api/service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
 
 export interface ApiV3Feature {
@@ -28,6 +30,12 @@ export class ApiV3InterfaceService extends ApiInterface {
     protected httpService: HttpService,
     protected translate: TranslateService
   ) { super(); }
+
+  public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
+    const url = this.createRequestUrl(apiUrl, 'services');
+    return this.requestApi<Service[]>(url, params, options)
+      .pipe(map(res => res.map(e => this.createService(e, apiUrl))));
+  }
 
   public getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature[]> {
     const url = this.createRequestUrl(apiUrl, 'features');
@@ -60,6 +68,14 @@ export class ApiV3InterfaceService extends ApiInterface {
     Object.getOwnPropertyNames(params)
       .forEach((key) => httpParams = httpParams.set(key, params[key]));
     return httpParams;
+  }
+
+  private createService(service: Service, url: string): Service {
+    service.apiUrl = url;
+    if (service.quantities && service.quantities.datasets && service.quantities.datasets['total']) {
+      service.quantities.datasets = service.quantities.datasets['total'];
+    }
+    return service;
   }
 
 }

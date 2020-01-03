@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
+import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
@@ -30,6 +31,10 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
       }),
       catchError(() => of(false))
     );
+  }
+
+  public getServices(url: string, filter: ParameterFilter): Observable<Service[]> {
+    return this.api.getServices(url, filter);
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {

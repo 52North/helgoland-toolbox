@@ -2,6 +2,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
+import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
@@ -18,6 +19,10 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
   constructor(
     @Optional() @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER) protected handler: IHelgolandServiceConnectorHandler[] | null
   ) { }
+
+  public getServices(url: string, filter: ParameterFilter = {}): Observable<Service[]> {
+    return this.getHandler(url).pipe(flatMap(e => e.getServices(url, filter)));
+  }
 
   public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {
     return this.getHandler(url).pipe(flatMap(e => e.getStations(url, filter)));
