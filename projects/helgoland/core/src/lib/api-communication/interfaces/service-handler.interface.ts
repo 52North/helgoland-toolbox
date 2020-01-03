@@ -4,6 +4,8 @@ import { Category } from '../../model/dataset-api/category';
 import { Service } from '../../model/dataset-api/service';
 import { Station } from '../../model/dataset-api/station';
 import { ParameterFilter } from '../../model/internal/http-requests';
+import { Offering } from '../../model/dataset-api/offering';
+import { Phenomenon } from '../../model/dataset-api/phenomenon';
 
 export interface IHelgolandServiceConnector {
     getStations(url: string, filter: ParameterFilter): Observable<Station[]>;
@@ -12,7 +14,13 @@ export interface IHelgolandServiceConnector {
     getCategories(url: string, filter: ParameterFilter): Observable<Category[]>;
     getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category>;
 
-    getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]>;
+    getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]>;
+    getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering>;
+
+    getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]>;
+    getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon>;
+
+    getServices(apiUrl: string, filter: ParameterFilter): Observable<Service[]>;
 }
 
 export interface IHelgolandServiceConnectorHandler extends IHelgolandServiceConnector {

@@ -24,7 +24,7 @@ import {
 } from '../../../sta/model/observed-properties';
 import { Sensor } from '../../../sta/model/sensors';
 import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
-import { Thing } from '../../../sta/model/things';
+import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/things';
 import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 
@@ -67,6 +67,44 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
 
   public getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
     return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createCategory(prop)));
+  }
+
+  public getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+    return this.sta.aggregatePaging(this.sta.getThings(url, this.createOfferingsFilter(filter)))
+      .pipe(map(things => things.value.map(t => this.createOffering(t))));
+  }
+
+  private createOfferingsFilter(params: ParameterFilter): StaFilter<ThingSelectParams, ThingExpandParams> {
+    if (params) {
+      const filterList = [];
+      return this.createFilter(filterList);
+    }
+  }
+
+  public getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+    return this.sta.getThing(url, id).pipe(map(t => this.createOffering(t)));
+  }
+
+  public getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createPhenomenaFilter(filter)))
+      .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e))));
+  }
+
+  private createPhenomenaFilter(params: ParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+    if (params) {
+      const filterList = [];
+      if (params.category) {
+        filterList.push(`id eq ${params.category}`);
+      }
+      if (params.feature) {
+        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+      }
+      return this.createFilter(filterList);
+    }
+  }
+
+  public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+    return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createPhenomenon(prop)));
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {

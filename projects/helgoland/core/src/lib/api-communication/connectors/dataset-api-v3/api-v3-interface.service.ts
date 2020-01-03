@@ -30,6 +30,18 @@ export interface ApiV3Category extends ApiV3Parameter {
   label: string;
 }
 
+export interface ApiV3Offering extends ApiV3Parameter {
+  href: string;
+  domainId: string;
+  label: string;
+}
+
+export interface ApiV3Phenomenon extends ApiV3Parameter {
+  href: string;
+  domainId: string;
+  label: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,6 +66,26 @@ export class ApiV3InterfaceService extends ApiInterface {
   public getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category> {
     const url = this.createRequestUrl(apiUrl, 'categories', id);
     return this.requestApi<ApiV3Category>(url, params, options);
+  }
+
+  public getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering[]> {
+    const url = this.createRequestUrl(apiUrl, 'offerings');
+    return this.requestApi<ApiV3Offering[]>(url, params, options);
+  }
+
+  public getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering> {
+    const url = this.createRequestUrl(apiUrl, 'offerings', id);
+    return this.requestApi<ApiV3Offering>(url, params, options);
+  }
+
+  public getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon[]> {
+    const url = this.createRequestUrl(apiUrl, 'phenomena');
+    return this.requestApi<ApiV3Phenomenon[]>(url, params, options);
+  }
+
+  public getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon> {
+    const url = this.createRequestUrl(apiUrl, 'phenomena', id);
+    return this.requestApi<ApiV3Phenomenon>(url, params, options);
   }
 
   public getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature[]> {

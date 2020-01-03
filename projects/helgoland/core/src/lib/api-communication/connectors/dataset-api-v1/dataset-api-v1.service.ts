@@ -4,6 +4,8 @@ import { catchError, map } from 'rxjs/operators';
 
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
 import { Category } from '../../../model/dataset-api/category';
+import { Offering } from '../../../model/dataset-api/offering';
+import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
@@ -44,6 +46,22 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   public getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
     return this.api.getCategory(id, url, filter);
+  }
+
+  public getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+    return this.api.getOfferings(url, filter);
+  }
+
+  public getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+    return this.api.getOffering(id, url, filter);
+  }
+
+  public getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+    return this.api.getPhenomena(url, filter);
+  }
+
+  public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+    return this.api.getPhenomenon(id, url, filter);
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {

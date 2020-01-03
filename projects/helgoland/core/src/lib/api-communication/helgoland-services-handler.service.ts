@@ -3,6 +3,8 @@ import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Category } from '../model/dataset-api/category';
+import { Offering } from '../model/dataset-api/offering';
+import { Phenomenon } from '../model/dataset-api/phenomenon';
 import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
@@ -31,6 +33,22 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
 
   public getCategory(id: string, url: string, filter: ParameterFilter = {}): Observable<Category> {
     return this.getHandler(url).pipe(flatMap(h => h.getCategory(id, url, filter)));
+  }
+
+  public getOfferings(url: string, filter: ParameterFilter = {}): Observable<Offering[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getOfferings(url, filter)));
+  }
+
+  public getOffering(id: string, url: string, filter: ParameterFilter = {}): Observable<Offering> {
+    return this.getHandler(url).pipe(flatMap(h => h.getOffering(id, url, filter)));
+  }
+
+  public getPhenomena(url: string, filter: ParameterFilter = {}): Observable<Phenomenon[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getPhenomena(url, filter)));
+  }
+
+  public getPhenomenon(id: string, url: string, filter: ParameterFilter = {}): Observable<Phenomenon> {
+    return this.getHandler(url).pipe(flatMap(h => h.getPhenomenon(id, url, filter)));
   }
 
   public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {
