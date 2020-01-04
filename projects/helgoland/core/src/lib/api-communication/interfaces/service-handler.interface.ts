@@ -1,3 +1,4 @@
+import { Feature } from './../../model/dataset-api/feature';
 import { Observable } from 'rxjs';
 
 import { Category } from '../../model/dataset-api/category';
@@ -23,6 +24,9 @@ export interface IHelgolandServiceConnector {
 
     getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]>;
     getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure>;
+
+    getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]>;
+    getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature>;
 
     getServices(apiUrl: string, filter: ParameterFilter): Observable<Service[]>;
 }

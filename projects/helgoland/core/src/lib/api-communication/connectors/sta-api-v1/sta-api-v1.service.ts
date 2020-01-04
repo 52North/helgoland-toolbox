@@ -133,6 +133,31 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.sta.getSensor(url, id).pipe(map(sensor => this.createProcedure(sensor)));
   }
 
+  public getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+    return this.sta.aggregatePaging(this.sta.getLocations(url, this.createFeaturesFilter(filter)))
+      .pipe(map(locs => locs.value.map(l => this.createFeature(l))));
+  }
+
+  private createFeaturesFilter(params: ParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+    if (params) {
+      const filterList = [];
+      if (params.category) {
+        filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.category}`);
+      }
+      if (params.phenomenon) {
+        filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
+      }
+      if (params.procedure) {
+        filterList.push(`Things/Datastreams/Sensor/id eq ${params.procedure}`);
+      }
+      return this.createFilter(filterList);
+    }
+  }
+
+  public getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+    return this.sta.getLocation(url, id).pipe(map(loc => this.createFeature(loc)));
+  }
+
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));

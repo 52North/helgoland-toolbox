@@ -3,13 +3,14 @@ import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Category } from '../model/dataset-api/category';
+import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
+import { Procedure } from '../model/dataset-api/procedure';
 import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
-import { Procedure } from '../model/dataset-api/procedure';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -58,6 +59,14 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
 
   public getProcedure(id: string, url: string, filter: ParameterFilter = {}): Observable<Procedure> {
     return this.getHandler(url).pipe(flatMap(h => h.getProcedure(id, url, filter)));
+  }
+
+  public getFeatures(url: string, filter: ParameterFilter = {}): Observable<Feature[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getFeatures(url, filter)));
+  }
+
+  public getFeature(id: string, url: string, filter: ParameterFilter = {}): Observable<Feature> {
+    return this.getHandler(url).pipe(flatMap(h => h.getFeature(id, url, filter)));
   }
 
   public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {

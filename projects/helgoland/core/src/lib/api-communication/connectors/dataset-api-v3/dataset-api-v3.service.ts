@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
 import { Category } from '../../../model/dataset-api/category';
+import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
@@ -58,7 +59,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
-    return this.api.getOfferings(url, this.createFilter(filter)).pipe(map(res => res.map(c => this.createOffering(c))));
+    return this.api.getOfferings(url, this.createFilter(filter)).pipe(map(res => res.map(o => this.createOffering(o))));
   }
 
   getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
@@ -66,7 +67,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
-    return this.api.getPhenomena(url, this.createFilter(filter)).pipe(map(res => res.map(c => this.createPhenomenon(c))));
+    return this.api.getPhenomena(url, this.createFilter(filter)).pipe(map(res => res.map(p => this.createPhenomenon(p))));
   }
 
   getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
@@ -74,11 +75,19 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
-    return this.api.getProcedures(url, this.createFilter(filter)).pipe(map(res => res.map(c => this.createProcedure(c))));
+    return this.api.getProcedures(url, this.createFilter(filter)).pipe(map(res => res.map(p => this.createProcedure(p))));
   }
 
   getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
     return this.api.getProcedure(id, url, this.createFilter(filter)).pipe(map(res => this.createProcedure(res)));
+  }
+
+  getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+    return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createFeature(f))));
+  }
+
+  getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+    return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createFeature(res)));
   }
 
   getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
@@ -133,6 +142,13 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return {
       id: procedure.id,
       label: procedure.label
+    };
+  }
+
+  private createFeature(feature: ApiV3Feature): Feature {
+    return {
+      id: feature.id,
+      label: feature.properties.label
     };
   }
 

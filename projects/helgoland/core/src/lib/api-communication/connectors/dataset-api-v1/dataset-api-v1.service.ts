@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
 import { Category } from '../../../model/dataset-api/category';
+import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
@@ -71,6 +72,14 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   public getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
     return this.api.getProcedure(id, url, filter);
+  }
+
+  public getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+    return this.api.getFeatures(url, filter);
+  }
+
+  public getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+    return this.api.getFeature(id, url, filter);
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
