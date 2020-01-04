@@ -9,6 +9,7 @@ import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
+import { Procedure } from '../model/dataset-api/procedure';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -49,6 +50,14 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
 
   public getPhenomenon(id: string, url: string, filter: ParameterFilter = {}): Observable<Phenomenon> {
     return this.getHandler(url).pipe(flatMap(h => h.getPhenomenon(id, url, filter)));
+  }
+
+  public getProcedures(url: string, filter: ParameterFilter = {}): Observable<Procedure[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getProcedures(url, filter)));
+  }
+
+  public getProcedure(id: string, url: string, filter: ParameterFilter = {}): Observable<Procedure> {
+    return this.getHandler(url).pipe(flatMap(h => h.getProcedure(id, url, filter)));
   }
 
   public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {

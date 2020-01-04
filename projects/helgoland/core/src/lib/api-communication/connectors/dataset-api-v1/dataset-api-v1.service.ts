@@ -6,6 +6,7 @@ import { DatasetApiInterface } from '../../../dataset-api/api-interface';
 import { Category } from '../../../model/dataset-api/category';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
+import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
@@ -62,6 +63,14 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
     return this.api.getPhenomenon(id, url, filter);
+  }
+
+  public getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+    return this.api.getProcedures(url, filter);
+  }
+
+  public getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+    return this.api.getProcedure(id, url, filter);
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {

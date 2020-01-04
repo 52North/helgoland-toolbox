@@ -6,6 +6,7 @@ import { HttpService } from '../../../dataset-api/http.service';
 import { Category } from '../../../model/dataset-api/category';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
+import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
@@ -16,6 +17,7 @@ import {
   ApiV3InterfaceService,
   ApiV3Offering,
   ApiV3Phenomenon,
+  ApiV3Procedure,
 } from './api-v3-interface.service';
 
 @Injectable({
@@ -71,6 +73,14 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.api.getPhenomenon(id, url, this.createFilter(filter)).pipe(map(res => this.createPhenomenon(res)));
   }
 
+  getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+    return this.api.getProcedures(url, this.createFilter(filter)).pipe(map(res => res.map(c => this.createProcedure(c))));
+  }
+
+  getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+    return this.api.getProcedure(id, url, this.createFilter(filter)).pipe(map(res => this.createProcedure(res)));
+  }
+
   getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
   }
@@ -112,10 +122,17 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     };
   }
 
-  private createPhenomenon(phenomenon: ApiV3Phenomenon): any {
+  private createPhenomenon(phenomenon: ApiV3Phenomenon): Phenomenon {
     return {
       id: phenomenon.id,
       label: phenomenon.label
+    };
+  }
+
+  private createProcedure(procedure: ApiV3Procedure): Procedure {
+    return {
+      id: procedure.id,
+      label: procedure.label
     };
   }
 

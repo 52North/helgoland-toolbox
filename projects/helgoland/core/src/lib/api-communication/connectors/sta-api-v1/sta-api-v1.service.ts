@@ -22,7 +22,7 @@ import {
   ObservedPropertyExpandParams,
   ObservedPropertySelectParams,
 } from '../../../sta/model/observed-properties';
-import { Sensor } from '../../../sta/model/sensors';
+import { Sensor, SensorExpandParams, SensorSelectParams } from '../../../sta/model/sensors';
 import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/things';
 import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
@@ -105,6 +105,32 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
 
   public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
     return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createPhenomenon(prop)));
+  }
+
+  public getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+    return this.sta.aggregatePaging(this.sta.getSensors(url, this.createProceduresFilter(filter)))
+      .pipe(map(sensors => sensors.value.map(s => this.createProcedure(s))));
+  }
+
+  private createProceduresFilter(params: ParameterFilter): StaFilter<SensorSelectParams, SensorExpandParams> {
+    if (params) {
+      const filterList = [];
+      if (params.category) {
+        filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+      }
+      // if (params.feature) {
+      //     filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+      // }
+      if (params.phenomenon) {
+        filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+      }
+      return this.createFilter(filterList);
+    }
+    return {};
+  }
+
+  public getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+    return this.sta.getSensor(url, id).pipe(map(sensor => this.createProcedure(sensor)));
   }
 
   public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {

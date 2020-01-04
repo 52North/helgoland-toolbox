@@ -42,6 +42,12 @@ export interface ApiV3Phenomenon extends ApiV3Parameter {
   label: string;
 }
 
+export interface ApiV3Procedure extends ApiV3Parameter {
+  href: string;
+  domainId: string;
+  label: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -96,6 +102,16 @@ export class ApiV3InterfaceService extends ApiInterface {
   public getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature> {
     const url = this.createRequestUrl(apiUrl, 'features', id);
     return this.requestApi<ApiV3Feature>(url, params, options);
+  }
+
+  public getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure[]> {
+    const url = this.createRequestUrl(apiUrl, 'procedures');
+    return this.requestApi<ApiV3Procedure[]>(url, params, options);
+  }
+
+  public getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure> {
+    const url = this.createRequestUrl(apiUrl, 'procedures', id);
+    return this.requestApi<ApiV3Procedure>(url, params, options);
   }
 
   protected requestApi<T>(
