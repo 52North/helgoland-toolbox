@@ -4,7 +4,7 @@ import moment from 'moment';
 import { TimeValueTuple } from '../model/dataset-api/data';
 import { SumValuesService } from './sum-values.service';
 
-fdescribe('SumValuesService', () => {
+describe('SumValuesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SumValuesService]
