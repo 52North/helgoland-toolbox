@@ -684,17 +684,14 @@ export class D3TimeseriesGraphComponent
 
     private isNotDrawable() {
         try {
-            // tslint:disable-next-line: no-unused-expression
-            this.rawSvg.node().width.baseVal.value;
-            // tslint:disable-next-line: no-unused-expression
-            this.rawSvg.node().height.baseVal.value;
+            return this.rawSvg.node().width.baseVal.value === undefined
+                || this.rawSvg.node().height.baseVal.value === undefined
+                || !this.graph
+                || !this.rawSvg
+                || !this.datasetIds;
         } catch (error) {
             return true;
         }
-        return !this.graph
-            || !this.rawSvg
-            || !this.rawSvg.node()
-            || !this.datasetIds;
     }
 
     protected prepareYAxes() {
