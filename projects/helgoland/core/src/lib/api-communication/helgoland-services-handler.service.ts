@@ -94,7 +94,7 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
           observer.next(handler);
           observer.complete();
         } else {
-          console.log(`No ConnectorHandler found for ${url}`);
+          observer.error(`No ConnectorHandler found for ${url}`);
           observer.complete();
         }
       });
