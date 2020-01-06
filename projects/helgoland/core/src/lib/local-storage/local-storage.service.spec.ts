@@ -28,9 +28,9 @@ describe('LocalStorage', () => {
     }));
 
     it('should be null on wrong parameter name', inject([LocalStorage], (service: LocalStorage) => {
-        expect(service.load('missingName')).toBeNull();
-        expect(service.loadArray('missingArray')).toBeNull();
-        expect(service.loadTextual('missingArray')).toBeNull();
+        expect(service.load('missingName')).toBeUndefined();
+        expect(service.loadArray('missingArray')).toBeUndefined();
+        expect(service.loadTextual('missingArray')).toBeUndefined();
     }));
 
     it('should load textual content', inject([LocalStorage], (service: LocalStorage) => {
