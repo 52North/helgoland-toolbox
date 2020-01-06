@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DatasetApiInterface, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
+import { HelgolandServicesHandlerService, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -37,7 +37,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     constructor(
         protected translate: TranslateService,
-        protected apiInterface: DatasetApiInterface
+        protected servicesHandler: HelgolandServicesHandlerService
     ) {
         super(translate);
     }
@@ -61,23 +61,23 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
         this.onLoading.emit(true);
         switch (this.endpoint) {
             case 'offering':
-                this.apiInterface.getOfferings(this.serviceUrl, this.filter)
+                this.servicesHandler.getOfferings(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'phenomenon':
-                this.apiInterface.getPhenomena(this.serviceUrl, this.filter)
+                this.servicesHandler.getPhenomena(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'procedure':
-                this.apiInterface.getProcedures(this.serviceUrl, this.filter)
+                this.servicesHandler.getProcedures(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'category':
-                this.apiInterface.getCategories(this.serviceUrl, this.filter)
+                this.servicesHandler.getCategories(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'feature':
-                this.apiInterface.getFeatures(this.serviceUrl, this.filter)
+                this.servicesHandler.getFeatures(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             default:

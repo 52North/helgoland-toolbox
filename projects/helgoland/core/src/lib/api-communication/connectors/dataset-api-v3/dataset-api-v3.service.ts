@@ -100,7 +100,11 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
 
   private createFilter(filter: ParameterFilter): ParameterFilter {
     const paramFilter: ParameterFilter = {};
+    if (filter.category) { paramFilter.category = filter.category; }
+    if (filter.offering) { paramFilter.offering = filter.offering; }
     if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
+    if (filter.procedure) { paramFilter.procedure = filter.procedure; }
+    if (filter.feature) { paramFilter.feature = filter.feature; }
     return paramFilter;
   }
 

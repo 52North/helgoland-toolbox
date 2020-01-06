@@ -65,31 +65,31 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
             const filter = entry.filter || {};
             switch (this.endpoint) {
                 case MultiServiceFilterEndpoint.offering:
-                    this.apiInterface.getOfferings(entry.url, filter).subscribe(
+                    this.servicesHandler.getOfferings(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.phenomenon:
-                    this.apiInterface.getPhenomena(entry.url, filter).subscribe(
+                    this.servicesHandler.getPhenomena(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.procedure:
-                    this.apiInterface.getProcedures(entry.url, filter).subscribe(
+                    this.servicesHandler.getProcedures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.feature:
-                    this.apiInterface.getFeatures(entry.url, filter).subscribe(
+                    this.servicesHandler.getFeatures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.category:
-                    this.apiInterface.getCategories(entry.url, filter).subscribe(
+                    this.servicesHandler.getCategories(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );

@@ -1,6 +1,10 @@
 export interface ParameterFilter {
     service?: string;
+    category?: string;
+    offering?: string;
     phenomenon?: string;
+    procedure?: string;
+    feature?: string;
     valueTypes?: string;
     platformTypes?: string;
     expanded?: boolean;
