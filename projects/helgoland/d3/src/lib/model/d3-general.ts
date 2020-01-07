@@ -1,4 +1,4 @@
-import { Data, DatasetOptions, IDataset, MinMaxRange, Timespan, TimeValueTuple } from '@helgoland/core';
+import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from '@helgoland/core';
 import { ScaleLinear } from 'd3';
 import { Duration, unitOfTime } from 'moment';
 
@@ -94,7 +94,7 @@ export interface InternalDataEntry {
     focusLabel?: any;
 }
 
-export interface DataConst extends IDataset {
+export interface DataConst extends HelgolandTimeseries {
     data?: Data<TimeValueTuple>;
 }
 

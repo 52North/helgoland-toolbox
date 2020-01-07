@@ -7,10 +7,10 @@ import { TranslateTestingModule } from './../../../../../testing/translate.testi
 import { HelgolandCoreModule } from './../core.module';
 import { HttpService } from './../dataset-api/http.service';
 import { SplittedDataDatasetApiInterface } from './../dataset-api/splitted-data-api-interface.service';
-import { DatasetApiV1Service } from './connectors/dataset-api-v1/dataset-api-v1.service';
-import { DatasetApiV3Service } from './connectors/dataset-api-v3/dataset-api-v3.service';
-import { StaApiV1Service } from './connectors/sta-api-v1/sta-api-v1.service';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER, HelgolandServicesHandlerService } from './helgoland-services-handler.service';
+import { DatasetApiV1ConnectorProvider } from './connectors/dataset-api-v1/dataset-api-v1.service';
+import { DatasetApiV3ConnectorProvider } from './connectors/dataset-api-v3/dataset-api-v3.service';
+import { DatasetStaConnectorProvider } from './connectors/sta-api-v1/sta-api-v1.service';
+import { HelgolandServicesHandlerService } from './helgoland-services-handler.service';
 
 fdescribe('HelgolandServicesHandlerService', () => {
 
@@ -23,21 +23,9 @@ fdescribe('HelgolandServicesHandlerService', () => {
       SettingsServiceTestingProvider,
       BasicAuthTestingProviders,
       HttpService,
-      {
-        provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-        useClass: DatasetApiV1Service,
-        multi: true
-      },
-      {
-        provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-        useClass: DatasetApiV3Service,
-        multi: true
-      },
-      {
-        provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-        useClass: StaApiV1Service,
-        multi: true
-      },
+      DatasetApiV1ConnectorProvider,
+      DatasetApiV3ConnectorProvider,
+      DatasetStaConnectorProvider,
       {
         provide: DatasetApiInterface,
         useClass: SplittedDataDatasetApiInterface
@@ -52,8 +40,27 @@ fdescribe('HelgolandServicesHandlerService', () => {
 
   it('should be created', () => {
     const service: HelgolandServicesHandlerService = TestBed.get(HelgolandServicesHandlerService);
-    const url = 'https://www.fluggs.de/sos2/api/v1/';
-    service.getStations(url).subscribe(res => console.log(res.map(e => e.properties.label)));
+    const urls = [
+    ];
+    urls.forEach(url => {
+      // service.getStations(url).subscribe(res => console.log(res.map(e => `Id: ${e.id}, Label: ${e.label}`)));
+      // service.getStation('42', url).subscribe(res => console.log(res));
+      service.getServices(url).subscribe(
+        res => res.forEach(e => console.log(e)),
+        error => console.error(`${error}`)
+      );
+      // service.getCategories(url).subscribe(res => console.log(res));
+      // service.getCategory('1', url).subscribe(res => console.log(res));
+      // service.getOfferings(url).subscribe(res => console.log(res));
+      // service.getOffering('1', url).subscribe(res => console.log(res));
+      // service.getPhenomena(url, { category: '1', offering: '1', phenomenon: '1', procedure: '1', feature: '4' }).subscribe(res => console.log(res));
+      // service.getPhenomenon('3', url).subscribe(res => console.log(res));
+      // service.getProcedures(url).subscribe(res => console.log(res));
+      // service.getProcedure('1', url).subscribe(res => console.log(res));
+      // service.getFeatures(url).subscribe(res => console.log(res));
+      // service.getFeature('4', url).subscribe(res => console.log(res));
+      service.getDatasets(url).subscribe(res => console.log(res));
+    });
     expect(service).toBeTruthy();
   });
 });

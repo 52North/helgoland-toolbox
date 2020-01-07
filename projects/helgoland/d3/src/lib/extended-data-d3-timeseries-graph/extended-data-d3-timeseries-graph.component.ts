@@ -15,6 +15,7 @@ import {
   InternalIdHandler,
   SumValuesService,
   Time,
+  HelgolandServicesHandlerService,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -90,7 +91,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected rangeCalc: RangeCalculationsService,
     protected graphHelper: D3GraphHelperService,
     protected graphService: D3Graphs,
-    protected graphId: D3GraphId
+    protected graphId: D3GraphId,
+    protected servicesHandler: HelgolandServicesHandlerService
   ) {
     super(
       iterableDiffers,
@@ -104,7 +106,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       rangeCalc,
       graphHelper,
       graphService,
-      graphId
+      graphId,
+      servicesHandler
     );
   }
 
@@ -174,9 +177,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             };
             if (dataset) {
               dataEntry.axisOptions.parameters = {
-                feature: dataset.parameters.feature,
-                phenomenon: dataset.parameters.phenomenon,
-                offering: dataset.parameters.offering
+                feature: dataset.feature,
+                phenomenon: dataset.phenomenon,
+                offering: dataset.offering
               };
             }
             this.preparedData.push(dataEntry);

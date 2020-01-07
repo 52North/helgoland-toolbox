@@ -2,6 +2,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
+import { InternalDatasetId } from '../dataset-api/internal-id-handler.service';
 import { Category } from '../model/dataset-api/category';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
@@ -10,7 +11,9 @@ import { Procedure } from '../model/dataset-api/procedure';
 import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
+import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
+import { DatasetFilter, HelgolandDataset } from './model/internal/dataset';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -22,7 +25,8 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
   private serviceMapping: Map<string, IHelgolandServiceConnectorHandler> = new Map();
 
   constructor(
-    @Optional() @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER) protected handler: IHelgolandServiceConnectorHandler[] | null
+    @Optional() @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER) protected handler: IHelgolandServiceConnectorHandler[] | null = [],
+    private internalIdHandler: InternalIdHandler
   ) { }
 
   public getServices(url: string, filter: ParameterFilter = {}): Observable<Service[]> {
@@ -77,6 +81,17 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return this.getHandler(url).pipe(flatMap(h => h.getStation(id, url, filter)));
   }
 
+  public getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getDatasets(url, filter)));
+  }
+
+  public getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+    if (typeof internalId === 'string') {
+      internalId = this.internalIdHandler.resolveInternalId(internalId);
+    }
+    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId)));
+  }
+
   private getHandler(url: string): Observable<IHelgolandServiceConnectorHandler> {
     return new Observable<IHelgolandServiceConnectorHandler>((observer: Observer<IHelgolandServiceConnectorHandler>) => {
       if (this.serviceMapping.has(url)) {
@@ -84,8 +99,13 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
         observer.complete();
         return;
       }
-      const temp = this.handler.map(h => h.canHandle(url));
-      combineLatest(temp).subscribe(res => {
+      if (!this.handler) {
+        observer.error(`No services handler are configured...`);
+        observer.complete();
+        return;
+      }
+      const canHandleObs = this.handler.map(h => h.canHandle(url));
+      combineLatest(canHandleObs).subscribe(res => {
         const idx = res.findIndex(e => e);
         if (idx >= 0) {
           const handler = this.handler[idx];

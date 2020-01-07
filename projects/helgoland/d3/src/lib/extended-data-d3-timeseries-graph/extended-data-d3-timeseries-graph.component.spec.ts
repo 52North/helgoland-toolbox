@@ -1,7 +1,14 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
+import {
+    DatasetApiV1ConnectorProvider,
+    DatasetApiV3ConnectorProvider,
+    DatasetOptions,
+    DatasetStaConnectorProvider,
+    HelgolandCoreModule,
+    Timespan,
+} from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -21,7 +28,10 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
                 HelgolandD3Module
             ],
             providers: [
-                DatasetApiInterfaceTesting
+                DatasetApiInterfaceTesting,
+                DatasetApiV1ConnectorProvider,
+                DatasetApiV3ConnectorProvider,
+                DatasetStaConnectorProvider
             ],
             declarations: []
         }).compileComponents();

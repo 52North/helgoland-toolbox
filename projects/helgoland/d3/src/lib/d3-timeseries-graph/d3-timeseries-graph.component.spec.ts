@@ -1,7 +1,15 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { DatasetOptions, DefinedTimespanService, HelgolandCoreModule, Timespan, DefinedTimespan } from '@helgoland/core';
+import {
+  DatasetApiV1ConnectorProvider,
+  DatasetApiV3ConnectorProvider,
+  DatasetOptions,
+  DatasetStaConnectorProvider,
+  DefinedTimespan,
+  DefinedTimespanService,
+  HelgolandCoreModule,
+} from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -24,10 +32,13 @@ describe('D3TimeseriesGraphComponent - raw', () => {
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandD3Module,
-        TranslateTestingModule
+        TranslateTestingModule,
       ],
       providers: [
-        DatasetApiInterfaceTesting
+        DatasetApiInterfaceTesting,
+        DatasetApiV1ConnectorProvider,
+        DatasetApiV3ConnectorProvider,
+        DatasetStaConnectorProvider
       ],
     }).compileComponents();
   }));
@@ -80,7 +91,10 @@ describe('D3TimeseriesGraphComponent - function', () => {
       ],
       providers: [
         DatasetApiInterfaceTesting,
-        DefinedTimespanService
+        DefinedTimespanService,
+        DatasetApiV1ConnectorProvider,
+        DatasetApiV3ConnectorProvider,
+        DatasetStaConnectorProvider
       ],
       declarations: [
         D3TimeseriesGraphComponent,

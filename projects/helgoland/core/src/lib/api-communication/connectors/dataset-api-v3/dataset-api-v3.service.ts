@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
+import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
@@ -12,6 +13,7 @@ import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import {
   ApiV3Category,
   ApiV3Feature,
@@ -20,6 +22,7 @@ import {
   ApiV3Phenomenon,
   ApiV3Procedure,
 } from './api-v3-interface.service';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +101,14 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
   }
 
+  getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+    throw new Error("Method not implemented.");
+  }
+
   private createFilter(filter: ParameterFilter): ParameterFilter {
     const paramFilter: ParameterFilter = {};
     if (filter.category) { paramFilter.category = filter.category; }
@@ -157,3 +168,9 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
 }
+
+export const DatasetApiV3ConnectorProvider = {
+  provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+  useClass: DatasetApiV3Service,
+  multi: true
+};

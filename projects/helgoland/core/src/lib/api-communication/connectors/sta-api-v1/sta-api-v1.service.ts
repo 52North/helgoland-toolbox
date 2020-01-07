@@ -3,7 +3,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
-import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
+import { InternalDatasetId, InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { Data } from '../../../model/dataset-api/data';
 import { FirstLastValue, ParameterConstellation, Timeseries } from '../../../model/dataset-api/dataset';
@@ -26,7 +26,9 @@ import { Sensor, SensorExpandParams, SensorSelectParams } from '../../../sta/mod
 import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/things';
 import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
 const DEFAULT_SERVICE_ID = '1';
@@ -192,6 +194,14 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
+  public getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  public getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+    throw new Error("Method not implemented.");
+  }
+
   private createStation(loc: Location): Station {
     return {
       id: loc['@iot.id'],
@@ -336,3 +346,9 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
   }
 
 }
+
+export const DatasetStaConnectorProvider = {
+  provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+  useClass: StaApiV1Service,
+  multi: true
+};

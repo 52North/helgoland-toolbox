@@ -16,13 +16,14 @@ import {
     DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
-    IDataset,
+    HelgolandDataset,
+    HelgolandServicesHandlerService,
+    HelgolandTimeseries,
     InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
     SumValuesService,
     Time,
-    Timeseries,
     TimeseriesData,
     Timespan,
     TimeValueTuple,
@@ -159,7 +160,8 @@ export class D3TimeseriesGraphComponent
         protected rangeCalc: RangeCalculationsService,
         protected graphHelper: D3GraphHelperService,
         protected graphService: D3Graphs,
-        protected graphId: D3GraphId
+        protected graphId: D3GraphId,
+        protected servicesHandler: HelgolandServicesHandlerService
     ) {
         super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
     }
@@ -217,13 +219,9 @@ export class D3TimeseriesGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.api.getSingleTimeseries(id, url).subscribe(
-            (timeseries) => this.loadAddedDataset(timeseries),
-            (error) => {
-                this.api.getDataset(id, url).subscribe(
-                    (dataset) => this.loadAddedDataset(dataset),
-                );
-            }
+        this.servicesHandler.getDataset({ id, url }).subscribe(
+            res => this.loadAddedDataset(res),
+            error => console.error(error)
         );
     }
 
@@ -284,18 +282,22 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
-    private loadAddedDataset(dataset: IDataset): void {
-        this.datasetMap.set(dataset.internalId, dataset);
-        this.loadDatasetData(dataset, false);
+    private loadAddedDataset(dataset: HelgolandDataset): void {
+        if (dataset instanceof HelgolandTimeseries) {
+            this.datasetMap.set(dataset.internalId, dataset);
+            this.loadDatasetData(dataset, false);
+        } else {
+            console.error(`Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`);
+        }
     }
 
     // load data of dataset
-    private loadDatasetData(dataset: IDataset, force: boolean): void {
+    private loadDatasetData(dataset: HelgolandTimeseries, force: boolean): void {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
         if (this.loadingCounter === 0) { this.onContentLoading.emit(true); }
         this.loadingCounter++;
 
-        if (dataset instanceof Timeseries && this.timespan) {
+        if (this.timespan) {
             if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
                 && dataset.firstValue
                 && dataset.lastValue
@@ -330,7 +332,7 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private onCompleteLoadingData(dataset: IDataset): void {
+    private onCompleteLoadingData(dataset: HelgolandTimeseries): void {
         this.runningDataRequests.delete(dataset.internalId);
         this.loadingData.delete(dataset.internalId);
         this.dataLoaded.emit(this.loadingData);
@@ -342,7 +344,7 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareData(dataset: IDataset, data: Data<TimeValueTuple>): void {
+    private prepareData(dataset: HelgolandTimeseries, data: Data<TimeValueTuple>): void {
 
         // add surrounding entries to the set
         if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
@@ -386,9 +388,9 @@ export class D3TimeseriesGraphComponent
                 autoRangeSelection: options.autoRangeSelection,
                 separateYAxis: options.separateYAxis,
                 parameters: {
-                    feature: dataset.parameters.feature,
-                    phenomenon: dataset.parameters.phenomenon,
-                    offering: dataset.parameters.offering
+                    feature: dataset.feature,
+                    phenomenon: dataset.phenomenon,
+                    offering: dataset.offering
                 }
             },
             referenceValueData: [],
