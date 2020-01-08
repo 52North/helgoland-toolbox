@@ -1,18 +1,17 @@
 import { ReferenceValues } from '../../../model/dataset-api/data';
-
-export type TimeValueArray = [number, number];
+import { TimeValueTuple } from './../../../model/dataset-api/data';
 
 export interface HelgolandData {
 }
 
 export class HelgolandTimeseriesData implements HelgolandData {
 
-    referenceValues: ReferenceValues<TimeValueArray>;
-    valueBeforeTimespan?: TimeValueArray;
-    valueAfterTimespan?: TimeValueArray;
+    referenceValues: ReferenceValues<TimeValueTuple>;
+    valueBeforeTimespan: TimeValueTuple;
+    valueAfterTimespan: TimeValueTuple;
 
     constructor(
-        public values: TimeValueArray[]
+        public values: TimeValueTuple[],
     ) { }
 }
 

@@ -16,9 +16,11 @@ import {
     DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
+    HelgolandData,
     HelgolandDataset,
     HelgolandServicesHandlerService,
     HelgolandTimeseries,
+    HelgolandTimeseriesData,
     InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
@@ -315,18 +317,20 @@ export class D3TimeseriesGraphComponent
                     this.runningDataRequests.get(dataset.internalId).unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
-                const request = this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
-                    {
-                        format: 'flot',
-                        expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
-                        generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                    },
-                    { forceUpdate: force }
-                ).subscribe(
-                    (result) => this.prepareData(dataset, result),
-                    (error) => this.onError(error),
-                    () => this.onCompleteLoadingData(dataset)
-                );
+                const request = this.servicesHandler.getDatasetData(dataset, buffer)
+                    // const request = this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
+                    //     {
+                    //         format: 'flot',
+                    //         expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
+                    //         generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                    //     },
+                    //     { forceUpdate: force }
+                    // )
+                    .subscribe(
+                        (result) => this.prepareData(dataset, result),
+                        (error) => this.onError(error),
+                        () => this.onCompleteLoadingData(dataset)
+                    );
                 this.runningDataRequests.set(dataset.internalId, request);
             }
         }
@@ -344,77 +348,79 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareData(dataset: HelgolandTimeseries, data: Data<TimeValueTuple>): void {
+    private prepareData(dataset: HelgolandTimeseries, data: HelgolandData): void {
+        if (data instanceof HelgolandTimeseriesData) {
+            // add surrounding entries to the set
+            if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
+            if (data.valueAfterTimespan) { data.values.push(data.valueAfterTimespan); }
 
-        // add surrounding entries to the set
-        if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
-        if (data.valueAfterTimespan) { data.values.push(data.valueAfterTimespan); }
+            this.datasetMap.get(dataset.internalId).data = data;
+            const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+            const options = this.datasetOptions.get(dataset.internalId);
 
-        this.datasetMap.get(dataset.internalId).data = data;
-        const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-        const options = this.datasetOptions.get(dataset.internalId);
+            let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; };
 
-        let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; };
-
-        // sum values for bar chart visualization
-        if (options.type === 'bar') {
-            barConfig = {
-                startOf: options.barStartOf as unitOfTime.StartOf,
-                period: moment.duration(options.barPeriod)
-            };
-            if (barConfig.period.asMilliseconds() === 0) {
-                throw new Error(`${dataset.internalId} needs a valid barPeriod`);
-            }
-            data.values = this.sumValues.sum(barConfig.startOf, barConfig.period, data.values);
-        }
-
-        // generate random color, if color is not defined
-        if (options.color === undefined) {
-            options.color = this.colorService.getColor();
-        }
-
-        // end of check for datasets
-        const dataEntry: InternalDataEntry = {
-            internalId: dataset.internalId,
-            id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
-            options,
-            selected: this.selectedDatasetIds.indexOf(dataset.internalId) >= 0,
-            data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
-            axisOptions: {
-                uom: dataset.uom,
-                label: dataset.label,
-                zeroBased: options.zeroBasedYAxis,
-                yAxisRange: options.yAxisRange,
-                autoRangeSelection: options.autoRangeSelection,
-                separateYAxis: options.separateYAxis,
-                parameters: {
-                    feature: dataset.feature,
-                    phenomenon: dataset.phenomenon,
-                    offering: dataset.offering
+            // sum values for bar chart visualization
+            if (options.type === 'bar') {
+                barConfig = {
+                    startOf: options.barStartOf as unitOfTime.StartOf,
+                    period: moment.duration(options.barPeriod)
+                };
+                if (barConfig.period.asMilliseconds() === 0) {
+                    throw new Error(`${dataset.internalId} needs a valid barPeriod`);
                 }
-            },
-            referenceValueData: [],
-            visible: options.visible,
-            bar: barConfig
-        };
-
-        let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
-        if (options.separateYAxis) {
-            if (separationIdx < 0) {
-                this.listOfSeparation.push(dataset.internalId);
+                data.values = this.sumValues.sum(barConfig.startOf, barConfig.period, data.values);
             }
-        } else {
-            this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
+
+            // generate random color, if color is not defined
+            if (options.color === undefined) {
+                options.color = this.colorService.getColor();
+            }
+
+            // end of check for datasets
+            const dataEntry: InternalDataEntry = {
+                internalId: dataset.internalId,
+                id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
+                options,
+                selected: this.selectedDatasetIds.indexOf(dataset.internalId) >= 0,
+                data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
+                axisOptions: {
+                    uom: dataset.uom,
+                    label: dataset.label,
+                    zeroBased: options.zeroBasedYAxis,
+                    yAxisRange: options.yAxisRange,
+                    autoRangeSelection: options.autoRangeSelection,
+                    separateYAxis: options.separateYAxis,
+                    parameters: {
+                        feature: dataset.feature,
+                        phenomenon: dataset.phenomenon,
+                        offering: dataset.offering
+                    }
+                },
+                referenceValueData: [],
+                visible: options.visible,
+                bar: barConfig
+            };
+
+            let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+            if (options.separateYAxis) {
+                if (separationIdx < 0) {
+                    this.listOfSeparation.push(dataset.internalId);
+                }
+            } else {
+                this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
+            }
+
+            if (datasetIdx >= 0) {
+                this.preparedData[datasetIdx] = dataEntry;
+            } else {
+                this.preparedData.push(dataEntry);
+            }
+            this.addReferenceValueData(dataEntry, options, data, dataset.uom);
+            this.processData(dataEntry);
+            this.redrawCompleteGraph();
         }
 
-        if (datasetIdx >= 0) {
-            this.preparedData[datasetIdx] = dataEntry;
-        } else {
-            this.preparedData.push(dataEntry);
-        }
-        this.addReferenceValueData(dataEntry, options, data, dataset.uom);
-        this.processData(dataEntry);
-        this.redrawCompleteGraph();
     }
 
     /**

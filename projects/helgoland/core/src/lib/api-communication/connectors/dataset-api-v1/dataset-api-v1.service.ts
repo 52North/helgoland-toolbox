@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
 import { InternalDatasetId, InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
+import { TimeValueTuple } from '../../../model/dataset-api/data';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Parameter } from '../../../model/dataset-api/parameter';
@@ -15,7 +16,7 @@ import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
-import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData, TimeValueArray } from '../../model/internal/data';
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, Timeseries } from './../../../model/dataset-api/dataset';
@@ -110,7 +111,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
-    return this.api.getTsData<TimeValueArray>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
+    return this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
       const data = new HelgolandTimeseriesData(res.values);
       data.referenceValues = res.referenceValues ? res.referenceValues : {};
       if (res.valueBeforeTimespan) { data.valueBeforeTimespan = res.valueBeforeTimespan; }

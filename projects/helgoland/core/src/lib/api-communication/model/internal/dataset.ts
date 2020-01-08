@@ -32,5 +32,9 @@ export class HelgolandTimeseries extends HelgolandDataset {
 }
 
 export interface DatasetFilter {
-
+    phenomenon?: string;
+    category?: string;
+    procedure?: string;
+    feature?: string;
+    expanded?: boolean;
 }
