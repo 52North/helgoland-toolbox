@@ -315,7 +315,7 @@ export class D3TimeseriesGraphComponent
                     this.runningDataRequests.get(dataset.internalId).unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
-                const request = this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+                const request = this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
                     {
                         format: 'flot',
                         expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
