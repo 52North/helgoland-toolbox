@@ -17,8 +17,7 @@ export interface TimeValueEntry extends IDataEntry {
     value: number;
 }
 
-// value can be number or 'NaN'
-export type TimeValueTuple = [number, number | string];
+export type TimeValueTuple = [number, number];
 
 export interface LocatedTimeValueEntry extends TimeValueEntry {
     geometry: GeoJSON.Point;
