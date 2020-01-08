@@ -7,6 +7,7 @@ import {
   InternalIdHandler,
   Time,
   Timeseries,
+  TimeValueTuple,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
@@ -166,7 +167,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   private loadTsData(timeseries: Timeseries) {
     if (this.timespan) {
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.api.getTsData<[number, number]>(timeseries.id, timeseries.url, this.timespan, { format: 'flot' })
+      this.api.getTsData<TimeValueTuple>(timeseries.id, timeseries.url, this.timespan, { format: 'flot' })
         .subscribe((result) => {
           // bring result into Array<DatasetTableData> format and pass to prepareData
           // convention for layout of newdata argument: see 3-line-comment in prepareData function

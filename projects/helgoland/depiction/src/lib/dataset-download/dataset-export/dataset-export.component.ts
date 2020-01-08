@@ -111,7 +111,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     if (dataset instanceof Timeseries) {
       const buffer = new Timespan(this.timespan.from, this.timespan.to);
 
-      this.api.getTsData<[number, number]>(dataset.id, dataset.url, buffer,
+      this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
         {
           format: 'flot',
           expanded: false,
