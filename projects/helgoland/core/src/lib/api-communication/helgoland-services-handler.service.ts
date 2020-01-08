@@ -11,8 +11,10 @@ import { Procedure } from '../model/dataset-api/procedure';
 import { Service } from '../model/dataset-api/service';
 import { Station } from '../model/dataset-api/station';
 import { ParameterFilter } from '../model/internal/http-requests';
+import { Timespan } from '../model/internal/timeInterval';
 import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
+import { HelgolandData, HelgolandDataFilter } from './model/internal/data';
 import { DatasetFilter, HelgolandDataset } from './model/internal/dataset';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
@@ -29,67 +31,76 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     private internalIdHandler: InternalIdHandler
   ) { }
 
-  public getServices(url: string, filter: ParameterFilter = {}): Observable<Service[]> {
+  getServices(url: string, filter: ParameterFilter = {}): Observable<Service[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getServices(url, filter)));
   }
 
-  public getCategories(url: string, filter: ParameterFilter = {}): Observable<Category[]> {
+  getCategories(url: string, filter: ParameterFilter = {}): Observable<Category[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getCategories(url, filter)));
   }
 
-  public getCategory(id: string, url: string, filter: ParameterFilter = {}): Observable<Category> {
+  getCategory(id: string, url: string, filter: ParameterFilter = {}): Observable<Category> {
     return this.getHandler(url).pipe(flatMap(h => h.getCategory(id, url, filter)));
   }
 
-  public getOfferings(url: string, filter: ParameterFilter = {}): Observable<Offering[]> {
+  getOfferings(url: string, filter: ParameterFilter = {}): Observable<Offering[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getOfferings(url, filter)));
   }
 
-  public getOffering(id: string, url: string, filter: ParameterFilter = {}): Observable<Offering> {
+  getOffering(id: string, url: string, filter: ParameterFilter = {}): Observable<Offering> {
     return this.getHandler(url).pipe(flatMap(h => h.getOffering(id, url, filter)));
   }
 
-  public getPhenomena(url: string, filter: ParameterFilter = {}): Observable<Phenomenon[]> {
+  getPhenomena(url: string, filter: ParameterFilter = {}): Observable<Phenomenon[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getPhenomena(url, filter)));
   }
 
-  public getPhenomenon(id: string, url: string, filter: ParameterFilter = {}): Observable<Phenomenon> {
+  getPhenomenon(id: string, url: string, filter: ParameterFilter = {}): Observable<Phenomenon> {
     return this.getHandler(url).pipe(flatMap(h => h.getPhenomenon(id, url, filter)));
   }
 
-  public getProcedures(url: string, filter: ParameterFilter = {}): Observable<Procedure[]> {
+  getProcedures(url: string, filter: ParameterFilter = {}): Observable<Procedure[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getProcedures(url, filter)));
   }
 
-  public getProcedure(id: string, url: string, filter: ParameterFilter = {}): Observable<Procedure> {
+  getProcedure(id: string, url: string, filter: ParameterFilter = {}): Observable<Procedure> {
     return this.getHandler(url).pipe(flatMap(h => h.getProcedure(id, url, filter)));
   }
 
-  public getFeatures(url: string, filter: ParameterFilter = {}): Observable<Feature[]> {
+  getFeatures(url: string, filter: ParameterFilter = {}): Observable<Feature[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getFeatures(url, filter)));
   }
 
-  public getFeature(id: string, url: string, filter: ParameterFilter = {}): Observable<Feature> {
+  getFeature(id: string, url: string, filter: ParameterFilter = {}): Observable<Feature> {
     return this.getHandler(url).pipe(flatMap(h => h.getFeature(id, url, filter)));
   }
 
-  public getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {
+  getStations(url: string, filter: ParameterFilter = {}): Observable<Station[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getStations(url, filter)));
   }
 
-  public getStation(id: string, url: string, filter: ParameterFilter = {}): Observable<Station> {
+  getStation(id: string, url: string, filter: ParameterFilter = {}): Observable<Station> {
     return this.getHandler(url).pipe(flatMap(h => h.getStation(id, url, filter)));
   }
 
-  public getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {
+  getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {
     return this.getHandler(url).pipe(flatMap(h => h.getDatasets(url, filter)));
   }
 
-  public getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+  getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+    internalId = this.checkInternalId(internalId);
+    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId)));
+  }
+
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter = {}): Observable<HelgolandData> {
+    return this.getHandler(dataset.url).pipe(flatMap(h => h.getDatasetData(dataset, timespan, filter)));
+  }
+
+  private checkInternalId(internalId: string | InternalDatasetId) {
     if (typeof internalId === 'string') {
       internalId = this.internalIdHandler.resolveInternalId(internalId);
     }
-    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId)));
+    return internalId;
   }
 
   private getHandler(url: string): Observable<IHelgolandServiceConnectorHandler> {

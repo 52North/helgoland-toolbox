@@ -13,7 +13,9 @@ import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
+import { Timespan } from '../../../model/internal/timeInterval';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData, TimeValueArray } from '../../model/internal/data';
 import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, Timeseries } from './../../../model/dataset-api/dataset';
@@ -31,7 +33,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     private internalIdHandler: InternalIdHandler
   ) { }
 
-  public canHandle(url: string): Observable<boolean> {
+  canHandle(url: string): Observable<boolean> {
     return this.http.client().get(url).pipe(
       map(res => {
         if (res instanceof Array) {
@@ -45,69 +47,76 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
-  public getServices(url: string, filter: ParameterFilter): Observable<Service[]> {
+  getServices(url: string, filter: ParameterFilter): Observable<Service[]> {
     return this.api.getServices(url, filter);
   }
 
-  public getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
+  getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
     return this.api.getCategories(url, filter);
   }
 
-  public getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
+  getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
     return this.api.getCategory(id, url, filter);
   }
 
-  public getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+  getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
     return this.api.getOfferings(url, filter);
   }
 
-  public getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+  getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
     return this.api.getOffering(id, url, filter);
   }
 
-  public getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+  getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
     return this.api.getPhenomena(url, filter);
   }
 
-  public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+  getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
     return this.api.getPhenomenon(id, url, filter);
   }
 
-  public getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+  getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
     return this.api.getProcedures(url, filter);
   }
 
-  public getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+  getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
     return this.api.getProcedure(id, url, filter);
   }
 
-  public getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+  getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
     return this.api.getFeatures(url, filter);
   }
 
-  public getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+  getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
     return this.api.getFeature(id, url, filter);
   }
 
-  public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
+  getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.api.getStations(url, filter);
   }
 
-  public getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
+  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.api.getStation(id, url, filter);
   }
 
-  public getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
+  getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     return this.api.getTimeseries(url, filter)
       .pipe(map(res => res.map(e => this.createDataset(e, url))));
   }
 
-  public getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
-    if (typeof internalId === 'string') {
-      internalId = this.internalIdHandler.resolveInternalId(internalId);
-    }
+  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
     return this.api.getSingleTimeseries(internalId.id, internalId.url)
       .pipe(map(res => this.createTimeseries(res, internalId.url)));
+  }
+
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
+    return this.api.getTsData<TimeValueArray>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
+      const data = new HelgolandTimeseriesData(res.values);
+      data.referenceValues = res.referenceValues ? res.referenceValues : {};
+      if (res.valueBeforeTimespan) { data.valueBeforeTimespan = res.valueBeforeTimespan; }
+      if (res.valueAfterTimespan) { data.valueAfterTimespan = res.valueAfterTimespan; }
+      return data;
+    }));
   }
 
   private createDataset(res: Timeseries, url: string): HelgolandDataset {

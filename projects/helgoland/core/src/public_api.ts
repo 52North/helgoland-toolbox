@@ -43,6 +43,7 @@ export * from './lib/api-communication/connectors/dataset-api-v3/dataset-api-v3.
 export * from './lib/api-communication/connectors/dataset-api-v3/api-v3-interface.service';
 export * from './lib/api-communication/connectors/sta-api-v1/sta-api-v1.service';
 export * from './lib/api-communication/model/internal/dataset';
+export * from './lib/api-communication/model/internal/data';
 export * from './lib/api-communication/helgoland-services-handler.service';
 
 export { Language } from './lib/language/model/language';

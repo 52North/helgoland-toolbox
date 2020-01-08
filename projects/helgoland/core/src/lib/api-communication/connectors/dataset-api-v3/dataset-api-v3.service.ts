@@ -12,8 +12,11 @@ import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
+import { Timespan } from '../../../model/internal/timeInterval';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { HelgolandData, HelgolandDataFilter } from './../../model/internal/data';
 import {
   ApiV3Category,
   ApiV3Feature,
@@ -22,7 +25,6 @@ import {
   ApiV3Phenomenon,
   ApiV3Procedure,
 } from './api-v3-interface.service';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -105,7 +107,11 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     throw new Error("Method not implemented.");
   }
 
-  getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
+    throw new Error("Method not implemented.");
+  }
+
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     throw new Error("Method not implemented.");
   }
 

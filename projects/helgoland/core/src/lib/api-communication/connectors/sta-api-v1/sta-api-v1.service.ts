@@ -14,6 +14,7 @@ import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { DataParameterFilter, ParameterFilter } from '../../../model/internal/http-requests';
+import { Timespan } from '../../../model/internal/timeInterval';
 import { Datastream } from '../../../sta/model/datasetreams';
 import { Location, LocationExpandParams, LocationSelectParams } from '../../../sta/model/locations';
 import { Observation } from '../../../sta/model/observations';
@@ -28,6 +29,7 @@ import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/
 import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { HelgolandData, HelgolandDataFilter } from '../../model/internal/data';
 import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
@@ -44,7 +46,7 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     private sta: StaReadInterfaceService
   ) { }
 
-  public canHandle(url: string): Observable<boolean> {
+  canHandle(url: string): Observable<boolean> {
     return this.http.client().get(url).pipe(
       map((res: any) => {
         if (res && res.value && res.value instanceof Array) {
@@ -58,20 +60,20 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
-  public getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
+  getServices(apiUrl: string, params?: ParameterFilter): Observable<Service[]> {
     return this.createServices(apiUrl);
   }
 
-  public getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
+  getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
     return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createCategoriesFilter(filter)))
       .pipe(map(obProps => obProps.value.map(e => this.createCategory(e))));
   }
 
-  public getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
+  getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
     return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createCategory(prop)));
   }
 
-  public getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+  getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
     return this.sta.aggregatePaging(this.sta.getThings(url, this.createOfferingsFilter(filter)))
       .pipe(map(things => things.value.map(t => this.createOffering(t))));
   }
@@ -83,11 +85,11 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  public getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+  getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
     return this.sta.getThing(url, id).pipe(map(t => this.createOffering(t)));
   }
 
-  public getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+  getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
     return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createPhenomenaFilter(filter)))
       .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e))));
   }
@@ -105,11 +107,11 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  public getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+  getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
     return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createPhenomenon(prop)));
   }
 
-  public getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+  getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
     return this.sta.aggregatePaging(this.sta.getSensors(url, this.createProceduresFilter(filter)))
       .pipe(map(sensors => sensors.value.map(s => this.createProcedure(s))));
   }
@@ -131,11 +133,11 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return {};
   }
 
-  public getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+  getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
     return this.sta.getSensor(url, id).pipe(map(sensor => this.createProcedure(sensor)));
   }
 
-  public getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+  getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createFeaturesFilter(filter)))
       .pipe(map(locs => locs.value.map(l => this.createFeature(l))));
   }
@@ -156,16 +158,16 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  public getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+  getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
     return this.sta.getLocation(url, id).pipe(map(loc => this.createFeature(loc)));
   }
 
-  public getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
+  getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));
   }
 
-  public getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
+  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
     return this.sta.getLocation(url, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
       .pipe(map(loc => this.createExtendedStation(loc)));
   }
@@ -194,11 +196,15 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  public getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
+  getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     throw new Error("Method not implemented.");
   }
 
-  public getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
+    throw new Error("Method not implemented.");
+  }
+
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     throw new Error("Method not implemented.");
   }
 
