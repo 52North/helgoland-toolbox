@@ -8,7 +8,6 @@ import { Category } from '../../../model/dataset-api/category';
 import { TimeValueTuple } from '../../../model/dataset-api/data';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
-import { Parameter } from '../../../model/dataset-api/parameter';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
@@ -125,12 +124,9 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   }
 
   private createTimeseries(res: Timeseries, url: string): HelgolandDataset {
-    let firstValue: FirstLastValue, lastValue: FirstLastValue, feature: Parameter, phenomenon: Parameter, offering: Parameter;
+    let firstValue: FirstLastValue, lastValue: FirstLastValue;
     if (res.firstValue) { firstValue = res.firstValue; }
     if (res.lastValue) { lastValue = res.lastValue; }
-    if (res.parameters && res.parameters.feature) { feature = res.parameters.feature; }
-    if (res.parameters && res.parameters.phenomenon) { phenomenon = res.parameters.phenomenon; }
-    if (res.parameters && res.parameters.offering) { offering = res.parameters.offering; }
     return new HelgolandTimeseries(
       res.id,
       url,
@@ -138,9 +134,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
       res.uom,
       firstValue,
       lastValue,
-      feature,
-      phenomenon,
-      offering
+      res.parameters
     );
   }
 

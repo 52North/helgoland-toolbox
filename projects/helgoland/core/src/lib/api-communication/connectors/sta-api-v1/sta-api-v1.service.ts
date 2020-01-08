@@ -300,7 +300,7 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     const station = this.createStation(loc);
     loc.Things.forEach(thing => {
       thing.Datastreams.forEach(ds => {
-        station.properties.timeseries[ds['@iot.id']] = this.createTsParameter(ds, thing, ds.Sensor, ds.ObservedProperty);
+        station.properties.timeseries[ds['@iot.id']] = this.createTsParameter(ds, thing);
       });
     });
     return station;
@@ -310,14 +310,14 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return new HelgolandDataset(ds['@iot.id'], url, ds.name);
   }
 
-  private createTsParameter(ds: Datastream, thing: Thing, sensor: Sensor, obsProp: ObservedProperty): ParameterConstellation {
+  private createTsParameter(ds: Datastream, thing: Thing): ParameterConstellation {
     return {
       service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
       offering: this.createOffering(thing),
       feature: this.createFeature(thing.Locations[0]),
-      procedure: this.createProcedure(sensor),
-      phenomenon: this.createPhenomenon(obsProp),
-      category: this.createCategory(obsProp)
+      procedure: this.createProcedure(ds.Sensor),
+      phenomenon: this.createPhenomenon(ds.ObservedProperty),
+      category: this.createCategory(ds.ObservedProperty)
     };
   }
 
@@ -325,8 +325,8 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     const id = ds['@iot.id'];
     const label = ds.name;
     const uom = ds.unitOfMeasurement.symbol;
-    const parameter = this.createTsParameter(ds, ds.Thing, ds.Sensor, ds.ObservedProperty);
-    return new HelgolandTimeseries(id, url, label, uom, first, last, parameter.feature, parameter.phenomenon, parameter.offering);
+    const parameter = this.createTsParameter(ds, ds.Thing);
+    return new HelgolandTimeseries(id, url, label, uom, first, last, parameter);
   }
 
   private createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {

@@ -392,9 +392,9 @@ export class D3TimeseriesGraphComponent
                     autoRangeSelection: options.autoRangeSelection,
                     separateYAxis: options.separateYAxis,
                     parameters: {
-                        feature: dataset.feature,
-                        phenomenon: dataset.phenomenon,
-                        offering: dataset.offering
+                        feature: dataset.parameter.feature,
+                        phenomenon: dataset.parameter.phenomenon,
+                        offering: dataset.parameter.offering
                     }
                 },
                 referenceValueData: [],
