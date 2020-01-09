@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FirstLatestTimeseriesEntryComponent } from './first-latest-timeseries-entry.component';
-import { DatasetApiInterfaceTesting } from '../../../../../../../testing/dataset-api-interface.testing';
 import { HelgolandCoreModule } from '@helgoland/core';
+
 import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
+import { FirstLatestTimeseriesEntryComponent } from './first-latest-timeseries-entry.component';
 
 describe('FirstLatestTimeseriesEntryComponent', () => {
   let component: FirstLatestTimeseriesEntryComponent;
@@ -15,12 +14,10 @@ describe('FirstLatestTimeseriesEntryComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule
       ],
-      declarations: [ FirstLatestTimeseriesEntryComponent ],
-      providers: [
-        DatasetApiInterfaceTesting
-      ]
+      declarations: [FirstLatestTimeseriesEntryComponent],
+      providers: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

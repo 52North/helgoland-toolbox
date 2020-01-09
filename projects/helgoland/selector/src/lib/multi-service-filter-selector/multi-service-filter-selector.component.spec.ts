@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
-import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { MultiServiceFilterEndpoint, MultiServiceFilterSelectorComponent } from './multi-service-filter-selector.component';
 
@@ -19,9 +18,7 @@ describe('MultiServiceFilterSelectorComponent', () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule
       ],
-      providers: [
-        DatasetApiInterfaceTesting
-      ],
+      providers: [],
       declarations: [MultiServiceFilterSelectorComponent]
     }).compileComponents();
   }));
@@ -51,9 +48,7 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule
       ],
-      providers: [
-        DatasetApiInterfaceTesting
-      ],
+      providers: [],
       declarations: [MultiServiceFilterSelectorComponent]
     }).compileComponents();
   }));

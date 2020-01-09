@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatasetExportComponent } from './dataset-export.component';
-
 import { HelgolandCoreModule } from '@helgoland/core';
-import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { DatasetExportComponent } from './dataset-export.component';
 
 describe('DatasetExportComponent', () => {
   let component: DatasetExportComponent;
@@ -16,9 +14,7 @@ describe('DatasetExportComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule
       ],
-      providers: [
-        DatasetApiInterfaceTesting
-      ],
+      providers: [],
       declarations: [DatasetExportComponent]
     }).compileComponents();
   }));

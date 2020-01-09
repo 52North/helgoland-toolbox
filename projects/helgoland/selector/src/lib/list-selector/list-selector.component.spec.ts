@@ -4,7 +4,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
-import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import {
   MultiServiceFilterSelectorComponent,
@@ -26,7 +25,6 @@ describe('ListSelectorComponent', () => {
       ],
       providers: [
         ListSelectorService,
-        DatasetApiInterfaceTesting
       ],
       declarations: [
         ListSelectorComponent,
@@ -61,7 +59,6 @@ describe('ListSelectorComponent creation', () => {
       ],
       providers: [
         ListSelectorService,
-        DatasetApiInterfaceTesting
       ],
       declarations: [
         ListSelectorComponent,

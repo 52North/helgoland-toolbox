@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {
-    DatasetApiInterface,
     DatasetApiMapping,
-    DatasetApiVersion,
     FilteredProvider,
-    IDataset,
+    HelgolandDataset,
+    HelgolandServicesHandlerService,
     ParameterFilter,
 } from '@helgoland/core';
 
@@ -36,13 +35,14 @@ export class ListSelectorComponent implements OnChanges {
     public selectorId: string;
 
     @Output()
-    public onDatasetSelection: EventEmitter<IDataset[]> = new EventEmitter<IDataset[]>();
+    public onDatasetSelection: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
 
     public activePanel: string;
 
     constructor(
         protected listSelectorService: ListSelectorService,
-        protected apiInterface: DatasetApiInterface,
+        // protected apiInterface: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected apiMapping: DatasetApiMapping
     ) { }
 
@@ -105,13 +105,14 @@ export class ListSelectorComponent implements OnChanges {
 
     private openDataset(url: string, params: ParameterFilter) {
         this.apiMapping.getApiVersion(url).subscribe((apiVersionId) => {
-            if (apiVersionId === DatasetApiVersion.V2) {
-                this.apiInterface.getDatasets(url, params).subscribe((result) => this.onDatasetSelection.emit(result));
-            } else if (apiVersionId === DatasetApiVersion.V1) {
-                this.apiInterface.getTimeseries(url, params).subscribe(
-                    (result) => this.onDatasetSelection.emit(result)
-                );
-            }
+            // if (apiVersionId === DatasetApiVersion.V2) {
+            //     this.apiInterface.getDatasets(url, params).subscribe((result) => this.onDatasetSelection.emit(result));
+            // } else if (apiVersionId === DatasetApiVersion.V1) {
+            //     this.apiInterface.getTimeseries(url, params).subscribe(
+            //         (result) => this.onDatasetSelection.emit(result)
+            //     );
+            // }
+            this.servicesHandler.getDatasets(url, params).subscribe(result => this.onDatasetSelection.emit(result));
         });
     }
 

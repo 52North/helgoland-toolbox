@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { DatasetApiInterface, Filter, LanguageChangNotifier, Parameter, ParameterFilter, HelgolandServicesHandlerService } from '@helgoland/core';
+import { Filter, HelgolandServicesHandlerService, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
@@ -40,7 +40,6 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
     constructor(
         protected servicesHandler: HelgolandServicesHandlerService,
-        protected apiInterface: DatasetApiInterface,
         protected translate: TranslateService
     ) {
         super(translate);
@@ -101,9 +100,9 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
                     );
                     break;
                 case MultiServiceFilterEndpoint.dataset:
-                    this.apiInterface.getDatasets(entry.url, filter).subscribe(
-                        (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                    this.servicesHandler.getDatasets(entry.url, filter).subscribe(
+                        res => this.setItems(res, filter, entry.url, filter.service),
+                        error => this.errorOnLoading
                     );
                     break;
                 default:

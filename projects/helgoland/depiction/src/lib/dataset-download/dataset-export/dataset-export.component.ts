@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Data, DatasetApiInterface, IDataset, Time, Timeseries, Timespan, TimeValueTuple } from '@helgoland/core';
+import {
+  HelgolandServicesHandlerService,
+  HelgolandTimeseries,
+  HelgolandTimeseriesData,
+  IDataset,
+  Time,
+  Timespan,
+} from '@helgoland/core';
 import moment from 'moment';
 import * as XLSX from 'xlsx';
 
@@ -26,7 +33,7 @@ export enum DownloadType {
 
 export class DatasetExportComponent implements OnInit, OnChanges {
 
-  private dataset: Timeseries;
+  private dataset: HelgolandTimeseries;
   private fileName = 'timeseries';
   private timespan: Timespan;
 
@@ -43,7 +50,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * returns the metadata of the selected dataset to be visualized
    */
-  @Output() public onMetadataChange: EventEmitter<IDataset> = new EventEmitter();
+  @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> = new EventEmitter();
 
   /**
    * Output to inform the loading status, while file is created
@@ -51,23 +58,22 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesHandler: HelgolandServicesHandlerService,
     protected timeSrvc: Time,
   ) { }
 
   ngOnInit() {
     // get timeseries metadata by internal id
     // e.g. http://www.fluggs.de/sos2/api/v1/__26
-    this.api.getSingleTimeseriesByInternalId(this.inputId).subscribe(
-      (timeseries) => {
-        this.dataset = timeseries;
-        this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
-
-        this.onMetadataChange.emit(timeseries);
+    this.servicesHandler.getDataset(this.inputId).subscribe(
+      ds => {
+        if (ds instanceof HelgolandTimeseries) {
+          this.dataset = ds;
+          this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
+          this.onMetadataChange.emit(ds);
+        }
       },
-      (error) => {
-        this.onError(error);
-      }
+      error => this.onError(error)
     );
   }
 
@@ -100,32 +106,26 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   public onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
     this.fileName = this.inputId;
-    if (this.dataset && this.dataset instanceof Timeseries) {
+    if (this.dataset) {
       this.loadData(this.dataset, downloadType);
     }
   }
 
-  private loadData(dataset: Timeseries, dwType: DownloadType): void {
+  private loadData(dataset: HelgolandTimeseries, dwType: DownloadType): void {
     console.log('Loading data ...');
     // get dataset data
-    if (dataset instanceof Timeseries) {
-      const buffer = new Timespan(this.timespan.from, this.timespan.to);
+    const buffer = new Timespan(this.timespan.from, this.timespan.to);
 
-      this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
-        {
-          format: 'flot',
-          expanded: false,
-          generalize: false
-        },
-        { forceUpdate: false }
-      ).subscribe(
-        (result) => this.prepareData(dataset, result, dwType),
-        (error) => this.onError(error),
+    this.servicesHandler.getDatasetData(dataset, buffer,
+      {
+        generalize: false
+      }).subscribe(
+        (result) => this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
+        error => this.onError(error),
         () => this.onCompleteLoadingData(dataset)
       );
-    }
   }
-  private prepareData(dataset: Timeseries, result: Data<TimeValueTuple>, dwType: DownloadType): void {
+  private prepareData(dataset: HelgolandTimeseries, result: HelgolandTimeseriesData, dwType: DownloadType): void {
     console.log('Preparing data ...');
     const valueHeader = dataset.parameters.phenomenon.label + '_(' + dataset.uom + ')';
     let exportData: xlsxExport = [

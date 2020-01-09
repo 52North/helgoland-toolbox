@@ -4,10 +4,11 @@ import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetTableData,
+  HelgolandServicesHandlerService,
+  HelgolandTimeseries,
+  HelgolandTimeseriesData,
   InternalIdHandler,
   Time,
-  Timeseries,
-  TimeValueTuple,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
@@ -27,12 +28,13 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   public preparedColors: string[] = Array();
   public ready = false;
 
-  public timeseriesArray: Timeseries[] = new Array();
+  public timeseriesArray: HelgolandTimeseries[] = new Array();
   private additionalStylesheet: HTMLElement;
 
   constructor(
     protected iterableDiffers: IterableDiffers,
     protected api: DatasetApiInterface,
+    protected servicesHandler: HelgolandServicesHandlerService,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
     protected translateSrvc: TranslateService
@@ -139,12 +141,15 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     this.timeseriesArray.splice(index, 1);
   }
 
-  protected addDataset(internalId: string, url: string): void {
+  protected addDataset(id: string, url: string): void {
     this.timeseriesArray.length += 1;  // create new empty slot
     this.preparedColors.push('darkgrey');
     this.additionalStylesheet.innerHTML += '\r\n';
-    this.api.getSingleTimeseries(internalId, url)
-      .subscribe((timeseries: Timeseries) => this.addTimeseries(timeseries));
+    this.servicesHandler.getDataset({ id, url }).subscribe(ds => {
+      if (ds instanceof HelgolandTimeseries) {
+        this.addTimeseries(ds);
+      }
+    });
   }
 
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {
@@ -159,29 +164,32 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     // TODO-CF: needed???? probably not
   }
 
-  private addTimeseries(timeseries: Timeseries) {
+  private addTimeseries(timeseries: HelgolandTimeseries) {
     this.timeseriesArray[this.getIndexFromInternalId(timeseries.internalId)] = timeseries;
     this.loadTsData(timeseries);
   }
 
-  private loadTsData(timeseries: Timeseries) {
+  private loadTsData(timeseries: HelgolandTimeseries) {
     if (this.timespan) {
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.api.getTsData<TimeValueTuple>(timeseries.id, timeseries.url, this.timespan, { format: 'flot' })
-        .subscribe((result) => {
+      this.servicesHandler.getDatasetData(timeseries, this.timespan).subscribe(
+        result => {
           // bring result into Array<DatasetTableData> format and pass to prepareData
           // convention for layout of newdata argument: see 3-line-comment in prepareData function
-          const index = this.getIndexFromInternalId(timeseries.internalId);
-          this.prepareData(timeseries, result.values.map((e) => {
-            const a = new Array(this.datasetIds.length).fill(undefined);
-            a[index] = e[1];
-            return { datetime: e[0], values: a };
-          }));
-        });
+          if (result instanceof HelgolandTimeseriesData) {
+            const index = this.getIndexFromInternalId(timeseries.internalId);
+            this.prepareData(timeseries, result.values.map((e) => {
+              const a = new Array(this.datasetIds.length).fill(undefined);
+              a[index] = e[1];
+              return { datetime: e[0], values: a };
+            }));
+          }
+        }
+      );
     }
   }
 
-  private prepareData(timeseries: Timeseries, newdata: DatasetTableData[]) {
+  private prepareData(timeseries: HelgolandTimeseries, newdata: DatasetTableData[]) {
     const index = this.getIndexFromInternalId(timeseries.internalId);
 
     // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
