@@ -87,9 +87,9 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return this.getHandler(url).pipe(flatMap(h => h.getDatasets(url, filter)));
   }
 
-  getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset> {
+  getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter = {}): Observable<HelgolandDataset> {
     internalId = this.checkInternalId(internalId);
-    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId)));
+    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId, filter)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter = {}): Observable<HelgolandData> {

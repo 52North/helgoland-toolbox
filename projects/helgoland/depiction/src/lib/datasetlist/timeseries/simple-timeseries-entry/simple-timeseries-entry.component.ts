@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { Dataset, DatasetApiInterface, IDataset, InternalIdHandler, ParameterFilter, Timeseries } from '@helgoland/core';
+import {
+  Dataset,
+  HelgolandServicesHandlerService,
+  HelgolandTimeseries,
+  InternalIdHandler,
+  ParameterFilter,
+  Timeseries,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../../list-entry.component';
@@ -17,7 +24,7 @@ import { ListEntryComponent } from '../../list-entry.component';
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 
-  public dataset: IDataset;
+  public dataset: HelgolandTimeseries;
 
   public platformLabel: string;
   public phenomenonLabel: string;
@@ -26,7 +33,7 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   public uom: string;
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesHandler: HelgolandServicesHandlerService,
     protected internalIdHandler: InternalIdHandler,
     protected translateSrvc: TranslateService
   ) {
@@ -37,15 +44,16 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
     const params: ParameterFilter = {};
     if (lang) { params.lang = lang; }
     this.loading = true;
-    this.api.getSingleTimeseries(this.internalId.id, this.internalId.url, params)
-      .subscribe(
-        (timeseries) => this.setDataset(timeseries),
-        (error) => {
-          this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => this.setDataset(dataset));
-        });
+    this.servicesHandler.getDataset(this.internalId, params).subscribe(
+      dataset => {
+        if (dataset instanceof HelgolandTimeseries) {
+          this.setDataset(dataset);
+        }
+      }
+    );
   }
 
-  protected setDataset(timeseries: IDataset) {
+  protected setDataset(timeseries: HelgolandTimeseries) {
     this.dataset = timeseries;
     this.setParameters();
     this.loading = false;

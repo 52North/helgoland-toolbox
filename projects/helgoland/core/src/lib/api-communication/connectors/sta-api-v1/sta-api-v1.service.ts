@@ -32,6 +32,7 @@ import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-ha
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter } from '../../model/internal/data';
 import { DatasetFilter, HelgolandDataset, HelgolandTimeseries } from '../../model/internal/dataset';
+import { HelgolandStation } from '../../model/internal/station';
 import { HelgolandTimeseriesData } from './../../model/internal/data';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
@@ -267,7 +268,7 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return `phenomenonTime eq ${time}`;
   }
 
-  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
+  getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     return this.sta.getDatastream(internalId.url, internalId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
       .pipe(flatMap(ds => this.requestExpandedTimeseries(ds, internalId.url)));
   }
@@ -296,7 +297,11 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     };
   }
 
-  private createExtendedStation(loc: Location): any {
+  private createHelgolandStation(loc: Location): HelgolandStation {
+    return new HelgolandStation(loc['@iot.id'], loc.name, loc.location);
+  }
+
+  private createExtendedStation(loc: Location): Station {
     const station = this.createStation(loc);
     loc.Things.forEach(thing => {
       thing.Datastreams.forEach(ds => {
@@ -326,7 +331,8 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     const label = ds.name;
     const uom = ds.unitOfMeasurement.symbol;
     const parameter = this.createTsParameter(ds, ds.Thing);
-    return new HelgolandTimeseries(id, url, label, uom, first, last, parameter);
+    const station = this.createHelgolandStation(ds.Thing.Locations[0]);
+    return new HelgolandTimeseries(id, url, label, uom, station, first, last, [], null, parameter);
   }
 
   private createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {

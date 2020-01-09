@@ -17,6 +17,7 @@ import { Timespan } from '../../../model/internal/timeInterval';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { HelgolandStation } from '../../model/internal/station';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, Timeseries } from './../../../model/dataset-api/dataset';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
@@ -104,8 +105,8 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
       .pipe(map(res => res.map(e => this.createDataset(e, url))));
   }
 
-  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
-    return this.api.getSingleTimeseries(internalId.id, internalId.url)
+  getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
+    return this.api.getSingleTimeseries(internalId.id, internalId.url, filter)
       .pipe(map(res => this.createTimeseries(res, internalId.url)));
   }
 
@@ -127,13 +128,17 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
     if (res.firstValue) { firstValue = res.firstValue; }
     if (res.lastValue) { lastValue = res.lastValue; }
+    const station = this.createStation(res.station);
     return new HelgolandTimeseries(
       res.id,
       url,
       res.label,
       res.uom,
+      station,
       firstValue,
       lastValue,
+      res.referenceValues,
+      res.renderingHints,
       res.parameters
     );
   }
@@ -144,9 +149,9 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   //   return paramFilter;
   // }
 
-  // private createStation(station: Station): HelgolandStation {
-  //   return new HelgolandStation(station.id, station.properties.label, station.geometry);
-  // }
+  private createStation(station: Station): HelgolandStation {
+    return new HelgolandStation(station.id, station.properties.label, station.geometry);
+  }
 
 }
 

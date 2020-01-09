@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Dataset, DatasetApiInterface, DatasetOptions, InternalIdHandler, Timeseries } from '@helgoland/core';
+import { DatasetOptions, HelgolandServicesHandlerService, InternalIdHandler } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
@@ -32,11 +32,11 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesHandler: HelgolandServicesHandlerService,
     protected internalIdHandler: InternalIdHandler,
     protected translateSrvc: TranslateService
   ) {
-    super(api, internalIdHandler, translateSrvc);
+    super(servicesHandler, internalIdHandler, translateSrvc);
   }
 
   public toggleVisibility() {
@@ -49,14 +49,7 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   }
 
   public showGeometry() {
-    if (this.dataset instanceof Timeseries) {
-      this.onShowGeometry.emit(this.dataset.station.geometry);
-    }
-    if (this.dataset instanceof Dataset) {
-      this.api.getPlatform(this.dataset.parameters.platform.id, this.dataset.url).subscribe((platform) => {
-        this.onShowGeometry.emit(platform.geometry);
-      });
-    }
+    this.onShowGeometry.emit(this.dataset.station.geometry);
   }
 
 }

@@ -20,6 +20,19 @@ export interface ApiV3Feature extends ApiV3Parameter {
     label: string;
     href: string;
     domainId: string;
+    datasets: {
+      [key: string]: {
+        phenomenon: ApiV3Phenomenon,
+        procedure: ApiV3Procedure,
+        category: ApiV3Category,
+        offering: ApiV3Offering,
+        service: {
+          id: string;
+          href: string;
+          label: string;
+        }
+      }
+    }
   };
   type: string;
   geometry: GeoJSON.GeometryObject;
@@ -80,7 +93,7 @@ export interface ApiV3Dataset extends ApiV3Parameter {
       href: string;
       label: string;
     },
-    paltforms: ApiV3Platform
+    platforms: ApiV3Platform
   };
 }
 
@@ -182,9 +195,9 @@ export class ApiV3InterfaceService extends ApiInterface {
     return this.requestApi<ApiV3Dataset[]>(url, params, options);
   }
 
-  public getDataset(id: string, apiUrl: string): Observable<ApiV3Dataset> {
+  public getDataset(id: string, apiUrl: string, params?: ApiV3DatasetFilter): Observable<ApiV3Dataset> {
     const url = this.createRequestUrl(apiUrl, 'datasets', id);
-    return this.requestApi<ApiV3Dataset>(url);
+    return this.requestApi<ApiV3Dataset>(url, params);
   }
 
   public getDatasetData(id: string, apiUrl: string, filter?: ApiV3DatasetDataFilter): Observable<Data<TimeValueTuple>> {

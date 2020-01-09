@@ -1,5 +1,13 @@
 import { Component, Injectable, OnChanges, ViewEncapsulation } from '@angular/core';
-import { ColorService, DatasetApiInterface, IdCache, InternalIdHandler, ReferenceValue, Time, DatasetOptions } from '@helgoland/core';
+import {
+    ColorService,
+    DatasetOptions,
+    HelgolandServicesHandlerService,
+    IdCache,
+    InternalIdHandler,
+    ReferenceValue,
+    Time,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
@@ -25,14 +33,14 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     public referenceValues: ReferenceValue[];
 
     constructor(
-        protected api: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
         protected color: ColorService,
         protected refValCache: ReferenceValueColorCache,
         protected translateSrvc: TranslateService
     ) {
-        super(api, internalIdHandler, translateSrvc, timeSrvc);
+        super(servicesHandler, internalIdHandler, translateSrvc, timeSrvc);
     }
 
     public toggleInformation() {

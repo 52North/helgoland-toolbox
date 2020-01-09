@@ -61,15 +61,15 @@ fdescribe('HelgolandServicesHandlerService', () => {
       // service.getProcedure('1', url).subscribe(res => console.log(res));
       // service.getFeatures(url).subscribe(res => console.log(res));
       // service.getFeature('4', url).subscribe(res => console.log(res));
-      service.getDatasets(url).subscribe(datasets => {
+      service.getDatasets(url, { lang: 'de' }).subscribe(datasets => {
         console.log(datasets);
         if (datasets.length > 0) {
-          service.getDataset(datasets[0].internalId).subscribe(dataset => {
+          service.getDataset(datasets[0].internalId, { lang: 'de' }).subscribe(dataset => {
             console.log(dataset);
             if (dataset instanceof HelgolandTimeseries) {
               const end = new Date(dataset.lastValue.timestamp);
               const start = new Date(dataset.lastValue.timestamp);
-              start.setDate(start.getDate() - 30);
+              start.setDate(start.getDate() - 3);
               service.getDatasetData(dataset, new Timespan(start, end)).subscribe(data => console.log(data));
             }
           });

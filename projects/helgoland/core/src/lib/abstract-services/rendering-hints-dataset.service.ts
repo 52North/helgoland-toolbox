@@ -1,12 +1,13 @@
-import { DatasetApiInterface } from '../dataset-api/api-interface';
-import { BarRenderingHints, IDataset, LineRenderingHints } from '../model/dataset-api/dataset';
+import { HelgolandTimeseries } from '../api-communication/model/internal/dataset';
+import { BarRenderingHints, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
+import { HelgolandServicesHandlerService } from './../api-communication/helgoland-services-handler.service';
 import { DatasetService } from './dataset.service';
 
 export abstract class RenderingHintsDatasetService<T extends DatasetOptions | DatasetOptions[]> extends DatasetService<T> {
 
     constructor(
-        protected api: DatasetApiInterface
+        protected servicesHandler: HelgolandServicesHandlerService
     ) {
         super();
     }
@@ -21,39 +22,36 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
                     this.saveState();
                     resolve(true);
                 } else {
-                    this.api.getSingleTimeseriesByInternalId(internalId).subscribe(
-                        (timeseries) => this.addLoadedDataset(timeseries, resolve),
-                        (error) => {
-                            this.api.getDatasetByInternalId(internalId).subscribe(
-                                (dataset) => this.addLoadedDataset(dataset, resolve)
-                            );
+                    this.servicesHandler.getDataset(internalId).subscribe(dataset => {
+                        if (dataset instanceof HelgolandTimeseries) {
+                            this.addLoadedDataset(dataset, resolve);
                         }
-                    );
+                    });
                 }
             }
         });
     }
 
-    private async addLoadedDataset(dataset: IDataset, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
-        this.datasetIds.push(dataset.internalId);
-        this.datasetOptions.set(dataset.internalId, this.createOptionsOfRenderingHints(dataset));
+    private async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+        this.datasetIds.push(timeseries.internalId);
+        this.datasetOptions.set(timeseries.internalId, this.createOptionsOfRenderingHints(timeseries));
         this.datasetIdsChanged.emit(this.datasetIds);
         this.saveState();
         resolve(true);
     }
 
-    private createOptionsOfRenderingHints(dataset: IDataset): T {
-        const options = this.createStyles(dataset.internalId) as DatasetOptions;
-        if (dataset.renderingHints) {
-            if (dataset.renderingHints.properties && dataset.renderingHints.properties.color) {
-                options.color = dataset.renderingHints.properties.color;
+    private createOptionsOfRenderingHints(timeseries: HelgolandTimeseries): T {
+        const options = this.createStyles(timeseries.internalId) as DatasetOptions;
+        if (timeseries.renderingHints) {
+            if (timeseries.renderingHints.properties && timeseries.renderingHints.properties.color) {
+                options.color = timeseries.renderingHints.properties.color;
             }
-            switch (dataset.renderingHints.chartType) {
+            switch (timeseries.renderingHints.chartType) {
                 case 'line':
-                    this.handleLineRenderingHints(dataset.renderingHints as LineRenderingHints, options);
+                    this.handleLineRenderingHints(timeseries.renderingHints as LineRenderingHints, options);
                     break;
                 case 'bar':
-                    this.handleBarRenderingHints(dataset.renderingHints as BarRenderingHints, options);
+                    this.handleBarRenderingHints(timeseries.renderingHints as BarRenderingHints, options);
                     break;
                 default:
                     break;

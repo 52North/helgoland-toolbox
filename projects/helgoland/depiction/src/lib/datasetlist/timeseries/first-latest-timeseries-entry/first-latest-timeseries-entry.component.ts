@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DatasetApiInterface, FirstLastValue, InternalIdHandler, Time, TimeInterval } from '@helgoland/core';
+import { FirstLastValue, HelgolandServicesHandlerService, InternalIdHandler, Time, TimeInterval } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
@@ -29,12 +29,12 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   public hasData = true;
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesHandler: HelgolandServicesHandlerService,
     protected internalIdHandler: InternalIdHandler,
     protected translateSrvc: TranslateService,
     protected timeSrvc: Time
   ) {
-    super(api, internalIdHandler, translateSrvc);
+    super(servicesHandler, internalIdHandler, translateSrvc);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

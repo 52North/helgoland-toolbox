@@ -1,5 +1,11 @@
 import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
-import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
+import {
+    FirstLastValue,
+    ParameterConstellation,
+    ReferenceValue,
+    RenderingHints,
+} from './../../../model/dataset-api/dataset';
+import { HelgolandStation } from './station';
 
 export class HelgolandDataset {
     public internalId: string;
@@ -20,8 +26,11 @@ export class HelgolandTimeseries extends HelgolandDataset {
         public url: string,
         public label: string,
         public uom: string,
+        public station: HelgolandStation,
         public firstValue: FirstLastValue,
         public lastValue: FirstLastValue,
+        public referenceValues: ReferenceValue[],
+        public renderingHints: RenderingHints,
         public parameters: ParameterConstellation,
     ) {
         super(id, url, label);
@@ -35,4 +44,5 @@ export interface DatasetFilter {
     feature?: string;
     offering?: string;
     expanded?: boolean;
+    lang?: string;
 }

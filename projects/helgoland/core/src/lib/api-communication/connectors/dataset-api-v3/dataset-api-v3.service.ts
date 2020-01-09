@@ -12,7 +12,7 @@ import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
-import { Station } from '../../../model/dataset-api/station';
+import { Station, TimeseriesCollection } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
@@ -21,6 +21,7 @@ import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from './../../model/internal/data';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
+import { HelgolandStation } from './../../model/internal/station';
 import {
   ApiV3Category,
   ApiV3Dataset,
@@ -112,7 +113,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
-    return this.api.getDatasets(url, this.createDatasetFilter(filter)).pipe(map(res => res.map(ds => this.createDataset(ds, url))));
+    return this.api.getDatasets(url, filter).pipe(map(res => res.map(ds => this.createDataset(ds, url))));
   }
 
   private createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
@@ -128,11 +129,16 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
           procedure: { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label },
           service: { id: ds.parameters.service.id, label: ds.parameters.service.label }
         };
-        return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, firstValue, lastValue, parameters);
+        const station = this.createHelgolandStation(ds.feature);
+        return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, station, firstValue, lastValue, [], null, parameters);
       }
     } else {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
+  }
+
+  private createHelgolandStation(feature: ApiV3Feature): HelgolandStation {
+    return new HelgolandStation(feature.id, feature.properties.label, feature.geometry);
   }
 
   private createDatasetFilter(params: DatasetFilter): ApiV3DatasetFilter {
@@ -146,8 +152,8 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return filter;
   }
 
-  getDataset(internalId: InternalDatasetId): Observable<HelgolandDataset> {
-    return this.api.getDataset(internalId.id, internalId.url).pipe(map(res => this.createDataset(res, internalId.url)));
+  getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
+    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
@@ -183,6 +189,23 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   private createStation(feature: ApiV3Feature): Station {
+    const timeseries: TimeseriesCollection = {};
+    for (const key in feature.properties.datasets) {
+      if (feature.properties.datasets.hasOwnProperty(key)) {
+        const elem = feature.properties.datasets[key];
+        timeseries[key] = {
+          category: elem.category,
+          offering: elem.offering,
+          phenomenon: elem.phenomenon,
+          procedure: elem.procedure,
+          service: elem.service,
+          feature: {
+            id: feature.id,
+            label: feature.properties.label
+          }
+        };
+      }
+    }
     return {
       id: feature.id,
       geometry: feature.geometry,
@@ -190,7 +213,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
       properties: {
         id: feature.id,
         label: feature.properties.label,
-        timeseries: {}
+        timeseries
       }
     };
   }

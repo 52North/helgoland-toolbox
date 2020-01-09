@@ -33,7 +33,7 @@ export interface IHelgolandServiceConnector {
     getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature>;
 
     getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]>;
-    getDataset(internalId: string | InternalDatasetId): Observable<HelgolandDataset>;
+    getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset>;
 
     getDatasetData(dataset: HelgolandDataset, timespan: Timespan, params?: HelgolandDataFilter): Observable<HelgolandData>;
 
