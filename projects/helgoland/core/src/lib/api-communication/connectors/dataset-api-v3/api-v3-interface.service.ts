@@ -9,6 +9,7 @@ import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
 import { Service } from '../../../model/dataset-api/service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
+import { Data, TimeValueTuple } from './../../../model/dataset-api/data';
 
 export interface ApiV3Parameter {
   id: string;
@@ -46,6 +47,68 @@ export interface ApiV3Procedure extends ApiV3Parameter {
   href: string;
   domainId: string;
   label: string;
+}
+
+export interface ApiV3Platform extends ApiV3Parameter {
+  href: string;
+  domainId: string;
+  label: string;
+}
+
+export interface ApiV3Dataset extends ApiV3Parameter {
+  href: string;
+  label: string;
+  datasetType: ApiV3DatasetTypes;
+  observationType: string;
+  valueType: string;
+  mobile: boolean;
+  insitu: boolean;
+  uom: string;
+  originTimezone: string;
+  samplingTimeStart: string;
+  samplingTimeEnd: string;
+  feature: ApiV3Feature;
+  firstValue: ApiV3FirstLastValue;
+  lastValue: ApiV3FirstLastValue;
+  parameters: {
+    phenomenon: ApiV3Phenomenon,
+    procedure: ApiV3Procedure,
+    category: ApiV3Category,
+    offering: ApiV3Offering,
+    service: {
+      id: string;
+      href: string;
+      label: string;
+    },
+    paltforms: ApiV3Platform
+  };
+}
+
+export interface ApiV3FirstLastValue {
+  timestamp: string;
+  value: number;
+}
+
+export enum ApiV3DatasetTypes {
+  Profile = 'profile',
+  Timeseries = 'timeseries',
+  IndividualObservation = 'individualObservation',
+  Trajectory = 'trajectory'
+}
+
+export interface ApiV3DatasetFilter {
+  expanded?: boolean;
+  datasetTypes?: ApiV3DatasetTypes;
+  feature?: string;
+  offering?: string;
+  phenomenon?: string;
+  category?: string;
+  procedure?: string;
+}
+
+export interface ApiV3DatasetDataFilter {
+  timespan?: string;
+  format?: string;
 }
 
 @Injectable({
@@ -112,6 +175,21 @@ export class ApiV3InterfaceService extends ApiInterface {
   public getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure> {
     const url = this.createRequestUrl(apiUrl, 'procedures', id);
     return this.requestApi<ApiV3Procedure>(url, params, options);
+  }
+
+  public getDatasets(apiUrl: string, params?: ApiV3DatasetFilter, options?: HttpRequestOptions): Observable<ApiV3Dataset[]> {
+    const url = this.createRequestUrl(apiUrl, 'datasets');
+    return this.requestApi<ApiV3Dataset[]>(url, params, options);
+  }
+
+  public getDataset(id: string, apiUrl: string): Observable<ApiV3Dataset> {
+    const url = this.createRequestUrl(apiUrl, 'datasets', id);
+    return this.requestApi<ApiV3Dataset>(url);
+  }
+
+  public getDatasetData(id: string, apiUrl: string, filter?: ApiV3DatasetDataFilter): Observable<Data<TimeValueTuple>> {
+    const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
+    return this.requestApi<Data<TimeValueTuple>>(url, filter);
   }
 
   protected requestApi<T>(

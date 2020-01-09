@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BasicAuthInformer, BasicAuthService, BasicAuthServiceMaintainer } from '@helgoland/auth';
 import { Observable, Observer } from 'rxjs';
-
-import {
-    BasicAuthInformer,
-    BasicAuthInterceptorService,
-} from '../helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service';
-import { BasicAuthServiceMaintainer } from '../helgoland/auth/src/lib/basic-auth/basic-auth-service-maintainer.service';
-import { BasicAuthService } from '../helgoland/auth/src/lib/basic-auth/basic-auth.service';
-import { HTTP_SERVICE_INTERCEPTORS } from '../helgoland/core/src/lib/dataset-api/http.service';
 
 @Injectable()
 export class BasicAuthInformerImplService implements BasicAuthInformer {
@@ -38,11 +31,6 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
 export const BasicAuthTestingProviders = [
     BasicAuthService,
     BasicAuthServiceMaintainer,
-    {
-        provide: HTTP_SERVICE_INTERCEPTORS,
-        useClass: BasicAuthInterceptorService,
-        multi: true
-    },
     {
         provide: BasicAuthInformer,
         useClass: BasicAuthInformerImplService

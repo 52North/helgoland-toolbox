@@ -22,7 +22,7 @@ export class HelgolandTimeseries extends HelgolandDataset {
         public uom: string,
         public firstValue: FirstLastValue,
         public lastValue: FirstLastValue,
-        public parameter: ParameterConstellation,
+        public parameters: ParameterConstellation,
     ) {
         super(id, url, label);
     }
@@ -33,5 +33,6 @@ export interface DatasetFilter {
     category?: string;
     procedure?: string;
     feature?: string;
+    offering?: string;
     expanded?: boolean;
 }

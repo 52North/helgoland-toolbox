@@ -177,9 +177,9 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             };
             if (dataset) {
               dataEntry.axisOptions.parameters = {
-                feature: dataset.parameter.feature,
-                phenomenon: dataset.parameter.phenomenon,
-                offering: dataset.parameter.offering
+                feature: dataset.parameters.feature,
+                phenomenon: dataset.parameters.phenomenon,
+                offering: dataset.parameters.offering
               };
             }
             this.preparedData.push(dataEntry);

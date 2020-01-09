@@ -5,8 +5,7 @@ import { Settings, SettingsService } from '@helgoland/core';
 export class ExtendedSettingsService extends SettingsService<Settings> {
     constructor() {
         super();
-        this.setSettings({
-        });
+        this.setSettings({});
     }
 }
 

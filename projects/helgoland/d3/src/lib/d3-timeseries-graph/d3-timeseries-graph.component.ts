@@ -309,6 +309,7 @@ export class D3TimeseriesGraphComponent
                     referenceValues: {}
                 };
                 this.prepareData(dataset, empty);
+                this.onCompleteLoadingData(dataset);
             } else {
                 const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
                 this.loadingData.add(dataset.internalId);
@@ -392,9 +393,9 @@ export class D3TimeseriesGraphComponent
                     autoRangeSelection: options.autoRangeSelection,
                     separateYAxis: options.separateYAxis,
                     parameters: {
-                        feature: dataset.parameter.feature,
-                        phenomenon: dataset.parameter.phenomenon,
-                        offering: dataset.parameter.offering
+                        feature: dataset.parameters.feature,
+                        phenomenon: dataset.parameters.phenomenon,
+                        offering: dataset.parameters.offering
                     }
                 },
                 referenceValueData: [],
