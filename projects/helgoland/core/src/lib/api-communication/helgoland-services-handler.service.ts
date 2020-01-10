@@ -15,7 +15,7 @@ import { Timespan } from '../model/internal/timeInterval';
 import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter } from './model/internal/data';
-import { DatasetFilter, HelgolandDataset } from './model/internal/dataset';
+import { DatasetFilter, HelgolandDataset, DatasetExtras } from './model/internal/dataset';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -94,6 +94,11 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter = {}): Observable<HelgolandData> {
     return this.getHandler(dataset.url).pipe(flatMap(h => h.getDatasetData(dataset, timespan, filter)));
+  }
+
+  getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras> {
+    internalId = this.checkInternalId(internalId);
+    return this.getHandler(internalId.url).pipe(flatMap(h => h.getDatasetExtras(internalId)));
   }
 
   private checkInternalId(internalId: string | InternalDatasetId) {

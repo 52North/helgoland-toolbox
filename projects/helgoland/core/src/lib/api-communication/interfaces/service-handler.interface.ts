@@ -10,7 +10,7 @@ import { Station } from '../../model/dataset-api/station';
 import { ParameterFilter } from '../../model/internal/http-requests';
 import { Timespan } from '../../model/internal/timeInterval';
 import { HelgolandData, HelgolandDataFilter } from '../model/internal/data';
-import { DatasetFilter, HelgolandDataset } from '../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../model/internal/dataset';
 import { Feature } from './../../model/dataset-api/feature';
 
 export interface IHelgolandServiceConnector {
@@ -34,6 +34,8 @@ export interface IHelgolandServiceConnector {
 
     getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]>;
     getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset>;
+
+    getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras>;
 
     getDatasetData(dataset: HelgolandDataset, timespan: Timespan, params?: HelgolandDataFilter): Observable<HelgolandData>;
 

@@ -10,15 +10,14 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {
-    DatasetApiInterface,
     HasLoadableContent,
     Mixin,
     ParameterFilter,
-    Station,
     StatusIntervalResolverService,
-    Timeseries,
     TimeseriesExtras,
-    HelgolandServicesHandlerService
+    HelgolandServicesHandlerService,
+    HelgolandStation,
+    HelgolandTimeseries
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import * as L from 'leaflet';
@@ -35,7 +34,7 @@ import { forkJoin } from 'rxjs';
     styleUrls: ['../map-selector.component.scss']
 })
 @Mixin([HasLoadableContent])
-export class StationMapSelectorComponent extends MapSelectorComponent<Station> implements OnChanges, AfterViewInit {
+export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandStation> implements OnChanges, AfterViewInit {
 
     @Input()
     public cluster: boolean;
@@ -53,7 +52,6 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
 
     constructor(
         protected statusIntervalResolver: StatusIntervalResolverService,
-        protected apiInterface: DatasetApiInterface,
         protected servicesHandler: HelgolandServicesHandlerService,
         protected mapCache: MapCache,
         protected kvDiffers: KeyValueDiffers,
@@ -82,11 +80,11 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             phenomenon: this.filter.phenomenon,
             expanded: true
         };
-        this.apiInterface.getTimeseries(this.serviceUrl, tempFilter).subscribe((timeseries: Timeseries[]) => {
+        this.servicesHandler.getDatasets(this.serviceUrl, tempFilter).subscribe(datasets => {
             this.markerFeatureGroup = L.featureGroup();
             const obsList: Array<Observable<TimeseriesExtras>> = [];
-            timeseries.forEach((ts: Timeseries) => {
-                const obs = this.apiInterface.getTimeseriesExtras(ts.id, this.serviceUrl);
+            datasets.forEach((ts: HelgolandTimeseries) => {
+                const obs = this.servicesHandler.getDatasetExtras(ts.internalId);
                 obsList.push(obs);
                 obs.subscribe((extras: TimeseriesExtras) => {
                     let marker;
@@ -114,21 +112,21 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
         });
     }
 
-    private createColoredMarker(station: Station, color: string): Layer {
+    private createColoredMarker(station: HelgolandStation, color: string): Layer {
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createFilledMarker) {
             return this.markerSelectorGenerator.createFilledMarker(station, color);
         }
         return this.createFilledMarker(station, color, 10);
     }
 
-    private createDefaultColoredMarker(station: Station): Layer {
+    private createDefaultColoredMarker(station: HelgolandStation): Layer {
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultFilledMarker) {
             return this.markerSelectorGenerator.createDefaultFilledMarker(station);
         }
         return this.createFilledMarker(station, '#000', 10);
     }
 
-    private createFilledMarker(station: Station, color: string, radius: number): Layer {
+    private createFilledMarker(station: HelgolandStation, color: string, radius: number): Layer {
         let geometry: Layer;
         if (station.geometry.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
@@ -182,7 +180,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<Station> i
             });
     }
 
-    private createDefaultGeometry(station: Station): Layer {
+    private createDefaultGeometry(station: HelgolandStation): Layer {
         let layer: Layer;
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultGeometry) {
             layer = this.markerSelectorGenerator.createDefaultGeometry(station);

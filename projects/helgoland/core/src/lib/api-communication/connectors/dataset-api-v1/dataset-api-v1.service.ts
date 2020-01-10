@@ -16,10 +16,10 @@ import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
-import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import { HelgolandStation } from '../../model/internal/station';
 import { HttpService } from './../../../dataset-api/http.service';
-import { FirstLastValue, Timeseries } from './../../../model/dataset-api/dataset';
+import { FirstLastValue, IDataset, Timeseries } from './../../../model/dataset-api/dataset';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
 
@@ -102,7 +102,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     return this.api.getTimeseries(url, filter)
-      .pipe(map(res => res.map(e => this.createDataset(e, url))));
+      .pipe(map(res => res.map(e => this.createDataset(e, url, filter))));
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
@@ -120,7 +120,16 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     }));
   }
 
-  private createDataset(res: Timeseries, url: string): HelgolandDataset {
+  getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
+    return this.api.getTimeseriesExtras(internalId.id, internalId.url);
+  }
+
+  private createDataset(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
+    if (filter.expanded) {
+      if (res instanceof Timeseries && res.firstValue) {
+        return new HelgolandTimeseries(res.id, url, res.label, res.uom, res.station, res.firstValue, res.lastValue, res.referenceValues, res.renderingHints, res.parameters);
+      }
+    }
     return new HelgolandDataset(res.id, url, res.label);
   }
 

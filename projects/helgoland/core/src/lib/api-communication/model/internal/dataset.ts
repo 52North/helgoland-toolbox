@@ -4,6 +4,7 @@ import {
     ParameterConstellation,
     ReferenceValue,
     RenderingHints,
+    StatusInterval,
 } from './../../../model/dataset-api/dataset';
 import { HelgolandStation } from './station';
 
@@ -35,6 +36,11 @@ export class HelgolandTimeseries extends HelgolandDataset {
     ) {
         super(id, url, label);
     }
+}
+
+export interface DatasetExtras {
+    license?: string;
+    statusIntervals?: StatusInterval[];
 }
 
 export interface DatasetFilter {

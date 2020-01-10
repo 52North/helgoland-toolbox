@@ -56,7 +56,7 @@ export interface D3GeneralDataPoint {
 
 export interface DataEntry {
     timestamp: number;
-    value: number | string;
+    value: number;
     xDiagCoord?: number;
     yDiagCoord?: number;
 }

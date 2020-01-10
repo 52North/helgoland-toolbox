@@ -5,7 +5,7 @@ import { TranslateTestingModule } from '../../../../../testing/translate.testing
 import { HelgolandD3Module } from './../d3.module';
 import { ExportImageButtonComponent } from './export-image-button.component';
 
-fdescribe('ExportImageButtonComponent', () => {
+describe('ExportImageButtonComponent', () => {
   let component: ExportImageButtonComponent;
   let fixture: ComponentFixture<ExportImageButtonComponent>;
 

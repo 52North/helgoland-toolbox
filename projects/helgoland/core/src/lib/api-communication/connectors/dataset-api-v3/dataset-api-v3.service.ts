@@ -17,7 +17,7 @@ import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
-import { DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
 import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from './../../model/internal/data';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
@@ -164,11 +164,15 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.api.getDatasetData(dataset.id, dataset.url, params).pipe(map(res => this.createDatasetData(dataset, res)));
   }
 
-  protected createRequestTimespan(timespan: Timespan): string {
+  getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
+    return this.api.getDatasetExtras(internalId.id, internalId.url);
+  }
+
+  private createRequestTimespan(timespan: Timespan): string {
     return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
   }
 
-  createDatasetData(dataset: HelgolandDataset, res: Data<TimeValueTuple>): HelgolandData {
+  private createDatasetData(dataset: HelgolandDataset, res: Data<TimeValueTuple>): HelgolandData {
     if (dataset instanceof HelgolandTimeseries) {
       const data = new HelgolandTimeseriesData(res.values);
       data.referenceValues = res.referenceValues ? res.referenceValues : {};

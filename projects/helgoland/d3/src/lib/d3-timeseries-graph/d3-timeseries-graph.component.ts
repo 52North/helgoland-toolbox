@@ -21,12 +21,10 @@ import {
     HelgolandServicesHandlerService,
     HelgolandTimeseries,
     HelgolandTimeseriesData,
-    InternalDatasetId,
     InternalIdHandler,
     MinMaxRange,
     SumValuesService,
     Time,
-    TimeseriesData,
     Timespan,
     TimeValueTuple,
 } from '@helgoland/core';
@@ -74,7 +72,7 @@ export class D3TimeseriesGraphComponent
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
     @Output()
-    public onClickDataPoint: EventEmitter<TimeseriesData[]> = new EventEmitter();
+    public onClickDataPoint: EventEmitter<{ timeseries: HelgolandTimeseries, data: HelgolandTimeseriesData }> = new EventEmitter();
 
     @ViewChild('d3timeseries', { static: true })
     public d3Elem: ElementRef;
@@ -444,7 +442,7 @@ export class D3TimeseriesGraphComponent
     }
 
     // adjust reference values with new structure to old one
-    private createReferenceValueData(data: Data<TimeValueTuple>, refId: string): { timestamp: number; value: string | number; }[] {
+    private createReferenceValueData(data: Data<TimeValueTuple>, refId: string): { timestamp: number; value: number; }[] {
         let refValues = data.referenceValues[refId] as any;
         if (!(refValues instanceof Array)) {
             if (refValues.valueBeforeTimespan) {
@@ -786,29 +784,9 @@ export class D3TimeseriesGraphComponent
 
     private clickDataPoint(d: DataEntry, entry: InternalDataEntry) {
         if (d !== undefined) {
-            const externalId: InternalDatasetId = this.datasetIdResolver.resolveInternalId(entry.internalId);
-            const apiurl = externalId.url;
-            const timespan: Timespan = { from: d.timestamp, to: d.timestamp };
-
-            // request all timeseries that have data for the same offering and feature
-            this.api.getTimeseries(apiurl,
-                {
-                    offering: entry.axisOptions.parameters.offering.id,
-                    feature: entry.axisOptions.parameters.feature.id
-                }).subscribe(
-                    (tsArray) => {
-                        const timeseries = [];
-                        tsArray.forEach(ts => timeseries.push(ts.id));
-
-                        // request ts data by timeseries ID for specific offering and feature
-                        this.api.getTimeseriesData(apiurl, timeseries, timespan)
-                            .subscribe(
-                                (tsData) => this.onClickDataPoint.emit(tsData),
-                                (error) => console.error(error)
-                            );
-                    },
-                    (error) => console.error(error)
-                );
+            const timeseries = this.datasetMap.get(entry.internalId) as HelgolandTimeseries;
+            const data = new HelgolandTimeseriesData([[d.timestamp, d.value as number]]);
+            this.onClickDataPoint.emit({ timeseries, data });
         }
     }
 
@@ -1563,7 +1541,7 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private setHoveringLabel(value: number | string, timestamp: number, uom: string) {
+    private setHoveringLabel(value: number, timestamp: number, uom: string) {
         let stringedValue = (typeof value === 'number') ? parseFloat(value.toPrecision(15)).toString() : value;
         this.highlightText
             .text(`${stringedValue} ${uom} ${moment(timestamp).format('DD.MM.YY HH:mm')}`)

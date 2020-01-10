@@ -9,6 +9,7 @@ import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
 import { Service } from '../../../model/dataset-api/service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
+import { DatasetExtras } from '../../model/internal/dataset';
 import { Data, TimeValueTuple } from './../../../model/dataset-api/data';
 
 export interface ApiV3Parameter {
@@ -203,6 +204,11 @@ export class ApiV3InterfaceService extends ApiInterface {
   public getDatasetData(id: string, apiUrl: string, filter?: ApiV3DatasetDataFilter): Observable<Data<TimeValueTuple>> {
     const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
     return this.requestApi<Data<TimeValueTuple>>(url, filter);
+  }
+
+  public getDatasetExtras(id: string, apiUrl: string): Observable<DatasetExtras> {
+    const url = this.createRequestUrl(apiUrl, 'timeseries', id);
+    return this.requestApi<DatasetExtras>(url + '/extras');
   }
 
   protected requestApi<T>(

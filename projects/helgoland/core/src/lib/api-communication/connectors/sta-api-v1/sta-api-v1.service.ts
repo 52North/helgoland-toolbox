@@ -4,7 +4,7 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, flatMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
-import { InternalDatasetId, InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
+import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { TimeValueTuple } from '../../../model/dataset-api/data';
 import { FirstLastValue, ParameterConstellation } from '../../../model/dataset-api/dataset';
@@ -31,7 +31,7 @@ import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.se
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter } from '../../model/internal/data';
-import { DatasetFilter, HelgolandDataset, HelgolandTimeseries } from '../../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, HelgolandDataset, HelgolandTimeseries } from '../../model/internal/dataset';
 import { HelgolandStation } from '../../model/internal/station';
 import { HelgolandTimeseriesData } from './../../model/internal/data';
 
@@ -45,7 +45,6 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
 
   constructor(
     private http: HttpService,
-    private internalDatasetId: InternalIdHandler,
     private sta: StaReadInterfaceService
   ) { }
 
@@ -277,6 +276,10 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.sta.aggregatePaging(
       this.sta.getDatastreamObservationsRelation(dataset.url, dataset.id, { $orderby: 'phenomenonTime', $filter: this.createTimespanFilter(timespan), $top: 200 })
     ).pipe(map(res => this.createData(res.value, filter)));
+  }
+
+  getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
+    return of({});
   }
 
   private createTimespanFilter(timespan: Timespan): string {
