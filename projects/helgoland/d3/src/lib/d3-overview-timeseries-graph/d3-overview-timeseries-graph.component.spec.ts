@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
-import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandD3Module } from '../d3.module';
 import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-graph.component';
@@ -12,9 +11,7 @@ describe('D3OverviewTimeseriesGraphComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [
-        DatasetApiInterfaceTesting
-      ],
+      providers: [],
       imports: [
         HelgolandCoreModule,
         HelgolandD3Module,

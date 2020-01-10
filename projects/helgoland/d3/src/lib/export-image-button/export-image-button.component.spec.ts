@@ -1,12 +1,11 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
 
-import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandD3Module } from './../d3.module';
 import { ExportImageButtonComponent } from './export-image-button.component';
 
-describe('ExportImageButtonComponent', () => {
+fdescribe('ExportImageButtonComponent', () => {
   let component: ExportImageButtonComponent;
   let fixture: ComponentFixture<ExportImageButtonComponent>;
 
@@ -20,9 +19,7 @@ describe('ExportImageButtonComponent', () => {
         TranslateTestingModule,
         HelgolandD3Module
       ],
-      providers: [
-        DatasetApiInterfaceTesting
-      ],
+      providers: [],
       declarations: [],
     }).compileComponents();
   }));

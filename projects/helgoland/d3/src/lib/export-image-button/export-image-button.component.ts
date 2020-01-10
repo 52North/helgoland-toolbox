@@ -7,7 +7,7 @@ import {
   Injector,
   Input,
 } from '@angular/core';
-import { DatasetApiInterface, DatasetOptions, Time, Timespan } from '@helgoland/core';
+import { DatasetOptions, HelgolandServicesHandlerService, HelgolandTimeseries, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -80,7 +80,7 @@ export class ExportImageButtonComponent {
   private internalWidth: number;
 
   constructor(
-    private api: DatasetApiInterface,
+    private servicesHandler: HelgolandServicesHandlerService,
     private applicationRef: ApplicationRef,
     private injector: Injector,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -168,23 +168,27 @@ export class ExportImageButtonComponent {
       const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
-        obs.push(this.api.getSingleTimeseriesByInternalId(k).pipe(map(ts => {
-          if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-            const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
-            this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-            label.append<SVGGraphicsElement>('svg:text').text(ts.label);
-            this.internalHeight += 25;
-            return {
-              label,
-              xPos: this.internalHeight - 10
-            };
-          } else {
-            return {
-              label: null,
-              xPos: 0
-            };
-          }
-        })));
+        obs.push(
+          this.servicesHandler.getDataset(k).pipe(map(ts => {
+            if (ts instanceof HelgolandTimeseries) {
+              if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+                const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+                label.append<SVGGraphicsElement>('svg:text').text(ts.label);
+                this.internalHeight += 25;
+                return {
+                  label,
+                  xPos: this.internalHeight - 10
+                };
+              } else {
+                return {
+                  label: null,
+                  xPos: 0
+                };
+              }
+            }
+          }))
+        );
       });
       return forkJoin(obs).pipe(map(elem => {
         const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
