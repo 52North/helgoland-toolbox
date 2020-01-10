@@ -1,4 +1,4 @@
-import { Timeseries } from '@helgoland/core';
+import { HelgolandTimeseries } from '@helgoland/core';
 
 export const enum LastValuePresentation {
   /**
@@ -16,6 +16,6 @@ export abstract class LastValueLabelGenerator {
   /**
    * Creates an icon label based on a given timeseries.
    */
-  public abstract createIconLabel(ts: Timeseries);
+  public abstract createIconLabel(ts: HelgolandTimeseries);
 
 }

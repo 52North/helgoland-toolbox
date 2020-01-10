@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ParameterFilter, Phenomenon, Station, Timeseries } from '@helgoland/core';
+import { HelgolandStation, ParameterFilter, Phenomenon, Timeseries } from '@helgoland/core';
 import { GeoSearchOptions, LastValuePresentation, LayerMap, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
 import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, WMSOptions } from 'leaflet';
 
@@ -21,7 +21,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
         private mapId: string
     ) { }
 
-    public createFilledMarker(station: Station, color: string): Layer {
+    public createFilledMarker(station: HelgolandStation, color: string): Layer {
         let geometry: Layer;
         if (station.geometry.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
@@ -50,11 +50,11 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
         return geometry;
     }
 
-    public createDefaultFilledMarker(station: Station): Layer {
+    public createDefaultFilledMarker(station: HelgolandStation): Layer {
         return this.createFilledMarker(station, '#fff');
     }
 
-    public createDefaultGeometry(station: Station): Layer {
+    public createDefaultGeometry(station: HelgolandStation): Layer {
         return this.createFilledMarker(station, '#ff0000');
     }
 
@@ -176,8 +176,8 @@ export class MapSelectorComponent {
         this.fitBounds = [[39.5, 3.27], [41.5, 5.67]];
     }
 
-    public onStationSelected(station: Station) {
-        console.log('Clicked station: ' + station.properties.label);
+    public onStationSelected(station: HelgolandStation) {
+        console.log('Clicked station: ' + station.label);
     }
 
     public onSelectPhenomenon(phenomenon: Phenomenon) {

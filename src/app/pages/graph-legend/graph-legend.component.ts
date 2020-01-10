@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ColorService, DatasetOptions, InternalIdHandler, Time, TimeseriesData, Timespan } from '@helgoland/core';
 import {
-    D3GeneralDataPoint,
-    D3GeneralDatasetInput,
-    D3GeneralInput,
-    D3PlotOptions,
-    HighlightOutput,
-    HoveringStyle,
-} from '@helgoland/d3';
+    ColorService,
+    DatasetOptions,
+    HelgolandTimeseries,
+    HelgolandTimeseriesData,
+    InternalIdHandler,
+    Time,
+    TimeseriesData,
+    Timespan,
+} from '@helgoland/core';
+import { D3GeneralDataPoint, D3GeneralInput, D3PlotOptions, HighlightOutput, HoveringStyle } from '@helgoland/d3';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
@@ -197,33 +199,37 @@ export class GraphLegendComponent {
      * Function that is executed as soons as a hovered datapoint is clicked.
      * @param tsData {TimeseriesData[]} array of various timeseries with data at the same timestamp
      */
-    public clickedDataPoint(tsData: TimeseriesData[]) {
+    public clickedDataPoint(tsData: {
+        timeseries: HelgolandTimeseries;
+        data: HelgolandTimeseriesData;
+    }) {
+        debugger;
         console.log(tsData);
-        const datasets: D3GeneralDatasetInput[] = [];
-        tsData.forEach(ts => {
-            const values: D3GeneralDataPoint[] = ts.data.map((val) => {
-                return { x: val.timestamp, y: val.value, date: (new Date(val.timestamp)).toUTCString() };
-            });
-            const singleTs: D3GeneralDatasetInput = {
-                data: values,
-                id: ts.id
-            };
+        // const datasets: D3GeneralDatasetInput[] = [];
+        // tsData.forEach(ts => {
+        //     const values: D3GeneralDataPoint[] = ts.data.map((val) => {
+        //         return { x: val.timestamp, y: val.value, date: (new Date(val.timestamp)).toUTCString() };
+        //     });
+        //     const singleTs: D3GeneralDatasetInput = {
+        //         data: values,
+        //         id: ts.id
+        //     };
 
-            datasets.push(singleTs);
-        });
-        const popupInput: D3GeneralInput = {
-            datasets: datasets,
-            plotOptions: {
-                // TODO: change to x and y axis label + make date boolean dynamic
-                xlabel: 'Time',
-                ylabel: 'DataPoint',
-                date: true
-            }
-        };
+        //     datasets.push(singleTs);
+        // });
+        // const popupInput: D3GeneralInput = {
+        //     datasets: datasets,
+        //     plotOptions: {
+        //         // TODO: change to x and y axis label + make date boolean dynamic
+        //         xlabel: 'Time',
+        //         ylabel: 'DataPoint',
+        //         date: true
+        //     }
+        // };
 
-        this.dialog.open(D3GeneralPopupComponent, {
-            data: popupInput
-        });
+        // this.dialog.open(D3GeneralPopupComponent, {
+        //     data: popupInput
+        // });
     }
 
     public showPopup() {
