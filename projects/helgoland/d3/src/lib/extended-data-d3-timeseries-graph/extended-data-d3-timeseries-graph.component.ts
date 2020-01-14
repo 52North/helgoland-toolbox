@@ -10,12 +10,11 @@ import {
 } from '@angular/core';
 import {
   ColorService,
-  DatasetApiInterface,
   DatasetOptions,
+  HelgolandServicesHandlerService,
   InternalIdHandler,
   SumValuesService,
   Time,
-  HelgolandServicesHandlerService,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -81,7 +80,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   constructor(
     protected iterableDiffers: IterableDiffers,
-    protected api: DatasetApiInterface,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
@@ -96,7 +94,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   ) {
     super(
       iterableDiffers,
-      api,
       datasetIdResolver,
       timeSrvc,
       timeFormatLocaleService,

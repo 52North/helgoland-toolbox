@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-    Dataset,
-    DatasetApiInterface,
+    DatasetType,
+    HelgolandLocatedProfileData,
+    HelgolandProfile,
     HelgolandServicesHandlerService,
     InternalIdHandler,
-    LocatedProfileDataEntry,
     ParameterFilter,
-    PlatformTypes,
     TimedDatasetOptions,
     Timespan,
 } from '@helgoland/core';
@@ -39,13 +38,12 @@ export class ProfileEntryComponent extends ListEntryComponent {
     @Output()
     public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
-    public dataset: Dataset;
+    public dataset: HelgolandProfile;
 
     public editableOptions: TimedDatasetOptions;
     public tempColor: string;
 
     constructor(
-        protected api: DatasetApiInterface,
         protected servicesHandler: HelgolandServicesHandlerService,
         protected internalIdHandler: InternalIdHandler,
         protected translateSrvc: TranslateService
@@ -66,26 +64,21 @@ export class ProfileEntryComponent extends ListEntryComponent {
         this.onUpdateOptions.emit(this.datasetOptions);
     }
 
-    public isMobile() {
-        if (this.dataset) {
-            return this.dataset.platformType === PlatformTypes.mobileInsitu;
-        }
-        return false;
-    }
-
     public openInCombiView(option: TimedDatasetOptions) {
         this.onOpenInCombiView.emit(option);
     }
 
     public showGeometry(option: TimedDatasetOptions) {
         const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
-        if (this.isMobile()) {
+        if (this.dataset.isMobile) {
             const timespan = new Timespan(option.timestamp);
-            this.api.getData<LocatedProfileDataEntry>(internalId.id, internalId.url, timespan).subscribe((result) => {
-                if (result.values.length === 1) {
-                    this.onShowGeometry.emit(result.values[0].geometry);
+            this.servicesHandler.getDatasetData(this.dataset, timespan).subscribe(
+                result => {
+                    if (result.values.length === 1 && result instanceof HelgolandLocatedProfileData) {
+                        this.onShowGeometry.emit(result.values[0].geometry);
+                    }
                 }
-            });
+            );
         } else {
             this.servicesHandler.getStation(this.dataset.parameters.platform.id, internalId.url)
                 .subscribe((station) => this.onShowGeometry.emit(station.geometry));
@@ -96,10 +89,11 @@ export class ProfileEntryComponent extends ListEntryComponent {
         const params: ParameterFilter = {};
         if (lang) { params.lang = lang; }
         this.loading = true;
-        this.api.getDataset(this.internalId.id, this.internalId.url, params).subscribe((dataset) => {
-            this.dataset = dataset;
-            this.loading = false;
-        });
+        this.servicesHandler.getDataset(this.internalId, { type: DatasetType.Profile }).subscribe(
+            dataset => this.dataset = dataset,
+            error => console.error(error),
+            () => this.loading = false
+        );
     }
 
 }

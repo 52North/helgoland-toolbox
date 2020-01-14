@@ -1,5 +1,6 @@
 import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
 import {
+    DatasetParameterConstellation,
     FirstLastValue,
     ParameterConstellation,
     ReferenceValue,
@@ -53,7 +54,7 @@ export class HelgolandTrajectory extends HelgolandDataset {
         public uom: string,
         public firstValue: FirstLastValue,
         public lastValue: FirstLastValue,
-        public parameters: ParameterConstellation,
+        public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);
     }
@@ -66,12 +67,13 @@ export class HelgolandProfile extends HelgolandDataset {
         public url: string,
         public label: string,
         public uom: string,
+        public isMobile: boolean,
         // public station: HelgolandStation,
         // public firstValue: FirstLastValue,
         // public lastValue: FirstLastValue,
         // public referenceValues: ReferenceValue[],
         // public renderingHints: RenderingHints,
-        // public parameters: ParameterConstellation,
+        public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);
     }

@@ -136,7 +136,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
     if (res.firstValue) { firstValue = res.firstValue; }
     if (res.lastValue) { lastValue = res.lastValue; }
-    const station = this.createStation(res.station);
+    const station = this.createHelgolandStation(res.station);
     return new HelgolandTimeseries(
       res.id,
       url,
@@ -157,7 +157,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   //   return paramFilter;
   // }
 
-  protected createStation(station: Station): HelgolandStation {
+  protected createHelgolandStation(station: Station): HelgolandStation {
     return new HelgolandStation(station.id, station.properties.label, station.geometry);
   }
 

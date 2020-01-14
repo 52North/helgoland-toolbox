@@ -12,13 +12,13 @@ import {
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
-import { DatasetApiInterface } from '../dataset-api/api-interface';
 import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { DatasetOptions } from '../model/internal/options';
 import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { HasLoadableContent } from '../model/mixins/has-loadable-content';
 import { Time } from '../time/time.service';
+import { HelgolandServicesHandlerService } from './../api-communication/helgoland-services-handler.service';
 import { PresenterMessage } from './presenter-message';
 
 const equal = require('deep-equal');
@@ -109,7 +109,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService

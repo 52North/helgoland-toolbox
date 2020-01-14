@@ -5,14 +5,24 @@ import { catchError, map } from 'rxjs/operators';
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
-import { LocatedTimeValueEntry, TimeValueTuple } from '../../../model/dataset-api/data';
+import {
+  LocatedProfileDataEntry,
+  LocatedTimeValueEntry,
+  ProfileDataEntry,
+  TimeValueTuple,
+} from '../../../model/dataset-api/data';
 import { Dataset } from '../../../model/dataset-api/dataset';
 import { PlatformTypes } from '../../../model/dataset-api/enums';
+import { Platform } from '../../../model/dataset-api/platform';
+import { Station } from '../../../model/dataset-api/station';
+import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import {
   HelgolandData,
   HelgolandDataFilter,
+  HelgolandLocatedProfileData,
+  HelgolandProfileData,
   HelgolandTimeseriesData,
   HelgolandTrajectoryData,
 } from '../../model/internal/data';
@@ -53,6 +63,14 @@ export class DatasetApiV2Service extends DatasetApiV1Service {
     );
   }
 
+  getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
+    return this.api.getPlatforms(url, filter).pipe(map(res => res.map(pf => this.createStation(pf))));
+  }
+
+  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
+    return this.api.getPlatform(id, url, filter).pipe(map(platform => this.createStation(platform)));
+  }
+
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     return this.api.getDatasets(url, filter)
       .pipe(map(res => res.map(e => this.createDataset(e, url, filter))));
@@ -77,6 +95,16 @@ export class DatasetApiV2Service extends DatasetApiV1Service {
     if (dataset instanceof HelgolandTrajectory) {
       return this.api.getData<LocatedTimeValueEntry>(dataset.id, dataset.url, timespan)
         .pipe(map(res => new HelgolandTrajectoryData(res.values)));
+    }
+
+    if (dataset instanceof HelgolandProfile) {
+      if (dataset.isMobile) {
+        return this.api.getData<LocatedProfileDataEntry>(dataset.id, dataset.url, timespan)
+          .pipe(map(res => new HelgolandLocatedProfileData(res.values)));
+      } else {
+        return this.api.getData<ProfileDataEntry>(dataset.id, dataset.url, timespan)
+          .pipe(map(res => new HelgolandProfileData(res.values)));
+      }
     }
   }
 
@@ -128,19 +156,32 @@ export class DatasetApiV2Service extends DatasetApiV1Service {
           url,
           dataset.label,
           dataset.uom,
+          dataset.platformType === PlatformTypes.mobileInsitu,
+          dataset.parameters
         );
       }
     }
     return new HelgolandDataset(dataset.id, url, dataset.label);
   }
 
-
-
   // private createStationFilter(filter: HelgolandStationFilter): ParameterFilter {
   //   const paramFilter: ParameterFilter = {};
   //   if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
   //   return paramFilter;
   // }
+
+  private createStation(platform: Platform): Station {
+    return {
+      id: platform.id,
+      label: platform.label,
+      geometry: platform.geometry,
+      properties: {
+        id: platform.id,
+        label: platform.label,
+        timeseries: {}
+      }
+    }
+  }
 
 }
 

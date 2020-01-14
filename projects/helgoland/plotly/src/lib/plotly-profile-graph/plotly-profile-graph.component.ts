@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from '@angular/core';
 import {
-    DatasetApiInterface,
     DatasetPresenterComponent,
-    IDataset,
+    DatasetType,
+    HelgolandProfile,
+    HelgolandServicesHandlerService,
     InternalIdHandler,
     PresenterHighlight,
     ProfileDataEntry,
@@ -15,7 +16,7 @@ import * as d3 from 'd3';
 import * as Plotly from 'plotly.js';
 
 interface RawData {
-    dataset: IDataset;
+    dataset: HelgolandProfile;
     datas: ProfileDataEntry[];
     options: TimedDatasetOptions[];
 }
@@ -78,12 +79,12 @@ export class PlotlyProfileGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateSrvc: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
+        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -101,12 +102,12 @@ export class PlotlyProfileGraphComponent
     protected timeIntervalChanges(): void { }
 
     protected addDataset(id: string, url: string): void {
-        this.api.getDataset(id, url).subscribe((dataset) => {
+        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Profile }).subscribe(dataset => {
             const options = this.datasetOptions.get(dataset.internalId);
             options.forEach((option) => {
                 if (option.timestamp) {
                     const timespan = new Timespan(option.timestamp);
-                    this.api.getData<ProfileDataEntry>(id, url, timespan).subscribe((data) => {
+                    this.servicesHandler.getDatasetData(dataset, timespan).subscribe(data => {
                         if (data.values.length === 1) {
                             if (this.rawData.has(dataset.internalId)) {
                                 this.rawData.get(dataset.internalId).datas.push(data.values[0]);
@@ -202,7 +203,7 @@ export class PlotlyProfileGraphComponent
         this.updateAxis();
     }
 
-    private createXAxis(dataset: IDataset, data: ProfileDataEntry): string {
+    private createXAxis(dataset: HelgolandProfile, data: ProfileDataEntry): string {
         let axis;
         for (const key in this.layout) {
             if (this.layout.hasOwnProperty(key) && key.startsWith('xaxis') && this.layout[key].title === dataset.uom) {
@@ -233,7 +234,7 @@ export class PlotlyProfileGraphComponent
         return axis.id;
     }
 
-    private createYAxis(dataset: IDataset, data: ProfileDataEntry): string {
+    private createYAxis(dataset: HelgolandProfile, data: ProfileDataEntry): string {
         let axis;
         // find axis
         for (const key in this.layout) {

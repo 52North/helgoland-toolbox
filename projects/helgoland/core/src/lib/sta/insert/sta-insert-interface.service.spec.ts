@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import moment from 'moment';
 
-import { DatasetApiInterface } from '../../dataset-api/api-interface';
 import { HttpService } from '../../dataset-api/http.service';
 import { SplittedDataDatasetApiInterface } from '../../dataset-api/splitted-data-api-interface.service';
 import { StaDeleteInterfaceService } from '../delete/sta-delete-interface.service';
@@ -41,7 +40,6 @@ describe('StaInsertInterfaceService', () => {
         const read: StaReadInterfaceService = TestBed.get(StaReadInterfaceService);
         const del: StaDeleteInterfaceService = TestBed.get(StaDeleteInterfaceService);
         const insert: StaInsertInterfaceService = TestBed.get(StaInsertInterfaceService);
-        const datasetApi: DatasetApiInterface = TestBed.get(SplittedDataDatasetApiInterface);
         // clearAll(read, del);
         // setTimeout(() => addCompleteThing(insert, read), 1000);
         // addFluggsLocations(datasetApi, insert);
@@ -135,20 +133,6 @@ function addSingleDataStream(insert: StaInsertInterfaceService) {
             // TODO: implement
         }
     );
-}
-
-function addFluggsLocations(datasetApi: DatasetApiInterface, insert: StaInsertInterfaceService) {
-    datasetApi.getStations(fluggs).subscribe(stations => {
-        stations.forEach(station => {
-            const loc: InsertLocation = {
-                name: station.properties.label,
-                description: station.properties.id,
-                location: station.geometry,
-                encodingType: 'application/vnd.geo+json'
-            };
-            insert.insertLocation(staUrl, loc).subscribe(res => console.log(`Insert location with id:${res['@iot.id']}`), error => console.error(error.error));
-        });
-    });
 }
 
 function clearAll(read: StaReadInterfaceService, del: StaDeleteInterfaceService) {

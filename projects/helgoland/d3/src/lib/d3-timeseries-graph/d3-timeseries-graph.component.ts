@@ -13,9 +13,9 @@ import {
 import {
     ColorService,
     Data,
-    DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
+    DatasetType,
     HelgolandData,
     HelgolandDataset,
     HelgolandServicesHandlerService,
@@ -150,7 +150,6 @@ export class D3TimeseriesGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected timeFormatLocaleService: D3TimeFormatLocaleService,
@@ -163,7 +162,7 @@ export class D3TimeseriesGraphComponent
         protected graphId: D3GraphId,
         protected servicesHandler: HelgolandServicesHandlerService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
@@ -219,7 +218,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesHandler.getDataset({ id, url }).subscribe(
+        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Timeseries }).subscribe(
             res => this.loadAddedDataset(res),
             error => console.error(error)
         );

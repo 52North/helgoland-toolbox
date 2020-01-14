@@ -12,7 +12,6 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import {
-    DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
     DatasetType,
@@ -134,13 +133,12 @@ export class D3TrajectoryGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
         protected servicesHandler: HelgolandServicesHandlerService,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateService);
         this.presenterOptions = this.defaultGraphOptions;
     }
 

@@ -1,6 +1,5 @@
 import { Component, IterableDiffers, OnInit } from '@angular/core';
 import {
-  DatasetApiInterface,
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetTableData,
@@ -34,13 +33,12 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
 
   constructor(
     protected iterableDiffers: IterableDiffers,
-    protected api: DatasetApiInterface,
     protected servicesHandler: HelgolandServicesHandlerService,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
     protected translateSrvc: TranslateService
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
+    super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateSrvc);
   }
 
   public ngOnInit() {
