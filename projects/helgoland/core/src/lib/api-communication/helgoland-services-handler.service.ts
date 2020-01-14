@@ -14,8 +14,15 @@ import { ParameterFilter } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
-import { HelgolandData, HelgolandDataFilter } from './model/internal/data';
-import { DatasetFilter, HelgolandDataset, DatasetExtras } from './model/internal/dataset';
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData, HelgolandTrajectoryData } from './model/internal/data';
+import {
+  DatasetExtras,
+  DatasetFilter,
+  DatasetType,
+  HelgolandDataset,
+  HelgolandTimeseries,
+  HelgolandTrajectory,
+} from './model/internal/dataset';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
@@ -87,10 +94,38 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return this.getHandler(url).pipe(flatMap(h => h.getDatasets(url, filter)));
   }
 
+  getDataset(internalId: string | InternalDatasetId, filter: {
+    phenomenon?: string,
+    category?: string,
+    procedure?: string,
+    feature?: string,
+    offering?: string,
+    expanded?: boolean,
+    lang?: string,
+    type: DatasetType.Timeseries
+  }): Observable<HelgolandTimeseries>;
+
+  getDataset(internalId: string | InternalDatasetId, filter: {
+    phenomenon?: string,
+    category?: string,
+    procedure?: string,
+    feature?: string,
+    offering?: string,
+    expanded?: boolean,
+    lang?: string,
+    type: DatasetType.Trajectory
+  }): Observable<HelgolandTrajectory>;
+
+  getDataset(internalId: string | InternalDatasetId, filter?: DatasetFilter): Observable<HelgolandDataset>;
+
   getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter = {}): Observable<HelgolandDataset> {
     internalId = this.checkInternalId(internalId);
     return this.getHandler(internalId.url).pipe(flatMap(h => h.getDataset(internalId, filter)));
   }
+
+  getDatasetData(dataset: HelgolandTimeseries, timespan: Timespan, filter?: HelgolandDataFilter): Observable<HelgolandTimeseriesData>;
+
+  getDatasetData(dataset: HelgolandTrajectory, timespan: Timespan, filter?: HelgolandDataFilter): Observable<HelgolandTrajectoryData>;
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter = {}): Observable<HelgolandData> {
     return this.getHandler(dataset.url).pipe(flatMap(h => h.getDatasetData(dataset, timespan, filter)));

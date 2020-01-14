@@ -1,8 +1,7 @@
-import { ReferenceValues } from '../../../model/dataset-api/data';
+import { LocatedTimeValueEntry, ReferenceValues } from '../../../model/dataset-api/data';
 import { TimeValueTuple } from './../../../model/dataset-api/data';
 
-export interface HelgolandData {
-}
+export interface HelgolandData { }
 
 export class HelgolandTimeseriesData implements HelgolandData {
 
@@ -12,6 +11,13 @@ export class HelgolandTimeseriesData implements HelgolandData {
 
     constructor(
         public values: TimeValueTuple[],
+    ) { }
+}
+
+export class HelgolandTrajectoryData implements HelgolandData {
+
+    constructor(
+        public values: LocatedTimeValueEntry[]
     ) { }
 }
 

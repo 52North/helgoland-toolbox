@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { BasicAuthInterceptorService, BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   DatasetApiV1ConnectorProvider,
   DatasetApiV3ConnectorProvider,
@@ -9,12 +10,15 @@ import {
   DefinedTimespan,
   DefinedTimespanService,
   HelgolandCoreModule,
+  HTTP_SERVICE_INTERCEPTORS,
 } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandD3Module } from '../d3.module';
 import { HoveringStyle } from '../model/d3-plot-options';
+import { BasicAuthTestingProviders } from './../../../../../testing/basic-auth.testing';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
 import {
   D3GraphPanZoomInteractionComponent,
@@ -94,7 +98,14 @@ describe('D3TimeseriesGraphComponent - function', () => {
         DefinedTimespanService,
         DatasetApiV1ConnectorProvider,
         DatasetApiV3ConnectorProvider,
-        DatasetStaConnectorProvider
+        DatasetStaConnectorProvider,
+        BasicAuthTestingProviders,
+        SettingsServiceTestingProvider,
+        {
+          provide: HTTP_SERVICE_INTERCEPTORS,
+          useClass: BasicAuthInterceptorService,
+          multi: true
+        }
       ],
       declarations: [
         D3TimeseriesGraphComponent,
@@ -103,6 +114,10 @@ describe('D3TimeseriesGraphComponent - function', () => {
         D3GraphCopyrightComponent
       ]
     }).compileComponents();
+  }));
+
+  beforeEach(inject([BasicAuthServiceMaintainer], (basicAuthServiceMaintainer: BasicAuthServiceMaintainer) => {
+    basicAuthServiceMaintainer.registerService('url');
   }));
 
   beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {

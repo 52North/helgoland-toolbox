@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HelgolandServicesHandlerService, Station, Timeseries } from '@helgoland/core';
+import { HelgolandServicesHandlerService, Station, HelgolandDataset } from '@helgoland/core';
 
-export class ExtendedTimeseries extends Timeseries {
+export class SelectableDataset extends HelgolandDataset {
     public selected: boolean;
 }
 
@@ -25,9 +25,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public phenomenonId: string;
 
     @Output()
-    public onSelectionChanged: EventEmitter<Timeseries[]> = new EventEmitter<Timeseries[]>();
+    public onSelectionChanged: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
 
-    public timeseriesList: ExtendedTimeseries[] = [];
+    public timeseriesList: SelectableDataset[] = [];
 
     public counter: number;
 
@@ -47,7 +47,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
                             this.counter++;
                             this.servicesHandler.getDataset({ id: id, url: this.url })
                                 .subscribe((result) => {
-                                    this.prepareResult(result as ExtendedTimeseries, this.defaultSelected);
+                                    this.prepareResult(result as SelectableDataset, this.defaultSelected);
                                     this.counter--;
                                 }, (error) => {
                                     this.counter--;
@@ -58,12 +58,12 @@ export class DatasetByStationSelectorComponent implements OnInit {
         }
     }
 
-    public toggle(timeseries: ExtendedTimeseries) {
+    public toggle(timeseries: SelectableDataset) {
         timeseries.selected = !timeseries.selected;
         this.updateSelection();
     }
 
-    protected prepareResult(result: ExtendedTimeseries, selection: boolean) {
+    protected prepareResult(result: SelectableDataset, selection: boolean) {
         result.selected = selection;
         this.timeseriesList.push(result);
         this.updateSelection();

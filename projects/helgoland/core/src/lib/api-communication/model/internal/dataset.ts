@@ -8,6 +8,12 @@ import {
 } from './../../../model/dataset-api/dataset';
 import { HelgolandStation } from './station';
 
+export enum DatasetType {
+    Timeseries,
+    Trajectory,
+    Profile
+}
+
 export class HelgolandDataset {
     public internalId: string;
 
@@ -38,6 +44,39 @@ export class HelgolandTimeseries extends HelgolandDataset {
     }
 }
 
+export class HelgolandTrajectory extends HelgolandDataset {
+
+    constructor(
+        public id: string,
+        public url: string,
+        public label: string,
+        public uom: string,
+        public firstValue: FirstLastValue,
+        public lastValue: FirstLastValue,
+        public parameters: ParameterConstellation,
+    ) {
+        super(id, url, label);
+    }
+}
+
+export class HelgolandProfile extends HelgolandDataset {
+
+    constructor(
+        public id: string,
+        public url: string,
+        public label: string,
+        public uom: string,
+        // public station: HelgolandStation,
+        // public firstValue: FirstLastValue,
+        // public lastValue: FirstLastValue,
+        // public referenceValues: ReferenceValue[],
+        // public renderingHints: RenderingHints,
+        // public parameters: ParameterConstellation,
+    ) {
+        super(id, url, label);
+    }
+}
+
 export interface DatasetExtras {
     license?: string;
     statusIntervals?: StatusInterval[];
@@ -51,4 +90,5 @@ export interface DatasetFilter {
     offering?: string;
     expanded?: boolean;
     lang?: string;
+    type?: DatasetType;
 }

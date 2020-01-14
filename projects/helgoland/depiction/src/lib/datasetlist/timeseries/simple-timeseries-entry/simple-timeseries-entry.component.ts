@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import {
   Dataset,
+  DatasetFilter,
+  DatasetType,
   HelgolandServicesHandlerService,
   HelgolandTimeseries,
   InternalIdHandler,
-  ParameterFilter,
   Timeseries,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,16 +42,11 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   }
 
   protected loadDataset(lang?: string): void {
-    const params: ParameterFilter = {};
+    const params: DatasetFilter = {};
     if (lang) { params.lang = lang; }
     this.loading = true;
-    this.servicesHandler.getDataset(this.internalId, params).subscribe(
-      dataset => {
-        if (dataset instanceof HelgolandTimeseries) {
-          this.setDataset(dataset);
-        }
-      }
-    );
+    this.servicesHandler.getDataset(this.internalId, { ...params, type: DatasetType.Timeseries })
+      .subscribe(dataset => this.setDataset(dataset));
   }
 
   protected setDataset(timeseries: HelgolandTimeseries) {

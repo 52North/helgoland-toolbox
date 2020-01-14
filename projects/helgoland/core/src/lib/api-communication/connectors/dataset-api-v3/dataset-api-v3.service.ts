@@ -17,7 +17,7 @@ import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
-import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
 import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from './../../model/internal/data';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
@@ -49,8 +49,8 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.http.client().get(url).pipe(
       map(res => {
         if (res instanceof Array) {
-          // check if endpoint 'platforms' exists
-          return res.findIndex(e => e.id === 'platforms') >= 0;
+          // check if endpoint 'trajectories' exists
+          return res.findIndex(e => e.id === 'trajectories') >= 0;
         } else {
           return false;
         }
@@ -113,27 +113,33 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
-    return this.api.getDatasets(url, filter).pipe(map(res => res.map(ds => this.createDataset(ds, url))));
+    return this.api.getDatasets(url, filter).pipe(map(res => res.map(ds => this.createDataset(ds, url, filter))));
   }
 
-  private createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
-    if (ds.firstValue || ds.lastValue) {
-      if (ds.datasetType === ApiV3DatasetTypes.Timeseries) {
-        const firstValue: FirstLastValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
-        const lastValue: FirstLastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
-        const parameters: ParameterConstellation = {
-          category: { id: ds.parameters.category.id, label: ds.parameters.category.label },
-          feature: { id: ds.feature.id, label: ds.feature.properties.label },
-          offering: { id: ds.parameters.offering.id, label: ds.parameters.offering.label },
-          phenomenon: { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label },
-          procedure: { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label },
-          service: { id: ds.parameters.service.id, label: ds.parameters.service.label }
-        };
-        const station = this.createHelgolandStation(ds.feature);
-        return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, station, firstValue, lastValue, [], null, parameters);
-      }
-    } else {
-      return new HelgolandDataset(ds.id, url, ds.label);
+  private createDataset(ds: ApiV3Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
+    switch (filter.type) {
+      case DatasetType.Timeseries:
+        if (ds.firstValue || ds.lastValue) {
+          if (ds.datasetType === ApiV3DatasetTypes.Timeseries) {
+            const firstValue: FirstLastValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
+            const lastValue: FirstLastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
+            const tsparameters: ParameterConstellation = {
+              category: { id: ds.parameters.category.id, label: ds.parameters.category.label },
+              feature: { id: ds.feature.id, label: ds.feature.properties.label },
+              offering: { id: ds.parameters.offering.id, label: ds.parameters.offering.label },
+              phenomenon: { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label },
+              procedure: { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label },
+              service: { id: ds.parameters.service.id, label: ds.parameters.service.label }
+            };
+            const station = this.createHelgolandStation(ds.feature);
+            return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, station, firstValue, lastValue, [], null, tsparameters);
+          }
+        } else {
+          return new HelgolandDataset(ds.id, url, ds.label);
+        }
+        break;
+      default:
+        return new HelgolandDataset(ds.id, url, ds.label);
     }
   }
 
@@ -153,7 +159,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
-    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url)));
+    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url, filter)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {

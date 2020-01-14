@@ -10,6 +10,7 @@ import {
   OnChanges,
 } from '@angular/core';
 import {
+  DatasetType,
   HasLoadableContent,
   HelgolandServicesHandlerService,
   HelgolandTimeseries,
@@ -98,10 +99,10 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   private createMarkersBySeriesIDs(ids: string[]) {
     const obsList: Array<Observable<any>> = [];
     ids.forEach(id => {
-      const tsObs = this.servicesHandler.getDataset(id); // is id and internal id
-      obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val as HelgolandTimeseries).pipe(tap(res => {
+      const tsObs = this.servicesHandler.getDataset(id, { type: DatasetType.Timeseries });
+      obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val).pipe(tap(res => {
         this.markerFeatureGroup.addLayer(res);
-        res.on('click', () => this.onSelected.emit(val as HelgolandTimeseries));
+        res.on('click', () => this.onSelected.emit(val));
       })))));
     });
     this.finalizeMarkerObservables(obsList);

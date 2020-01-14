@@ -7,7 +7,7 @@ import {
   Injector,
   Input,
 } from '@angular/core';
-import { DatasetOptions, HelgolandServicesHandlerService, HelgolandTimeseries, Time, Timespan } from '@helgoland/core';
+import { DatasetOptions, DatasetType, HelgolandServicesHandlerService, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -169,23 +169,21 @@ export class ExportImageButtonComponent {
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
         obs.push(
-          this.servicesHandler.getDataset(k).pipe(map(ts => {
-            if (ts instanceof HelgolandTimeseries) {
-              if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-                const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
-                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-                label.append<SVGGraphicsElement>('svg:text').text(ts.label);
-                this.internalHeight += 25;
-                return {
-                  label,
-                  xPos: this.internalHeight - 10
-                };
-              } else {
-                return {
-                  label: null,
-                  xPos: 0
-                };
-              }
+          this.servicesHandler.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
+            if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+              const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+              this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+              label.append<SVGGraphicsElement>('svg:text').text(ts.label);
+              this.internalHeight += 25;
+              return {
+                label,
+                xPos: this.internalHeight - 10
+              };
+            } else {
+              return {
+                label: null,
+                xPos: 0
+              };
             }
           }))
         );

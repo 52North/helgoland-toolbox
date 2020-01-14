@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
-import { InternalDatasetId, InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
+import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { TimeValueTuple } from '../../../model/dataset-api/data';
 import { Feature } from '../../../model/dataset-api/feature';
@@ -29,17 +29,16 @@ import { HelgolandTimeseries } from './../../model/internal/dataset';
 export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   constructor(
-    private http: HttpService,
-    private api: DatasetApiInterface,
-    private internalIdHandler: InternalIdHandler
+    protected http: HttpService,
+    protected api: DatasetApiInterface
   ) { }
 
   canHandle(url: string): Observable<boolean> {
     return this.http.client().get(url).pipe(
       map(res => {
         if (res instanceof Array) {
-          // check if endpoint 'platforms' not exists
-          return res.findIndex(e => e.id === 'platforms') === -1;
+          // check if endpoint 'trajectories' not exists
+          return res.findIndex(e => e.id === 'trajectories') === -1 && res.findIndex(e => e.id === 'platforms') === -1;
         } else {
           return false;
         }
@@ -102,12 +101,12 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     return this.api.getTimeseries(url, filter)
-      .pipe(map(res => res.map(e => this.createDataset(e, url, filter))));
+      .pipe(map(res => res.map(e => this.mapTimeseries(e, url, filter))));
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     return this.api.getSingleTimeseries(internalId.id, internalId.url, filter)
-      .pipe(map(res => this.createTimeseries(res, internalId.url)));
+      .pipe(map(res => this.createHelgolandTimeseries(res, internalId.url)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
@@ -124,7 +123,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.api.getTimeseriesExtras(internalId.id, internalId.url);
   }
 
-  private createDataset(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
+  protected mapTimeseries(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
     if (filter.expanded) {
       if (res instanceof Timeseries && res.firstValue) {
         return new HelgolandTimeseries(res.id, url, res.label, res.uom, res.station, res.firstValue, res.lastValue, res.referenceValues, res.renderingHints, res.parameters);
@@ -133,7 +132,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     return new HelgolandDataset(res.id, url, res.label);
   }
 
-  private createTimeseries(res: Timeseries, url: string): HelgolandDataset {
+  protected createHelgolandTimeseries(res: Timeseries, url: string): HelgolandTimeseries {
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
     if (res.firstValue) { firstValue = res.firstValue; }
     if (res.lastValue) { lastValue = res.lastValue; }
@@ -158,7 +157,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   //   return paramFilter;
   // }
 
-  private createStation(station: Station): HelgolandStation {
+  protected createStation(station: Station): HelgolandStation {
     return new HelgolandStation(station.id, station.properties.label, station.geometry);
   }
 

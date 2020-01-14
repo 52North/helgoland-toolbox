@@ -1,4 +1,4 @@
-import { HelgolandTimeseries } from '../api-communication/model/internal/dataset';
+import { DatasetType, HelgolandTimeseries } from '../api-communication/model/internal/dataset';
 import { BarRenderingHints, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
 import { HelgolandServicesHandlerService } from './../api-communication/helgoland-services-handler.service';
@@ -22,11 +22,8 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
                     this.saveState();
                     resolve(true);
                 } else {
-                    this.servicesHandler.getDataset(internalId).subscribe(dataset => {
-                        if (dataset instanceof HelgolandTimeseries) {
-                            this.addLoadedDataset(dataset, resolve);
-                        }
-                    });
+                    this.servicesHandler.getDataset(internalId, { type: DatasetType.Timeseries })
+                        .subscribe(dataset => this.addLoadedDataset(dataset, resolve));
                 }
             }
         });

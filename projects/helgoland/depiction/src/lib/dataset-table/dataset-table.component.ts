@@ -4,6 +4,7 @@ import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetTableData,
+  DatasetType,
   HelgolandServicesHandlerService,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
@@ -145,11 +146,8 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     this.timeseriesArray.length += 1;  // create new empty slot
     this.preparedColors.push('darkgrey');
     this.additionalStylesheet.innerHTML += '\r\n';
-    this.servicesHandler.getDataset({ id, url }).subscribe(ds => {
-      if (ds instanceof HelgolandTimeseries) {
-        this.addTimeseries(ds);
-      }
-    });
+    this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Timeseries })
+      .subscribe(ds => this.addTimeseries(ds));
   }
 
   protected datasetOptionsChanged(internalId: string, options: DatasetOptions): void {

@@ -15,7 +15,9 @@ import {
     DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
-    IDataset,
+    DatasetType,
+    HelgolandServicesHandlerService,
+    HelgolandTrajectory,
     InternalIdHandler,
     LocatedTimeValueEntry,
     Time,
@@ -53,7 +55,7 @@ interface DataEntry extends LocatedTimeValueEntry {
 }
 
 interface DatasetConstellation {
-    dataset?: IDataset;
+    dataset?: HelgolandTrajectory;
     data?: LocatedTimeValueEntry[];
     yScale?: ScaleLinear<number, number>;
     drawOptions?: DrawOptions;
@@ -133,6 +135,7 @@ export class D3TrajectoryGraphComponent
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected api: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService
@@ -188,10 +191,11 @@ export class D3TrajectoryGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.api.getDataset(id, url).subscribe((dataset) => {
-            this.datasetMap.set(dataset.internalId, { dataset });
-            this.loadData(dataset);
-        });
+        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Trajectory })
+            .subscribe(dataset => {
+                this.datasetMap.set(dataset.internalId, { dataset });
+                this.loadData(dataset);
+            });
     }
 
     protected removeDataset(internalId: string): void {
@@ -222,16 +226,13 @@ export class D3TrajectoryGraphComponent
         this.drawLineGraph();
     }
 
-    private loadData(dataset: IDataset) {
+    private loadData(dataset: HelgolandTrajectory) {
         if (this.timespan &&
             this.datasetOptions.has(dataset.internalId) &&
             this.datasetOptions.get(dataset.internalId).visible) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option = this.datasetOptions.get(dataset.internalId);
-            this.api.getData<LocatedTimeValueEntry>(dataset.id, dataset.url, buffer,
-                {
-                    generalize: option.generalize
-                })
+            this.servicesHandler.getDatasetData(dataset, buffer, { generalize: option.generalize })
                 .subscribe((result) => {
                     this.dataLength = result.values.length;
                     this.datasetMap.get(dataset.internalId).data = result.values;
