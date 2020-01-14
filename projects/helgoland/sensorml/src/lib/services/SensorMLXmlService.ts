@@ -1,7 +1,4 @@
-import {
-    AbstractProcess,
-} from '../model/sml';
-
+import { AbstractProcess } from '../model/sml';
 import { AbstractXmlService } from './AbstractXmlService';
 import { SensorMLDocumentEncoder } from './xml/SensorMLDocumentEncoder';
 import { SensorMLDocumentDecoder } from './xml/SensorMLDocumentDecoder';
