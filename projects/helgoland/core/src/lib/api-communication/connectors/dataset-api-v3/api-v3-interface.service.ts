@@ -2,12 +2,10 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ApiInterface } from '../../../abstract-services/api-interface';
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
-import { Service } from '../../../model/dataset-api/service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
 import { Data, TimeValueTuple } from './../../../model/dataset-api/data';
@@ -69,6 +67,32 @@ export interface ApiV3Platform extends ApiV3Parameter {
   label: string;
 }
 
+export interface ApiV3Service extends ApiV3Parameter {
+  href: string;
+  label: string;
+  extras: string[];
+  version: string;
+  type: string;
+  supportsFirstLatest: boolean;
+  quantities: {
+    categories: number;
+    sampling: number;
+    datasets: {
+      profiles: number;
+      timeseries: number;
+      total: number;
+      individualObservations: number;
+      trajectories: number;
+    }
+    measuringPrograms: number;
+    features: number;
+    procedures: number;
+    offerings: number;
+    phenomena: number;
+    platforms: number;
+  };
+}
+
 export interface ApiV3Dataset extends ApiV3Parameter {
   href: string;
   label: string;
@@ -110,14 +134,26 @@ export enum ApiV3DatasetTypes {
   Trajectory = 'trajectory'
 }
 
-export interface ApiV3DatasetFilter {
-  expanded?: boolean;
+export enum ApiV3ObservationTypes {
+  Simple = 'simple'
+}
+
+export enum ApiV3ValueTypes {
+  Text = 'text',
+  Quantity = 'quantity'
+}
+
+export interface ApiV3ParameterFilter {
   datasetTypes?: ApiV3DatasetTypes;
+  observationTypes?: ApiV3ObservationTypes;
+  valuesTypes?: ApiV3ValueTypes;
+  expanded?: boolean;
   feature?: string;
   offering?: string;
   phenomenon?: string;
   category?: string;
   procedure?: string;
+  lang?: string;
 }
 
 export interface ApiV3DatasetDataFilter {
@@ -135,68 +171,67 @@ export class ApiV3InterfaceService extends ApiInterface {
     protected translate: TranslateService
   ) { super(); }
 
-  public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
+  public getServices(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Service[]> {
     const url = this.createRequestUrl(apiUrl, 'services');
-    return this.requestApi<Service[]>(url, params, options)
-      .pipe(map(res => res.map(e => this.createService(e, apiUrl))));
+    return this.requestApi<ApiV3Service[]>(url, params, options);
   }
 
-  public getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category[]> {
+  public getCategories(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category[]> {
     const url = this.createRequestUrl(apiUrl, 'categories');
     return this.requestApi<ApiV3Category[]>(url, params, options);
   }
 
-  public getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category> {
+  public getCategory(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category> {
     const url = this.createRequestUrl(apiUrl, 'categories', id);
     return this.requestApi<ApiV3Category>(url, params, options);
   }
 
-  public getOfferings(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering[]> {
+  public getOfferings(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering[]> {
     const url = this.createRequestUrl(apiUrl, 'offerings');
     return this.requestApi<ApiV3Offering[]>(url, params, options);
   }
 
-  public getOffering(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering> {
+  public getOffering(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Offering> {
     const url = this.createRequestUrl(apiUrl, 'offerings', id);
     return this.requestApi<ApiV3Offering>(url, params, options);
   }
 
-  public getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon[]> {
+  public getPhenomena(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon[]> {
     const url = this.createRequestUrl(apiUrl, 'phenomena');
     return this.requestApi<ApiV3Phenomenon[]>(url, params, options);
   }
 
-  public getPhenomenon(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon> {
+  public getPhenomenon(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Phenomenon> {
     const url = this.createRequestUrl(apiUrl, 'phenomena', id);
     return this.requestApi<ApiV3Phenomenon>(url, params, options);
   }
 
-  public getFeatures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature[]> {
+  public getFeatures(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature[]> {
     const url = this.createRequestUrl(apiUrl, 'features');
     return this.requestApi<ApiV3Feature[]>(url, params, options);
   }
 
-  public getFeature(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature> {
+  public getFeature(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Feature> {
     const url = this.createRequestUrl(apiUrl, 'features', id);
     return this.requestApi<ApiV3Feature>(url, params, options);
   }
 
-  public getProcedures(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure[]> {
+  public getProcedures(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure[]> {
     const url = this.createRequestUrl(apiUrl, 'procedures');
     return this.requestApi<ApiV3Procedure[]>(url, params, options);
   }
 
-  public getProcedure(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure> {
+  public getProcedure(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Procedure> {
     const url = this.createRequestUrl(apiUrl, 'procedures', id);
     return this.requestApi<ApiV3Procedure>(url, params, options);
   }
 
-  public getDatasets(apiUrl: string, params?: ApiV3DatasetFilter, options?: HttpRequestOptions): Observable<ApiV3Dataset[]> {
+  public getDatasets(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Dataset[]> {
     const url = this.createRequestUrl(apiUrl, 'datasets');
     return this.requestApi<ApiV3Dataset[]>(url, params, options);
   }
 
-  public getDataset(id: string, apiUrl: string, params?: ApiV3DatasetFilter): Observable<ApiV3Dataset> {
+  public getDataset(id: string, apiUrl: string, params?: ApiV3ParameterFilter): Observable<ApiV3Dataset> {
     const url = this.createRequestUrl(apiUrl, 'datasets', id);
     return this.requestApi<ApiV3Dataset>(url, params);
   }
@@ -232,14 +267,6 @@ export class ApiV3InterfaceService extends ApiInterface {
     Object.getOwnPropertyNames(params)
       .forEach((key) => httpParams = httpParams.set(key, params[key]));
     return httpParams;
-  }
-
-  private createService(service: Service, url: string): Service {
-    service.apiUrl = url;
-    if (service.quantities && service.quantities.datasets && service.quantities.datasets['total']) {
-      service.quantities.datasets = service.quantities.datasets['total'];
-    }
-    return service;
   }
 
 }

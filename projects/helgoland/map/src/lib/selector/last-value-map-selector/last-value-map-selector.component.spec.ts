@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from '@helgoland/core';
 import { DatasetApiInterfaceTesting } from 'projects/testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from 'projects/testing/translate.testing.module';
 
@@ -23,6 +23,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
       ],
       providers: [
         DatasetApiInterfaceTesting,
+        DatasetApiV1ConnectorProvider,
         MapCache
       ],
       declarations: []
@@ -39,7 +40,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', (done) => {
     component.lastValuePresentation = LastValuePresentation.Textual;
     component.lastValueSeriesIDs = [
       'https://www.fluggs.de/sos2/api/v1/__51',
@@ -54,6 +55,8 @@ describe('LastValueMapSelectorComponent with external Data', () => {
       // component.lastValueSeriesIDs.splice(1, 1);
       // component.fitBounds = [[49.5, 3.27], [51.5, 5.67]];
       fixture.detectChanges();
+      expect(component).toBeTruthy();
+      done();
     }, 2000);
   });
 });

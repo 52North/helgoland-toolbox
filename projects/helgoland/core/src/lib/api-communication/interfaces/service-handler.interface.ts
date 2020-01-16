@@ -5,32 +5,33 @@ import { Category } from '../../model/dataset-api/category';
 import { Offering } from '../../model/dataset-api/offering';
 import { Phenomenon } from '../../model/dataset-api/phenomenon';
 import { Procedure } from '../../model/dataset-api/procedure';
-import { Service } from '../../model/dataset-api/service';
 import { Station } from '../../model/dataset-api/station';
-import { ParameterFilter } from '../../model/internal/http-requests';
 import { Timespan } from '../../model/internal/timeInterval';
 import { HelgolandData, HelgolandDataFilter } from '../model/internal/data';
 import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../model/internal/dataset';
+import { HelgolandParameterFilter } from '../model/internal/filter';
 import { Feature } from './../../model/dataset-api/feature';
+import { HelgolandService } from './../model/internal/service';
 
 export interface IHelgolandServiceConnector {
-    getStations(url: string, filter: ParameterFilter): Observable<Station[]>;
-    getStation(id: string, url: string, filter: ParameterFilter): Observable<Station>;
 
-    getCategories(url: string, filter: ParameterFilter): Observable<Category[]>;
-    getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category>;
+    getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]>;
+    getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station>;
 
-    getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]>;
-    getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering>;
+    getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]>;
+    getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable<Category>;
 
-    getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]>;
-    getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon>;
+    getOfferings(url: string, filter: HelgolandParameterFilter): Observable<Offering[]>;
+    getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering>;
 
-    getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]>;
-    getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure>;
+    getPhenomena(url: string, filter: HelgolandParameterFilter): Observable<Phenomenon[]>;
+    getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon>;
 
-    getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]>;
-    getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature>;
+    getProcedures(url: string, filter: HelgolandParameterFilter): Observable<Procedure[]>;
+    getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<Procedure>;
+
+    getFeatures(url: string, filter: HelgolandParameterFilter): Observable<Feature[]>;
+    getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature>;
 
     getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]>;
     getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset>;
@@ -39,7 +40,7 @@ export interface IHelgolandServiceConnector {
 
     getDatasetData(dataset: HelgolandDataset, timespan: Timespan, params?: HelgolandDataFilter): Observable<HelgolandData>;
 
-    getServices(apiUrl: string, filter: ParameterFilter): Observable<Service[]>;
+    getServices(apiUrl: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]>;
 }
 
 export interface IHelgolandServiceConnectorHandler extends IHelgolandServiceConnector {

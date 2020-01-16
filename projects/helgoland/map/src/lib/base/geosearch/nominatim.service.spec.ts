@@ -1,11 +1,14 @@
 import { HttpClientModule } from '@angular/common/http';
-import { inject, TestBed } from '@angular/core/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { Point } from 'geojson';
 
 import { NominatimGeoSearchService } from './nominatim.service';
 
 describe('NominatimService', () => {
+
+  let nominatimService: NominatimGeoSearchService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -16,12 +19,16 @@ describe('NominatimService', () => {
     });
   });
 
+  beforeEach(inject([NominatimGeoSearchService], s => {
+    nominatimService = s;
+  }));
+
   it('should be created', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
     expect(service).toBeTruthy();
   }));
 
-  it('should search with point geometry in result', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
-    service.searchTerm('gent', {
+  it('should search with point geometry in result', async(() => {
+    nominatimService.searchTerm('gent', {
       asPointGeometry: true,
       addressdetails: true,
       countrycodes: ['be'],
@@ -31,12 +38,12 @@ describe('NominatimService', () => {
     });
   }));
 
-  it('should reverse search', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
+  it('should reverse search', async(() => {
     const point: Point = {
       type: 'Point',
       coordinates: [51.9350437, 7.6520628]
     };
-    service.reverse(point, {
+    nominatimService.reverse(point, {
       acceptLanguage: 'be'
     }).subscribe(res => {
       expect(res.address).toBeTruthy();

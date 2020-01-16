@@ -16,12 +16,14 @@ import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
-import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../../model/internal/dataset';
+import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
+import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandStation } from '../../model/internal/station';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, IDataset, Timeseries } from './../../../model/dataset-api/dataset';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
+import { HelgolandService } from './../../model/internal/service';
 
 @Injectable({
   providedIn: 'root'
@@ -47,59 +49,67 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
-  getServices(url: string, filter: ParameterFilter): Observable<Service[]> {
-    return this.api.getServices(url, filter);
+  getServices(url: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]> {
+    return this.api.getServices(url, this.createFilter(filter))
+      .pipe(map(res => res.map(s => this.createService(s, filter))));
   }
 
-  getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
+  getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getCategories(url, filter);
   }
 
-  getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
+  getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable<Category> {
     return this.api.getCategory(id, url, filter);
   }
 
-  getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+  getOfferings(url: string, filter: HelgolandParameterFilter): Observable<Offering[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getOfferings(url, filter);
   }
 
-  getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+  getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering> {
     return this.api.getOffering(id, url, filter);
   }
 
-  getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+  getPhenomena(url: string, filter: HelgolandParameterFilter): Observable<Phenomenon[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getPhenomena(url, filter);
   }
 
-  getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+  getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon> {
     return this.api.getPhenomenon(id, url, filter);
   }
 
-  getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+  getProcedures(url: string, filter: HelgolandParameterFilter): Observable<Procedure[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getProcedures(url, filter);
   }
 
-  getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+  getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<Procedure> {
     return this.api.getProcedure(id, url, filter);
   }
 
-  getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+  getFeatures(url: string, filter: HelgolandParameterFilter): Observable<Feature[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getFeatures(url, filter);
   }
 
-  getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+  getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature> {
     return this.api.getFeature(id, url, filter);
   }
 
-  getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
+  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getStations(url, filter);
   }
 
-  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
+  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
     return this.api.getStation(id, url, filter);
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.api.getTimeseries(url, filter)
       .pipe(map(res => res.map(e => this.mapTimeseries(e, url, filter))));
   }
@@ -121,6 +131,29 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
     return this.api.getTimeseriesExtras(internalId.id, internalId.url);
+  }
+
+  private createService(service: Service, filter: HelgolandParameterFilter): HelgolandService {
+    let hasTimeseries = true;
+    if (filter.type && filter.type !== DatasetType.Timeseries) {
+      hasTimeseries = false;
+    }
+    return new HelgolandService(
+      service.id,
+      service.apiUrl,
+      service.label,
+      service.type,
+      service.version,
+      {
+        categories: hasTimeseries ? service.quantities.categories : 0,
+        features: hasTimeseries ? service.quantities.features : 0,
+        offerings: hasTimeseries ? service.quantities.offerings : 0,
+        phenomena: hasTimeseries ? service.quantities.phenomena : 0,
+        procedures: hasTimeseries ? service.quantities.procedures : 0,
+        datasets: hasTimeseries ? service.quantities.timeseries : 0,
+        stations: hasTimeseries ? service.quantities.stations : 0
+      }
+    );
   }
 
   protected mapTimeseries(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
@@ -151,14 +184,26 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
-  // private createStationFilter(filter: HelgolandStationFilter): ParameterFilter {
-  //   const paramFilter: ParameterFilter = {};
-  //   if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
-  //   return paramFilter;
-  // }
+  private createFilter(filter: HelgolandParameterFilter): ParameterFilter {
+    const paramFilter: ParameterFilter = {};
+    if (filter.platform) { paramFilter.station = filter.platform; }
+    if (filter.category) { paramFilter.category = filter.category; }
+    if (filter.offering) { paramFilter.offering = filter.offering; }
+    if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
+    if (filter.procedure) { paramFilter.procedure = filter.procedure; }
+    if (filter.feature) { paramFilter.feature = filter.feature; }
+    if (filter.expanded) { paramFilter.expanded = filter.expanded; }
+    if (filter.lang) { paramFilter.lang = filter.lang; }
+    if (filter.service) { paramFilter.service = filter.service; }
+    return paramFilter;
+  }
 
   protected createHelgolandStation(station: Station): HelgolandStation {
     return new HelgolandStation(station.id, station.properties.label, station.geometry);
+  }
+
+  private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
+    return filter.type && filter.type !== DatasetType.Timeseries;
   }
 
 }

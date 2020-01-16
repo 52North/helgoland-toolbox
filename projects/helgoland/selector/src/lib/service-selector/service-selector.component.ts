@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BlacklistedService, DatasetApi, ParameterFilter, Service } from '@helgoland/core';
+import { BlacklistedService, DatasetApi, HelgolandParameterFilter, HelgolandService } from '@helgoland/core';
 
 import { ServiceSelectorService } from './service-selector.service';
 
@@ -23,18 +23,18 @@ export class ServiceSelectorComponent implements OnInit {
     public supportStations: boolean;
 
     @Input()
-    public selectedService: Service;
+    public selectedService: HelgolandService;
 
     @Input()
-    public filter: ParameterFilter;
+    public filter: HelgolandParameterFilter;
 
     @Input()
     public showUnresolvableServices: boolean;
 
     @Output()
-    public onServiceSelected: EventEmitter<Service> = new EventEmitter<Service>();
+    public onServiceSelected: EventEmitter<HelgolandService> = new EventEmitter<HelgolandService>();
 
-    public services: Service[];
+    public services: HelgolandService[];
     public unResolvableServices: DatasetApi[];
     public loadingCount = 0;
 
@@ -56,10 +56,7 @@ export class ServiceSelectorComponent implements OnInit {
                             this.loadingCount--;
                             if (res && res instanceof Array) {
                                 res.forEach((entry) => {
-                                    if (entry.quantities && (entry.quantities.platforms > 0 || this.supportStations && entry.quantities.stations > 0)) {
-                                        this.services.push(entry);
-                                    } else if (entry['features'] && entry['features'].quantities && entry['features'].quantities.platforms > 0) {
-                                        entry.quantities = entry['features'].quantities;
+                                    if (entry.quantities.datasets) {
                                         this.services.push(entry);
                                     }
                                 });
@@ -78,12 +75,12 @@ export class ServiceSelectorComponent implements OnInit {
         }
     }
 
-    public isSelected(service: Service) {
+    public isSelected(service: HelgolandService) {
         if (!this.selectedService) { return false; }
         return this.selectedService.id === service.id && this.selectedService.apiUrl === service.apiUrl;
     }
 
-    public selectService(service: Service) {
+    public selectService(service: HelgolandService) {
         this.onServiceSelected.emit(service);
     }
 }

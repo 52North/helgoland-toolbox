@@ -70,11 +70,12 @@ describe('StationMapSelectorComponent', () => {
         httpTestingController.verify();
     });
 
-    it('should create', () => {
-        component.serviceUrl = testUrl;
-        component.onSelected.subscribe(res => console.log(res));
-        component.filter = { phenomenon: '1' };
-        component.statusIntervals = true;
-        // component.cluster = true;
-    });
+    // it('should create', () => {
+    //     component.serviceUrl = testUrl;
+    //     component.onSelected.subscribe(res => console.log(res));
+    //     component.filter = { phenomenon: '1' };
+    //     component.statusIntervals = true;
+    //     // component.cluster = true;
+    //     expect(component).toBeTruthy();
+    // });
 });

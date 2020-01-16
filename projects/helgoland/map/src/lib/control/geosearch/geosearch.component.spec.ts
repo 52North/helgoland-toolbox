@@ -41,7 +41,7 @@ describe('GeosearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should search with point geometry in result', () => {
+  it('should search with point geometry in result', (done) => {
     component.searchTerm = 'gent';
     component.options = {
       asPointGeometry: true
@@ -49,6 +49,7 @@ describe('GeosearchComponent', () => {
     component.triggerSearch();
     component.onResultChanged.subscribe((res: GeoSearchResult) => {
       expect(res.geometry.type === 'Point').toBeTruthy();
+      done();
     });
   });
 

@@ -11,28 +11,36 @@ import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
-import { Service } from '../../../model/dataset-api/service';
 import { Station, TimeseriesCollection } from '../../../model/dataset-api/station';
-import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
-import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
+import {
+  DatasetExtras,
+  DatasetFilter,
+  DatasetType,
+  HelgolandDataset,
+  HelgolandTimeseries,
+} from '../../model/internal/dataset';
+import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from './../../model/internal/data';
-import { HelgolandTimeseries } from './../../model/internal/dataset';
+import { HelgolandService } from './../../model/internal/service';
 import { HelgolandStation } from './../../model/internal/station';
 import {
   ApiV3Category,
   ApiV3Dataset,
   ApiV3DatasetDataFilter,
-  ApiV3DatasetFilter,
   ApiV3DatasetTypes,
   ApiV3Feature,
   ApiV3InterfaceService,
+  ApiV3ObservationTypes,
   ApiV3Offering,
+  ApiV3ParameterFilter,
   ApiV3Phenomenon,
   ApiV3Procedure,
+  ApiV3Service,
+  ApiV3ValueTypes,
 } from './api-v3-interface.service';
 
 @Injectable({
@@ -59,61 +67,62 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     );
   }
 
-  getServices(url: string, filter: ParameterFilter): Observable<Service[]> {
-    filter.expanded = true;
-    return this.api.getServices(url, filter);
+  getServices(url: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]> {
+    const clone = Object.create(filter);
+    clone.expanded = true;
+    return this.api.getServices(url, this.createFilter(clone)).pipe(map(res => res.map(s => this.createService(s, url, filter))));
   }
 
-  getCategories(url: string, filter: ParameterFilter): Observable<Category[]> {
+  getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {
     return this.api.getCategories(url, this.createFilter(filter)).pipe(map(res => res.map(c => this.createCategory(c))));
   }
 
-  getCategory(id: string, url: string, filter: ParameterFilter): Observable<Category> {
+  getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable<Category> {
     return this.api.getCategory(id, url, this.createFilter(filter)).pipe(map(res => this.createCategory(res)));
   }
 
-  getOfferings(url: string, filter: ParameterFilter): Observable<Offering[]> {
+  getOfferings(url: string, filter: HelgolandParameterFilter): Observable<Offering[]> {
     return this.api.getOfferings(url, this.createFilter(filter)).pipe(map(res => res.map(o => this.createOffering(o))));
   }
 
-  getOffering(id: string, url: string, filter: ParameterFilter): Observable<Offering> {
+  getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering> {
     return this.api.getOffering(id, url, this.createFilter(filter)).pipe(map(res => this.createOffering(res)));
   }
 
-  getPhenomena(url: string, filter: ParameterFilter): Observable<Phenomenon[]> {
+  getPhenomena(url: string, filter: HelgolandParameterFilter): Observable<Phenomenon[]> {
     return this.api.getPhenomena(url, this.createFilter(filter)).pipe(map(res => res.map(p => this.createPhenomenon(p))));
   }
 
-  getPhenomenon(id: string, url: string, filter: ParameterFilter): Observable<Phenomenon> {
+  getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon> {
     return this.api.getPhenomenon(id, url, this.createFilter(filter)).pipe(map(res => this.createPhenomenon(res)));
   }
 
-  getProcedures(url: string, filter: ParameterFilter): Observable<Procedure[]> {
+  getProcedures(url: string, filter: HelgolandParameterFilter): Observable<Procedure[]> {
     return this.api.getProcedures(url, this.createFilter(filter)).pipe(map(res => res.map(p => this.createProcedure(p))));
   }
 
-  getProcedure(id: string, url: string, filter: ParameterFilter): Observable<Procedure> {
+  getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<Procedure> {
     return this.api.getProcedure(id, url, this.createFilter(filter)).pipe(map(res => this.createProcedure(res)));
   }
 
-  getFeatures(url: string, filter: ParameterFilter): Observable<Feature[]> {
+  getFeatures(url: string, filter: HelgolandParameterFilter): Observable<Feature[]> {
     return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createFeature(f))));
   }
 
-  getFeature(id: string, url: string, filter: ParameterFilter): Observable<Feature> {
+  getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature> {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createFeature(res)));
   }
 
-  getStations(url: string, filter: ParameterFilter): Observable<Station[]> {
+  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
     return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
   }
 
-  getStation(id: string, url: string, filter: ParameterFilter): Observable<Station> {
+  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
-    return this.api.getDatasets(url, filter).pipe(map(res => res.map(ds => this.createDataset(ds, url, filter))));
+    return this.api.getDatasets(url, this.createFilter(filter)).pipe(map(res => res.map(ds => this.createDataset(ds, url, filter))));
   }
 
   private createDataset(ds: ApiV3Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
@@ -147,15 +156,39 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return new HelgolandStation(feature.id, feature.properties.label, feature.geometry);
   }
 
-  private createDatasetFilter(params: DatasetFilter): ApiV3DatasetFilter {
-    const filter: ApiV3DatasetFilter = {};
-    if (params.category) { filter.category = params.category; }
-    if (params.feature) { filter.feature = params.feature; }
-    if (params.offering) { filter.offering = params.offering; }
-    if (params.phenomenon) { filter.phenomenon = params.phenomenon; }
-    if (params.procedure) { filter.procedure = params.procedure; }
-    if (params.expanded) { filter.expanded = params.expanded; }
-    return filter;
+  private createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
+    // TODO: remove fix for dataset count, use just service.quantities.datasets.total for dataset
+    let datasets;
+    switch (filter.type) {
+      case DatasetType.Timeseries:
+        datasets = service.quantities.datasets.timeseries;
+        break;
+      case DatasetType.Trajectory:
+        datasets = service.quantities.datasets.trajectories;
+        break;
+      case DatasetType.Profile:
+        datasets = service.quantities.datasets.profiles;
+        break;
+      default:
+        datasets = service.quantities.datasets.total;
+        break;
+    }
+    return new HelgolandService(
+      service.id,
+      url,
+      service.label,
+      service.type,
+      service.version,
+      {
+        categories: service.quantities.categories,
+        features: service.quantities.features,
+        offerings: service.quantities.offerings,
+        phenomena: service.quantities.phenomena,
+        procedures: service.quantities.procedures,
+        datasets: datasets,
+        platforms: service.quantities.platforms
+      }
+    );
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
@@ -188,14 +221,35 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  private createFilter(filter: ParameterFilter): ParameterFilter {
-    const paramFilter: ParameterFilter = {};
-    if (filter.category) { paramFilter.category = filter.category; }
-    if (filter.offering) { paramFilter.offering = filter.offering; }
-    if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
-    if (filter.procedure) { paramFilter.procedure = filter.procedure; }
-    if (filter.feature) { paramFilter.feature = filter.feature; }
-    return paramFilter;
+  private createFilter(filter: HelgolandParameterFilter): ApiV3ParameterFilter {
+    const apiFilter: ApiV3ParameterFilter = {};
+    if (filter.category) { apiFilter.category = filter.category; }
+    if (filter.offering) { apiFilter.offering = filter.offering; }
+    if (filter.phenomenon) { apiFilter.phenomenon = filter.phenomenon; }
+    if (filter.procedure) { apiFilter.procedure = filter.procedure; }
+    if (filter.feature) { apiFilter.feature = filter.feature; }
+    if (filter.expanded) { apiFilter.expanded = filter.expanded; }
+    if (filter.lang) { apiFilter.lang = filter.lang; }
+    switch (filter.type) {
+      case DatasetType.Timeseries:
+        apiFilter.datasetTypes = ApiV3DatasetTypes.Timeseries;
+        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
+        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        break;
+      case DatasetType.Trajectory:
+        apiFilter.datasetTypes = ApiV3DatasetTypes.Trajectory;
+        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
+        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        break;
+      case DatasetType.Profile:
+        apiFilter.datasetTypes = ApiV3DatasetTypes.Profile;
+        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
+        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        break;
+      default:
+        break;
+    }
+    return apiFilter;
   }
 
   private createStation(feature: ApiV3Feature): Station {

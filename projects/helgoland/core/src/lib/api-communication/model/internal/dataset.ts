@@ -10,9 +10,9 @@ import {
 import { HelgolandStation } from './station';
 
 export enum DatasetType {
-    Timeseries,
-    Trajectory,
-    Profile
+    Timeseries = 'timeseries',
+    Trajectory = 'trajectory',
+    Profile = 'profile'
 }
 
 export class HelgolandDataset {

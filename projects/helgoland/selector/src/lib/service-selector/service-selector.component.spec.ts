@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { DatasetType, HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { ServiceSelectorComponent } from './service-selector.component';
@@ -32,8 +32,8 @@ describe('ServiceSelectorComponent', () => {
     //   url: 'url-to-test'
     // }];
     component.filter = {
-      locale: 'de',
-      valueTypes: 'quantity'
+      lang: 'de',
+      type: DatasetType.Timeseries
     };
     fixture.detectChanges();
   });

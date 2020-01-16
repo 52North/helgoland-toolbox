@@ -80,36 +80,39 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandS
             phenomenon: this.filter.phenomenon,
             expanded: true
         };
-        this.servicesHandler.getDatasets(this.serviceUrl, tempFilter).subscribe(datasets => {
-            this.markerFeatureGroup = L.featureGroup();
-            const obsList: Array<Observable<TimeseriesExtras>> = [];
-            datasets.forEach((ts: HelgolandTimeseries) => {
-                const obs = this.servicesHandler.getDatasetExtras(ts.internalId);
-                obsList.push(obs);
-                obs.subscribe((extras: TimeseriesExtras) => {
-                    let marker;
-                    if (extras.statusIntervals) {
-                        if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
-                            const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
-                            if (interval) { marker = this.createColoredMarker(ts.station, interval.color); }
+        this.servicesHandler.getDatasets(this.serviceUrl, tempFilter).subscribe(
+            datasets => {
+                this.markerFeatureGroup = L.featureGroup();
+                const obsList: Array<Observable<TimeseriesExtras>> = [];
+                datasets.forEach((ts: HelgolandTimeseries) => {
+                    const obs = this.servicesHandler.getDatasetExtras(ts.internalId);
+                    obsList.push(obs);
+                    obs.subscribe((extras: TimeseriesExtras) => {
+                        let marker;
+                        if (extras.statusIntervals) {
+                            if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
+                                const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
+                                if (interval) { marker = this.createColoredMarker(ts.station, interval.color); }
+                            }
                         }
-                    }
-                    if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
-                    marker.on('click', () => {
-                        this.onSelected.emit(ts.station);
+                        if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
+                        marker.on('click', () => {
+                            this.onSelected.emit(ts.station);
+                        });
+                        this.markerFeatureGroup.addLayer(marker);
                     });
-                    this.markerFeatureGroup.addLayer(marker);
                 });
-            });
 
-            forkJoin(obsList).subscribe(() => {
-                this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
-                if (this.map) { this.map.invalidateSize(); }
-                this.isContentLoading(false);
-            });
+                forkJoin(obsList).subscribe(() => {
+                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds());
+                    if (this.map) { this.map.invalidateSize(); }
+                    this.isContentLoading(false);
+                });
 
-            if (this.map) { this.markerFeatureGroup.addTo(this.map); }
-        });
+                if (this.map) { this.markerFeatureGroup.addTo(this.map); }
+            },
+            error => console.error(error)
+        );
     }
 
     private createColoredMarker(station: HelgolandStation, color: string): Layer {

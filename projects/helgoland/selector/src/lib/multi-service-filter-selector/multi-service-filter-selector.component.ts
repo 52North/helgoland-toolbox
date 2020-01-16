@@ -1,10 +1,16 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Filter, HelgolandServicesHandlerService, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
+import {
+    Filter,
+    HelgolandParameterFilter,
+    HelgolandServicesHandlerService,
+    LanguageChangNotifier,
+    Parameter,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
     url: string;
-    filter?: ParameterFilter;
+    filter?: HelgolandParameterFilter;
 }
 
 export enum MultiServiceFilterEndpoint {
@@ -116,7 +122,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.loading--;
     }
 
-    private setItems(res: FilteredParameter[], prevfilter: ParameterFilter, url: string, service: string): void {
+    private setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
         res.forEach((entry) => {
             const filter: Filter = {
