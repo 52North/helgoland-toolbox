@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, Timeseries } from '@helgoland/core';
+import { Required, HelgolandTimeseries } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
 import { FacetSearch } from '../../facet-search-model';
@@ -13,9 +13,9 @@ export class ResultListComponent implements OnInit, OnDestroy {
 
   @Input() @Required public facetSearchService: FacetSearch;
 
-  @Output() public selected: EventEmitter<Timeseries> = new EventEmitter();
+  @Output() public selected: EventEmitter<HelgolandTimeseries> = new EventEmitter();
 
-  public timeseries: Timeseries[];
+  public timeseries: HelgolandTimeseries[];
 
   private resultSubs: Subscription;
 
@@ -30,7 +30,7 @@ export class ResultListComponent implements OnInit, OnDestroy {
     this.resultSubs.unsubscribe();
   }
 
-  public timeseriesSelected(ts: Timeseries) {
+  public timeseriesSelected(ts: HelgolandTimeseries) {
     this.selected.emit(ts);
   }
 

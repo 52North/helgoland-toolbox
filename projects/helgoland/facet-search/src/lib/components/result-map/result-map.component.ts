@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, Station, Timeseries } from '@helgoland/core';
+import { Required, HelgolandPlatform, HelgolandTimeseries } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
@@ -29,7 +29,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public selectSingleStation = false;
 
-  @Output() public selected: EventEmitter<Timeseries | { station: Station, url: string }> = new EventEmitter();
+  @Output() public selected: EventEmitter<HelgolandTimeseries | { station: HelgolandPlatform, url: string }> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
   private resultsSubs: Subscription;
@@ -59,7 +59,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private fetchResults(ts: Timeseries[]) {
+  private fetchResults(ts: HelgolandTimeseries[]) {
     if (this.map) {
       if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
       if (this.cluster) {
@@ -68,11 +68,11 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         this.markerFeatureGroup = L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const stations = new Map<string, { station: Station, url: string }>();
+        const stations = new Map<string, { station: HelgolandPlatform, url: string }>();
         ts.forEach(e => {
-          const id = `${e.station.id}-${e.url}`;
+          const id = `${e.platform.id}-${e.url}`;
           if (!stations.has(id)) {
-            stations.set(id, { station: e.station, url: e.url });
+            stations.set(id, { station: e.platform, url: e.url });
           }
         });
         stations.forEach(v => {
@@ -99,7 +99,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createStationGeometry(station: Station, url: string): L.GeoJSON {
+  private createStationGeometry(station: HelgolandPlatform, url: string): L.GeoJSON {
     if (station) {
       const geometry = geoJSON(station.geometry);
       geometry.on('click', () => this.selected.emit({ station, url }));
@@ -107,9 +107,9 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createTsGeometry(ts: Timeseries) {
-    if (ts.station) {
-      const geometry = geoJSON(ts.station.geometry);
+  private createTsGeometry(ts: HelgolandTimeseries) {
+    if (ts.platform) {
+      const geometry = geoJSON(ts.platform.geometry);
       geometry.on('click', () => this.selected.emit(ts));
       return geometry;
     }

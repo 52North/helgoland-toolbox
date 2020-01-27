@@ -164,8 +164,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private createFilledMarker(ts: HelgolandTimeseries, color: string, radius: number): Layer {
     let geometry: Layer;
-    if (ts.station.geometry.type === 'Point') {
-      const point = ts.station.geometry as GeoJSON.Point;
+    if (ts.platform.geometry.type === 'Point') {
+      const point = ts.platform.geometry as GeoJSON.Point;
       geometry = circleMarker([point.coordinates[1], point.coordinates[0]], {
         color: '#000',
         fillColor: color,
@@ -174,7 +174,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
         weight: 2
       });
     } else {
-      geometry = geoJSON(ts.station.geometry, {
+      geometry = geoJSON(ts.platform.geometry, {
         style: () => ({
           color: '#000',
           fillColor: color,
@@ -192,8 +192,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   private createLabeledMarker(ts: HelgolandTimeseries): Observable<Layer> {
     return new Observable<Layer>(observer => {
       const icon = this.lastValueLabelGenerator.createIconLabel(ts);
-      if (ts.station.geometry.type === 'Point') {
-        const point = ts.station.geometry as GeoJSON.Point;
+      if (ts.platform.geometry.type === 'Point') {
+        const point = ts.platform.geometry as GeoJSON.Point;
         const genMarker = marker([point.coordinates[1], point.coordinates[0]], { icon });
         this.setId(genMarker, ts.internalId);
         observer.next(genMarker);

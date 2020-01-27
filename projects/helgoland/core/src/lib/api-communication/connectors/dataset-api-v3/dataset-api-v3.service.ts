@@ -11,7 +11,7 @@ import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
-import { Station, TimeseriesCollection } from '../../../model/dataset-api/station';
+import { TimeseriesCollection } from '../../../model/dataset-api/station';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
 import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
@@ -25,8 +25,8 @@ import {
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { FirstLastValue, ParameterConstellation } from './../../../model/dataset-api/dataset';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from './../../model/internal/data';
+import { HelgolandPlatform } from './../../model/internal/platform';
 import { HelgolandService } from './../../model/internal/service';
-import { HelgolandStation } from './../../model/internal/station';
 import {
   ApiV3Category,
   ApiV3Dataset,
@@ -113,11 +113,11 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createFeature(res)));
   }
 
-  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
+  getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
     return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
   }
 
-  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
     return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
   }
 
@@ -140,8 +140,8 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
               procedure: { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label },
               service: { id: ds.parameters.service.id, label: ds.parameters.service.label }
             };
-            const station = this.createHelgolandStation(ds.feature);
-            return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, station, firstValue, lastValue, [], null, tsparameters);
+            const platform = this.createHelgolandPlatform(ds.feature);
+            return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, platform, firstValue, lastValue, [], null, tsparameters);
           }
         } else {
           return new HelgolandDataset(ds.id, url, ds.label);
@@ -152,8 +152,8 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     }
   }
 
-  private createHelgolandStation(feature: ApiV3Feature): HelgolandStation {
-    return new HelgolandStation(feature.id, feature.properties.label, feature.geometry);
+  private createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
+    return new HelgolandPlatform(feature.id, feature.properties.label, {}, feature.geometry);
   }
 
   private createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
@@ -252,7 +252,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
     return apiFilter;
   }
 
-  private createStation(feature: ApiV3Feature): Station {
+  private createStation(feature: ApiV3Feature): HelgolandPlatform {
     const timeseries: TimeseriesCollection = {};
     for (const key in feature.properties.datasets) {
       if (feature.properties.datasets.hasOwnProperty(key)) {
@@ -270,16 +270,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
         };
       }
     }
-    return {
-      id: feature.id,
-      geometry: feature.geometry,
-      label: feature.properties.label,
-      properties: {
-        id: feature.id,
-        label: feature.properties.label,
-        timeseries
-      }
-    };
+    return new HelgolandPlatform(feature.id, feature.properties.label, timeseries, feature.geometry);
   }
 
   private createCategory(category: ApiV3Category): Category {

@@ -20,7 +20,6 @@ import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Platform } from '../../../model/dataset-api/platform';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
-import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
@@ -44,7 +43,7 @@ import {
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandService } from '../../model/internal/service';
-import { HelgolandStation } from '../../model/internal/station';
+import { HelgolandPlatform } from './../../model/internal/platform';
 
 @Injectable({
   providedIn: 'root'
@@ -75,12 +74,12 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
       .pipe(map(res => res.map(s => this.createV2Service(s, filter))));
   }
 
-  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
-    return this.api.getPlatforms(url, this.createFilter(filter)).pipe(map(res => res.map(pf => this.createStation(pf))));
+  getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
+    return this.api.getPlatforms(url, this.createFilter(filter)).pipe(map(res => res.map(pf => this.createHelgolandPlatform(pf))));
   }
 
-  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
-    return this.api.getPlatform(id, url, filter).pipe(map(platform => this.createStation(platform)));
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
+    return this.api.getPlatform(id, url, filter).pipe(map(platform => this.createHelgolandPlatform(platform)));
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {
@@ -169,7 +168,7 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
       case DatasetType.Timeseries:
         if (dataset.parameters) {
           // TODO: ggf station nachholen
-          const station = new HelgolandStation(dataset.parameters.platform.id, dataset.parameters.platform.label, null);
+          const station = new HelgolandPlatform(dataset.parameters.platform.id, dataset.parameters.platform.label, null);
           return new HelgolandTimeseries(
             dataset.id,
             url,
@@ -227,8 +226,7 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
         phenomena: s.quantities.phenomena,
         procedures: s.quantities.procedures,
         datasets: s.quantities.datasets,
-        platforms: s.quantities.platforms,
-        stations: s.quantities.stations
+        platforms: 0 + (s.quantities.platforms ? s.quantities.platforms : 0) + (s.quantities.stations ? s.quantities.stations : 0),
       }
     );
     return service;
@@ -265,17 +263,8 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
   //   return paramFilter;
   // }
 
-  private createStation(platform: Platform): Station {
-    return {
-      id: platform.id,
-      label: platform.label,
-      geometry: platform.geometry,
-      properties: {
-        id: platform.id,
-        label: platform.label,
-        timeseries: {}
-      }
-    };
+  private createHelgolandPlatform(platform: Platform): HelgolandPlatform {
+    return new HelgolandPlatform(platform.id, platform.label, {}, platform.geometry);
   }
 
 }

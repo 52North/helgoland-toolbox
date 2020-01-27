@@ -48,7 +48,7 @@ export * from './lib/api-communication/model/internal/data';
 export * from './lib/api-communication/model/internal/dataset';
 export * from './lib/api-communication/model/internal/filter';
 export * from './lib/api-communication/model/internal/service';
-export * from './lib/api-communication/model/internal/station';
+export * from './lib/api-communication/model/internal/platform';
 
 export { Language } from './lib/language/model/language';
 export { LanguageChangNotifier } from './lib/language/language-changer';

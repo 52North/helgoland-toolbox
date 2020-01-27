@@ -129,8 +129,8 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     const valueHeader = dataset.parameters.phenomenon.label + '_(' + dataset.uom + ')';
     let exportData: xlsxExport = [
       ['Station', dataset.parameters.feature.label],
-      ['Lat', dataset.station.geometry['coordinates'][1]],
-      ['Lon', dataset.station.geometry['coordinates'][0]],
+      ['Lat', dataset.platform.geometry['coordinates'][1]],
+      ['Lon', dataset.platform.geometry['coordinates'][0]],
       // ['Timezone', ''],
       ['TIME', valueHeader],
     ];

@@ -1,8 +1,8 @@
-import { HelgolandStation } from '@helgoland/core';
+import { HelgolandPlatform } from '@helgoland/core';
 import { Layer } from 'leaflet';
 
 export interface MarkerSelectorGenerator {
-    createFilledMarker?(station: HelgolandStation, color: string): Layer;
-    createDefaultFilledMarker?(station: HelgolandStation): Layer;
-    createDefaultGeometry?(station: HelgolandStation): Layer;
+    createFilledMarker?(station: HelgolandPlatform, color: string): Layer;
+    createDefaultFilledMarker?(station: HelgolandPlatform): Layer;
+    createDefaultGeometry?(station: HelgolandPlatform): Layer;
 }

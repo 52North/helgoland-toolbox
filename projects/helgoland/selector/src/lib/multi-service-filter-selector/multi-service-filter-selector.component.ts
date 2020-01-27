@@ -100,7 +100,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
                     );
                     break;
                 case MultiServiceFilterEndpoint.platform:
-                    this.servicesHandler.getStations(entry.url, filter).subscribe(
+                    this.servicesHandler.getPlatforms(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );

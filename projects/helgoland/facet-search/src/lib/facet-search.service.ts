@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timeseries, Timespan } from '@helgoland/core';
+import { HelgolandTimeseries, Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } from './facet-search-model';
@@ -9,24 +9,24 @@ import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } f
 })
 export class FacetSearchService implements FacetSearch {
 
-  private onResultsChanged: ReplaySubject<Timeseries[]> = new ReplaySubject(1);
+  private onResultsChanged: ReplaySubject<HelgolandTimeseries[]> = new ReplaySubject(1);
 
   private facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
-  private timeseries: Timeseries[];
+  private timeseries: HelgolandTimeseries[];
 
   private selectedTimespan: Timespan;
 
-  private filteredTimeseries: Timeseries[];
+  private filteredTimeseries: HelgolandTimeseries[];
 
   constructor() { }
 
-  public setTimeseries(ts: Timeseries[]) {
+  public setTimeseries(ts: HelgolandTimeseries[]) {
     this.timeseries = ts;
     this.setFilteredTimeseries();
   }
 
-  public getResults(): Observable<Timeseries[]> {
+  public getResults(): Observable<HelgolandTimeseries[]> {
     return this.onResultsChanged.asObservable();
   }
 
@@ -67,7 +67,7 @@ export class FacetSearchService implements FacetSearch {
     return this.facets.size > 0 || !!this.selectedTimespan;
   }
 
-  public getFilteredResults(): Timeseries[] {
+  public getFilteredResults(): HelgolandTimeseries[] {
     return this.filteredTimeseries;
   }
 
@@ -94,7 +94,7 @@ export class FacetSearchService implements FacetSearch {
     this.setFilteredTimeseries();
   }
 
-  private createTimespan(timeseriesList: Timeseries[]): Timespan {
+  private createTimespan(timeseriesList: HelgolandTimeseries[]): Timespan {
     let timespan: Timespan = null;
     if (timeseriesList.length > 0) {
       timespan = { from: Infinity, to: 0 };
@@ -129,7 +129,7 @@ export class FacetSearchService implements FacetSearch {
     }
   }
 
-  private checkTimespan(ts: Timeseries): boolean {
+  private checkTimespan(ts: HelgolandTimeseries): boolean {
     if (this.selectedTimespan) {
       const checkfrom = this.selectedTimespan.from <= ts.lastValue.timestamp && this.selectedTimespan.to >= ts.firstValue.timestamp;
       return checkfrom;

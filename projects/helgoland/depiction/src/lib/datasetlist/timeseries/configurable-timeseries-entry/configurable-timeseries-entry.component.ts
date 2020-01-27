@@ -49,7 +49,7 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   }
 
   public showGeometry() {
-    this.onShowGeometry.emit(this.dataset.station.geometry);
+    this.onShowGeometry.emit(this.dataset.platform.geometry);
   }
 
 }

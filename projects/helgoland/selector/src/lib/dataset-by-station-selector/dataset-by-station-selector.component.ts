@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HelgolandServicesHandlerService, Station, HelgolandDataset } from '@helgoland/core';
+import { HelgolandDataset, HelgolandPlatform, HelgolandServicesHandlerService } from '@helgoland/core';
 
 export class SelectableDataset extends HelgolandDataset {
     public selected: boolean;
@@ -13,7 +13,7 @@ export class SelectableDataset extends HelgolandDataset {
 export class DatasetByStationSelectorComponent implements OnInit {
 
     @Input()
-    public station: Station;
+    public station: HelgolandPlatform;
 
     @Input()
     public url: string;
@@ -37,13 +37,12 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     public ngOnInit() {
         if (this.station) {
-            const stationId = this.station.properties && this.station.properties.id ? this.station.properties.id : this.station.id;
-            this.servicesHandler.getStation(stationId, this.url)
+            this.servicesHandler.getPlatform(this.station.id, this.url)
                 .subscribe((station) => {
                     this.station = station;
                     this.counter = 0;
-                    for (const id in this.station.properties.timeseries) {
-                        if (this.station.properties.timeseries.hasOwnProperty(id)) {
+                    for (const id in this.station.datasets) {
+                        if (this.station.datasets.hasOwnProperty(id)) {
                             this.counter++;
                             this.servicesHandler.getDataset({ id: id, url: this.url })
                                 .subscribe((result) => {

@@ -18,11 +18,11 @@ import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-hand
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
-import { HelgolandStation } from '../../model/internal/station';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, IDataset, Timeseries } from './../../../model/dataset-api/dataset';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
+import { HelgolandPlatform } from './../../model/internal/platform';
 import { HelgolandService } from './../../model/internal/service';
 
 @Injectable({
@@ -99,13 +99,14 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.api.getFeature(id, url, filter);
   }
 
-  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
+  getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
-    return this.api.getStations(url, filter);
+    return this.api.getStations(url, filter)
+      .pipe(map(res => res.map(e => this.createHelgolandPlatform(e))));
   }
 
-  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
-    return this.api.getStation(id, url, filter);
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
+    return this.api.getStation(id, url, filter).pipe(map(res => this.createHelgolandPlatform(res)));
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
@@ -151,7 +152,7 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
         phenomena: hasTimeseries ? service.quantities.phenomena : 0,
         procedures: hasTimeseries ? service.quantities.procedures : 0,
         datasets: hasTimeseries ? service.quantities.timeseries : 0,
-        stations: hasTimeseries ? service.quantities.stations : 0
+        platforms: hasTimeseries ? service.quantities.stations : 0
       }
     );
   }
@@ -159,7 +160,9 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   protected mapTimeseries(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
     if (filter.expanded) {
       if (res instanceof Timeseries && res.firstValue) {
-        return new HelgolandTimeseries(res.id, url, res.label, res.uom, res.station, res.firstValue, res.lastValue, res.referenceValues, res.renderingHints, res.parameters);
+        return new HelgolandTimeseries(
+          res.id, url, res.label, res.uom, this.createHelgolandPlatform(res.station), res.firstValue, res.lastValue, res.referenceValues, res.renderingHints, res.parameters
+        );
       }
     }
     return new HelgolandDataset(res.id, url, res.label);
@@ -169,13 +172,13 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
     if (res.firstValue) { firstValue = res.firstValue; }
     if (res.lastValue) { lastValue = res.lastValue; }
-    const station = this.createHelgolandStation(res.station);
+    const platform = this.createHelgolandPlatform(res.station);
     return new HelgolandTimeseries(
       res.id,
       url,
       res.label,
       res.uom,
-      station,
+      platform,
       firstValue,
       lastValue,
       res.referenceValues,
@@ -198,8 +201,8 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     return paramFilter;
   }
 
-  protected createHelgolandStation(station: Station): HelgolandStation {
-    return new HelgolandStation(station.id, station.properties.label, station.geometry);
+  protected createHelgolandPlatform(station: Station): HelgolandPlatform {
+    return new HelgolandPlatform(station.id, station.properties.label, {}, station.geometry);
   }
 
   private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {

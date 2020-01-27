@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timeseries } from '@helgoland/core';
+import { HelgolandTimeseries } from '@helgoland/core';
 import * as L from 'leaflet';
 import moment from 'moment';
 
@@ -12,7 +12,7 @@ export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
     super();
   }
 
-  public createIconLabel(ts: Timeseries) {
+  public createIconLabel(ts: HelgolandTimeseries) {
     const date = moment(ts.lastValue.timestamp).fromNow();
     return L.divIcon({
       className: 'last-value-container',

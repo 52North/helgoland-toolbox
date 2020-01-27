@@ -12,7 +12,6 @@ import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
-import { Station } from '../../../model/dataset-api/station';
 import { DataParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from '../../../sta/model/datasetreams';
@@ -38,7 +37,7 @@ import {
   HelgolandTimeseries,
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
-import { HelgolandStation } from '../../model/internal/station';
+import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandTimeseriesData } from './../../model/internal/data';
 import { HelgolandService } from './../../model/internal/service';
 
@@ -181,13 +180,13 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return this.sta.getLocation(url, id).pipe(map(loc => this.createFeature(loc)));
   }
 
-  getStations(url: string, filter: HelgolandParameterFilter): Observable<Station[]> {
+  getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
       .pipe(map(locs => locs.value.map(e => this.createStation(e))));
   }
 
-  getStation(id: string, url: string, filter: HelgolandParameterFilter): Observable<Station> {
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
     return this.sta.getLocation(url, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
       .pipe(map(loc => this.createExtendedStation(loc)));
@@ -308,31 +307,22 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return `phenomenonTime ge ${moment(timespan.from).format(format)} and phenomenonTime le ${moment(timespan.to).format(format)}`;
   }
 
-  private createStation(loc: Location): Station {
-    return {
-      id: loc['@iot.id'],
-      geometry: loc.location,
-      label: loc.name,
-      properties: {
-        id: loc['@iot.id'],
-        label: loc.name,
-        timeseries: {}
-      }
-    };
+  private createStation(loc: Location): HelgolandPlatform {
+    return new HelgolandPlatform(loc['@iot.id'], loc.name, {}, loc.location);
   }
 
-  private createHelgolandStation(loc: Location): HelgolandStation {
-    return new HelgolandStation(loc['@iot.id'], loc.name, loc.location);
+  private createHelgolandPlatform(loc: Location): HelgolandPlatform {
+    return new HelgolandPlatform(loc['@iot.id'], loc.name, {}, loc.location);
   }
 
-  private createExtendedStation(loc: Location): Station {
-    const station = this.createStation(loc);
+  private createExtendedStation(loc: Location): HelgolandPlatform {
+    const platform = this.createStation(loc);
     loc.Things.forEach(thing => {
       thing.Datastreams.forEach(ds => {
-        station.properties.timeseries[ds['@iot.id']] = this.createTsParameter(ds, thing);
+        platform.datasets[ds['@iot.id']] = this.createTsParameter(ds, thing);
       });
     });
-    return station;
+    return platform;
   }
 
   private createTimeseries(ds: Datastream, url: string): HelgolandDataset {
@@ -355,8 +345,8 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     const label = ds.name;
     const uom = ds.unitOfMeasurement.symbol;
     const parameter = this.createTsParameter(ds, ds.Thing);
-    const station = this.createHelgolandStation(ds.Thing.Locations[0]);
-    return new HelgolandTimeseries(id, url, label, uom, station, first, last, [], null, parameter);
+    const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
+    return new HelgolandTimeseries(id, url, label, uom, platform, first, last, [], null, parameter);
   }
 
   private createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {
@@ -399,7 +389,6 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
         offerings: 0,
         phenomena: 0,
         procedures: 0,
-        stations: 0,
         platforms: 0,
         datasets: 0
       }
@@ -419,7 +408,6 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
       service.quantities.offerings = res[2]['@iot.count'];
       service.quantities.phenomena = res[1]['@iot.count'];
       service.quantities.procedures = res[3]['@iot.count'];
-      service.quantities.stations = res[0]['@iot.count'];
       service.quantities.platforms = res[0]['@iot.count'];
       service.quantities.datasets = res[4]['@iot.count'];
       return [service];

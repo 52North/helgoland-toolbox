@@ -8,7 +8,6 @@ import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
 import { Procedure } from '../model/dataset-api/procedure';
-import { Station } from '../model/dataset-api/station';
 import { Timespan } from '../model/internal/timeInterval';
 import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
 import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
@@ -29,6 +28,7 @@ import {
   HelgolandTrajectory,
 } from './model/internal/dataset';
 import { HelgolandParameterFilter } from './model/internal/filter';
+import { HelgolandPlatform } from './model/internal/platform';
 import { HelgolandService } from './model/internal/service';
 
 export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
@@ -89,12 +89,12 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return this.getHandler(url).pipe(flatMap(h => h.getFeature(id, url, filter)));
   }
 
-  getStations(url: string, filter: HelgolandParameterFilter = {}): Observable<Station[]> {
-    return this.getHandler(url).pipe(flatMap(h => h.getStations(url, filter)));
+  getPlatforms(url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandPlatform[]> {
+    return this.getHandler(url).pipe(flatMap(h => h.getPlatforms(url, filter)));
   }
 
-  getStation(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Station> {
-    return this.getHandler(url).pipe(flatMap(h => h.getStation(id, url, filter)));
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandPlatform> {
+    return this.getHandler(url).pipe(flatMap(h => h.getPlatform(id, url, filter)));
   }
 
   getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { HelgolandServicesHandlerService, ParameterFilter, Required, Station } from '@helgoland/core';
+import { HelgolandPlatform, HelgolandServicesHandlerService, ParameterFilter, Required } from '@helgoland/core';
 import { Feature, Map } from 'ol';
 import { unlistenByKey } from 'ol/events';
 import { click, pointerMove } from 'ol/events/condition';
@@ -53,7 +53,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * Inform, when a station is selected
    */
-  @Output() public onSelected: EventEmitter<Station> = new EventEmitter<Station>();
+  @Output() public onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
@@ -89,7 +89,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createStationGeometries() {
-    this.servicesHandler.getStations(this.serviceUrl, this.filter)
+    this.servicesHandler.getPlatforms(this.serviceUrl, this.filter)
       .subscribe((stations) => {
         const features: Feature[] = this.createFeatureList(stations);
 
@@ -127,7 +127,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     this.map.addLayer(this.layer);
   }
 
-  private createFeatureList(stations: Station[]) {
+  private createFeatureList(stations: HelgolandPlatform[]) {
     const features: Feature[] = [];
     stations.forEach(st => {
       // TODO: add to service

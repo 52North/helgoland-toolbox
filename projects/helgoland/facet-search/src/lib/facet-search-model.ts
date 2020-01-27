@@ -1,12 +1,12 @@
-import { Timeseries, Timespan } from '@helgoland/core';
+import { HelgolandTimeseries, Timespan } from '@helgoland/core';
 import { Observable } from 'rxjs';
 
 export interface FacetSearch {
-    getResults(): Observable<Timeseries[]>;
+    getResults(): Observable<HelgolandTimeseries[]>;
     getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
     selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
-    setTimeseries(timeseries: Timeseries[]);
-    getFilteredResults(): Timeseries[];
+    setTimeseries(timeseries: HelgolandTimeseries[]);
+    getFilteredResults(): HelgolandTimeseries[];
     setSelectedTimespan(timespan: Timespan);
     getSelectedTimespan(): Timespan;
     getFilteredTimespan(): Timespan;

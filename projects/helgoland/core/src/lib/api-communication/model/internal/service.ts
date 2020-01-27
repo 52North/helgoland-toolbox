@@ -18,6 +18,5 @@ export interface HelgolandServiceQuantities {
     phenomena?: number;
     procedures?: number;
     datasets?: number;
-    stations?: number;
     platforms?: number;
 }

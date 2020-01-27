@@ -16,8 +16,8 @@ import {
     StatusIntervalResolverService,
     TimeseriesExtras,
     HelgolandServicesHandlerService,
-    HelgolandStation,
-    HelgolandTimeseries
+    HelgolandTimeseries,
+    HelgolandPlatform
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import * as L from 'leaflet';
@@ -34,7 +34,7 @@ import { forkJoin } from 'rxjs';
     styleUrls: ['../map-selector.component.scss']
 })
 @Mixin([HasLoadableContent])
-export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandStation> implements OnChanges, AfterViewInit {
+export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandPlatform> implements OnChanges, AfterViewInit {
 
     @Input()
     public cluster: boolean;
@@ -92,12 +92,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandS
                         if (extras.statusIntervals) {
                             if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
                                 const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
-                                if (interval) { marker = this.createColoredMarker(ts.station, interval.color); }
+                                if (interval) { marker = this.createColoredMarker(ts.platform, interval.color); }
                             }
                         }
-                        if (!marker) { marker = this.createDefaultColoredMarker(ts.station); }
+                        if (!marker) { marker = this.createDefaultColoredMarker(ts.platform); }
                         marker.on('click', () => {
-                            this.onSelected.emit(ts.station);
+                            this.onSelected.emit(ts.platform);
                         });
                         this.markerFeatureGroup.addLayer(marker);
                     });
@@ -115,21 +115,21 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandS
         );
     }
 
-    private createColoredMarker(station: HelgolandStation, color: string): Layer {
+    private createColoredMarker(station: HelgolandPlatform, color: string): Layer {
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createFilledMarker) {
             return this.markerSelectorGenerator.createFilledMarker(station, color);
         }
         return this.createFilledMarker(station, color, 10);
     }
 
-    private createDefaultColoredMarker(station: HelgolandStation): Layer {
+    private createDefaultColoredMarker(station: HelgolandPlatform): Layer {
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultFilledMarker) {
             return this.markerSelectorGenerator.createDefaultFilledMarker(station);
         }
         return this.createFilledMarker(station, '#000', 10);
     }
 
-    private createFilledMarker(station: HelgolandStation, color: string, radius: number): Layer {
+    private createFilledMarker(station: HelgolandPlatform, color: string, radius: number): Layer {
         let geometry: Layer;
         if (station.geometry.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
@@ -161,7 +161,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandS
     }
 
     private createStationGeometries() {
-        this.servicesHandler.getStations(this.serviceUrl, this.filter)
+        this.servicesHandler.getPlatforms(this.serviceUrl, this.filter)
             .subscribe((res) => {
                 if (this.cluster) {
                     this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
@@ -183,7 +183,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandS
             });
     }
 
-    private createDefaultGeometry(station: HelgolandStation): Layer {
+    private createDefaultGeometry(station: HelgolandPlatform): Layer {
         let layer: Layer;
         if (this.markerSelectorGenerator && this.markerSelectorGenerator.createDefaultGeometry) {
             layer = this.markerSelectorGenerator.createDefaultGeometry(station);

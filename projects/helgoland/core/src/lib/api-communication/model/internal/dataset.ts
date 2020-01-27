@@ -7,7 +7,7 @@ import {
     RenderingHints,
     StatusInterval,
 } from './../../../model/dataset-api/dataset';
-import { HelgolandStation } from './station';
+import { HelgolandPlatform } from './platform';
 
 export enum DatasetType {
     Timeseries = 'timeseries',
@@ -34,7 +34,7 @@ export class HelgolandTimeseries extends HelgolandDataset {
         public url: string,
         public label: string,
         public uom: string,
-        public station: HelgolandStation,
+        public platform: HelgolandPlatform,
         public firstValue: FirstLastValue,
         public lastValue: FirstLastValue,
         public referenceValues: ReferenceValue[],
@@ -68,11 +68,6 @@ export class HelgolandProfile extends HelgolandDataset {
         public label: string,
         public uom: string,
         public isMobile: boolean,
-        // public station: HelgolandStation,
-        // public firstValue: FirstLastValue,
-        // public lastValue: FirstLastValue,
-        // public referenceValues: ReferenceValue[],
-        // public renderingHints: RenderingHints,
         public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);
