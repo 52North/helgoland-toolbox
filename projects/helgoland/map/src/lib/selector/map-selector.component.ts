@@ -8,7 +8,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { HasLoadableContent, ParameterFilter } from '@helgoland/core';
+import { HasLoadableContent, HelgolandParameterFilter } from '@helgoland/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
@@ -29,7 +29,7 @@ export abstract class MapSelectorComponent<T>
      * @input The filter which should be used, while fetching the selection.
      */
     @Input()
-    public filter: ParameterFilter;
+    public filter: HelgolandParameterFilter;
 
     @Input()
     public avoidZoomToSelection: boolean;

@@ -1,7 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HelgolandDataset, HelgolandPlatform, HelgolandServicesHandlerService } from '@helgoland/core';
+import {
+    DatasetType,
+    HelgolandDataset,
+    HelgolandPlatform,
+    HelgolandServicesHandlerService,
+    HelgolandTimeseries,
+} from '@helgoland/core';
 
-export class SelectableDataset extends HelgolandDataset {
+export class SelectableDataset extends HelgolandTimeseries {
     public selected: boolean;
 }
 
@@ -41,18 +47,16 @@ export class DatasetByStationSelectorComponent implements OnInit {
                 .subscribe((station) => {
                     this.station = station;
                     this.counter = 0;
-                    for (const id in this.station.datasets) {
-                        if (this.station.datasets.hasOwnProperty(id)) {
-                            this.counter++;
-                            this.servicesHandler.getDataset({ id: id, url: this.url })
-                                .subscribe((result) => {
-                                    this.prepareResult(result as SelectableDataset, this.defaultSelected);
-                                    this.counter--;
-                                }, (error) => {
-                                    this.counter--;
-                                });
-                        }
-                    }
+                    this.station.datasetIds.forEach(id => {
+                        this.counter++;
+                        this.servicesHandler.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
+                            .subscribe((result) => {
+                                this.prepareResult(result as SelectableDataset, this.defaultSelected);
+                                this.counter--;
+                            }, (error) => {
+                                this.counter--;
+                            });
+                    });
                 });
         }
     }

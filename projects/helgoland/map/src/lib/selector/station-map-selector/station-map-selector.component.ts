@@ -12,12 +12,12 @@ import {
 import {
     HasLoadableContent,
     Mixin,
-    ParameterFilter,
     StatusIntervalResolverService,
     TimeseriesExtras,
     HelgolandServicesHandlerService,
     HelgolandTimeseries,
-    HelgolandPlatform
+    HelgolandPlatform,
+    HelgolandParameterFilter
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import * as L from 'leaflet';
@@ -76,7 +76,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     }
 
     private createValuedMarkers() {
-        const tempFilter: ParameterFilter = {
+        const tempFilter: HelgolandParameterFilter = {
             phenomenon: this.filter.phenomenon,
             expanded: true
         };

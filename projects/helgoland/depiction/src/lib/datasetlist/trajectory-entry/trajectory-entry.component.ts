@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     DatasetOptions,
     DatasetType,
+    HelgolandParameterFilter,
     HelgolandServicesHandlerService,
     HelgolandTrajectory,
     InternalIdHandler,
-    ParameterFilter,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -48,7 +48,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     }
 
     protected loadDataset(lang?: string): void {
-        const params: ParameterFilter = {};
+        const params: HelgolandParameterFilter = {};
         if (lang) { params.lang = lang; }
         this.loading = true;
         this.servicesHandler.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })

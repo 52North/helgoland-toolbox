@@ -202,7 +202,15 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   }
 
   protected createHelgolandPlatform(station: Station): HelgolandPlatform {
-    return new HelgolandPlatform(station.id, station.properties.label, {}, station.geometry);
+    const datasets = [];
+    if (station.properties.timeseries) {
+      for (const key in station.properties.timeseries) {
+        if (station.properties.timeseries.hasOwnProperty(key)) {
+          datasets.push(key);
+        }
+      }
+    }
+    return new HelgolandPlatform(station.id, station.properties.label, datasets, station.geometry);
   }
 
   private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {

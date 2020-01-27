@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { HelgolandPlatform, HelgolandServicesHandlerService, ParameterFilter, Required } from '@helgoland/core';
+import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesHandlerService, Required } from '@helgoland/core';
 import { Feature, Map } from 'ol';
 import { unlistenByKey } from 'ol/events';
 import { click, pointerMove } from 'ol/events/condition';
@@ -38,7 +38,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * The filter which should be used, while fetching the selection.
    */
-  @Input() public filter: ParameterFilter;
+  @Input() public filter: HelgolandParameterFilter;
 
   /**
    * Zoom to the stations after collected and displayed

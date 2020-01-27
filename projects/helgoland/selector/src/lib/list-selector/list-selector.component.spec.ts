@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { DatasetType, HelgolandCoreModule, PlatformTypes } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -75,8 +75,8 @@ describe('ListSelectorComponent creation', () => {
       { id: '1', url: 'http://localhost:3001/api/', filter: {} }
     ];
     component.filter = {
-      valueTypes: 'quantity',
-      platformTypes: 'mobile'
+      type: DatasetType.Timeseries,
+      platformType: PlatformTypes.mobile
     };
     component.parameters = [
       {

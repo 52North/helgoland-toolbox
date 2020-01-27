@@ -153,7 +153,7 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   private createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
-    return new HelgolandPlatform(feature.id, feature.properties.label, {}, feature.geometry);
+    return new HelgolandPlatform(feature.id, feature.properties.label, [], feature.geometry);
   }
 
   private createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
@@ -253,24 +253,13 @@ export class DatasetApiV3Service implements IHelgolandServiceConnectorHandler {
   }
 
   private createStation(feature: ApiV3Feature): HelgolandPlatform {
-    const timeseries: TimeseriesCollection = {};
+    const datasetIds = [];
     for (const key in feature.properties.datasets) {
       if (feature.properties.datasets.hasOwnProperty(key)) {
-        const elem = feature.properties.datasets[key];
-        timeseries[key] = {
-          category: elem.category,
-          offering: elem.offering,
-          phenomenon: elem.phenomenon,
-          procedure: elem.procedure,
-          service: elem.service,
-          feature: {
-            id: feature.id,
-            label: feature.properties.label
-          }
-        };
+        datasetIds.push(key);
       }
     }
-    return new HelgolandPlatform(feature.id, feature.properties.label, timeseries, feature.geometry);
+    return new HelgolandPlatform(feature.id, feature.properties.label, datasetIds, feature.geometry);
   }
 
   private createCategory(category: ApiV3Category): Category {

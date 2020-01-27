@@ -183,13 +183,13 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
-      .pipe(map(locs => locs.value.map(e => this.createStation(e))));
+      .pipe(map(locs => locs.value.map(e => this.createHelgolandPlatform(e))));
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
     return this.sta.getLocation(url, id, { $expand: 'Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor' })
-      .pipe(map(loc => this.createExtendedStation(loc)));
+      .pipe(map(loc => this.createExtendedPlatform(loc)));
   }
 
   private createCategoriesFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
@@ -307,19 +307,15 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
     return `phenomenonTime ge ${moment(timespan.from).format(format)} and phenomenonTime le ${moment(timespan.to).format(format)}`;
   }
 
-  private createStation(loc: Location): HelgolandPlatform {
-    return new HelgolandPlatform(loc['@iot.id'], loc.name, {}, loc.location);
-  }
-
   private createHelgolandPlatform(loc: Location): HelgolandPlatform {
-    return new HelgolandPlatform(loc['@iot.id'], loc.name, {}, loc.location);
+    return new HelgolandPlatform(loc['@iot.id'], loc.name, [], loc.location);
   }
 
-  private createExtendedStation(loc: Location): HelgolandPlatform {
-    const platform = this.createStation(loc);
+  private createExtendedPlatform(loc: Location): HelgolandPlatform {
+    const platform = this.createHelgolandPlatform(loc);
     loc.Things.forEach(thing => {
       thing.Datastreams.forEach(ds => {
-        platform.datasets[ds['@iot.id']] = this.createTsParameter(ds, thing);
+        platform.datasetIds.push(`${ds['@iot.id']}`);
       });
     });
     return platform;

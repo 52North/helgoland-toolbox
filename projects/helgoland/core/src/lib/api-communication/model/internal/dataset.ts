@@ -68,6 +68,8 @@ export class HelgolandProfile extends HelgolandDataset {
         public label: string,
         public uom: string,
         public isMobile: boolean,
+        public firstValue: FirstLastValue,
+        public lastValue: FirstLastValue,
         public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);

@@ -75,7 +75,9 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
   }
 
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
-    return this.api.getPlatforms(url, this.createFilter(filter)).pipe(map(res => res.map(pf => this.createHelgolandPlatform(pf))));
+    return this.api.getPlatforms(url, this.createFilter(filter)).pipe(
+      map(res => res instanceof Array ? res.map(pf => this.createHelgolandPlatform(pf)) : [])
+    );
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
@@ -204,6 +206,8 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
             dataset.label,
             dataset.uom,
             dataset.platformType === PlatformTypes.mobileInsitu,
+            dataset.firstValue,
+            dataset.lastValue,
             dataset.parameters
           );
         }
@@ -245,6 +249,7 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
       case DatasetType.Profile:
         paramFilter.valueTypes = 'quantity-profile';
     }
+    if (filter.platformType) { paramFilter.platformTypes = filter.platformType; }
     if (filter.platform) { paramFilter.platforms = filter.platform; }
     if (filter.category) { paramFilter.category = filter.category; }
     if (filter.offering) { paramFilter.offering = filter.offering; }
@@ -257,14 +262,12 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
     return paramFilter;
   }
 
-  // private createStationFilter(filter: HelgolandStationFilter): ParameterFilter {
-  //   const paramFilter: ParameterFilter = {};
-  //   if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
-  //   return paramFilter;
-  // }
-
   private createHelgolandPlatform(platform: Platform): HelgolandPlatform {
-    return new HelgolandPlatform(platform.id, platform.label, {}, platform.geometry);
+    let datasets = [];
+    if (platform.datasets && platform.datasets.length > 0) {
+      datasets = platform.datasets.map(pf => pf.id);
+    }
+    return new HelgolandPlatform(platform.id, platform.label, datasets, platform.geometry);
   }
 
 }

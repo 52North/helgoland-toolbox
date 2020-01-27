@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { HelgolandServicesHandlerService, LanguageChangNotifier, Parameter, ParameterFilter } from '@helgoland/core';
+import {
+    HelgolandParameterFilter,
+    HelgolandServicesHandlerService,
+    LanguageChangNotifier,
+    Parameter,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -18,7 +23,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     public serviceUrl: string;
 
     @Input()
-    public filter: ParameterFilter;
+    public filter: HelgolandParameterFilter;
 
     @Input()
     public selectionId: string;

@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     DatasetType,
     HelgolandLocatedProfileData,
+    HelgolandParameterFilter,
     HelgolandProfile,
     HelgolandServicesHandlerService,
     InternalIdHandler,
-    ParameterFilter,
     TimedDatasetOptions,
     Timespan,
 } from '@helgoland/core';
@@ -86,10 +86,10 @@ export class ProfileEntryComponent extends ListEntryComponent {
     }
 
     protected loadDataset(lang?: string) {
-        const params: ParameterFilter = {};
+        const params: HelgolandParameterFilter = {};
         if (lang) { params.lang = lang; }
         this.loading = true;
-        this.servicesHandler.getDataset(this.internalId, { type: DatasetType.Profile }).subscribe(
+        this.servicesHandler.getDataset(this.internalId, { ...params, type: DatasetType.Profile }).subscribe(
             dataset => this.dataset = dataset,
             error => console.error(error),
             () => this.loading = false

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FilteredProvider, HelgolandDataset, HelgolandServicesHandlerService, ParameterFilter } from '@helgoland/core';
+import { FilteredProvider, HelgolandDataset, HelgolandServicesHandlerService, HelgolandParameterFilter } from '@helgoland/core';
 
 import {
     FilteredParameter,
@@ -20,7 +20,7 @@ export class ListSelectorComponent implements OnChanges {
     public parameters: ListSelectorParameter[];
 
     @Input()
-    public filter: ParameterFilter;
+    public filter: HelgolandParameterFilter;
 
     @Input()
     public providerList: FilteredProvider[];
@@ -95,7 +95,7 @@ export class ListSelectorComponent implements OnChanges {
         }
     }
 
-    private openDataset(url: string, params: ParameterFilter) {
+    private openDataset(url: string, params: HelgolandParameterFilter) {
         this.servicesHandler.getDatasets(url, params).subscribe(result => this.onDatasetSelection.emit(result));
     }
 

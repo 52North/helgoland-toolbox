@@ -12,9 +12,11 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {
-    DatasetApiInterface,
     HasLoadableContent,
-    IDataset,
+    HelgolandDataset,
+    HelgolandLocatedProfileData,
+    HelgolandProfile,
+    HelgolandServicesHandlerService,
     LocatedProfileDataEntry,
     Mixin,
     Timespan,
@@ -43,7 +45,7 @@ export class ProfileTrajectoryMapSelectorComponent
 
     private layer: L.FeatureGroup;
     private data: LocatedProfileDataEntry[];
-    private dataset: IDataset;
+    private dataset: HelgolandDataset;
 
     private defaultStyle: L.PathOptions = {
         color: 'red',
@@ -58,7 +60,7 @@ export class ProfileTrajectoryMapSelectorComponent
     };
 
     constructor(
-        protected apiInterface: DatasetApiInterface,
+        protected servicesHandler: HelgolandServicesHandlerService,
         protected mapCache: MapCache,
         protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
@@ -82,28 +84,31 @@ export class ProfileTrajectoryMapSelectorComponent
 
     protected drawGeometries() {
         this.isContentLoading(true);
-        this.apiInterface.getDatasets(this.serviceUrl, this.filter).subscribe((datasets) => {
+        if (!this.serviceUrl) { return; }
+        this.servicesHandler.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
             datasets.forEach((dataset) => {
-                this.dataset = dataset;
-                const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
-                this.apiInterface.getData<LocatedProfileDataEntry>(dataset.id, this.serviceUrl, timespan)
-                    .subscribe((data) => {
-                        if (this.map && data.values instanceof Array) {
-                            this.initLayer();
-                            this.data = [];
-                            const timelist: number[] = [];
-                            data.values.forEach((entry) => {
-                                this.data.push(entry);
-                                const geojson = this.createGeoJson(entry, dataset);
-                                timelist.push(entry.timestamp);
-                                this.layer.addLayer(geojson);
-                            });
-                            this.onTimeListDetermined.emit(timelist);
-                            this.layer.addTo(this.map);
-                            this.zoomToMarkerBounds(this.layer.getBounds());
-                        }
-                        this.isContentLoading(false);
-                    });
+                if (dataset instanceof HelgolandProfile) {
+                    this.dataset = dataset;
+                    const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
+                    this.servicesHandler.getDatasetData(dataset, timespan)
+                        .subscribe((data: HelgolandLocatedProfileData) => {
+                            if (this.map && data.values instanceof Array) {
+                                this.initLayer();
+                                this.data = [];
+                                const timelist: number[] = [];
+                                data.values.forEach((entry) => {
+                                    this.data.push(entry);
+                                    const geojson = this.createGeoJson(entry, dataset);
+                                    timelist.push(entry.timestamp);
+                                    this.layer.addLayer(geojson);
+                                });
+                                this.onTimeListDetermined.emit(timelist);
+                                this.layer.addTo(this.map);
+                                this.zoomToMarkerBounds(this.layer.getBounds());
+                            }
+                            this.isContentLoading(false);
+                        });
+                }
             });
         });
     }
@@ -118,7 +123,7 @@ export class ProfileTrajectoryMapSelectorComponent
         }
     }
 
-    private createGeoJson(profileDataEntry: LocatedProfileDataEntry, dataset: IDataset): L.GeoJSON {
+    private createGeoJson(profileDataEntry: LocatedProfileDataEntry, dataset: HelgolandDataset): L.GeoJSON {
         const geojson = new L.GeoJSON(profileDataEntry.geometry);
         geojson.setStyle(this.defaultStyle);
         geojson.on('click', () => {

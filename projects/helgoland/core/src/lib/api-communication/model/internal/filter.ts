@@ -1,3 +1,4 @@
+import { PlatformTypes } from './../../../model/dataset-api/enums';
 import { DatasetType } from './dataset';
 
 export class HelgolandParameterFilter {
@@ -8,6 +9,7 @@ export class HelgolandParameterFilter {
     procedure?: string;
     feature?: string;
     platform?: string;
+    platformType?: PlatformTypes;
     type?: DatasetType;
     expanded?: boolean;
     lang?: string;
