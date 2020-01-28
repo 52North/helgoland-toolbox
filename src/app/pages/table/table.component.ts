@@ -10,7 +10,7 @@ export class TableComponent {
     public datasetIds = [
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
-        'http://geo.irceline.be/sos/api/v1/__6941',
+        'https://geo.irceline.be/sos/api/v1/__6941',
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
     ];
 

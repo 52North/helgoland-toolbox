@@ -124,7 +124,7 @@ This code is implemented in the helgoland-toolbox github repository and can be v
 Implement the functionality of the `n52-station-map-selector`-directive by adding the following code to the class `AppComponent` in `src/app/app.component.ts`:
 
 ```javascript
-public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+public providerUrl = 'https://geo.irceline.be/sos/api/v1/';
 
 public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
 public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
@@ -393,7 +393,7 @@ import * as L from 'leaflet';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+  public providerUrl = 'https://geo.irceline.be/sos/api/v1/';
 
   public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
   public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
