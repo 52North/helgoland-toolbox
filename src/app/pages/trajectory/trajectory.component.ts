@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
-    DatasetApiInterface,
     ColorService,
     DatasetOptions,
+    DatasetType,
+    HelgolandServicesHandlerService,
     InternalIdHandler,
-    LocatedTimeValueEntry,
     Timespan,
 } from '@helgoland/core';
 import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
@@ -49,7 +49,7 @@ export class TrajectoryComponent implements OnInit {
         private color: ColorService,
         private dialog: MatDialog,
         private internalIdHandler: InternalIdHandler,
-        private api: DatasetApiInterface
+        private servicesHandler: HelgolandServicesHandlerService
     ) { }
 
     public ngOnInit(): void {
@@ -62,9 +62,9 @@ export class TrajectoryComponent implements OnInit {
 
         if (this.datasetIds.length > 0) {
             const internalId = this.internalIdHandler.resolveInternalId(this.datasetIds[0]);
-            this.api.getDataset(internalId.id, internalId.url).subscribe((dataset) => {
+            this.servicesHandler.getDataset({ id: internalId.id, url: internalId.url }, { type: DatasetType.Trajectory }).subscribe((dataset) => {
                 this.timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
-                this.api.getData<LocatedTimeValueEntry>(internalId.id, internalId.url, this.timespan)
+                this.servicesHandler.getDatasetData(dataset, this.timespan)
                     .subscribe((data) => {
                         this.geometry = {
                             type: 'LineString',

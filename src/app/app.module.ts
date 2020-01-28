@@ -95,9 +95,8 @@ const APP_PROVIDERS = [
   StatusCheckService,
   {
     provide: DatasetApiInterface,
-    useClass: MultiDatasetInterface
+    useClass: SplittedDataDatasetApiInterface
   },
-  SplittedDataDatasetApiInterface,
   {
     provide: SettingsService,
     useClass: ExtendedSettingsService

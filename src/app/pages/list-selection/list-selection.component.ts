@@ -9,8 +9,8 @@ import { ListSelectorParameter } from '@helgoland/selector';
 export class ListSelectionComponent {
 
     public categoryParams: ListSelectorParameter[] = [{
-        type: 'category',
-        header: 'Kategorie'
+        type: 'platform',
+        header: 'Platform'
     }, {
         type: 'feature',
         header: 'Station'

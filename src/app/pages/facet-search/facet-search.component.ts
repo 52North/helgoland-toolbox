@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material';
-import { DatasetApiInterface, Timeseries, Timespan } from '@helgoland/core';
+import { DatasetType, HelgolandServicesHandlerService, Timeseries, Timespan, HelgolandTimeseries } from '@helgoland/core';
 import { FacetSearchService, ParameterFacetType } from '@helgoland/facet-search';
 import { forkJoin } from 'rxjs';
 
@@ -33,19 +33,26 @@ export class FacetSearchComponent {
   public selectedEnd: Date;
 
   constructor(
-    private api: DatasetApiInterface,
+    private servicesHandler: HelgolandServicesHandlerService,
     public facetSearch: FacetSearchService
   ) {
-
     forkJoin([
-      this.api.getTimeseries('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true }),
-      // this.api.getTimeseries('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true }),
-      // this.api.getTimeseries('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/', { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156' }),
-      // this.api.getTimeseries('http://geo.irceline.be/sos/api/v1/', { expanded: true }),
-      // this.api.getTimeseries('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true }),
+      this.servicesHandler.getDatasets('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
+      //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
+      // ),
+      // this.servicesHandler.getDatasets('http://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
     ]).subscribe(res => {
       const complete = [];
-      res.forEach(e => complete.push(...e));
+      res.forEach(dsList => {
+        dsList.forEach(ds => {
+          if (ds instanceof HelgolandTimeseries) {
+            complete.push(ds);
+          }
+        });
+      });
       this.facetSearch.setTimeseries(complete);
     });
 

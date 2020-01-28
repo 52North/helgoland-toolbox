@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetApi, ParameterFilter, PlatformTypes, Settings, SettingsService, ValueTypes } from '@helgoland/core';
+import { DatasetApi, DatasetType, HelgolandParameterFilter, Settings, SettingsService } from '@helgoland/core';
 
 @Component({
     templateUrl: './service-selector.component.html',
@@ -15,8 +15,7 @@ export class ServiceSelectorComponent {
         this.datasetApis = this.settings.getSettings().datasetApis;
     }
 
-    public providerFilter: ParameterFilter = {
-        platformTypes: PlatformTypes.stationary,
-        valueTypes: ValueTypes.quantity
+    public providerFilter: HelgolandParameterFilter = {
+        type: DatasetType.Trajectory
     };
 }

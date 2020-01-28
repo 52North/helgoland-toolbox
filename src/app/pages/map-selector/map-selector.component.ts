@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HelgolandStation, ParameterFilter, Phenomenon, Timeseries } from '@helgoland/core';
+import { HelgolandParameterFilter, HelgolandPlatform, Phenomenon, Timeseries } from '@helgoland/core';
 import { GeoSearchOptions, LastValuePresentation, LayerMap, MapCache, MarkerSelectorGenerator } from '@helgoland/map';
 import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, WMSOptions } from 'leaflet';
 
@@ -21,7 +21,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
         private mapId: string
     ) { }
 
-    public createFilledMarker(station: HelgolandStation, color: string): Layer {
+    public createFilledMarker(station: HelgolandPlatform, color: string): Layer {
         let geometry: Layer;
         if (station.geometry.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
@@ -50,11 +50,11 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
         return geometry;
     }
 
-    public createDefaultFilledMarker(station: HelgolandStation): Layer {
+    public createDefaultFilledMarker(station: HelgolandPlatform): Layer {
         return this.createFilledMarker(station, '#fff');
     }
 
-    public createDefaultGeometry(station: HelgolandStation): Layer {
+    public createDefaultGeometry(station: HelgolandPlatform): Layer {
         return this.createFilledMarker(station, '#ff0000');
     }
 
@@ -85,7 +85,7 @@ export class MapSelectorComponent {
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public cluster = false;
     public loadingStations: boolean;
-    public stationFilter: ParameterFilter = {
+    public stationFilter: HelgolandParameterFilter = {
         // phenomenon: '8'
     };
     public statusIntervals = false;
@@ -176,7 +176,7 @@ export class MapSelectorComponent {
         this.fitBounds = [[39.5, 3.27], [41.5, 5.67]];
     }
 
-    public onStationSelected(station: HelgolandStation) {
+    public onStationSelected(station: HelgolandPlatform) {
         console.log('Clicked station: ' + station.label);
     }
 

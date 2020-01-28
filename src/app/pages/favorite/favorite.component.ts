@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetApiInterface, DatasetOptions, Timespan } from '@helgoland/core';
+import { DatasetOptions, DatasetType, HelgolandServicesHandlerService, Timespan } from '@helgoland/core';
 import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
 
 @Component({
@@ -13,9 +13,9 @@ export class FavoriteComponent {
   constructor(
     private favoriteSrvc: FavoriteService,
     private jsonExport: JsonFavoriteExporterService,
-    private api: DatasetApiInterface
+    private servicesHandler: HelgolandServicesHandlerService
   ) {
-    this.api.getSingleTimeseries('26', 'http://www.fluggs.de/sos2/api/v1/').subscribe(dataset => {
+    this.servicesHandler.getDataset({ id: '26', url: 'http://www.fluggs.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
       this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });
@@ -47,13 +47,25 @@ export class FavoriteComponent {
         label: entry.label,
         favorite: entry.favorite,
         timespan,
-        options: option
+        options: option,
+        show: true
       });
     });
+  }
+
+  public createDatasetIdsArray(fav: ExtendedSingleFavorite) {
+    return [fav.favorite.internalId];
+  }
+
+  public createDatasetOptions(fav: ExtendedSingleFavorite) {
+    const optionsMap = new Map<string, DatasetOptions>();
+    optionsMap.set(fav.favorite.internalId, fav.options);
+    return optionsMap;
   }
 }
 
 interface ExtendedSingleFavorite extends SingleFavorite {
   timespan: Timespan;
-  // option: Map<string, DatasetOptions>;
+  options: DatasetOptions;
+  show: boolean;
 }

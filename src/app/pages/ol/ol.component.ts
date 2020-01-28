@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Station } from '@helgoland/core';
+import { HelgolandPlatform } from '@helgoland/core';
 import { OlMapService } from '@helgoland/open-layers';
 import { Layer } from 'ol/layer';
 import BaseLayer from 'ol/layer/Base';
@@ -87,8 +87,8 @@ export class OlComponent implements OnInit {
     this.mapService.getMap(this.mapId).subscribe(map => map.removeLayer(layer[0]));
   }
 
-  public stationSelected(station: Station) {
-    alert(station.properties.label);
+  public stationSelected(station: HelgolandPlatform) {
+    alert(station.label);
     console.log(station);
   }
 
