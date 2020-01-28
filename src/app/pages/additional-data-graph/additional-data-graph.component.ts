@@ -12,7 +12,7 @@ import { StyleModificationComponent } from '../../components/style-modification/
 export class AdditionalDataGraphComponent {
 
     public datasetIds = [
-        'http://www.fluggs.de/sos2/api/v1/__26',
+        'https://www.fluggs.de/sos2/api/v1/__26',
     ];
 
     public additionalData: AdditionalData[] = [];

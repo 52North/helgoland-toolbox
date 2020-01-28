@@ -82,8 +82,8 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__26';
-  let datasetID2 = 'http://geo.irceline.be/sos/api/v1/__6522';
+  let datasetID1 = 'https://www.fluggs.de/sos2/api/v1/__26';
+  let datasetID2 = 'https://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {

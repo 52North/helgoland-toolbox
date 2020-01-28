@@ -73,7 +73,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
 })
 export class MapSelectorComponent {
 
-    public providerUrl = 'https://mudak-wrm.dev.52north.org/sanepar-sos/api/';
+    public providerUrl = 'https://geo.irceline.be/sos/api/v1/';
     // public providerUrl = 'http://mudak-wrm.dev.52north.org/sos/api/';
 
     public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
@@ -165,10 +165,10 @@ export class MapSelectorComponent {
     }
 
     public switchProvider() {
-        if (this.providerUrl === 'http://geo.irceline.be/sos/api/v1/') {
+        if (this.providerUrl === 'https://geo.irceline.be/sos/api/v1/') {
             this.providerUrl = 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/';
         } else {
-            this.providerUrl = 'http://geo.irceline.be/sos/api/v1/';
+            this.providerUrl = 'https://geo.irceline.be/sos/api/v1/';
         }
     }
 

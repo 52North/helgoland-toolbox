@@ -15,7 +15,7 @@ export class FavoriteComponent {
     private jsonExport: JsonFavoriteExporterService,
     private servicesHandler: HelgolandServicesHandlerService
   ) {
-    this.servicesHandler.getDataset({ id: '26', url: 'http://www.fluggs.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
+    this.servicesHandler.getDataset({ id: '26', url: 'https://www.fluggs.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
       this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });

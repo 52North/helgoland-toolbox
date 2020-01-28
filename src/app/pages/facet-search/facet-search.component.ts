@@ -42,7 +42,7 @@ export class FacetSearchComponent {
       // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
       //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
       // ),
-      // this.servicesHandler.getDatasets('http://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
     ]).subscribe(res => {
       const complete = [];

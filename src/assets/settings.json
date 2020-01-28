@@ -21,7 +21,7 @@
         },
         {
             "name": "geo.irceline.be",
-            "url": "http://geo.irceline.be/sos/api/v1/"
+            "url": "https://geo.irceline.be/sos/api/v1/"
         },
         {
             "name": "fluggs.de",
