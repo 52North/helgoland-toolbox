@@ -15,7 +15,7 @@ export class FavoriteComponent {
     private jsonExport: JsonFavoriteExporterService,
     private api: DatasetApiInterface
   ) {
-    this.api.getSingleTimeseries('26', 'http://www.fluggs.de/sos2/api/v1/').subscribe(dataset => {
+    this.api.getSingleTimeseries('26', 'https://www.fluggs.de/sos2/api/v1/').subscribe(dataset => {
       this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });

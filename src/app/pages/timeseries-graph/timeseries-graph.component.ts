@@ -8,10 +8,10 @@ import { D3PlotOptions } from '@helgoland/d3';
 })
 export class TimeseriesGraphComponent {
 
-    public datasetIds = ['http://www.fluggs.de/sos2/api/v1/__63'];
-    public datasetIdsOne = ['http://www.fluggs.de/sos2/api/v1/__72'];
+    public datasetIds = ['https://www.fluggs.de/sos2/api/v1/__63'];
+    public datasetIdsOne = ['https://www.fluggs.de/sos2/api/v1/__72'];
     // public datasetIdsMultiple = ['https://www.fluggs.de/sos2/api/v1/__26'];
-    public datasetIdsMultiple = ['http://www.fluggs.de/sos2/api/v1/__63', 'http://www.fluggs.de/sos2/api/v1/__72', 'http://www.fluggs.de/sos2/api/v1/__26'];
+    public datasetIdsMultiple = ['https://www.fluggs.de/sos2/api/v1/__63', 'https://www.fluggs.de/sos2/api/v1/__72', 'https://www.fluggs.de/sos2/api/v1/__26'];
     public colors = ['#123456', '#FF0000'];
 
     public timespan = new Timespan(new Date().getTime() - 100000000, new Date().getTime());
