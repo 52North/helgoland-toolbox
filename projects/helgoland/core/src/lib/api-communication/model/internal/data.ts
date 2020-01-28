@@ -36,7 +36,6 @@ export class HelgolandLocatedProfileData implements HelgolandData {
 }
 
 export interface HelgolandDataFilter {
-    // format?: string;
-    // timespan?: string;
+    expanded?: boolean;
     generalize?: boolean;
 }

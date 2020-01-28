@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import {
-  Dataset,
   DatasetFilter,
   DatasetType,
   HelgolandServicesHandlerService,
   HelgolandTimeseries,
   InternalIdHandler,
-  Timeseries,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -56,11 +54,7 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   }
 
   protected setParameters() {
-    if (this.dataset instanceof Dataset) {
-      this.platformLabel = this.dataset.parameters.platform.label;
-    } else if (this.dataset instanceof Timeseries) {
-      this.platformLabel = this.dataset.station.properties.label;
-    }
+    this.platformLabel = this.dataset.platform.label;
     this.phenomenonLabel = this.dataset.parameters.phenomenon.label;
     this.procedureLabel = this.dataset.parameters.procedure.label;
     this.categoryLabel = this.dataset.parameters.category.label;

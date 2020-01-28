@@ -315,20 +315,14 @@ export class D3TimeseriesGraphComponent
                     this.runningDataRequests.get(dataset.internalId).unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
-                const request = this.servicesHandler.getDatasetData(dataset, buffer)
-                    // const request = this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, buffer,
-                    //     {
-                    //         format: 'flot',
-                    //         expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
-                    //         generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-                    //     },
-                    //     { forceUpdate: force }
-                    // )
-                    .subscribe(
-                        (result) => this.prepareData(dataset, result),
-                        (error) => this.onError(error),
-                        () => this.onCompleteLoadingData(dataset)
-                    );
+                const request = this.servicesHandler.getDatasetData(dataset, buffer, {
+                    expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
+                    generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
+                }).subscribe(
+                    (result) => this.prepareData(dataset, result),
+                    (error) => this.onError(error),
+                    () => this.onCompleteLoadingData(dataset)
+                );
                 this.runningDataRequests.set(dataset.internalId, request);
             }
         }

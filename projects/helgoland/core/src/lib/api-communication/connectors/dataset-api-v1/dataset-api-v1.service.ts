@@ -20,6 +20,7 @@ import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HttpService } from './../../../dataset-api/http.service';
 import { FirstLastValue, IDataset, Timeseries } from './../../../model/dataset-api/dataset';
+import { DataParameterFilter } from './../../../model/internal/http-requests';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
 import { HelgolandTimeseries } from './../../model/internal/dataset';
 import { HelgolandPlatform } from './../../model/internal/platform';
@@ -121,7 +122,9 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
-    return this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
+    const dataFilter = this.createDataFilter(filter);
+    dataFilter.format = 'flot';
+    return this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, timespan, dataFilter).pipe(map(res => {
       const data = new HelgolandTimeseriesData(res.values);
       data.referenceValues = res.referenceValues ? res.referenceValues : {};
       if (res.valueBeforeTimespan) { data.valueBeforeTimespan = res.valueBeforeTimespan; }
@@ -199,6 +202,13 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
     if (filter.lang) { paramFilter.lang = filter.lang; }
     if (filter.service) { paramFilter.service = filter.service; }
     return paramFilter;
+  }
+
+  private createDataFilter(filter: HelgolandDataFilter): DataParameterFilter {
+    const dataFilter: DataParameterFilter = {};
+    if (filter.expanded) { dataFilter.expanded = filter.expanded; }
+    if (filter.generalize) { dataFilter.generalize = filter.generalize; }
+    return dataFilter;
   }
 
   protected createHelgolandPlatform(station: Station): HelgolandPlatform {

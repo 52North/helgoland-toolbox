@@ -203,7 +203,6 @@ export class GraphLegendComponent {
         timeseries: HelgolandTimeseries;
         data: HelgolandTimeseriesData;
     }) {
-        debugger;
         console.log(tsData);
         // const datasets: D3GeneralDatasetInput[] = [];
         // tsData.forEach(ts => {
