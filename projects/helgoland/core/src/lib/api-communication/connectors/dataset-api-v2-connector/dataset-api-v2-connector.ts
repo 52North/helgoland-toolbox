@@ -22,8 +22,8 @@ import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
-import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
+import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import {
   HelgolandData,
   HelgolandDataFilter,
@@ -43,12 +43,12 @@ import {
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandService } from '../../model/internal/service';
-import { HelgolandPlatform } from './../../model/internal/platform';
+import { HelgolandPlatform } from '../../model/internal/platform';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
+export class DatasetApiV2Connector implements HelgolandServiceConnector {
 
   constructor(
     protected http: HttpService,
@@ -274,6 +274,6 @@ export class DatasetApiV2Service implements IHelgolandServiceConnectorHandler {
 
 export const DatasetApiV2ConnectorProvider = {
   provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-  useClass: DatasetApiV2Service,
+  useClass: DatasetApiV2Connector,
   multi: true
 };

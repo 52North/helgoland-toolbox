@@ -1,13 +1,13 @@
 import { DatasetType, HelgolandTimeseries } from '../api-communication/model/internal/dataset';
 import { BarRenderingHints, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
-import { HelgolandServicesHandlerService } from './../api-communication/helgoland-services-handler.service';
+import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { DatasetService } from './dataset.service';
 
 export abstract class RenderingHintsDatasetService<T extends DatasetOptions | DatasetOptions[]> extends DatasetService<T> {
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService
+        protected servicesHandler: HelgolandServicesConnector
     ) {
         super();
     }

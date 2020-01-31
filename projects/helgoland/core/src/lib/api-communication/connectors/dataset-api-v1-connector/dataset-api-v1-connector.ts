@@ -14,22 +14,22 @@ import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
 import { ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
-import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
-import { HttpService } from './../../../dataset-api/http.service';
-import { FirstLastValue, IDataset, Timeseries } from './../../../model/dataset-api/dataset';
-import { DataParameterFilter } from './../../../model/internal/http-requests';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from './../../helgoland-services-handler.service';
-import { HelgolandTimeseries } from './../../model/internal/dataset';
-import { HelgolandPlatform } from './../../model/internal/platform';
-import { HelgolandService } from './../../model/internal/service';
+import { HttpService } from '../../../dataset-api/http.service';
+import { FirstLastValue, IDataset, Timeseries } from '../../../model/dataset-api/dataset';
+import { DataParameterFilter } from '../../../model/internal/http-requests';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
+import { HelgolandTimeseries } from '../../model/internal/dataset';
+import { HelgolandPlatform } from '../../model/internal/platform';
+import { HelgolandService } from '../../model/internal/service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
+export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   constructor(
     protected http: HttpService,
@@ -231,6 +231,6 @@ export class DatasetApiV1Service implements IHelgolandServiceConnectorHandler {
 
 export const DatasetApiV1ConnectorProvider = {
   provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-  useClass: DatasetApiV1Service,
+  useClass: DatasetApiV1Connector,
   multi: true
 };

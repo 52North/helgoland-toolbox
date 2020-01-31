@@ -9,8 +9,8 @@ import { Offering } from '../model/dataset-api/offering';
 import { Phenomenon } from '../model/dataset-api/phenomenon';
 import { Procedure } from '../model/dataset-api/procedure';
 import { Timespan } from '../model/internal/timeInterval';
-import { InternalIdHandler } from './../dataset-api/internal-id-handler.service';
-import { IHelgolandServiceConnector, IHelgolandServiceConnectorHandler } from './interfaces/service-handler.interface';
+import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
+import { HelgolandServiceConnector, HelgolandServiceInterface } from './interfaces/service-connector-interfaces';
 import {
   HelgolandData,
   HelgolandDataFilter,
@@ -31,17 +31,17 @@ import { HelgolandParameterFilter } from './model/internal/filter';
 import { HelgolandPlatform } from './model/internal/platform';
 import { HelgolandService } from './model/internal/service';
 
-export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<IHelgolandServiceConnectorHandler>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
+export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<HelgolandServiceConnector>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
 @Injectable({
   providedIn: 'root'
 })
-export class HelgolandServicesHandlerService implements IHelgolandServiceConnector {
+export class HelgolandServicesConnector implements HelgolandServiceInterface {
 
-  private serviceMapping: Map<string, IHelgolandServiceConnectorHandler> = new Map();
+  private serviceMapping: Map<string, HelgolandServiceConnector> = new Map();
 
   constructor(
-    @Optional() @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER) protected handler: IHelgolandServiceConnectorHandler[] | null = [],
+    @Optional() @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER) protected handler: HelgolandServiceConnector[] | null = [],
     private internalIdHandler: InternalIdHandler
   ) { }
 
@@ -163,8 +163,8 @@ export class HelgolandServicesHandlerService implements IHelgolandServiceConnect
     return internalId;
   }
 
-  private getHandler(url: string): Observable<IHelgolandServiceConnectorHandler> {
-    return new Observable<IHelgolandServiceConnectorHandler>((observer: Observer<IHelgolandServiceConnectorHandler>) => {
+  private getHandler(url: string): Observable<HelgolandServiceConnector> {
+    return new Observable<HelgolandServiceConnector>((observer: Observer<HelgolandServiceConnector>) => {
       if (this.serviceMapping.has(url)) {
         observer.next(this.serviceMapping.get(url));
         observer.complete();

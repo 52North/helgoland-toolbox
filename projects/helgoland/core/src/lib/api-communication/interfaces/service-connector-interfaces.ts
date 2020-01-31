@@ -13,7 +13,7 @@ import { HelgolandPlatform } from '../model/internal/platform';
 import { Feature } from './../../model/dataset-api/feature';
 import { HelgolandService } from './../model/internal/service';
 
-export interface IHelgolandServiceConnector {
+export interface HelgolandServiceInterface {
 
     getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]>;
     getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform>;
@@ -43,6 +43,6 @@ export interface IHelgolandServiceConnector {
     getServices(apiUrl: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]>;
 }
 
-export interface IHelgolandServiceConnectorHandler extends IHelgolandServiceConnector {
+export interface HelgolandServiceConnector extends HelgolandServiceInterface {
     canHandle(url: string): Observable<boolean>;
 }

@@ -38,12 +38,12 @@ export * from './lib/sta/model/sensors';
 export * from './lib/sta/model/sta-interface';
 export * from './lib/sta/model/things';
 
-export * from './lib/api-communication/connectors/dataset-api-v1/dataset-api-v1.service';
-export * from './lib/api-communication/connectors/dataset-api-v2/dataset-api-v2.service';
-export * from './lib/api-communication/connectors/dataset-api-v3/api-v3-interface.service';
-export * from './lib/api-communication/connectors/dataset-api-v3/dataset-api-v3.service';
-export * from './lib/api-communication/connectors/sta-api-v1/sta-api-v1.service';
-export * from './lib/api-communication/helgoland-services-handler.service';
+export * from './lib/api-communication/connectors/dataset-api-v1-connector/dataset-api-v1-connector';
+export * from './lib/api-communication/connectors/dataset-api-v2-connector/dataset-api-v2-connector';
+export * from './lib/api-communication/connectors/dataset-api-v3-connector/api-v3-interface';
+export * from './lib/api-communication/connectors/dataset-api-v3-connector/dataset-api-v3-connector';
+export * from './lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector';
+export * from './lib/api-communication/helgoland-services-connector';
 export * from './lib/api-communication/model/internal/data';
 export * from './lib/api-communication/model/internal/dataset';
 export * from './lib/api-communication/model/internal/filter';

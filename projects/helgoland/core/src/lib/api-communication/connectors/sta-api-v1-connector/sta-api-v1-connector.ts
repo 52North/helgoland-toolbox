@@ -26,8 +26,8 @@ import { Sensor, SensorExpandParams, SensorSelectParams } from '../../../sta/mod
 import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/things';
 import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-handler.service';
-import { IHelgolandServiceConnectorHandler } from '../../interfaces/service-handler.interface';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
+import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import { HelgolandData, HelgolandDataFilter } from '../../model/internal/data';
 import {
   DatasetExtras,
@@ -38,8 +38,8 @@ import {
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
-import { HelgolandTimeseriesData } from './../../model/internal/data';
-import { HelgolandService } from './../../model/internal/service';
+import { HelgolandTimeseriesData } from '../../model/internal/data';
+import { HelgolandService } from '../../model/internal/service';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
 const DEFAULT_SERVICE_ID = '1';
@@ -47,7 +47,7 @@ const DEFAULT_SERVICE_ID = '1';
 @Injectable({
   providedIn: 'root'
 })
-export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
+export class StaApiV1Connector implements HelgolandServiceConnector {
 
   constructor(
     private http: HttpService,
@@ -435,6 +435,6 @@ export class StaApiV1Service implements IHelgolandServiceConnectorHandler {
 
 export const DatasetStaConnectorProvider = {
   provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-  useClass: StaApiV1Service,
+  useClass: StaApiV1Connector,
   multi: true
 };

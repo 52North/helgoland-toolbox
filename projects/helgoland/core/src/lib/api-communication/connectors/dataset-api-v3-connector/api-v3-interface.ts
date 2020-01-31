@@ -8,7 +8,7 @@ import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
-import { Data, TimeValueTuple } from './../../../model/dataset-api/data';
+import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
 
 export interface ApiV3Parameter {
   id: string;

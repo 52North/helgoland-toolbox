@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ApiV3InterfaceService } from './api-v3-interface.service';
+import { ApiV3InterfaceService } from './api-v3-interface';
 
 describe('ApiV3InterfaceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
