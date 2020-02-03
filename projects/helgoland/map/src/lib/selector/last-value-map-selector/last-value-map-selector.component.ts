@@ -12,7 +12,7 @@ import {
 import {
   DatasetType,
   HasLoadableContent,
-  HelgolandServicesHandlerService,
+  HelgolandServicesConnector,
   HelgolandTimeseries,
   Mixin,
   StatusIntervalResolverService,
@@ -63,7 +63,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     protected kvDiffers: KeyValueDiffers,
     protected iDiffers: IterableDiffers,
     protected cd: ChangeDetectorRef,
-    protected servicesHandler: HelgolandServicesHandlerService,
+    protected servicesConnector: HelgolandServicesConnector,
     protected lastValueLabelGenerator: LastValueLabelGenerator,
     protected statusIntervalResolver: StatusIntervalResolverService
   ) {
@@ -99,7 +99,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   private createMarkersBySeriesIDs(ids: string[]) {
     const obsList: Array<Observable<any>> = [];
     ids.forEach(id => {
-      const tsObs = this.servicesHandler.getDataset(id, { type: DatasetType.Timeseries });
+      const tsObs = this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries });
       obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val).pipe(tap(res => {
         this.markerFeatureGroup.addLayer(res);
         res.on('click', () => this.onSelected.emit(val));
@@ -134,7 +134,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private createColorizedMarker(ts: HelgolandTimeseries): Observable<Layer> {
     return new Observable<Layer>((observer: Observer<Layer>) => {
-      this.servicesHandler.getDatasetExtras(ts).subscribe(extras => {
+      this.servicesConnector.getDatasetExtras(ts).subscribe(extras => {
         let coloredMarker;
         if (extras.statusIntervals) {
           if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {

@@ -15,7 +15,7 @@ import {
     DatasetOptions,
     DatasetPresenterComponent,
     DatasetType,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     HelgolandTrajectory,
     InternalIdHandler,
     LocatedTimeValueEntry,
@@ -133,12 +133,12 @@ export class D3TrajectoryGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService
     ) {
-        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
         this.presenterOptions = this.defaultGraphOptions;
     }
 
@@ -189,7 +189,7 @@ export class D3TrajectoryGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Trajectory })
+        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Trajectory })
             .subscribe(dataset => {
                 this.datasetMap.set(dataset.internalId, { dataset });
                 this.loadData(dataset);
@@ -230,7 +230,7 @@ export class D3TrajectoryGraphComponent
             this.datasetOptions.get(dataset.internalId).visible) {
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option = this.datasetOptions.get(dataset.internalId);
-            this.servicesHandler.getDatasetData(dataset, buffer, { generalize: option.generalize })
+            this.servicesConnector.getDatasetData(dataset, buffer, { generalize: option.generalize })
                 .subscribe((result) => {
                     this.dataLength = result.values.length;
                     this.datasetMap.get(dataset.internalId).data = result.values;

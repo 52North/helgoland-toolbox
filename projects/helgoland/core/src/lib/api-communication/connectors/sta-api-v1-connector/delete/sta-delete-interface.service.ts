@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { HttpService } from '../../dataset-api/http.service';
+import { HttpService } from '../../../../dataset-api/http.service';
 import { StaDeleteInterface, StaEndpoint } from '../model/sta-interface';
 
 @Injectable()

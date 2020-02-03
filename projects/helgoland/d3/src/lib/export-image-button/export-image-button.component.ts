@@ -7,7 +7,7 @@ import {
   Injector,
   Input,
 } from '@angular/core';
-import { DatasetOptions, DatasetType, HelgolandServicesHandlerService, Time, Timespan } from '@helgoland/core';
+import { DatasetOptions, DatasetType, HelgolandServicesConnector, Time, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -80,7 +80,7 @@ export class ExportImageButtonComponent {
   private internalWidth: number;
 
   constructor(
-    private servicesHandler: HelgolandServicesHandlerService,
+    private servicesConnector: HelgolandServicesConnector,
     private applicationRef: ApplicationRef,
     private injector: Injector,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -169,7 +169,7 @@ export class ExportImageButtonComponent {
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
         obs.push(
-          this.servicesHandler.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
+          this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
             if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
               const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
               this.graphHelper.drawDatasetSign(label, option, -10, -5, false);

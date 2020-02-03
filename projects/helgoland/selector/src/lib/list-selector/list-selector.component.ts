@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FilteredProvider, HelgolandDataset, HelgolandServicesHandlerService, HelgolandParameterFilter } from '@helgoland/core';
+import { FilteredProvider, HelgolandDataset, HelgolandServicesConnector, HelgolandParameterFilter } from '@helgoland/core';
 
 import {
     FilteredParameter,
@@ -35,7 +35,7 @@ export class ListSelectorComponent implements OnChanges {
 
     constructor(
         protected listSelectorService: ListSelectorService,
-        protected servicesHandler: HelgolandServicesHandlerService
+        protected servicesConnector: HelgolandServicesConnector
     ) { }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -96,7 +96,7 @@ export class ListSelectorComponent implements OnChanges {
     }
 
     private openDataset(url: string, params: HelgolandParameterFilter) {
-        this.servicesHandler.getDatasets(url, params).subscribe(result => this.onDatasetSelection.emit(result));
+        this.servicesConnector.getDatasets(url, params).subscribe(result => this.onDatasetSelection.emit(result));
     }
 
     private isEqual(listOne: FilteredProvider[], listTwo: FilteredProvider[]): boolean {

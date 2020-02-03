@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {
     HelgolandParameterFilter,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     LanguageChangNotifier,
     Parameter,
 } from '@helgoland/core';
@@ -42,7 +42,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
     constructor(
         protected translate: TranslateService,
-        protected servicesHandler: HelgolandServicesHandlerService
+        protected servicesConnector: HelgolandServicesConnector
     ) {
         super(translate);
     }
@@ -66,23 +66,23 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
         this.onLoading.emit(true);
         switch (this.endpoint) {
             case 'offering':
-                this.servicesHandler.getOfferings(this.serviceUrl, this.filter)
+                this.servicesConnector.getOfferings(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'phenomenon':
-                this.servicesHandler.getPhenomena(this.serviceUrl, this.filter)
+                this.servicesConnector.getPhenomena(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'procedure':
-                this.servicesHandler.getProcedures(this.serviceUrl, this.filter)
+                this.servicesConnector.getProcedures(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'category':
-                this.servicesHandler.getCategories(this.serviceUrl, this.filter)
+                this.servicesConnector.getCategories(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             case 'feature':
-                this.servicesHandler.getFeatures(this.serviceUrl, this.filter)
+                this.servicesConnector.getFeatures(this.serviceUrl, this.filter)
                     .subscribe((res) => this.setItems(res), (error) => this.errorOnLoading);
                 break;
             default:

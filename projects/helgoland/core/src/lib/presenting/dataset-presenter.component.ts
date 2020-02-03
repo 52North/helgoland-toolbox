@@ -18,7 +18,7 @@ import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { HasLoadableContent } from '../model/mixins/has-loadable-content';
 import { Time } from '../time/time.service';
-import { HelgolandServicesHandlerService } from './../api-communication/helgoland-services-handler.service';
+import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { PresenterMessage } from './presenter-message';
 
 const equal = require('deep-equal');
@@ -109,7 +109,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService

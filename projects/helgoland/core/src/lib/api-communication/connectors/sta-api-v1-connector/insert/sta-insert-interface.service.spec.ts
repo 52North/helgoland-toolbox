@@ -2,15 +2,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import moment from 'moment';
 
-import { HttpService } from '../../dataset-api/http.service';
-import { SplittedDataDatasetApiInterface } from '../../dataset-api/splitted-data-api-interface.service';
+import { HttpService } from '../../../../dataset-api/http.service';
+import { SplittedDataDatasetApiInterface } from '../../../../dataset-api/splitted-data-api-interface.service';
 import { StaDeleteInterfaceService } from '../delete/sta-delete-interface.service';
 import { StaInsertInterfaceService } from '../insert/sta-insert-interface.service';
 import { InsertLocation } from '../model/locations';
 import { InsertThing } from '../model/things';
 import { StaReadInterfaceService } from '../read/sta-read-interface.service';
-import { TranslateTestingModule } from './../../../../../../testing/translate.testing.module';
-import { InternalIdHandler } from './../../dataset-api/internal-id-handler.service';
+import { TranslateTestingModule } from '../../../../../../../../testing/translate.testing.module';
+import { InternalIdHandler } from '../../../../dataset-api/internal-id-handler.service';
 
 const staUrl = 'http://docker.srv.int.52north.org:8081/sta/';
 const fluggs = 'https://www.fluggs.de/sos2/api/v1/';

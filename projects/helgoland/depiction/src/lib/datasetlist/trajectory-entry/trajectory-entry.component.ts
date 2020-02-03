@@ -3,7 +3,7 @@ import {
     DatasetOptions,
     DatasetType,
     HelgolandParameterFilter,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     HelgolandTrajectory,
     InternalIdHandler,
 } from '@helgoland/core';
@@ -31,7 +31,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected internalIdHandler: InternalIdHandler,
         protected translateSrvc: TranslateService
     ) {
@@ -51,7 +51,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
         const params: HelgolandParameterFilter = {};
         if (lang) { params.lang = lang; }
         this.loading = true;
-        this.servicesHandler.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })
+        this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })
             .subscribe(
                 trajectory => this.dataset = trajectory,
                 error => console.error(error),

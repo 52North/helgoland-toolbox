@@ -7,7 +7,7 @@ import { DatasetService } from './dataset.service';
 export abstract class RenderingHintsDatasetService<T extends DatasetOptions | DatasetOptions[]> extends DatasetService<T> {
 
     constructor(
-        protected servicesHandler: HelgolandServicesConnector
+        protected servicesConnector: HelgolandServicesConnector
     ) {
         super();
     }
@@ -22,7 +22,7 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
                     this.saveState();
                     resolve(true);
                 } else {
-                    this.servicesHandler.getDataset(internalId, { type: DatasetType.Timeseries })
+                    this.servicesConnector.getDataset(internalId, { type: DatasetType.Timeseries })
                         .subscribe(dataset => this.addLoadedDataset(dataset, resolve));
                 }
             }

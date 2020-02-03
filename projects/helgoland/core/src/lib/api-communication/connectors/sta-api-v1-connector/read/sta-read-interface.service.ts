@@ -2,9 +2,9 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
-import { UriParameterCoder } from '../../dataset-api/api-interface';
-import { HttpService } from '../../dataset-api/http.service';
-import { HttpRequestOptions } from '../../model/internal/http-requests';
+import { UriParameterCoder } from '../../../../dataset-api/api-interface';
+import { HttpService } from '../../../../dataset-api/http.service';
+import { HttpRequestOptions } from '../../../../model/internal/http-requests';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from '../model/datasetreams';
 import {
   FeatureOfInterest,

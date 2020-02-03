@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatasetOptions, HelgolandServicesHandlerService, InternalIdHandler } from '@helgoland/core';
+import { DatasetOptions, HelgolandServicesConnector, InternalIdHandler } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
@@ -32,11 +32,11 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
   constructor(
-    protected servicesHandler: HelgolandServicesHandlerService,
+    protected servicesConnector: HelgolandServicesConnector,
     protected internalIdHandler: InternalIdHandler,
     protected translateSrvc: TranslateService
   ) {
-    super(servicesHandler, internalIdHandler, translateSrvc);
+    super(servicesConnector, internalIdHandler, translateSrvc);
   }
 
   public toggleVisibility() {

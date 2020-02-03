@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
   DatasetType,
-  HelgolandServicesHandlerService,
+  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   IDataset,
@@ -59,14 +59,14 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    protected servicesHandler: HelgolandServicesHandlerService,
+    protected servicesConnector: HelgolandServicesConnector,
     protected timeSrvc: Time,
   ) { }
 
   ngOnInit() {
     // get timeseries metadata by internal id
     // e.g. https://www.fluggs.de/sos2/api/v1/__26
-    this.servicesHandler.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
+    this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
       ds => {
         this.dataset = ds;
         this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
@@ -115,7 +115,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     // get dataset data
     const buffer = new Timespan(this.timespan.from, this.timespan.to);
 
-    this.servicesHandler.getDatasetData(dataset, buffer,
+    this.servicesConnector.getDatasetData(dataset, buffer,
       {
         generalize: false
       }).subscribe(

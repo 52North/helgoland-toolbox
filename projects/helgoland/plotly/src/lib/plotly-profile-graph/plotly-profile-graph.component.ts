@@ -3,7 +3,7 @@ import {
     DatasetPresenterComponent,
     DatasetType,
     HelgolandProfile,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     InternalIdHandler,
     PresenterHighlight,
     ProfileDataEntry,
@@ -79,12 +79,12 @@ export class PlotlyProfileGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateSrvc: TranslateService
     ) {
-        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateSrvc);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -102,12 +102,12 @@ export class PlotlyProfileGraphComponent
     protected timeIntervalChanges(): void { }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Profile }).subscribe(dataset => {
+        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Profile }).subscribe(dataset => {
             const options = this.datasetOptions.get(dataset.internalId);
             options.forEach((option) => {
                 if (option.timestamp) {
                     const timespan = new Timespan(option.timestamp);
-                    this.servicesHandler.getDatasetData(dataset, timespan).subscribe(data => {
+                    this.servicesConnector.getDatasetData(dataset, timespan).subscribe(data => {
                         if (data.values.length === 1) {
                             if (this.rawData.has(dataset.internalId)) {
                                 this.rawData.get(dataset.internalId).datas.push(data.values[0]);

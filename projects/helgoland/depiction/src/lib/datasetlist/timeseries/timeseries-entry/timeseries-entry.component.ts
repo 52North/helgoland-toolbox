@@ -2,7 +2,7 @@ import { Component, Injectable, OnChanges, ViewEncapsulation } from '@angular/co
 import {
     ColorService,
     DatasetOptions,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     IdCache,
     InternalIdHandler,
     ReferenceValue,
@@ -33,14 +33,14 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     public referenceValues: ReferenceValue[];
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
         protected color: ColorService,
         protected refValCache: ReferenceValueColorCache,
         protected translateSrvc: TranslateService
     ) {
-        super(servicesHandler, internalIdHandler, translateSrvc, timeSrvc);
+        super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
     }
 
     public toggleInformation() {

@@ -14,21 +14,9 @@ import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { DataParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
-import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from '../../../sta/model/datasetreams';
-import { Location, LocationExpandParams, LocationSelectParams } from '../../../sta/model/locations';
-import { Observation } from '../../../sta/model/observations';
-import {
-  ObservedProperty,
-  ObservedPropertyExpandParams,
-  ObservedPropertySelectParams,
-} from '../../../sta/model/observed-properties';
-import { Sensor, SensorExpandParams, SensorSelectParams } from '../../../sta/model/sensors';
-import { StaExpandParams, StaFilter, StaSelectParams } from '../../../sta/model/sta-interface';
-import { Thing, ThingExpandParams, ThingSelectParams } from '../../../sta/model/things';
-import { StaReadInterfaceService } from '../../../sta/read/sta-read-interface.service';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
 import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
-import { HelgolandData, HelgolandDataFilter } from '../../model/internal/data';
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import {
   DatasetExtras,
   DatasetFilter,
@@ -38,8 +26,15 @@ import {
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
-import { HelgolandTimeseriesData } from '../../model/internal/data';
 import { HelgolandService } from '../../model/internal/service';
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './model/datasetreams';
+import { Location, LocationExpandParams, LocationSelectParams } from './model/locations';
+import { Observation } from './model/observations';
+import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from './model/observed-properties';
+import { Sensor, SensorExpandParams, SensorSelectParams } from './model/sensors';
+import { StaExpandParams, StaFilter, StaSelectParams } from './model/sta-interface';
+import { Thing, ThingExpandParams, ThingSelectParams } from './model/things';
+import { StaReadInterfaceService } from './read/sta-read-interface.service';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
 const DEFAULT_SERVICE_ID = '1';

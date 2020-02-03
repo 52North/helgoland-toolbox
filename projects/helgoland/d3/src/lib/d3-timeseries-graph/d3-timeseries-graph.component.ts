@@ -18,7 +18,7 @@ import {
     DatasetType,
     HelgolandData,
     HelgolandDataset,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     HelgolandTimeseries,
     HelgolandTimeseriesData,
     InternalIdHandler,
@@ -160,9 +160,9 @@ export class D3TimeseriesGraphComponent
         protected graphHelper: D3GraphHelperService,
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
-        protected servicesHandler: HelgolandServicesHandlerService
+        protected servicesConnector: HelgolandServicesConnector
     ) {
-        super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
     }
 
     public ngAfterViewInit(): void {
@@ -218,7 +218,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Timeseries }).subscribe(
+        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Timeseries }).subscribe(
             res => this.loadAddedDataset(res),
             error => console.error(error)
         );
@@ -315,7 +315,7 @@ export class D3TimeseriesGraphComponent
                     this.runningDataRequests.get(dataset.internalId).unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
-                const request = this.servicesHandler.getDatasetData(dataset, buffer, {
+                const request = this.servicesConnector.getDatasetData(dataset, buffer, {
                     expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 }).subscribe(

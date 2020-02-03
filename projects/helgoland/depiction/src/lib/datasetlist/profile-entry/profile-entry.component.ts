@@ -4,7 +4,7 @@ import {
     HelgolandLocatedProfileData,
     HelgolandParameterFilter,
     HelgolandProfile,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     InternalIdHandler,
     TimedDatasetOptions,
     Timespan,
@@ -44,7 +44,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
     public tempColor: string;
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected internalIdHandler: InternalIdHandler,
         protected translateSrvc: TranslateService
     ) {
@@ -72,7 +72,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
         const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
         if (this.dataset.isMobile) {
             const timespan = new Timespan(option.timestamp);
-            this.servicesHandler.getDatasetData(this.dataset, timespan).subscribe(
+            this.servicesConnector.getDatasetData(this.dataset, timespan).subscribe(
                 result => {
                     if (result.values.length === 1 && result instanceof HelgolandLocatedProfileData) {
                         this.onShowGeometry.emit(result.values[0].geometry);
@@ -80,7 +80,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
                 }
             );
         } else {
-            this.servicesHandler.getPlatform(this.dataset.parameters.platform.id, internalId.url)
+            this.servicesConnector.getPlatform(this.dataset.parameters.platform.id, internalId.url)
                 .subscribe((station) => this.onShowGeometry.emit(station.geometry));
         }
     }
@@ -89,7 +89,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
         const params: HelgolandParameterFilter = {};
         if (lang) { params.lang = lang; }
         this.loading = true;
-        this.servicesHandler.getDataset(this.internalId, { ...params, type: DatasetType.Profile }).subscribe(
+        this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Profile }).subscribe(
             dataset => this.dataset = dataset,
             error => console.error(error),
             () => this.loading = false

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import {
     Filter,
     HelgolandParameterFilter,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     LanguageChangNotifier,
     Parameter,
 } from '@helgoland/core';
@@ -45,7 +45,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public items: FilteredParameter[];
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected translate: TranslateService
     ) {
         super(translate);
@@ -70,43 +70,43 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
             const filter = entry.filter || {};
             switch (this.endpoint) {
                 case MultiServiceFilterEndpoint.offering:
-                    this.servicesHandler.getOfferings(entry.url, filter).subscribe(
+                    this.servicesConnector.getOfferings(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.phenomenon:
-                    this.servicesHandler.getPhenomena(entry.url, filter).subscribe(
+                    this.servicesConnector.getPhenomena(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.procedure:
-                    this.servicesHandler.getProcedures(entry.url, filter).subscribe(
+                    this.servicesConnector.getProcedures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.feature:
-                    this.servicesHandler.getFeatures(entry.url, filter).subscribe(
+                    this.servicesConnector.getFeatures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.category:
-                    this.servicesHandler.getCategories(entry.url, filter).subscribe(
+                    this.servicesConnector.getCategories(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.platform:
-                    this.servicesHandler.getPlatforms(entry.url, filter).subscribe(
+                    this.servicesConnector.getPlatforms(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
                         (error) => this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.dataset:
-                    this.servicesHandler.getDatasets(entry.url, filter).subscribe(
+                    this.servicesConnector.getDatasets(entry.url, filter).subscribe(
                         res => this.setItems(res, filter, entry.url, filter.service),
                         error => this.errorOnLoading
                     );

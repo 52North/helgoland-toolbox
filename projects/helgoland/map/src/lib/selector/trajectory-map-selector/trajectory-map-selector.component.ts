@@ -16,7 +16,7 @@ import {
     HelgolandDataset,
     HelgolandLocatedProfileData,
     HelgolandProfile,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     LocatedProfileDataEntry,
     Mixin,
     Timespan,
@@ -60,7 +60,7 @@ export class ProfileTrajectoryMapSelectorComponent
     };
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected mapCache: MapCache,
         protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
@@ -85,12 +85,12 @@ export class ProfileTrajectoryMapSelectorComponent
     protected drawGeometries() {
         this.isContentLoading(true);
         if (!this.serviceUrl) { return; }
-        this.servicesHandler.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
+        this.servicesConnector.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
             datasets.forEach((dataset) => {
                 if (dataset instanceof HelgolandProfile) {
                     this.dataset = dataset;
                     const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
-                    this.servicesHandler.getDatasetData(dataset, timespan)
+                    this.servicesConnector.getDatasetData(dataset, timespan)
                         .subscribe((data: HelgolandLocatedProfileData) => {
                             if (this.map && data.values instanceof Array) {
                                 this.initLayer();

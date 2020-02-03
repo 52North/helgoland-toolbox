@@ -4,7 +4,7 @@ import {
   DatasetPresenterComponent,
   DatasetTableData,
   DatasetType,
-  HelgolandServicesHandlerService,
+  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   InternalIdHandler,
@@ -33,12 +33,12 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
 
   constructor(
     protected iterableDiffers: IterableDiffers,
-    protected servicesHandler: HelgolandServicesHandlerService,
+    protected servicesConnector: HelgolandServicesConnector,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
     protected translateSrvc: TranslateService
   ) {
-    super(iterableDiffers, servicesHandler, datasetIdResolver, timeSrvc, translateSrvc);
+    super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
   }
 
   public ngOnInit() {
@@ -144,7 +144,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     this.timeseriesArray.length += 1;  // create new empty slot
     this.preparedColors.push('darkgrey');
     this.additionalStylesheet.innerHTML += '\r\n';
-    this.servicesHandler.getDataset({ id, url }, { type: DatasetType.Timeseries })
+    this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Timeseries })
       .subscribe(ds => this.addTimeseries(ds));
   }
 
@@ -168,7 +168,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   private loadTsData(timeseries: HelgolandTimeseries) {
     if (this.timespan) {
       // const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.servicesHandler.getDatasetData(timeseries, this.timespan).subscribe(
+      this.servicesConnector.getDatasetData(timeseries, this.timespan).subscribe(
         result => {
           // bring result into Array<DatasetTableData> format and pass to prepareData
           // convention for layout of newdata argument: see 3-line-comment in prepareData function

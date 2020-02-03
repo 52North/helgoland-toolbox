@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { HttpRequestOptions } from '../../model/internal/http-requests';
+import { HttpRequestOptions } from '../../../../model/internal/http-requests';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './datasetreams';
 import { FeatureOfInterest, FeatureOfInterestExpandParams, FeatureOfInterestSelectParams } from './features-of-interest';
 import { HistoricalLocation, HistoricalLocationExpandParams, HistoricalLocationSelectParams } from './historical-locations';

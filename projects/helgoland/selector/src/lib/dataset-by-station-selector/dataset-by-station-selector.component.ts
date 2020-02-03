@@ -3,7 +3,7 @@ import {
     DatasetType,
     HelgolandDataset,
     HelgolandPlatform,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     HelgolandTimeseries,
 } from '@helgoland/core';
 
@@ -38,18 +38,18 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public counter: number;
 
     constructor(
-        protected servicesHandler: HelgolandServicesHandlerService
+        protected servicesConnector: HelgolandServicesConnector
     ) { }
 
     public ngOnInit() {
         if (this.station) {
-            this.servicesHandler.getPlatform(this.station.id, this.url)
+            this.servicesConnector.getPlatform(this.station.id, this.url)
                 .subscribe((station) => {
                     this.station = station;
                     this.counter = 0;
                     this.station.datasetIds.forEach(id => {
                         this.counter++;
-                        this.servicesHandler.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
+                        this.servicesConnector.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
                             .subscribe((result) => {
                                 this.prepareResult(result as SelectableDataset, this.defaultSelected);
                                 this.counter--;

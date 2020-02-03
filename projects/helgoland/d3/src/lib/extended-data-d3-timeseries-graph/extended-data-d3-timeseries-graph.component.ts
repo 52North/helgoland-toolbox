@@ -11,7 +11,7 @@ import {
 import {
   ColorService,
   DatasetOptions,
-  HelgolandServicesHandlerService,
+  HelgolandServicesConnector,
   InternalIdHandler,
   SumValuesService,
   Time,
@@ -90,7 +90,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected graphHelper: D3GraphHelperService,
     protected graphService: D3Graphs,
     protected graphId: D3GraphId,
-    protected servicesHandler: HelgolandServicesHandlerService
+    protected servicesConnector: HelgolandServicesConnector
   ) {
     super(
       iterableDiffers,
@@ -104,7 +104,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       graphHelper,
       graphService,
       graphId,
-      servicesHandler
+      servicesConnector
     );
   }
 

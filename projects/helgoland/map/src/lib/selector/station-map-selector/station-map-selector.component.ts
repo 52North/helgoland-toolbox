@@ -14,7 +14,7 @@ import {
     Mixin,
     StatusIntervalResolverService,
     TimeseriesExtras,
-    HelgolandServicesHandlerService,
+    HelgolandServicesConnector,
     HelgolandTimeseries,
     HelgolandPlatform,
     HelgolandParameterFilter
@@ -52,7 +52,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
 
     constructor(
         protected statusIntervalResolver: StatusIntervalResolverService,
-        protected servicesHandler: HelgolandServicesHandlerService,
+        protected servicesConnector: HelgolandServicesConnector,
         protected mapCache: MapCache,
         protected kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
@@ -80,12 +80,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
             phenomenon: this.filter.phenomenon,
             expanded: true
         };
-        this.servicesHandler.getDatasets(this.serviceUrl, tempFilter).subscribe(
+        this.servicesConnector.getDatasets(this.serviceUrl, tempFilter).subscribe(
             datasets => {
                 this.markerFeatureGroup = L.featureGroup();
                 const obsList: Array<Observable<TimeseriesExtras>> = [];
                 datasets.forEach((ts: HelgolandTimeseries) => {
-                    const obs = this.servicesHandler.getDatasetExtras(ts.internalId);
+                    const obs = this.servicesConnector.getDatasetExtras(ts.internalId);
                     obsList.push(obs);
                     obs.subscribe((extras: TimeseriesExtras) => {
                         let marker;
@@ -161,7 +161,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     }
 
     private createStationGeometries() {
-        this.servicesHandler.getPlatforms(this.serviceUrl, this.filter)
+        this.servicesConnector.getPlatforms(this.serviceUrl, this.filter)
             .subscribe((res) => {
                 if (this.cluster) {
                     this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
