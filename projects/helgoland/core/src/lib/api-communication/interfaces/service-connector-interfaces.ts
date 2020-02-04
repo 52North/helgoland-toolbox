@@ -44,5 +44,6 @@ export interface HelgolandServiceInterface {
 }
 
 export interface HelgolandServiceConnector extends HelgolandServiceInterface {
+    name: string;
     canHandle(url: string): Observable<boolean>;
 }

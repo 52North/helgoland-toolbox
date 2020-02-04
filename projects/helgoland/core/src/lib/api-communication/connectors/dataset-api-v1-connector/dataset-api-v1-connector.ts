@@ -31,6 +31,8 @@ import { HelgolandService } from '../../model/internal/service';
 })
 export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
+  name = 'DatasetApiV1Connector';
+
   constructor(
     protected http: HttpService,
     protected api: DatasetApiInterface

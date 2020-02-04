@@ -49,6 +49,8 @@ import { HelgolandPlatform } from '../../model/internal/platform';
   providedIn: 'root'
 })
 export class DatasetApiV2Connector implements HelgolandServiceConnector {
+  
+  name = 'DatasetApiV2Connector';
 
   constructor(
     protected http: HttpService,

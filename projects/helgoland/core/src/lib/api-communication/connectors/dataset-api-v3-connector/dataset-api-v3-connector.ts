@@ -46,6 +46,8 @@ import {
 })
 export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
+  name = 'DatasetApiV3Connector';
+
   constructor(
     private http: HttpService,
     private api: ApiV3InterfaceService
