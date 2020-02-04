@@ -16,6 +16,6 @@ export class ServiceSelectorComponent {
     }
 
     public providerFilter: HelgolandParameterFilter = {
-        type: DatasetType.Trajectory
+        // type: DatasetType.Trajectory
     };
 }

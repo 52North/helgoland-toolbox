@@ -27,7 +27,6 @@ import {
   DatasetApiV3ConnectorProvider,
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
-  MultiDatasetInterface,
   SettingsService,
   SplittedDataDatasetApiInterface,
   StatusCheckService,

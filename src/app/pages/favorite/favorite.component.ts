@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetOptions, DatasetType, HelgolandServicesHandlerService, Timespan } from '@helgoland/core';
+import { DatasetOptions, DatasetType, Timespan, HelgolandServicesConnector } from '@helgoland/core';
 import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
 
 @Component({
@@ -13,9 +13,9 @@ export class FavoriteComponent {
   constructor(
     private favoriteSrvc: FavoriteService,
     private jsonExport: JsonFavoriteExporterService,
-    private servicesHandler: HelgolandServicesHandlerService
+    private servicesConnector: HelgolandServicesConnector
   ) {
-    this.servicesHandler.getDataset({ id: '26', url: 'https://www.fluggs.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
+    this.servicesConnector.getDataset({ id: '26', url: 'https://www.fluggs.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
       this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });

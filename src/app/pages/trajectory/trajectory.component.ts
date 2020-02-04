@@ -4,9 +4,9 @@ import {
     ColorService,
     DatasetOptions,
     DatasetType,
-    HelgolandServicesHandlerService,
     InternalIdHandler,
     Timespan,
+    HelgolandServicesConnector,
 } from '@helgoland/core';
 import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
 import { GeoJsonObject, LineString, Point } from 'geojson';
@@ -49,7 +49,7 @@ export class TrajectoryComponent implements OnInit {
         private color: ColorService,
         private dialog: MatDialog,
         private internalIdHandler: InternalIdHandler,
-        private servicesHandler: HelgolandServicesHandlerService
+        private servicesConnector: HelgolandServicesConnector
     ) { }
 
     public ngOnInit(): void {
@@ -62,9 +62,9 @@ export class TrajectoryComponent implements OnInit {
 
         if (this.datasetIds.length > 0) {
             const internalId = this.internalIdHandler.resolveInternalId(this.datasetIds[0]);
-            this.servicesHandler.getDataset({ id: internalId.id, url: internalId.url }, { type: DatasetType.Trajectory }).subscribe((dataset) => {
+            this.servicesConnector.getDataset({ id: internalId.id, url: internalId.url }, { type: DatasetType.Trajectory }).subscribe((dataset) => {
                 this.timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
-                this.servicesHandler.getDatasetData(dataset, this.timespan)
+                this.servicesConnector.getDatasetData(dataset, this.timespan)
                     .subscribe((data) => {
                         this.geometry = {
                             type: 'LineString',
