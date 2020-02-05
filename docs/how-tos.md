@@ -10,6 +10,7 @@ To get in touch with the helgoland-toolbox, here you will find a list of how tos
 - [Using basic auth services](./how-tos/basic-auth-services.html)
 - [Handle styling options for datasets](../how-tos/handle-styling-options.html)
 - [Add last value map selector](../how-tos/add-last-value-map-selector.html)
+- [Using new communication interface](../how-tos/using-new-communication-interface.html)
 
 ### Preparing a how to app with angular-cli
 

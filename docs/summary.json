@@ -29,6 +29,9 @@
     },{
       "title": "Add last value map selector",
       "file": "how-tos/add-last-value-map-selector.md"
+    },{
+      "title": "Using new communication interface",
+      "file": "how-tos/using-new-communication-interface.md"
     }]
   }
 ]
