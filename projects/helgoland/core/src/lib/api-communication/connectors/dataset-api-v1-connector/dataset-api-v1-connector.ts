@@ -114,7 +114,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
-    return this.api.getTimeseries(url, filter)
+    return this.api.getTimeseries(url, this.createFilter(filter))
       .pipe(map(res => res.map(e => this.mapTimeseries(e, url, filter))));
   }
 
@@ -164,7 +164,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   protected mapTimeseries(res: IDataset, url: string, filter: DatasetFilter): HelgolandDataset {
     if (filter.expanded) {
-      if (res instanceof Timeseries && res.firstValue) {
+      if (res instanceof Timeseries && res.station) {
         return new HelgolandTimeseries(
           res.id, url, res.label, res.uom, this.createHelgolandPlatform(res.station), res.firstValue, res.lastValue, res.referenceValues, res.renderingHints, res.parameters
         );

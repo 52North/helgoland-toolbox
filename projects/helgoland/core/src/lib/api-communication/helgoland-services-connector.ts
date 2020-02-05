@@ -99,6 +99,44 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     return this.getConnector(url).pipe(flatMap(h => h.getPlatform(id, url, filter)));
   }
 
+  getDatasets(url: string, filter: {
+    phenomenon?: string,
+    category?: string,
+    procedure?: string,
+    feature?: string,
+    offering?: string,
+    service?: string,
+    expanded?: boolean,
+    lang?: string,
+    type: DatasetType.Timeseries
+  }): Observable<HelgolandTimeseries[]>;
+
+  getDatasets(url: string, filter: {
+    phenomenon?: string,
+    category?: string,
+    procedure?: string,
+    feature?: string,
+    offering?: string,
+    service?: string,
+    expanded?: boolean,
+    lang?: string,
+    type: DatasetType.Trajectory
+  }): Observable<HelgolandTrajectory[]>;
+
+  getDatasets(url: string, filter: {
+    phenomenon?: string,
+    category?: string,
+    procedure?: string,
+    feature?: string,
+    offering?: string,
+    service?: string,
+    expanded?: boolean,
+    lang?: string,
+    type: DatasetType.Profile
+  }): Observable<HelgolandProfile[]>;
+
+  getDatasets(internalId: string | InternalDatasetId, filter?: DatasetFilter): Observable<HelgolandDataset[]>;
+
   getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {
     return this.getConnector(url).pipe(flatMap(h => h.getDatasets(url, filter)));
   }
@@ -109,6 +147,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     procedure?: string,
     feature?: string,
     offering?: string,
+    service?: string,
     expanded?: boolean,
     lang?: string,
     type: DatasetType.Timeseries
@@ -120,6 +159,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     procedure?: string,
     feature?: string,
     offering?: string,
+    service?: string,
     expanded?: boolean,
     lang?: string,
     type: DatasetType.Trajectory
@@ -131,6 +171,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     procedure?: string,
     feature?: string,
     offering?: string,
+    service?: string,
     expanded?: boolean,
     lang?: string,
     type: DatasetType.Profile

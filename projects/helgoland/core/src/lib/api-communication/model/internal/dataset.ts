@@ -87,6 +87,7 @@ export interface DatasetFilter {
     procedure?: string;
     feature?: string;
     offering?: string;
+    service?: string;
     expanded?: boolean;
     lang?: string;
     type?: DatasetType;
