@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatasetType, HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { ServiceSelectorComponent } from './service-selector.component';
 import { ServiceSelectorService } from './service-selector.service';
 
@@ -18,9 +19,12 @@ describe('ServiceSelectorComponent', () => {
         TranslateTestingModule
       ],
       providers: [
-        ServiceSelectorService
+        ServiceSelectorService,
+        SettingsServiceTestingProvider,
       ],
-      declarations: [ServiceSelectorComponent]
+      declarations: [
+        ServiceSelectorComponent
+      ]
     }).compileComponents();
   }));
 

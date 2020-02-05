@@ -3,6 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { ServiceSelectorService } from './service-selector.service';
 
 describe('ServiceSelectorService', () => {
@@ -14,7 +15,8 @@ describe('ServiceSelectorService', () => {
         TranslateTestingModule
       ],
       providers: [
-        ServiceSelectorService
+        ServiceSelectorService,
+        SettingsServiceTestingProvider
       ]
     });
   });

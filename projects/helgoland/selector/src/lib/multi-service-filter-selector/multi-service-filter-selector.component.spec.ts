@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { MultiServiceFilterEndpoint, MultiServiceFilterSelectorComponent } from './multi-service-filter-selector.component';
 
 describe('MultiServiceFilterSelectorComponent', () => {
@@ -18,7 +19,9 @@ describe('MultiServiceFilterSelectorComponent', () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [MultiServiceFilterSelectorComponent]
     }).compileComponents();
   }));
@@ -48,7 +51,9 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [MultiServiceFilterSelectorComponent]
     }).compileComponents();
   }));

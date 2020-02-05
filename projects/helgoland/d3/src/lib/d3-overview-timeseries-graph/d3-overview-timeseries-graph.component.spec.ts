@@ -3,6 +3,7 @@ import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandD3Module } from '../d3.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-graph.component';
 
 describe('D3OverviewTimeseriesGraphComponent', () => {
@@ -11,7 +12,9 @@ describe('D3OverviewTimeseriesGraphComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       imports: [
         HelgolandCoreModule,
         HelgolandD3Module,

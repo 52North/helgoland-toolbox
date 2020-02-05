@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
+import { SettingsServiceTestingProvider } from '../../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
 import { SimpleTimeseriesEntryComponent } from './simple-timeseries-entry.component';
 
@@ -14,7 +15,9 @@ describe('SimpleTimeseriesEntryComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [SimpleTimeseriesEntryComponent]
     })
       .compileComponents();

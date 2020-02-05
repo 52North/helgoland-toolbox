@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { D3TrajectoryGraphComponent } from './d3-trajectory-graph.component';
 
 describe('D3TrajectoryGraphComponent', () => {
@@ -18,7 +19,8 @@ describe('D3TrajectoryGraphComponent', () => {
         TranslateTestingModule
       ],
       providers: [
-        DatasetApiInterfaceTesting
+        DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider
       ],
       declarations: [D3TrajectoryGraphComponent]
     }).compileComponents();

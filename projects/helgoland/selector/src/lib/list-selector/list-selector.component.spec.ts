@@ -8,6 +8,7 @@ import { TranslateTestingModule } from '../../../../../testing/translate.testing
 import {
   MultiServiceFilterSelectorComponent,
 } from '../multi-service-filter-selector/multi-service-filter-selector.component';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { ListSelectorComponent } from './list-selector.component';
 import { ListSelectorService } from './list-selector.service';
 
@@ -25,6 +26,7 @@ describe('ListSelectorComponent', () => {
       ],
       providers: [
         ListSelectorService,
+        SettingsServiceTestingProvider
       ],
       declarations: [
         ListSelectorComponent,
@@ -44,7 +46,7 @@ describe('ListSelectorComponent', () => {
   });
 });
 
-describe('ListSelectorComponent creation', () => {
+describe('ListSelectorComponent', () => {
   let component: ListSelectorComponent;
   let fixture: ComponentFixture<ListSelectorComponent>;
   let fixtureInterval: number;
@@ -59,6 +61,7 @@ describe('ListSelectorComponent creation', () => {
       ],
       providers: [
         ListSelectorService,
+        SettingsServiceTestingProvider
       ],
       declarations: [
         ListSelectorComponent,

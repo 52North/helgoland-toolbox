@@ -5,6 +5,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { MapCache } from '../../base/map-cache.service';
+import { SettingsServiceTestingProvider } from './../../../../../../testing/settings.testing';
 import { ProfileTrajectoryMapSelectorComponent } from './trajectory-map-selector.component';
 
 describe('ProfileTrajectoryMapSelectorComponent', () => {
@@ -20,6 +21,7 @@ describe('ProfileTrajectoryMapSelectorComponent', () => {
       ],
       providers: [
         DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider,
         MapCache
       ],
       declarations: [ProfileTrajectoryMapSelectorComponent]

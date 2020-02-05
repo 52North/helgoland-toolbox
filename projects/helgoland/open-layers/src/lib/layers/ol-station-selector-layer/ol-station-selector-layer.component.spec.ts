@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../../testing/settings.testing';
 import { OlStationSelectorLayerComponent } from './ol-station-selector-layer.component';
 
 describe('OlStationSelectorLayerComponent', () => {
@@ -19,7 +20,8 @@ describe('OlStationSelectorLayerComponent', () => {
         TranslateTestingModule
       ],
       providers: [
-        DatasetApiInterfaceTesting
+        DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider
       ],
     }).compileComponents();
   }));

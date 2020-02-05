@@ -13,6 +13,7 @@ import {
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandD3Module } from '../d3.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { ExtendedDataD3TimeseriesGraphComponent } from './extended-data-d3-timeseries-graph.component';
 
 describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
@@ -31,7 +32,8 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
                 DatasetApiInterfaceTesting,
                 DatasetApiV1ConnectorProvider,
                 DatasetApiV3ConnectorProvider,
-                DatasetStaConnectorProvider
+                DatasetStaConnectorProvider,
+                SettingsServiceTestingProvider
             ],
             declarations: []
         }).compileComponents();

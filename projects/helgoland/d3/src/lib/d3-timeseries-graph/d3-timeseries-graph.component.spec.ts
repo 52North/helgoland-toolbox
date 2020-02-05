@@ -42,7 +42,8 @@ describe('D3TimeseriesGraphComponent - raw', () => {
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
         DatasetApiV3ConnectorProvider,
-        DatasetStaConnectorProvider
+        DatasetStaConnectorProvider,
+        SettingsServiceTestingProvider
       ],
     }).compileComponents();
   }));

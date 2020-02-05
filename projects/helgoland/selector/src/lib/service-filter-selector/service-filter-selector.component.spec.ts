@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { ServiceFilterSelectorComponent } from './service-filter-selector.component';
 
 describe('ServiceFilterSelectorComponent', () => {
@@ -18,7 +19,9 @@ describe('ServiceFilterSelectorComponent', () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [ServiceFilterSelectorComponent]
     }).compileComponents();
   }));

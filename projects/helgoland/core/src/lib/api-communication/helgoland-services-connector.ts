@@ -178,8 +178,8 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
         return;
       }
 
-      const serviceConfig = this.settings.getSettings().datasetApis.find(e => e.url === url);
-      if (serviceConfig.connector) {
+      const serviceConfig = this.settings.getSettings() && this.settings.getSettings().datasetApis && this.settings.getSettings().datasetApis.find(e => e.url === url);
+      if (serviceConfig && serviceConfig.connector) {
         const connector = this.connectorList.find(c => c.name === serviceConfig.connector);
         if (connector) {
           this.setConnector(url, connector, observer);

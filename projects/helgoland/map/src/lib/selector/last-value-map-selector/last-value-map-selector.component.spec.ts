@@ -7,6 +7,7 @@ import { TranslateTestingModule } from 'projects/testing/translate.testing.modul
 import { MapCache } from '../../base/map-cache.service';
 import { HelgolandMapSelectorModule } from '../module';
 import { LastValuePresentation } from '../services/last-value-label-generator.interface';
+import { SettingsServiceTestingProvider } from './../../../../../../testing/settings.testing';
 import { LastValueMapSelectorComponent } from './last-value-map-selector.component';
 
 describe('LastValueMapSelectorComponent with external Data', () => {
@@ -24,6 +25,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
       providers: [
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
+        SettingsServiceTestingProvider,
         MapCache
       ],
       declarations: []

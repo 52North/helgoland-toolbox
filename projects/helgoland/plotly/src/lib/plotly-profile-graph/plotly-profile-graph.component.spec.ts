@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { PlotlyProfileGraphComponent } from './plotly-profile-graph.component';
 
 describe('PlotlyProfileGraphComponent', () => {
@@ -18,7 +19,8 @@ describe('PlotlyProfileGraphComponent', () => {
         HelgolandCoreModule
       ],
       providers: [
-        DatasetApiInterfaceTesting
+        DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider
       ],
       declarations: [PlotlyProfileGraphComponent]
     }).compileComponents();

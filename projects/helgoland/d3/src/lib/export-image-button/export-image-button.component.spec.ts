@@ -2,6 +2,7 @@ import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing'
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
 import { HelgolandD3Module } from './../d3.module';
 import { ExportImageButtonComponent } from './export-image-button.component';
 
@@ -19,7 +20,9 @@ describe('ExportImageButtonComponent', () => {
         TranslateTestingModule,
         HelgolandD3Module
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [],
     }).compileComponents();
   }));
