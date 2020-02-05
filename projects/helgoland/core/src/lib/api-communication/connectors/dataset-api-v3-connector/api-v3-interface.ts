@@ -6,12 +6,15 @@ import { Observable } from 'rxjs';
 import { ApiInterface } from '../../../abstract-services/api-interface';
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
+import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
 import { HttpRequestOptions, ParameterFilter } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
-import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
 
 export interface ApiV3Parameter {
-  id: string;
+  id?: string;
+  href?: string;
+  domainId?: string;
+  label?: string;
 }
 
 export interface ApiV3Feature extends ApiV3Parameter {
@@ -19,7 +22,7 @@ export interface ApiV3Feature extends ApiV3Parameter {
     label: string;
     href: string;
     domainId: string;
-    datasets: {
+    datasets?: {
       [key: string]: {
         phenomenon: ApiV3Phenomenon,
         procedure: ApiV3Procedure,
@@ -37,39 +40,17 @@ export interface ApiV3Feature extends ApiV3Parameter {
   geometry: GeoJSON.GeometryObject;
 }
 
-export interface ApiV3Category extends ApiV3Parameter {
-  href: string;
-  domainId: string;
-  label: string;
-}
+export interface ApiV3Category extends ApiV3Parameter { }
 
-export interface ApiV3Offering extends ApiV3Parameter {
-  href: string;
-  domainId: string;
-  label: string;
-}
+export interface ApiV3Offering extends ApiV3Parameter { }
 
-export interface ApiV3Phenomenon extends ApiV3Parameter {
-  href: string;
-  domainId: string;
-  label: string;
-}
+export interface ApiV3Phenomenon extends ApiV3Parameter { }
 
-export interface ApiV3Procedure extends ApiV3Parameter {
-  href: string;
-  domainId: string;
-  label: string;
-}
+export interface ApiV3Procedure extends ApiV3Parameter { }
 
-export interface ApiV3Platform extends ApiV3Parameter {
-  href: string;
-  domainId: string;
-  label: string;
-}
+export interface ApiV3Platform extends ApiV3Parameter { }
 
 export interface ApiV3Service extends ApiV3Parameter {
-  href: string;
-  label: string;
   extras: string[];
   version: string;
   type: string;
@@ -94,8 +75,6 @@ export interface ApiV3Service extends ApiV3Parameter {
 }
 
 export interface ApiV3Dataset extends ApiV3Parameter {
-  href: string;
-  label: string;
   datasetType: ApiV3DatasetTypes;
   observationType: string;
   valueType: string;
@@ -159,6 +138,45 @@ export interface ApiV3ParameterFilter {
 export interface ApiV3DatasetDataFilter {
   timespan?: string;
   format?: string;
+}
+
+export interface ApiV3Sampler extends ApiV3Parameter { }
+
+export interface ApiV3MeasuringProgram extends ApiV3Parameter { }
+
+export interface ApiV3SamplingObservation {
+  value: any;
+  timestamp?: string;
+  uom?: string;
+  dataset?: ApiV3Parameter;
+  phenomenon?: ApiV3Parameter;
+  category?: ApiV3Parameter;
+  procedure?: ApiV3Parameter;
+  platform?: ApiV3Parameter;
+  offering?: ApiV3Parameter;
+}
+
+export interface ApiV3Sampling extends ApiV3Parameter {
+  comment: string;
+  measuringProgram: ApiV3MeasuringProgram;
+  sampler: ApiV3Sampler;
+  samplingMethod: string;
+  environmentalConditions: string;
+  samplingTimeStart: string;
+  samplingTimeEnd: string;
+  feature?: ApiV3Feature;
+  samplingObservations?: ApiV3SamplingObservation[];
+}
+
+export interface ApiV3SamplingsFilter {
+  timespan?: string;
+  expanded?: boolean;
+  feature?: string;
+  procedure?: string;
+  offering?: string;
+  phenomenon?: string;
+  category?: string;
+  lang?: string;
 }
 
 @Injectable({
@@ -244,6 +262,16 @@ export class ApiV3InterfaceService extends ApiInterface {
   public getDatasetExtras(id: string, apiUrl: string): Observable<DatasetExtras> {
     const url = this.createRequestUrl(apiUrl, 'timeseries', id);
     return this.requestApi<DatasetExtras>(url + '/extras');
+  }
+
+  public getSamplings(apiUrl: string, params?: ApiV3SamplingsFilter, options?: HttpRequestOptions): Observable<ApiV3Sampling[]> {
+    const url = this.createRequestUrl(apiUrl, 'samplings');
+    return this.requestApi<ApiV3Sampling[]>(url, params, options);
+  }
+
+  public getSampling(id: string, apiUrl: string, params?: ApiV3SamplingsFilter): Observable<ApiV3Sampling> {
+    const url = this.createRequestUrl(apiUrl, 'samplings', id);
+    return this.requestApi<ApiV3Sampling>(url, params);
   }
 
   protected requestApi<T>(
