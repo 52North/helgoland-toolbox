@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatasetOptions, IDataset, LocalStorage } from '@helgoland/core';
+import { DatasetOptions, LocalStorage, HelgolandDataset } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
 export interface Favorite {
@@ -8,7 +8,7 @@ export interface Favorite {
 }
 
 export interface SingleFavorite extends Favorite {
-  favorite: IDataset;
+  favorite: HelgolandDataset;
   options: DatasetOptions;
 }
 
@@ -18,7 +18,7 @@ function isSingleFavorite(object: any): object is SingleFavorite {
 
 export interface GroupFavorite extends Favorite {
   favorites: {
-    dataset: IDataset,
+    dataset: HelgolandDataset,
     options: DatasetOptions
   }[];
 }
@@ -45,7 +45,7 @@ export class FavoriteService {
     this.loadFavorites();
   }
 
-  public addFavorite(dataset: IDataset, options: DatasetOptions, label?: string): boolean {
+  public addFavorite(dataset: HelgolandDataset, options: DatasetOptions, label?: string): boolean {
     if (!this.singleFavs.has(dataset.internalId)) {
       this.singleFavs.set(dataset.internalId, {
         id: dataset.internalId,
@@ -63,7 +63,7 @@ export class FavoriteService {
     return this.favoriteCountChanged;
   }
 
-  public hasFavorite(dataset: IDataset): boolean {
+  public hasFavorite(dataset: HelgolandDataset): boolean {
     return this.singleFavs.has(dataset.internalId);
   }
 
@@ -91,7 +91,7 @@ export class FavoriteService {
     return false;
   }
 
-  public addFavoriteGroup(datasets: { dataset: IDataset, options: DatasetOptions }[], label?: string): boolean {
+  public addFavoriteGroup(datasets: { dataset: HelgolandDataset, options: DatasetOptions }[], label?: string): boolean {
     const id = 'Group' + this.groupCounter++;
     this.groupFavs.set(id, {
       id,
