@@ -43,7 +43,7 @@ const DEFAULT_SERVICE_ID = '1';
   providedIn: 'root'
 })
 export class StaApiV1Connector implements HelgolandServiceConnector {
-  
+
   name = 'StaApiV1Connector';
 
   constructor(

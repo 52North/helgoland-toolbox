@@ -148,10 +148,10 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         }
         break;
       case ApiV3DatasetTypes.Profile:
-        debugger;
+        throw new Error('not implemented');
         break;
       case ApiV3DatasetTypes.Timeseries:
-        debugger;
+        throw new Error('not implemented');
         break;
       default:
         return new HelgolandDataset(ds.id, url, ds.label);

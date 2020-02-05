@@ -42,14 +42,14 @@ import {
   HelgolandTrajectory,
 } from '../../model/internal/dataset';
 import { HelgolandParameterFilter } from '../../model/internal/filter';
-import { HelgolandService } from '../../model/internal/service';
 import { HelgolandPlatform } from '../../model/internal/platform';
+import { HelgolandService } from '../../model/internal/service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatasetApiV2Connector implements HelgolandServiceConnector {
-  
+
   name = 'DatasetApiV2Connector';
 
   constructor(

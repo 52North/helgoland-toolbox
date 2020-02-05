@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandCoreModule } from '../core.module';
 import { DatasetApiInterface } from '../dataset-api/api-interface';
-import { HTTP_SERVICE_INTERCEPTORS, HttpService } from '../dataset-api/http.service';
+import { HttpService } from '../dataset-api/http.service';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
-import { Timespan } from '../model/internal/timeInterval';
 import { Settings } from '../model/settings/settings';
 import { SettingsService } from '../settings/settings.service';
 import { DatasetApiV1ConnectorProvider } from './connectors/dataset-api-v1-connector/dataset-api-v1-connector';
@@ -15,15 +14,17 @@ import { DatasetApiV2ConnectorProvider } from './connectors/dataset-api-v2-conne
 import { DatasetApiV3ConnectorProvider } from './connectors/dataset-api-v3-connector/dataset-api-v3-connector';
 import { DatasetStaConnectorProvider } from './connectors/sta-api-v1-connector/sta-api-v1-connector';
 import { HelgolandServicesConnector } from './helgoland-services-connector';
-import { HelgolandTimeseries } from './model/internal/dataset';
+import { DatasetType } from './model/internal/dataset';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
-    constructor() {
-        super();
-        this.setSettings({});
-    }
+  constructor() {
+    super();
+    this.setSettings({});
+  }
 }
+
+describe('HelgolandservicesConnectorService', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
