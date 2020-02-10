@@ -54,7 +54,7 @@
     <div style="display: flex; flex-direction: row; height: 100%;">
         <div style="width: 50%; padding: 5px;">
             <n52-ol-map [zoom]="13" [lat]="51.95" [lon]="7.65" [showZoomControl]="true" [showAttributionControl]="true">
-                <n52-ol-overview-map [collapsible]="false"></n52-ol-overview-map>
+                <n52-ol-overview-map [collapsible]="false" [layers]="overviewMapLayers"></n52-ol-overview-map>
                 <n52-ol-mouse-position></n52-ol-mouse-position>
             </n52-ol-map>
         </div>
