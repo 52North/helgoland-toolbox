@@ -28,17 +28,17 @@
     "compodoc": "./node_modules/.bin/compodoc projects/helgoland -p tsconfig.doc.json --includes docs",
     "e2e": "ng e2e",
     "gh-pages": "rimraf documentation && npm run compodoc && gh-pages -d documentation",
-    "lib:build": "./node_modules/ts-node/dist/bin.js scripts/build.ts",
-    "lib:pack": "./node_modules/ts-node/dist/bin.js scripts/pack.ts",
-    "lib:bumpVersion": "./node_modules/ts-node/dist/bin.js scripts/bumpVersions.ts",
-    "lib:publish": "./node_modules/ts-node/dist/bin.js scripts/publish.ts",
+    "lib:build": "./node_modules/ts-node/dist/bin.js --skip-project scripts/build.ts",
+    "lib:pack": "./node_modules/ts-node/dist/bin.js --skip-project scripts/pack.ts",
+    "lib:bumpVersion": "./node_modules/ts-node/dist/bin.js --skip-project scripts/bumpVersions.ts",
+    "lib:publish": "./node_modules/ts-node/dist/bin.js --skip-project scripts/publish.ts",
     "lint": "ng lint",
     "ng": "ng",
     "preversion": "npm run lint",
     "version": "npm run lib:bumpVersion && npm run lib:build && npm test && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "start": "ng serve",
-    "test": "./node_modules/ts-node/dist/bin.js scripts/test.ts"
+    "test": "./node_modules/ts-node/dist/bin.js --skip-project scripts/test.ts"
   },
   "dependencies": {
     "@angular/animations": "^8.2.10",
