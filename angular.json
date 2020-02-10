@@ -773,6 +773,11 @@
           "options": {
             "tsConfig": "projects/helgoland/open-layers/tsconfig.lib.json",
             "project": "projects/helgoland/open-layers/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/helgoland/open-layers/ng-package.prod.json"
+            }
           }
         },
         "test": {

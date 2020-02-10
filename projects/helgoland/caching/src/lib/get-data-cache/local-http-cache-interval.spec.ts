@@ -1,7 +1,7 @@
 import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
-import moment = require('moment');
+import moment from 'moment';
 
 import { HelgolandCachingModule } from '../caching.module';
 import { CachedIntersection, CachedObject, LocalHttpCacheInterval } from './local-http-cache-interval';
