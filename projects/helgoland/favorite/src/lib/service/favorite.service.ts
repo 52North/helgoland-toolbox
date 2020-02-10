@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatasetOptions, LocalStorage, HelgolandDataset } from '@helgoland/core';
+import { DatasetOptions, HelgolandTimeseries, LocalStorage } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
 export interface Favorite {
@@ -8,7 +8,7 @@ export interface Favorite {
 }
 
 export interface SingleFavorite extends Favorite {
-  favorite: HelgolandDataset;
+  favorite: HelgolandTimeseries;
   options: DatasetOptions;
 }
 
@@ -18,7 +18,7 @@ function isSingleFavorite(object: any): object is SingleFavorite {
 
 export interface GroupFavorite extends Favorite {
   favorites: {
-    dataset: HelgolandDataset,
+    dataset: HelgolandTimeseries,
     options: DatasetOptions
   }[];
 }
@@ -45,7 +45,7 @@ export class FavoriteService {
     this.loadFavorites();
   }
 
-  public addFavorite(dataset: HelgolandDataset, options: DatasetOptions, label?: string): boolean {
+  public addFavorite(dataset: HelgolandTimeseries, options: DatasetOptions, label?: string): boolean {
     if (!this.singleFavs.has(dataset.internalId)) {
       this.singleFavs.set(dataset.internalId, {
         id: dataset.internalId,
@@ -63,7 +63,7 @@ export class FavoriteService {
     return this.favoriteCountChanged;
   }
 
-  public hasFavorite(dataset: HelgolandDataset): boolean {
+  public hasFavorite(dataset: HelgolandTimeseries): boolean {
     return this.singleFavs.has(dataset.internalId);
   }
 
@@ -91,7 +91,7 @@ export class FavoriteService {
     return false;
   }
 
-  public addFavoriteGroup(datasets: { dataset: HelgolandDataset, options: DatasetOptions }[], label?: string): boolean {
+  public addFavoriteGroup(datasets: { dataset: HelgolandTimeseries, options: DatasetOptions }[], label?: string): boolean {
     const id = 'Group' + this.groupCounter++;
     this.groupFavs.set(id, {
       id,
@@ -131,13 +131,40 @@ export class FavoriteService {
     this.groupFavs = new Map();
     const loadedSingleFavs = this.localStorage.loadArray<SingleFavorite>(CACHE_PARAM_FAVORITES_SINGLE);
     if (loadedSingleFavs) {
-      loadedSingleFavs.forEach((entry) => this.singleFavs.set(entry.id, entry));
+      loadedSingleFavs.forEach((entry) => {
+        entry.favorite = this.instanciateClass(entry.favorite);
+        this.singleFavs.set(entry.id, entry);
+      });
     }
     const loadedGroupFavs = this.localStorage.loadArray<GroupFavorite>(CACHE_PARAM_FAVORITES_GROUP);
     if (loadedGroupFavs) {
-      loadedGroupFavs.forEach((entry) => this.groupFavs.set(entry.id, entry));
+      loadedGroupFavs.forEach((entry) => {
+        entry.favorites.map(element => {
+          return {
+            dataset: this.instanciateClass(element.dataset),
+            options: element.options
+          }
+        });
+        this.groupFavs.set(entry.id, entry);
+      });
     }
     this.updateFavoriteCount();
+  }
+
+  private instanciateClass(timeseries: HelgolandTimeseries): HelgolandTimeseries {
+    const storedFav = timeseries as HelgolandTimeseries;
+    return new HelgolandTimeseries(
+      storedFav.id,
+      storedFav.url,
+      storedFav.label,
+      storedFav.uom,
+      storedFav.platform,
+      storedFav.firstValue,
+      storedFav.lastValue,
+      storedFav.referenceValues,
+      storedFav.renderingHints,
+      storedFav.parameters
+    );
   }
 
   private updateFavoriteCount() {

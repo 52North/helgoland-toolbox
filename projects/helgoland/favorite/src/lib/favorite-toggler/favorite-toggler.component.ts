@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DatasetOptions, HelgolandDataset, NotifierService } from '@helgoland/core';
+import { DatasetOptions, HelgolandTimeseries, NotifierService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FavoriteService } from '../service/favorite.service';
@@ -10,7 +10,7 @@ import { FavoriteService } from '../service/favorite.service';
 })
 export class FavoriteTogglerComponent implements OnChanges {
 
-  @Input() public dataset: HelgolandDataset;
+  @Input() public dataset: HelgolandTimeseries;
   @Input() public options: DatasetOptions;
 
   public isFavorite: boolean;

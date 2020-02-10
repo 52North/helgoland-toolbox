@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatasetOptions, DatasetType, Timespan, HelgolandServicesConnector } from '@helgoland/core';
+import { DatasetOptions, DatasetType, HelgolandServicesConnector, Timespan } from '@helgoland/core';
 import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
 
 @Component({
