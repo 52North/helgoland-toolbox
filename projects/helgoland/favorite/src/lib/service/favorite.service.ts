@@ -143,7 +143,7 @@ export class FavoriteService {
           return {
             dataset: this.instanciateClass(element.dataset),
             options: element.options
-          }
+          };
         });
         this.groupFavs.set(entry.id, entry);
       });
