@@ -7,9 +7,10 @@ import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
-import { FirstLastValue, ParameterConstellation } from '../../../model/dataset-api/dataset';
+import { FirstLastValue, PlatformParameter } from '../../../model/dataset-api/dataset';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
+import { Parameter } from '../../../model/dataset-api/parameter';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { Timespan } from '../../../model/internal/timeInterval';
@@ -26,6 +27,8 @@ import {
 import { HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
+import { PlatformTypes } from './../../../model/dataset-api/enums';
+import { HelgolandProfile, HelgolandTrajectory } from './../../model/internal/dataset';
 import {
   ApiV3Category,
   ApiV3Dataset,
@@ -122,37 +125,54 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
-    return this.api.getDatasets(url, this.createFilter(filter)).pipe(map(res => res.map(ds => this.createDataset(ds, url, filter))));
+    return this.api.getDatasets(url, this.createFilter(filter)).pipe(map(res => res.map(ds => this.createDataset(ds, url))));
   }
 
-  private createDataset(ds: ApiV3Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
+  private createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
+    if (!(ds.firstValue && ds.lastValue && ds.parameters)) {
+      return new HelgolandDataset(ds.id, url, ds.label);
+    }
+    let firstValue: FirstLastValue, lastValue: FirstLastValue;
+    let category: Parameter, feature: Parameter, offering: Parameter, phenomenon: Parameter, procedure: Parameter, service: Parameter;
+    let platform: PlatformParameter;
+    if (ds.firstValue) {
+      firstValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
+    }
+    if (ds.lastValue) {
+      lastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
+    }
+    if (ds.parameters) {
+      category = { id: ds.parameters.category.id, label: ds.parameters.category.label };
+      feature = { id: ds.feature.id, label: ds.feature.properties.label };
+      offering = { id: ds.parameters.offering.id, label: ds.parameters.offering.label };
+      phenomenon = { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label };
+      procedure = { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label };
+      service = { id: ds.parameters.service.id, label: ds.parameters.service.label };
+      platform = { id: ds.parameters.service.id, label: ds.parameters.service.label, platformType: PlatformTypes.stationary };
+    }
     switch (ds.datasetType) {
       case ApiV3DatasetTypes.Timeseries:
-        if (ds.firstValue || ds.lastValue) {
-          if (ds.datasetType === ApiV3DatasetTypes.Timeseries) {
-            const firstValue: FirstLastValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
-            const lastValue: FirstLastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
-            const tsparameters: ParameterConstellation = {
-              category: { id: ds.parameters.category.id, label: ds.parameters.category.label },
-              feature: { id: ds.feature.id, label: ds.feature.properties.label },
-              offering: { id: ds.parameters.offering.id, label: ds.parameters.offering.label },
-              phenomenon: { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label },
-              procedure: { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label },
-              service: { id: ds.parameters.service.id, label: ds.parameters.service.label }
-            };
-            const platform = this.createHelgolandPlatform(ds.feature);
-            return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, platform, firstValue, lastValue, [], null, tsparameters);
-          }
+        if (ds.observationType === ApiV3ObservationTypes.Simple && (ds.valueType === ApiV3ValueTypes.Quantity || ds.valueType === ApiV3ValueTypes.Count)) {
+          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, this.createHelgolandPlatform(ds.feature), firstValue, lastValue, [], null,
+            { category, feature, offering, phenomenon, procedure, service }
+          );
+        } else if (ds.observationType === ApiV3ObservationTypes.Profil) {
+          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, false, firstValue, lastValue,
+            { category, feature, offering, phenomenon, procedure, service, platform }
+          );
         } else {
           return new HelgolandDataset(ds.id, url, ds.label);
         }
-        break;
+      case ApiV3DatasetTypes.Trajectory:
+        if (ds.observationType === ApiV3ObservationTypes.Profil) {
+          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, true, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform });
+        } else {
+          return new HelgolandTrajectory(ds.id, url, ds.label, ds.uom, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform });
+        }
       case ApiV3DatasetTypes.Profile:
-        throw new Error('not implemented');
-        break;
-      case ApiV3DatasetTypes.Timeseries:
-        throw new Error('not implemented');
-        break;
+      case ApiV3DatasetTypes.IndividualObservation:
+        console.error(`not implemented`);
+        return new HelgolandDataset(ds.id, url, ds.label);
       default:
         return new HelgolandDataset(ds.id, url, ds.label);
     }
@@ -198,7 +218,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
-    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url, filter)));
+    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
