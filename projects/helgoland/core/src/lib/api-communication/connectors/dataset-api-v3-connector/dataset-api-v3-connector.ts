@@ -276,22 +276,22 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     if (filter.procedure) { apiFilter.procedure = filter.procedure; }
     if (filter.feature) { apiFilter.feature = filter.feature; }
     if (filter.expanded) { apiFilter.expanded = filter.expanded; }
-    if (filter.lang) { apiFilter.lang = filter.lang; }
+    if (filter.lang) { apiFilter.locale = filter.lang; }
     switch (filter.type) {
       case DatasetType.Timeseries:
-        apiFilter.datasetTypes = ApiV3DatasetTypes.Timeseries;
-        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
-        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        apiFilter.datasetTypes = [ApiV3DatasetTypes.Timeseries];
+        apiFilter.observationTypes = [ApiV3ObservationTypes.Simple];
+        apiFilter.valueTypes = [ApiV3ValueTypes.Quantity, ApiV3ValueTypes.Count];
         break;
       case DatasetType.Trajectory:
-        apiFilter.datasetTypes = ApiV3DatasetTypes.Trajectory;
-        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
-        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        apiFilter.datasetTypes = [ApiV3DatasetTypes.Trajectory];
+        apiFilter.observationTypes = [ApiV3ObservationTypes.Simple];
+        apiFilter.valueTypes = [ApiV3ValueTypes.Quantity];
         break;
       case DatasetType.Profile:
-        apiFilter.datasetTypes = ApiV3DatasetTypes.Profile;
-        apiFilter.observationTypes = ApiV3ObservationTypes.Simple;
-        apiFilter.valuesTypes = ApiV3ValueTypes.Quantity;
+        apiFilter.datasetTypes = [ApiV3DatasetTypes.Timeseries];
+        apiFilter.observationTypes = [ApiV3ObservationTypes.Profil];
+        apiFilter.valueTypes = [ApiV3ValueTypes.Quantity];
         break;
       default:
         break;
