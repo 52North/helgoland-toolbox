@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/plotly",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "dependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",

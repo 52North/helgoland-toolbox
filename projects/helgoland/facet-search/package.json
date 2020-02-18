@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/facet-search",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.12",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
