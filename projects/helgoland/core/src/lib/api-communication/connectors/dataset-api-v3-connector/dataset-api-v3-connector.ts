@@ -156,10 +156,6 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, this.createHelgolandPlatform(ds.feature), firstValue, lastValue, [], null,
             { category, feature, offering, phenomenon, procedure, service }
           );
-        } else if (ds.observationType === ApiV3ObservationTypes.Profil) {
-          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, false, firstValue, lastValue,
-            { category, feature, offering, phenomenon, procedure, service, platform }
-          );
         } else {
           return new HelgolandDataset(ds.id, url, ds.label);
         }
@@ -171,7 +167,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         }
       case ApiV3DatasetTypes.Profile:
       case ApiV3DatasetTypes.IndividualObservation:
-        console.error(`not implemented`);
+        console.error(`'${ds.datasetType}' not implemented`);
         return new HelgolandDataset(ds.id, url, ds.label);
       default:
         return new HelgolandDataset(ds.id, url, ds.label);
