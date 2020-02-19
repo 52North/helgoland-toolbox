@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
-import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
+import { Data, TimeValueTuple, LocatedTimeValueEntry } from '../../../model/dataset-api/data';
 import { FirstLastValue, PlatformParameter } from '../../../model/dataset-api/dataset';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
@@ -16,7 +16,12 @@ import { Procedure } from '../../../model/dataset-api/procedure';
 import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
 import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
-import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
+import {
+  HelgolandData,
+  HelgolandDataFilter,
+  HelgolandTimeseriesData,
+  HelgolandTrajectoryData,
+} from '../../model/internal/data';
 import {
   DatasetExtras,
   DatasetFilter,
@@ -218,43 +223,51 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
-    const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
-    if ((timespan.to - timespan.from) > maxTimeExtent) {
-      const requests: Array<Observable<HelgolandTimeseriesData>> = [];
-      let start = moment(timespan.from).startOf('year');
-      let end = moment(timespan.from).endOf('year');
-      while (start.isBefore(moment(timespan.to))) {
-        const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
-        requests.push(
-          this.api.getDatasetData(dataset.id, dataset.url, { timespan: this.createRequestTimespan(chunkSpan), format: 'flot' })
-            .pipe(map(res => this.createTimeseriesData(res)))
-        );
-        start = end.add(1, 'millisecond');
-        end = moment(start).endOf('year');
-      }
-      return forkJoin(requests).pipe(map((e) => {
-        const mergedResult = e.reduce((previous, current) => {
-          const next: HelgolandTimeseriesData = new HelgolandTimeseriesData(previous.values.concat(current.values));
-          for (const key in previous.referenceValues) {
-            if (previous.referenceValues.hasOwnProperty(key)) {
-              next.referenceValues[key] = previous.referenceValues[key].concat(current.referenceValues[key]);
-            }
-          }
-          return next;
-        });
-        if (mergedResult.values && mergedResult.values.length > 0) {
-          // cut first
-          const fromIdx = mergedResult.values.findIndex(el => el[0] >= timespan.from);
-          mergedResult.values = mergedResult.values.slice(fromIdx);
-          // cut last
-          const toIdx = mergedResult.values.findIndex(el => el[0] >= timespan.to);
-          if (toIdx >= 0) { mergedResult.values = mergedResult.values.slice(0, toIdx + 1); }
+
+    if (dataset instanceof HelgolandTimeseries) {
+      const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
+      if ((timespan.to - timespan.from) > maxTimeExtent) {
+        const requests: Array<Observable<HelgolandTimeseriesData>> = [];
+        let start = moment(timespan.from).startOf('year');
+        let end = moment(timespan.from).endOf('year');
+        while (start.isBefore(moment(timespan.to))) {
+          const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
+          requests.push(
+            this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(chunkSpan), format: 'flot' })
+              .pipe(map(res => this.createTimeseriesData(res)))
+          );
+          start = end.add(1, 'millisecond');
+          end = moment(start).endOf('year');
         }
-        return mergedResult;
-      }));
-    } else {
-      return this.api.getDatasetData(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), format: 'flot' })
-        .pipe(map(res => this.createDatasetData(dataset, res)));
+        return forkJoin(requests).pipe(map((e) => {
+          const mergedResult = e.reduce((previous, current) => {
+            const next: HelgolandTimeseriesData = new HelgolandTimeseriesData(previous.values.concat(current.values));
+            for (const key in previous.referenceValues) {
+              if (previous.referenceValues.hasOwnProperty(key)) {
+                next.referenceValues[key] = previous.referenceValues[key].concat(current.referenceValues[key]);
+              }
+            }
+            return next;
+          });
+          if (mergedResult.values && mergedResult.values.length > 0) {
+            // cut first
+            const fromIdx = mergedResult.values.findIndex(el => el[0] >= timespan.from);
+            mergedResult.values = mergedResult.values.slice(fromIdx);
+            // cut last
+            const toIdx = mergedResult.values.findIndex(el => el[0] >= timespan.to);
+            if (toIdx >= 0) { mergedResult.values = mergedResult.values.slice(0, toIdx + 1); }
+          }
+          return mergedResult;
+        }));
+      } else {
+        return this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), format: 'flot' })
+          .pipe(map(res => this.createTimeseriesData(res)));
+      }
+    }
+
+    if (dataset instanceof HelgolandTrajectory) {
+      return this.api.getDatasetData<LocatedTimeValueEntry>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), unixTime: true })
+        .pipe(map(res => this.createTrajectoryData(res)));
     }
   }
 
@@ -266,13 +279,11 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
   }
 
-  private createDatasetData(dataset: HelgolandDataset, res: Data<TimeValueTuple>): HelgolandData {
-    if (dataset instanceof HelgolandTimeseries) {
-      return this.createTimeseriesData(res);
-    }
+  private createTrajectoryData(res: Data<LocatedTimeValueEntry>): HelgolandTrajectoryData {
+    return new HelgolandTrajectoryData(res.values);
   }
 
-  private createTimeseriesData(res: Data<TimeValueTuple>) {
+  private createTimeseriesData(res: Data<TimeValueTuple>): HelgolandTimeseriesData {
     const data = new HelgolandTimeseriesData(res.values);
     data.referenceValues = res.referenceValues ? res.referenceValues : {};
     if (res.valueBeforeTimespan) {

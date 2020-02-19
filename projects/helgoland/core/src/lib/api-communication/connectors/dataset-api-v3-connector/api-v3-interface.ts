@@ -140,6 +140,7 @@ export interface ApiV3ParameterFilter {
 export interface ApiV3DatasetDataFilter {
   timespan?: string;
   format?: string;
+  unixTime?: boolean;
 }
 
 export interface ApiV3Sampler extends ApiV3Parameter { }
@@ -256,9 +257,9 @@ export class ApiV3InterfaceService extends ApiInterface {
     return this.requestApi<ApiV3Dataset>(url, this.prepareParams(params));
   }
 
-  public getDatasetData(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<TimeValueTuple>> {
+  public getDatasetData<T>(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<T>> {
     const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
-    return this.requestApi<Data<TimeValueTuple>>(url, this.prepareParams(params));
+    return this.requestApi<Data<T>>(url, this.prepareParams(params));
   }
 
   public getDatasetExtras(id: string, apiUrl: string): Observable<DatasetExtras> {
