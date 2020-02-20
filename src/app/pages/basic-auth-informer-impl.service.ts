@@ -29,5 +29,3 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
             );
         });
     }
-
-}
