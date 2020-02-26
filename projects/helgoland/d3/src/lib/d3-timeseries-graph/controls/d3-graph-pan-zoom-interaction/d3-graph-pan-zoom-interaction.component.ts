@@ -30,6 +30,8 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   private dragTimeStart: number;
   private plotWhileDrag: boolean;
 
+  private isHoverable: boolean;
+
   private dragRect: any;
   private dragRectG: any;
 
@@ -79,6 +81,8 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     this.draggingMove = false;
     this.dragMoveStart = d3.event.x;
     this.dragMoveRange = [timespan.from, timespan.to];
+    this.isHoverable = this.d3Graph.plotOptions.hoverable;
+    this.d3Graph.plotOptions.hoverable = false;
   }
 
   /**
@@ -86,7 +90,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
    */
   private panMoveHandler(graphExtent: D3GraphExtent) {
     this.draggingMove = true;
-    const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 100;
+    const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 50;
     if (this.dragMoveStart && this.draggingMove && timeDiff) {
       if (!this.plotWhileDrag) {
         this.plotWhileDrag = true;
@@ -109,6 +113,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
    * Function that ends the dragging control.
    */
   private panEndHandler() {
+    this.d3Graph.plotOptions.hoverable = this.isHoverable;
     if (this.xAxisRangePan) {
       this.d3Graph.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
       this.dragMoveStart = null;
