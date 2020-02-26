@@ -6,6 +6,7 @@ import {
     Input,
     IterableDiffers,
     OnDestroy,
+    Optional,
     Output,
     ViewChild,
     ViewEncapsulation,
@@ -35,11 +36,13 @@ import { Subscription } from 'rxjs';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
 import { D3GraphId } from './../helper/d3-graph-id.service';
 import { D3Graphs } from './../helper/d3-graphs.service';
+import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 
@@ -160,7 +163,8 @@ export class D3TimeseriesGraphComponent
         protected graphHelper: D3GraphHelperService,
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
-        protected servicesConnector: HelgolandServicesConnector
+        protected servicesConnector: HelgolandServicesConnector,
+        @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
     }
@@ -340,11 +344,13 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareData(dataset: HelgolandTimeseries, data: HelgolandData): void {
-        if (data instanceof HelgolandTimeseriesData) {
+    private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandData): void {
+        if (rawdata instanceof HelgolandTimeseriesData) {
             // add surrounding entries to the set
-            if (data.valueBeforeTimespan) { data.values.unshift(data.valueBeforeTimespan); }
-            if (data.valueAfterTimespan) { data.values.push(data.valueAfterTimespan); }
+            if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
+            if (rawdata.valueAfterTimespan) { rawdata.values.push(rawdata.valueAfterTimespan); }
+
+            const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan);
 
             this.datasetMap.get(dataset.internalId).data = data;
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);

@@ -16,6 +16,8 @@ import {
   ExtendedDataD3TimeseriesGraphComponent,
 } from './extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
 import { D3TimeFormatLocaleService } from './helper/d3-time-format-locale.service';
+import { D3DataGeneralizer } from './helper/generalizing/d3-data-generalizer';
+import { D3DataSimpleGeneralizer } from './helper/generalizing/d3-data-simple-generalizer.service';
 
 const COMPONENTS = [
   D3TrajectoryGraphComponent,
@@ -39,6 +41,11 @@ const COMPONENTS = [
   providers: [
     D3TimeFormatLocaleService,
     D3TimeseriesGraphComponent,
+    // configured default generalizer, can be overridden by self provided service
+    {
+      provide: D3DataGeneralizer,
+      useClass: D3DataSimpleGeneralizer
+    }
   ],
   entryComponents: [
     D3TimeseriesGraphComponent,

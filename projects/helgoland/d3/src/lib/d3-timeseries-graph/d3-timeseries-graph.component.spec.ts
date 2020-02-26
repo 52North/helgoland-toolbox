@@ -19,11 +19,6 @@ import { HelgolandD3Module } from '../d3.module';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { BasicAuthTestingProviders } from './../../../../../testing/basic-auth.testing';
 import { SettingsServiceTestingProvider } from './../../../../../testing/settings.testing';
-import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
-import {
-  D3GraphPanZoomInteractionComponent,
-} from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
-import { D3YAxisModifierComponent } from './controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
 
 describe('D3TimeseriesGraphComponent - raw', () => {
@@ -92,6 +87,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
       imports: [
         HttpClientModule,
         HelgolandCoreModule,
+        HelgolandD3Module,
         TranslateTestingModule
       ],
       providers: [
@@ -108,12 +104,6 @@ describe('D3TimeseriesGraphComponent - function', () => {
           multi: true
         }
       ],
-      declarations: [
-        D3TimeseriesGraphComponent,
-        D3YAxisModifierComponent,
-        D3GraphPanZoomInteractionComponent,
-        D3GraphCopyrightComponent
-      ]
     }).compileComponents();
   }));
 
