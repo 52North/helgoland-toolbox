@@ -42,16 +42,31 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
             }
             return forkJoin(requests).pipe(map((e) => {
                 const mergedResult = e.reduce((previous, current) => {
-                    const next: Data<T> = {
-                        referenceValues: {},
-                        values: previous.values.concat(current.values)
-                    };
+                    if (previous.values && current.values) {
+                        previous.values = previous.values.concat(current.values);
+                    }
+
+                    if (previous.valueAfterTimespan && current.valueAfterTimespan) {
+                        previous.valueAfterTimespan = current.valueAfterTimespan;
+                    }
+
                     for (const key in previous.referenceValues) {
-                        if (previous.referenceValues.hasOwnProperty(key)) {
-                            next.referenceValues[key] = previous.referenceValues[key].concat(current.referenceValues[key]);
+                        if (previous.referenceValues.hasOwnProperty(key) && current.referenceValues.hasOwnProperty(key)) {
+                            const refVal = previous.referenceValues[key];
+                            if (refVal instanceof Array) {
+                                refVal.concat(current.referenceValues[key]);
+                            } else {
+                                const currRefValData = (current.referenceValues[key] as never) as Data<T>;
+                                const prevRefValData = (refVal as Data<T>);
+                                prevRefValData.values = prevRefValData.values.concat(currRefValData.values);
+                                if (prevRefValData.valueAfterTimespan && currRefValData.valueAfterTimespan) {
+                                    prevRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                                }
+                            }
                         }
                     }
-                    return next;
+
+                    return previous;
                 });
                 if (mergedResult.values && mergedResult.values.length > 0) {
                     // cut first
