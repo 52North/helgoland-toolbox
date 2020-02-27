@@ -2,7 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Required } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
-import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } from '../../facet-search-model';
+import { FacetParameter, ParameterFacetSort, ParameterFacetType } from '../../facet-search-model';
+import { FacetSearchService } from '../../facet-search.service';
 
 @Component({
   selector: 'n52-parameter-facet',
@@ -11,7 +12,7 @@ import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } f
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearch;
+  @Input() @Required public facetSearchService: FacetSearchService;
 
   @Input() @Required public type: ParameterFacetType;
 

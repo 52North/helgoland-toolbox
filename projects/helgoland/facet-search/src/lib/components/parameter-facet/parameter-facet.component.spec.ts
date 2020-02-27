@@ -1,7 +1,7 @@
-import { FacetSearchService } from './../../facet-search.service';
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
-import { MatchFacetParameterLabelPipe } from '../../pipes/match-facet-parameter-label.pipe';
+import { HelgolandFacetSearchModule } from './../../facet-search.module';
+import { FacetSearchService } from './../../facet-search.service';
 import { ParameterFacetComponent } from './parameter-facet.component';
 
 describe('ParameterFacetComponent', () => {
@@ -10,7 +10,7 @@ describe('ParameterFacetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ParameterFacetComponent, MatchFacetParameterLabelPipe],
+      imports: [HelgolandFacetSearchModule]
     }).compileComponents();
   }));
 

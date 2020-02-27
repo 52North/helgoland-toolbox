@@ -1,5 +1,6 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
+import { HelgolandFacetSearchModule } from '../../facet-search.module';
 import { FacetSearchService } from '../../facet-search.service';
 import { ResultListComponent } from './result-list.component';
 
@@ -9,7 +10,8 @@ describe('ResultListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultListComponent]
+      imports: [HelgolandFacetSearchModule],
+      declarations: []
     }).compileComponents();
   }));
 

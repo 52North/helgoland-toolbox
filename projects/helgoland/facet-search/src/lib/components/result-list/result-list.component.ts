@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, HelgolandTimeseries } from '@helgoland/core';
+import { HelgolandTimeseries, Required } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
-import { FacetSearch } from '../../facet-search-model';
+import { FacetSearchService } from '../../facet-search.service';
 
 @Component({
   selector: 'n52-result-list',
@@ -11,7 +11,7 @@ import { FacetSearch } from '../../facet-search-model';
 })
 export class ResultListComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearch;
+  @Input() @Required public facetSearchService: FacetSearchService;
 
   @Output() public selected: EventEmitter<HelgolandTimeseries> = new EventEmitter();
 

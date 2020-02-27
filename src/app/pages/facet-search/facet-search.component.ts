@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material';
-import { DatasetType, Timeseries, Timespan, HelgolandTimeseries, HelgolandServicesConnector } from '@helgoland/core';
+import { DatasetType, HelgolandServicesConnector, HelgolandTimeseries, Timeseries, Timespan } from '@helgoland/core';
 import { FacetSearchService, ParameterFacetType } from '@helgoland/facet-search';
 import { forkJoin } from 'rxjs';
 

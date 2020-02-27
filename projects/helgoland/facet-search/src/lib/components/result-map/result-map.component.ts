@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, HelgolandPlatform, HelgolandTimeseries } from '@helgoland/core';
+import { HelgolandPlatform, HelgolandTimeseries, Required } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 
-import { FacetSearch } from '../../facet-search-model';
+import { FacetSearchService } from '../../facet-search.service';
 
 delete L.Icon.Default.prototype['_getIconUrl'];
 L.Icon.Default.mergeOptions({
@@ -21,7 +21,7 @@ L.Icon.Default.mergeOptions({
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearch;
+  @Input() @Required public facetSearchService: FacetSearchService;
 
   @Input() public cluster = true;
 

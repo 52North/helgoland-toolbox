@@ -1,6 +1,7 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { HelgolandMapModule } from '@helgoland/map';
 
+import { HelgolandFacetSearchModule } from '../../facet-search.module';
 import { FacetSearchService } from '../../facet-search.service';
 import { ResultMapComponent } from './result-map.component';
 
@@ -10,8 +11,8 @@ describe('ResultMapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandMapModule],
-      declarations: [ResultMapComponent]
+      imports: [HelgolandMapModule, HelgolandFacetSearchModule],
+      declarations: []
     }).compileComponents();
   }));
 

@@ -1,13 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { HelgolandTimeseries, Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { FacetParameter, FacetSearch, ParameterFacetSort, ParameterFacetType } from './facet-search-model';
+import { FacetParameter, ParameterFacetSort, ParameterFacetType } from './facet-search-model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class FacetSearchService implements FacetSearch {
+export abstract class FacetSearchService {
+  abstract getResults(): Observable<HelgolandTimeseries[]>;
+  abstract getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
+  abstract selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
+  abstract setTimeseries(timeseries: HelgolandTimeseries[]);
+  abstract getFilteredResults(): HelgolandTimeseries[];
+  abstract setSelectedTimespan(timespan: Timespan);
+  abstract getSelectedTimespan(): Timespan;
+  abstract getFilteredTimespan(): Timespan;
+  abstract getCompleteTimespan(): Timespan;
+  abstract resetAllFacets();
+  abstract areFacetsSelected(): boolean;
+}
+
+@Injectable()
+export class FacetSearchConfig {
+  showZeroValues?: boolean;
+}
+
+@Injectable()
+export class FacetSearchServiceImpl implements FacetSearchService {
 
   private onResultsChanged: ReplaySubject<HelgolandTimeseries[]> = new ReplaySubject(1);
 
@@ -19,7 +36,13 @@ export class FacetSearchService implements FacetSearch {
 
   private filteredTimeseries: HelgolandTimeseries[];
 
-  constructor() { }
+  private nullable = false;
+
+  constructor(
+    @Optional() config?: FacetSearchConfig
+  ) {
+    if (config && config.showZeroValues) { this.nullable = config.showZeroValues; }
+  }
 
   public setTimeseries(ts: HelgolandTimeseries[]) {
     this.timeseries = ts;
@@ -31,22 +54,27 @@ export class FacetSearchService implements FacetSearch {
   }
 
   public getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[] {
-    const params = [];
+    let params = [];
     if (this.filteredTimeseries) {
       switch (type) {
         case ParameterFacetType.category:
+          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.category); }
           this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.parameters.category.label));
           break;
         case ParameterFacetType.feature:
+          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.feature); }
           this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.parameters.feature.label));
           break;
         case ParameterFacetType.offering:
+          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.offering); }
           this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.parameters.offering.label));
           break;
         case ParameterFacetType.phenomenon:
+          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.phenomenon); }
           this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.parameters.phenomenon.label));
           break;
         case ParameterFacetType.procedure:
+          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.procedure); }
           this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.parameters.procedure.label));
           break;
       }
@@ -172,6 +200,16 @@ export class FacetSearchService implements FacetSearch {
         selected: this.checkSelection(type, entry)
       });
     }
+  }
+
+  private createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
+    const params: FacetParameter[] = [];
+    this.timeseries.forEach(ts => {
+      if (!params.find(e => e.label === ts.parameters[type].label)) {
+        params.push({ label: ts.parameters[type].label, count: 0, selected: this.checkSelection(type, ts.parameters[type].label) });
+      }
+    });
+    return params;
   }
 
   private checkSelection(type: ParameterFacetType, entry: string): boolean {
