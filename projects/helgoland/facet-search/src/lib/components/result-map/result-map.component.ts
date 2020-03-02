@@ -29,6 +29,10 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public selectSingleStation = false;
 
+  @Input() public autoZoomToResults = true;
+
+  @Input() public nextResultsZoom = true;
+
   @Output() public selected: EventEmitter<HelgolandTimeseries | { station: HelgolandPlatform, url: string }> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
@@ -92,9 +96,10 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       this.markerFeatureGroup.addTo(this.map);
 
       const bounds = this.markerFeatureGroup.getBounds();
-      if (bounds.isValid()) {
+      if (bounds.isValid() && (this.autoZoomToResults || this.nextResultsZoom)) {
         this.map.fitBounds(bounds);
         this.map.invalidateSize();
+        this.nextResultsZoom = false;
       }
     }
   }

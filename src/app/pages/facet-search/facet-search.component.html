@@ -89,7 +89,7 @@
             <n52-result-list *ngIf="!showMap" [facetSearchService]="facetSearch" (selected)="onSelectedTs($event)">
             </n52-result-list>
             <n52-result-map *ngIf="showMap" [facetSearchService]="facetSearch" [cluster]="true"
-                [aggregateToStations]="true" (selected)="onSelectedTs($event)">
+                [aggregateToStations]="true" [autoZoomToResults]="false" (selected)="onSelectedTs($event)">
             </n52-result-map>
         </div>
     </div>
