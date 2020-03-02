@@ -867,7 +867,7 @@ export class D3TimeseriesGraphComponent
         if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
             // create label for point hovering
             this.highlightRect = this.focusG.append('svg:rect');
-            this.highlightText = this.focusG.append('svg:text');
+            this.highlightText = this.focusG.append('g');
         }
         this.preparedData.forEach((entry) => this.drawChart(entry));
     }
@@ -1395,7 +1395,7 @@ export class D3TimeseriesGraphComponent
 
     private hideHoveringLabel() {
         if (this.highlightRect) { this.highlightRect.style('visibility', 'hidden'); }
-        if (this.highlightText) { this.highlightText.style('visibility', 'hidden'); }
+        if (this.highlightText) { this.highlightText.selectAll('*').remove(); }
     }
 
     private showHoveringLabel() {
@@ -1449,16 +1449,17 @@ export class D3TimeseriesGraphComponent
     }
 
     private positioningHoverLabel(x: number, y: number, color: string) {
+        x = x + this.leftOffset;
         let onLeftSide = false;
         if ((this.background.node().getBBox().width + this.leftOffset) / 2 > x) {
             onLeftSide = true;
         }
-        let rectX: number = x + 15;
+        let rectX: number = x + 25;
         let rectY: number = y;
         let rectW: number = this.graphHelper.getDimensions(this.highlightText.node()).w + 8;
         let rectH: number = this.graphHelper.getDimensions(this.highlightText.node()).h;
         if (!onLeftSide) {
-            rectX = x - 15 - rectW;
+            rectX = x - rectW - 10;
             rectY = y;
         }
         if ((y + rectH + 4) > this.background.node().getBBox().height) {
@@ -1484,7 +1485,7 @@ export class D3TimeseriesGraphComponent
         if ((y + rectH + 4) > this.background.node().getBBox().height) {
             labelY = labelY - rectH;
         }
-        this.highlightText.attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
+        this.highlightText.attr('transform', 'translate(' + rectX + ', ' + labelY + ')');
         this.lastHoverPositioning = new Date().getTime();
     }
 
@@ -1542,7 +1543,7 @@ export class D3TimeseriesGraphComponent
 
     private setHoveringLabel(value: number, timestamp: number, uom: string) {
         let stringedValue = (typeof value === 'number') ? parseFloat(value.toPrecision(15)).toString() : value;
-        this.highlightText
+        this.highlightText.append('text')
             .text(`${stringedValue} ${uom} ${moment(timestamp).format('DD.MM.YY HH:mm')}`)
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
