@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import {
     ColorService,
     DatasetOptions,
+    DefinedTimespan,
+    DefinedTimespanService,
     HelgolandTimeseries,
     HelgolandTimeseriesData,
     InternalIdHandler,
@@ -86,21 +88,19 @@ export class GraphLegendComponent {
         private cdr: ChangeDetectorRef,
         private dialog: MatDialog,
         private time: Time,
+        private definedTime: DefinedTimespanService,
         protected internalIdHandler: InternalIdHandler,
-
         private http: HttpClient,
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
-            option.generalize = false;
+            option.generalize = true;
             option.lineWidth = 2;
             option.pointRadius = 4;
             this.datasetOptions.set(entry, option);
         });
 
-        const end = new Date().valueOf();
-        const diff = 10000000;
-        this.timespan = new Timespan(end - diff, end);
+        this.timespan = this.definedTime.getInterval(DefinedTimespan.TODAY_YESTERDAY);
     }
 
     public timespanChanged(timespan: Timespan) {

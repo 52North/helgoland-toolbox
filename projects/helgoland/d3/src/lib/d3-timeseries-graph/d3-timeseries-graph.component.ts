@@ -1,3 +1,5 @@
+import 'moment-timezone';
+
 import {
     AfterViewInit,
     Component,
@@ -1544,7 +1546,7 @@ export class D3TimeseriesGraphComponent
     private setHoveringLabel(value: number, timestamp: number, uom: string) {
         let stringedValue = (typeof value === 'number') ? parseFloat(value.toPrecision(15)).toString() : value;
         this.highlightText.append('text')
-            .text(`${stringedValue} ${uom} ${moment(timestamp).format('DD.MM.YY HH:mm')}`)
+            .text(`${stringedValue} ${uom} ${moment.tz(timestamp, moment.tz.guess()).format('DD.MM.YY HH:mm zz')}`)
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
             .style('fill', 'black');

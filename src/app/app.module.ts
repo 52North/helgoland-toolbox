@@ -38,7 +38,7 @@ import {
   HelgolandDatasetTableModule,
 } from '@helgoland/depiction';
 import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
-import { HelgolandFacetSearchModule } from '@helgoland/facet-search';
+import { FacetSearchConfig, HelgolandFacetSearchModule } from '@helgoland/facet-search';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import {
   GeoSearch,
@@ -215,7 +215,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatasetApiV1ConnectorProvider,
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,
-    DatasetStaConnectorProvider
+    DatasetStaConnectorProvider,
+    {
+      provide: FacetSearchConfig,
+      useValue: {
+        showZeroValues: true
+      } as FacetSearchConfig
+    }
   ]
 })
 export class AppModule { }
