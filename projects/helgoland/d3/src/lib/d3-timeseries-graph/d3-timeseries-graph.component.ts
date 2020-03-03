@@ -1,5 +1,3 @@
-import 'moment-timezone';
-
 import {
     AfterViewInit,
     Component,
@@ -39,6 +37,8 @@ import { Subscription } from 'rxjs';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
+import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
+import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
@@ -73,6 +73,8 @@ export class D3TimeseriesGraphComponent
     @Input()
     public yaxisModifier: boolean;
 
+    @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService();
+
     @Output()
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
@@ -87,14 +89,12 @@ export class D3TimeseriesGraphComponent
     // DOM elements
     protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
     protected graph: d3.Selection<SVGSVGElement, any, any, any>;
-    protected graphFocus: any;
+    protected graphFocus: d3.Selection<SVGGElement, any, any, any>;
     protected graphBody: any;
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
-    private focusG: any;
+    private focusG: d3.Selection<SVGGElement, any, any, any>;
     private highlightFocus: any;
-    private highlightRect: any;
-    private highlightText: any;
     private focuslabelTime: any;
 
     // options for interaction
@@ -868,8 +868,7 @@ export class D3TimeseriesGraphComponent
         this.focusG = this.graphFocus.append('g');
         if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
             // create label for point hovering
-            this.highlightRect = this.focusG.append('svg:rect');
-            this.highlightText = this.focusG.append('g');
+            this.hoveringService.initPointHovering(this.focusG);
         }
         this.preparedData.forEach((entry) => this.drawChart(entry));
     }
@@ -1395,16 +1394,6 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private hideHoveringLabel() {
-        if (this.highlightRect) { this.highlightRect.style('visibility', 'hidden'); }
-        if (this.highlightText) { this.highlightText.selectAll('*').remove(); }
-    }
-
-    private showHoveringLabel() {
-        if (this.highlightRect) { this.highlightRect.style('visibility', 'visible'); }
-        if (this.highlightText) { this.highlightText.style('visibility', 'visible'); }
-    }
-
     private mouseoverBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
         if (d !== undefined) {
             let coords = d3.mouse(this.background.node());
@@ -1415,11 +1404,9 @@ export class D3TimeseriesGraphComponent
                 // highlight bar
                 d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
 
-                this.showHoveringLabel();
+                this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
 
-                this.setHoveringLabel(d.value, d.timestamp, entry.axisOptions.uom);
-
-                this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
+                this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
                 // generate output of highlighted data
                 this.highlightOutput = {
                     timestamp: d.timestamp,
@@ -1436,7 +1423,7 @@ export class D3TimeseriesGraphComponent
             let coords = d3.mouse(this.background.node());
             let xCoord = coords[0];
             let yCoord = coords[1];
-            this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
+            this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
         }
     }
 
@@ -1446,49 +1433,8 @@ export class D3TimeseriesGraphComponent
             d3.select(rectElems[idx])
                 .style('stroke-width', this.calculateLineWidth(entry));
             // make label invisible
-            this.hideHoveringLabel();
+            this.hoveringService.hidePointHovering(d, entry);
         }
-    }
-
-    private positioningHoverLabel(x: number, y: number, color: string) {
-        x = x + this.leftOffset;
-        let onLeftSide = false;
-        if ((this.background.node().getBBox().width + this.leftOffset) / 2 > x) {
-            onLeftSide = true;
-        }
-        let rectX: number = x + 25;
-        let rectY: number = y;
-        let rectW: number = this.graphHelper.getDimensions(this.highlightText.node()).w + 8;
-        let rectH: number = this.graphHelper.getDimensions(this.highlightText.node()).h;
-        if (!onLeftSide) {
-            rectX = x - rectW - 10;
-            rectY = y;
-        }
-        if ((y + rectH + 4) > this.background.node().getBBox().height) {
-            rectY = rectY - rectH;
-        }
-        // create hovering label
-        let dotRectangle = this.highlightRect
-            .attr('class', 'mouseHoverDotRect')
-            .style('fill', 'white')
-            .style('fill-opacity', 1)
-            .style('stroke', color)
-            .style('stroke-width', '1px')
-            .style('pointer-events', 'none')
-            .attr('width', rectW)
-            .attr('height', rectH)
-            .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
-        let labelX: number = x + 4 + 15;
-        let labelY: number = y + this.graphHelper.getDimensions(dotRectangle.node()).h - 4;
-        if (!onLeftSide) {
-            labelX = x - rectW + 4 - 15;
-            labelY = y + this.graphHelper.getDimensions(dotRectangle.node()).h - 4;
-        }
-        if ((y + rectH + 4) > this.background.node().getBBox().height) {
-            labelY = labelY - rectH;
-        }
-        this.highlightText.attr('transform', 'translate(' + rectX + ', ' + labelY + ')');
-        this.lastHoverPositioning = new Date().getTime();
     }
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
@@ -1517,48 +1463,22 @@ export class D3TimeseriesGraphComponent
     }
 
     private mouseOverPointHovering(d: DataEntry, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            let coords = d3.mouse(this.background.node());
-            let xCoord = coords[0];
-            let yCoord = coords[1];
-            let rectBack = this.background.node().getBBox();
-            if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
-                // highlight hovered dot
-                d3.select('#dot-' + d.timestamp + '-' + entry.id)
-                    .attr('opacity', 0.8)
-                    .attr('r', this.calculatePointRadius(entry) + 3);
+        if (d !== undefined && d.xDiagCoord && d.yDiagCoord) {
+            this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
 
-                this.showHoveringLabel();
+            this.hoveringService.positioningPointHovering(d.xDiagCoord, d.yDiagCoord, entry.options.color, this.background);
 
-                this.setHoveringLabel(d.value, d.timestamp, entry.axisOptions.uom);
-
-                this.positioningHoverLabel(xCoord, yCoord, entry.options.color);
-
-                this.highlightOutput = {
-                    timestamp: d.timestamp,
-                    ids: new Map().set(entry.internalId, { timestamp: d.timestamp, value: d.value })
-                };
-                this.onHighlightChanged.emit(this.highlightOutput);
-            }
+            this.highlightOutput = {
+                timestamp: d.timestamp,
+                ids: new Map().set(entry.internalId, { timestamp: d.timestamp, value: d.value })
+            };
+            this.onHighlightChanged.emit(this.highlightOutput);
         }
-    }
-
-    private setHoveringLabel(value: number, timestamp: number, uom: string) {
-        let stringedValue = (typeof value === 'number') ? parseFloat(value.toPrecision(15)).toString() : value;
-        this.highlightText.append('text')
-            .text(`${stringedValue} ${uom} ${moment.tz(timestamp, moment.tz.guess()).format('DD.MM.YY HH:mm zz')}`)
-            .attr('class', 'mouseHoverDotLabel')
-            .style('pointer-events', 'none')
-            .style('fill', 'black');
     }
 
     private mouseOutPointHovering(d: DataEntry, entry: InternalDataEntry) {
         if (d !== undefined) {
-            // unhighlight hovered dot
-            d3.select('#dot-' + d.timestamp + '-' + entry.id)
-                .attr('opacity', 1)
-                .attr('r', this.calculatePointRadius(entry));
-            this.hideHoveringLabel();
+            this.hoveringService.hidePointHovering(d, entry);
         }
     }
 

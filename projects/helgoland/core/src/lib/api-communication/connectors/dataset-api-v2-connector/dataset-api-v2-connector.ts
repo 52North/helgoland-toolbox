@@ -139,7 +139,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     if (dataset instanceof HelgolandTimeseries) {
-      return this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
+      return this.api.getData<TimeValueTuple>(dataset.id, dataset.url, timespan, { format: 'flot' }).pipe(map(res => {
         const data = new HelgolandTimeseriesData(res.values);
         data.referenceValues = res.referenceValues ? res.referenceValues : {};
         if (res.valueBeforeTimespan) { data.valueBeforeTimespan = res.valueBeforeTimespan; }
