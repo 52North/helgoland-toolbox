@@ -1,7 +1,7 @@
 # How to Wrap D3 Component as Angular-Element (for static html)
 
 In this tutorial a stepwise instruction will be given on how to use a wrapper as [angular-element](https://angular.io/guide/elements) for the d3 component to become independent of angular and to use d3 for example in a standalone (static) html file.
-An example implementation can be found [here](https://github.com/TeKraft/D3-wrapper-element).
+An example implementation can be found [here](https://github.com/52North/d3wrapper).
 
 First initialize an app as described in the prepare section [here](../how-tos.html).
 
@@ -321,4 +321,4 @@ public togglePanZoom() {
 
 ### Wrapper Element
 
-To see further adaptions like Inputs or Outputs with Eventlisteners look [here](https://github.com/TeKraft/D3-wrapper-element). You will find an example implementation.
+To see further adaptions like Inputs or Outputs with Eventlisteners look [here](https://github.com/52North/d3wrapper). You will find an example implementation.
