@@ -2,6 +2,7 @@
 
 To get in touch with the helgoland-toolbox, here you will find a list of how tos:
 
+- [Wrap D3 timeseries component as angular-element](./how-tos/d3-wrapper-element.md.html)
 - [Integrate a D3 timeseries component](./how-tos/integrate-a-d3-timeseries-component.html)
 - [Integrate a table component](./how-tos/integrate-a-table-component.html)
 - [Integrate a map component](./how-tos/integrate-map.html)
