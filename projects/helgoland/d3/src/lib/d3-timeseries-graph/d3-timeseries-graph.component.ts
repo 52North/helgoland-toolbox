@@ -556,6 +556,12 @@ export class D3TimeseriesGraphComponent
         }
     }
 
+    public getDrawingLayer() {
+        return this.rawSvg
+            .insert('g', ':first-child')
+            .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+    }
+
     /**
      * Function to plot the whole graph and its dependencies
      * (graph line, graph axes, event handlers)
@@ -620,14 +626,31 @@ export class D3TimeseriesGraphComponent
             // execute when it is not an overview diagram
             // mouse events hovering
             if (this.plotOptions.hoverable) {
-                if (this.plotOptions.hoverStyle === HoveringStyle.line) {
-                    this.createLineHovering();
-                } else {
-                    d3.select('g.d3line').attr('visibility', 'hidden');
-                }
+                this.createLineHovering();
+            }
+
+            this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
+
+            this.background.on('mouseover', () => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground()));
+
+            this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
+
+            if (this.plotOptions.togglePanZoom === false) {
+                this.background.call(d3.zoom()
+                    .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
+                    .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
+                    .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()))
+                );
+            } else {
+                this.background.call(d3.drag()
+                    .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
+                    .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
+                    .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()))
+                );
             }
 
             this.observer.forEach(e => {
+
                 if (e.adjustBackground) {
                     const graphExtent: D3GraphExtent = {
                         width: this.width,
@@ -753,34 +776,38 @@ export class D3TimeseriesGraphComponent
     }
 
     private createLineHovering() {
-        this.background
-            .on('mousemove.focus', this.mousemoveHandler)
-            .on('mouseout.focus', this.mouseoutHandler);
-        // line inside graph
-        this.highlightFocus = this.focusG.append('svg:line')
-            .attr('class', 'mouse-focus-line')
-            .attr('x2', '0')
-            .attr('y2', '0')
-            .attr('x1', '0')
-            .attr('y1', '0')
-            .style('stroke', 'black')
-            .style('stroke-width', '1px');
-        this.preparedData.forEach((entry) => {
-            // label inside graph
-            entry.focusLabelRect = this.focusG.append('svg:rect')
-                .attr('class', 'mouse-focus-label')
-                .style('fill', 'white')
-                .style('stroke', 'none')
-                .style('pointer-events', 'none');
-            entry.focusLabel = this.focusG.append('svg:text')
-                .attr('class', 'mouse-focus-label')
-                .style('pointer-events', 'none')
-                .style('fill', entry.options.color)
-                .style('font-weight', 'lighter');
-            this.focuslabelTime = this.focusG.append('svg:text')
-                .style('pointer-events', 'none')
-                .attr('class', 'mouse-focus-time');
-        });
+        if (this.plotOptions.hoverStyle === HoveringStyle.line) {
+            this.background
+                .on('mousemove.focus', this.mousemoveHandler)
+                .on('mouseout.focus', this.mouseoutHandler);
+            // line inside graph
+            this.highlightFocus = this.focusG.append('svg:line')
+                .attr('class', 'mouse-focus-line')
+                .attr('x2', '0')
+                .attr('y2', '0')
+                .attr('x1', '0')
+                .attr('y1', '0')
+                .style('stroke', 'black')
+                .style('stroke-width', '1px');
+            this.preparedData.forEach((entry) => {
+                // label inside graph
+                entry.focusLabelRect = this.focusG.append('svg:rect')
+                    .attr('class', 'mouse-focus-label')
+                    .style('fill', 'white')
+                    .style('stroke', 'none')
+                    .style('pointer-events', 'none');
+                entry.focusLabel = this.focusG.append('svg:text')
+                    .attr('class', 'mouse-focus-label')
+                    .style('pointer-events', 'none')
+                    .style('fill', entry.options.color)
+                    .style('font-weight', 'lighter');
+                this.focuslabelTime = this.focusG.append('svg:text')
+                    .style('pointer-events', 'none')
+                    .attr('class', 'mouse-focus-time');
+            });
+        } else {
+            d3.select('g.d3line').attr('visibility', 'hidden');
+        }
     }
 
     private clickDataPoint(d: DataEntry, entry: InternalDataEntry) {

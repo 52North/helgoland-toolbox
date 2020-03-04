@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -15,11 +15,6 @@ import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component'
   styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss']
 })
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
-
-  /**
-   * Toggle to decide if the graph component should support panning or zooming of the graph
-   */
-  @Input() public togglePanZoom: boolean;
 
   private dragging: boolean;
   private dragStart: [number, number];
@@ -40,6 +35,12 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
 
   private d3Graph: D3TimeseriesGraphComponent;
 
+  private timespan: Timespan;
+  private graphExtent: D3GraphExtent;
+  private background: d3.Selection<SVGSVGElement, any, any, any>;
+  private graph: d3.Selection<SVGSVGElement, any, any, any>;
+  private preparedData: InternalDataEntry[];
+
   constructor(
     protected graphId: D3GraphId,
     protected graphs: D3Graphs,
@@ -59,28 +60,45 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
-    if (this.togglePanZoom === false) {
-      background.call(d3.zoom()
-        .on('start', () => this.zoomStartHandler(timespan, background))
-        .on('zoom', () => this.zoomHandler(graph, background, graphExtent))
-        .on('end', () => this.zoomEndHandler(timespan, graphExtent, preparedData))
-      );
-    } else {
-      background.call(d3.drag()
-        .on('start', () => this.panStartHandler(timespan))
-        .on('drag', () => this.panMoveHandler(graphExtent))
-        .on('end', () => this.panEndHandler()));
-    }
+    this.timespan = timespan;
+    this.graphExtent = graphExtent;
+    this.background = background;
+    this.graph = graph;
+    this.preparedData = preparedData;
+  }
+
+  public zoomStartBackground() {
+    this.zoomStartHandler(this.timespan, this.background);
+  }
+
+  public zoomMoveBackground() {
+    this.zoomHandler(this.graph, this.background, this.graphExtent);
+  }
+
+  public zoomEndBackground() {
+    this.zoomEndHandler(this.timespan, this.graphExtent, this.preparedData);
+  }
+
+  public dragStartBackground() {
+    this.panStartHandler();
+  }
+
+  public dragMoveBackground() {
+    this.panMoveHandler();
+  }
+
+  public dragEndBackground() {
+    this.panEndHandler();
   }
 
   /**
    * Function starting the drag handling for the diagram.
    */
-  private panStartHandler(timespan: Timespan) {
+  private panStartHandler() {
     this.dragTimeStart = new Date().valueOf();
     this.draggingMove = false;
     this.dragMoveStart = d3.event.x;
-    this.dragMoveRange = [timespan.from, timespan.to];
+    this.dragMoveRange = [this.timespan.from, this.timespan.to];
     this.isHoverable = this.d3Graph.plotOptions.hoverable;
     this.d3Graph.plotOptions.hoverable = false;
   }
@@ -88,7 +106,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   /**
    * Function that controlls the panning (dragging) of the graph.
    */
-  private panMoveHandler(graphExtent: D3GraphExtent) {
+  private panMoveHandler() {
     this.draggingMove = true;
     const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 50;
     if (this.dragMoveStart && this.draggingMove && timeDiff) {
@@ -97,7 +115,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
         this.dragTimeStart = new Date().valueOf();
         let diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
         let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
-        let ratioTimestampDiagCoord = amountTimestamp / graphExtent.width;
+        let ratioTimestampDiagCoord = amountTimestamp / this.graphExtent.width;
         let newTimeMin = this.dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
         let newTimeMax = this.dragMoveRange[1] + (ratioTimestampDiagCoord * diff);
 

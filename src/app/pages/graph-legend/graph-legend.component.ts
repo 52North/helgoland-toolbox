@@ -13,16 +13,41 @@ import {
     TimeseriesData,
     Timespan,
 } from '@helgoland/core';
-import { D3GeneralDataPoint, D3GeneralInput, D3PlotOptions, HighlightOutput, HoveringStyle } from '@helgoland/d3';
+import {
+    D3GeneralDataPoint,
+    D3GeneralInput,
+    D3PlotOptions,
+    D3SimpleHoveringService,
+    DataEntry,
+    HighlightOutput,
+    HoveringStyle,
+    InternalDataEntry,
+} from '@helgoland/d3';
+import * as moment from 'moment';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
+class HoveringTestService extends D3SimpleHoveringService {
+
+    protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+        const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
+        this.highlightText.append('text')
+            .text(`${stringedValue} ${entry.axisOptions.uom} ${moment.tz(d.timestamp, moment.tz.guess()).format('DD.MM.YY HH:mm zz')}`)
+            .attr('class', 'mouseHoverDotLabel')
+            .style('pointer-events', 'none')
+            .style('fill', 'black');
+        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.procedure.label);
+        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.feature.label);
+    }
+
+}
+
 @Component({
     templateUrl: './graph-legend.component.html',
-    styleUrls: ['./graph-legend.component.css']
+    styleUrls: ['./graph-legend.component.scss']
 })
 export class GraphLegendComponent {
 
@@ -46,6 +71,8 @@ export class GraphLegendComponent {
     public timespan;
     public plotLanguage;
     public yaxisModifier = true;
+
+    public hoveringService = new HoveringTestService();
 
     public loadings: Set<string> = new Set();
 

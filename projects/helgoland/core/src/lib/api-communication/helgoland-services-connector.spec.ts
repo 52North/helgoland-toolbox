@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
+import { BasicAuthInterceptorService, BasicAuthServiceMaintainer } from '@helgoland/auth';
 
+import { BasicAuthTestingProviders } from '../../../../../testing/basic-auth.testing';
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandCoreModule } from '../core.module';
@@ -9,12 +11,14 @@ import { HttpService } from '../dataset-api/http.service';
 import { SplittedDataDatasetApiInterface } from '../dataset-api/splitted-data-api-interface.service';
 import { Settings } from '../model/settings/settings';
 import { SettingsService } from '../settings/settings.service';
+import { HTTP_SERVICE_INTERCEPTORS } from './../dataset-api/http.service';
 import { DatasetApiV1ConnectorProvider } from './connectors/dataset-api-v1-connector/dataset-api-v1-connector';
 import { DatasetApiV2ConnectorProvider } from './connectors/dataset-api-v2-connector/dataset-api-v2-connector';
 import { DatasetApiV3ConnectorProvider } from './connectors/dataset-api-v3-connector/dataset-api-v3-connector';
 import { DatasetStaConnectorProvider } from './connectors/sta-api-v1-connector/sta-api-v1-connector';
 import { HelgolandServicesConnector } from './helgoland-services-connector';
 import { DatasetType } from './model/internal/dataset';
+import { HelgolandParameterFilter } from './model/internal/filter';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
@@ -37,6 +41,12 @@ describe('HelgolandservicesConnectorService', () => {
         provide: SettingsService,
         useClass: ExtendedSettingsService
       },
+      BasicAuthTestingProviders,
+      {
+        provide: HTTP_SERVICE_INTERCEPTORS,
+        useClass: BasicAuthInterceptorService,
+        multi: true
+      },
       HttpService,
       DatasetApiV1ConnectorProvider,
       DatasetApiV2ConnectorProvider,
@@ -47,6 +57,10 @@ describe('HelgolandservicesConnectorService', () => {
         useClass: SplittedDataDatasetApiInterface
       },
     ]
+  }));
+
+  beforeEach(inject([BasicAuthServiceMaintainer], (basicAuthServiceMaintainer: BasicAuthServiceMaintainer) => {
+    basicAuthServiceMaintainer.registerService('');
   }));
 
   it('should be created', () => {
@@ -62,7 +76,7 @@ describe('HelgolandservicesConnectorService', () => {
       // 'http://geo.irceline.be/sos/api/v1/',
     ];
     urls.forEach(url => {
-      const filter = { type: DatasetType.Profile };
+      const filter: HelgolandParameterFilter = { type: DatasetType.Timeseries };
 
       service.getServices(url, filter).subscribe(res => console.log(res));
       service.getCategories(url, filter).subscribe(res => console.log(res));

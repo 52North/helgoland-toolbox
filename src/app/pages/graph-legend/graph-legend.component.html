@@ -1,11 +1,12 @@
 <div style="height: 500px;">
   <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
     [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-    [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
+    [hoveringService]="hoveringService" [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
     (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
     (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
     (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
     <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
+    <n52-d3-graph-hover-line></n52-d3-graph-hover-line>
   </n52-d3-timeseries-graph>
 </div>
 <div>

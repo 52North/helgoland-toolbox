@@ -15,6 +15,15 @@ export interface D3GraphObserver {
         graph: d3.Selection<SVGSVGElement, any, any, any>,
         timespan: Timespan
     ): void;
+    mousemoveBackground?();
+    mouseoverBackground?();
+    mouseoutBackground?();
+    dragStartBackground?();
+    dragMoveBackground?();
+    dragEndBackground?();
+    zoomStartBackground?();
+    zoomMoveBackground?();
+    zoomEndBackground?();
     adjustYAxis?(axis: YAxis): void;
     afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
 }

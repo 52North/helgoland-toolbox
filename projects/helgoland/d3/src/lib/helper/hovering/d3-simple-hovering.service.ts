@@ -45,13 +45,15 @@ export class D3SimpleHoveringService extends D3HoveringService {
   }
 
   public positioningPointHovering(x: number, y: number, color: string, background: any) {
-    let onLeftSide = this.leftSidedTooltip(background, x);
+    const padding = 2;
+    const fontSize = 14; // shift for this size down
+    const onLeftSide = this.leftSidedTooltip(background, x);
+    const rectW: number = this.graphHelper.getDimensions(this.highlightText.node()).w;
+    const rectH: number = this.graphHelper.getDimensions(this.highlightText.node()).h;
     let rectX: number = x + 15; // offset for right-side tooltip
     let rectY: number = y;
-    let rectW: number = this.graphHelper.getDimensions(this.highlightText.node()).w;
-    let rectH: number = this.graphHelper.getDimensions(this.highlightText.node()).h;
     if (!onLeftSide) {
-      rectX = x - rectW - 10;
+      rectX = x - rectW - 10 - 2 * padding;
       rectY = y;
     }
     if ((y + rectH + 4) > background.node().getBBox().height) {
@@ -65,18 +67,14 @@ export class D3SimpleHoveringService extends D3HoveringService {
       .style('stroke', color)
       .style('stroke-width', '1px')
       .style('pointer-events', 'none')
-      .attr('width', rectW)
-      .attr('height', rectH)
+      .attr('width', rectW + 2 * padding)
+      .attr('height', rectH + 2 * padding)
       .attr('transform', 'translate(' + rectX + ', ' + rectY + ')');
-    let labelX: number = x + 4 + 15;
-    let labelY: number = y + 13;
-    if (!onLeftSide) {
-      labelX = x - rectW + 4 - 15;
-    }
+    let labelY: number = y + fontSize;
     if ((y + rectH + 4) > background.node().getBBox().height) {
       labelY = labelY - rectH;
     }
-    this.highlightText.attr('transform', 'translate(' + rectX + ', ' + labelY + ')');
+    this.highlightText.attr('transform', 'translate(' + (rectX + padding) + ', ' + (labelY + padding) + ')');
     // this.lastHoverPositioning = new Date().getTime();
   }
 
@@ -91,9 +89,6 @@ export class D3SimpleHoveringService extends D3HoveringService {
       .attr('class', 'mouseHoverDotLabel')
       .style('pointer-events', 'none')
       .style('fill', 'black');
-    // TODO: multi line tooltip
-    // this.highlightText.append('text').attr('dy', '1em').text('line 2');
-    // this.highlightText.append('text').attr('dy', '1em').text('line 3');
   }
 
   protected calculatePointRadius(entry: InternalDataEntry) {
