@@ -21,6 +21,8 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private graphExtent: D3GraphExtent;
   private disableHovering: boolean;
+  private lastDraw = new Date().getTime();
+  private drawLatency = 20;
 
   constructor(
     protected graphId: D3GraphId,
@@ -104,9 +106,13 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   }
 
   private moveHoverLineIndicator(): void {
-    const mouse = d3.mouse(this.background.node());
-    d3.selectAll('.hovering-line')
-      .attr('d', () => 'M' + (mouse[0] + this.graphExtent.leftOffset) + ',' + this.graphExtent.height + ' ' + (mouse[0] + this.graphExtent.leftOffset) + ',' + 0);
+    const time = new Date().getTime();
+    if (this.lastDraw + this.drawLatency < time) {
+      const mouse = d3.mouse(this.background.node());
+      d3.selectAll('.hovering-line')
+        .attr('d', () => 'M' + (mouse[0] + this.graphExtent.leftOffset) + ',' + this.graphExtent.height + ' ' + (mouse[0] + this.graphExtent.leftOffset) + ',' + 0);
+      this.lastDraw = time;
+    }
   }
 }
 
