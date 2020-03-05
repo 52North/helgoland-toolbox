@@ -39,8 +39,8 @@ class HoveringTestService extends D3SimpleHoveringService {
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
             .style('fill', 'black');
-        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.procedure.label);
-        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.feature.label);
+        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
+        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
     }
 
 }

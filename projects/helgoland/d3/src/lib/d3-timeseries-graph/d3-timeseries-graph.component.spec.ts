@@ -185,6 +185,8 @@ describe('D3TimeseriesGraphComponent - function', () => {
       component.ngOnChanges({ timeInterval: new SimpleChange(null, timespan, true) });
     });
 
+    component.onContentLoading.subscribe(loading => console.log(`loading: ${loading}`));
+
     fixture.detectChanges();
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
