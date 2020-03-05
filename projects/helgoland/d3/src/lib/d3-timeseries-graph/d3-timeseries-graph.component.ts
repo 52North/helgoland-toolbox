@@ -325,9 +325,15 @@ export class D3TimeseriesGraphComponent
                     expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
                     generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
                 }).subscribe(
-                    (result) => this.prepareData(dataset, result),
-                    (error) => this.onError(error),
-                    () => this.onCompleteLoadingData(dataset)
+                    (result) => {
+                        this.prepareData(dataset, result);
+                        this.onCompleteLoadingData(dataset);
+                    },
+                    (error) => {
+                        console.error(error);
+                        // TODO: handle errored get Data requests
+                        this.onCompleteLoadingData(dataset);
+                    }
                 );
                 this.runningDataRequests.set(dataset.internalId, request);
             }
@@ -1724,14 +1730,6 @@ export class D3TimeseriesGraphComponent
         return Math.floor((1 + Math.random()) * 0x10000)
             .toString(16)
             .substring(1);
-    }
-
-    /**
-     * Function that logs the error in the console.
-     * @param error {Object} Object with the error.
-     */
-    private onError(error: any): void {
-        console.error(error);
     }
 
     private calculateLineWidth(entry: InternalDataEntry): number {
