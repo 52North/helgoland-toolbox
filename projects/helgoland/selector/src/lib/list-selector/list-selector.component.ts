@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FilteredProvider, HelgolandDataset, HelgolandServicesConnector, HelgolandParameterFilter } from '@helgoland/core';
+import { FilteredProvider, HelgolandDataset, HelgolandParameterFilter, HelgolandServicesConnector } from '@helgoland/core';
 
 import {
     FilteredParameter,

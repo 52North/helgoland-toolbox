@@ -1,7 +1,17 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatasetType, HelgolandCoreModule, PlatformTypes } from '@helgoland/core';
+import {
+  DatasetApiInterface,
+  DatasetApiV1ConnectorProvider,
+  DatasetApiV2ConnectorProvider,
+  DatasetApiV3ConnectorProvider,
+  DatasetStaConnectorProvider,
+  DatasetType,
+  HelgolandCoreModule,
+  PlatformTypes,
+  SplittedDataDatasetApiInterface,
+} from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -60,6 +70,14 @@ describe('ListSelectorComponent', () => {
         TranslateTestingModule
       ],
       providers: [
+        {
+          provide: DatasetApiInterface,
+          useClass: SplittedDataDatasetApiInterface
+        },
+        DatasetApiV1ConnectorProvider,
+        DatasetApiV2ConnectorProvider,
+        DatasetApiV3ConnectorProvider,
+        DatasetStaConnectorProvider,
         ListSelectorService,
         SettingsServiceTestingProvider
       ],
@@ -75,7 +93,7 @@ describe('ListSelectorComponent', () => {
     component = fixture.componentInstance;
     component.selectorId = 'test-id';
     component.providerList = [
-      { id: '1', url: 'http://localhost:3001/api/', filter: {} }
+      { id: '1', url: 'https://www.fluggs.de/sos2/api/v1/', filter: {} }
     ];
     component.filter = {
       type: DatasetType.Timeseries,
@@ -83,19 +101,20 @@ describe('ListSelectorComponent', () => {
     };
     component.parameters = [
       {
-        type: 'platform',
-        header: 'Platform'
+        type: 'category',
+        header: 'Category'
       }, {
         type: 'offering',
         header: 'Offering'
       }, {
-        type: 'feature',
-        header: 'Pfad'
+        type: 'phenomenon',
+        header: 'Phenomenon'
       }
     ];
     component.ngOnChanges({
       'providerList': new SimpleChange(null, component.providerList, true)
     });
+    component.onDatasetSelection.subscribe(datasets => console.log(datasets));
     fixtureInterval = window.setInterval(() => fixture['_isDestroyed'] ? clearInterval(fixtureInterval) : fixture.detectChanges(), 100);
   });
 

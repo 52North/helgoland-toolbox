@@ -56,6 +56,8 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     }
 
     public onSelectItem(item: FilteredParameter): void {
+        this.items.forEach(e => e.selected = false);
+        item.selected = true;
         this.onItemSelected.emit(item);
     }
 
@@ -147,4 +149,5 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
 export interface FilteredParameter extends Parameter {
     filterList?: Filter[];
+    selected?: boolean;
 }
