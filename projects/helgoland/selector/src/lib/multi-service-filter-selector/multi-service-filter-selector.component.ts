@@ -65,7 +65,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.loadItems();
     }
 
-    private loadItems() {
+    protected loadItems() {
         this.items = [];
         this.filterList.forEach((entry) => {
             this.loading++;
@@ -120,11 +120,11 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         });
     }
 
-    private errorOnLoading(): void {
+    protected errorOnLoading(): void {
         this.loading--;
     }
 
-    private setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
+    protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
         res.forEach((entry) => {
             const filter: Filter = {
