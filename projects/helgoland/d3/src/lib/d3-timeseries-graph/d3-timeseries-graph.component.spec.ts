@@ -11,6 +11,7 @@ import {
   DefinedTimespanService,
   HelgolandCoreModule,
   HTTP_SERVICE_INTERCEPTORS,
+  DatasetApiV2ConnectorProvider,
 } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
@@ -36,6 +37,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
       providers: [
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
+        DatasetApiV2ConnectorProvider,
         DatasetApiV3ConnectorProvider,
         DatasetStaConnectorProvider,
         SettingsServiceTestingProvider

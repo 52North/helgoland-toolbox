@@ -335,7 +335,9 @@ export class D3TimeseriesGraphComponent
                         this.onCompleteLoadingData(dataset);
                     }
                 );
-                this.runningDataRequests.set(dataset.internalId, request);
+                if (!request.closed) {
+                    this.runningDataRequests.set(dataset.internalId, request);
+                }
             }
         }
     }

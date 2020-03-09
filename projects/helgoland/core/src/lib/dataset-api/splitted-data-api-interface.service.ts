@@ -42,31 +42,49 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
             }
             return forkJoin(requests).pipe(map((e) => {
                 const mergedResult = e.reduce((previous, current) => {
+                    const next: Data<T> = {
+                        referenceValues: {},
+                        values: []
+                    };
+
                     if (previous.values && current.values) {
-                        previous.values = previous.values.concat(current.values);
+                        next.values = previous.values.concat(current.values);
                     }
 
-                    if (previous.valueAfterTimespan && current.valueAfterTimespan) {
-                        previous.valueAfterTimespan = current.valueAfterTimespan;
+                    if (previous.valueBeforeTimespan) {
+                        next.valueBeforeTimespan = previous.valueBeforeTimespan;
+                    }
+
+                    if (current.valueAfterTimespan) {
+                        next.valueAfterTimespan = current.valueAfterTimespan;
                     }
 
                     for (const key in previous.referenceValues) {
                         if (previous.referenceValues.hasOwnProperty(key) && current.referenceValues.hasOwnProperty(key)) {
                             const refVal = previous.referenceValues[key];
                             if (refVal instanceof Array) {
-                                refVal.concat(current.referenceValues[key]);
+                                next.referenceValues[key] = refVal.concat(current.referenceValues[key]);
                             } else {
                                 const currRefValData = (current.referenceValues[key] as never) as Data<T>;
                                 const prevRefValData = (refVal as Data<T>);
-                                prevRefValData.values = prevRefValData.values.concat(currRefValData.values);
-                                if (prevRefValData.valueAfterTimespan && currRefValData.valueAfterTimespan) {
-                                    prevRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                                const nextRefValData: Data<T> = {
+                                    referenceValues: {},
+                                    values: []
+                                };
+                                if (prevRefValData.values && currRefValData.values) {
+                                    nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
                                 }
+                                if (prevRefValData.valueBeforeTimespan) {
+                                    nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
+                                }
+                                if (currRefValData.valueAfterTimespan) {
+                                    nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                                }
+                                next.referenceValues[key] = nextRefValData as never;
                             }
                         }
                     }
-
-                    return previous;
+                    return next;
                 });
                 if (mergedResult.values && mergedResult.values.length > 0) {
                     // cut first
@@ -103,31 +121,49 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
             }
             return forkJoin(requests).pipe(map((e) => {
                 const mergedResult = e.reduce((previous, current) => {
+                    const next: Data<T> = {
+                        referenceValues: {},
+                        values: []
+                    };
+
                     if (previous.values && current.values) {
-                        previous.values = previous.values.concat(current.values);
+                        next.values = previous.values.concat(current.values);
                     }
 
-                    if (previous.valueAfterTimespan && current.valueAfterTimespan) {
-                        previous.valueAfterTimespan = current.valueAfterTimespan;
+                    if (previous.valueBeforeTimespan) {
+                        next.valueBeforeTimespan = previous.valueBeforeTimespan;
+                    }
+
+                    if (current.valueAfterTimespan) {
+                        next.valueAfterTimespan = current.valueAfterTimespan;
                     }
 
                     for (const key in previous.referenceValues) {
                         if (previous.referenceValues.hasOwnProperty(key) && current.referenceValues.hasOwnProperty(key)) {
                             const refVal = previous.referenceValues[key];
                             if (refVal instanceof Array) {
-                                refVal.concat(current.referenceValues[key]);
+                                next.referenceValues[key] = refVal.concat(current.referenceValues[key]);
                             } else {
                                 const currRefValData = (current.referenceValues[key] as never) as Data<T>;
                                 const prevRefValData = (refVal as Data<T>);
-                                prevRefValData.values = prevRefValData.values.concat(currRefValData.values);
-                                if (prevRefValData.valueAfterTimespan && currRefValData.valueAfterTimespan) {
-                                    prevRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                                const nextRefValData: Data<T> = {
+                                    referenceValues: {},
+                                    values: []
+                                };
+                                if (prevRefValData.values && currRefValData.values) {
+                                    nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
                                 }
+                                if (prevRefValData.valueBeforeTimespan) {
+                                    nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
+                                }
+                                if (currRefValData.valueAfterTimespan) {
+                                    nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                                }
+                                next.referenceValues[key] = nextRefValData as never;
                             }
                         }
                     }
-
-                    return previous;
+                    return next;
                 });
                 if (mergedResult.values && mergedResult.values.length > 0) {
                     // cut first
