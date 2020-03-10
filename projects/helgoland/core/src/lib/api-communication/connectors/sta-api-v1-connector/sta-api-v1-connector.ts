@@ -24,7 +24,7 @@ import {
   HelgolandDataset,
   HelgolandTimeseries,
 } from '../../model/internal/dataset';
-import { HelgolandParameterFilter } from '../../model/internal/filter';
+import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './model/datasetreams';
@@ -293,6 +293,10 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return this.sta.aggregatePaging(
       this.sta.getDatastreamObservationsRelation(dataset.url, dataset.id, { $orderby: 'phenomenonTime', $filter: this.createTimespanFilter(timespan), $top: 200 })
     ).pipe(map(res => this.createData(res.value, filter)));
+  }
+
+  createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
+    return of(null);
   }
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {

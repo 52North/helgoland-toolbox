@@ -28,7 +28,7 @@ import {
   HelgolandTimeseries,
   HelgolandTrajectory,
 } from './model/internal/dataset';
-import { HelgolandParameterFilter } from './model/internal/filter';
+import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from './model/internal/filter';
 import { HelgolandPlatform } from './model/internal/platform';
 import { HelgolandService } from './model/internal/service';
 
@@ -180,7 +180,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   getDataset(internalId: string | InternalDatasetId, filter?: DatasetFilter): Observable<HelgolandDataset>;
 
   getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter = {}): Observable<HelgolandDataset> {
-    internalId = this.checkInternalId(internalId);
+    internalId = this.internalIdHandler.resolveInternalId(internalId);
     return this.getConnector(internalId.url).pipe(flatMap(h => h.getDataset(internalId, filter)));
   }
 
@@ -194,16 +194,14 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     return this.getConnector(dataset.url).pipe(flatMap(h => h.getDatasetData(dataset, timespan, filter)));
   }
 
-  getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras> {
-    internalId = this.checkInternalId(internalId);
-    return this.getConnector(internalId.url).pipe(flatMap(h => h.getDatasetExtras(internalId)));
+  createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams = {}): Observable<string> {
+    internalId = this.internalIdHandler.resolveInternalId(internalId);
+    return this.getConnector(internalId.url).pipe(flatMap(h => h.createCsvDataExportLink(internalId, params)));
   }
 
-  private checkInternalId(internalId: string | InternalDatasetId) {
-    if (typeof internalId === 'string') {
-      internalId = this.internalIdHandler.resolveInternalId(internalId);
-    }
-    return internalId;
+  getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras> {
+    internalId = this.internalIdHandler.resolveInternalId(internalId);
+    return this.getConnector(internalId.url).pipe(flatMap(h => h.getDatasetExtras(internalId)));
   }
 
   private getConnector(url: string): Observable<HelgolandServiceConnector> {
@@ -214,7 +212,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
         return;
       }
       if (!this.connectorList) {
-        observer.error(`No services handler are configured...`);
+        observer.error(`No service connectors are configured...`);
         observer.complete();
         return;
       }

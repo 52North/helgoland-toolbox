@@ -17,7 +17,7 @@ import { Timespan } from '../../../model/internal/timeInterval';
 import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
 import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
-import { HelgolandParameterFilter } from '../../model/internal/filter';
+import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from '../../model/internal/filter';
 import { HttpService } from '../../../dataset-api/http.service';
 import { FirstLastValue, IDataset, Timeseries } from '../../../model/dataset-api/dataset';
 import { DataParameterFilter } from '../../../model/internal/http-requests';
@@ -25,6 +25,7 @@ import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-co
 import { HelgolandTimeseries } from '../../model/internal/dataset';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
+import { UrlGenerator } from '../../helper/url-generator';
 
 @Injectable({
   providedIn: 'root'
@@ -133,6 +134,20 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
       if (res.valueAfterTimespan) { data.valueAfterTimespan = res.valueAfterTimespan; }
       return data;
     }));
+  }
+
+  createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
+    const generator = new UrlGenerator();
+    const url = generator.createBaseUrl(internalId.url, 'timeseries', internalId.id) + '/getData.zip';
+    const reqParams = new Map<string, string>();
+    if (params.timespan) {
+      reqParams.set('timespan', generator.createTimespanRequestParam(params.timespan));
+    }
+    if (params.lang) { reqParams.set('locale', params.lang); }
+    if (params.generalize) { reqParams.set('locale', params.generalize.toString()); }
+    if (params.zip) { reqParams.set('locale', params.zip.toString()); }
+    reqParams.set('bom', 'true');
+    return of(generator.addUrlParams(url, reqParams));
   }
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {

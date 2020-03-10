@@ -38,15 +38,23 @@ export class InternalIdHandler {
    * @param internalId The internal id as string
    * @returns Construct of url and API id
    */
-  public resolveInternalId(internalId: string): InternalDatasetId {
-    const split = internalId.split(INTERNAL_ID_SEPERATOR);
-    if (split.length !== 2) {
-      console.error('InternalID ' + internalId + ' is not resolvable');
-    } else {
-      return {
-        url: split[0],
-        id: split[1]
-      };
+  public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
+    if (typeof(internalId) === 'string') {
+      const split = internalId.split(INTERNAL_ID_SEPERATOR);
+      if (split.length !== 2) {
+        console.error('InternalID ' + internalId + ' is not resolvable');
+      } else {
+        return {
+          url: split[0],
+          id: split[1]
+        };
+      }
+    } else if (this.instanceOfInternalDatasetId(internalId)) {
+      return internalId;
     }
+  }
+
+  private instanceOfInternalDatasetId(object: any): object is InternalDatasetId {
+    return 'id' in object && 'url' in object;
   }
 }

@@ -1,3 +1,3 @@
-<a href="{{downloadLink}}">
+<a *ngIf="downloadLink" href="{{downloadLink}}">
   <span>{{'timeseries.diagram.legend.entry.csv-download' | translate}}</span>
 </a>

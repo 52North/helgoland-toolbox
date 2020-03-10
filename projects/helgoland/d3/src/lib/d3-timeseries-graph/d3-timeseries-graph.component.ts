@@ -307,11 +307,7 @@ export class D3TimeseriesGraphComponent
                 && dataset.firstValue
                 && dataset.lastValue
                 && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
-                const empty: Data<TimeValueTuple> = {
-                    values: [],
-                    referenceValues: {}
-                };
-                this.prepareData(dataset, empty);
+                this.prepareData(dataset, new HelgolandTimeseriesData([]));
                 this.onCompleteLoadingData(dataset);
             } else {
                 const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
@@ -354,7 +350,7 @@ export class D3TimeseriesGraphComponent
      * Function to prepare each dataset for the graph and adding it to an array of datasets.
      * @param dataset {IDataset} Object of the whole dataset
      */
-    private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandData): void {
+    private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
         if (rawdata instanceof HelgolandTimeseriesData) {
             // add surrounding entries to the set
             if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }

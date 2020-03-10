@@ -8,7 +8,7 @@ import { Procedure } from '../../model/dataset-api/procedure';
 import { Timespan } from '../../model/internal/timeInterval';
 import { HelgolandData, HelgolandDataFilter } from '../model/internal/data';
 import { DatasetExtras, DatasetFilter, HelgolandDataset } from '../model/internal/dataset';
-import { HelgolandParameterFilter } from '../model/internal/filter';
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../model/internal/filter';
 import { HelgolandPlatform } from '../model/internal/platform';
 import { Feature } from './../../model/dataset-api/feature';
 import { HelgolandService } from './../model/internal/service';
@@ -39,6 +39,8 @@ export interface HelgolandServiceInterface {
     getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras>;
 
     getDatasetData(dataset: HelgolandDataset, timespan: Timespan, params?: HelgolandDataFilter): Observable<HelgolandData>;
+
+    createCsvDataExportLink(internalId: string | InternalDatasetId, params?: HelgolandCsvExportLinkParams): Observable<string>;
 
     getServices(apiUrl: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]>;
 }

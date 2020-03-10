@@ -41,9 +41,10 @@ import {
   HelgolandTimeseries,
   HelgolandTrajectory,
 } from '../../model/internal/dataset';
-import { HelgolandParameterFilter } from '../../model/internal/filter';
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
+import { UrlGenerator } from './../../helper/url-generator';
 
 @Injectable({
   providedIn: 'root'
@@ -162,6 +163,20 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
           .pipe(map(res => new HelgolandProfileData(res.values)));
       }
     }
+  }
+
+  createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
+    const generator = new UrlGenerator();
+    const url = generator.createBaseUrl(internalId.url, 'datasets', internalId.id) + '/data.zip';
+    const reqParams = new Map<string, string>();
+    if (params.timespan) {
+      reqParams.set('timespan', generator.createTimespanRequestParam(params.timespan));
+    }
+    if (params.lang) { reqParams.set('locale', params.lang); }
+    if (params.generalize) { reqParams.set('locale', params.generalize.toString()); }
+    if (params.zip) { reqParams.set('locale', params.zip.toString()); }
+    reqParams.set('bom', 'true');
+    return of(generator.addUrlParams(url, reqParams));
   }
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
