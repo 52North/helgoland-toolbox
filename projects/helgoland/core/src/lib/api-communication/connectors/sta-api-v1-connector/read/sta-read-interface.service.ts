@@ -194,11 +194,7 @@ export class StaReadInterfaceService implements StaReadInterface {
   protected createRequestUrl(url: string, endpoint: string, id?: string, relation?: string) {
     let requestStub = `${url}${endpoint}`;
     if (id !== null && id !== undefined) {
-      if (isNaN(Number(id))) {
-        requestStub += `('${id}')`;
-      } else {
-        requestStub += `(${id})`;
-      }
+      requestStub += `(${id})`;
       if (relation !== undefined) {
         requestStub += `/${relation}`;
       }
