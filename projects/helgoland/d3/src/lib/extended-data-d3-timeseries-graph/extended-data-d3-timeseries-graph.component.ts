@@ -134,8 +134,13 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   public ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    if (this.additionalData) {
-      setTimeout(() => this.redrawCompleteGraph(), 0);
+  }
+
+  protected timeIntervalChanges(): void {
+    if (this.datasetMap.size > 0) {
+      super.timeIntervalChanges();
+    } else {
+      this.redrawCompleteGraph();
     }
   }
 
