@@ -108,10 +108,10 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList = [];
       if (params.category) {
-        filterList.push(`id eq ${params.category}`);
+        filterList.push(`id eq '${params.category}'`);
       }
       if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       }
       return this.createFilter(filterList);
     }
@@ -132,13 +132,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList = [];
       if (params.category) {
-        filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+        filterList.push(`Datastreams/ObservedProperty/id eq '${params.category}'`);
       }
       // if (params.feature) {
-      //     filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+      //     filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       // }
       if (params.phenomenon) {
-        filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+        filterList.push(`Datastreams/ObservedProperty/id eq '${params.category}'`);
       }
       return this.createFilter(filterList);
     }
@@ -160,13 +160,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList = [];
       if (params.category) {
-        filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.category}`);
+        filterList.push(`Things/Datastreams/ObservedProperty/id eq '${params.category}'`);
       }
       if (params.phenomenon) {
-        filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
+        filterList.push(`Things/Datastreams/ObservedProperty/id eq '${params.phenomenon}'`);
       }
       if (params.procedure) {
-        filterList.push(`Things/Datastreams/Sensor/id eq ${params.procedure}`);
+        filterList.push(`Things/Datastreams/Sensor/id eq '${params.procedure}'`);
       }
       return this.createFilter(filterList);
     }
@@ -193,13 +193,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList = [];
       if (params.phenomenon) {
-        filterList.push(`id eq ${params.phenomenon}`);
+        filterList.push(`id eq '${params.phenomenon}'`);
       }
       if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       }
       if (params.procedure) {
-        filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+        filterList.push(`Datastreams/Sensor/id eq '${params.procedure}'`);
       }
       return this.createFilter(filterList);
     }
@@ -208,7 +208,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   private createStationFilter(filter: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
     if (filter) {
       if (filter.phenomenon) {
-        return { $filter: `Things/Datastreams/ObservedProperty/id eq ${filter.phenomenon}` };
+        return { $filter: `Things/Datastreams/ObservedProperty/id eq '${filter.phenomenon}'` };
       }
     }
   }
@@ -232,16 +232,16 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList = [];
       if (params.phenomenon) {
-        filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
+        filterList.push(`ObservedProperty/id eq '${params.phenomenon}'`);
       }
       if (params.category) {
-        filterList.push(`ObservedProperty/id eq ${params.category}`);
+        filterList.push(`ObservedProperty/id eq '${params.category}'`);
       }
       if (params.procedure) {
-        filterList.push(`Sensor/id eq ${params.procedure}`);
+        filterList.push(`Sensor/id eq '${params.procedure}'`);
       }
       if (params.feature) {
-        filterList.push(`Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Thing/Locations/id eq '${params.feature}'`);
       }
       filter = this.createFilter(filterList);
     }
