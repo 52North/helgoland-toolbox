@@ -63,7 +63,7 @@ export interface DataEntry {
 
 export interface InternalDataEntry {
     internalId: string;
-    id?: number;
+    hoverId: string;
     data: DataEntry[];
     selected?: boolean;
     options: DatasetOptions;

@@ -384,7 +384,7 @@ export class D3TimeseriesGraphComponent
             // end of check for datasets
             const dataEntry: InternalDataEntry = {
                 internalId: dataset.internalId,
-                id: (datasetIdx >= 0 ? datasetIdx : this.preparedData.length),
+                hoverId: `hov-${(datasetIdx >= 0 ? datasetIdx : this.preparedData.length)}`,
                 options,
                 selected: this.selectedDatasetIds.indexOf(dataset.internalId) >= 0,
                 data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
@@ -1367,7 +1367,7 @@ export class D3TimeseriesGraphComponent
             .data(entry.data.filter((d) => typeof d.value === 'number'))
             .enter().append('circle')
             .attr('class', 'graphDots')
-            .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.id)
+            .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
             .attr('stroke', entry.options.pointBorderColor)
             .attr('stroke-width', entry.options.pointBorderWidth)
             .attr('fill', entry.options.color)
@@ -1380,7 +1380,7 @@ export class D3TimeseriesGraphComponent
                 .data(entry.data.filter((d) => typeof d.value === 'number'))
                 .enter().append('circle')
                 .attr('class', 'hoverDots')
-                .attr('id', (d: DataEntry) => 'hover-dot-' + d.timestamp + '-' + entry.id)
+                .attr('id', (d: DataEntry) => 'hover-dot-' + d.timestamp + '-' + entry.hoverId)
                 .attr('stroke', 'transparent')
                 .attr('fill', 'transparent')
                 .attr('cx', line.x())

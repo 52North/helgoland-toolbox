@@ -27,7 +27,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     if (this.highlightRect) { this.highlightRect.style('visibility', 'hidden'); }
     if (this.highlightText) { this.highlightText.selectAll('*').remove(); }
     // unhighlight hovered dot
-    d3.select('#dot-' + d.timestamp + '-' + entry.id)
+    d3.select('#dot-' + d.timestamp + '-' + entry.hoverId)
       .attr('opacity', 1)
       .attr('r', this.calculatePointRadius(entry));
   }
@@ -37,7 +37,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     if (this.highlightText) { this.highlightText.style('visibility', 'visible'); }
 
     // highlight hovered dot
-    d3.select('#dot-' + d.timestamp + '-' + entry.id)
+    d3.select('#dot-' + d.timestamp + '-' + entry.hoverId)
       .attr('opacity', 0.8)
       .attr('r', this.calculatePointRadius(entry) + 3);
 
