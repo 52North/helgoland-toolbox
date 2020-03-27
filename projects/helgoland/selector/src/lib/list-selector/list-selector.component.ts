@@ -83,6 +83,7 @@ export class ListSelectorComponent implements OnChanges {
             this.parameters[index + 1].filterList.forEach((entry) => entry.filter[this.parameters[index].type] = entry.itemId);
             for (let i = index + 2; i < this.parameters.length; i++) {
                 this.parameters[i].isDisabled = true;
+                this.parameters[i].filterList = [];
             }
             for (let j = index + 1; j < this.parameters.length; j++) {
                 this.parameters[j].headerAddition = '';

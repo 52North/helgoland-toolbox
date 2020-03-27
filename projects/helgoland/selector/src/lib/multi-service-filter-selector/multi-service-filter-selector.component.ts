@@ -56,7 +56,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     }
 
     public onSelectItem(item: FilteredParameter): void {
-        this.items.forEach(e => e.selected = false);
+        this.deselectAllItems();
         item.selected = true;
         this.onItemSelected.emit(item);
     }
@@ -126,23 +126,28 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
     protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
-        res.forEach((entry) => {
+        res.forEach(entry => {
+            entry.selected = false;
             const filter: Filter = {
                 filter: prevfilter,
                 itemId: entry.id,
                 url,
                 service
             };
-            const item = this.items.find((elem) => {
-                if (elem.label === entry.label) { return true; }
-            });
+            const item = this.items.find(e => e.label === entry.label);
             if (item) {
-                item.filterList.push(filter);
+                if (!item.filterList.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
+                    item.filterList.push(filter);
+                }
             } else {
                 entry.filterList = [filter];
                 this.items.push(entry);
             }
         });
+    }
+
+    private deselectAllItems() {
+        this.items.forEach(e => e.selected = false);
     }
 
 }
