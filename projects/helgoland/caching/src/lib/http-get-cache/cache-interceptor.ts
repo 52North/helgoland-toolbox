@@ -32,7 +32,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
-            return of(cachedResponse);
+            return of(cachedResponse.clone({ body: JSON.parse(JSON.stringify(cachedResponse.body)) }));
         }
 
         // check if the same request is still in the pipe
@@ -47,7 +47,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                     if (res instanceof HttpResponse) {
                         this.cache.put(req, res, metadata.expirationAtMs);
                         this.ongoingCache.clear(req);
-                        observer.next(res);
+                        observer.next(res.clone({ body: JSON.parse(JSON.stringify(res.body)) }));
                         observer.complete();
                     }
                 }, (error) => {
