@@ -1,12 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ApiInterface } from '../../../abstract-services/api-interface';
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
-import { Data, TimeValueTuple } from '../../../model/dataset-api/data';
+import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
+import { Data } from '../../../model/dataset-api/data';
 import { HttpRequestOptions } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
 
@@ -77,6 +78,7 @@ export interface ApiV3Service extends ApiV3Parameter {
 export interface ApiV3Dataset extends ApiV3Parameter {
   datasetType: ApiV3DatasetTypes;
   observationType: string;
+  internalId: string;
   valueType: string;
   mobile: boolean;
   insitu: boolean;
@@ -87,6 +89,7 @@ export interface ApiV3Dataset extends ApiV3Parameter {
   feature: ApiV3Feature;
   firstValue: ApiV3FirstLastValue;
   lastValue: ApiV3FirstLastValue;
+  hasSamplings: boolean;
   parameters: {
     phenomenon: ApiV3Phenomenon,
     procedure: ApiV3Procedure,
@@ -189,7 +192,8 @@ export class ApiV3InterfaceService extends ApiInterface {
 
   constructor(
     protected httpService: HttpService,
-    protected translate: TranslateService
+    // protected translate: TranslateService,
+    protected internalIdHander: InternalIdHandler
   ) { super(); }
 
   public getServices(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Service[]> {
@@ -249,12 +253,12 @@ export class ApiV3InterfaceService extends ApiInterface {
 
   public getDatasets(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Dataset[]> {
     const url = this.createRequestUrl(apiUrl, 'datasets');
-    return this.requestApi<ApiV3Dataset[]>(url, this.prepareParams(params), options);
+    return this.requestApi<ApiV3Dataset[]>(url, this.prepareParams(params), options).pipe(map(res => res.map(e => this.prepareDataset(e, apiUrl))));
   }
 
   public getDataset(id: string, apiUrl: string, params?: ApiV3ParameterFilter): Observable<ApiV3Dataset> {
     const url = this.createRequestUrl(apiUrl, 'datasets', id);
-    return this.requestApi<ApiV3Dataset>(url, this.prepareParams(params));
+    return this.requestApi<ApiV3Dataset>(url, this.prepareParams(params)).pipe(map(res => this.prepareDataset(res, apiUrl)));
   }
 
   public getDatasetData<T>(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<T>> {
@@ -290,14 +294,21 @@ export class ApiV3InterfaceService extends ApiInterface {
 
   protected prepareParams(params: any): HttpParams {
     let httpParams = new HttpParams({ encoder: new UriParameterCoder() });
-    Object.getOwnPropertyNames(params).forEach((key) => {
-      if (params[key] instanceof Array) {
-        httpParams = httpParams.set(key, params[key].join(','));
-      } else {
-        httpParams = httpParams.set(key, params[key]);
-      }
-    });
+    if (params) {
+      Object.getOwnPropertyNames(params).forEach((key) => {
+        if (params[key] instanceof Array) {
+          httpParams = httpParams.set(key, params[key].join(','));
+        } else {
+          httpParams = httpParams.set(key, params[key]);
+        }
+      });
+    }
     return httpParams;
+  }
+
+  private prepareDataset(ds: ApiV3Dataset, url: string): ApiV3Dataset {
+    ds.internalId = this.internalIdHander.createInternalId(url, ds.id);
+    return ds;
   }
 
 }
