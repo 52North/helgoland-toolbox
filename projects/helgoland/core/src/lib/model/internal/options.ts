@@ -107,9 +107,9 @@ export class DatasetOptions {
     }
 }
 
-export class ReferenceValueOption {
-    public id: string;
-    public color: string;
+export interface ReferenceValueOption {
+    id: string;
+    color: string;
 }
 
 /**

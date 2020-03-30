@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {
     Filter,
     HelgolandParameterFilter,
@@ -54,7 +54,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         super(translate);
     }
 
-    public ngOnChanges() {
+    public ngOnChanges(changes: SimpleChanges) {
         this.loadItems();
     }
 
