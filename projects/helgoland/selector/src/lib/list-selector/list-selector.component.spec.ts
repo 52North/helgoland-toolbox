@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
   DatasetApiV1ConnectorProvider,
@@ -67,7 +68,8 @@ describe('ListSelectorComponent', () => {
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        TranslateTestingModule
+        TranslateTestingModule,
+        HelgolandCachingModule
       ],
       providers: [
         {
@@ -104,11 +106,14 @@ describe('ListSelectorComponent', () => {
         type: 'category',
         header: 'Category'
       }, {
-        type: 'offering',
-        header: 'Offering'
+        type: 'feature',
+        header: 'Feature'
       }, {
         type: 'phenomenon',
         header: 'Phenomenon'
+      }, {
+        type: 'procedure',
+        header: 'Procedure'
       }
     ];
     component.ngOnChanges({

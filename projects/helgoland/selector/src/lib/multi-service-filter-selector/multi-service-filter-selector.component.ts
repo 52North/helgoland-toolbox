@@ -38,6 +38,9 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     @Input()
     public filterList: MultiServiceFilter[];
 
+    @Input()
+    public selected: string;
+
     @Output()
     public onItemSelected: EventEmitter<FilteredParameter> = new EventEmitter<FilteredParameter>();
 
@@ -127,7 +130,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
         res.forEach(entry => {
-            entry.selected = false;
+            entry.selected = this.selected === entry.label;
             const filter: Filter = {
                 filter: prevfilter,
                 itemId: entry.id,

@@ -8,6 +8,7 @@ interface ExtendedFilter extends HelgolandParameterFilter {
 export interface ListSelectorParameter {
     header: string;
     type: string;
+    selected?: string;
     isDisabled?: boolean;
     headerAddition?: string;
     filterList?: ExtendedFilter[];

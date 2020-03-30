@@ -75,6 +75,7 @@ export class ListSelectorComponent implements OnChanges {
     public itemSelected(item: FilteredParameter, index: number) {
         if (index < this.parameters.length - 1) {
             this.parameters[index].headerAddition = item.label;
+            this.parameters[index].selected = item.label;
             this.activePanel = this.selectorId + '-' + (index + 1);
             this.parameters[index + 1].isDisabled = false;
             // copy filter to new item
@@ -87,6 +88,7 @@ export class ListSelectorComponent implements OnChanges {
             }
             for (let j = index + 1; j < this.parameters.length; j++) {
                 this.parameters[j].headerAddition = '';
+                this.parameters[j].selected = '';
             }
         } else {
             item.filterList.forEach((entry) => {
