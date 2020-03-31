@@ -17,7 +17,6 @@ import {
     DatasetOptions,
     DatasetPresenterComponent,
     DatasetType,
-    HelgolandData,
     HelgolandDataset,
     HelgolandServicesConnector,
     HelgolandTimeseries,
@@ -719,7 +718,9 @@ export class D3TimeseriesGraphComponent
     private isNotDrawable() {
         try {
             return this.rawSvg.node().width.baseVal.value === undefined
+                || this.rawSvg.node().width.baseVal.value === 0
                 || this.rawSvg.node().height.baseVal.value === undefined
+                || this.rawSvg.node().height.baseVal.value === 0
                 || !this.graph
                 || !this.rawSvg
                 || !this.datasetIds;
