@@ -10,6 +10,7 @@ import { LocalStorage } from './local-storage/local-storage.service';
 import { Settings } from './model/settings/settings';
 import { NotifierService } from './notifier/notifier.service';
 import { DateProxyPipe } from './pipes/dateproxy/dateproxy.pipe';
+import { MatchLabelPipe } from './pipes/matchLabel/match-label.pipe';
 import { SumValuesService } from './processing/sum-values.service';
 import { SettingsService } from './settings/settings.service';
 import { DefinedTimespanService } from './time/defined-timespan.service';
@@ -25,13 +26,15 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
 
 @NgModule({
   declarations: [
-    DateProxyPipe
+    DateProxyPipe,
+    MatchLabelPipe
   ],
   imports: [
     HttpClientModule
   ],
   exports: [
-    DateProxyPipe
+    DateProxyPipe,
+    MatchLabelPipe
   ],
   providers: [
     ColorService,

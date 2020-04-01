@@ -80,6 +80,7 @@ export * from './lib/model/settings/settings';
 export * from './lib/notifier/notifier.service';
 
 export * from './lib/pipes/dateproxy/dateproxy.pipe';
+export * from './lib/pipes/matchLabel/match-label.pipe';
 
 export * from './lib/presenting/dataset-presenter.component';
 export * from './lib/presenting/presenter-highlight';
