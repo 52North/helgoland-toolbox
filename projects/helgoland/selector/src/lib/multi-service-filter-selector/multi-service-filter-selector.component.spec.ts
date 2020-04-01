@@ -67,7 +67,7 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
     ];
     component.endpoint = MultiServiceFilterEndpoint.offering;
     component.onItemSelected.subscribe(res => alert(res));
-    component.ngOnChanges();
+    component.ngOnChanges({});
     fixtureInterval = window.setInterval(() => fixture['_isDestroyed'] ? clearInterval(fixtureInterval) : fixture.detectChanges(), 100);
   });
 
