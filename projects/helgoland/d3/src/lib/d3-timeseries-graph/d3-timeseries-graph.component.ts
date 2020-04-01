@@ -970,7 +970,7 @@ export class D3TimeseriesGraphComponent
         this.xScaleBase = d3.scaleTime()
             .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
             .range([bufferXrange, this.width]); // .nice(); // function which makes the "beautiful" (not used here, because the ticks are inconsistent with this function)
-
+        const tickCount = (this.width - this.leftOffset) / 80;
         let xAxis = d3.axisBottom(this.xScaleBase)
             .tickFormat(d => {
                 const date = new Date(d.valueOf());
@@ -992,7 +992,7 @@ export class D3TimeseriesGraphComponent
                                     : d3.timeYear(date) < date ? formatMonth
                                         : formatYear;
                 return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
-            });
+            }).ticks(tickCount);
 
         // update x axis
         this.graph.selectAll('.x.axis.bottom').remove();
