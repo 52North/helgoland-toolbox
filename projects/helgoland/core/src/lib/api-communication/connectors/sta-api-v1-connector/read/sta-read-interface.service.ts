@@ -104,8 +104,14 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<Datastream>(this.createRequestUrl(url, StaEndpoint.Datastreams, id), {}, params, options);
   }
 
+  getDatastreamsByNavigationLink(
+    url: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
+  ): Observable<StaValueListResponse<Datastream>> {
+    return this.requestApi<StaValueListResponse<Datastream>>(url, {}, params, options);
+  }
+
   // TODO: make function more generic
-  getDatastreamObservationsRelation(
+  getDatastreamsObservationsRelation(
     url: string, id: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
   ): Observable<StaValueListResponse<Observation>> {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, 'Observations'), {}, params, options);
