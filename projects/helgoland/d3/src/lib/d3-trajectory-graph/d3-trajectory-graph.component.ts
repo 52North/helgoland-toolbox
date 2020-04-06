@@ -248,12 +248,13 @@ export class D3TrajectoryGraphComponent
     }
 
     protected processDataForId(internalId: string) {
-        if (this.datasetOptions.get(internalId).visible) {
-            const datasetEntry = this.datasetMap.get(internalId);
+        const dataset = this.datasetMap.get(internalId);
+        const options = this.datasetOptions.get(internalId);
+        if (options.visible && dataset.data && dataset.data.length > 0) {
             const firstEntry = this.baseValues.length === 0;
             let previous: DataEntry = null;
-            if (datasetEntry && datasetEntry.data && datasetEntry.data.length >= 0) {
-                datasetEntry.data.forEach((elem, idx) => {
+            if (dataset && dataset.data && dataset.data.length >= 0) {
+                dataset.data.forEach((elem, idx) => {
                     if (firstEntry) {
                         const entry = this.createDataEntry(internalId, elem, previous, idx);
                         if (this.selection) {
@@ -402,7 +403,7 @@ export class D3TrajectoryGraphComponent
         this.yScaleBase = null;
 
         this.datasetMap.forEach((datasetEntry, id) => {
-            if (this.datasetOptions.has(id) && datasetEntry.data && this.datasetOptions.get(id).visible) {
+            if (this.datasetOptions.has(id) && datasetEntry.data && datasetEntry.data.length > 0 && this.datasetOptions.get(id).visible) {
                 datasetEntry.drawOptions = {
                     uom: datasetEntry.dataset.uom,
                     id: datasetEntry.dataset.internalId,
@@ -433,7 +434,7 @@ export class D3TrajectoryGraphComponent
         this.drawXAxis(this.bufferSum);
 
         this.datasetMap.forEach((entry, id) => {
-            if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data) {
+            if (this.datasetOptions.has(id) && this.datasetOptions.get(id).visible && entry.data && entry.data.length > 0) {
                 this.drawGraph(entry.yScale, entry.drawOptions);
             }
         });
@@ -586,7 +587,7 @@ export class D3TrajectoryGraphComponent
     protected showLabelValues(item: DataEntry, onLeftSide: boolean) {
         this.datasetMap.forEach((entry, id) => {
             if (this.datasetOptions.get(id).visible) {
-                if (entry.focusLabel) {
+                if (entry.focusLabel && entry.yScale && item[id]) {
                     entry.focusLabel.text(item[id] + (entry.dataset.uom ? entry.dataset.uom : ''));
                     const entryX = onLeftSide ?
                         item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
