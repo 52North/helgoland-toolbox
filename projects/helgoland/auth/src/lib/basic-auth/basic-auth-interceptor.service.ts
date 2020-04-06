@@ -39,12 +39,17 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
                 }
               });
             }
-            next.handle(req, options).subscribe(res => {
-              observer.next(res);
-              if (res instanceof HttpResponse) {
+            next.handle(req, options).subscribe(
+              res => {
+                observer.next(res);
+                if (res instanceof HttpResponse) {
+                  observer.complete();
+                }
+              },
+              error => {
+                observer.error(error);
                 observer.complete();
-              }
-            });
+              });
           });
         });
       }
