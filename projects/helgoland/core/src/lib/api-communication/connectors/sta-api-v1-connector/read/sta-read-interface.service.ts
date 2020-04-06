@@ -111,7 +111,7 @@ export class StaReadInterfaceService implements StaReadInterface {
   }
 
   // TODO: make function more generic
-  getDatastreamsObservationsRelation(
+  getDatastreamObservationsRelation(
     url: string, id: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
   ): Observable<StaValueListResponse<Observation>> {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, 'Observations'), {}, params, options);
