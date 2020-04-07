@@ -24,6 +24,15 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
   }
 }
 
+/**
+ * The core module includes the following functionality:
+ * - the communication to the different APIs
+ * - describes the base internal model
+ * - language handling
+ * - settings handling
+ * - some pipes
+ * - time service for calculations
+ */
 @NgModule({
   declarations: [
     DateProxyPipe,

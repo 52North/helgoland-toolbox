@@ -28,6 +28,10 @@ const COMPONENTS = [
   TrajectoryEntryComponent
 ];
 
+/**
+ * The datasetlist module includes the following functionality:
+ * - display component of different dataset types
+ */
 @NgModule({
   imports: [
     CommonModule,

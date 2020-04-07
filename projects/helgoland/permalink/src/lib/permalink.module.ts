@@ -11,6 +11,10 @@ const COMPONENTS = [
   PermalinkToClipboardComponent
 ];
 
+/**
+ * The permalink module includes the following functionality:
+ * - permalink handling to parse and create permalinks
+ */
 @NgModule({
   declarations: [
     COMPONENTS

@@ -14,6 +14,13 @@ import { ServiceFilterSelectorComponent } from './service-filter-selector/servic
 import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import { ServiceSelectorService } from './service-selector/service-selector.service';
 
+/**
+ * The selector module includes the following functionality:
+ * - different selector components:
+ *   - simple parameter selection
+ *   - list selection component
+ *   - service selection component
+ */
 @NgModule({
   declarations: [
     ServiceSelectorComponent,

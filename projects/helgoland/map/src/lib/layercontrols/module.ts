@@ -12,6 +12,10 @@ const COMPONENTS = [
   LayerOpacitySliderComponent,
 ];
 
+/**
+ * The layer controls module includes the following functionality:
+ * - controls to handle layer
+ */
 @NgModule({
   declarations: [
     COMPONENTS

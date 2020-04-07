@@ -19,6 +19,10 @@ export interface HelgolandMapSelectorModuleConfig {
     lastValueLabelGeneratorService: Type<LastValueLabelGenerator>;
 }
 
+/**
+ * The map selector module includes the following functionality:
+ * - map based selection
+ */
 @NgModule({
     declarations: [
         COMPONENTS

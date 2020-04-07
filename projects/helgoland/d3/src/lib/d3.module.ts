@@ -33,6 +33,14 @@ const COMPONENTS = [
   ExtendedDataD3TimeseriesGraphComponent,
 ];
 
+/**
+ * The d3 module includes the following functionality:
+ * - on d3 based graphs
+ * - timeseries graph component
+ * - trajectory graph component
+ * - different graph controls
+ * - graph export control
+ */
 @NgModule({
   declarations: COMPONENTS,
   imports: [

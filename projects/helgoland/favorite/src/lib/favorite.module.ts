@@ -9,6 +9,12 @@ const COMPONENTS = [
   FavoriteTogglerComponent
 ];
 
+/**
+ * The favorite module includes the following functionality:
+ * - favorite service to handle favorites
+ * - toggler component so activate a favorite
+ * - import/export serivce
+ */
 @NgModule({
   declarations: [
     COMPONENTS

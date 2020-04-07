@@ -8,6 +8,12 @@ import { ColorSelectorComponent } from './color-selector/color-selector.componen
 import { DragOptionsComponent } from './drag-options/drag-options.component';
 import { MinMaxRangeComponent } from './min-max-range/min-max-range.component';
 
+/**
+ * The modification module includes the following functionality:
+ * - controls to modify some aspects as:
+ *   - color selector
+ *   - axes modifications
+ */
 @NgModule({
   declarations: [
     ColorSelectorComponent,

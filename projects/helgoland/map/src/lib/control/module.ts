@@ -17,6 +17,14 @@ const COMPONENTS = [
   ExtentControlComponent
 ];
 
+/**
+ * The map controls module includes the following functionality:
+ * - different controls for map components
+ * - locate control
+ * - zoom control
+ * - geo search control
+ * - extent control
+ */
 @NgModule({
   declarations: [
     COMPONENTS

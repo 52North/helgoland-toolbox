@@ -17,6 +17,10 @@ const COMPONENTS = [
   AutoUpdateTimespanComponent
 ];
 
+/**
+ * The time module includes the following functionality:
+ * - different time controls to manipulate a timestamp or timeinterval
+ */
 @NgModule({
   declarations: [
     COMPONENTS

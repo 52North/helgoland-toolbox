@@ -36,6 +36,10 @@ const COMPONENTS = [
   OlStationSelectorLayerComponent,
 ];
 
+/**
+ * The open layers module includes the following functionality:
+ * - open-layers map component and different control components
+ */
 @NgModule({
   declarations: COMPONENTS,
   exports: COMPONENTS,

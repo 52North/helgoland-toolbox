@@ -13,6 +13,13 @@ const COMPONENTS = [
   ResultMapComponent,
 ];
 
+/**
+ * The facet-search module includes the following functionality:
+ * - facet search with service and components
+ * - result list compoent
+ * - result map component
+ * - parameter list facet
+ */
 @NgModule({
   imports: [
     CommonModule,

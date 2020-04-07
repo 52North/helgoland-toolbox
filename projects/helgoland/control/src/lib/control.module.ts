@@ -11,6 +11,10 @@ const COMPONENTS = [
   RefreshButtonComponent
 ];
 
+/**
+ * The control module includes the following functionality:
+ * - simple small control components
+ */
 @NgModule({
   declarations: [
     COMPONENTS
