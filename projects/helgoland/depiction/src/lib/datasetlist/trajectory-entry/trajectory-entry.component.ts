@@ -53,10 +53,18 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
         this.loading = true;
         this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })
             .subscribe(
-                trajectory => this.dataset = trajectory,
-                error => console.error(error),
-                () => this.loading = false
+                trajectory => this.setTrajectory(trajectory),
+                error => this.handleTrajectoryLoadError(error),
             );
     }
 
+    protected handleTrajectoryLoadError(error: any): void {
+        console.error(error);
+        this.loading = false;
+    }
+
+    protected setTrajectory(trajectory: HelgolandTrajectory) {
+        this.dataset = trajectory;
+        this.loading = false;
+    }
 }
