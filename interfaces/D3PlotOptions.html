@@ -119,11 +119,19 @@
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
+                                        <a href="#sendDataRequestOnlyIfDatasetTimespanCovered">sendDataRequestOnlyIfDatasetTimespanCovered</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#showReferenceValues">showReferenceValues</a>
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
                                         <a href="#showTimeLabel">showTimeLabel</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#timespanBufferFactor">timespanBufferFactor</a>
                                 </li>
                                 <li>
                                             <span class="modifier">Optional</span>
@@ -475,6 +483,46 @@ false = single y axis for each timeseries</p>
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
+                                        <a name="sendDataRequestOnlyIfDatasetTimespanCovered"></a>
+                                        <span class="name"><b>sendDataRequestOnlyIfDatasetTimespanCovered</b><a href="#sendDataRequestOnlyIfDatasetTimespanCovered"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>sendDataRequestOnlyIfDatasetTimespanCovered:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Sends request only, when the corresponding dataset has values inside the request timespan. So the first and last values must cover the timespan.</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
                                         <a name="showReferenceValues"></a>
                                         <span class="name"><b>showReferenceValues</b><a href="#showReferenceValues"><span class="icon ion-ios-link"></span></a></span>
                                     </td>
@@ -546,6 +594,46 @@ false = single y axis for each timeseries</p>
                             <tr>
                                 <td class="col-md-4">
                                     <div class="io-description"><p>show the label of the xaxis</p>
+</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="timespanBufferFactor"></a>
+                                        <span class="name"><b>timespanBufferFactor</b><a href="#timespanBufferFactor"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>timespanBufferFactor:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Buffering factor for the get Data requests, which will be added before and after the timespan for every get data request.</p>
 </div>
                                 </td>
                             </tr>
@@ -747,6 +835,15 @@ false = single y axis for each timeseries</p>
     */
     requestBeforeAfterValues?: boolean;
 
+    /**
+     * Buffering factor for the get Data requests, which will be added before and after the timespan for every get data request.
+     */
+    timespanBufferFactor?: number;
+
+    /**
+     * Sends request only, when the corresponding dataset has values inside the request timespan. So the first and last values must cover the timespan.
+     */
+    sendDataRequestOnlyIfDatasetTimespanCovered?: boolean;
 }
 
 export interface D3Copyright {

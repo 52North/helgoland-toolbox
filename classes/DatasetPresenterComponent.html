@@ -280,7 +280,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(iterableDiffers: <a href="https://angular.io/api/core/IterableDiffers" target="_blank">IterableDiffers</a>, api: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>, datasetIdResolver: <a href="../injectables/InternalIdHandler.html">InternalIdHandler</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>, translateService: <a href="../interfaces/Service.html">TranslateService</a>)</code>
+<code>constructor(iterableDiffers: <a href="https://angular.io/api/core/IterableDiffers" target="_blank">IterableDiffers</a>, servicesConnector: <a href="../injectables/HelgolandServicesConnector.html">HelgolandServicesConnector</a>, datasetIdResolver: <a href="../injectables/InternalIdHandler.html">InternalIdHandler</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>, translateService: <a href="../interfaces/Service.html">TranslateService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -315,10 +315,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>api</td>
+                                                        <td>servicesConnector</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                                        <code><a href="../injectables/HelgolandServicesConnector.html" target="_self" >HelgolandServicesConnector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -1785,7 +1785,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>EventEmitter&lt;PresenterMessage&gt;</code>
+                        <i>Type : </i>        <code><a href="../classes/Event.html" target="_self" >EventEmitter&lt;PresenterMessage&gt;</a></code>
 
                     </td>
                 </tr>
@@ -1850,13 +1850,13 @@
 import { LangChangeEvent, TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
 
-import { DatasetApiInterface } from &#x27;../dataset-api/api-interface&#x27;;
 import { InternalIdHandler } from &#x27;../dataset-api/internal-id-handler.service&#x27;;
 import { DatasetOptions } from &#x27;../model/internal/options&#x27;;
 import { ResizableComponent } from &#x27;../model/internal/ResizableComponent&#x27;;
 import { TimeInterval, Timespan } from &#x27;../model/internal/timeInterval&#x27;;
 import { HasLoadableContent } from &#x27;../model/mixins/has-loadable-content&#x27;;
 import { Time } from &#x27;../time/time.service&#x27;;
+import { HelgolandServicesConnector } from &#x27;../api-communication/helgoland-services-connector&#x27;;
 import { PresenterMessage } from &#x27;./presenter-message&#x27;;
 
 const equal &#x3D; require(&#x27;deep-equal&#x27;);
@@ -1947,7 +1947,7 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService

@@ -132,14 +132,12 @@ import { HelgolandCoreModule } from &#x27;@helgoland/core&#x27;;
 
 import { HelgolandMapModule } from &#x27;../base/map.module&#x27;;
 import { LastValueMapSelectorComponent } from &#x27;./last-value-map-selector/last-value-map-selector.component&#x27;;
-import { PlatformMapSelectorComponent } from &#x27;./platform-map-selector/platform-map-selector.component&#x27;;
 import { LastValueLabelGenerator } from &#x27;./services/last-value-label-generator.interface&#x27;;
 import { LastValueLabelGeneratorService } from &#x27;./services/last-value-label-generator.service&#x27;;
 import { StationMapSelectorComponent } from &#x27;./station-map-selector/station-map-selector.component&#x27;;
 import { ProfileTrajectoryMapSelectorComponent } from &#x27;./trajectory-map-selector/trajectory-map-selector.component&#x27;;
 
 const COMPONENTS &#x3D; [
-    PlatformMapSelectorComponent,
     StationMapSelectorComponent,
     ProfileTrajectoryMapSelectorComponent,
     LastValueMapSelectorComponent
@@ -149,6 +147,10 @@ export interface HelgolandMapSelectorModuleConfig {
     lastValueLabelGeneratorService: Type&lt;LastValueLabelGenerator&gt;;
 }
 
+/**
+ * The map selector module includes the following functionality:
+ * - map based selection
+ */
 @NgModule({
     declarations: [
         COMPONENTS

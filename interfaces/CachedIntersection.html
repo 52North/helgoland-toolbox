@@ -1,0 +1,507 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>CachedIntersection</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/caching/src/lib/get-data-cache/local-http-cache-interval.ts</code>
+        </p>
+
+
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#cachedObjects">cachedObjects</a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#timespans">timespans</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="cachedObjects"></a>
+                                        <span class="name"><b>cachedObjects</b><a href="#cachedObjects"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>cachedObjects:     <code>CachedObject[]</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>CachedObject[]</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="timespans"></a>
+                                        <span class="name"><b>timespans</b><a href="#timespans"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>timespans:         <code><a href="../injectables/Time.html" target="_self" >Timespan[]</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >Timespan[]</a></code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpResponse } from &#x27;@angular/common/http&#x27;;
+import { Injectable } from &#x27;@angular/core&#x27;;
+import { Data, Timespan, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
+import * as lodash from &#x27;lodash&#x27;;
+
+import { HttpCacheInterval } from &#x27;../model&#x27;;
+
+export interface CachedObject {
+    values: Data&lt;TimeValueTuple&gt;;
+    expirationDate: Date;
+    expirationAtMs: number;
+    httpResponse: HttpResponse&lt;any&gt;;
+    requestTs: Timespan;
+}
+
+export interface CachedIntersection {
+    cachedObjects: CachedObject[];
+    timespans?: Timespan[];
+}
+
+@Injectable()
+export class LocalHttpCacheInterval extends HttpCacheInterval {
+
+    private cache: Map&lt;string, CachedObject[]&gt; &#x3D; new Map();
+    private generalizedCache: Map&lt;string, CachedObject[]&gt; &#x3D; new Map();
+
+    /**
+     * Get all objects cached with a given key (url).
+     * @param url {string} key
+     * @param generalize {boolean} indicate if request has parameter generalized true or false to safe to different caches
+     */
+    public get(url: string, generalize: boolean): CachedObject[] {
+        if (generalize) {
+            return this.getByCache(this.generalizedCache, url);
+        } else {
+            return this.getByCache(this.cache, url);
+        }
+    }
+
+    /**
+     * Get all objects from cache.
+     * @param selectedCache {Map&lt;string, CachedObject[]&gt;} selected cache (generalized or not generalized)
+     * @param url {string} key
+     */
+    private getByCache(selectedCache: Map&lt;string, CachedObject[]&gt;, url: string): CachedObject[] {
+        const objs &#x3D; selectedCache.get(url);
+        if (objs) {
+            const filteredObjs &#x3D; objs.filter(el &#x3D;&gt; {
+                return (new Date() &lt; el.expirationDate);
+            });
+            const newCachedObjs &#x3D; this.tidyUpCache(filteredObjs);
+            selectedCache.set(url, newCachedObjs);
+            return newCachedObjs;
+        } else {
+            return objs;
+        }
+    }
+
+    /**
+     * Get all objects intersecting with a given timespan.
+     * Further return all timespans that are not covered.
+     * @param url {string} key
+     * @param timespan {Timespan} timespan
+     * @param generalize {boolean} generalized or not
+     */
+    public getIntersection(url: string, timespan: Timespan, generalize: boolean): CachedIntersection | null {
+        const objs &#x3D; this.get(url, generalize);
+        if (objs &amp;&amp; objs.length &gt; 0) {
+            return this.identifyCachedIntersection(objs, timespan);
+        }
+        return null;
+    }
+
+    /**
+     * Cache a new object under a given key (url).
+     * @param url {string} key
+     * @param obj {CachedObject} object to be cached
+     * @param generalize {boolean} generalized or not
+     * @param originReq {boolean} indicating if original request or manipulated
+     */
+    public put(url: string, obj: CachedObject, generalize: boolean, originReq?: boolean) {
+        if (generalize) {
+            this.putByCache(this.generalizedCache, url, obj, originReq);
+        } else {
+            this.putByCache(this.cache, url, obj, originReq);
+        }
+    }
+
+    /**
+     * Check for intersection before putting a new object into cache.
+     * @param selectedCache {Map&lt;string, CachedObject[]&gt;} current cached objects
+     * @param url {string} key
+     * @param obj {CachedObject} object to be put into cache
+     * @param originReq {boolean} indicating if original request or manipulated
+     */
+    private putByCache(selectedCache: Map&lt;string, CachedObject[]&gt;, url: string, obj: CachedObject, originReq?: boolean) {
+        if (selectedCache.has(url)) {
+            let cachedObjs &#x3D; selectedCache.get(url);
+            // add new obj to current key
+            const cachedObjsManip: CachedObject[] &#x3D; [];
+            if (originReq) {
+                // update timespan boundaries with incoming forceUpdate or origin request
+                const objTs &#x3D; new Timespan(obj.requestTs.from, obj.requestTs.to);
+                // filter cachedObjs without any intersection
+                cachedObjs.forEach(el &#x3D;&gt; {
+                    const elTs &#x3D; new Timespan(el.requestTs.from, el.requestTs.to);
+
+                    if (elTs.from &gt;&#x3D; objTs.from &amp;&amp; elTs.to &lt;&#x3D; objTs.to) {
+                        // do not push cached element into new cache - cached obj completely covered by new element
+                    } else if (elTs.from &gt; objTs.to) {
+                        // el right of obj
+                        cachedObjsManip.push(el);
+                    } else if (elTs.to &lt; objTs.from) {
+                        // el left of obj
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from &gt; objTs.from &amp;&amp; elTs.to &gt;&#x3D; objTs.to) {
+                        // el partly right of obj
+                        el.values.values &#x3D; el.values.values.filter(val &#x3D;&gt; val[0] &gt; objTs.to);
+                        el.requestTs &#x3D; new Timespan(objTs.to + 1, el.requestTs.to);
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from &lt;&#x3D; objTs.from &amp;&amp; elTs.to &lt; objTs.to) {
+                        // el partly left of obj
+                        el.values.values &#x3D; el.values.values.filter(val &#x3D;&gt; val[0] &lt; objTs.from);
+                        el.requestTs &#x3D; new Timespan(el.requestTs.from, objTs.from - 1);
+                        cachedObjsManip.push(el);
+                    } else if (elTs.from &lt;&#x3D; objTs.from &amp;&amp; elTs.to &gt;&#x3D; objTs.to) {
+                        // el over obj # do partly right and partly left
+                        const elLeft &#x3D; lodash.cloneDeep(el);
+                        elLeft.values.values &#x3D; elLeft.values.values.filter(val &#x3D;&gt; val[0] &lt; objTs.from);
+                        elLeft.requestTs &#x3D; new Timespan(elLeft.requestTs.from, objTs.from - 1);
+                        cachedObjsManip.push(elLeft);
+                        el.values.values &#x3D; el.values.values.filter(val &#x3D;&gt; val[0] &gt; objTs.to);
+                        el.requestTs &#x3D; new Timespan(objTs.to + 1, el.requestTs.to);
+                        cachedObjsManip.push(el);
+                    }
+                });
+                cachedObjs &#x3D; cachedObjsManip;
+            }
+            cachedObjs.push(obj);
+            // sort by timespan
+            const objsSorted &#x3D; cachedObjs.sort((a, b) &#x3D;&gt; (a.requestTs.from &gt; b.requestTs.from) ? 1 : ((b.requestTs.from &gt; a.requestTs.from) ? -1 : 0));
+            selectedCache.set(url, objsSorted);
+        } else {
+            selectedCache.set(url, [obj]);
+        }
+    }
+
+    /**
+     * Remove every entry in cache.
+     */
+    public clearCache() {
+        this.cache.clear();
+        this.generalizedCache.clear();
+    }
+
+    /**
+     * Identify relevant objects inside cache and return timespans that are not covered with data.
+     * @param objs {CachedObject[]} objects to be checked
+     * @param ts {Timespan} timespan that might be intersected
+     */
+    private identifyCachedIntersection(objs: CachedObject[], ts: Timespan): CachedIntersection | null {
+        const intersectedObjs: CachedObject[] &#x3D; [];
+        const differedIntervals: Timespan[] &#x3D; [];
+
+        for (let i &#x3D; 0; i &lt; objs.length; i++) {
+            const el &#x3D; objs[i];
+            const cachedTs &#x3D; new Timespan(el.requestTs.from, el.requestTs.to);
+
+            if (ts.from &gt; cachedTs.to) {
+                // ts right of cached # no overlapping
+                if (i &#x3D;&#x3D;&#x3D; objs.length - 1) {
+                    differedIntervals.push(ts);
+                }
+                continue;
+            } else if (ts.to &lt; cachedTs.from) {
+                // ts left of cached # no overlapping
+                differedIntervals.push(ts);
+                break;
+            } else if (ts.from &gt;&#x3D; cachedTs.from &amp;&amp; ts.to &lt;&#x3D; cachedTs.to) {
+                // ts inside cached # cached completely overlaps ts
+                const intVals &#x3D; this.getCachedInterval(el, null, ts, &#x27;inside&#x27;);
+                if (intVals.values.values.length &gt; 0) { intersectedObjs.push(intVals); }
+                break;
+            } else if (ts.from &gt; cachedTs.from &amp;&amp; ts.to &gt;&#x3D; cachedTs.to) {
+                // ts partly right of cached # ts and cached overlap, ts ends after cached
+                const diffTs &#x3D; new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
+                if (i &#x3D;&#x3D;&#x3D; objs.length - 1) {
+                    differedIntervals.push(ts);
+                }
+                const intVals &#x3D; this.getCachedInterval(el, diffTs, ts, &#x27;right&#x27;);
+                if (intVals.values.values.length &gt; 0) { intersectedObjs.push(intVals); }
+            } else if (ts.from &lt;&#x3D; cachedTs.from &amp;&amp; ts.to &lt; cachedTs.to) {
+                // ts partly left of cached # ts and cached overlap, cached ends after ts
+                const diffTs &#x3D; new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
+                differedIntervals.push(diffTs);
+                const intVals &#x3D; this.getCachedInterval(el, diffTs, ts, &#x27;left&#x27;);
+                if (intVals.values.values.length &gt; 0) { intersectedObjs.push(intVals); }
+                break;
+            } else if (ts.from &lt;&#x3D; cachedTs.from &amp;&amp; ts.to &gt;&#x3D; cachedTs.to) {
+                // ts over cached # ts completely overlaps cached
+                let pushedLeft &#x3D; false;
+                // partly left
+                if (ts.from &lt; cachedTs.from) {
+                    const diffTs &#x3D; new Timespan(ts.from, Math.min(ts.to, cachedTs.from) - 1);
+                    differedIntervals.push(diffTs);
+                    const intVals &#x3D; this.getCachedInterval(el, diffTs, ts, &#x27;left&#x27;);
+                    if (intVals.values.values.length &gt; 0) { intersectedObjs.push(intVals); }
+                    pushedLeft &#x3D; true;
+                } else {
+                    // completely inside
+                    const intVals &#x3D; this.getCachedInterval(el, null, ts, &#x27;inside&#x27;);
+                    if (intVals.values.values.length &gt; 0) { intersectedObjs.push(intVals); }
+                    pushedLeft &#x3D; true;
+                }
+                // partly right
+                if (i &#x3D;&#x3D;&#x3D; objs.length - 1) {
+                    const diffTsRight &#x3D; new Timespan(Math.max(ts.from, cachedTs.to) + 1, ts.to);
+                    differedIntervals.push(diffTsRight);
+                    if (!pushedLeft) {
+                        const intValsRight &#x3D; this.getCachedInterval(el, diffTsRight, ts, &#x27;right&#x27;);
+                        if (intValsRight.values.values.length &gt; 0) { intersectedObjs.push(intValsRight); }
+                    }
+                    break;
+                }
+            }
+            ts.from &#x3D; Math.min(ts.to, cachedTs.to) + 1;
+            // break if ts is negative now
+            if (ts.from &gt; ts.to) { break; }
+        }
+        return {
+            cachedObjects: intersectedObjs,
+            timespans: differedIntervals
+        };
+    }
+
+    /**
+     * Function to filter cached values by given timespan.
+     * @param obj {CachedObject} cached object with values
+     * @param tsDiff {Timespan} updated timespan for different cached objects and time periods
+     * @param ts {Timespan} requested timespan
+     * @param pos {string} indicates point in time where values should be taken from
+     */
+    private getCachedInterval(obj: CachedObject, tsDiff: Timespan, ts: Timespan, pos: string): CachedObject {
+        const clonedObj: CachedObject &#x3D; lodash.cloneDeep(obj);
+        if (pos &#x3D;&#x3D;&#x3D; &#x27;left&#x27;) {
+            clonedObj.values.values &#x3D; obj.values.values.filter(el &#x3D;&gt; el[0] &lt;&#x3D; ts.to &amp;&amp; el[0] &gt;&#x3D; tsDiff.to);
+        }
+        if (pos &#x3D;&#x3D;&#x3D; &#x27;right&#x27;) {
+            clonedObj.values.values &#x3D; obj.values.values.filter(el &#x3D;&gt; el[0] &gt;&#x3D; ts.from &amp;&amp; el[0] &lt;&#x3D; tsDiff.from);
+        }
+        if (pos &#x3D;&#x3D;&#x3D; &#x27;inside&#x27;) {
+            clonedObj.values.values &#x3D; obj.values.values.filter(el &#x3D;&gt; el[0] &gt;&#x3D; ts.from &amp;&amp; el[0] &lt;&#x3D; ts.to);
+        }
+        // set valueBeforeTimespan and valueAfterTimespan, if possible
+        if (clonedObj.values.values.length &gt; 0 &amp;&amp; obj.values.values.length &gt; 0) {
+            const idx &#x3D; obj.values.values.findIndex(el &#x3D;&gt; el[0] &#x3D;&#x3D;&#x3D; clonedObj.values.values[0][0]);
+            if (idx &gt; 0 &amp;&amp; obj.values.values[idx - 1]) {
+                clonedObj.values.valueBeforeTimespan &#x3D; obj.values.values[idx - 1];
+            }
+            const idxj &#x3D; obj.values.values.findIndex(el &#x3D;&gt; el[0] &#x3D;&#x3D;&#x3D; clonedObj.values.values[clonedObj.values.values.length - 1][0]);
+            if (idxj &gt;&#x3D; 0 &amp;&amp; obj.values.values[idxj + 1]) {
+                clonedObj.values.valueAfterTimespan &#x3D; obj.values.values[idxj + 1];
+            }
+        }
+        return clonedObj;
+    }
+
+    /**
+     * Filter cached objects and remove duplicates.
+     * @param filteredObjs {CachedObject[]} objects to be filtered
+     */
+    private tidyUpCache(filteredObjs: CachedObject[]): CachedObject[] {
+        // tidy up to avoid duplicate timespans in cache
+        for (let i &#x3D; 0; i &lt; filteredObjs.length - 1; i++) {
+            const obj &#x3D; filteredObjs[i];
+            filteredObjs &#x3D; filteredObjs.filter(el &#x3D;&gt; !(el.requestTs.from &gt;&#x3D; obj.requestTs.from &amp;&amp; el.requestTs.to &lt;&#x3D; obj.requestTs.to));
+            filteredObjs.splice(i, 0, obj);
+        }
+        return filteredObjs;
+    }
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'CachedIntersection.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

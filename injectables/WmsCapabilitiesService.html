@@ -83,6 +83,14 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cleanUpWMSUrl">cleanUpWMSUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createLayer">createLayer</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Private</span>
                                 <a href="#createTimeList">createTimeList</a>
                             </li>
@@ -120,6 +128,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#getLayerTree">getLayerTree</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getLegendUrl">getLegendUrl</a>
                             </li>
                             <li>
@@ -153,7 +165,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -200,6 +212,152 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="cleanUpWMSUrl"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            cleanUpWMSUrl
+                        </b>
+                        <a href="#cleanUpWMSUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cleanUpWMSUrl(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:162</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes every request parameter of the url an returns this cleand url.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createLayer"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createLayer
+                        </b>
+                        <a href="#createLayer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createLayer(layer: <a href="../interfaces/InternalWMSLayer.html">InternalWMSLayer</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:170</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>layer</td>
+                                    <td>
+                                                <code><a href="../interfaces/InternalWMSLayer.html" target="_self" >InternalWMSLayer</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/WMSLayer.html" target="_self" >WMSLayer</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createTimeList"></a>
                     <span class="name">
                         <b>
@@ -220,8 +378,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="185"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:185</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:216</a></div>
                 </td>
             </tr>
 
@@ -285,15 +443,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findLayerByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layerList: <a href="../interfaces/WMSLayer.html">WMSLayer[]</a>)</code>
+                    <code>findLayerByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, layerList: InternalWMSLayer[])</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="154"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:154</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="185"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:185</a></div>
                 </td>
             </tr>
 
@@ -327,7 +485,7 @@
                                 <tr>
                                     <td>layerList</td>
                                     <td>
-                                                <code><a href="../interfaces/WMSLayer.html" target="_self" >WMSLayer[]</a></code>
+                                            <code>InternalWMSLayer[]</code>
                                     </td>
 
                                     <td>
@@ -342,7 +500,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/WMSLayer.html" target="_self" >WMSLayer</a></code>
+                        <b>Returns : </b>        <code><a href="../interfaces/InternalWMSLayer.html" target="_self" >InternalWMSLayer</a></code>
 
                     </div>
                     <div class="io-description">
@@ -376,8 +534,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="189"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:189</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="220"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:220</a></div>
                 </td>
             </tr>
 
@@ -460,8 +618,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="176"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:176</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="207"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:207</a></div>
                 </td>
             </tr>
 
@@ -544,8 +702,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="67"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:67</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:74</a></div>
                 </td>
             </tr>
 
@@ -631,8 +789,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="148"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:148</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="179"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:179</a></div>
                 </td>
             </tr>
 
@@ -703,8 +861,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="111"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:111</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:118</a></div>
                 </td>
             </tr>
 
@@ -789,8 +947,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="135"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:135</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:142</a></div>
                 </td>
             </tr>
 
@@ -887,8 +1045,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="170"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:170</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:201</a></div>
                 </td>
             </tr>
 
@@ -917,6 +1075,78 @@
                                 </tr>
                                 <tr>
                                     <td>url</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;InternalWMSLayer&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLayerTree"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getLayerTree
+                        </b>
+                        <a href="#getLayerTree"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getLayerTree(wmsurl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>wmsurl</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -964,8 +1194,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="96"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:96</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:103</a></div>
                 </td>
             </tr>
 
@@ -1050,8 +1280,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="78"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:78</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:85</a></div>
                 </td>
             </tr>
 
@@ -1136,8 +1366,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="63"
+                            class="link-to-prism">projects/helgoland/open-layers/src/lib/services/wms-capabilities.service.ts:63</a></div>
                 </td>
             </tr>
 
@@ -1211,11 +1441,11 @@ import WMSCapabilities from &#x27;ol/format/WMSCapabilities&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 
-interface WMSLayer {
+interface InternalWMSLayer {
   Name: string;
   Title: string;
   Abstract: string;
-  Layer: WMSLayer[];
+  Layer: InternalWMSLayer[];
   Dimension: {
     name: string;
     default: string;
@@ -1236,6 +1466,13 @@ interface WMSLayer {
     }[]
   }[];
   EX_GeographicBoundingBox: number[];
+}
+
+export interface WMSLayer {
+  name: string;
+  title: string;
+  abstract: string;
+  childLayer: WMSLayer[];
 }
 
 // request Capabilities only all 5 minutes
@@ -1352,13 +1589,37 @@ export class WmsCapabilitiesService {
     }));
   }
 
+  public getLayerTree(wmsurl: string): Observable&lt;WMSLayer&gt; {
+    return this.getCapabilities(wmsurl).pipe(map(res &#x3D;&gt; this.createLayer(res.Capability.Layer)));
+  }
+
+  /**
+   * Removes every request parameter of the url an returns this cleand url.
+   */
+  public cleanUpWMSUrl(url: string): string {
+    let wmsRequesturl &#x3D; url;
+    if (wmsRequesturl.indexOf(&#x27;?&#x27;) !&#x3D;&#x3D; -1) {
+      wmsRequesturl &#x3D; wmsRequesturl.substring(0, wmsRequesturl.indexOf(&#x27;?&#x27;));
+    }
+    return wmsRequesturl;
+  }
+
+  private createLayer(layer: InternalWMSLayer): WMSLayer {
+    return {
+      name: layer.Name,
+      title: layer.Title,
+      abstract: layer.Abstract,
+      childLayer: layer.Layer ? layer.Layer.map(l &#x3D;&gt; this.createLayer(l)) : []
+    };
+  }
+
   private getCapabilities(url: string): Observable&lt;any&gt; {
-    if (!url.endsWith(&#x27;?&#x27;)) { url &#x3D; url + &#x27;?&#x27;; }
-    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(&#x60;${url}service&#x3D;wms&amp;version&#x3D;1.3.0&amp;request&#x3D;GetCapabilities&#x60;, { responseType: &#x27;text&#x27; })
+    const wmsRequesturl &#x3D; this.cleanUpWMSUrl(url) + &#x27;?request&#x3D;GetCapabilities&amp;service&#x3D;wms&amp;version&#x3D;1.3.0&#x27;;
+    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(wmsRequesturl, { responseType: &#x27;text&#x27; })
       .pipe(map(res &#x3D;&gt; new WMSCapabilities().read(res)));
   }
 
-  private findLayerByName(name: string, layerList: WMSLayer[]): WMSLayer {
+  private findLayerByName(name: string, layerList: InternalWMSLayer[]): InternalWMSLayer {
     let layer &#x3D; layerList.find(e &#x3D;&gt; e.Name &#x3D;&#x3D;&#x3D; name);
     if (layer) {
       return layer;
@@ -1374,7 +1635,7 @@ export class WmsCapabilitiesService {
     }
   }
 
-  private getLayerInfo(layerName, url): Observable&lt;WMSLayer&gt; {
+  private getLayerInfo(layerName, url): Observable&lt;InternalWMSLayer&gt; {
     return this.getCapabilities(url).pipe(
       map(caps &#x3D;&gt; this.findLayerByName(layerName, caps.Capability.Layer.Layer))
     );

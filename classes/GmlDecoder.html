@@ -1,0 +1,1557 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>GmlDecoder</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_profileIDMap">_profileIDMap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#utils">utils</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeAbstractFeature">decodeAbstractFeature</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeAbstractGML">decodeAbstractGML</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeAssociationAttributeGroup">decodeAssociationAttributeGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeCodeType">decodeCodeType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeEnvelope">decodeEnvelope</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodePoint">decodePoint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodePos">decodePos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeReferenced">decodeReferenced</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeTime">decodeTime</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeTimeInstant">decodeTimeInstant</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeTimePeriod">decodeTimePeriod</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getTime">getTime</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#profileIDMap">profileIDMap</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_profileIDMap"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _profileIDMap</b>
+                            <a href="#_profileIDMap"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/BidiMap.html" target="_self" >BidiMap</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:22</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="utils"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            utils</b>
+                            <a href="#utils"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new DecoderUtils()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeAbstractFeature"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeAbstractFeature
+                        </b>
+                        <a href="#decodeAbstractFeature"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeAbstractFeature(elem: Element, abstractFeature: <a href="../interfaces/Feature.html">AbstractFeature</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="175"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:175</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>abstractFeature</td>
+                                    <td>
+                                                <code><a href="../interfaces/Feature.html" target="_self" >AbstractFeature</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeAbstractGML"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeAbstractGML
+                        </b>
+                        <a href="#decodeAbstractGML"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeAbstractGML(elem: Element, object: <a href="../classes/AbstractGML.html">AbstractGML</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractGML.html" target="_self" >AbstractGML</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeAssociationAttributeGroup"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeAssociationAttributeGroup
+                        </b>
+                        <a href="#decodeAssociationAttributeGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeAssociationAttributeGroup(elem: Element, object: <a href="../interfaces/AssociationAttributeGroup.html">AssociationAttributeGroup</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/AssociationAttributeGroup.html" target="_self" >AssociationAttributeGroup</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeCodeType"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeCodeType
+                        </b>
+                        <a href="#decodeCodeType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeCodeType(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ReturnObject&lt;CodeType&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeEnvelope"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeEnvelope
+                        </b>
+                        <a href="#decodeEnvelope"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeEnvelope(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:186</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Envelope.html" target="_self" >Envelope</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodePoint"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodePoint
+                        </b>
+                        <a href="#decodePoint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodePoint(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="149"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:149</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ReturnObject&lt;Point&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodePos"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodePos
+                        </b>
+                        <a href="#decodePos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodePos(elem: Element, point: <a href="../classes/Point.html">Point</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="160"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:160</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>point</td>
+                                    <td>
+                                                <code><a href="../classes/Point.html" target="_self" >Point</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeReferenced"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeReferenced
+                        </b>
+                        <a href="#decodeReferenced"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeReferenced(elem: Element, referenced: <a href="../interfaces/Referenced.html">Referenced</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="219"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:219</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>referenced</td>
+                                    <td>
+                                                <code><a href="../interfaces/Referenced.html" target="_self" >Referenced</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeTime"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeTime
+                        </b>
+                        <a href="#decodeTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeTime(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >ReturnObject&lt;AbstractTime&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeTimeInstant"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeTimeInstant
+                        </b>
+                        <a href="#decodeTimeInstant"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeTimeInstant(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:40</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >ReturnObject&lt;AbstractTime&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeTimePeriod"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeTimePeriod
+                        </b>
+                        <a href="#decodeTimePeriod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeTimePeriod(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:56</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >ReturnObject&lt;AbstractTime&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTime"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            getTime
+                        </b>
+                        <a href="#getTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTime(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="241"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:241</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="profileIDMap"></a>
+                        <span class="name"><b>profileIDMap</b><a href="#profileIDMap"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>profileIDMap()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:24</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>profileIDMap(profileIDMap)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/GmlDecoder.ts:28</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>profileIDMap</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AbstractFeature,
+    AbstractGML,
+    AbstractTime,
+    AssociationAttributeGroup,
+    CodeType,
+    Envelope,
+    Point,
+    Referenced,
+    TimeInstant,
+    TimePeriod
+} from &#x27;../../model/gml&#x27;;
+import { BidiMap } from &#x27;../dynamicGUI/BidiMap&#x27;;
+import { DecoderUtils } from &#x27;./DecoderUtils&#x27;;
+import { NAMESPACES } from &#x27;./Namespaces&#x27;;
+import { ReturnObject } from &#x27;./ReturnObject&#x27;;
+
+export class GmlDecoder {
+
+    private utils &#x3D; new DecoderUtils();
+
+    private _profileIDMap: BidiMap;
+
+    public get profileIDMap() {
+        return this._profileIDMap;
+    }
+
+    public set profileIDMap(profileIDMap: BidiMap) {
+        this._profileIDMap &#x3D; profileIDMap;
+    }
+
+    public decodeTime(elem: Element): ReturnObject&lt;AbstractTime&gt; {
+        const timeInstant &#x3D; this.decodeTimeInstant(elem);
+        if (timeInstant !&#x3D; null) { return timeInstant; }
+
+        const timePeriod &#x3D; this.decodeTimePeriod(elem);
+        if (timePeriod !&#x3D; null) { return timePeriod; }
+    }
+
+    public decodeTimeInstant(elem: Element): ReturnObject&lt;AbstractTime&gt; {
+        const timeElem &#x3D; this.utils.getElement(elem, &#x27;TimeInstant&#x27;, NAMESPACES.GML);
+        if (timeElem !&#x3D; null) {
+            const instant &#x3D; new TimeInstant();
+            this._profileIDMap &#x3D; this.utils.processProfileID(timeElem, instant, &#x27;&#x27;, this._profileIDMap);
+            this.decodeAbstractGML(timeElem, instant);
+
+            const timePositionElem &#x3D; this.utils.getElement(timeElem, &#x27;timePosition&#x27;, NAMESPACES.GML);
+            if (timePositionElem !&#x3D; null) {
+                instant.time &#x3D; this.getTime(timePositionElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(timePositionElem, instant, &#x27;time&#x27;, this._profileIDMap);
+            }
+            return new ReturnObject(instant, timeElem);
+        }
+    }
+
+    public decodeTimePeriod(elem: Element): ReturnObject&lt;AbstractTime&gt; {
+        const timeElem &#x3D; this.utils.getElement(elem, &#x27;TimePeriod&#x27;, NAMESPACES.GML);
+        if (timeElem !&#x3D; null) {
+            const period &#x3D; new TimePeriod();
+            this._profileIDMap &#x3D; this.utils.processProfileID(timeElem, period, &#x27;&#x27;, this._profileIDMap);
+            this.decodeAbstractGML(timeElem, period);
+
+            const beginPositionElem &#x3D; this.utils.getElement(timeElem, &#x27;beginPosition&#x27;, NAMESPACES.GML);
+            if (beginPositionElem !&#x3D; null) {
+                period.begin &#x3D; this.getTime(beginPositionElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(
+                    beginPositionElem, period, &#x27;begin&#x27;, this._profileIDMap
+                );
+            }
+
+            const endPositionElem &#x3D; this.utils.getElement(timeElem, &#x27;endPosition&#x27;, NAMESPACES.GML);
+            if (endPositionElem !&#x3D; null) {
+                period.end &#x3D; this.getTime(endPositionElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(endPositionElem, period, &#x27;end&#x27;, this._profileIDMap);
+
+            }
+            return new ReturnObject(period, timeElem);
+        }
+    }
+
+    public decodeAssociationAttributeGroup(elem: Element, object: AssociationAttributeGroup): void {
+        if (elem.hasAttributeNS(NAMESPACES.XLINK, &#x27;href&#x27;)) {
+            object.href &#x3D; elem.getAttributeNS(NAMESPACES.XLINK, &#x27;href&#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, object, &#x27;href&#x27;, this._profileIDMap);
+        }
+
+        if (elem.hasAttributeNS(NAMESPACES.XLINK, &#x27;title&#x27;)) {
+            object.title &#x3D; elem.getAttributeNS(NAMESPACES.XLINK, &#x27;title&#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, object, &#x27;title&#x27;, this._profileIDMap);
+        }
+    }
+
+    public decodeAbstractGML(elem: Element, object: AbstractGML): void {
+        if (elem.hasAttributeNS(NAMESPACES.GML, &#x27;id&#x27;)) {
+            object.gmlId &#x3D; elem.getAttributeNS(NAMESPACES.GML, &#x27;id&#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, object, &#x27;gmlId&#x27;, this._profileIDMap);
+
+        }
+
+        const descriptionElem &#x3D; this.utils.getElement(elem, &#x27;description&#x27;, NAMESPACES.GML);
+        if (descriptionElem !&#x3D; null) {
+            object.description &#x3D; descriptionElem.textContent;
+            this._profileIDMap &#x3D; this.utils.processProfileID(
+                descriptionElem, object, &#x27;description&#x27;, this._profileIDMap
+            );
+
+        }
+
+        const descriptionReferenceElem &#x3D; this.utils.getElement(elem, &#x27;descriptionReference&#x27;, NAMESPACES.GML);
+        if (descriptionReferenceElem !&#x3D; null) {
+            object.descriptionReference &#x3D; descriptionReferenceElem.textContent;
+            this._profileIDMap &#x3D; this.utils.processProfileID(
+                descriptionReferenceElem, object, &#x27;descriptionReference&#x27;, this._profileIDMap
+            );
+
+        }
+
+        const identifierElem &#x3D; this.utils.getElement(elem, &#x27;identifier&#x27;, NAMESPACES.GML);
+        if (identifierElem !&#x3D; null) {
+            const returnObject &#x3D; this.decodeCodeType(identifierElem);
+            if (returnObject) {
+                object.identifier &#x3D; returnObject.value;
+                this._profileIDMap &#x3D; this.utils.processProfileID(
+                    returnObject.docElement, object, &#x27;identifier&#x27;, this._profileIDMap
+                );
+            }
+        }
+
+        object.name &#x3D; this.utils.getDecodedList(
+            elem, &#x27;name&#x27;, NAMESPACES.GML, this._profileIDMap, (nameElem) &#x3D;&gt; this.decodeCodeType(nameElem)
+        );
+    }
+
+    public decodeCodeType(elem: Element): ReturnObject&lt;CodeType&gt; {
+
+        let codeSpace &#x3D; null;
+        if (elem.hasAttribute(&#x27;codeSpace&#x27;)) {
+            codeSpace &#x3D; elem.getAttribute(&#x27;codeSpace&#x27;);
+        }
+
+        const codeType &#x3D; new CodeType(elem.textContent, codeSpace);
+        if (elem.hasAttribute(&#x27;codeSpace&#x27;)) {
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, codeType, &#x27;codeSpace&#x27;, this._profileIDMap);
+        }
+
+        return new ReturnObject(codeType, elem);
+    }
+
+    public decodePoint(elem: Element): ReturnObject&lt;Point&gt; {
+        const pointElem &#x3D; this.utils.getElement(elem, &#x27;Point&#x27;, NAMESPACES.GML);
+        if (pointElem !&#x3D; null) {
+            const point &#x3D; new Point();
+            this._profileIDMap &#x3D; this.utils.processProfileID(pointElem, point, &#x27;&#x27;, this._profileIDMap);
+            this.decodeReferenced(pointElem, point);
+            this.decodePos(pointElem, point);
+            return new ReturnObject(point, pointElem);
+        }
+    }
+
+    public decodePos(elem: Element, point: Point) {
+        const posElem &#x3D; this.utils.getElement(elem, &#x27;pos&#x27;, NAMESPACES.GML);
+        if (posElem !&#x3D; null) {
+            const content &#x3D; posElem.textContent.split(&#x27; &#x27;);
+            if (content[0]) {
+                point.x &#x3D; +content[0];
+                this._profileIDMap &#x3D; this.utils.processProfileID(posElem, point, &#x27;x&#x27;, this._profileIDMap);
+            }
+            if (content[1]) {
+                point.y &#x3D; +content[1];
+                this._profileIDMap &#x3D; this.utils.processProfileID(posElem, point, &#x27;y&#x27;, this._profileIDMap);
+            }
+        }
+    }
+
+    public decodeAbstractFeature(elem: Element, abstractFeature: AbstractFeature): void {
+        this.decodeAbstractGML(elem, abstractFeature);
+        const boundedByElem &#x3D; this.utils.getElement(elem, &#x27;boundedBy&#x27;, NAMESPACES.GML);
+        if (boundedByElem !&#x3D; null) {
+            abstractFeature.boundedBy &#x3D; this.decodeEnvelope(boundedByElem);
+            this._profileIDMap &#x3D; this.utils.processProfileID(
+                boundedByElem, abstractFeature, &#x27;boundedBy&#x27;, this._profileIDMap
+            );
+        }
+    }
+
+    public decodeEnvelope(elem: Element): Envelope {
+        const envelopeElem &#x3D; this.utils.getElement(elem, &#x27;Envelope&#x27;, NAMESPACES.GML);
+        if (envelopeElem !&#x3D; null) {
+            const envelope &#x3D; new Envelope();
+            this._profileIDMap &#x3D; this.utils.processProfileID(envelopeElem, envelope, &#x27;&#x27;, this._profileIDMap);
+            this.decodeReferenced(envelopeElem, envelope);
+
+            const lowerCorner &#x3D; this.utils.getElement(envelopeElem, &#x27;lowerCorner&#x27;, NAMESPACES.GML);
+            if (lowerCorner !&#x3D; null) {
+                const lc &#x3D; lowerCorner.textContent.split(&#x27; &#x27;);
+                if (lc.length &#x3D;&#x3D;&#x3D; 2) {
+                    envelope.lowerCorner &#x3D; [+lc[0], +lc[1]];
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        lowerCorner, envelope, &#x27;lowerCorner&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const upperCorner &#x3D; this.utils.getElement(envelopeElem, &#x27;upperCorner&#x27;, NAMESPACES.GML);
+            if (upperCorner !&#x3D; null) {
+                const uc &#x3D; upperCorner.textContent.split(&#x27; &#x27;);
+                if (uc.length &#x3D;&#x3D;&#x3D; 2) {
+                    envelope.upperCorner &#x3D; [+uc[0], +uc[1]];
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        upperCorner, envelope, &#x27;upperCorner&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            return envelope;
+        }
+    }
+
+    public decodeReferenced(elem: Element, referenced: Referenced): void {
+        if (elem.hasAttribute(&#x27;srsName&#x27;)) {
+            referenced.srsName &#x3D; elem.getAttribute(&#x27;srsName&#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, referenced, &#x27;srsName&#x27;, this._profileIDMap);
+        }
+
+        if (elem.hasAttribute(&#x27;srsDimension&#x27;) &amp;&amp; !isNaN(+elem.getAttribute(&#x27;srsDimension&#x27;))) {
+            referenced.srsDimension &#x3D; +elem.getAttribute(&#x27;srsDimension&#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, referenced, &#x27;srsDimension&#x27;, this._profileIDMap);
+        }
+
+        if (elem.hasAttribute(&#x27;axisLabels&#x27;)) {
+            referenced.axisLabels &#x3D; elem.getAttribute(&#x27;axisLabels&#x27;).split(&#x27; &#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, referenced, &#x27;axisLabels&#x27;, this._profileIDMap);
+        }
+
+        if (elem.hasAttribute(&#x27;uomLabels&#x27;)) {
+            referenced.uomLabels &#x3D; elem.getAttribute(&#x27;uomLabels&#x27;).split(&#x27; &#x27;);
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, referenced, &#x27;uomLabels&#x27;, this._profileIDMap);
+        }
+    }
+
+    private getTime(elem: Element): Date {
+        if (elem.hasAttribute(&#x27;indeterminatePosition&#x27;) &amp;&amp; elem.getAttribute(&#x27;indeterminatePosition&#x27;) &#x3D;&#x3D;&#x3D; &#x27;unknown&#x27;) {
+            return null;
+        } else {
+            const date &#x3D; new Date(Date.parse(elem.textContent));
+            this._profileIDMap &#x3D; this.utils.processProfileID(elem, date, &#x27;&#x27;, this._profileIDMap);
+            return date;
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'GmlDecoder.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -278,10 +278,19 @@
                                 <a href="#aggregateToStations">aggregateToStations</a>
                             </li>
                             <li>
+                                <a href="#autoZoomToResults">autoZoomToResults</a>
+                            </li>
+                            <li>
                                 <a href="#cluster">cluster</a>
                             </li>
                             <li>
                                 <a href="#facetSearchService">facetSearchService</a>
+                            </li>
+                            <li>
+                                <a href="#nextResultsZoom">nextResultsZoom</a>
+                            </li>
+                            <li>
+                                <a href="#selectSingleStation">selectSingleStation</a>
                             </li>
                             <li>
                                 <a href="#baseMaps">baseMaps</a>
@@ -343,7 +352,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -419,6 +428,26 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="autoZoomToResults"></a>
+                        <b>autoZoomToResults</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="cluster"></a>
                         <b>cluster</b>
                     </td>
@@ -445,13 +474,53 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/FacetSearch.html" target="_self" >FacetSearch</a></code>
+                        <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >FacetSearchService</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
                                     <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nextResultsZoom"></a>
+                        <b>nextResultsZoom</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectSingleStation"></a>
+                        <b>selectSingleStation</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:30</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -707,13 +776,13 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;Timeseries | literal type&gt;</a></code>
+                        <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;HelgolandTimeseries | literal type&gt;</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:36</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -777,15 +846,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createStationGeometry(station: <a href="../classes/Station.html">Station</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>createStationGeometry(station: <a href="../interfaces/Platform.html">HelgolandPlatform</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:95</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:107</a></div>
                 </td>
             </tr>
 
@@ -807,7 +876,7 @@
                                 <tr>
                                     <td>station</td>
                                     <td>
-                                                <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
                                     </td>
 
                                     <td>
@@ -861,15 +930,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createTsGeometry(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    <code>createTsGeometry(ts: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="103"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:103</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:115</a></div>
                 </td>
             </tr>
 
@@ -891,7 +960,7 @@
                                 <tr>
                                     <td>ts</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -933,15 +1002,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchResults(ts: <a href="../injectables/Time.html">Timeseries[]</a>)</code>
+                    <code>fetchResults(ts: <a href="../injectables/Time.html">HelgolandTimeseries[]</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:66</a></div>
                 </td>
             </tr>
 
@@ -963,7 +1032,7 @@
                                 <tr>
                                     <td>ts</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries[]</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries[]</a></code>
                                     </td>
 
                                     <td>
@@ -1010,8 +1079,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:52</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:58</a></div>
                 </td>
             </tr>
 
@@ -1049,8 +1118,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="47"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:47</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:53</a></div>
                 </td>
             </tr>
 
@@ -1088,8 +1157,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:48</a></div>
                 </td>
             </tr>
 
@@ -1851,7 +1920,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:38</a></div>
                             </td>
                         </tr>
 
@@ -1879,7 +1948,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:33</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/facet-search/src/lib/components/result-map/result-map.component.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -2224,13 +2293,13 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from &#x27;@angular/core&#x27;;
-import { Required, Station, Timeseries } from &#x27;@helgoland/core&#x27;;
+import { HelgolandPlatform, HelgolandTimeseries, Required } from &#x27;@helgoland/core&#x27;;
 import { CachedMapComponent, MapCache } from &#x27;@helgoland/map&#x27;;
 import { geoJSON } from &#x27;leaflet&#x27;;
 import * as L from &#x27;leaflet&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
 
-import { FacetSearch } from &#x27;../../facet-search-model&#x27;;
+import { FacetSearchService } from &#x27;../../facet-search.service&#x27;;
 
 delete L.Icon.Default.prototype[&#x27;_getIconUrl&#x27;];
 L.Icon.Default.mergeOptions({
@@ -2246,13 +2315,19 @@ L.Icon.Default.mergeOptions({
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearch;
+  @Input() @Required public facetSearchService: FacetSearchService;
 
   @Input() public cluster &#x3D; true;
 
   @Input() public aggregateToStations &#x3D; false;
 
-  @Output() public selected: EventEmitter&lt;Timeseries | { station: Station, url: string }&gt; &#x3D; new EventEmitter();
+  @Input() public selectSingleStation &#x3D; false;
+
+  @Input() public autoZoomToResults &#x3D; true;
+
+  @Input() public nextResultsZoom &#x3D; true;
+
+  @Output() public selected: EventEmitter&lt;HelgolandTimeseries | { station: HelgolandPlatform, url: string }&gt; &#x3D; new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
   private resultsSubs: Subscription;
@@ -2282,7 +2357,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private fetchResults(ts: Timeseries[]) {
+  private fetchResults(ts: HelgolandTimeseries[]) {
     if (this.map) {
       if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
       if (this.cluster) {
@@ -2291,16 +2366,21 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         this.markerFeatureGroup &#x3D; L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const stations &#x3D; new Map&lt;string, { station: Station, url: string }&gt;();
+        const stations &#x3D; new Map&lt;string, { station: HelgolandPlatform, url: string }&gt;();
         ts.forEach(e &#x3D;&gt; {
-          if (!stations.has(e.station.id)) {
-            stations.set(e.station.id, { station: e.station, url: e.url });
+          const id &#x3D; &#x60;${e.platform.id}-${e.url}&#x60;;
+          if (!stations.has(id)) {
+            stations.set(id, { station: e.platform, url: e.url });
           }
         });
         stations.forEach(v &#x3D;&gt; {
           const station &#x3D; this.createStationGeometry(v.station, v.url);
           if (station) { this.markerFeatureGroup.addLayer(station); }
         });
+        if (stations.size &#x3D;&#x3D;&#x3D; 1 &amp;&amp; this.selectSingleStation) {
+          const entry &#x3D; stations.get(stations.keys().next().value);
+          this.selected.emit({ station: entry.station, url: entry.url });
+        }
       } else {
         ts.forEach(e &#x3D;&gt; {
           const marker &#x3D; this.createTsGeometry(e);
@@ -2310,14 +2390,15 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       this.markerFeatureGroup.addTo(this.map);
 
       const bounds &#x3D; this.markerFeatureGroup.getBounds();
-      if (bounds.isValid()) {
+      if (bounds.isValid() &amp;&amp; (this.autoZoomToResults || this.nextResultsZoom)) {
         this.map.fitBounds(bounds);
         this.map.invalidateSize();
+        this.nextResultsZoom &#x3D; false;
       }
     }
   }
 
-  private createStationGeometry(station: Station, url: string): L.GeoJSON {
+  private createStationGeometry(station: HelgolandPlatform, url: string): L.GeoJSON {
     if (station) {
       const geometry &#x3D; geoJSON(station.geometry);
       geometry.on(&#x27;click&#x27;, () &#x3D;&gt; this.selected.emit({ station, url }));
@@ -2325,9 +2406,9 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createTsGeometry(ts: Timeseries) {
-    if (ts.station) {
-      const geometry &#x3D; geoJSON(ts.station.geometry);
+  private createTsGeometry(ts: HelgolandTimeseries) {
+    if (ts.platform) {
+      const geometry &#x3D; geoJSON(ts.platform.geometry);
       geometry.on(&#x27;click&#x27;, () &#x3D;&gt; this.selected.emit(ts));
       return geometry;
     }
@@ -2381,7 +2462,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div [attr.id]="mapId" class="map-viewer"></div></div>'
-    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ResultMapComponent'};
 </script>

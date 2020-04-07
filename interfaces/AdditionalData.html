@@ -322,8 +322,8 @@ One of the optional properties &#39;linkedDatasetId&#39; and &#39;yaxisLabel&#39
 } from &#x27;@angular/core&#x27;;
 import {
   ColorService,
-  DatasetApiInterface,
   DatasetOptions,
+  HelgolandServicesConnector,
   InternalIdHandler,
   SumValuesService,
   Time,
@@ -332,8 +332,10 @@ import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 import { D3TimeseriesGraphComponent } from &#x27;../d3-timeseries-graph/d3-timeseries-graph.component&#x27;;
 import { D3GraphHelperService } from &#x27;../helper/d3-graph-helper.service&#x27;;
+import { D3GraphId } from &#x27;../helper/d3-graph-id.service&#x27;;
 import { D3TimeFormatLocaleService } from &#x27;../helper/d3-time-format-locale.service&#x27;;
 import { InternalDataEntry } from &#x27;../model/d3-general&#x27;;
+import { D3Graphs } from &#x27;./../helper/d3-graphs.service&#x27;;
 import { RangeCalculationsService } from &#x27;./../helper/range-calculations.service&#x27;;
 
 /**
@@ -379,6 +381,7 @@ export interface AdditionalDataEntry {
   selector: &#x27;n52-extended-data-d3-timeseries-graph&#x27;,
   templateUrl: &#x27;../d3-timeseries-graph/d3-timeseries-graph.component.html&#x27;,
   styleUrls: [&#x27;../d3-timeseries-graph/d3-timeseries-graph.component.scss&#x27;],
+  providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None
 })
 export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit, OnInit {
@@ -389,7 +392,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   constructor(
     protected iterableDiffers: IterableDiffers,
-    protected api: DatasetApiInterface,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
@@ -397,9 +399,25 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected translateService: TranslateService,
     protected sumValues: SumValuesService,
     protected rangeCalc: RangeCalculationsService,
-    protected graphHelper: D3GraphHelperService
+    protected graphHelper: D3GraphHelperService,
+    protected graphService: D3Graphs,
+    protected graphId: D3GraphId,
+    protected servicesConnector: HelgolandServicesConnector
   ) {
-    super(iterableDiffers, api, datasetIdResolver, timeSrvc, timeFormatLocaleService, colorService, translateService, sumValues, rangeCalc, graphHelper);
+    super(
+      iterableDiffers,
+      datasetIdResolver,
+      timeSrvc,
+      timeFormatLocaleService,
+      colorService,
+      translateService,
+      sumValues,
+      rangeCalc,
+      graphHelper,
+      graphService,
+      graphId,
+      servicesConnector
+    );
   }
 
   public ngOnInit(): void {
@@ -428,8 +446,13 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   public ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    if (this.additionalData) {
-      setTimeout(() &#x3D;&gt; this.redrawCompleteGraph(), 0);
+  }
+
+  protected timeIntervalChanges(): void {
+    if (this.datasetMap.size &gt; 0) {
+      super.timeIntervalChanges();
+    } else {
+      this.redrawCompleteGraph();
     }
   }
 
@@ -453,6 +476,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
           if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
             dataEntry &#x3D; {
               internalId: this.generateAdditionalInternalId(entry),
+              hoverId: &#x60;hov-${Math.random().toString(36).substr(2, 9)}&#x60;,
               options,
               data: options.visible ? entry.data.map(e &#x3D;&gt; ({ timestamp: e.timestamp, value: e.value })) : [],
               axisOptions: {

@@ -122,7 +122,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createIconLabel(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    <code>createIconLabel(ts: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
@@ -154,7 +154,7 @@
                                 <tr>
                                     <td>ts</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -189,7 +189,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Timeseries } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HelgolandTimeseries } from &#x27;@helgoland/core&#x27;;
 
 export const enum LastValuePresentation {
   /**
@@ -207,7 +207,7 @@ export abstract class LastValueLabelGenerator {
   /**
    * Creates an icon label based on a given timeseries.
    */
-  public abstract createIconLabel(ts: Timeseries);
+  public abstract createIconLabel(ts: HelgolandTimeseries);
 
 }
 </code></pre>

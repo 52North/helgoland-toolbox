@@ -136,8 +136,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:66</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:71</a></div>
                 </td>
             </tr>
 
@@ -235,12 +235,17 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
                 }
               });
             }
-            next.handle(req, options).subscribe(res &#x3D;&gt; {
-              observer.next(res);
-              if (res instanceof HttpResponse) {
+            next.handle(req, options).subscribe(
+              res &#x3D;&gt; {
+                observer.next(res);
+                if (res instanceof HttpResponse) {
+                  observer.complete();
+                }
+              },
+              error &#x3D;&gt; {
+                observer.error(error);
                 observer.complete();
-              }
-            });
+              });
           });
         });
       }

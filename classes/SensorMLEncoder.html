@@ -1,0 +1,5100 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>SensorMLEncoder</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#gmlEncoder">gmlEncoder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isoEncoder">isoEncoder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#sweEncoder">sweEncoder</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createAbstractProcess">createAbstractProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractMetadataList">encodeAbstractMetadataList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractPhysicalProcess">encodeAbstractPhysicalProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractProcess">encodeAbstractProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAggregateProcess">encodeAggregateProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAggregatingProcess">encodeAggregatingProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAlgorithm">encodeAlgorithm</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCapabilityList">encodeCapabilityList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCharacteristicList">encodeCharacteristicList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeClassifierList">encodeClassifierList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeComponentList">encodeComponentList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeConnection">encodeConnection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeConnectionList">encodeConnectionList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeContactList">encodeContactList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataInterface">encodeDataInterface</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDescribedObject">encodeDescribedObject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDocumentList">encodeDocumentList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeEvent">encodeEvent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeEventList">encodeEventList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeFeatureList">encodeFeatureList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeIdentifierList">encodeIdentifierList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeInputList">encodeInputList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeInputOrOutputOrParameter">encodeInputOrOutputOrParameter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#encodeInputOrOutputOrParameterValue">encodeInputOrOutputOrParameterValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeKeywordList">encodeKeywordList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeMode">encodeMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeModeChoice">encodeModeChoice</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeModes">encodeModes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeObservableProperty">encodeObservableProperty</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeOutputList">encodeOutputList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeParameterList">encodeParameterList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodePhysicalComponent">encodePhysicalComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodePhysicalSystem">encodePhysicalSystem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodePosition">encodePosition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeProcess">encodeProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeProcessMethod">encodeProcessMethod</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeProcessMethodProcess">encodeProcessMethodProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeSettings">encodeSettings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeSimpleProcess">encodeSimpleProcess</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeSpatialFrame">encodeSpatialFrame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeTemporalFrame">encodeTemporalFrame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeTerm">encodeTerm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="gmlEncoder"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            gmlEncoder</b>
+                            <a href="#gmlEncoder"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new GmlEncoder()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:63</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isoEncoder"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            isoEncoder</b>
+                            <a href="#isoEncoder"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new IsoEncoder()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:62</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sweEncoder"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            sweEncoder</b>
+                            <a href="#sweEncoder"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new SweEncoder()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:61</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createAbstractProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createAbstractProcess
+                        </b>
+                        <a href="#createAbstractProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createAbstractProcess(process: <a href="../classes/AbstractProcess.html">AbstractProcess</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="801"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:801</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>process</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractProcess.html" target="_self" >AbstractProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractMetadataList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractMetadataList
+                        </b>
+                        <a href="#encodeAbstractMetadataList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractMetadataList(node: Element, object: <a href="../classes/AbstractMetadataList.html">AbstractMetadataList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:97</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractMetadataList.html" target="_self" >AbstractMetadataList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractPhysicalProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractPhysicalProcess
+                        </b>
+                        <a href="#encodeAbstractPhysicalProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractPhysicalProcess(node: Element, object: <a href="../classes/AbstractPhysicalProcess.html">AbstractPhysicalProcess</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="815"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:815</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractPhysicalProcess.html" target="_self" >AbstractPhysicalProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractProcess
+                        </b>
+                        <a href="#encodeAbstractProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractProcess(node: Element, object: <a href="../classes/AbstractProcess.html">AbstractProcess</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="424"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:424</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractProcess.html" target="_self" >AbstractProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAggregateProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAggregateProcess
+                        </b>
+                        <a href="#encodeAggregateProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAggregateProcess(object: <a href="../classes/AggregateProcess.html">AggregateProcess</a>, document: Document, node?: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="737"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:737</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AggregateProcess.html" target="_self" >AggregateProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAggregatingProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAggregatingProcess
+                        </b>
+                        <a href="#encodeAggregatingProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAggregatingProcess(node: Element, object: <a href="../interfaces/AggregatingProcess.html">AggregatingProcess</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="949"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:949</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/AggregatingProcess.html" target="_self" >AggregatingProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAlgorithm"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAlgorithm
+                        </b>
+                        <a href="#encodeAlgorithm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAlgorithm(object: <a href="../interfaces/AbstractAlgorithm.html">AbstractAlgorithm</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="732"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:732</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/AbstractAlgorithm.html" target="_self" >AbstractAlgorithm</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCapabilityList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCapabilityList
+                        </b>
+                        <a href="#encodeCapabilityList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCapabilityList(object: <a href="../classes/CapabilityList.html">CapabilityList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="200"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:200</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/CapabilityList.html" target="_self" >CapabilityList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCharacteristicList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCharacteristicList
+                        </b>
+                        <a href="#encodeCharacteristicList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCharacteristicList(object: <a href="../classes/CharacteristicList.html">CharacteristicList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:162</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/CharacteristicList.html" target="_self" >CharacteristicList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeClassifierList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeClassifierList
+                        </b>
+                        <a href="#encodeClassifierList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeClassifierList(object: <a href="../classes/ClassifierList.html">ClassifierList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="146"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:146</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ClassifierList.html" target="_self" >ClassifierList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeComponentList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeComponentList
+                        </b>
+                        <a href="#encodeComponentList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeComponentList(componentList: <a href="../classes/ComponentList.html">ComponentList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="777"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:777</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>componentList</td>
+                                    <td>
+                                                <code><a href="../classes/ComponentList.html" target="_self" >ComponentList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeConnection"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeConnection
+                        </b>
+                        <a href="#encodeConnection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeConnection(object: <a href="../classes/Connection.html">Connection</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="762"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:762</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/Connection.html" target="_self" >Connection</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeConnectionList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeConnectionList
+                        </b>
+                        <a href="#encodeConnectionList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeConnectionList(object: <a href="../classes/ConnectionList.html">ConnectionList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="747"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:747</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ConnectionList.html" target="_self" >ConnectionList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeContactList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeContactList
+                        </b>
+                        <a href="#encodeContactList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeContactList(object: <a href="../classes/ContactList.html">ContactList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="226"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:226</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ContactList.html" target="_self" >ContactList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataInterface"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataInterface
+                        </b>
+                        <a href="#encodeDataInterface"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataInterface(object: <a href="../interfaces/Data.html">DataInterface</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="664"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:664</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >DataInterface</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDescribedObject"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDescribedObject
+                        </b>
+                        <a href="#encodeDescribedObject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDescribedObject(node: Element, object: <a href="../classes/DescribedObject.html">DescribedObject</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="326"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:326</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/DescribedObject.html" target="_self" >DescribedObject</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDocumentList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDocumentList
+                        </b>
+                        <a href="#encodeDocumentList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDocumentList(object: <a href="../classes/DocumentList.html">DocumentList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:242</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/DocumentList.html" target="_self" >DocumentList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeEvent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeEvent
+                        </b>
+                        <a href="#encodeEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeEvent(object: <a href="../interfaces/Event.html">Event</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="258"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:258</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Event.html" target="_self" >Event</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeEventList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeEventList
+                        </b>
+                        <a href="#encodeEventList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeEventList(object: <a href="../interfaces/Event.html">EventList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="184"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:184</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Event.html" target="_self" >EventList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeFeatureList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeFeatureList
+                        </b>
+                        <a href="#encodeFeatureList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeFeatureList(object: <a href="../interfaces/Feature.html">FeatureList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="603"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:603</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Feature.html" target="_self" >FeatureList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeIdentifierList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeIdentifierList
+                        </b>
+                        <a href="#encodeIdentifierList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeIdentifierList(object: <a href="../interfaces/Id.html">IdentifierList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Id.html" target="_self" >IdentifierList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeInputList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeInputList
+                        </b>
+                        <a href="#encodeInputList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeInputList(object: <a href="../classes/InputList.html">InputList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="619"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:619</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/InputList.html" target="_self" >InputList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeInputOrOutputOrParameter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeInputOrOutputOrParameter
+                        </b>
+                        <a href="#encodeInputOrOutputOrParameter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeInputOrOutputOrParameter(node: Element, object: <a href="../interfaces/Parameter.html">InputOrOutputOrParameter</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="697"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:697</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Parameter.html" target="_self" >InputOrOutputOrParameter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeInputOrOutputOrParameterValue"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            encodeInputOrOutputOrParameterValue
+                        </b>
+                        <a href="#encodeInputOrOutputOrParameterValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeInputOrOutputOrParameterValue(value: <a href="../interfaces/Data.html">SweDataComponent | DataInterface | ObservableProperty</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="981"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:981</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataComponent | DataInterface | ObservableProperty</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeKeywordList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeKeywordList
+                        </b>
+                        <a href="#encodeKeywordList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeKeywordList(object: <a href="../classes/KeywordList.html">KeywordList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/KeywordList.html" target="_self" >KeywordList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeMode"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeMode
+                        </b>
+                        <a href="#encodeMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeMode(object: <a href="../classes/Mode.html">Mode</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="503"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:503</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/Mode.html" target="_self" >Mode</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeModeChoice"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeModeChoice
+                        </b>
+                        <a href="#encodeModeChoice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeModeChoice(object: <a href="../classes/ModeChoice.html">ModeChoice</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="487"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:487</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ModeChoice.html" target="_self" >ModeChoice</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeModes"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeModes
+                        </b>
+                        <a href="#encodeModes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeModes(object: <a href="../classes/AbstractModes.html">AbstractModes</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="477"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:477</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractModes.html" target="_self" >AbstractModes</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeObservableProperty"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeObservableProperty
+                        </b>
+                        <a href="#encodeObservableProperty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeObservableProperty(object: <a href="../classes/ObservableProperty.html">ObservableProperty</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="685"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:685</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ObservableProperty.html" target="_self" >ObservableProperty</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeOutputList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeOutputList
+                        </b>
+                        <a href="#encodeOutputList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeOutputList(object: <a href="../classes/OutputList.html">OutputList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="634"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:634</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/OutputList.html" target="_self" >OutputList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeParameterList"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeParameterList
+                        </b>
+                        <a href="#encodeParameterList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeParameterList(object: <a href="../interfaces/Parameter.html">ParameterList</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="649"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:649</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Parameter.html" target="_self" >ParameterList</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodePhysicalComponent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodePhysicalComponent
+                        </b>
+                        <a href="#encodePhysicalComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodePhysicalComponent(object: <a href="../classes/PhysicalComponent.html">PhysicalComponent</a>, document: Document, node?: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="972"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:972</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/PhysicalComponent.html" target="_self" >PhysicalComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodePhysicalSystem"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodePhysicalSystem
+                        </b>
+                        <a href="#encodePhysicalSystem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodePhysicalSystem(object: <a href="../classes/PhysicalSystem.html">PhysicalSystem</a>, document: Document, node?: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="938"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:938</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/PhysicalSystem.html" target="_self" >PhysicalSystem</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodePosition"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodePosition
+                        </b>
+                        <a href="#encodePosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodePosition(object: <a href="../undefineds/Position.html">Position</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="858"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:858</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#Position" target="_self" >Position</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeProcess
+                        </b>
+                        <a href="#encodeProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeProcess(object: <a href="../classes/AbstractProcess.html">AbstractProcess</a>, document: Document, node?: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="882"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:882</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractProcess.html" target="_self" >AbstractProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeProcessMethod"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeProcessMethod
+                        </b>
+                        <a href="#encodeProcessMethod"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeProcessMethod(object: <a href="../classes/ProcessMethod.html">ProcessMethod</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="717"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:717</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/ProcessMethod.html" target="_self" >ProcessMethod</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeProcessMethodProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeProcessMethodProcess
+                        </b>
+                        <a href="#encodeProcessMethodProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeProcessMethodProcess(node: Element, object: <a href="../interfaces/ProcessMethodProcess.html">ProcessMethodProcess</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="963"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:963</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/ProcessMethodProcess.html" target="_self" >ProcessMethodProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeSettings"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeSettings
+                        </b>
+                        <a href="#encodeSettings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeSettings(object: <a href="../interfaces/Settings.html">Settings</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="516"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:516</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../interfaces/Settings.html" target="_self" >Settings</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeSimpleProcess"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeSimpleProcess
+                        </b>
+                        <a href="#encodeSimpleProcess"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeSimpleProcess(object: <a href="../classes/SimpleProcess.html">SimpleProcess</a>, document: Document, node?: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="707"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:707</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/SimpleProcess.html" target="_self" >SimpleProcess</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeSpatialFrame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeSpatialFrame
+                        </b>
+                        <a href="#encodeSpatialFrame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeSpatialFrame(object: <a href="../classes/SpatialFrame.html">SpatialFrame</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="899"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:899</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/SpatialFrame.html" target="_self" >SpatialFrame</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeTemporalFrame"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeTemporalFrame
+                        </b>
+                        <a href="#encodeTemporalFrame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeTemporalFrame(object: <a href="../classes/TemporalFrame.html">TemporalFrame</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="925"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:925</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../classes/TemporalFrame.html" target="_self" >TemporalFrame</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeTerm"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeTerm
+                        </b>
+                        <a href="#encodeTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeTerm(term: <a href="../classes/Term.html">Term</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SensorMLEncoder.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>term</td>
+                                    <td>
+                                                <code><a href="../classes/Term.html" target="_self" >Term</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    Point
+} from &#x27;../../model/gml&#x27;;
+import {
+    AbstractAlgorithm,
+    AbstractMetadataList,
+    AbstractModes,
+    AbstractPhysicalProcess,
+    AbstractProcess,
+    AggregateProcess,
+    AggregatingProcess,
+    CapabilityList,
+    CharacteristicList,
+    ClassifierList,
+    ComponentList,
+    Connection,
+    ConnectionList,
+    ContactList,
+    DataInterface,
+    DescribedObject,
+    DocumentList,
+    Event,
+    EventList,
+    FeatureList,
+    IdentifierList,
+    InputList,
+    InputOrOutputOrParameter,
+    KeywordList,
+    Mode,
+    ModeChoice,
+    ObservableProperty,
+    OutputList,
+    ParameterList,
+    PhysicalComponent,
+    PhysicalSystem,
+    Position,
+    ProcessMethod,
+    ProcessMethodProcess,
+    Settings,
+    SimpleProcess,
+    SpatialFrame,
+    TemporalFrame,
+    Term
+} from &#x27;../../model/sml&#x27;;
+import {
+    AbstractDataComponent,
+    SweDataRecord,
+    SweText,
+    SweVector,
+    SweMatrix,
+    SweDataArray,
+    SweDataComponent,
+} from &#x27;../../model/swe&#x27;;
+import { GmlEncoder } from &#x27;./GmlEncoder&#x27;;
+import { IsoEncoder } from &#x27;./IsoEncoder&#x27;;
+import { NAMESPACES } from &#x27;./Namespaces&#x27;;
+import { SweEncoder } from &#x27;./SweEncoder&#x27;;
+
+export class SensorMLEncoder {
+
+    private sweEncoder &#x3D; new SweEncoder();
+    private isoEncoder &#x3D; new IsoEncoder();
+    private gmlEncoder &#x3D; new GmlEncoder();
+
+    public encodeTerm(term: Term, document: Document): Node {
+        const termNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:Term&#x27;);
+
+        if (term.definition) {
+            termNode.setAttribute(&#x27;definition&#x27;, term.definition);
+        }
+
+        if (typeof term.label !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            const labelNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:label&#x27;);
+            labelNode.textContent &#x3D; term.label;
+            termNode.appendChild(labelNode);
+        }
+
+        if (term.codeSpace) {
+            const codeSpaceNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:codeSpace&#x27;);
+            codeSpaceNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, term.codeSpace);
+            termNode.appendChild(codeSpaceNode);
+        }
+
+        if (typeof term.value !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            const labelNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:value&#x27;);
+            labelNode.textContent &#x3D; term.value;
+            termNode.appendChild(labelNode);
+        }
+
+        if (term.extension &amp;&amp; term.extension.length &gt; 0) {
+            throw new Error(&#x27;Extensions are not supported!&#x27;);
+        }
+
+        return termNode;
+    }
+
+    public encodeAbstractMetadataList(node: Element, object: AbstractMetadataList, document: Document): void {
+
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.definition) {
+            node.setAttribute(&#x27;definition&#x27;, object.definition);
+        }
+
+    }
+
+    public encodeIdentifierList(object: IdentifierList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:IdentifierList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.identifiers) {
+            object.identifiers.forEach((term) &#x3D;&gt; {
+                const identifierNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:identifier&#x27;);
+                identifierNode.appendChild(this.encodeTerm(term, document));
+                node.appendChild(identifierNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeKeywordList(object: KeywordList, document: Document): Node {
+
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:KeywordList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.codeSpace) {
+            const codeSpaceNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:codeSpace&#x27;);
+            codeSpaceNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, object.codeSpace);
+            node.appendChild(codeSpaceNode);
+        }
+
+        if (object.keywords) {
+            object.keywords.forEach((keyword) &#x3D;&gt; {
+                const keywordNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:keyword&#x27;);
+                keywordNode.textContent &#x3D; keyword;
+                node.appendChild(keywordNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeClassifierList(object: ClassifierList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ClassifierList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.classifiers) {
+            object.classifiers.forEach((term) &#x3D;&gt; {
+                const classifierNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:classifier&#x27;);
+                classifierNode.appendChild(this.encodeTerm(term, document));
+                node.appendChild(classifierNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeCharacteristicList(object: CharacteristicList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:CharacteristicList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.characteristics) {
+            object.characteristics.forEach((c) &#x3D;&gt; {
+                const n &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:characteristic&#x27;);
+
+                if (c.name) {
+                    n.setAttribute(&#x27;name&#x27;, c.name);
+                }
+                if (c.component) {
+                    n.appendChild(this.sweEncoder.encodeDataComponent(c.component, document));
+                }
+
+                node.appendChild(n);
+            });
+        }
+        return node;
+    }
+
+    public encodeEventList(object: EventList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:EventList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.events) {
+            object.events.forEach((event) &#x3D;&gt; {
+                const eventNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:event&#x27;);
+                eventNode.appendChild(this.encodeEvent(event, document));
+                node.appendChild(eventNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeCapabilityList(object: CapabilityList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:CapabilityList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.capabilities) {
+            object.capabilities.forEach((c) &#x3D;&gt; {
+
+                const n &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:capability&#x27;);
+
+                if (c.name) {
+                    n.setAttribute(&#x27;name&#x27;, c.name);
+                }
+
+                if (c.component) {
+                    n.appendChild(this.sweEncoder.encodeDataComponent(c.component, document));
+                }
+
+                node.appendChild(n);
+            });
+        }
+
+
+        return node;
+    }
+
+    public encodeContactList(object: ContactList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ContactList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.contacts) {
+            object.contacts.forEach((contact) &#x3D;&gt; {
+                const contactNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:contact&#x27;);
+                contactNode.appendChild(this.isoEncoder.encodeResponsibleParty(contact, document));
+                node.appendChild(contactNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeDocumentList(object: DocumentList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:DocumentList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.documents) {
+            object.documents.forEach((onlineResource) &#x3D;&gt; {
+                const onlineResourceNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:document&#x27;);
+                onlineResourceNode.appendChild(this.isoEncoder.encodeOnlineResource(onlineResource, document));
+                node.appendChild(onlineResourceNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeEvent(object: Event, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:Event&#x27;);
+
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.keywords) {
+            object.keywords.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:keywords&#x27;);
+                listNode.appendChild(this.encodeKeywordList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.identification) {
+            object.identification.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:identification&#x27;);
+                listNode.appendChild(this.encodeIdentifierList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.classification) {
+            object.classification.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:classification&#x27;);
+                listNode.appendChild(this.encodeClassifierList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.contacts) {
+            object.contacts.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:contacts&#x27;);
+                listNode.appendChild(this.encodeContactList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.documentation) {
+            object.documentation.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:documentation&#x27;);
+                listNode.appendChild(this.encodeDocumentList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.time) {
+            const timeNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:time&#x27;);
+            timeNode.appendChild(this.gmlEncoder.encodeTime(object.time, document));
+            node.appendChild(timeNode);
+        }
+
+        if (object.properties) {
+            object.properties.forEach((property) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:property&#x27;);
+                listNode.appendChild(this.sweEncoder.encodeDataComponent(property, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.configuration) {
+            const configurationNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:configuration&#x27;);
+            configurationNode.appendChild(this.encodeSettings(object.configuration, document));
+            node.appendChild(configurationNode);
+        }
+
+        return node;
+    }
+
+    public encodeDescribedObject(node: Element, object: DescribedObject, document: Document): void {
+        this.gmlEncoder.encodeAbstractFeature(node, object, document);
+
+        if (object.extension &amp;&amp; object.extension.length &gt; 0) {
+            throw new Error(&#x27;Extensions are currently unsupported&#x27;);
+        }
+
+        if (object.keywords) {
+            object.keywords.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:keywords&#x27;);
+                listNode.appendChild(this.encodeKeywordList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.identification) {
+            object.identification.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:identification&#x27;);
+                listNode.appendChild(this.encodeIdentifierList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.classification) {
+            object.classification.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:classification&#x27;);
+                listNode.appendChild(this.encodeClassifierList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.validTime) {
+            object.validTime.forEach((time) &#x3D;&gt; {
+                const validTimeNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:validTime&#x27;);
+                validTimeNode.appendChild(this.gmlEncoder.encodeTime(time, document));
+                node.appendChild(validTimeNode);
+            });
+        }
+
+        if (object.securityConstraints &amp;&amp; object.securityConstraints.length &gt; 0) {
+            throw new Error(&#x27;Currently not supported&#x27;);
+        }
+
+        if (object.legalConstraints) {
+            object.legalConstraints.forEach((legalConstraints) &#x3D;&gt; {
+                const legalConstraintsNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:legalConstraints&#x27;);
+                legalConstraintsNode.appendChild(this.isoEncoder.encodeLegalConstraints(legalConstraints, document));
+                node.appendChild(legalConstraintsNode);
+            });
+        }
+
+        if (object.characteristics) {
+            object.characteristics.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:characteristics&#x27;);
+                listNode.appendChild(this.encodeCharacteristicList(list, document));
+                if (list.name) {
+                    listNode.setAttribute(&#x27;name&#x27;, list.name);
+                }
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.capabilities) {
+            object.capabilities.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:capabilities&#x27;);
+                listNode.appendChild(this.encodeCapabilityList(list, document));
+                if (list.name) {
+                    listNode.setAttribute(&#x27;name&#x27;, list.name);
+                }
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.contacts) {
+            object.contacts.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:contacts&#x27;);
+                listNode.appendChild(this.encodeContactList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.documentation) {
+            object.documentation.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:documentation&#x27;);
+                listNode.appendChild(this.encodeDocumentList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+
+        if (object.history) {
+            object.history.forEach((list) &#x3D;&gt; {
+                const listNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:history&#x27;);
+                listNode.appendChild(this.encodeEventList(list, document));
+                node.appendChild(listNode);
+            });
+        }
+    }
+
+    public encodeAbstractProcess(node: Element, object: AbstractProcess, document: Document): void {
+        this.encodeDescribedObject(node, object, document);
+
+        if (object.typeOf) {
+            const typeOfNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:typeOf&#x27;);
+            typeOfNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, object.typeOf);
+            node.appendChild(typeOfNode);
+        }
+
+        if (object.configuration) {
+            const configurationNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:configuration&#x27;);
+            configurationNode.appendChild(this.encodeSettings(object.configuration, document));
+            node.appendChild(configurationNode);
+        }
+
+        if (object.featureOfInterest &amp;&amp; object.featureOfInterest.feature.length &gt; 0) {
+            const featureOfInterestNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:featuresOfInterest&#x27;);
+            featureOfInterestNode.appendChild(this.encodeFeatureList(object.featureOfInterest, document));
+            node.appendChild(featureOfInterestNode);
+        }
+
+        if (object.inputs &amp;&amp; object.inputs.inputs.length &gt; 0) {
+            const inputsNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:inputs&#x27;);
+            inputsNode.appendChild(this.encodeInputList(object.inputs, document));
+            node.appendChild(inputsNode);
+        }
+
+        if (object.outputs &amp;&amp; object.outputs.outputs.length &gt; 0) {
+            const outputsNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:outputs&#x27;);
+            outputsNode.appendChild(this.encodeOutputList(object.outputs, document));
+            node.appendChild(outputsNode);
+        }
+
+        if (object.parameters &amp;&amp; object.parameters.parameters.length &gt; 0) {
+            const parametersNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:parameters&#x27;);
+            parametersNode.appendChild(this.encodeParameterList(object.parameters, document));
+            node.appendChild(parametersNode);
+        }
+
+        if (object.modes) {
+            object.modes.forEach((modes) &#x3D;&gt; {
+                const modesNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:modes&#x27;);
+                modesNode.appendChild(this.encodeModes(modes, document));
+                node.appendChild(modesNode);
+            });
+        }
+
+        if (object.definition) {
+            node.setAttribute(&#x27;definiton&#x27;, object.definition);
+        }
+
+    }
+
+    public encodeModes(object: AbstractModes, document: Document): Node {
+
+        if (object instanceof ModeChoice) {
+            return this.encodeModeChoice(object, document);
+        }
+
+        throw new Error(&#x27;Unsupported modes type&#x27;);
+
+    }
+
+    public encodeModeChoice(object: ModeChoice, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ModeChoice&#x27;);
+
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.modes) {
+            object.modes.forEach((mode) &#x3D;&gt; {
+                const modeNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:mode&#x27;);
+                modeNode.appendChild(this.encodeMode(mode, document));
+                node.appendChild(modeNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeMode(object: Mode, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:Mode&#x27;);
+        this.encodeDescribedObject(node, object, document);
+
+        if (object.configuration) {
+            const configurationNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:configuration&#x27;);
+            configurationNode.appendChild(this.encodeSettings(object.configuration, document));
+            node.appendChild(configurationNode);
+        }
+
+        return node;
+    }
+
+    public encodeSettings(object: Settings, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:Settings&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.setValue) {
+
+            object.setValue.forEach((setting) &#x3D;&gt; {
+                const valueNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:setValue&#x27;);
+                if (setting.ref) {
+                    valueNode.setAttribute(&#x27;ref&#x27;, setting.ref);
+                }
+                if (setting.value !&#x3D; null) {
+                    const value &#x3D; setting.value;
+                    if (value instanceof Date) {
+                        valueNode.textContent &#x3D; value.toISOString();
+                    } else {
+                        valueNode.textContent &#x3D; value.toString();
+                    }
+                }
+                node.appendChild(valueNode);
+            });
+        }
+
+        if (object.setArrayValue) {
+            object.setArrayValue.forEach((setting) &#x3D;&gt; {
+                const arrayValueNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:setArrayValue&#x27;);
+                if (setting.ref) {
+                    arrayValueNode.setAttribute(&#x27;ref&#x27;, setting.ref);
+                }
+
+                if (setting.encoding) {
+                    const encodingNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:encoding&#x27;);
+                    encodingNode.appendChild(this.sweEncoder.encodeAbstractEncoding(setting.encoding, document));
+                    arrayValueNode.appendChild(encodingNode);
+                }
+
+                if (setting.value) {
+                    const valueNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:value&#x27;);
+                    valueNode.textContent &#x3D; setting.value.toString();
+                    arrayValueNode.appendChild(valueNode);
+                }
+                node.appendChild(arrayValueNode);
+            });
+        }
+
+        if (object.setConstraint) {
+            object.setConstraint.forEach((setting) &#x3D;&gt; {
+                const constraintNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:setConstraint&#x27;);
+                if (setting.ref) {
+                    constraintNode.setAttribute(&#x27;ref&#x27;, setting.ref);
+                }
+                if (setting.value) {
+                    constraintNode.appendChild(this.sweEncoder.encodeConstraint(setting.value, document));
+                }
+                node.appendChild(constraintNode);
+            });
+        }
+
+        if (object.setMode) {
+            object.setMode.forEach((setting) &#x3D;&gt; {
+                const modeNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:setMode&#x27;);
+                if (setting.ref) {
+                    modeNode.setAttribute(&#x27;ref&#x27;, setting.ref);
+                }
+                if (setting.value) {
+                    modeNode.textContent &#x3D; setting.value;
+                }
+                node.appendChild(modeNode);
+            });
+        }
+
+        if (object.setStatus) {
+            object.setStatus.forEach((setting) &#x3D;&gt; {
+                const statusNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:setStatus&#x27;);
+                if (setting.ref) {
+                    statusNode.setAttribute(&#x27;ref&#x27;, setting.ref);
+                }
+                if (setting.value) {
+                    statusNode.textContent &#x3D; setting.value;
+                }
+                node.appendChild(statusNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeFeatureList(object: FeatureList, document: Document) {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:FeatureList&#x27;);
+
+        this.encodeAbstractMetadataList(node, object, document);
+
+        if (object.feature) {
+            object.feature.forEach((feature) &#x3D;&gt; {
+                const featureNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:feature&#x27;);
+                this.gmlEncoder.encodeFeature(featureNode, feature, document);
+                node.appendChild(featureNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeInputList(object: InputList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:InputList&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.inputs) {
+            object.inputs.forEach((input) &#x3D;&gt; {
+                const inputNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:input&#x27;);
+                this.encodeInputOrOutputOrParameter(inputNode, input, document);
+                node.appendChild(inputNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeOutputList(object: OutputList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:OutputList&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.outputs) {
+            object.outputs.forEach((input) &#x3D;&gt; {
+                const outputNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:output&#x27;);
+                this.encodeInputOrOutputOrParameter(outputNode, input, document);
+                node.appendChild(outputNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeParameterList(object: ParameterList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ParameterList&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.parameters) {
+            object.parameters.forEach((parameter) &#x3D;&gt; {
+                const parameterNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:parameter&#x27;);
+                this.encodeInputOrOutputOrParameter(parameterNode, parameter, document);
+                node.appendChild(parameterNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeDataInterface(object: DataInterface, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:DataInterface&#x27;);
+
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+
+        if (object.data) {
+            const dataNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:data&#x27;);
+            dataNode.appendChild(this.sweEncoder.encodeDataStream(object.data, document));
+            node.appendChild(dataNode);
+        }
+
+        if (object.interfaceParameters) {
+            const interfaceParametersNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:interfaceParameters&#x27;);
+            interfaceParametersNode.appendChild(this.sweEncoder.encodeDataRecord(object.interfaceParameters, document));
+            node.appendChild(interfaceParametersNode);
+        }
+
+        return node;
+    }
+
+    public encodeObservableProperty(object: ObservableProperty, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ObservableProperty&#x27;);
+
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.definition) {
+            node.setAttribute(&#x27;definition&#x27;, object.definition);
+        }
+
+        return node;
+    }
+
+    public encodeInputOrOutputOrParameter(node: Element, object: InputOrOutputOrParameter, document: Document): void {
+        if (object.name) {
+            node.setAttribute(&#x27;name&#x27;, object.name);
+        }
+
+        if (object.value) {
+            node.appendChild(this.encodeInputOrOutputOrParameterValue(object.value));
+        }
+    }
+
+    public encodeSimpleProcess(object: SimpleProcess, document: Document, node?: Element): Node {
+        if (!node) {
+            node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:SimpleProcess&#x27;);
+        }
+        this.encodeAbstractProcess(node, object, document);
+        this.encodeProcessMethodProcess(node, object, document);
+
+        return node;
+    }
+
+    public encodeProcessMethod(object: ProcessMethod, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ProcessMethod&#x27;);
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.algorithm) {
+            object.algorithm.forEach((algorithm) &#x3D;&gt; {
+                const algorithmNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:algorithm&#x27;);
+                algorithmNode.appendChild(this.encodeAlgorithm(algorithm, document));
+                node.appendChild(algorithmNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeAlgorithm(object: AbstractAlgorithm, document: Document): Node {
+        // TODO implement algorithm
+        throw new Error(&#x27;not yet implemented&#x27;);
+    }
+
+    public encodeAggregateProcess(object: AggregateProcess, document: Document, node?: Element): Node {
+        if (!node) {
+            node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:AggregateProcess&#x27;);
+        }
+        this.encodeAbstractProcess(node, object, document);
+        this.encodeAggregatingProcess(node, object, document);
+
+        return node;
+    }
+
+    public encodeConnectionList(object: ConnectionList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ConnectionList&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, object, document);
+
+        if (object.connections) {
+            object.connections.forEach((connection) &#x3D;&gt; {
+                const connectionNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:connection&#x27;);
+                connectionNode.appendChild(this.encodeConnection(connection, document));
+                node.appendChild(connectionNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeConnection(object: Connection, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:Link&#x27;);
+        if (object.source) {
+            const sourceNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:source&#x27;);
+            sourceNode.setAttribute(&#x27;ref&#x27;, object.source);
+            node.appendChild(sourceNode);
+        }
+        if (object.destination) {
+            const destinationNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:destination&#x27;);
+            destinationNode.setAttribute(&#x27;ref&#x27;, object.destination);
+            node.appendChild(destinationNode);
+        }
+        return node;
+    }
+
+    public encodeComponentList(componentList: ComponentList, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:ComponentList&#x27;);
+        this.sweEncoder.encodeAbstractSwe(node, componentList, document);
+
+        if (componentList.components) {
+            componentList.components.forEach((component) &#x3D;&gt; {
+                const componentNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:component&#x27;);
+                if (component.name) {
+                    componentNode.setAttribute(&#x27;name&#x27;, component.name);
+                }
+                if (component.href) {
+                    componentNode.setAttribute(&#x27;href&#x27;, component.href);
+                    componentNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, component.href);
+                    node.appendChild(componentNode);
+                }
+                if (component.abstractProcess) {
+                    componentNode.appendChild(this.createAbstractProcess(component.abstractProcess, document));
+                }
+                node.appendChild(componentNode);
+            });
+        }
+        return node;
+    }
+
+    private createAbstractProcess(process: AbstractProcess, document: Document): Node {
+        if (process instanceof SimpleProcess) {
+            return this.encodeSimpleProcess(process, document);
+        } else if (process instanceof AggregateProcess) {
+            return this.encodeAggregateProcess(process, document);
+        } else if (process instanceof PhysicalComponent) {
+            return this.encodePhysicalComponent(process, document);
+        } else if (process instanceof PhysicalSystem) {
+            return this.encodePhysicalSystem(process, document);
+        } else {
+            throw new Error(&#x27;Unsupported process type&#x27;);
+        }
+    }
+
+    public encodeAbstractPhysicalProcess(node: Element, object: AbstractPhysicalProcess, document: Document): void {
+        this.encodeAbstractProcess(node, object, document);
+
+        if (object.attachedTo) {
+            const attachedToNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:attachedTo&#x27;);
+            attachedToNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, object.attachedTo);
+            node.appendChild(attachedToNode);
+        }
+
+        if (object.localReferenceFrame) {
+            object.localReferenceFrame.forEach((frame) &#x3D;&gt; {
+                const frameNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:localReferenceFrame&#x27;);
+                frameNode.appendChild(this.encodeSpatialFrame(frame, document));
+                node.appendChild(frameNode);
+            });
+        }
+
+        if (object.localTimeFrame) {
+            object.localTimeFrame.forEach((frame) &#x3D;&gt; {
+                const frameNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:localTimeFrame&#x27;);
+                frameNode.appendChild(this.encodeTemporalFrame(frame, document));
+                node.appendChild(frameNode);
+            });
+        }
+
+        if (object.position) {
+            object.position.forEach((position) &#x3D;&gt; {
+                const positionNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:position&#x27;);
+                positionNode.appendChild(this.encodePosition(position, document));
+                node.appendChild(positionNode);
+            });
+        }
+
+        if (object.timePosition) {
+            object.timePosition.forEach((position) &#x3D;&gt; {
+                const positionNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:timePosition&#x27;);
+                positionNode.appendChild(this.sweEncoder.encodeTime(position, document));
+                node.appendChild(positionNode);
+            });
+        }
+
+    }
+
+    public encodePosition(object: Position, document: Document): Node {
+        if (object instanceof Point) {
+            return this.gmlEncoder.encodePoint(object, document);
+        }
+        if (object instanceof SweText) {
+            return this.sweEncoder.encodeText(object, document);
+        }
+        if (object instanceof SweVector) {
+            return this.sweEncoder.encodeVector(object, document);
+        }
+        if (object instanceof SweDataRecord) {
+            return this.sweEncoder.encodeDataRecord(object, document);
+        }
+        if (object instanceof SweMatrix) {
+            return this.sweEncoder.encodeMatrix(object, document);
+        }
+        if (object instanceof SweDataArray) {
+            return this.sweEncoder.encodeDataArray(object, document);
+        }
+        if (object instanceof AbstractProcess) {
+            return this.encodeProcess(object, document);
+        }
+    }
+
+    public encodeProcess(object: AbstractProcess, document: Document, node?: Element): Node {
+        if (object instanceof SimpleProcess) {
+            return this.encodeSimpleProcess(object, document, node);
+        }
+        if (object instanceof AggregateProcess) {
+            return this.encodeAggregateProcess(object, document, node);
+        }
+        if (object instanceof PhysicalSystem) {
+            return this.encodePhysicalSystem(object, document, node);
+        }
+        if (object instanceof PhysicalComponent) {
+            return this.encodePhysicalComponent(object, document, node);
+        }
+
+        throw new Error(&#x27;Unsupported process type&#x27;);
+    }
+
+    public encodeSpatialFrame(object: SpatialFrame, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:SpatialFrame&#x27;);
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.origin) {
+            const originNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:origin&#x27;);
+            originNode.textContent &#x3D; object.origin;
+            node.appendChild(originNode);
+        }
+
+        if (object.axis) {
+            object.axis.forEach((axis) &#x3D;&gt; {
+                const axisNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:axis&#x27;);
+                if (axis.name) {
+                    axisNode.setAttribute(&#x27;name&#x27;, axis.name);
+                }
+                if (axis.description) {
+                    axisNode.textContent &#x3D; axis.description;
+                }
+                node.appendChild(axisNode);
+            });
+        }
+
+        return node;
+    }
+
+    public encodeTemporalFrame(object: TemporalFrame, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:TemporalFrame&#x27;);
+        this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
+
+        if (object.origin) {
+            const originNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:origin&#x27;);
+            originNode.textContent &#x3D; object.origin;
+            node.appendChild(originNode);
+        }
+
+        return node;
+    }
+
+    public encodePhysicalSystem(object: PhysicalSystem, document: Document, node?: Element): Node {
+        if (!node) {
+            node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:PhysicalSystem&#x27;);
+        }
+
+        this.encodeAbstractPhysicalProcess(node, object, document);
+        this.encodeAggregatingProcess(node, object, document);
+
+        return node;
+    }
+
+    public encodeAggregatingProcess(node: Element, object: AggregatingProcess, document: Document): void {
+        if (object.components &amp;&amp; object.components.components.length &gt; 0) {
+            const componentsNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:components&#x27;);
+            componentsNode.appendChild(this.encodeComponentList(object.components, document));
+            node.appendChild(componentsNode);
+        }
+
+        if (object.connections &amp;&amp; object.connections.connections.length &gt; 0) {
+            const connectionsNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:connections&#x27;);
+            connectionsNode.appendChild(this.encodeConnectionList(object.connections, document));
+            node.appendChild(connectionsNode);
+        }
+    }
+
+    public encodeProcessMethodProcess(node: Element, object: ProcessMethodProcess, document: Document): void {
+
+        if (object.method) {
+            const methodNode &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:method&#x27;);
+            methodNode.appendChild(this.encodeProcessMethod(object.method, document));
+            node.appendChild(methodNode);
+        }
+    }
+
+    public encodePhysicalComponent(object: PhysicalComponent, document: Document, node?: Element): Node {
+        if (!node) {
+            node &#x3D; document.createElementNS(NAMESPACES.SML, &#x27;sml:PhysicalComponent&#x27;);
+        }
+        this.encodeAbstractPhysicalProcess(node, object, document);
+        this.encodeProcessMethodProcess(node, object, document);
+        return node;
+    }
+
+    private encodeInputOrOutputOrParameterValue(
+        value: SweDataComponent | DataInterface | ObservableProperty): Node {
+        if (value instanceof AbstractDataComponent) {
+            return this.sweEncoder.encodeDataComponent(value, document);
+        } else if (value instanceof ObservableProperty) {
+            return this.encodeObservableProperty(value, document);
+        } else if (value instanceof DataInterface) {
+            return this.encodeDataInterface(value, document);
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'SensorMLEncoder.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

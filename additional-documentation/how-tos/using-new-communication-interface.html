@@ -1,0 +1,135 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	      <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="how-to-integrate-a-table-component">How to integrate a table component</h1>
+<p>In the current development, we have integrated a middleware communication level. Currently there exists four connectors with their corresponding providers, which must be configured in the providers section:</p>
+<ul>
+<li><code>DatasetApiV1Connector</code> - <code>DatasetApiV1ConnectorProvider</code></li>
+<li><code>DatasetApiV2Connector</code> - <code>DatasetApiV2ConnectorProvider</code></li>
+<li><code>DatasetApiV3Connector</code> - <code>DatasetApiV3ConnectorProvider</code></li>
+<li><code>DatasetSTAConnector</code> - <code>DatasetStaConnectorProvider</code></li>
+</ul>
+<p>There is a mechanism to detect the correct connector to every configured service url. But to reduce requests for this auto detect mechanism you can also configure to every service url the corresponding connector in the following way:</p>
+<div><pre class="line-numbers"><code class="language-json">{
+  &quot;name&quot;: &quot;instance1&quot;,
+  &quot;url&quot;: &quot;https://url-to-instance1-api/&quot;,
+  &quot;connector&quot;: &quot;DatasetApiV1Connector&quot;
+},
+{
+  &quot;name&quot;: &quot;instance2&quot;,
+  &quot;url&quot;: &quot;https://url-to-instance2-api/&quot;,
+  &quot;connector&quot;: &quot;StaApiConnector&quot;
+},</code></pre></div><p>Steps to migrate:</p>
+<ul>
+<li>add providers of the connectors which you need to your module configuration</li>
+<li>use <a href="../../../documentation/injectables/HelgolandServicesConnector.html"><code>HelgolandServicesConnector</code></a> to communicate with the different services via their connectors, by replacing <code>DatasetApiInterface</code>. Some methods of the new communication interface are slightly different, but hopefully self explained.<ul>
+<li>use <code>HelgolandParameterFilter</code> where you need filtering your requests instead of previously used <code>ParameterFilter</code></li>
+<li>with the <code>getDatasets</code> request, you get a list of basic datasets <code>HelgolandDataset</code>. If you use the <code>DatasetType</code> in the filters, you can get specified Datasets in the response array. The single <code>getDataset</code> request works equivalent. Currently there are 3 different types of dataset available: <ul>
+<li><code>HelgolandTimeseries</code></li>
+<li><code>HelgolandTrajectory</code></li>
+<li><code>HelgolandProfile</code></li>
+</ul>
+</li>
+<li>So replace previous structures as <code>Dataset</code>, <code>Timeseries</code>, ... with <code>HelgolandDataset</code>, <code>HelgolandTimeseries</code>, ...</li>
+</ul>
+</li>
+<li><code>HelgolandPlatform</code> replaces the old Structure of <code>Station</code> or <code>Platform</code></li>
+<li>component <code>n52-platform-map-selector</code> is removed, use instead <code>n52-station-map-selector</code></li>
+</ul>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 2;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'using-new-communication-interface.html';
+       </script>
+
+       <script src="../../js/libs/custom-elements.min.js"></script>
+       <script src="../../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
+
+       <script src="../../js/libs/bootstrap-native.js"></script>
+
+       <script src="../../js/libs/es6-shim.min.js"></script>
+       <script src="../../js/libs/EventDispatcher.js"></script>
+       <script src="../../js/libs/promise.min.js"></script>
+       <script src="../../js/libs/zepto.min.js"></script>
+
+       <script src="../../js/compodoc.js"></script>
+
+       <script src="../../js/tabs.js"></script>
+       <script src="../../js/menu.js"></script>
+       <script src="../../js/libs/clipboard.min.js"></script>
+       <script src="../../js/libs/prism.js"></script>
+       <script src="../../js/sourceCode.js"></script>
+          <script src="../../js/search/search.js"></script>
+          <script src="../../js/search/lunr.min.js"></script>
+          <script src="../../js/search/search-lunr.js"></script>
+          <script src="../../js/search/search_index.js"></script>
+       <script src="../../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

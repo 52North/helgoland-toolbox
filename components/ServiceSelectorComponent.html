@@ -309,7 +309,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                        <i>Type : </i>        <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
 
                     </td>
                 </tr>
@@ -351,7 +351,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >Service</a></code>
+                        <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >HelgolandService</a></code>
 
                     </td>
                 </tr>
@@ -417,7 +417,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>EventEmitter&lt;Service&gt;</code>
+                        <i>Type : </i>    <code>EventEmitter&lt;HelgolandService&gt;</code>
 
                     </td>
                 </tr>
@@ -453,15 +453,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isSelected(service: <a href="../interfaces/Service.html">Service</a>)</code>
+                    <code>isSelected(service: <a href="../interfaces/Service.html">HelgolandService</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/service-selector/service-selector.component.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/service-selector/service-selector.component.ts:78</a></div>
                 </td>
             </tr>
 
@@ -483,7 +483,7 @@
                                 <tr>
                                     <td>service</td>
                                     <td>
-                                                <code><a href="../interfaces/Service.html" target="_self" >Service</a></code>
+                                                <code><a href="../interfaces/Service.html" target="_self" >HelgolandService</a></code>
                                     </td>
 
                                     <td>
@@ -566,15 +566,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>selectService(service: <a href="../interfaces/Service.html">Service</a>)</code>
+                    <code>selectService(service: <a href="../interfaces/Service.html">HelgolandService</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="84"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/service-selector/service-selector.component.ts:84</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/service-selector/service-selector.component.ts:83</a></div>
                 </td>
             </tr>
 
@@ -596,7 +596,7 @@
                                 <tr>
                                     <td>service</td>
                                     <td>
-                                                <code><a href="../interfaces/Service.html" target="_self" >Service</a></code>
+                                                <code><a href="../interfaces/Service.html" target="_self" >HelgolandService</a></code>
                                     </td>
 
                                     <td>
@@ -675,7 +675,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >Service[]</a></code>
+                            <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >HelgolandService[]</a></code>
 
                         </td>
                     </tr>
@@ -723,7 +723,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnInit, Output } from &#x27;@angular/core&#x27;;
-import { BlacklistedService, DatasetApi, ParameterFilter, Service } from &#x27;@helgoland/core&#x27;;
+import { BlacklistedService, DatasetApi, HelgolandParameterFilter, HelgolandService } from &#x27;@helgoland/core&#x27;;
 
 import { ServiceSelectorService } from &#x27;./service-selector.service&#x27;;
 
@@ -747,18 +747,18 @@ export class ServiceSelectorComponent implements OnInit {
     public supportStations: boolean;
 
     @Input()
-    public selectedService: Service;
+    public selectedService: HelgolandService;
 
     @Input()
-    public filter: ParameterFilter;
+    public filter: HelgolandParameterFilter;
 
     @Input()
     public showUnresolvableServices: boolean;
 
     @Output()
-    public onServiceSelected: EventEmitter&lt;Service&gt; &#x3D; new EventEmitter&lt;Service&gt;();
+    public onServiceSelected: EventEmitter&lt;HelgolandService&gt; &#x3D; new EventEmitter&lt;HelgolandService&gt;();
 
-    public services: Service[];
+    public services: HelgolandService[];
     public unResolvableServices: DatasetApi[];
     public loadingCount &#x3D; 0;
 
@@ -780,8 +780,7 @@ export class ServiceSelectorComponent implements OnInit {
                             this.loadingCount--;
                             if (res &amp;&amp; res instanceof Array) {
                                 res.forEach((entry) &#x3D;&gt; {
-                                    if (entry.quantities.platforms &gt; 0
-                                        || this.supportStations &amp;&amp; entry.quantities.stations &gt; 0) {
+                                    if (entry.quantities.datasets) {
                                         this.services.push(entry);
                                     }
                                 });
@@ -800,12 +799,12 @@ export class ServiceSelectorComponent implements OnInit {
         }
     }
 
-    public isSelected(service: Service) {
+    public isSelected(service: HelgolandService) {
         if (!this.selectedService) { return false; }
         return this.selectedService.id &#x3D;&#x3D;&#x3D; service.id &amp;&amp; this.selectedService.apiUrl &#x3D;&#x3D;&#x3D; service.apiUrl;
     }
 
-    public selectService(service: Service) {
+    public selectService(service: HelgolandService) {
         this.onServiceSelected.emit(service);
     }
 }
@@ -817,24 +816,26 @@ export class ServiceSelectorComponent implements OnInit {
   &lt;span&gt;Requesting {{loadingCount}} providers...&lt;/span&gt;
 &lt;/div&gt;
 &lt;div class&#x3D;&quot;service-list&quot;&gt;
-  &lt;div class&#x3D;&quot;service-item&quot; *ngFor&#x3D;&quot;let service of services&quot; (click)&#x3D;&quot;selectService(service)&quot; [ngClass]&#x3D;&quot;{&#x27;selected&#x27;: isSelected(service)}&quot;&gt;
+  &lt;div class&#x3D;&quot;service-item&quot; *ngFor&#x3D;&quot;let service of services&quot; (click)&#x3D;&quot;selectService(service)&quot;
+    [ngClass]&#x3D;&quot;{&#x27;selected&#x27;: isSelected(service)}&quot;&gt;
     &lt;div&gt;{{service.label}}&lt;/div&gt;
     &lt;div class&#x3D;&quot;small&quot;&gt;{{service.type}}, {{service.version}}
     &lt;/div&gt;
     &lt;div class&#x3D;&quot;small&quot; *ngIf&#x3D;&quot;service.apiUrl&quot;&gt;{{&#x27;service-selector.service-url&#x27; | translate}}: {{service.apiUrl}}&lt;/div&gt;
     &lt;div class&#x3D;&quot;small&quot;&gt;
-      &lt;span *ngIf&#x3D;&quot;service.quantities.stations !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.stations&#x27; | translate}}: {{service.quantities.stations}}&lt;/span&gt;
-      &lt;span *ngIf&#x3D;&quot;service.quantities.platforms !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.platforms&#x27; | translate}}: {{service.quantities.platforms}}&lt;/span&gt;
-      &lt;span *ngIf&#x3D;&quot;service.quantities.timeseries !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.timeseries&#x27; | translate}}: {{service.quantities.timeseries}}&lt;/span&gt;
-      &lt;span *ngIf&#x3D;&quot;service.quantities.datasets !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.datasets&#x27; | translate}}: {{service.quantities.datasets}}&lt;/span&gt;
+      &lt;span *ngIf&#x3D;&quot;service.quantities.stations !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.stations&#x27; | translate}}:
+        {{service.quantities.stations}}&lt;/span&gt;
+      &lt;span *ngIf&#x3D;&quot;service.quantities.platforms !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.platforms&#x27; | translate}}:
+        {{service.quantities.platforms}}&lt;/span&gt;
+      &lt;span *ngIf&#x3D;&quot;service.quantities.datasets !&#x3D;&#x3D; undefined&quot;&gt;{{&#x27;service-selector.datasets&#x27; | translate}}:
+        {{service.quantities.datasets}}&lt;/span&gt;
       &lt;span&gt;{{&#x27;service-selector.phenomena&#x27; | translate}}: {{service.quantities.phenomena}}&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div *ngFor&#x3D;&quot;let item of unResolvableServices&quot;&gt;
     &lt;div style&#x3D;&quot;color: red;&quot;&gt;{{item.name}} is currently not reachable&lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
@@ -882,8 +883,8 @@ export class ServiceSelectorComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div *ngIf="loadingCount > 0">  <span>Requesting {{loadingCount}} providers...</span></div><div class="service-list">  <div class="service-item" *ngFor="let service of services" (click)="selectService(service)" [ngClass]="{\'selected\': isSelected(service)}">    <div>{{service.label}}</div>    <div class="small">{{service.type}}, {{service.version}}    </div>    <div class="small" *ngIf="service.apiUrl">{{\'service-selector.service-url\' | translate}}: {{service.apiUrl}}</div>    <div class="small">      <span *ngIf="service.quantities.stations !== undefined">{{\'service-selector.stations\' | translate}}: {{service.quantities.stations}}</span>      <span *ngIf="service.quantities.platforms !== undefined">{{\'service-selector.platforms\' | translate}}: {{service.quantities.platforms}}</span>      <span *ngIf="service.quantities.timeseries !== undefined">{{\'service-selector.timeseries\' | translate}}: {{service.quantities.timeseries}}</span>      <span *ngIf="service.quantities.datasets !== undefined">{{\'service-selector.datasets\' | translate}}: {{service.quantities.datasets}}</span>      <span>{{\'service-selector.phenomena\' | translate}}: {{service.quantities.phenomena}}</span>    </div>  </div>  <div *ngFor="let item of unResolvableServices">    <div style="color: red;">{{item.name}} is currently not reachable</div>  </div></div></div>'
-    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="loadingCount > 0">  <span>Requesting {{loadingCount}} providers...</span></div><div class="service-list">  <div class="service-item" *ngFor="let service of services" (click)="selectService(service)"    [ngClass]="{\'selected\': isSelected(service)}">    <div>{{service.label}}</div>    <div class="small">{{service.type}}, {{service.version}}    </div>    <div class="small" *ngIf="service.apiUrl">{{\'service-selector.service-url\' | translate}}: {{service.apiUrl}}</div>    <div class="small">      <span *ngIf="service.quantities.stations !== undefined">{{\'service-selector.stations\' | translate}}:        {{service.quantities.stations}}</span>      <span *ngIf="service.quantities.platforms !== undefined">{{\'service-selector.platforms\' | translate}}:        {{service.quantities.platforms}}</span>      <span *ngIf="service.quantities.datasets !== undefined">{{\'service-selector.datasets\' | translate}}:        {{service.quantities.datasets}}</span>      <span>{{\'service-selector.phenomena\' | translate}}: {{service.quantities.phenomena}}</span>    </div>  </div>  <div *ngFor="let item of unResolvableServices">    <div style="color: red;">{{item.name}} is currently not reachable</div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ServiceSelectorComponent'};
 </script>

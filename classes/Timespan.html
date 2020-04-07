@@ -112,7 +112,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(from: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, to?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+<code>constructor(from: number | Date, to?: number | Date)</code>
                     </td>
                 </tr>
                         <tr>
@@ -138,7 +138,7 @@
                                                         <td>from</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                                    <code>number | Date</code>
                                                         </td>
                                                   
                                                     <td>
@@ -150,7 +150,7 @@
                                                         <td>to</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                                    <code>number | Date</code>
                                                         </td>
                                                   
                                                     <td>
@@ -250,17 +250,10 @@ export class Timespan extends TimeInterval {
 
     public to: number;
 
-    constructor(
-        from: number,
-        to?: number
-    ) {
+    constructor(from: number | Date, to?: number | Date) {
         super();
-        this.from &#x3D; from;
-        if (to) {
-            this.to &#x3D; to;
-        } else {
-            this.to &#x3D; from;
-        }
+        this.from &#x3D; from instanceof Date ? from.valueOf() : from;
+        this.to &#x3D; to ? (to instanceof Date ? to.valueOf() : to) : this.from;
     }
 
 }

@@ -106,7 +106,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>filter:         <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                        <code>filter:         <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -114,7 +114,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                            <i>Type : </i>        <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
 
                                         </td>
                                     </tr>
@@ -164,13 +164,19 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output } from &#x27;@angular/core&#x27;;
-import { DatasetApiInterface, Filter, LanguageChangNotifier, Parameter, ParameterFilter } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
+import {
+    Filter,
+    HelgolandParameterFilter,
+    HelgolandServicesConnector,
+    LanguageChangNotifier,
+    Parameter,
+} from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 export interface MultiServiceFilter {
     url: string;
-    filter?: ParameterFilter;
+    filter?: HelgolandParameterFilter;
 }
 
 export enum MultiServiceFilterEndpoint {
@@ -198,6 +204,9 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     @Input()
     public filterList: MultiServiceFilter[];
 
+    @Input()
+    public selected: string;
+
     @Output()
     public onItemSelected: EventEmitter&lt;FilteredParameter&gt; &#x3D; new EventEmitter&lt;FilteredParameter&gt;();
 
@@ -205,17 +214,19 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public items: FilteredParameter[];
 
     constructor(
-        protected apiInterface: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected translate: TranslateService
     ) {
         super(translate);
     }
 
-    public ngOnChanges() {
+    public ngOnChanges(changes: SimpleChanges) {
         this.loadItems();
     }
 
     public onSelectItem(item: FilteredParameter): void {
+        this.deselectAllItems();
+        item.selected &#x3D; true;
         this.onItemSelected.emit(item);
     }
 
@@ -223,52 +234,52 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.loadItems();
     }
 
-    private loadItems() {
+    protected loadItems() {
         this.items &#x3D; [];
         this.filterList.forEach((entry) &#x3D;&gt; {
             this.loading++;
             const filter &#x3D; entry.filter || {};
             switch (this.endpoint) {
                 case MultiServiceFilterEndpoint.offering:
-                    this.apiInterface.getOfferings(entry.url, filter).subscribe(
+                    this.servicesConnector.getOfferings(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.phenomenon:
-                    this.apiInterface.getPhenomena(entry.url, filter).subscribe(
+                    this.servicesConnector.getPhenomena(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.procedure:
-                    this.apiInterface.getProcedures(entry.url, filter).subscribe(
+                    this.servicesConnector.getProcedures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.feature:
-                    this.apiInterface.getFeatures(entry.url, filter).subscribe(
+                    this.servicesConnector.getFeatures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.category:
-                    this.apiInterface.getCategories(entry.url, filter).subscribe(
+                    this.servicesConnector.getCategories(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.platform:
-                    this.apiInterface.getPlatforms(entry.url, filter).subscribe(
+                    this.servicesConnector.getPlatforms(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.dataset:
-                    this.apiInterface.getDatasets(entry.url, filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
-                        (error) &#x3D;&gt; this.errorOnLoading
+                    this.servicesConnector.getDatasets(entry.url, filter).subscribe(
+                        res &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
+                        error &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 default:
@@ -278,24 +289,25 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         });
     }
 
-    private errorOnLoading(): void {
+    protected errorOnLoading(): void {
         this.loading--;
     }
 
-    private setItems(res: FilteredParameter[], prevfilter: ParameterFilter, url: string, service: string): void {
+    protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
-        res.forEach((entry) &#x3D;&gt; {
+        res.forEach(entry &#x3D;&gt; {
+            entry.selected &#x3D; this.selected &#x3D;&#x3D;&#x3D; entry.label;
             const filter: Filter &#x3D; {
                 filter: prevfilter,
                 itemId: entry.id,
                 url,
                 service
             };
-            const item &#x3D; this.items.find((elem) &#x3D;&gt; {
-                if (elem.label &#x3D;&#x3D;&#x3D; entry.label) { return true; }
-            });
+            const item &#x3D; this.items.find(e &#x3D;&gt; e.label &#x3D;&#x3D;&#x3D; entry.label);
             if (item) {
-                item.filterList.push(filter);
+                if (!item.filterList.find(e &#x3D;&gt; e.itemId &#x3D;&#x3D;&#x3D; filter.itemId &amp;&amp; e.service &#x3D;&#x3D;&#x3D; filter.service)) {
+                    item.filterList.push(filter);
+                }
             } else {
                 entry.filterList &#x3D; [filter];
                 this.items.push(entry);
@@ -303,10 +315,15 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         });
     }
 
+    private deselectAllItems() {
+        this.items.forEach(e &#x3D;&gt; e.selected &#x3D; false);
+    }
+
 }
 
 export interface FilteredParameter extends Parameter {
     filterList?: Filter[];
+    selected?: boolean;
 }
 </code></pre>
     </div>

@@ -137,7 +137,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>dataset:         <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                        <code>dataset:         <code><a href="../classes/HelgolandProfile.html" target="_self" >HelgolandProfile</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -145,7 +145,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                            <i>Type : </i>        <code><a href="../classes/HelgolandProfile.html" target="_self" >HelgolandProfile</a></code>
 
                                         </td>
                                     </tr>
@@ -192,9 +192,10 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from &#x27;@angular/core&#x27;;
 import {
-    DatasetApiInterface,
     DatasetPresenterComponent,
-    IDataset,
+    DatasetType,
+    HelgolandProfile,
+    HelgolandServicesConnector,
     InternalIdHandler,
     PresenterHighlight,
     ProfileDataEntry,
@@ -207,7 +208,7 @@ import * as d3 from &#x27;d3&#x27;;
 import * as Plotly from &#x27;plotly.js&#x27;;
 
 interface RawData {
-    dataset: IDataset;
+    dataset: HelgolandProfile;
     datas: ProfileDataEntry[];
     options: TimedDatasetOptions[];
 }
@@ -270,12 +271,12 @@ export class PlotlyProfileGraphComponent
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateSrvc: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateSrvc);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -293,12 +294,12 @@ export class PlotlyProfileGraphComponent
     protected timeIntervalChanges(): void { }
 
     protected addDataset(id: string, url: string): void {
-        this.api.getDataset(id, url).subscribe((dataset) &#x3D;&gt; {
+        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Profile }).subscribe(dataset &#x3D;&gt; {
             const options &#x3D; this.datasetOptions.get(dataset.internalId);
             options.forEach((option) &#x3D;&gt; {
                 if (option.timestamp) {
                     const timespan &#x3D; new Timespan(option.timestamp);
-                    this.api.getData&lt;ProfileDataEntry&gt;(id, url, timespan).subscribe((data) &#x3D;&gt; {
+                    this.servicesConnector.getDatasetData(dataset, timespan).subscribe(data &#x3D;&gt; {
                         if (data.values.length &#x3D;&#x3D;&#x3D; 1) {
                             if (this.rawData.has(dataset.internalId)) {
                                 this.rawData.get(dataset.internalId).datas.push(data.values[0]);
@@ -394,7 +395,7 @@ export class PlotlyProfileGraphComponent
         this.updateAxis();
     }
 
-    private createXAxis(dataset: IDataset, data: ProfileDataEntry): string {
+    private createXAxis(dataset: HelgolandProfile, data: ProfileDataEntry): string {
         let axis;
         for (const key in this.layout) {
             if (this.layout.hasOwnProperty(key) &amp;&amp; key.startsWith(&#x27;xaxis&#x27;) &amp;&amp; this.layout[key].title &#x3D;&#x3D;&#x3D; dataset.uom) {
@@ -425,7 +426,7 @@ export class PlotlyProfileGraphComponent
         return axis.id;
     }
 
-    private createYAxis(dataset: IDataset, data: ProfileDataEntry): string {
+    private createYAxis(dataset: HelgolandProfile, data: ProfileDataEntry): string {
         let axis;
         // find axis
         for (const key in this.layout) {

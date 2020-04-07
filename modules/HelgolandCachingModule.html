@@ -121,6 +121,16 @@
         </p>
 
 
+        <p class="comment">
+            <h3>Description</h3>
+        </p>
+        <p class="comment">
+            <p>The caching module includes the following functionality:</p>
+<ul>
+<li>caches similar requests</li>
+</ul>
+
+        </p>
 
 
         <div class="container-fluid module">
@@ -137,42 +147,155 @@
             </div>
         </div>
 
+        <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="forRoot"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            forRoot
+                        </b>
+                        <a href="#forRoot"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>forRoot(config: <a href="../interfaces/CacheConfig.html">CacheConfig</a>)</code>
+                </td>
+            </tr>
 
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">projects/helgoland/caching/src/lib/caching.module.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>config</td>
+                                    <td>
+                                                <code><a href="../interfaces/CacheConfig.html" target="_self" >CacheConfig</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Provider.html" target="_self" >ModuleWithProviders</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { HTTP_SERVICE_INTERCEPTORS, HelgolandCoreModule } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ModuleWithProviders, NgModule } from &#x27;@angular/core&#x27;;
+import { HelgolandCoreModule, HTTP_SERVICE_INTERCEPTORS } from &#x27;@helgoland/core&#x27;;
 
-import { CachingInterceptor } from &#x27;./cache-interceptor&#x27;;
-import { LocalHttpCache } from &#x27;./local-http-cache&#x27;;
-import { LocalOngoingHttpCache } from &#x27;./local-ongoing-http-cache&#x27;;
-import { HttpCache, OnGoingHttpCache } from &#x27;./model&#x27;;
+import { CacheConfig, CacheConfigService } from &#x27;./config&#x27;;
+import { LocalHttpCacheInterval } from &#x27;./get-data-cache/local-http-cache-interval&#x27;;
+import { LocalHttpCacheIntervalInterceptor } from &#x27;./get-data-cache/local-http-cache-interval-interceptor&#x27;;
+import { CachingInterceptor } from &#x27;./http-get-cache/cache-interceptor&#x27;;
+import { LocalHttpCache } from &#x27;./http-get-cache/local-http-cache&#x27;;
+import { LocalOngoingHttpCache } from &#x27;./http-get-cache/local-ongoing-http-cache&#x27;;
+import { HttpCache, HttpCacheInterval, OnGoingHttpCache } from &#x27;./model&#x27;;
 
+const GET_DATA_CACHE_PROVIDERS &#x3D; [
+  {
+    provide: HTTP_SERVICE_INTERCEPTORS,
+    useClass: LocalHttpCacheIntervalInterceptor,
+    multi: true
+  },
+  {
+    provide: HttpCacheInterval,
+    useClass: LocalHttpCacheInterval
+  }
+];
+
+const HTTP_GET_PROVIDERS &#x3D; [
+  {
+    provide: HttpCache,
+    useClass: LocalHttpCache
+  },
+  {
+    provide: HTTP_SERVICE_INTERCEPTORS,
+    useClass: CachingInterceptor,
+    multi: true
+  },
+  {
+    provide: OnGoingHttpCache,
+    useClass: LocalOngoingHttpCache
+  }
+];
+
+/**
+ * The caching module includes the following functionality:
+ * - caches similar requests
+ */
 @NgModule({
   declarations: [],
   imports: [
     HelgolandCoreModule
   ],
   exports: [],
-  providers: [
-    {
-      provide: HttpCache,
-      useClass: LocalHttpCache
-    },
-    {
-      provide: HTTP_SERVICE_INTERCEPTORS,
-      useClass: CachingInterceptor,
-      multi: true
-    },
-    {
-      provide: OnGoingHttpCache,
-      useClass: LocalOngoingHttpCache
-    },
-  ]
+  providers: [HTTP_GET_PROVIDERS]
 })
-export class HelgolandCachingModule { }
+export class HelgolandCachingModule {
+
+  static forRoot(config: CacheConfig): ModuleWithProviders {
+    return {
+      ngModule: HelgolandCachingModule,
+      providers: [
+        ...(config.getDataCacheActive ? GET_DATA_CACHE_PROVIDERS : []),
+        {
+          provide: CacheConfigService,
+          useValue: config
+        }
+      ]
+    };
+  }
+
+}
 </code></pre>
     </div>
 </div>

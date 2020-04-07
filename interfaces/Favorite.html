@@ -159,7 +159,33 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { IDataset, LocalStorage } from &#x27;@helgoland/core&#x27;;
+import { DatasetOptions, HelgolandTimeseries, LocalStorage } from &#x27;@helgoland/core&#x27;;
+import { Observable, ReplaySubject } from &#x27;rxjs&#x27;;
+
+export interface Favorite {
+  id: string;
+  label: string;
+}
+
+export interface SingleFavorite extends Favorite {
+  favorite: HelgolandTimeseries;
+  options: DatasetOptions;
+}
+
+function isSingleFavorite(object: any): object is SingleFavorite {
+  return &#x27;favorite&#x27; in object;
+}
+
+export interface GroupFavorite extends Favorite {
+  favorites: {
+    dataset: HelgolandTimeseries,
+    options: DatasetOptions
+  }[];
+}
+
+function isGroupFavorite(object: any): object is GroupFavorite {
+  return &#x27;favorites&#x27; in object;
+}
 
 const CACHE_PARAM_FAVORITES_SINGLE &#x3D; &#x27;SingleFavorites&#x27;;
 const CACHE_PARAM_FAVORITES_GROUP &#x3D; &#x27;GroupFavorites&#x27;;
@@ -171,18 +197,21 @@ export class FavoriteService {
   private groupFavs: Map&lt;string, GroupFavorite&gt;;
   private groupCounter &#x3D; 0;
 
+  private favoriteCountChanged: ReplaySubject&lt;number&gt; &#x3D; new ReplaySubject();
+
   constructor(
     protected localStorage: LocalStorage
   ) {
     this.loadFavorites();
   }
 
-  public addFavorite(dataset: IDataset, label?: string): boolean {
+  public addFavorite(dataset: HelgolandTimeseries, options: DatasetOptions, label?: string): boolean {
     if (!this.singleFavs.has(dataset.internalId)) {
       this.singleFavs.set(dataset.internalId, {
         id: dataset.internalId,
         label: label ? label : dataset.label,
-        favorite: dataset
+        favorite: dataset,
+        options
       });
       this.saveFavorites();
       return true;
@@ -190,8 +219,18 @@ export class FavoriteService {
     return false;
   }
 
-  public hasFavorite(dataset: IDataset): boolean {
+  public getFavoriteCountChanged(): Observable&lt;number&gt; {
+    return this.favoriteCountChanged;
+  }
+
+  public hasFavorite(dataset: HelgolandTimeseries): boolean {
     return this.singleFavs.has(dataset.internalId);
+  }
+
+  public setFavorites(singles: Map&lt;string, SingleFavorite&gt;, groups: Map&lt;string, GroupFavorite&gt;) {
+    this.groupFavs &#x3D; groups;
+    this.singleFavs &#x3D; singles;
+    this.saveFavorites();
   }
 
   public getFavorites(): SingleFavorite[] {
@@ -212,7 +251,7 @@ export class FavoriteService {
     return false;
   }
 
-  public addFavoriteGroup(datasets: IDataset[], label?: string): boolean {
+  public addFavoriteGroup(datasets: { dataset: HelgolandTimeseries, options: DatasetOptions }[], label?: string): boolean {
     const id &#x3D; &#x27;Group&#x27; + this.groupCounter++;
     this.groupFavs.set(id, {
       id,
@@ -244,6 +283,7 @@ export class FavoriteService {
   private saveFavorites(): void {
     this.localStorage.save(CACHE_PARAM_FAVORITES_SINGLE, this.getFavorites());
     this.localStorage.save(CACHE_PARAM_FAVORITES_GROUP, this.getFavoriteGroups());
+    this.updateFavoriteCount();
   }
 
   private loadFavorites(): void {
@@ -251,34 +291,45 @@ export class FavoriteService {
     this.groupFavs &#x3D; new Map();
     const loadedSingleFavs &#x3D; this.localStorage.loadArray&lt;SingleFavorite&gt;(CACHE_PARAM_FAVORITES_SINGLE);
     if (loadedSingleFavs) {
-      loadedSingleFavs.forEach((entry) &#x3D;&gt; this.singleFavs.set(entry.id, entry));
+      loadedSingleFavs.forEach((entry) &#x3D;&gt; {
+        entry.favorite &#x3D; this.instanciateClass(entry.favorite);
+        this.singleFavs.set(entry.id, entry);
+      });
     }
     const loadedGroupFavs &#x3D; this.localStorage.loadArray&lt;GroupFavorite&gt;(CACHE_PARAM_FAVORITES_GROUP);
     if (loadedGroupFavs) {
-      loadedGroupFavs.forEach((entry) &#x3D;&gt; this.groupFavs.set(entry.id, entry));
+      loadedGroupFavs.forEach((entry) &#x3D;&gt; {
+        entry.favorites.map(element &#x3D;&gt; {
+          return {
+            dataset: this.instanciateClass(element.dataset),
+            options: element.options
+          };
+        });
+        this.groupFavs.set(entry.id, entry);
+      });
     }
+    this.updateFavoriteCount();
   }
-}
 
-export interface Favorite {
-  id: string;
-  label: string;
-}
+  private instanciateClass(timeseries: HelgolandTimeseries): HelgolandTimeseries {
+    const storedFav &#x3D; timeseries as HelgolandTimeseries;
+    return new HelgolandTimeseries(
+      storedFav.id,
+      storedFav.url,
+      storedFav.label,
+      storedFav.uom,
+      storedFav.platform,
+      storedFav.firstValue,
+      storedFav.lastValue,
+      storedFav.referenceValues,
+      storedFav.renderingHints,
+      storedFav.parameters
+    );
+  }
 
-export interface SingleFavorite extends Favorite {
-  favorite: IDataset;
-}
-
-function isSingleFavorite(object: any): object is SingleFavorite {
-  return &#x27;favorite&#x27; in object;
-}
-
-export interface GroupFavorite extends Favorite {
-  favorites: IDataset[];
-}
-
-function isGroupFavorite(object: any): object is GroupFavorite {
-  return &#x27;favorites&#x27; in object;
+  private updateFavoriteCount() {
+    this.favoriteCountChanged.next(this.singleFavs.size + this.groupFavs.size);
+  }
 }
 </code></pre>
     </div>

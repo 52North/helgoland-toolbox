@@ -143,7 +143,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createIconLabel(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    <code>createIconLabel(ts: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
@@ -173,7 +173,7 @@
                                 <tr>
                                     <td>ts</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -216,7 +216,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createIconLabel(ts: <a href="../injectables/Time.html">Timeseries</a>)</code>
+                    <code>createIconLabel(ts: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
@@ -254,7 +254,7 @@
                                 <tr>
                                     <td>ts</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -286,7 +286,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { Timeseries } from &#x27;@helgoland/core&#x27;;
+import { HelgolandTimeseries } from &#x27;@helgoland/core&#x27;;
 import * as L from &#x27;leaflet&#x27;;
 import moment from &#x27;moment&#x27;;
 
@@ -299,7 +299,7 @@ export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
     super();
   }
 
-  public createIconLabel(ts: Timeseries) {
+  public createIconLabel(ts: HelgolandTimeseries) {
     const date &#x3D; moment(ts.lastValue.timestamp).fromNow();
     return L.divIcon({
       className: &#x27;last-value-container&#x27;,

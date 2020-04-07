@@ -190,21 +190,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Timeseries, Timespan } from &#x27;@helgoland/core&#x27;;
-import { Observable } from &#x27;rxjs&#x27;;
-
-export interface FacetSearch {
-    getResults(): Observable&lt;Timeseries[]&gt;;
-    getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
-    selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
-    setTimeseries(timeseries: Timeseries[]);
-    getFilteredResults(): Timeseries[];
-    setCurrentTimespan(timespan: Timespan);
-    getCurrentTimespan(): Timespan;
-    getCompleteTimespan(): Timespan;
-}
-
-export enum ParameterFacetType {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export enum ParameterFacetType {
     category &#x3D; &#x27;category&#x27;,
     phenomenon &#x3D; &#x27;phenomenon&#x27;,
     procedure &#x3D; &#x27;procedure&#x27;,

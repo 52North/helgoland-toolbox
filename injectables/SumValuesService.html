@@ -251,9 +251,9 @@ export class SumValuesService {
               hasValues &#x3D; true;
             }
           });
-          result.push([currentBucketStart.unix() * 1000, hasValues ? sum : &#x27;NaN&#x27;]);
+          result.push([currentBucketStart.unix() * 1000, hasValues ? sum : NaN]);
         } else {
-          result.push([currentBucketStart.unix() * 1000, &#x27;NaN&#x27;]);
+          result.push([currentBucketStart.unix() * 1000, NaN]);
         }
         bucketVals &#x3D; [];
         currentBucketStart &#x3D; currentBucketStart.add(period);

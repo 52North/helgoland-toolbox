@@ -150,7 +150,7 @@ node_modules/rxjs/operator/map.d.ts(1,15): error TS2307: Cannot find module &#39
 </ul>
 <div><pre class="line-numbers"><code class="language-html">&lt;div style=&quot;height: 500px;&quot;&gt;&lt;/div&gt;</code></pre></div><p>This code is implemented in the helgoland-toolbox github repository and can be viewed <a href="https://github.com/52North/helgoland-toolbox/blob/develop/src/app/pages/map-selector/map-selector.component.html">here</a>.</p>
 <p>Implement the functionality of the <code>n52-station-map-selector</code>-directive by adding the following code to the class <code>AppComponent</code> in <code>src/app/app.component.ts</code>:</p>
-<div><pre class="line-numbers"><code class="language-javascript">public providerUrl = &#39;http://geo.irceline.be/sos/api/v1/&#39;;
+<div><pre class="line-numbers"><code class="language-javascript">public providerUrl = &#39;https://geo.irceline.be/sos/api/v1/&#39;;
 
 public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
 public zoomControlOptions: L.Control.ZoomOptions = { position: &#39;topleft&#39; };
@@ -325,7 +325,7 @@ import * as L from &#39;leaflet&#39;;
   styleUrls: [&#39;./app.component.scss&#39;]
 })
 export class AppComponent {
-  public providerUrl = &#39;http://geo.irceline.be/sos/api/v1/&#39;;
+  public providerUrl = &#39;https://geo.irceline.be/sos/api/v1/&#39;;
 
   public fitBounds: L.LatLngBoundsExpression = [[49.5, 3.27], [51.5, 5.67]];
   public zoomControlOptions: L.Control.ZoomOptions = { position: &#39;topleft&#39; };

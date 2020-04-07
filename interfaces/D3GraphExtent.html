@@ -222,11 +222,13 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, OnDestroy, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, OnDestroy } from &#x27;@angular/core&#x27;;
 import { Timespan } from &#x27;@helgoland/core&#x27;;
 
 import { D3GraphHelperService } from &#x27;../helper/d3-graph-helper.service&#x27;;
+import { D3GraphId } from &#x27;../helper/d3-graph-id.service&#x27;;
 import { InternalDataEntry, YAxis } from &#x27;../model/d3-general&#x27;;
+import { D3Graphs } from &#x27;./../helper/d3-graphs.service&#x27;;
 import { D3TimeseriesGraphComponent } from &#x27;./d3-timeseries-graph.component&#x27;;
 
 export interface D3GraphObserver {
@@ -237,6 +239,15 @@ export interface D3GraphObserver {
         graph: d3.Selection&lt;SVGSVGElement, any, any, any&gt;,
         timespan: Timespan
     ): void;
+    mousemoveBackground?();
+    mouseoverBackground?();
+    mouseoutBackground?();
+    dragStartBackground?();
+    dragMoveBackground?();
+    dragEndBackground?();
+    zoomStartBackground?();
+    zoomMoveBackground?();
+    zoomEndBackground?();
     adjustYAxis?(axis: YAxis): void;
     afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
 }
@@ -264,20 +275,27 @@ export interface D3GraphExtent {
  *      &lt;implementation-selector&gt;&lt;/implementation-selector&gt;
  * &lt;/n52-d3-timeseries-graph&gt;
  */
-export abstract class D3TimeseriesGraphControl implements OnInit, OnDestroy, D3GraphObserver {
+export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
 
     constructor(
-        @Inject(D3TimeseriesGraphComponent) protected d3Graph: D3TimeseriesGraphComponent,
+        protected graphId: D3GraphId,
+        protected graphs: D3Graphs,
         protected graphHelper: D3GraphHelperService
     ) { }
 
-    public ngOnInit(): void {
-        this.d3Graph.registerObserver(this);
+    public ngAfterViewInit(): void {
+        this.graphId.getId().subscribe(graphId &#x3D;&gt; this.graphs.getGraph(graphId).subscribe(graph &#x3D;&gt; {
+            // needs to be registered first, to react then on the callbacks
+            graph.registerObserver(this);
+            this.graphInitialized(graph);
+        }));
     }
 
     public ngOnDestroy(): void {
-        this.d3Graph.unregisterObserver(this);
+        this.graphId.getId().subscribe(graphId &#x3D;&gt; this.graphs.getGraph(graphId).subscribe(graph &#x3D;&gt; graph.unregisterObserver(this)));
     }
+
+    public abstract graphInitialized(graph: D3TimeseriesGraphComponent);
 
     public adjustYAxis?(axis: YAxis): void;
 

@@ -157,6 +157,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
+                                <a href="#deselectAllItems">deselectAllItems</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
                                 <a href="#errorOnLoading">errorOnLoading</a>
                             </li>
                             <li>
@@ -164,7 +168,7 @@
                                 <a href="#languageChanged">languageChanged</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Protected</span>
                                 <a href="#loadItems">loadItems</a>
                             </li>
                             <li>
@@ -176,7 +180,7 @@
                                 <a href="#onSelectItem">onSelectItem</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Protected</span>
                                 <a href="#setItems">setItems</a>
                             </li>
                             <li>
@@ -201,6 +205,9 @@
                             </li>
                             <li>
                                 <a href="#filterList">filterList</a>
+                            </li>
+                            <li>
+                                <a href="#selected">selected</a>
                             </li>
                         </ul>
                     </td>
@@ -233,12 +240,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(apiInterface: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>, translate: <a href="../interfaces/Service.html">TranslateService</a>)</code>
+<code>constructor(servicesConnector: <a href="../injectables/HelgolandServicesConnector.html">HelgolandServicesConnector</a>, translate: <a href="../interfaces/Service.html">TranslateService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:39</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -256,10 +263,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>apiInterface</td>
+                                                        <td>servicesConnector</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                                        <code><a href="../injectables/HelgolandServicesConnector.html" target="_self" >HelgolandServicesConnector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -306,7 +313,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:36</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -327,7 +334,28 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:33</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selected"></a>
+                        <b>selected</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:42</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -345,13 +373,13 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/Filter.html" target="_self" >EventEmitter&lt;FilteredParameter&gt;</a></code>
+                        <i>Type : </i>    <code>EventEmitter&lt;FilteredParameter&gt;</code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:45</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -368,10 +396,51 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="errorOnLoading"></a>
+                    <a name="deselectAllItems"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Private</span>
+                            deselectAllItems
+                        </b>
+                        <a href="#deselectAllItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deselectAllItems()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="152"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:152</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorOnLoading"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Protected</span>
                             errorOnLoading
                         </b>
                         <a href="#errorOnLoading"><span class="icon ion-ios-link"></span></a>
@@ -388,8 +457,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:115</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:126</a></div>
                 </td>
             </tr>
 
@@ -429,8 +498,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:67</a></div>
                 </td>
             </tr>
 
@@ -453,7 +522,7 @@
                     <a name="loadItems"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Private</span>
+                            <span class="modifier">Protected</span>
                             loadItems
                         </b>
                         <a href="#loadItems"><span class="icon ion-ios-link"></span></a>
@@ -470,8 +539,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:71</a></div>
                 </td>
             </tr>
 
@@ -504,15 +573,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>ngOnChanges()</code>
+                    <code>ngOnChanges(changes: <a href="https://angular.io/api/core/SimpleChanges" target="_blank">SimpleChanges</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="48"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:48</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:57</a></div>
                 </td>
             </tr>
 
@@ -521,8 +590,39 @@
                 <td class="col-md-4">
 
                     <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>changes</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/core/SimpleChanges" target="_blank" >SimpleChanges</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -552,8 +652,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:52</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:61</a></div>
                 </td>
             </tr>
 
@@ -607,7 +707,7 @@
                     <a name="setItems"></a>
                     <span class="name">
                         <b>
-                            <span class="modifier">Private</span>
+                            <span class="modifier">Protected</span>
                             setItems
                         </b>
                         <a href="#setItems"><span class="icon ion-ios-link"></span></a>
@@ -617,15 +717,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setItems(res: <a href="../classes/Filter.html">FilteredParameter[]</a>, prevfilter: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, service: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>setItems(res: FilteredParameter[], prevfilter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, service: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="119"
-                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:119</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:130</a></div>
                 </td>
             </tr>
 
@@ -647,7 +747,7 @@
                                 <tr>
                                     <td>res</td>
                                     <td>
-                                                <code><a href="../classes/Filter.html" target="_self" >FilteredParameter[]</a></code>
+                                            <code>FilteredParameter[]</code>
                                     </td>
 
                                     <td>
@@ -659,7 +759,7 @@
                                 <tr>
                                     <td>prevfilter</td>
                                     <td>
-                                                <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
                                     </td>
 
                                     <td>
@@ -777,13 +877,13 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../classes/Filter.html" target="_self" >FilteredParameter[]</a></code>
+                            <i>Type : </i>    <code>FilteredParameter[]</code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:39</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -816,7 +916,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/selector/src/lib/multi-service-filter-selector/multi-service-filter-selector.component.ts:47</a></div>
                             </td>
                         </tr>
 
@@ -829,13 +929,19 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output } from &#x27;@angular/core&#x27;;
-import { DatasetApiInterface, Filter, LanguageChangNotifier, Parameter, ParameterFilter } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
+import {
+    Filter,
+    HelgolandParameterFilter,
+    HelgolandServicesConnector,
+    LanguageChangNotifier,
+    Parameter,
+} from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 export interface MultiServiceFilter {
     url: string;
-    filter?: ParameterFilter;
+    filter?: HelgolandParameterFilter;
 }
 
 export enum MultiServiceFilterEndpoint {
@@ -863,6 +969,9 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     @Input()
     public filterList: MultiServiceFilter[];
 
+    @Input()
+    public selected: string;
+
     @Output()
     public onItemSelected: EventEmitter&lt;FilteredParameter&gt; &#x3D; new EventEmitter&lt;FilteredParameter&gt;();
 
@@ -870,17 +979,19 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public items: FilteredParameter[];
 
     constructor(
-        protected apiInterface: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected translate: TranslateService
     ) {
         super(translate);
     }
 
-    public ngOnChanges() {
+    public ngOnChanges(changes: SimpleChanges) {
         this.loadItems();
     }
 
     public onSelectItem(item: FilteredParameter): void {
+        this.deselectAllItems();
+        item.selected &#x3D; true;
         this.onItemSelected.emit(item);
     }
 
@@ -888,52 +999,52 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.loadItems();
     }
 
-    private loadItems() {
+    protected loadItems() {
         this.items &#x3D; [];
         this.filterList.forEach((entry) &#x3D;&gt; {
             this.loading++;
             const filter &#x3D; entry.filter || {};
             switch (this.endpoint) {
                 case MultiServiceFilterEndpoint.offering:
-                    this.apiInterface.getOfferings(entry.url, filter).subscribe(
+                    this.servicesConnector.getOfferings(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.phenomenon:
-                    this.apiInterface.getPhenomena(entry.url, filter).subscribe(
+                    this.servicesConnector.getPhenomena(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.procedure:
-                    this.apiInterface.getProcedures(entry.url, filter).subscribe(
+                    this.servicesConnector.getProcedures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.feature:
-                    this.apiInterface.getFeatures(entry.url, filter).subscribe(
+                    this.servicesConnector.getFeatures(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.category:
-                    this.apiInterface.getCategories(entry.url, filter).subscribe(
+                    this.servicesConnector.getCategories(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.platform:
-                    this.apiInterface.getPlatforms(entry.url, filter).subscribe(
+                    this.servicesConnector.getPlatforms(entry.url, filter).subscribe(
                         (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
                         (error) &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 case MultiServiceFilterEndpoint.dataset:
-                    this.apiInterface.getDatasets(entry.url, filter).subscribe(
-                        (res) &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
-                        (error) &#x3D;&gt; this.errorOnLoading
+                    this.servicesConnector.getDatasets(entry.url, filter).subscribe(
+                        res &#x3D;&gt; this.setItems(res, filter, entry.url, filter.service),
+                        error &#x3D;&gt; this.errorOnLoading
                     );
                     break;
                 default:
@@ -943,24 +1054,25 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         });
     }
 
-    private errorOnLoading(): void {
+    protected errorOnLoading(): void {
         this.loading--;
     }
 
-    private setItems(res: FilteredParameter[], prevfilter: ParameterFilter, url: string, service: string): void {
+    protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
         this.loading--;
-        res.forEach((entry) &#x3D;&gt; {
+        res.forEach(entry &#x3D;&gt; {
+            entry.selected &#x3D; this.selected &#x3D;&#x3D;&#x3D; entry.label;
             const filter: Filter &#x3D; {
                 filter: prevfilter,
                 itemId: entry.id,
                 url,
                 service
             };
-            const item &#x3D; this.items.find((elem) &#x3D;&gt; {
-                if (elem.label &#x3D;&#x3D;&#x3D; entry.label) { return true; }
-            });
+            const item &#x3D; this.items.find(e &#x3D;&gt; e.label &#x3D;&#x3D;&#x3D; entry.label);
             if (item) {
-                item.filterList.push(filter);
+                if (!item.filterList.find(e &#x3D;&gt; e.itemId &#x3D;&#x3D;&#x3D; filter.itemId &amp;&amp; e.service &#x3D;&#x3D;&#x3D; filter.service)) {
+                    item.filterList.push(filter);
+                }
             } else {
                 entry.filterList &#x3D; [filter];
                 this.items.push(entry);
@@ -968,10 +1080,15 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         });
     }
 
+    private deselectAllItems() {
+        this.items.forEach(e &#x3D;&gt; e.selected &#x3D; false);
+    }
+
 }
 
 export interface FilteredParameter extends Parameter {
     filterList?: Filter[];
+    selected?: boolean;
 }
 </code></pre>
     </div>
@@ -980,7 +1097,7 @@ export interface FilteredParameter extends Parameter {
         <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;loading &gt; 0&quot;&gt;
     &lt;span&gt;loading...&lt;/span&gt;
 &lt;/div&gt;
-&lt;div *ngFor&#x3D;&quot;let item of items&quot; (click)&#x3D;&quot;onSelectItem(item)&quot;&gt;
+&lt;div *ngFor&#x3D;&quot;let item of items&quot; (click)&#x3D;&quot;onSelectItem(item)&quot; [ngStyle]&#x3D;&quot;{&#x27;font-weight&#x27;: item.selected ? &#x27;bold&#x27;: &#x27;normal&#x27;}&quot;&gt;
     {{item.id}} - {{item.label}}
 &lt;/div&gt;</code></pre>
     </div>
@@ -1011,8 +1128,8 @@ export interface FilteredParameter extends Parameter {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div *ngIf="loading > 0">    <span>loading...</span></div><div *ngFor="let item of items" (click)="onSelectItem(item)">    {{item.id}} - {{item.label}}</div></div>'
-    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="loading > 0">    <span>loading...</span></div><div *ngFor="let item of items" (click)="onSelectItem(item)" [ngStyle]="{\'font-weight\': item.selected ? \'bold\': \'normal\'}">    {{item.id}} - {{item.label}}</div></div>'
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MultiServiceFilterSelectorComponent'};
 </script>

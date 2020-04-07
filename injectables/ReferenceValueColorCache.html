@@ -425,7 +425,15 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Injectable, OnChanges, ViewEncapsulation } from &#x27;@angular/core&#x27;;
-import { ColorService, DatasetApiInterface, IdCache, InternalIdHandler, ReferenceValue, Time } from &#x27;@helgoland/core&#x27;;
+import {
+    ColorService,
+    DatasetOptions,
+    HelgolandServicesConnector,
+    IdCache,
+    InternalIdHandler,
+    ReferenceValue,
+    Time,
+} from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 import {
@@ -451,14 +459,14 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     public referenceValues: ReferenceValue[];
 
     constructor(
-        protected api: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected timeSrvc: Time,
         protected internalIdHandler: InternalIdHandler,
         protected color: ColorService,
         protected refValCache: ReferenceValueColorCache,
         protected translateSrvc: TranslateService
     ) {
-        super(api, internalIdHandler, translateSrvc, timeSrvc);
+        super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
     }
 
     public toggleInformation() {
@@ -466,7 +474,7 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     }
 
     public toggleReferenceValue(refValue: ReferenceValue) {
-        const options &#x3D; JSON.parse(JSON.stringify(this.datasetOptions));
+        const options &#x3D; JSON.parse(JSON.stringify(this.datasetOptions)) as DatasetOptions;
         const idx &#x3D; options.showReferenceValues.findIndex((entry) &#x3D;&gt; entry.id &#x3D;&#x3D;&#x3D; refValue.referenceValueId);
         const refValId &#x3D; this.createRefValId(refValue.referenceValueId);
         if (idx &gt; -1) {

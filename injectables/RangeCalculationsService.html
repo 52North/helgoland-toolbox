@@ -314,8 +314,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/helper/range-calculations.service.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/helper/range-calculations.service.ts:40</a></div>
                 </td>
             </tr>
 
@@ -401,9 +401,12 @@ export class RangeCalculationsService {
    * @param rangeTwo {MinMaxRange}
    */
   public mergeRanges(rangeOne: MinMaxRange, rangeTwo: MinMaxRange): MinMaxRange {
+    const calcMin &#x3D; Math.min(rangeOne.min !&#x3D;&#x3D; undefined ? rangeOne.min : Number.POSITIVE_INFINITY, rangeTwo.min !&#x3D;&#x3D; undefined ? rangeTwo.min : Number.POSITIVE_INFINITY);
+    const calcMax &#x3D; Math.max(rangeOne.max !&#x3D;&#x3D; undefined ? rangeOne.max : Number.NEGATIVE_INFINITY, rangeTwo.max !&#x3D;&#x3D; undefined ? rangeTwo.max : Number.NEGATIVE_INFINITY);
+
     return {
-      min: Math.min(rangeOne.min, rangeTwo.min),
-      max: Math.max(rangeOne.max, rangeTwo.max)
+      min: calcMin &#x3D;&#x3D;&#x3D; Number.POSITIVE_INFINITY ? undefined : calcMin,
+      max: calcMax &#x3D;&#x3D;&#x3D; Number.NEGATIVE_INFINITY ? undefined : calcMax
     };
   }
 

@@ -69,7 +69,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
             </p>
 
         <section>
@@ -138,7 +138,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Data, DatasetOptions, IDataset, MinMaxRange, Timespan, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
 import { ScaleLinear } from &#x27;d3&#x27;;
 import { Duration, unitOfTime } from &#x27;moment&#x27;;
 
@@ -196,14 +196,14 @@ export interface D3GeneralDataPoint {
 
 export interface DataEntry {
     timestamp: number;
-    value: number | string;
+    value: number;
     xDiagCoord?: number;
     yDiagCoord?: number;
 }
 
 export interface InternalDataEntry {
     internalId: string;
-    id?: number;
+    hoverId: string;
     data: DataEntry[];
     selected?: boolean;
     options: DatasetOptions;
@@ -234,7 +234,7 @@ export interface InternalDataEntry {
     focusLabel?: any;
 }
 
-export interface DataConst extends IDataset {
+export interface DataConst extends HelgolandTimeseries {
     data?: Data&lt;TimeValueTuple&gt;;
 }
 

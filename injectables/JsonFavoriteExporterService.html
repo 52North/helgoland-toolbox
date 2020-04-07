@@ -214,8 +214,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">projects/helgoland/favorite/src/lib/service/json-favorite-exporter.service.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">projects/helgoland/favorite/src/lib/service/json-favorite-exporter.service.ts:36</a></div>
                 </td>
             </tr>
 
@@ -271,7 +271,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { Observable, Observer } from &#x27;rxjs&#x27;;
 
-import { FavoriteService, SingleFavorite } from &#x27;./favorite.service&#x27;;
+import { FavoriteService, GroupFavorite, SingleFavorite } from &#x27;./favorite.service&#x27;;
 
 @Injectable()
 export class JsonFavoriteExporterService {
@@ -282,7 +282,10 @@ export class JsonFavoriteExporterService {
 
   public exportFavorites() {
     const filename &#x3D; &#x27;favorites.json&#x27;;
-    const json &#x3D; JSON.stringify(this.favoriteSrvc.getFavorites());
+    const json &#x3D; {
+      singles: this.favoriteSrvc.getFavorites(),
+      groups: this.favoriteSrvc.getFavoriteGroups()
+    };
     // if (window.navigator.msSaveBlob) {
     //     // IE version &gt;&#x3D; 10
     //     const blob &#x3D; new Blob([json], {
@@ -292,7 +295,7 @@ export class JsonFavoriteExporterService {
     // } else {
     // FF, Chrome ...
     const a &#x3D; document.createElement(&#x27;a&#x27;);
-    a.href &#x3D; &#x27;data:application/json,&#x27; + encodeURIComponent(json);
+    a.href &#x3D; &#x27;data:application/json,&#x27; + encodeURIComponent(JSON.stringify(json));
     a.target &#x3D; &#x27;_blank&#x27;;
     a.download &#x3D; filename;
     document.body.appendChild(a);
@@ -312,10 +315,12 @@ export class JsonFavoriteExporterService {
         };
         reader.onload &#x3D; (e: any) &#x3D;&gt; {
           const result &#x3D; e.target.result;
-          const favorites &#x3D; JSON.parse(result) as SingleFavorite[];
-          favorites.forEach((entry) &#x3D;&gt; {
-            this.favoriteSrvc.addFavorite(entry.favorite, entry.label);
-          });
+          const json &#x3D; JSON.parse(result);
+          const singles &#x3D; new Map&lt;string, SingleFavorite&gt;();
+          json.singles.forEach((single: SingleFavorite) &#x3D;&gt; singles.set(single.id, single));
+          const groups &#x3D; new Map&lt;string, GroupFavorite&gt;();
+          json.groups.forEach((group: GroupFavorite) &#x3D;&gt; groups.set(group.id, group));
+          this.favoriteSrvc.setFavorites(singles, groups);
           observer.next(true);
           observer.complete();
         };

@@ -38,25 +38,47 @@
 <!-- [![dependencies Status](https://david-dm.org/52north/helgoland-toolbox/status.svg)](https://david-dm.org/52north/helgoland-toolbox)
 [![devDependencies Status](https://david-dm.org/52north/helgoland-toolbox/dev-status.svg)](https://david-dm.org/52north/helgoland-toolbox?type=dev) -->
 
-<p>This project contains <a href="https://angular.io/">Angular</a> based Modules, Components, Injectables to build a sensor observation service based client. </p>
+<p>This project contains <a href="https://angular.io/">Angular</a> based Modules, Components, Injectables to build a sensor observation service based client.</p>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="dependencies">Dependencies</h3>
 <h4 id="nodenpm">Node/NPM</h4>
-<p>Install latest Node and NPM following the <a href="https://nodejs.org/en/download/">instructions</a>. Make sure you have Node version ≥ 7.0 and NPM ≥ 4.</p>
-<ul>
-<li><code>brew install node</code> for Mac.</li>
-</ul>
+<p>Install latest Node and NPM following the <a href="https://nodejs.org/en/download/">instructions</a>. Make sure you have Node version ≥ 10 and NPM ≥ 6. <code>brew install node</code> for Mac.</p>
 <h3 id="installing">Installing</h3>
 <ul>
 <li><code>fork</code> this repository.</li>
 <li><code>clone</code> your fork to your local environment.</li>
 <li><code>npm install</code> to install required dependencies.</li>
 </ul>
-<h3 id="build-the-libraries">Build the libraries</h3>
+<h3 id="start-test-application">Start test application</h3>
 <ul>
-<li><code>npm run build:libs</code> for building the library once</li>
+<li><code>npm start</code> will start the test application, which provide views for the main modules and components</li>
+<li>the app, and their corrensponding files can be found in the <code>src</code> folder</li>
+</ul>
+<h3 id="see-documentation">See Documentation</h3>
+<ul>
+<li>a module based documentation can be found here: <a href="https://52north.github.io/helgoland-toolbox/">https://52north.github.io/helgoland-toolbox/</a></li>
+<li>there is also a how to page with different use cases: <a href="https://52north.github.io/helgoland-toolbox/additional-documentation/how-tos.html">https://52north.github.io/helgoland-toolbox/additional-documentation/how-tos.html</a></li>
+</ul>
+<!-- TODO: check how toos, if their are still valid -->
+
+<h2 id="development">Development</h2>
+<ul>
+<li>different moduls are in the projects folder<!-- TODO: short description to every module -->
+
+</li>
+</ul>
+<h3 id="use-customized-toolbox-in-an-other-app-development">use customized toolbox in an other app development</h3>
+<h4 id="build-toolbox">build Toolbox</h4>
+<ul>
+<li><code>npm run lib:build</code> builds the complete toolbox in the <code>dist</code>-folder</li>
+<li>after build <code>npm run lib:pack</code> packs every module to a file in the following structure <code>helgoland-MODULENAME-CURRENT_VERSION.tgz</code> in the <code>root</code>-folder</li>
+<li>every packed module can be used by installing it in app development with it&#39;s relative path, for example <code>npm install ../helgoland-toolbox/helgoland-MODULENAME-CURRENT_VERSION.tgz</code></li>
 </ul>
 <h3 id="other-commands">Other commands</h3>
+<h4 id="run-tests">Run tests</h4>
+<ul>
+<li>all implemented tests for the modules can be run by <code>npm test</code></li>
+</ul>
 <h4 id="lint-the-complete-code">Lint the complete code</h4>
 <ul>
 <li><code>ng lint</code> for performing static code analysis.</li>
@@ -72,69 +94,12 @@
 </ul>
 <!-- `preversion` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing. -->
 
-<h5 id="publish-library-to-npm">Publish library to NPM</h5>
-<ul>
-<li><code>yarn lib:publish</code> to publish your library sources on <a href="https://www.npmjs.com/">npmjs.com</a>. Once the library is published it will be available for usage in npm packages.</li>
-</ul>
-<!-- `prepublishOnly` script in this case will automatically run project testing and linting in prior in order to check that the library is ready for publishing. -->
+<!-- ## Supported series API versions mapping
 
-<h3 id="using-demo-applications">Using demo applications</h3>
-<ul>
-<li>just start the demo with <code>ng serve</code> and the demo is published </li>
-</ul>
-<!-- #### Using `yarn link`
+| helgoland-toolbox version | [series rest API](https://github.com/52North/series-rest-api) version |
+| :-----------------------: | :-------------------------------------------------------------------: |
+|      v0.0.1-alpha.53      |                                v1.10.2                                | -->
 
-In you library root folder:
-
-```bash
-# Create symbolic link
-yarn link
-
-# Build library in watch mode
-yarn build:watch
-```
-
-In you project folder that should consume the library:
-
-```bash
-# Link you library to the project
-yarn link "angular-library-seed"
-
-# Build your project. In case of Angular-CLI use the following command.
-ng serve --aot
-```
-
-Then you need to import your library into your project's source code.
-
-Now, once you update your library source code it will automatically be re-compiled and your project will be re-built so you may see library changes instantly.
-
-[More information](https://yarnpkg.com/en/docs/cli/link) about `yarn link` command.
-
-> At the moment of publishing this project there is a [bug](https://github.com/angular/angular-cli/issues/3854) exists when using `yarn link` in combination with Angular CLI. The issue is caused by having `node_modules` folder inside linked library. There is a [workaround](https://github.com/angular/angular-cli/issues/3854#issuecomment-274344771) has been provided that suggests to add a `paths` property with all Angular dependencies to the `tsconfig.json` file of the Angular CLI project like it is shown below:
-
-```
-{
-  "compilerOptions": {
-    "paths": { "@angular/*": ["../node_modules/@angular/*"] }
-  }
-}
-``` -->
-
-<h2 id="supported-series-api-versions-mapping">Supported series API versions mapping</h2>
-<table class="table table-bordered compodoc-table">
-<thead>
-<tr>
-<th align="center">helgoland-toolbox version</th>
-<th align="center"><a href="https://github.com/52North/series-rest-api">series rest API</a> version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">v0.0.1-alpha.53</td>
-<td align="center">v1.10.2</td>
-</tr>
-</tbody>
-</table>
 <h2 id="troubleshooting-while-using-this-library">Troubleshooting while using this library</h2>
 <ul>
 <li>add <code>allowSyntheticDefaultImports: true</code> to your tsconfig.json to avoid error messages like <code>... has no default export</code></li>

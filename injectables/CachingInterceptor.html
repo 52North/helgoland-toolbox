@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/caching/src/lib/cache-interceptor.ts</code>
+            <code>projects/helgoland/caching/src/lib/http-get-cache/cache-interceptor.ts</code>
         </p>
 
 
@@ -102,7 +102,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">projects/helgoland/caching/src/lib/http-get-cache/cache-interceptor.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -182,7 +182,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/helgoland/caching/src/lib/cache-interceptor.ts:16</a></div>
+                            class="link-to-prism">projects/helgoland/caching/src/lib/http-get-cache/cache-interceptor.ts:16</a></div>
                 </td>
             </tr>
 
@@ -265,7 +265,7 @@ import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor } from &
 import { Observable, Observer, of } from &#x27;rxjs&#x27;;
 import { share } from &#x27;rxjs/operators&#x27;;
 
-import { HttpCache, OnGoingHttpCache } from &#x27;./model&#x27;;
+import { HttpCache, OnGoingHttpCache } from &#x27;../model&#x27;;
 
 @Injectable()
 export class CachingInterceptor implements HttpServiceInterceptor {
@@ -293,7 +293,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
-            return of(cachedResponse);
+            return of(cachedResponse.clone({ body: JSON.parse(JSON.stringify(cachedResponse.body)) }));
         }
 
         // check if the same request is still in the pipe
@@ -308,7 +308,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                     if (res instanceof HttpResponse) {
                         this.cache.put(req, res, metadata.expirationAtMs);
                         this.ongoingCache.clear(req);
-                        observer.next(res);
+                        observer.next(res.clone({ body: JSON.parse(JSON.stringify(res.body)) }));
                         observer.complete();
                     }
                 }, (error) &#x3D;&gt; {

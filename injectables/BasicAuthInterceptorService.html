@@ -103,7 +103,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(settings: <a href="../classes/SettingsService.html">SettingsService<Settings></a>, basicAuthServices: <a href="../injectables/BasicAuthServiceMaintainer.html">BasicAuthServiceMaintainer</a>, basicAuthSrvc: <a href="../injectables/BasicAuthService.html">BasicAuthService</a>, receptor: <a href="../classes/BasicAuthInformer.html">BasicAuthInformer</a>)</code>
+<code>constructor(settings: SettingsService<Settings>, basicAuthServices: <a href="../injectables/BasicAuthServiceMaintainer.html">BasicAuthServiceMaintainer</a>, basicAuthSrvc: <a href="../injectables/BasicAuthService.html">BasicAuthService</a>, receptor: <a href="../classes/BasicAuthInformer.html">BasicAuthInformer</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -129,7 +129,7 @@
                                                         <td>settings</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/SettingsService.html" target="_self" >SettingsService&lt;Settings&gt;</a></code>
+                                                                    <code>SettingsService&lt;Settings&gt;</code>
                                                         </td>
                                                   
                                                     <td>
@@ -328,12 +328,17 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
                 }
               });
             }
-            next.handle(req, options).subscribe(res &#x3D;&gt; {
-              observer.next(res);
-              if (res instanceof HttpResponse) {
+            next.handle(req, options).subscribe(
+              res &#x3D;&gt; {
+                observer.next(res);
+                if (res instanceof HttpResponse) {
+                  observer.complete();
+                }
+              },
+              error &#x3D;&gt; {
+                observer.error(error);
                 observer.complete();
-              }
-            });
+              });
           });
         });
       }

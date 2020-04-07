@@ -83,7 +83,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/station.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">projects/helgoland/core/src/lib/model/dataset-api/station.ts:15</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -101,8 +101,9 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ParameterConstellation, Timeseries } from &#x27;./dataset&#x27;;
 import { Parameter } from &#x27;./parameter&#x27;;
 
-export class Station {
+export class Station implements Parameter {
     public id: string;
+    public label: string;
     public geometry: GeoJSON.GeometryObject;
     public properties: StationProperties;
 }

@@ -1,0 +1,1577 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>IsoDecoder</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_profileIDMap">_profileIDMap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#utils">utils</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeAddress">decodeAddress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeContact">decodeContact</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeLegalConstraints">decodeLegalConstraints</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeOnlineFunction">decodeOnlineFunction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeOnlineResource">decodeOnlineResource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodePhone">decodePhone</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeResponsibleParty">decodeResponsibleParty</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeRestriction">decodeRestriction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#decodeRole">decodeRole</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getDecodedCharacterString">getDecodedCharacterString</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getDecodedUrl">getDecodedUrl</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#profileIDMap">profileIDMap</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_profileIDMap"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _profileIDMap</b>
+                            <a href="#_profileIDMap"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/BidiMap.html" target="_self" >BidiMap</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:21</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="utils"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            utils</b>
+                            <a href="#utils"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new DecoderUtils()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeAddress"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeAddress
+                        </b>
+                        <a href="#decodeAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeAddress(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:177</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Address.html" target="_self" >Address</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeContact"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeContact
+                        </b>
+                        <a href="#decodeContact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeContact(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:29</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Contact.html" target="_self" >Contact</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeLegalConstraints"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeLegalConstraints
+                        </b>
+                        <a href="#decodeLegalConstraints"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeLegalConstraints(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="364"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:364</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ReturnObject&lt;LegalConstraints&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeOnlineFunction"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeOnlineFunction
+                        </b>
+                        <a href="#decodeOnlineFunction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeOnlineFunction(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="319"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:319</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#OnlineFunction" target="_self" >OnlineFunction</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeOnlineResource"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeOnlineResource
+                        </b>
+                        <a href="#decodeOnlineResource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeOnlineResource(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:103</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ReturnObject&lt;OnlineResource&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodePhone"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodePhone
+                        </b>
+                        <a href="#decodePhone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodePhone(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Phone.html" target="_self" >Phone</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeResponsibleParty"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeResponsibleParty
+                        </b>
+                        <a href="#decodeResponsibleParty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeResponsibleParty(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="243"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:243</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>ReturnObject&lt;ResponsibleParty&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeRestriction"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeRestriction
+                        </b>
+                        <a href="#decodeRestriction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeRestriction(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="332"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:332</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ReturnObject.html" target="_self" >ReturnObject&lt;Restriction&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="decodeRole"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            decodeRole
+                        </b>
+                        <a href="#decodeRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>decodeRole(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="301"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:301</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#Role" target="_self" >Role</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDecodedCharacterString"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            getDecodedCharacterString
+                        </b>
+                        <a href="#getDecodedCharacterString"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDecodedCharacterString(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="395"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:395</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ReturnObject.html" target="_self" >ReturnObject&lt;string&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDecodedUrl"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            getDecodedUrl
+                        </b>
+                        <a href="#getDecodedUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDecodedUrl(elem: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="401"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:401</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>elem</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ReturnObject.html" target="_self" >ReturnObject&lt;string&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="profileIDMap"></a>
+                        <span class="name"><b>profileIDMap</b><a href="#profileIDMap"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>profileIDMap()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:23</a></div>
+                                </td>
+                            </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>profileIDMap(profileIDMap)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/IsoDecoder.ts:26</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>profileIDMap</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    Address,
+    Contact,
+    LegalConstraints,
+    OnlineFunction,
+    OnlineResource,
+    Phone,
+    ResponsibleParty,
+    Restriction,
+    Role
+} from &#x27;../../model/iso&#x27;;
+import { BidiMap } from &#x27;../dynamicGUI/BidiMap&#x27;;
+import { DecoderUtils } from &#x27;./DecoderUtils&#x27;;
+import { NAMESPACES } from &#x27;./Namespaces&#x27;;
+import { ReturnObject } from &#x27;./ReturnObject&#x27;;
+
+export class IsoDecoder {
+
+    private utils &#x3D; new DecoderUtils();
+
+    private _profileIDMap: BidiMap;
+
+    public get profileIDMap() {
+        return this._profileIDMap;
+    }
+    public set profileIDMap(profileIDMap: BidiMap) {
+        this._profileIDMap &#x3D; profileIDMap;
+    }
+    public decodeContact(elem: Element): Contact {
+        const contactElem &#x3D; this.utils.getElement(elem, &#x27;CI_Contact&#x27;, NAMESPACES.GMD);
+        if (contactElem !&#x3D; null) {
+            const contact &#x3D; new Contact();
+            this._profileIDMap &#x3D; this.utils.processProfileID(contactElem, contact, &#x27;&#x27;, this._profileIDMap);
+
+            const phoneElem &#x3D; this.utils.getElement(contactElem, &#x27;phone&#x27;, NAMESPACES.GMD);
+            if (phoneElem !&#x3D; null) {
+                contact.phone &#x3D; this.decodePhone(phoneElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(phoneElem, contact, &#x27;phone&#x27;, this._profileIDMap);
+
+            }
+            const addressElem &#x3D; this.utils.getElement(contactElem, &#x27;address&#x27;, NAMESPACES.GMD);
+            if (addressElem !&#x3D; null) {
+                contact.address &#x3D; this.decodeAddress(addressElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(addressElem, contact, &#x27;address&#x27;, this._profileIDMap);
+
+            }
+            const onlineResourceElem &#x3D; this.utils.getElement(contactElem, &#x27;onlineResource&#x27;, NAMESPACES.GMD);
+            if (onlineResourceElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;OnlineResource&gt; &#x3D; this.decodeOnlineResource(onlineResourceElem);
+                if (returnObject) {
+                    contact.onlineResource &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, contact, &#x27;onlineResource&#x27;, this._profileIDMap
+                    );
+                }
+            }
+            const hoursOfServiceElem &#x3D; this.utils.getElement(contactElem, &#x27;hoursOfService&#x27;, NAMESPACES.GMD);
+            if (hoursOfServiceElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(hoursOfServiceElem);
+                if (returnObject) {
+                    contact.hoursOfService &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, contact, &#x27;hoursOfService&#x27;, this._profileIDMap
+                    );
+                }
+            }
+            const contactInstructionsElem &#x3D; this.utils.getElement(contactElem, &#x27;contactInstructions&#x27;, NAMESPACES.GMD);
+            if (contactInstructionsElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(contactInstructionsElem);
+                if (returnObject) {
+                    contact.contactInstructions &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, contact, &#x27;contactInstructions&#x27;, this._profileIDMap
+                    );
+                }
+            }
+            return contact;
+        }
+    }
+
+    public decodePhone(elem: Element): Phone {
+        const phoneElem &#x3D; this.utils.getElement(elem, &#x27;CI_Telephone&#x27;, NAMESPACES.GMD);
+        if (phoneElem !&#x3D; null) {
+            const phone &#x3D; new Phone();
+            this._profileIDMap &#x3D; this.utils.processProfileID(phoneElem, phone, &#x27;&#x27;, this._profileIDMap);
+
+            phone.voice &#x3D; this.utils.getDecodedList(
+                phoneElem,
+                &#x27;voice&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (voice) &#x3D;&gt; this.getDecodedCharacterString(voice));
+
+            phone.facsimile &#x3D; this.utils.getDecodedList(
+                phoneElem,
+                &#x27;facsimile&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (facsimile) &#x3D;&gt; this.getDecodedCharacterString(facsimile));
+
+            return phone;
+        }
+    }
+
+    public decodeOnlineResource(elem: Element): ReturnObject&lt;OnlineResource&gt; {
+        const onlineResourceElem &#x3D; this.utils.getElement(elem, &#x27;CI_OnlineResource&#x27;, NAMESPACES.GMD);
+        if (onlineResourceElem !&#x3D; null) {
+            const onlineResource &#x3D; new OnlineResource();
+            this._profileIDMap &#x3D; this.utils.processProfileID(
+                onlineResourceElem, onlineResource, &#x27;&#x27;, this._profileIDMap
+            );
+
+            const linkageElem &#x3D; this.utils.getElement(onlineResourceElem, &#x27;linkage&#x27;, NAMESPACES.GMD);
+            if (linkageElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedUrl(linkageElem);
+                if (returnObject) {
+                    onlineResource.linkage &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, onlineResource, &#x27;linkage&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const protocolElem &#x3D; this.utils.getElement(onlineResourceElem, &#x27;protocol&#x27;, NAMESPACES.GMD);
+            if (protocolElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(protocolElem);
+                if (returnObject) {
+                    onlineResource.protocol &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, onlineResource, &#x27;protocol&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const applicationProfileElem &#x3D; this.utils.getElement(
+                onlineResourceElem, &#x27;applicationProfile&#x27;, NAMESPACES.GMD
+            );
+            if (applicationProfileElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(applicationProfileElem);
+                if (returnObject) {
+                    onlineResource.applicationProfile &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, onlineResource, &#x27;applicationProfile&#x27;, this._profileIDMap
+                    );
+                }
+            }
+            const nameElem &#x3D; this.utils.getElement(onlineResourceElem, &#x27;name&#x27;, NAMESPACES.GMD);
+            if (nameElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(nameElem);
+                if (returnObject) {
+                    onlineResource.name &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, onlineResource, &#x27;name&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const descriptionElem &#x3D; this.utils.getElement(onlineResourceElem, &#x27;description&#x27;, NAMESPACES.GMD);
+            if (descriptionElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(descriptionElem);
+                if (returnObject) {
+                    onlineResource.description &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, onlineResource, &#x27;description&#x27;, this._profileIDMap
+                    );
+                }
+            }
+            const functionElem &#x3D; this.utils.getElement(onlineResourceElem, &#x27;function&#x27;, NAMESPACES.GMD);
+            if (functionElem !&#x3D; null) {
+                onlineResource.function &#x3D; this.decodeOnlineFunction(functionElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(
+                    functionElem, onlineResource, &#x27;function&#x27;, this._profileIDMap
+                );
+            }
+            return new ReturnObject(onlineResource, onlineResourceElem);
+        }
+    }
+
+    public decodeAddress(elem: Element): Address {
+        const addressElem &#x3D; this.utils.getElement(elem, &#x27;CI_Address&#x27;, NAMESPACES.GMD);
+        if (addressElem !&#x3D; null) {
+            const address &#x3D; new Address();
+            this._profileIDMap &#x3D; this.utils.processProfileID(addressElem, address, &#x27;&#x27;, this._profileIDMap);
+
+            const cityElem &#x3D; this.utils.getElement(addressElem, &#x27;city&#x27;, NAMESPACES.GMD);
+            if (cityElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(cityElem);
+                if (returnObject) {
+                    address.city &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, address, &#x27;city&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const administrativeAreaElem &#x3D; this.utils.getElement(addressElem, &#x27;administrativeArea&#x27;, NAMESPACES.GMD);
+            if (administrativeAreaElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(administrativeAreaElem);
+                if (returnObject) {
+                    address.administrativeArea &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, address, &#x27;administrativeArea&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const postalCodeElem &#x3D; this.utils.getElement(addressElem, &#x27;postalCode&#x27;, NAMESPACES.GMD);
+            if (postalCodeElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(postalCodeElem);
+                if (returnObject) {
+                    address.postalCode &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, address, &#x27;postalCode&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const countryElem &#x3D; this.utils.getElement(addressElem, &#x27;country&#x27;, NAMESPACES.GMD);
+            if (countryElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(countryElem);
+                if (returnObject) {
+                    address.country &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, address, &#x27;country&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            address.deliveryPoint &#x3D; this.utils.getDecodedList(
+                addressElem,
+                &#x27;deliveryPoint&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (deliveryPoint) &#x3D;&gt; this.getDecodedCharacterString(deliveryPoint));
+
+            address.electronicMailAddress &#x3D; this.utils.getDecodedList(
+                addressElem,
+                &#x27;electronicMailAddress&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (electronicMailAddress) &#x3D;&gt; this.getDecodedCharacterString(electronicMailAddress));
+
+            return address;
+        }
+    }
+
+    public decodeResponsibleParty(elem: Element): ReturnObject&lt;ResponsibleParty&gt; {
+        const respPartyElem &#x3D; this.utils.getElement(elem, &#x27;CI_ResponsibleParty&#x27;, NAMESPACES.GMD);
+
+        if (respPartyElem !&#x3D; null) {
+            const respParty &#x3D; new ResponsibleParty();
+            this._profileIDMap &#x3D; this.utils.processProfileID(respPartyElem, respParty, &#x27;&#x27;, this._profileIDMap);
+
+            const individualNameElem &#x3D; this.utils.getElement(respPartyElem, &#x27;individualName&#x27;, NAMESPACES.GMD);
+            if (individualNameElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(individualNameElem);
+                if (returnObject) {
+                    respParty.individualName &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, respParty, &#x27;individualName&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const organisationNameElem &#x3D; this.utils.getElement(respPartyElem, &#x27;organisationName&#x27;, NAMESPACES.GMD);
+            if (organisationNameElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(organisationNameElem);
+                if (returnObject) {
+                    respParty.organisationName &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, respParty, &#x27;organisationName&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const positionNameElem &#x3D; this.utils.getElement(respPartyElem, &#x27;positionName&#x27;, NAMESPACES.GMD);
+            if (positionNameElem !&#x3D; null) {
+                const returnObject: ReturnObject&lt;string&gt; &#x3D; this.getDecodedCharacterString(positionNameElem);
+                if (returnObject) {
+                    respParty.positionName &#x3D; returnObject.value;
+                    this._profileIDMap &#x3D; this.utils.processProfileID(
+                        returnObject.docElement, respParty, &#x27;positionName&#x27;, this._profileIDMap
+                    );
+                }
+            }
+
+            const contactInfoElem &#x3D; this.utils.getElement(respPartyElem, &#x27;contactInfo&#x27;, NAMESPACES.GMD);
+            if (contactInfoElem !&#x3D; null) {
+                respParty.contactInfo &#x3D; this.decodeContact(contactInfoElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(
+                    contactInfoElem, respParty, &#x27;contactInfo&#x27;, this._profileIDMap
+                );
+            }
+
+            const roleElem &#x3D; this.utils.getElement(respPartyElem, &#x27;role&#x27;, NAMESPACES.GMD);
+            if (roleElem !&#x3D; null) {
+                respParty.role &#x3D; this.decodeRole(roleElem);
+                this._profileIDMap &#x3D; this.utils.processProfileID(roleElem, respParty, &#x27;role&#x27;, this._profileIDMap);
+            }
+
+            return new ReturnObject(respParty, respPartyElem);
+        }
+    }
+
+    public decodeRole(elem: Element): Role {
+        const roleElem &#x3D; this.utils.getElement(elem, &#x27;CI_RoleCode&#x27;, NAMESPACES.GMD);
+
+        if (roleElem !&#x3D; null) {
+            const role &#x3D; roleElem.getAttribute(&#x27;codeListValue&#x27;);
+            if (role.indexOf(&#x27;resourceProvider&#x27;) &gt;&#x3D; 0) { return &#x27;resourceProvider&#x27;; }
+            if (role.indexOf(&#x27;custodian&#x27;) &gt;&#x3D; 0) { return &#x27;custodian&#x27;; }
+            if (role.indexOf(&#x27;user&#x27;) &gt;&#x3D; 0) { return &#x27;user&#x27;; }
+            if (role.indexOf(&#x27;originator&#x27;) &gt;&#x3D; 0) { return &#x27;originator&#x27;; }
+            if (role.indexOf(&#x27;pointOfContact&#x27;) &gt;&#x3D; 0) { return &#x27;pointOfContact&#x27;; }
+            if (role.indexOf(&#x27;principalInvestigator&#x27;) &gt;&#x3D; 0) { return &#x27;principalInvestigator&#x27;; }
+            if (role.indexOf(&#x27;processor&#x27;) &gt;&#x3D; 0) { return &#x27;processor&#x27;; }
+            if (role.indexOf(&#x27;publisher&#x27;) &gt;&#x3D; 0) { return &#x27;publisher&#x27;; }
+            if (role.indexOf(&#x27;author&#x27;) &gt;&#x3D; 0) { return &#x27;author&#x27;; }
+            if (role.indexOf(&#x27;owner&#x27;) &gt;&#x3D; 0) { return &#x27;owner&#x27;; }
+        }
+    }
+
+    public decodeOnlineFunction(elem: Element): OnlineFunction {
+        const onlineFunctionElem &#x3D; this.utils.getElement(elem, &#x27;CI_OnLineFunctionCode&#x27;, NAMESPACES.GMD);
+
+        if (onlineFunctionElem !&#x3D; null) {
+            const onlineFunction &#x3D; onlineFunctionElem.getAttribute(&#x27;codeListValue&#x27;);
+            if (onlineFunction.indexOf(&#x27;download&#x27;) &gt;&#x3D; 0) { return &#x27;download&#x27;; }
+            if (onlineFunction.indexOf(&#x27;information&#x27;) &gt;&#x3D; 0) { return &#x27;information&#x27;; }
+            if (onlineFunction.indexOf(&#x27;offlineAccess&#x27;) &gt;&#x3D; 0) { return &#x27;offlineAccess&#x27;; }
+            if (onlineFunction.indexOf(&#x27;order&#x27;) &gt;&#x3D; 0) { return &#x27;order&#x27;; }
+            if (onlineFunction.indexOf(&#x27;search&#x27;) &gt;&#x3D; 0) { return &#x27;search&#x27;; }
+        }
+    }
+
+    public decodeRestriction(elem: Element): ReturnObject&lt;Restriction&gt; {
+        const restrictionElem &#x3D; this.utils.getElement(elem, &#x27;MD_RestrictionCode&#x27;, NAMESPACES.GMD);
+
+        if (restrictionElem !&#x3D; null) {
+            const restriction &#x3D; restrictionElem.getAttribute(&#x27;codeListValue&#x27;);
+            if (restriction.indexOf(&#x27;copyright&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;copyright&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;patent&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;patent&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;patentPending&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;patentPending&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;trademark&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;trademark&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;license&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;license&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;intellectualPropertyRights&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;intellectualPropertyRights&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;restricted&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;restricted&#x27;, restrictionElem);
+            }
+            if (restriction.indexOf(&#x27;otherRestrictions&#x27;) &gt;&#x3D; 0) {
+                return new ReturnObject&lt;Restriction&gt;(&#x27;otherRestrictions&#x27;, restrictionElem);
+            }
+        }
+    }
+
+    public decodeLegalConstraints(elem: Element): ReturnObject&lt;LegalConstraints&gt; {
+        const legalConstraintsElem &#x3D; this.utils.getElement(elem, &#x27;MD_LegalConstraints&#x27;, NAMESPACES.GMD);
+
+        if (legalConstraintsElem !&#x3D; null) {
+            const legalConstraints &#x3D; new LegalConstraints();
+            this._profileIDMap &#x3D; this.utils.processProfileID(
+                legalConstraintsElem, legalConstraints, &#x27;&#x27;, this._profileIDMap
+            );
+
+            legalConstraints.accessConstraints &#x3D; this.utils.getDecodedList(
+                legalConstraintsElem,
+                &#x27;accessConstraints&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (accConst) &#x3D;&gt; this.decodeRestriction(accConst));
+
+            legalConstraints.useConstraints &#x3D; this.utils.getDecodedList(
+                legalConstraintsElem,
+                &#x27;useConstraints&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (useConst) &#x3D;&gt; this.decodeRestriction(useConst));
+
+            legalConstraints.otherConstraints &#x3D; this.utils.getDecodedList(
+                legalConstraintsElem,
+                &#x27;otherConstraints&#x27;,
+                NAMESPACES.GMD, this._profileIDMap,
+                (otherConst) &#x3D;&gt; this.getDecodedCharacterString(otherConst));
+
+            return new ReturnObject(legalConstraints, legalConstraintsElem);
+        }
+    }
+
+    private getDecodedCharacterString(elem: Element): ReturnObject&lt;string&gt; {
+        const charStringElem &#x3D; this.utils.getElement(elem, &#x27;CharacterString&#x27;, NAMESPACES.GCO);
+
+        if (charStringElem !&#x3D; null) { return new ReturnObject(charStringElem.textContent, charStringElem); }
+    }
+
+    private getDecodedUrl(elem: Element): ReturnObject&lt;string&gt; {
+        const urlElem &#x3D; this.utils.getElement(elem, &#x27;URL&#x27;, NAMESPACES.GMD);
+
+        if (urlElem !&#x3D; null) { return new ReturnObject(urlElem.textContent, urlElem); }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'IsoDecoder.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

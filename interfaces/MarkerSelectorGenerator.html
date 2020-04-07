@@ -118,7 +118,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>createDefaultFilledMarker(station: <a href="../classes/Station.html">Station</a>)</code>
+<code>createDefaultFilledMarker(station: <a href="../interfaces/Platform.html">HelgolandPlatform</a>)</code>
                 </td>
             </tr>
 
@@ -148,7 +148,7 @@
                                 <tr>
                                     <td>station</td>
                                     <td>
-                                                <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
                                     </td>
 
                                     <td>
@@ -189,7 +189,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>createDefaultGeometry(station: <a href="../classes/Station.html">Station</a>)</code>
+<code>createDefaultGeometry(station: <a href="../interfaces/Platform.html">HelgolandPlatform</a>)</code>
                 </td>
             </tr>
 
@@ -219,7 +219,7 @@
                                 <tr>
                                     <td>station</td>
                                     <td>
-                                                <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
                                     </td>
 
                                     <td>
@@ -260,7 +260,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>createFilledMarker(station: <a href="../classes/Station.html">Station</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>createFilledMarker(station: <a href="../interfaces/Platform.html">HelgolandPlatform</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -290,7 +290,7 @@
                                 <tr>
                                     <td>station</td>
                                     <td>
-                                                <code><a href="../classes/Station.html" target="_self" >Station</a></code>
+                                                <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
                                     </td>
 
                                     <td>
@@ -333,13 +333,13 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Station } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HelgolandPlatform } from &#x27;@helgoland/core&#x27;;
 import { Layer } from &#x27;leaflet&#x27;;
 
 export interface MarkerSelectorGenerator {
-    createFilledMarker?(station: Station, color: string): Layer;
-    createDefaultFilledMarker?(station: Station): Layer;
-    createDefaultGeometry?(station: Station): Layer;
+    createFilledMarker?(station: HelgolandPlatform, color: string): Layer;
+    createDefaultFilledMarker?(station: HelgolandPlatform): Layer;
+    createDefaultGeometry?(station: HelgolandPlatform): Layer;
 }
 </code></pre>
     </div>

@@ -162,8 +162,13 @@
 
 export interface Settings {
     datasetApis?: DatasetApi[];
+    defaultService?: {
+        serviceId: string;
+        apiUrl: string;
+    };
     providerBlackList?: BlacklistedService[];
     proxyUrl?: string;
+    proxyUrlsStartWith?: string[];
     timespanPresets?: TimespanPreset[];
     colorList?: string[];
     languages?: [{ label: string, code: string }];
@@ -173,6 +178,7 @@ export interface Settings {
 export interface DatasetApi {
     name: string;
     url: string;
+    connector?: string;
     basicAuth?: boolean;
 }
 

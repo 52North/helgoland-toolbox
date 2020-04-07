@@ -433,7 +433,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(api: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>, internalIdHandler: <a href="../injectables/InternalIdHandler.html">InternalIdHandler</a>, translateSrvc: <a href="../interfaces/Service.html">TranslateService</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>)</code>
+<code>constructor(servicesConnector: <a href="../injectables/HelgolandServicesConnector.html">HelgolandServicesConnector</a>, internalIdHandler: <a href="../injectables/InternalIdHandler.html">InternalIdHandler</a>, translateSrvc: <a href="../interfaces/Service.html">TranslateService</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -456,10 +456,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>api</td>
+                                                        <td>servicesConnector</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                                        <code><a href="../injectables/HelgolandServicesConnector.html" target="_self" >HelgolandServicesConnector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -1338,7 +1338,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:36</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:42</a></code>
 </div>
                 </td>
             </tr>
@@ -1403,7 +1403,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setDataset(timeseries: <a href="../interfaces/IDataset.html">IDataset</a>)</code>
+                    <code>setDataset(timeseries: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
@@ -1416,7 +1416,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:48</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:50</a></code>
 </div>
                 </td>
             </tr>
@@ -1439,7 +1439,7 @@
                                 <tr>
                                     <td>timeseries</td>
                                     <td>
-                                                <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -1494,7 +1494,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:54</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:56</a></code>
 </div>
                 </td>
             </tr>
@@ -1886,7 +1886,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:36</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:42</a></code>
 </div>
                 </td>
             </tr>
@@ -1951,7 +1951,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setDataset(timeseries: <a href="../interfaces/IDataset.html">IDataset</a>)</code>
+                    <code>setDataset(timeseries: <a href="../injectables/Time.html">HelgolandTimeseries</a>)</code>
                 </td>
             </tr>
 
@@ -1964,7 +1964,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:48</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:50</a></code>
 </div>
                 </td>
             </tr>
@@ -1987,7 +1987,7 @@
                                 <tr>
                                     <td>timeseries</td>
                                     <td>
-                                                <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -2042,7 +2042,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:54</a></code>
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:56</a></code>
 </div>
                 </td>
             </tr>
@@ -2520,7 +2520,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:25</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:31</a></code>
 </div>
                             </td>
                         </tr>
@@ -2543,7 +2543,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
 
                         </td>
                     </tr>
@@ -2555,7 +2555,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:20</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:26</a></code>
 </div>
                             </td>
                         </tr>
@@ -2590,7 +2590,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:23</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:29</a></code>
 </div>
                             </td>
                         </tr>
@@ -2625,7 +2625,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:22</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:28</a></code>
 </div>
                             </td>
                         </tr>
@@ -2660,7 +2660,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:24</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:30</a></code>
 </div>
                             </td>
                         </tr>
@@ -2695,7 +2695,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:26</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >ConfigurableTimeseriesEntryComponent:32</a></code>
 </div>
                             </td>
                         </tr>
@@ -2835,7 +2835,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:25</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:31</a></code>
 </div>
                             </td>
                         </tr>
@@ -2858,7 +2858,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/IDataset.html" target="_self" >IDataset</a></code>
+                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
 
                         </td>
                     </tr>
@@ -2870,7 +2870,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:20</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:26</a></code>
 </div>
                             </td>
                         </tr>
@@ -2905,7 +2905,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:23</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:29</a></code>
 </div>
                             </td>
                         </tr>
@@ -2940,7 +2940,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:22</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:28</a></code>
 </div>
                             </td>
                         </tr>
@@ -2975,7 +2975,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:24</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:30</a></code>
 </div>
                             </td>
                         </tr>
@@ -3010,7 +3010,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:26</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >SimpleTimeseriesEntryComponent:32</a></code>
 </div>
                             </td>
                         </tr>
@@ -3130,7 +3130,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
-import { DatasetApiInterface, FirstLastValue, InternalIdHandler, Time, TimeInterval } from &#x27;@helgoland/core&#x27;;
+import { FirstLastValue, HelgolandServicesConnector, InternalIdHandler, Time, TimeInterval } from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
 import {
@@ -3160,12 +3160,12 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   public hasData &#x3D; true;
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesConnector: HelgolandServicesConnector,
     protected internalIdHandler: InternalIdHandler,
     protected translateSrvc: TranslateService,
     protected timeSrvc: Time
   ) {
-    super(api, internalIdHandler, translateSrvc);
+    super(servicesConnector, internalIdHandler, translateSrvc);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -3190,7 +3190,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   }
 
   private checkDataInTimespan() {
-    if (this.timeInterval &amp;&amp; this.dataset) {
+    if (this.timeInterval &amp;&amp; this.dataset &amp;&amp; this.dataset.firstValue &amp;&amp; this.dataset.lastValue) {
       this.hasData &#x3D; this.timeSrvc.overlaps(
         this.timeInterval,
         this.dataset.firstValue.timestamp,
@@ -3243,7 +3243,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><span>{{procedureLabel}} - {{platformLabel}}</span><span>Has Data: {{hasData}}</span><button *ngIf="firstValue" (click)="jumpToFirstTimeStamp()">{{firstValue.value}} - {{firstValue.timestamp | date}}</button><button *ngIf="lastValue" (click)="jumpToLastTimeStamp()">{{lastValue.value}} - {{lastValue.timestamp | date}}</button></div>'
-    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'FirstLatestTimeseriesEntryComponent'};
 </script>

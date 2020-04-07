@@ -1,0 +1,4476 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>SweEncoder</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts</code>
+        </p>
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#encodeAbstractDataArray">encodeAbstractDataArray</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractDataComponent">encodeAbstractDataComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractEncoding">encodeAbstractEncoding</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractSimpleComponent">encodeAbstractSimpleComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractSwe">encodeAbstractSwe</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAbstractSweIdentifiable">encodeAbstractSweIdentifiable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAllowedTimes">encodeAllowedTimes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAllowedTokens">encodeAllowedTokens</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeAllowedValues">encodeAllowedValues</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeBinaryBlock">encodeBinaryBlock</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeBinaryComponent">encodeBinaryComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeBinaryEncoding">encodeBinaryEncoding</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeBoolean">encodeBoolean</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCategory">encodeCategory</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCategoryRange">encodeCategoryRange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeConstraint">encodeConstraint</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCoordinate">encodeCoordinate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCount">encodeCount</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeCountRange">encodeCountRange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataArray">encodeDataArray</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataChoice">encodeDataChoice</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataComponent">encodeDataComponent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataRecord">encodeDataRecord</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeDataStream">encodeDataStream</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeElementType">encodeElementType</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeField">encodeField</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeMatrix">encodeMatrix</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeNilValue">encodeNilValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeQuality">encodeQuality</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeQuantity">encodeQuantity</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeQuantityRange">encodeQuantityRange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeText">encodeText</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeTextEncoding">encodeTextEncoding</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeTime">encodeTime</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeTimeRange">encodeTimeRange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#encodeUom">encodeUom</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeVector">encodeVector</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#encodeXmlEncoding">encodeXmlEncoding</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractDataArray"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            encodeAbstractDataArray
+                        </b>
+                        <a href="#encodeAbstractDataArray"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractDataArray(node: Element, component: <a href="../interfaces/Data.html">SweDataArray</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="848"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:848</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataArray</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractDataComponent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractDataComponent
+                        </b>
+                        <a href="#encodeAbstractDataComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractDataComponent(node: Element, component: <a href="../interfaces/Data.html">AbstractDataComponent</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="775"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:775</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >AbstractDataComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractEncoding"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractEncoding
+                        </b>
+                        <a href="#encodeAbstractEncoding"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractEncoding(encoding: <a href="../classes/SweEncoding.html">SweEncoding</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:172</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>encoding</td>
+                                    <td>
+                                                <code><a href="../classes/SweEncoding.html" target="_self" >SweEncoding</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractSimpleComponent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractSimpleComponent
+                        </b>
+                        <a href="#encodeAbstractSimpleComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractSimpleComponent(node: Element, component: <a href="../classes/AbstractSimpleComponent.html">AbstractSimpleComponent</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="792"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:792</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractSimpleComponent.html" target="_self" >AbstractSimpleComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractSwe"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractSwe
+                        </b>
+                        <a href="#encodeAbstractSwe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractSwe(node: Element, component: <a href="../classes/AbstractSWE.html">AbstractSWE</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="741"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:741</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractSWE.html" target="_self" >AbstractSWE</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAbstractSweIdentifiable"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAbstractSweIdentifiable
+                        </b>
+                        <a href="#encodeAbstractSweIdentifiable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAbstractSweIdentifiable(node: Element, component: <a href="../classes/AbstractSWEIdentifiable.html">AbstractSWEIdentifiable</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="752"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:752</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/AbstractSWEIdentifiable.html" target="_self" >AbstractSWEIdentifiable</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAllowedTimes"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAllowedTimes
+                        </b>
+                        <a href="#encodeAllowedTimes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAllowedTimes(allowedTimes: <a href="../injectables/Time.html">AllowedTimes</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="668"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:668</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedTimes</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >AllowedTimes</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAllowedTokens"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAllowedTokens
+                        </b>
+                        <a href="#encodeAllowedTokens"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAllowedTokens(allowedTokens: <a href="../classes/AllowedTokens.html">AllowedTokens</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="617"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:617</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedTokens</td>
+                                    <td>
+                                                <code><a href="../classes/AllowedTokens.html" target="_self" >AllowedTokens</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeAllowedValues"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeAllowedValues
+                        </b>
+                        <a href="#encodeAllowedValues"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeAllowedValues(allowedValues: <a href="../classes/AllowedValues.html">AllowedValues</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="639"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:639</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>allowedValues</td>
+                                    <td>
+                                                <code><a href="../classes/AllowedValues.html" target="_self" >AllowedValues</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeBinaryBlock"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeBinaryBlock
+                        </b>
+                        <a href="#encodeBinaryBlock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeBinaryBlock(block: <a href="../classes/SweBinaryBlock.html">SweBinaryBlock</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="274"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:274</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>block</td>
+                                    <td>
+                                                <code><a href="../classes/SweBinaryBlock.html" target="_self" >SweBinaryBlock</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeBinaryComponent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeBinaryComponent
+                        </b>
+                        <a href="#encodeBinaryComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeBinaryComponent(block: <a href="../classes/SweBinaryComponent.html">SweBinaryComponent</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="241"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:241</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>block</td>
+                                    <td>
+                                                <code><a href="../classes/SweBinaryComponent.html" target="_self" >SweBinaryComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeBinaryEncoding"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeBinaryEncoding
+                        </b>
+                        <a href="#encodeBinaryEncoding"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeBinaryEncoding(encoding: <a href="../classes/SweBinaryEncoding.html">SweBinaryEncoding</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:209</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>encoding</td>
+                                    <td>
+                                                <code><a href="../classes/SweBinaryEncoding.html" target="_self" >SweBinaryEncoding</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeBoolean"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeBoolean
+                        </b>
+                        <a href="#encodeBoolean"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeBoolean(component: <a href="../classes/SweBoolean.html">SweBoolean</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="477"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:477</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweBoolean.html" target="_self" >SweBoolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCategory"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCategory
+                        </b>
+                        <a href="#encodeCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCategory(component: <a href="../interfaces/Category.html">SweCategory</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="570"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:570</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Category.html" target="_self" >SweCategory</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCategoryRange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCategoryRange
+                        </b>
+                        <a href="#encodeCategoryRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCategoryRange(component: <a href="../classes/SweCategoryRange.html">SweCategoryRange</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="449"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:449</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweCategoryRange.html" target="_self" >SweCategoryRange</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeConstraint"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeConstraint
+                        </b>
+                        <a href="#encodeConstraint"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeConstraint(object: <a href="../injectables/Time.html">AllowedTimes | AllowedTokens | AllowedValues</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="437"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:437</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >AllowedTimes | AllowedTokens | AllowedValues</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCoordinate"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCoordinate
+                        </b>
+                        <a href="#encodeCoordinate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCoordinate(coord: <a href="../classes/SweCoordinate.html">SweCoordinate</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:91</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>coord</td>
+                                    <td>
+                                                <code><a href="../classes/SweCoordinate.html" target="_self" >SweCoordinate</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCount"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCount
+                        </b>
+                        <a href="#encodeCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCount(component: <a href="../classes/SweCount.html">SweCount</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="491"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:491</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweCount.html" target="_self" >SweCount</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeCountRange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeCountRange
+                        </b>
+                        <a href="#encodeCountRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeCountRange(component: <a href="../interfaces/Range.html">SweCountRange</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="417"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:417</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Range.html" target="_self" >SweCountRange</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataArray"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataArray
+                        </b>
+                        <a href="#encodeDataArray"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataArray(component: <a href="../interfaces/Data.html">SweDataArray</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:166</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataArray</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataChoice"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataChoice
+                        </b>
+                        <a href="#encodeDataChoice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataChoice(component: <a href="../interfaces/Data.html">SweDataChoice</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="328"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:328</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataChoice</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataComponent"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataComponent
+                        </b>
+                        <a href="#encodeDataComponent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataComponent(component: <a href="../interfaces/Data.html">AbstractDataComponent</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >AbstractDataComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataRecord"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataRecord
+                        </b>
+                        <a href="#encodeDataRecord"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataRecord(component: <a href="../interfaces/Data.html">SweDataRecord</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="138"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:138</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataRecord</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeDataStream"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeDataStream
+                        </b>
+                        <a href="#encodeDataStream"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeDataStream(dataStream: <a href="../interfaces/Data.html">SweDataStream</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="819"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:819</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataStream</td>
+                                    <td>
+                                                <code><a href="../interfaces/Data.html" target="_self" >SweDataStream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeElementType"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeElementType
+                        </b>
+                        <a href="#encodeElementType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeElementType(type: <a href="../classes/SweElementType.html">SweElementType</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="314"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:314</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                                <code><a href="../classes/SweElementType.html" target="_self" >SweElementType</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeField"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeField
+                        </b>
+                        <a href="#encodeField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeField(field: <a href="../classes/SweField.html">SweField</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+                                    <td>
+                                                <code><a href="../classes/SweField.html" target="_self" >SweField</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeMatrix"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeMatrix
+                        </b>
+                        <a href="#encodeMatrix"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeMatrix(component: <a href="../classes/SweMatrix.html">SweMatrix</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweMatrix.html" target="_self" >SweMatrix</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeNilValue"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeNilValue
+                        </b>
+                        <a href="#encodeNilValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeNilValue(nilValue: <a href="../classes/SweNilValue.html">SweNilValue</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="713"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:713</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nilValue</td>
+                                    <td>
+                                                <code><a href="../classes/SweNilValue.html" target="_self" >SweNilValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeQuality"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeQuality
+                        </b>
+                        <a href="#encodeQuality"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeQuality(quality: <a href="../undefineds/SweQuality.html">SweQuality</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="724"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:724</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>quality</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#SweQuality" target="_self" >SweQuality</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeQuantity"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeQuantity
+                        </b>
+                        <a href="#encodeQuantity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeQuantity(component: <a href="../classes/SweQuantity.html">SweQuantity</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="511"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:511</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweQuantity.html" target="_self" >SweQuantity</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeQuantityRange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeQuantityRange
+                        </b>
+                        <a href="#encodeQuantityRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeQuantityRange(component: <a href="../interfaces/Range.html">SweQuantityRange</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="355"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:355</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../interfaces/Range.html" target="_self" >SweQuantityRange</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeText"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeText
+                        </b>
+                        <a href="#encodeText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeText(component: <a href="../classes/SweText.html">SweText</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="596"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:596</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweText.html" target="_self" >SweText</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeTextEncoding"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeTextEncoding
+                        </b>
+                        <a href="#encodeTextEncoding"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeTextEncoding(encoding: <a href="../classes/SweTextEncoding.html">SweTextEncoding</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="185"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:185</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>encoding</td>
+                                    <td>
+                                                <code><a href="../classes/SweTextEncoding.html" target="_self" >SweTextEncoding</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeTime"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeTime
+                        </b>
+                        <a href="#encodeTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeTime(component: <a href="../injectables/Time.html">SweTime</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="533"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:533</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >SweTime</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeTimeRange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeTimeRange
+                        </b>
+                        <a href="#encodeTimeRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeTimeRange(component: <a href="../injectables/Time.html">SweTimeRange</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="377"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:377</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >SweTimeRange</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeUom"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            encodeUom
+                        </b>
+                        <a href="#encodeUom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeUom(uom: <a href="../classes/UnitOfMeasure.html">UnitOfMeasure</a>, document: Document, node: Element)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="874"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:874</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>uom</td>
+                                    <td>
+                                                <code><a href="../classes/UnitOfMeasure.html" target="_self" >UnitOfMeasure</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>node</td>
+                                    <td>
+                                            <code>Element</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeVector"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeVector
+                        </b>
+                        <a href="#encodeVector"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeVector(component: <a href="../classes/SweVector.html">SweVector</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:105</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>component</td>
+                                    <td>
+                                                <code><a href="../classes/SweVector.html" target="_self" >SweVector</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="encodeXmlEncoding"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            encodeXmlEncoding
+                        </b>
+                        <a href="#encodeXmlEncoding"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>encodeXmlEncoding(encoding: <a href="../classes/SweXmlEncoding.html">SweXmlEncoding</a>, document: Document)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="306"
+                            class="link-to-prism">projects/helgoland/sensorml/src/lib/services/xml/SweEncoder.ts:306</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>encoding</td>
+                                    <td>
+                                                <code><a href="../classes/SweXmlEncoding.html" target="_self" >SweXmlEncoding</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>document</td>
+                                    <td>
+                                            <code>Document</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Node</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+    AbstractDataComponent,
+    AbstractSimpleComponent,
+    AbstractSWE,
+    AbstractSWEIdentifiable,
+    AllowedTimes,
+    AllowedTokens,
+    AllowedValues,
+    SweBinaryBlock,
+    SweBinaryComponent,
+    SweBinaryEncoding,
+    SweBoolean,
+    SweCategory,
+    SweCategoryRange,
+    SweCoordinate,
+    SweCount,
+    SweCountRange,
+    SweDataArray,
+    SweDataChoice,
+    SweDataRecord,
+    SweDataStream,
+    SweElementType,
+    SweEncoding,
+    SweField,
+    SweMatrix,
+    SweNilValue,
+    SweQuality,
+    SweQuantity,
+    SweQuantityRange,
+    SweText,
+    SweTextEncoding,
+    SweTime,
+    SweTimeRange,
+    SweVector,
+    SweXmlEncoding,
+    UnitOfMeasure
+} from &#x27;../../model/swe&#x27;;
+import { NAMESPACES } from &#x27;./Namespaces&#x27;;
+
+export class SweEncoder {
+
+    public encodeDataComponent(component: AbstractDataComponent, document: Document): Node {
+        if (component instanceof SweVector) {
+            return this.encodeVector(component, document);
+        }
+        if (component instanceof SweDataRecord) {
+            return this.encodeDataRecord(component, document);
+        }
+        if (component instanceof SweMatrix) {
+            return this.encodeMatrix(component, document);
+        }
+        if (component instanceof SweDataArray) {
+            return this.encodeDataArray(component, document);
+        }
+        if (component instanceof SweDataChoice) {
+            return this.encodeDataChoice(component, document);
+        }
+        if (component instanceof SweQuantityRange) {
+            return this.encodeQuantityRange(component, document);
+        }
+        if (component instanceof SweTimeRange) {
+            return this.encodeTimeRange(component, document);
+        }
+        if (component instanceof SweCountRange) {
+            return this.encodeCountRange(component, document);
+        }
+        if (component instanceof SweCategoryRange) {
+            return this.encodeCategoryRange(component, document);
+        }
+        if (component instanceof SweBoolean) {
+            return this.encodeBoolean(component, document);
+        }
+        if (component instanceof SweCount) {
+            return this.encodeCount(component, document);
+        }
+        if (component instanceof SweQuantity) {
+            return this.encodeQuantity(component, document);
+        }
+        if (component instanceof SweTime) {
+            return this.encodeTime(component, document);
+        }
+        if (component instanceof SweCategory) {
+            return this.encodeCategory(component, document);
+        }
+        if (component instanceof SweText) {
+            return this.encodeText(component, document);
+        }
+        throw new Error(&#x27;Unsupported SWE data component&#x27;);
+    }
+
+    public encodeCoordinate(coord: SweCoordinate, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:coordinate&#x27;);
+
+        if (coord.name) {
+            node.setAttribute(&#x27;name&#x27;, coord.name);
+        }
+
+        if (coord.coordinate) {
+            node.appendChild(this.encodeDataComponent(coord.coordinate, document));
+        }
+
+        return node;
+    }
+
+    public encodeVector(component: SweVector, document: Document): Node {
+
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Vector&#x27;);
+
+        this.encodeAbstractDataComponent(node, component, document);
+
+        if (component.coordinates) {
+            component.coordinates.forEach((coord) &#x3D;&gt;
+                node.appendChild(this.encodeCoordinate(coord, document)));
+        }
+
+        if (component.referenceFrame) {
+            node.setAttribute(&#x27;referenceFrame&#x27;, component.referenceFrame);
+        }
+
+        if (component.localFrame) {
+            node.setAttribute(&#x27;localFrame&#x27;, component.localFrame);
+        }
+
+        return node;
+    }
+
+    public encodeField(field: SweField, document: Document): Node {
+        const fieldNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:field&#x27;);
+        if (field.name) {
+            fieldNode.setAttribute(&#x27;name&#x27;, field.name);
+        }
+        if (field.component) {
+            fieldNode.appendChild(this.encodeDataComponent(field.component, document));
+        }
+        return fieldNode;
+    }
+
+    public encodeDataRecord(component: SweDataRecord, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:DataRecord&#x27;);
+
+        this.encodeAbstractDataComponent(node, component, document);
+
+        if (component.fields) {
+            component.fields.forEach((field) &#x3D;&gt; node.appendChild(this.encodeField(field, document)));
+        }
+
+        return node;
+    }
+
+    public encodeMatrix(component: SweMatrix, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Matrix&#x27;);
+        this.encodeAbstractDataArray(node, component, document);
+
+        if (component.referenceFrame) {
+            node.setAttribute(&#x27;referenceFrame&#x27;, component.referenceFrame);
+        }
+
+        if (component.localFrame) {
+            node.setAttribute(&#x27;localFrame&#x27;, component.localFrame);
+        }
+
+        return node;
+    }
+
+
+    public encodeDataArray(component: SweDataArray, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:DataArray&#x27;);
+        this.encodeAbstractDataArray(node, component, document);
+        return node;
+    }
+
+    public encodeAbstractEncoding(encoding: SweEncoding, document: Document): Node {
+        if (encoding instanceof SweTextEncoding) {
+            return this.encodeTextEncoding(encoding, document);
+        }
+        if (encoding instanceof SweBinaryEncoding) {
+            return this.encodeBinaryEncoding(encoding, document);
+        }
+        if (encoding instanceof SweXmlEncoding) {
+            return this.encodeXmlEncoding(encoding, document);
+        }
+        throw new Error(&#x27;Unsupported encoding type&#x27;);
+    }
+
+    public encodeTextEncoding(encoding: SweTextEncoding, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:TextEncoding&#x27;);
+
+        this.encodeAbstractSwe(node, encoding, document);
+
+        if (encoding.collapseWhiteSpace !&#x3D; null) {
+            node.setAttribute(&#x27;collapseWhiteSpace&#x27;, encoding.collapseWhiteSpace.toString());
+        }
+
+        if (encoding.decimalSeparator) {
+            node.setAttribute(&#x27;decimalSeparator&#x27;, encoding.decimalSeparator);
+        }
+
+        if (encoding.tokenSeparator) {
+            node.setAttribute(&#x27;tokenSeparator&#x27;, encoding.tokenSeparator);
+        }
+
+        if (encoding.blockSeparator) {
+            node.setAttribute(&#x27;blockSeparator&#x27;, encoding.blockSeparator);
+        }
+
+        return node;
+    }
+
+    public encodeBinaryEncoding(encoding: SweBinaryEncoding, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:BinaryEncoding&#x27;);
+
+        this.encodeAbstractSwe(node, encoding, document);
+
+        if (encoding.members) {
+            encoding.members.forEach((member) &#x3D;&gt; {
+                const memberNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:member&#x27;);
+                if (member instanceof SweBinaryComponent) {
+                    memberNode.appendChild(this.encodeBinaryComponent(member, document));
+                } else {
+                    memberNode.appendChild(this.encodeBinaryBlock(member, document));
+                }
+                node.appendChild(memberNode);
+            });
+        }
+
+        if (encoding.byteOrder !&#x3D; null) {
+            node.setAttribute(&#x27;byteOrder&#x27;, encoding.byteOrder);
+        }
+
+        if (encoding.byteEncoding !&#x3D; null) {
+            node.setAttribute(&#x27;byteEncoding&#x27;, encoding.byteEncoding);
+        }
+
+        if (encoding.byteLength !&#x3D; null) {
+            node.setAttribute(&#x27;byteLength&#x27;, encoding.byteLength.toString());
+        }
+
+        return node;
+    }
+
+    public encodeBinaryComponent(block: SweBinaryComponent, document: Document): Node {
+
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Component&#x27;);
+
+        this.encodeAbstractSwe(node, block, document);
+
+        if (block.encryption) {
+            node.setAttribute(&#x27;encryption&#x27;, block.encryption);
+        }
+
+        if (block.significantBits !&#x3D; null) {
+            node.setAttribute(&#x27;significantBits&#x27;, block.significantBits.toString());
+        }
+
+        if (block.bitLength !&#x3D; null) {
+            node.setAttribute(&#x27;bitLength&#x27;, block.bitLength.toString());
+        }
+
+        if (block.byteLength !&#x3D; null) {
+            node.setAttribute(&#x27;byteLength&#x27;, block.byteLength.toString());
+        }
+
+        if (block.dataType) {
+            node.setAttribute(&#x27;dataType&#x27;, block.dataType);
+        }
+
+        if (block.ref) {
+            node.setAttribute(&#x27;ref&#x27;, block.ref);
+        }
+
+        return node;
+    }
+
+    public encodeBinaryBlock(block: SweBinaryBlock, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Block&#x27;);
+
+        this.encodeAbstractSwe(node, block, document);
+
+        if (block.compression) {
+            node.setAttribute(&#x27;compression&#x27;, block.compression);
+        }
+
+        if (block.encryption) {
+            node.setAttribute(&#x27;encryption&#x27;, block.encryption);
+        }
+
+        if (block.paddingBytesAfter !&#x3D; null) {
+            node.setAttribute(&#x27;paddingBytes-after&#x27;, block.paddingBytesAfter.toString());
+        }
+
+        if (block.paddingBytesBefore !&#x3D; null) {
+            node.setAttribute(&#x27;paddingBytes-before&#x27;, block.paddingBytesBefore.toString());
+        }
+
+        if (block.byteLength !&#x3D; null) {
+            node.setAttribute(&#x27;byteLength&#x27;, block.byteLength.toString());
+        }
+
+        if (block.ref) {
+            node.setAttribute(&#x27;ref&#x27;, block.ref);
+        }
+
+        return node;
+    }
+
+    public encodeXmlEncoding(encoding: SweXmlEncoding, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:XMLEncoding&#x27;);
+
+        this.encodeAbstractSwe(node, encoding, document);
+
+        return node;
+    }
+
+    public encodeElementType(type: SweElementType, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:elementType&#x27;);
+
+        if (type.name) {
+            node.setAttribute(&#x27;name&#x27;, type.name);
+        }
+
+        if (type.type) {
+            node.appendChild(this.encodeDataComponent(type.type, document));
+        }
+
+        return node;
+    }
+
+    public encodeDataChoice(component: SweDataChoice, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:DataChoice&#x27;);
+
+        this.encodeAbstractDataComponent(node, component, document);
+
+        if (component.choiceValue &amp;&amp; component.choiceValue.length &gt; 0) {
+            const choiceValueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:choiceValue&#x27;);
+            component.choiceValue.forEach((category) &#x3D;&gt;
+                choiceValueNode.appendChild(this.encodeCategory(category, document)));
+            node.appendChild(choiceValueNode);
+        }
+
+        if (component.items) {
+            component.items.forEach((item) &#x3D;&gt; {
+                const itemNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:item&#x27;);
+                if (item.name) {
+                    itemNode.setAttribute(&#x27;name&#x27;, item.name);
+                }
+                if (item.item) {
+                    itemNode.appendChild(this.encodeDataComponent(item.item, document));
+                }
+                node.appendChild(itemNode);
+            });
+        }
+        return node;
+    }
+
+    public encodeQuantityRange(component: SweQuantityRange, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:QuantityRange&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        this.encodeUom(component.uom, document, node);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedValues(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; &#x60;${component.value[0].toString()} ${component.value[1].toString()}&#x60;;
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeTimeRange(component: SweTimeRange, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:TimeRange&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        this.encodeUom(component.uom, document, node);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedTimes(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+
+            const value &#x3D; component.value.map((v) &#x3D;&gt; {
+                if (v instanceof Date) {
+                    return v.toISOString();
+                } else {
+                    return v;
+                }
+            });
+
+            valueNode.textContent &#x3D; &#x60;${value[0]} ${value[1]}&#x60;;
+
+            node.appendChild(valueNode);
+        }
+
+        if (component.referenceTime) {
+            node.setAttribute(&#x27;referenceTime&#x27;, component.referenceTime.toISOString());
+        }
+
+        if (component.localFrame) {
+            node.setAttribute(&#x27;localFrame&#x27;, component.localFrame);
+        }
+
+        return node;
+    }
+
+    public encodeCountRange(component: SweCountRange, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:CountRange&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedValues(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; &#x60;${component.value[0].toString()} ${component.value[1].toString()}&#x60;;
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeConstraint(object: AllowedTimes | AllowedTokens | AllowedValues, document: Document): Node {
+        if (object instanceof AllowedTimes) {
+            return this.encodeAllowedTimes(object, document);
+        }
+        if (object instanceof AllowedTokens) {
+            return this.encodeAllowedTokens(object, document);
+        }
+        if (object instanceof AllowedValues) {
+            return this.encodeAllowedValues(object, document);
+        }
+    }
+
+    public encodeCategoryRange(component: SweCategoryRange, document: Document): Node {
+
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:CategoryRange&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.codeSpace) {
+            const codeSpaceNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:codeSpace&#x27;);
+            codeSpaceNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, component.codeSpace);
+            node.appendChild(codeSpaceNode);
+        }
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedTokens(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            // let value &#x3D; component.value.map(x &#x3D;&gt; x.replace(&#x27; &#x27;, &#x27;&amp;#032;&#x27;));
+            valueNode.textContent &#x3D; &#x60;${component.value[0]} ${component.value[1]}&#x60;;
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeBoolean(component: SweBoolean, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Boolean&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; component.value.toString();
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeCount(component: SweCount, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Count&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedValues(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; component.value.toString();
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeQuantity(component: SweQuantity, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Quantity&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        this.encodeUom(component.uom, document, node);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedValues(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; component.value.toString();
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeTime(component: SweTime, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Time&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        this.encodeUom(component.uom, document, node);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedTimes(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value !&#x3D; null) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            const value &#x3D; component.value;
+
+            if (value instanceof Date) {
+                valueNode.textContent &#x3D; value.toISOString();
+            } else {
+                valueNode.textContent &#x3D; value;
+            }
+
+            node.appendChild(valueNode);
+        }
+
+        if (component.referenceTime) {
+            node.setAttribute(&#x27;referenceTime&#x27;, component.referenceTime.toISOString());
+        }
+
+        if (component.localFrame) {
+            node.setAttribute(&#x27;localFrame&#x27;, component.localFrame);
+        }
+
+        return node;
+    }
+
+    public encodeCategory(component: SweCategory, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Category&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.codeSpace) {
+            const codeSpaceNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:codeSpace&#x27;);
+            codeSpaceNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, component.codeSpace);
+            node.appendChild(codeSpaceNode);
+        }
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedTokens(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; component.value;
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeText(component: SweText, document: Document): Node {
+
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:Text&#x27;);
+
+        this.encodeAbstractSimpleComponent(node, component, document);
+
+        if (component.constraint &amp;&amp; component.constraint.values.length &gt; 0) {
+            const constraintNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:constraint&#x27;);
+            constraintNode.appendChild(this.encodeAllowedTokens(component.constraint, document));
+            node.appendChild(constraintNode);
+        }
+
+        if (component.value) {
+            const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+            valueNode.textContent &#x3D; component.value;
+            node.appendChild(valueNode);
+        }
+
+        return node;
+    }
+
+    public encodeAllowedTokens(allowedTokens: AllowedTokens, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:AllowedTokens&#x27;);
+
+        this.encodeAbstractSwe(node, allowedTokens, document);
+
+        if (allowedTokens.values) {
+            allowedTokens.values.forEach((value) &#x3D;&gt; {
+                const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+                valueNode.textContent &#x3D; value;
+                node.appendChild(valueNode);
+            });
+        }
+
+        if (allowedTokens.pattern) {
+            const patternNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:pattern&#x27;);
+            patternNode.textContent &#x3D; allowedTokens.pattern;
+            node.appendChild(patternNode);
+        }
+
+        return node;
+    }
+
+    public encodeAllowedValues(allowedValues: AllowedValues, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:AllowedValues&#x27;);
+
+        this.encodeAbstractSwe(node, allowedValues, document);
+
+        if (allowedValues.values) {
+            allowedValues.values.filter((x) &#x3D;&gt; !isNaN(+x))
+                .forEach((x) &#x3D;&gt; {
+                    const n &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+                    n.textContent &#x3D; x.toString();
+                    node.appendChild(n);
+                });
+            allowedValues.values.filter((x) &#x3D;&gt; x instanceof Array)
+                .forEach((x) &#x3D;&gt; {
+                    const n &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:interval&#x27;);
+                    n.textContent &#x3D; &#x60;${x[0]} ${x[1]}&#x60;;
+                    node.appendChild(n);
+                });
+        }
+        if (allowedValues.significantFigures !&#x3D; null) {
+            const n &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:significantFigures&#x27;);
+            n.textContent &#x3D; allowedValues.significantFigures.toString();
+            node.appendChild(n);
+        }
+
+        return node;
+
+    }
+
+    public encodeAllowedTimes(allowedTimes: AllowedTimes, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:AllowedTimes&#x27;);
+
+        this.encodeAbstractSwe(node, allowedTimes, document);
+
+        if (allowedTimes.values) {
+            allowedTimes.values.forEach((allowedTime) &#x3D;&gt; {
+                let value: any;
+                if (allowedTime instanceof Date) {
+                    value &#x3D; allowedTime.toISOString();
+                } else if (allowedTime instanceof String) {
+                    value &#x3D; allowedTime;
+                }
+                if (value) {
+                    const valueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:value&#x27;);
+                    valueNode.textContent &#x3D; value;
+                    node.appendChild(valueNode);
+                }
+            });
+
+            allowedTimes.values.forEach((allowedTime) &#x3D;&gt; {
+                if (allowedTime instanceof Array) {
+                    const value &#x3D; allowedTime.map((v) &#x3D;&gt; {
+                        if (v instanceof Date) {
+                            return v.toISOString();
+                        } else {
+                            return v;
+                        }
+                    });
+                    const intervalNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:interval&#x27;);
+                    intervalNode.textContent &#x3D; &#x60;${value[0]} ${value[1]}&#x60;;
+                    node.appendChild(intervalNode);
+                }
+            });
+        }
+
+        if (allowedTimes.significantFigures !&#x3D; null) {
+            const n &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:significantFigures&#x27;);
+            n.textContent &#x3D; allowedTimes.significantFigures.toString();
+            node.appendChild(n);
+        }
+
+        return node;
+    }
+
+    public encodeNilValue(nilValue: SweNilValue, document: Document): Node {
+        const nilValueNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:nilValue&#x27;);
+        if (nilValue.value) {
+            nilValueNode.textContent &#x3D; nilValue.value;
+        }
+        if (nilValue.reason) {
+            nilValueNode.setAttribute(&#x27;reason&#x27;, nilValue.reason);
+        }
+        return nilValueNode;
+    }
+
+    public encodeQuality(quality: SweQuality, document: Document): Node {
+        const qualityNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:quality&#x27;);
+        if (quality instanceof SweQuantity) {
+            qualityNode.appendChild(this.encodeQuantity(quality, document));
+        } else if (quality instanceof SweQuantityRange) {
+            qualityNode.appendChild(this.encodeQuantityRange(quality, document));
+        } else if (quality instanceof SweCategory) {
+            qualityNode.appendChild(this.encodeCategory(quality, document));
+        } else if (quality instanceof SweText) {
+            qualityNode.appendChild(this.encodeText(quality, document));
+        } else {
+            throw new Error(&#x27;Unkown quality type&#x27;);
+        }
+        return qualityNode;
+    }
+
+
+    public encodeAbstractSwe(node: Element, component: AbstractSWE, document: Document): void {
+        if (component.id) {
+            node.setAttribute(&#x27;id&#x27;, component.id);
+        }
+
+        if (component.extension) {
+            throw new Error(&#x27;Extensions are not supported&#x27;);
+        }
+
+    }
+
+    public encodeAbstractSweIdentifiable(node: Element, component: AbstractSWEIdentifiable, document: Document): void {
+
+        this.encodeAbstractSwe(node, component, document);
+
+        if (component.identifier) {
+            const identifierNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:identifier&#x27;);
+            identifierNode.textContent &#x3D; component.identifier;
+            node.appendChild(identifierNode);
+        }
+
+        if (component.label) {
+            const labelNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:label&#x27;);
+            labelNode.textContent &#x3D; component.label;
+            node.appendChild(labelNode);
+        }
+
+        if (component.description) {
+            const descriptionNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:description&#x27;);
+            descriptionNode.textContent &#x3D; component.description;
+            node.appendChild(descriptionNode);
+        }
+    }
+
+    public encodeAbstractDataComponent(node: Element, component: AbstractDataComponent, document: Document): void {
+
+        this.encodeAbstractSweIdentifiable(node, component, document);
+
+        if (component.updatable !&#x3D; null) {
+            node.setAttribute(&#x27;updatable&#x27;, component.updatable.toString());
+        }
+
+        if (component.optional !&#x3D; null) {
+            node.setAttribute(&#x27;optional&#x27;, component.optional.toString());
+        }
+
+        if (component.definition) {
+            node.setAttribute(&#x27;definition&#x27;, component.definition);
+        }
+    }
+
+    public encodeAbstractSimpleComponent(node: Element, component: AbstractSimpleComponent, document: Document): void {
+
+        this.encodeAbstractDataComponent(node, component, document);
+
+        if (component.quality) {
+            component.quality.forEach((quality) &#x3D;&gt; node.appendChild(this.encodeQuality(quality, document)));
+        }
+
+        if (component.nilValues &amp;&amp; component.nilValues.length &gt; 0) {
+            const outerNilValuesNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:nilValues&#x27;);
+            const innerNilValuesNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:NilValues&#x27;);
+            outerNilValuesNode.appendChild(innerNilValuesNode);
+            node.appendChild(outerNilValuesNode);
+            component.nilValues.forEach(
+                (nilValue) &#x3D;&gt; innerNilValuesNode.appendChild(this.encodeNilValue(nilValue, document))
+            );
+        }
+
+        if (component.referenceFrame) {
+            node.setAttribute(&#x27;referenceFrame&#x27;, component.referenceFrame);
+        }
+
+        if (component.axisId) {
+            node.setAttribute(&#x27;axisID&#x27;, component.axisId);
+        }
+    }
+
+    public encodeDataStream(dataStream: SweDataStream, document: Document): Node {
+        const node &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:DataStream&#x27;);
+
+        this.encodeAbstractSweIdentifiable(node, dataStream, document);
+
+        if (dataStream.elementCount &amp;&amp; dataStream.elementCount.length &gt; 0) {
+            const elementCountNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:elementCount&#x27;);
+            dataStream.elementCount.forEach((elementCount) &#x3D;&gt;
+                elementCountNode.appendChild(this.encodeCount(elementCount, document)));
+            node.appendChild(elementCountNode);
+        }
+
+        if (dataStream.elementType) {
+            node.appendChild(this.encodeElementType(dataStream.elementType, document));
+        }
+
+        if (dataStream.encoding) {
+            const encodingNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:encoding&#x27;);
+            encodingNode.appendChild(this.encodeAbstractEncoding(dataStream.encoding, document));
+            node.appendChild(encodingNode);
+        }
+
+        if (dataStream.values) {
+            const valuesNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:values&#x27;);
+            node.appendChild(valuesNode);
+        }
+        return node;
+    }
+
+    private encodeAbstractDataArray(node: Element, component: SweDataArray, document: Document): void {
+        this.encodeAbstractDataComponent(node, component, document);
+
+        if (component.elementCount !&#x3D; null) {
+            const countNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:elementCount&#x27;);
+            countNode.textContent &#x3D; component.elementCount.toString();
+            node.appendChild(countNode);
+        }
+
+        if (component.elementType) {
+            node.appendChild(this.encodeElementType(component.elementType, document));
+        }
+
+        if (component.encoding) {
+            const encodingNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:encoding&#x27;);
+            encodingNode.appendChild(this.encodeAbstractEncoding(component.encoding, document));
+            node.appendChild(encodingNode);
+        }
+
+        if (component.values) {
+            const valuesNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:values&#x27;);
+            valuesNode.textContent &#x3D; component.values as string;
+            node.appendChild(valuesNode);
+        }
+    }
+
+    private encodeUom(uom: UnitOfMeasure, document: Document, node: Element) {
+        if (uom) {
+            const uomNode &#x3D; document.createElementNS(NAMESPACES.SWE, &#x27;swe:uom&#x27;);
+            if (uom.code) {
+                uomNode.setAttribute(&#x27;code&#x27;, uom.code);
+            }
+            if (uom.href) {
+                uomNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:href&#x27;, uom.href);
+            }
+            if (uom.title) {
+                uomNode.setAttributeNS(NAMESPACES.XLINK, &#x27;xlink:title&#x27;, uom.title);
+            }
+            node.appendChild(uomNode);
+        }
+    }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'SweEncoder.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

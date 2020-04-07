@@ -142,10 +142,6 @@
                                     <span class="modifier">Private</span>
                                 <a href="#timespan">timespan</a>
                             </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#timezone">timezone</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -248,12 +244,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(api: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>)</code>
+<code>constructor(servicesConnector: <a href="../injectables/HelgolandServicesConnector.html">HelgolandServicesConnector</a>, timeSrvc: <a href="../injectables/Time.html">Time</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:67</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:59</a></div>
                             </td>
                         </tr>
 
@@ -271,10 +267,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>api</td>
+                                                        <td>servicesConnector</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                                        <code><a href="../injectables/HelgolandServicesConnector.html" target="_self" >HelgolandServicesConnector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -321,7 +317,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:44</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -348,7 +344,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:49</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -378,7 +374,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:59</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -399,13 +395,13 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>EventEmitter&lt;ExportData&gt;</code>
+                        <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >EventEmitter&lt;HelgolandTimeseries&gt;</a></code>
 
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:54</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -441,15 +437,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>downloadData(data: <a href="../undefineds/xlsxExport.html">xlsxExport</a>, dwType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>downloadData(data: <a href="../undefineds/xlsxExport.html">xlsxExport</a>, dwType: <a href="../undefineds/DownloadType.html">DownloadType</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="173"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:173</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:143</a></div>
                 </td>
             </tr>
 
@@ -483,7 +479,7 @@
                                 <tr>
                                     <td>dwType</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../miscellaneous/enumerations.html#DownloadType" target="_self" >DownloadType</a></code>
                                     </td>
 
                                     <td>
@@ -525,15 +521,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>loadData(dataset: <a href="../injectables/Time.html">Timeseries</a>, dwType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>loadData(dataset: <a href="../injectables/Time.html">HelgolandTimeseries</a>, dwType: <a href="../undefineds/DownloadType.html">DownloadType</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:113</a></div>
                 </td>
             </tr>
 
@@ -555,7 +551,7 @@
                                 <tr>
                                     <td>dataset</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -567,7 +563,7 @@
                                 <tr>
                                     <td>dwType</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../miscellaneous/enumerations.html#DownloadType" target="_self" >DownloadType</a></code>
                                     </td>
 
                                     <td>
@@ -614,8 +610,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="103"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:103</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:79</a></div>
                 </td>
             </tr>
 
@@ -684,8 +680,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:66</a></div>
                 </td>
             </tr>
 
@@ -725,8 +721,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="190"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:190</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="160"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:160</a></div>
                 </td>
             </tr>
 
@@ -790,15 +786,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>onDownload(downloadType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>onDownload(downloadType: <a href="../undefineds/DownloadType.html">DownloadType</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="130"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:130</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:105</a></div>
                 </td>
             </tr>
 
@@ -820,7 +816,7 @@
                                 <tr>
                                     <td>downloadType</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../miscellaneous/enumerations.html#DownloadType" target="_self" >DownloadType</a></code>
                                     </td>
 
                                     <td>
@@ -869,8 +865,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="185"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:185</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:155</a></div>
                 </td>
             </tr>
 
@@ -941,8 +937,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="201"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:201</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:171</a></div>
                 </td>
             </tr>
 
@@ -1013,8 +1009,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="195"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:195</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="165"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:165</a></div>
                 </td>
             </tr>
 
@@ -1078,15 +1074,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>prepareData(dataset: <a href="../injectables/Time.html">Timeseries</a>, result: <a href="../injectables/Time.html">Data<TimeValueTuple></a>, dwType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>prepareData(dataset: <a href="../injectables/Time.html">HelgolandTimeseries</a>, result: <a href="../injectables/Time.html">HelgolandTimeseriesData</a>, dwType: <a href="../undefineds/DownloadType.html">DownloadType</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:157</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:127</a></div>
                 </td>
             </tr>
 
@@ -1108,7 +1104,7 @@
                                 <tr>
                                     <td>dataset</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
                                     </td>
 
                                     <td>
@@ -1120,7 +1116,7 @@
                                 <tr>
                                     <td>result</td>
                                     <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >Data&lt;TimeValueTuple&gt;</a></code>
+                                                <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseriesData</a></code>
                                     </td>
 
                                     <td>
@@ -1132,7 +1128,7 @@
                                 <tr>
                                     <td>dwType</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../miscellaneous/enumerations.html#DownloadType" target="_self" >DownloadType</a></code>
                                     </td>
 
                                     <td>
@@ -1178,13 +1174,13 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >Timeseries</a></code>
+                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
 
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -1217,7 +1213,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:38</a></div>
                             </td>
                         </tr>
 
@@ -1245,35 +1241,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:46</a></div>
-                            </td>
-                        </tr>
-
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="timezone"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            timezone</b>
-                            <a href="#timezone"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:47</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -1287,38 +1255,31 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from &#x27;@angular/core&#x27;;
-import { Data, DatasetApiInterface, IDataset, Time, Timeseries, Timespan, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
+import {
+  DatasetType,
+  HelgolandServicesConnector,
+  HelgolandTimeseries,
+  HelgolandTimeseriesData,
+  IDataset,
+  Time,
+  Timespan,
+} from &#x27;@helgoland/core&#x27;;
 import moment from &#x27;moment&#x27;;
 import * as XLSX from &#x27;xlsx&#x27;;
 
 type xlsxExport &#x3D; any[][];
 
 /**
- * metadata informing about the selected dataset, that can be visualized
- */
-export interface ExportData {
-  station: string;
-  timezone: string;
-  phenomenon: string;
-  uom: string;
-  firstvalue: string;
-  lastvalue: string;
-  timeperiod: {
-    from: Date;
-    to: Date;
-  };
-}
-
-/**
  * information that defines options for the export
  */
 export interface ExportOptions {
-  downloadType: string;
-  timeperiod: {
-    from: Date;
-    to: Date;
-  };
-  timezone: string;
+  downloadType: DownloadType;
+  timeperiod: Timespan;
+}
+
+export enum DownloadType {
+  XLSX &#x3D; &#x27;xlsx&#x27;,
+  CSV &#x3D; &#x27;csv&#x27;
 }
 
 @Component({
@@ -1329,10 +1290,9 @@ export interface ExportOptions {
 
 export class DatasetExportComponent implements OnInit, OnChanges {
 
-  private dataset: Timeseries;
+  private dataset: HelgolandTimeseries;
   private fileName &#x3D; &#x27;timeseries&#x27;;
   private timespan: Timespan;
-  private timezone: string;
 
   /**
    * options to define the export parameters
@@ -1347,7 +1307,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * returns the metadata of the selected dataset to be visualized
    */
-  @Output() public onMetadataChange: EventEmitter&lt;ExportData&gt; &#x3D; new EventEmitter();
+  @Output() public onMetadataChange: EventEmitter&lt;HelgolandTimeseries&gt; &#x3D; new EventEmitter();
 
   /**
    * Output to inform the loading status, while file is created
@@ -1355,43 +1315,26 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   @Output() public onLoadingChange: EventEmitter&lt;boolean&gt; &#x3D; new EventEmitter();
 
   constructor(
-    protected api: DatasetApiInterface,
+    protected servicesConnector: HelgolandServicesConnector,
     protected timeSrvc: Time,
   ) { }
 
   ngOnInit() {
     // get timeseries metadata by internal id
-    // e.g. http://www.fluggs.de/sos2/api/v1/__26
-    this.api.getSingleTimeseriesByInternalId(this.inputId).subscribe(
-      (timeseries) &#x3D;&gt; {
-        this.fileName &#x3D; this.fileName + &#x27;_&#x27; + this.inputId;
-        this.dataset &#x3D; timeseries;
+    // e.g. https://www.fluggs.de/sos2/api/v1/__26
+    this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
+      ds &#x3D;&gt; {
+        this.dataset &#x3D; ds;
         this.timespan &#x3D; new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
-
-        const exportData: ExportData &#x3D; {
-          station: timeseries.parameters.feature.label,
-          timezone: null,
-          phenomenon: timeseries.parameters.phenomenon.label,
-          uom: timeseries.uom,
-          firstvalue: moment(timeseries.firstValue.timestamp).format(),
-          lastvalue: moment(timeseries.lastValue.timestamp).format(),
-          timeperiod: {
-            from: this.parseUnixToDate(this.timespan.from),
-            to: this.parseUnixToDate(this.timespan.to)
-          }
-        };
-        this.onMetadataChange.emit(exportData);
+        this.onMetadataChange.emit(ds);
       },
-      (error) &#x3D;&gt; {
-        this.onError(error);
-      }
+      error &#x3D;&gt; this.onError(error)
     );
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.exportOptions &amp;&amp; changes.exportOptions.currentValue) {
-      this.timezone &#x3D; changes.exportOptions.currentValue.timezone;
-      this.timespan &#x3D; new Timespan(this.parseDateToUnix(changes.exportOptions.currentValue.timeperiod.from), this.parseDateToUnix(changes.exportOptions.currentValue.timeperiod.to));
+    if (changes.exportOptions &amp;&amp; this.exportOptions) {
+      this.timespan &#x3D; this.exportOptions.timeperiod;
       // check if timespan is inside range
       if (this.timespan.from &gt; this.timespan.to) {
         this.timespan &#x3D; {
@@ -1399,57 +1342,52 @@ export class DatasetExportComponent implements OnInit, OnChanges {
           to: this.timespan.from
         };
       }
-      if (changes.exportOptions.currentValue.timeperiod.from &lt; this.dataset.firstValue.timestamp) {
+      if (this.exportOptions.timeperiod.from &lt; this.dataset.firstValue.timestamp) {
         this.timespan.from &#x3D; this.dataset.firstValue.timestamp;
-      } else if (changes.exportOptions.currentValue.timeperiod.from &gt; this.dataset.lastValue.timestamp) {
+      } else if (this.exportOptions.timeperiod.from &gt; this.dataset.lastValue.timestamp) {
         this.timespan.from &#x3D; this.dataset.lastValue.timestamp;
       }
-      if (changes.exportOptions.currentValue.timeperiod.to &gt; this.dataset.lastValue.timestamp) {
+      if (this.exportOptions.timeperiod.to &gt; this.dataset.lastValue.timestamp) {
         this.timespan.to &#x3D; this.dataset.lastValue.timestamp;
-      } else if (changes.exportOptions.currentValue.timeperiod.to &lt; this.dataset.firstValue.timestamp) {
+      } else if (this.exportOptions.timeperiod.to &lt; this.dataset.firstValue.timestamp) {
         this.timespan.to &#x3D; this.dataset.firstValue.timestamp;
       }
-      if (changes.exportOptions.currentValue.downloadType &#x3D;&#x3D;&#x3D; &#x27;csv&#x27; || changes.exportOptions.currentValue.downloadType &#x3D;&#x3D;&#x3D; &#x27;xlsx&#x27;) {
-        this.onDownload(changes.exportOptions.currentValue.downloadType);
+      if (this.exportOptions.downloadType) {
+        this.onDownload(this.exportOptions.downloadType);
       }
     }
   }
 
-  public onDownload(downloadType: string): void {
+  public onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
-    if (this.dataset &amp;&amp; this.dataset instanceof Timeseries) {
+    this.fileName &#x3D; this.inputId;
+    if (this.dataset) {
       this.loadData(this.dataset, downloadType);
     }
   }
 
-  private loadData(dataset: Timeseries, dwType: string): void {
+  private loadData(dataset: HelgolandTimeseries, dwType: DownloadType): void {
     console.log(&#x27;Loading data ...&#x27;);
     // get dataset data
-    if (dataset instanceof Timeseries) {
-      const buffer &#x3D; new Timespan(this.timespan.from, this.timespan.to);
+    const buffer &#x3D; new Timespan(this.timespan.from, this.timespan.to);
 
-      this.api.getTsData&lt;[number, number]&gt;(dataset.id, dataset.url, buffer,
-        {
-          format: &#x27;flot&#x27;,
-          expanded: false,
-          generalize: false
-        },
-        { forceUpdate: false }
-      ).subscribe(
-        (result) &#x3D;&gt; this.prepareData(dataset, result, dwType),
-        (error) &#x3D;&gt; this.onError(error),
+    this.servicesConnector.getDatasetData(dataset, buffer,
+      {
+        generalize: false
+      }).subscribe(
+        (result) &#x3D;&gt; this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
+        error &#x3D;&gt; this.onError(error),
         () &#x3D;&gt; this.onCompleteLoadingData(dataset)
       );
-    }
   }
-  private prepareData(dataset: Timeseries, result: Data&lt;TimeValueTuple&gt;, dwType: string): void {
+  private prepareData(dataset: HelgolandTimeseries, result: HelgolandTimeseriesData, dwType: DownloadType): void {
     console.log(&#x27;Preparing data ...&#x27;);
     const valueHeader &#x3D; dataset.parameters.phenomenon.label + &#x27;_(&#x27; + dataset.uom + &#x27;)&#x27;;
     let exportData: xlsxExport &#x3D; [
       [&#x27;Station&#x27;, dataset.parameters.feature.label],
-      [&#x27;Lat&#x27;, dataset.station.geometry[&#x27;coordinates&#x27;][1]],
-      [&#x27;Lon&#x27;, dataset.station.geometry[&#x27;coordinates&#x27;][0]],
-      [&#x27;Timezone&#x27;, &#x27;input&#x27;],
+      [&#x27;Lat&#x27;, dataset.platform.geometry[&#x27;coordinates&#x27;][1]],
+      [&#x27;Lon&#x27;, dataset.platform.geometry[&#x27;coordinates&#x27;][0]],
+      // [&#x27;Timezone&#x27;, &#x27;&#x27;],
       [&#x27;TIME&#x27;, valueHeader],
     ];
 
@@ -1458,7 +1396,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     this.downloadData(exportData, dwType);
   }
 
-  private downloadData(data: xlsxExport, dwType: string): void {
+  private downloadData(data: xlsxExport, dwType: DownloadType): void {
     console.log(&#x27;Downloading data ...&#x27;);
     /* generate worksheet */
     const ws: XLSX.WorkSheet &#x3D; XLSX.utils.aoa_to_sheet(data);
@@ -1534,7 +1472,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div></div>'
-    var COMPONENTS = [{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlatformMapSelectorComponent', 'selector': 'n52-platform-map-selector'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DatasetExportComponent'};
 </script>

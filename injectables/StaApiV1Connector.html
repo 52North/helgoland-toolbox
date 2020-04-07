@@ -1,0 +1,4396 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>StaApiV1Connector</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#name">name</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canHandle">canHandle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createCategoriesFilter">createCategoriesFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createCategory">createCategory</a>
+                            </li>
+                            <li>
+                                <a href="#createCsvDataExportLink">createCsvDataExportLink</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createData">createData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createDatastreamFilter">createDatastreamFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createExpandedTimeseries">createExpandedTimeseries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createExtendedPlatform">createExtendedPlatform</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFeature">createFeature</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFeaturesFilter">createFeaturesFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFilter">createFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createFirstLastValue">createFirstLastValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createHelgolandPlatform">createHelgolandPlatform</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createOffering">createOffering</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createOfferingsFilter">createOfferingsFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createPhenomenaFilter">createPhenomenaFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createPhenomenon">createPhenomenon</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createProcedure">createProcedure</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createProceduresFilter">createProceduresFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createServices">createServices</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createStationFilter">createStationFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createTimeFilter">createTimeFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createTimeseries">createTimeseries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createTimespanFilter">createTimespanFilter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#createTsParameter">createTsParameter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#filterTimeseriesMatchesNot">filterTimeseriesMatchesNot</a>
+                            </li>
+                            <li>
+                                <a href="#getCategories">getCategories</a>
+                            </li>
+                            <li>
+                                <a href="#getCategory">getCategory</a>
+                            </li>
+                            <li>
+                                <a href="#getDataset">getDataset</a>
+                            </li>
+                            <li>
+                                <a href="#getDatasetData">getDatasetData</a>
+                            </li>
+                            <li>
+                                <a href="#getDatasetExtras">getDatasetExtras</a>
+                            </li>
+                            <li>
+                                <a href="#getDatasets">getDatasets</a>
+                            </li>
+                            <li>
+                                <a href="#getFeature">getFeature</a>
+                            </li>
+                            <li>
+                                <a href="#getFeatures">getFeatures</a>
+                            </li>
+                            <li>
+                                <a href="#getOffering">getOffering</a>
+                            </li>
+                            <li>
+                                <a href="#getOfferings">getOfferings</a>
+                            </li>
+                            <li>
+                                <a href="#getPhenomena">getPhenomena</a>
+                            </li>
+                            <li>
+                                <a href="#getPhenomenon">getPhenomenon</a>
+                            </li>
+                            <li>
+                                <a href="#getPlatform">getPlatform</a>
+                            </li>
+                            <li>
+                                <a href="#getPlatforms">getPlatforms</a>
+                            </li>
+                            <li>
+                                <a href="#getProcedure">getProcedure</a>
+                            </li>
+                            <li>
+                                <a href="#getProcedures">getProcedures</a>
+                            </li>
+                            <li>
+                                <a href="#getServices">getServices</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#requestExpandedTimeseries">requestExpandedTimeseries</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="../injectables/HttpService.html">HttpService</a>, sta: <a href="../injectables/StaReadInterfaceService.html">StaReadInterfaceService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/HttpService.html" target="_self" >HttpService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>sta</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/StaReadInterfaceService.html" target="_self" >StaReadInterfaceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canHandle"></a>
+                    <span class="name">
+                        <b>
+                            canHandle
+                        </b>
+                        <a href="#canHandle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canHandle(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createCategoriesFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createCategoriesFilter
+                        </b>
+                        <a href="#createCategoriesFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createCategoriesFilter(params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:192</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;ObservedPropertySelectParams, ObservedPropertyExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createCategory"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createCategory
+                        </b>
+                        <a href="#createCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createCategory(obsProp: <a href="../interfaces/ObservedProperty.html">ObservedProperty</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:368</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>obsProp</td>
+                                    <td>
+                                                <code><a href="../interfaces/ObservedProperty.html" target="_self" >ObservedProperty</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Category.html" target="_self" >Category</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createCsvDataExportLink"></a>
+                    <span class="name">
+                        <b>
+                            createCsvDataExportLink
+                        </b>
+                        <a href="#createCsvDataExportLink"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createCsvDataExportLink(internalId: <a href="../classes/Dataset.html">string | InternalDatasetId</a>, params: <a href="../interfaces/HelgolandCsvExportLinkParams.html">HelgolandCsvExportLinkParams</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="298"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:298</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>internalId</td>
+                                    <td>
+                                                <code><a href="../classes/Dataset.html" target="_self" >string | InternalDatasetId</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../interfaces/HelgolandCsvExportLinkParams.html" target="_self" >HelgolandCsvExportLinkParams</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createData"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createData
+                        </b>
+                        <a href="#createData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createData(observations: <a href="../interfaces/Observation.html">Observation[]</a>, params: <a href="../interfaces/DataParameterFilter.html">DataParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="349"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:349</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>observations</td>
+                                    <td>
+                                                <code><a href="../interfaces/Observation.html" target="_self" >Observation[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../interfaces/DataParameterFilter.html" target="_self" >DataParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>{}</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseriesData</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDatastreamFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createDatastreamFilter
+                        </b>
+                        <a href="#createDatastreamFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDatastreamFilter(params: <a href="../interfaces/DatasetFilter.html">DatasetFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="230"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:230</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../interfaces/DatasetFilter.html" target="_self" >DatasetFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;DatastreamSelectParams, DatastreamExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createExpandedTimeseries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createExpandedTimeseries
+                        </b>
+                        <a href="#createExpandedTimeseries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createExpandedTimeseries(ds: <a href="../interfaces/Datastream.html">Datastream</a>, first: <a href="../classes/FirstLastValue.html">FirstLastValue</a>, last: <a href="../classes/FirstLastValue.html">FirstLastValue</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="340"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:340</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ds</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datastream.html" target="_self" >Datastream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>first</td>
+                                    <td>
+                                                <code><a href="../classes/FirstLastValue.html" target="_self" >FirstLastValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>last</td>
+                                    <td>
+                                                <code><a href="../classes/FirstLastValue.html" target="_self" >FirstLastValue</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >HelgolandTimeseries</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createExtendedPlatform"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createExtendedPlatform
+                        </b>
+                        <a href="#createExtendedPlatform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createExtendedPlatform(loc: <a href="../interfaces/Location.html">Location</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="315"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:315</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>loc</td>
+                                    <td>
+                                                <code><a href="../interfaces/Location.html" target="_self" >Location</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFeature"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createFeature
+                        </b>
+                        <a href="#createFeature"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFeature(loc: <a href="../interfaces/Location.html">Location</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="356"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:356</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>loc</td>
+                                    <td>
+                                                <code><a href="../interfaces/Location.html" target="_self" >Location</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Feature.html" target="_self" >Feature</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFeaturesFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createFeaturesFilter
+                        </b>
+                        <a href="#createFeaturesFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFeaturesFilter(params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="159"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:159</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;LocationSelectParams, LocationExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createFilter
+                        </b>
+                        <a href="#createFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFilter(filterList: any[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="424"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:424</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterList</td>
+                                    <td>
+                                            <code>any[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;StaSelectParams, StaExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createFirstLastValue"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createFirstLastValue
+                        </b>
+                        <a href="#createFirstLastValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createFirstLastValue(obs: <a href="../interfaces/Observation.html">Observation</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="275"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:275</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>obs</td>
+                                    <td>
+                                                <code><a href="../interfaces/Observation.html" target="_self" >Observation</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/FirstLastValue.html" target="_self" >FirstLastValue</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createHelgolandPlatform"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createHelgolandPlatform
+                        </b>
+                        <a href="#createHelgolandPlatform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createHelgolandPlatform(loc: <a href="../interfaces/Location.html">Location</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="311"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:311</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>loc</td>
+                                    <td>
+                                                <code><a href="../interfaces/Location.html" target="_self" >Location</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Platform.html" target="_self" >HelgolandPlatform</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOffering"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createOffering
+                        </b>
+                        <a href="#createOffering"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createOffering(thing: <a href="../interfaces/Thing.html">Thing</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="360"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:360</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>thing</td>
+                                    <td>
+                                                <code><a href="../interfaces/Thing.html" target="_self" >Thing</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Offering.html" target="_self" >Offering</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createOfferingsFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createOfferingsFilter
+                        </b>
+                        <a href="#createOfferingsFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createOfferingsFilter(params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="89"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:89</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;ThingSelectParams, ThingExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPhenomenaFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createPhenomenaFilter
+                        </b>
+                        <a href="#createPhenomenaFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPhenomenaFilter(params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;ObservedPropertySelectParams, ObservedPropertyExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPhenomenon"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createPhenomenon
+                        </b>
+                        <a href="#createPhenomenon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPhenomenon(obsProp: <a href="../interfaces/ObservedProperty.html">ObservedProperty</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="364"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:364</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>obsProp</td>
+                                    <td>
+                                                <code><a href="../interfaces/ObservedProperty.html" target="_self" >ObservedProperty</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Phenomenon.html" target="_self" >Phenomenon</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createProcedure"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createProcedure
+                        </b>
+                        <a href="#createProcedure"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createProcedure(sensor: <a href="../interfaces/Sensor.html">Sensor</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="372"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:372</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>sensor</td>
+                                    <td>
+                                                <code><a href="../interfaces/Sensor.html" target="_self" >Sensor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Procedure.html" target="_self" >Procedure</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createProceduresFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createProceduresFilter
+                        </b>
+                        <a href="#createProceduresFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createProceduresFilter(params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;SensorSelectParams, SensorExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createServices"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createServices
+                        </b>
+                        <a href="#createServices"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createServices(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, paramfilter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="376"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:376</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>paramfilter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Service.html" target="_self" >Observable&lt;HelgolandService[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createStationFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createStationFilter
+                        </b>
+                        <a href="#createStationFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createStationFilter(filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:208</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Filter.html" target="_self" >StaFilter&lt;LocationSelectParams, LocationExpandParams&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTimeFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createTimeFilter
+                        </b>
+                        <a href="#createTimeFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createTimeFilter(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="282"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:282</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTimeseries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createTimeseries
+                        </b>
+                        <a href="#createTimeseries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createTimeseries(ds: <a href="../interfaces/Datastream.html">Datastream</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="325"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:325</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ds</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datastream.html" target="_self" >Datastream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/HelgolandDataset.html" target="_self" >HelgolandDataset</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTimespanFilter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createTimespanFilter
+                        </b>
+                        <a href="#createTimespanFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createTimespanFilter(timespan: <a href="../injectables/Time.html">Timespan</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="306"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:306</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>timespan</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >Timespan</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createTsParameter"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            createTsParameter
+                        </b>
+                        <a href="#createTsParameter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createTsParameter(ds: <a href="../interfaces/Datastream.html">Datastream</a>, thing: <a href="../interfaces/Thing.html">Thing</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="329"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:329</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ds</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datastream.html" target="_self" >Datastream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>thing</td>
+                                    <td>
+                                                <code><a href="../interfaces/Thing.html" target="_self" >Thing</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Parameter.html" target="_self" >ParameterConstellation</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterTimeseriesMatchesNot"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            filterTimeseriesMatchesNot
+                        </b>
+                        <a href="#filterTimeseriesMatchesNot"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filterTimeseriesMatchesNot(filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="431"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:431</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategories"></a>
+                    <span class="name">
+                        <b>
+                            getCategories
+                        </b>
+                        <a href="#getCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategories(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Category.html" target="_self" >Observable&lt;Category[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCategory"></a>
+                    <span class="name">
+                        <b>
+                            getCategory
+                        </b>
+                        <a href="#getCategory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCategory(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:78</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Category.html" target="_self" >Observable&lt;Category&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDataset"></a>
+                    <span class="name">
+                        <b>
+                            getDataset
+                        </b>
+                        <a href="#getDataset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDataset(internalId: <a href="../interfaces/InternalDatasetId.html">InternalDatasetId</a>, filter: <a href="../interfaces/DatasetFilter.html">DatasetFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="286"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:286</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>internalId</td>
+                                    <td>
+                                                <code><a href="../interfaces/InternalDatasetId.html" target="_self" >InternalDatasetId</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../interfaces/DatasetFilter.html" target="_self" >DatasetFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;HelgolandDataset&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatasetData"></a>
+                    <span class="name">
+                        <b>
+                            getDatasetData
+                        </b>
+                        <a href="#getDatasetData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatasetData(dataset: <a href="../classes/HelgolandDataset.html">HelgolandDataset</a>, timespan: <a href="../injectables/Time.html">Timespan</a>, filter: <a href="../interfaces/HelgolandDataFilter.html">HelgolandDataFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="292"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:292</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dataset</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandDataset.html" target="_self" >HelgolandDataset</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>timespan</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >Timespan</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../interfaces/HelgolandDataFilter.html" target="_self" >HelgolandDataFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;HelgolandData&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatasetExtras"></a>
+                    <span class="name">
+                        <b>
+                            getDatasetExtras
+                        </b>
+                        <a href="#getDatasetExtras"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatasetExtras(internalId: <a href="../interfaces/InternalDatasetId.html">InternalDatasetId</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="302"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:302</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>internalId</td>
+                                    <td>
+                                                <code><a href="../interfaces/InternalDatasetId.html" target="_self" >InternalDatasetId</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Dataset.html" target="_self" >Observable&lt;DatasetExtras&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDatasets"></a>
+                    <span class="name">
+                        <b>
+                            getDatasets
+                        </b>
+                        <a href="#getDatasets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDatasets(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../interfaces/DatasetFilter.html">DatasetFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="216"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:216</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../interfaces/DatasetFilter.html" target="_self" >DatasetFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;HelgolandDataset[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFeature"></a>
+                    <span class="name">
+                        <b>
+                            getFeature
+                        </b>
+                        <a href="#getFeature"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFeature(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="175"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:175</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Feature.html" target="_self" >Observable&lt;Feature&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFeatures"></a>
+                    <span class="name">
+                        <b>
+                            getFeatures
+                        </b>
+                        <a href="#getFeatures"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFeatures(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:153</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Feature.html" target="_self" >Observable&lt;Feature[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOffering"></a>
+                    <span class="name">
+                        <b>
+                            getOffering
+                        </b>
+                        <a href="#getOffering"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOffering(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Offering.html" target="_self" >Observable&lt;Offering&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOfferings"></a>
+                    <span class="name">
+                        <b>
+                            getOfferings
+                        </b>
+                        <a href="#getOfferings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOfferings(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Offering.html" target="_self" >Observable&lt;Offering[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPhenomena"></a>
+                    <span class="name">
+                        <b>
+                            getPhenomena
+                        </b>
+                        <a href="#getPhenomena"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPhenomena(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="101"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Phenomenon.html" target="_self" >Observable&lt;Phenomenon[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPhenomenon"></a>
+                    <span class="name">
+                        <b>
+                            getPhenomenon
+                        </b>
+                        <a href="#getPhenomenon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPhenomenon(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:120</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Phenomenon.html" target="_self" >Observable&lt;Phenomenon&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPlatform"></a>
+                    <span class="name">
+                        <b>
+                            getPlatform
+                        </b>
+                        <a href="#getPlatform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPlatform(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:186</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Platform.html" target="_self" >Observable&lt;HelgolandPlatform&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPlatforms"></a>
+                    <span class="name">
+                        <b>
+                            getPlatforms
+                        </b>
+                        <a href="#getPlatforms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPlatforms(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:180</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Platform.html" target="_self" >Observable&lt;HelgolandPlatform[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProcedure"></a>
+                    <span class="name">
+                        <b>
+                            getProcedure
+                        </b>
+                        <a href="#getProcedure"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProcedure(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:148</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Procedure.html" target="_self" >Observable&lt;Procedure&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProcedures"></a>
+                    <span class="name">
+                        <b>
+                            getProcedures
+                        </b>
+                        <a href="#getProcedures"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProcedures(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>filter</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Procedure.html" target="_self" >Observable&lt;Procedure[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getServices"></a>
+                    <span class="name">
+                        <b>
+                            getServices
+                        </b>
+                        <a href="#getServices"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getServices(apiUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, params: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:68</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>apiUrl</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>params</td>
+                                    <td>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Service.html" target="_self" >Observable&lt;HelgolandService[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="requestExpandedTimeseries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            requestExpandedTimeseries
+                        </b>
+                        <a href="#requestExpandedTimeseries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>requestExpandedTimeseries(ds: <a href="../interfaces/Datastream.html">Datastream</a>, apiUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="252"
+                            class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:252</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ds</td>
+                                    <td>
+                                                <code><a href="../interfaces/Datastream.html" target="_self" >Datastream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>apiUrl</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >Observable&lt;HelgolandTimeseries&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="name"></a>
+                        <span class="name">
+                            <b>
+                            name</b>
+                            <a href="#name"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;StaApiV1Connector&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">projects/helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector.ts:47</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import moment from &#x27;moment&#x27;;
+import { forkJoin, Observable, of } from &#x27;rxjs&#x27;;
+import { catchError, flatMap, map } from &#x27;rxjs/operators&#x27;;
+
+import { HttpService } from &#x27;../../../dataset-api/http.service&#x27;;
+import { InternalDatasetId } from &#x27;../../../dataset-api/internal-id-handler.service&#x27;;
+import { Category } from &#x27;../../../model/dataset-api/category&#x27;;
+import { TimeValueTuple } from &#x27;../../../model/dataset-api/data&#x27;;
+import { FirstLastValue, ParameterConstellation } from &#x27;../../../model/dataset-api/dataset&#x27;;
+import { Feature } from &#x27;../../../model/dataset-api/feature&#x27;;
+import { Offering } from &#x27;../../../model/dataset-api/offering&#x27;;
+import { Phenomenon } from &#x27;../../../model/dataset-api/phenomenon&#x27;;
+import { Procedure } from &#x27;../../../model/dataset-api/procedure&#x27;;
+import { DataParameterFilter } from &#x27;../../../model/internal/http-requests&#x27;;
+import { Timespan } from &#x27;../../../model/internal/timeInterval&#x27;;
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from &#x27;../../helgoland-services-connector&#x27;;
+import { HelgolandServiceConnector } from &#x27;../../interfaces/service-connector-interfaces&#x27;;
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from &#x27;../../model/internal/data&#x27;;
+import {
+  DatasetExtras,
+  DatasetFilter,
+  DatasetType,
+  HelgolandDataset,
+  HelgolandTimeseries,
+} from &#x27;../../model/internal/dataset&#x27;;
+import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from &#x27;../../model/internal/filter&#x27;;
+import { HelgolandPlatform } from &#x27;../../model/internal/platform&#x27;;
+import { HelgolandService } from &#x27;../../model/internal/service&#x27;;
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from &#x27;./model/datasetreams&#x27;;
+import { Location, LocationExpandParams, LocationSelectParams } from &#x27;./model/locations&#x27;;
+import { Observation } from &#x27;./model/observations&#x27;;
+import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from &#x27;./model/observed-properties&#x27;;
+import { Sensor, SensorExpandParams, SensorSelectParams } from &#x27;./model/sensors&#x27;;
+import { StaExpandParams, StaFilter, StaSelectParams } from &#x27;./model/sta-interface&#x27;;
+import { Thing, ThingExpandParams, ThingSelectParams } from &#x27;./model/things&#x27;;
+import { StaReadInterfaceService } from &#x27;./read/sta-read-interface.service&#x27;;
+
+const DEFAULT_SERVICE_LABEL &#x3D; &#x27;OGC SensorThings API&#x27;;
+const DEFAULT_SERVICE_ID &#x3D; &#x27;1&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class StaApiV1Connector implements HelgolandServiceConnector {
+
+  name &#x3D; &#x27;StaApiV1Connector&#x27;;
+
+  constructor(
+    private http: HttpService,
+    private sta: StaReadInterfaceService
+  ) { }
+
+  canHandle(url: string): Observable&lt;boolean&gt; {
+    return this.http.client().get(url).pipe(
+      map((res: any) &#x3D;&gt; {
+        if (res &amp;&amp; res.value &amp;&amp; res.value instanceof Array) {
+          // check if endpoint &#x27;Things&#x27; exists
+          return res.value.findIndex(e &#x3D;&gt; e.name &#x3D;&#x3D;&#x3D; &#x27;Things&#x27;) &gt;&#x3D; 0;
+        } else {
+          return false;
+        }
+      }),
+      catchError(() &#x3D;&gt; of(false))
+    );
+  }
+
+  getServices(apiUrl: string, params: HelgolandParameterFilter): Observable&lt;HelgolandService[]&gt; {
+    return this.createServices(apiUrl, params);
+  }
+
+  getCategories(url: string, filter: HelgolandParameterFilter): Observable&lt;Category[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createCategoriesFilter(filter)))
+      .pipe(map(obProps &#x3D;&gt; obProps.value.map(e &#x3D;&gt; this.createCategory(e))));
+  }
+
+  getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;Category&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getObservedProperty(url, id).pipe(map(prop &#x3D;&gt; this.createCategory(prop)));
+  }
+
+  getOfferings(url: string, filter: HelgolandParameterFilter): Observable&lt;Offering[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getThings(url, this.createOfferingsFilter(filter)))
+      .pipe(map(things &#x3D;&gt; things.value.map(t &#x3D;&gt; this.createOffering(t))));
+  }
+
+  private createOfferingsFilter(params: HelgolandParameterFilter): StaFilter&lt;ThingSelectParams, ThingExpandParams&gt; {
+    if (params) {
+      const filterList &#x3D; [];
+      return this.createFilter(filterList);
+    }
+  }
+
+  getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;Offering&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getThing(url, id).pipe(map(t &#x3D;&gt; this.createOffering(t)));
+  }
+
+  getPhenomena(url: string, filter: HelgolandParameterFilter): Observable&lt;Phenomenon[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createPhenomenaFilter(filter)))
+      .pipe(map(obsProps &#x3D;&gt; obsProps.value.map(e &#x3D;&gt; this.createPhenomenon(e))));
+  }
+
+  private createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter&lt;ObservedPropertySelectParams, ObservedPropertyExpandParams&gt; {
+    if (params) {
+      const filterList &#x3D; [];
+      if (params.category) {
+        filterList.push(&#x60;id eq &#x27;${params.category}&#x27;&#x60;);
+      }
+      if (params.feature) {
+        filterList.push(&#x60;Datastreams/Thing/Locations/id eq &#x27;${params.feature}&#x27;&#x60;);
+      }
+      return this.createFilter(filterList);
+    }
+  }
+
+  getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;Phenomenon&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getObservedProperty(url, id).pipe(map(prop &#x3D;&gt; this.createPhenomenon(prop)));
+  }
+
+  getProcedures(url: string, filter: HelgolandParameterFilter): Observable&lt;Procedure[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getSensors(url, this.createProceduresFilter(filter)))
+      .pipe(map(sensors &#x3D;&gt; sensors.value.map(s &#x3D;&gt; this.createProcedure(s))));
+  }
+
+  private createProceduresFilter(params: HelgolandParameterFilter): StaFilter&lt;SensorSelectParams, SensorExpandParams&gt; {
+    if (params) {
+      const filterList &#x3D; [];
+      if (params.category) {
+        filterList.push(&#x60;Datastreams/ObservedProperty/id eq &#x27;${params.category}&#x27;&#x60;);
+      }
+      // if (params.feature) {
+      //     filterList.push(&#x60;Datastreams/Thing/Locations/id eq &#x27;${params.feature}&#x27;&#x60;);
+      // }
+      if (params.phenomenon) {
+        filterList.push(&#x60;Datastreams/ObservedProperty/id eq &#x27;${params.category}&#x27;&#x60;);
+      }
+      return this.createFilter(filterList);
+    }
+    return {};
+  }
+
+  getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;Procedure&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getSensor(url, id).pipe(map(sensor &#x3D;&gt; this.createProcedure(sensor)));
+  }
+
+  getFeatures(url: string, filter: HelgolandParameterFilter): Observable&lt;Feature[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getLocations(url, this.createFeaturesFilter(filter)))
+      .pipe(map(locs &#x3D;&gt; locs.value.map(l &#x3D;&gt; this.createFeature(l))));
+  }
+
+  private createFeaturesFilter(params: HelgolandParameterFilter): StaFilter&lt;LocationSelectParams, LocationExpandParams&gt; {
+    if (params) {
+      const filterList &#x3D; [];
+      if (params.category) {
+        filterList.push(&#x60;Things/Datastreams/ObservedProperty/id eq &#x27;${params.category}&#x27;&#x60;);
+      }
+      if (params.phenomenon) {
+        filterList.push(&#x60;Things/Datastreams/ObservedProperty/id eq &#x27;${params.phenomenon}&#x27;&#x60;);
+      }
+      if (params.procedure) {
+        filterList.push(&#x60;Things/Datastreams/Sensor/id eq &#x27;${params.procedure}&#x27;&#x60;);
+      }
+      return this.createFilter(filterList);
+    }
+  }
+
+  getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;Feature&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getLocation(url, id).pipe(map(loc &#x3D;&gt; this.createFeature(loc)));
+  }
+
+  getPlatforms(url: string, filter: HelgolandParameterFilter): Observable&lt;HelgolandPlatform[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getLocations(url, this.createStationFilter(filter)))
+      .pipe(map(locs &#x3D;&gt; locs.value.map(e &#x3D;&gt; this.createHelgolandPlatform(e))));
+  }
+
+  getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable&lt;HelgolandPlatform&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getLocation(url, id, { $expand: &#x27;Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor&#x27; })
+      .pipe(map(loc &#x3D;&gt; this.createExtendedPlatform(loc)));
+  }
+
+  private createCategoriesFilter(params: HelgolandParameterFilter): StaFilter&lt;ObservedPropertySelectParams, ObservedPropertyExpandParams&gt; {
+    if (params) {
+      const filterList &#x3D; [];
+      if (params.phenomenon) {
+        filterList.push(&#x60;id eq &#x27;${params.phenomenon}&#x27;&#x60;);
+      }
+      if (params.feature) {
+        filterList.push(&#x60;Datastreams/Thing/Locations/id eq &#x27;${params.feature}&#x27;&#x60;);
+      }
+      if (params.procedure) {
+        filterList.push(&#x60;Datastreams/Sensor/id eq &#x27;${params.procedure}&#x27;&#x60;);
+      }
+      return this.createFilter(filterList);
+    }
+  }
+
+  private createStationFilter(filter: HelgolandParameterFilter): StaFilter&lt;LocationSelectParams, LocationExpandParams&gt; {
+    if (filter) {
+      if (filter.phenomenon) {
+        return { $filter: &#x60;Things/Datastreams/ObservedProperty/id eq &#x27;${filter.phenomenon}&#x27;&#x60; };
+      }
+    }
+  }
+
+  getDatasets(url: string, filter: DatasetFilter): Observable&lt;HelgolandDataset[]&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
+    return this.sta.aggregatePaging(this.sta.getDatastreams(url, this.createDatastreamFilter(filter)))
+      .pipe(flatMap(ds &#x3D;&gt; {
+        return forkJoin(ds.value.map(d &#x3D;&gt; {
+          if (filter.expanded) {
+            return this.requestExpandedTimeseries(d, url);
+          } else {
+            return of(this.createTimeseries(d, url));
+          }
+        }));
+      }));
+  }
+
+  private createDatastreamFilter(params: DatasetFilter): StaFilter&lt;DatastreamSelectParams, DatastreamExpandParams&gt; {
+    let filter: StaFilter&lt;StaSelectParams, StaExpandParams&gt; &#x3D; {};
+    if (params) {
+      const filterList &#x3D; [];
+      if (params.phenomenon) {
+        filterList.push(&#x60;ObservedProperty/id eq &#x27;${params.phenomenon}&#x27;&#x60;);
+      }
+      if (params.category) {
+        filterList.push(&#x60;ObservedProperty/id eq &#x27;${params.category}&#x27;&#x60;);
+      }
+      if (params.procedure) {
+        filterList.push(&#x60;Sensor/id eq &#x27;${params.procedure}&#x27;&#x60;);
+      }
+      if (params.feature) {
+        filterList.push(&#x60;Thing/Locations/id eq &#x27;${params.feature}&#x27;&#x60;);
+      }
+      filter &#x3D; this.createFilter(filterList);
+    }
+    filter.$expand &#x3D; &#x27;Thing,Thing/Locations,ObservedProperty,Sensor&#x27;;
+    return filter;
+  }
+
+  private requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable&lt;HelgolandTimeseries&gt; {
+    // get first and last timestamp
+    if (ds.phenomenonTime &amp;&amp; ds.phenomenonTime.indexOf(&#x27;/&#x27;)) {
+      const firstLastDates &#x3D; ds.phenomenonTime.split(&#x27;/&#x27;);
+      // request for first and last timestamp the values
+      const firstReq &#x3D; this.sta.getDatastreamObservationsRelation(apiUrl, ds[&#x27;@iot.id&#x27;], { $filter: this.createTimeFilter(firstLastDates[0]) });
+      const lastReq &#x3D; this.sta.getDatastreamObservationsRelation(apiUrl, ds[&#x27;@iot.id&#x27;], { $filter: this.createTimeFilter(firstLastDates[1]) });
+      return forkJoin([firstReq, lastReq]).pipe(map(res &#x3D;&gt; {
+        const first: FirstLastValue &#x3D; this.createFirstLastValue(res[0].value[0]);
+        const last: FirstLastValue &#x3D; this.createFirstLastValue(res[1].value[0]);
+        return this.createExpandedTimeseries(ds, first, last, apiUrl);
+      }));
+    } else {
+      const firstReq &#x3D; this.sta.getDatastreamObservationsRelation(apiUrl, ds[&#x27;@iot.id&#x27;], { $orderby: &#x27;phenomenonTime&#x27;, $top: 1 });
+      const lastReq &#x3D; this.sta.getDatastreamObservationsRelation(apiUrl, ds[&#x27;@iot.id&#x27;], { $orderby: &#x27;phenomenonTime desc&#x27;, $top: 1 });
+      return forkJoin([firstReq, lastReq]).pipe(map(res &#x3D;&gt; {
+        const first: FirstLastValue &#x3D; this.createFirstLastValue(res[0].value[0]);
+        const last: FirstLastValue &#x3D; this.createFirstLastValue(res[1].value[0]);
+        return this.createExpandedTimeseries(ds, first, last, apiUrl);
+      }));
+    }
+  }
+
+  private createFirstLastValue(obs: Observation): FirstLastValue {
+    if (obs &amp;&amp; obs.phenomenonTime &amp;&amp; obs.result) {
+      return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
+    }
+    return null;
+  }
+
+  private createTimeFilter(time: string): string {
+    return &#x60;phenomenonTime eq ${time}&#x60;;
+  }
+
+  getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable&lt;HelgolandDataset&gt; {
+    if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
+    return this.sta.getDatastream(internalId.url, internalId.id, { $expand: &#x27;Thing,Thing/Locations,ObservedProperty,Sensor&#x27; })
+      .pipe(flatMap(ds &#x3D;&gt; this.requestExpandedTimeseries(ds, internalId.url)));
+  }
+
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable&lt;HelgolandData&gt; {
+    return this.sta.aggregatePaging(
+      this.sta.getDatastreamObservationsRelation(dataset.url, dataset.id, { $orderby: &#x27;phenomenonTime&#x27;, $filter: this.createTimespanFilter(timespan), $top: 200 })
+    ).pipe(map(res &#x3D;&gt; this.createData(res.value, filter)));
+  }
+
+  createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable&lt;string&gt; {
+    return of(null);
+  }
+
+  getDatasetExtras(internalId: InternalDatasetId): Observable&lt;DatasetExtras&gt; {
+    return of({});
+  }
+
+  private createTimespanFilter(timespan: Timespan): string {
+    const format &#x3D; &#x27;YYYY-MM-DDTHH:mm:ss.SSSZ&#x27;;
+    return &#x60;phenomenonTime ge ${moment(timespan.from).format(format)} and phenomenonTime le ${moment(timespan.to).format(format)}&#x60;;
+  }
+
+  private createHelgolandPlatform(loc: Location): HelgolandPlatform {
+    return new HelgolandPlatform(loc[&#x27;@iot.id&#x27;], loc.name, [], loc.location);
+  }
+
+  private createExtendedPlatform(loc: Location): HelgolandPlatform {
+    const platform &#x3D; this.createHelgolandPlatform(loc);
+    loc.Things.forEach(thing &#x3D;&gt; {
+      thing.Datastreams.forEach(ds &#x3D;&gt; {
+        platform.datasetIds.push(&#x60;${ds[&#x27;@iot.id&#x27;]}&#x60;);
+      });
+    });
+    return platform;
+  }
+
+  private createTimeseries(ds: Datastream, url: string): HelgolandDataset {
+    return new HelgolandDataset(ds[&#x27;@iot.id&#x27;], url, ds.name);
+  }
+
+  private createTsParameter(ds: Datastream, thing: Thing): ParameterConstellation {
+    return {
+      service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
+      offering: this.createOffering(thing),
+      feature: this.createFeature(thing.Locations[0]),
+      procedure: this.createProcedure(ds.Sensor),
+      phenomenon: this.createPhenomenon(ds.ObservedProperty),
+      category: this.createCategory(ds.ObservedProperty)
+    };
+  }
+
+  private createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): HelgolandTimeseries {
+    const id &#x3D; ds[&#x27;@iot.id&#x27;];
+    const label &#x3D; ds.name;
+    const uom &#x3D; ds.unitOfMeasurement.symbol;
+    const parameter &#x3D; this.createTsParameter(ds, ds.Thing);
+    const platform &#x3D; this.createHelgolandPlatform(ds.Thing.Locations[0]);
+    return new HelgolandTimeseries(id, url, label, uom, platform, first, last, [], null, parameter);
+  }
+
+  private createData(observations: Observation[], params: DataParameterFilter &#x3D; {}): HelgolandTimeseriesData {
+    const values &#x3D; observations.map(obs &#x3D;&gt; [new Date(obs.phenomenonTime).getTime(), parseFloat(obs.result as string)] as TimeValueTuple);
+    const data &#x3D; new HelgolandTimeseriesData(values);
+    data.referenceValues &#x3D; {};
+    return data;
+  }
+
+  private createFeature(loc: Location): Feature {
+    return { id: loc[&#x27;@iot.id&#x27;], label: loc.name };
+  }
+
+  private createOffering(thing: Thing): Offering {
+    return { id: thing[&#x27;@iot.id&#x27;], label: thing.name };
+  }
+
+  private createPhenomenon(obsProp: ObservedProperty): Phenomenon {
+    return { id: obsProp[&#x27;@iot.id&#x27;], label: obsProp.name };
+  }
+
+  private createCategory(obsProp: ObservedProperty): Category {
+    return { id: obsProp[&#x27;@iot.id&#x27;], label: obsProp.name };
+  }
+
+  private createProcedure(sensor: Sensor): Procedure {
+    return { id: sensor[&#x27;@iot.id&#x27;], label: sensor.name };
+  }
+
+  private createServices(url: string, paramfilter: HelgolandParameterFilter): Observable&lt;HelgolandService[]&gt; {
+    const service &#x3D; new HelgolandService(
+      DEFAULT_SERVICE_ID,
+      url,
+      DEFAULT_SERVICE_LABEL,
+      &#x27;STA&#x27;,
+      &#x27;1.0&#x27;,
+      {
+        categories: 0,
+        features: 0,
+        offerings: 0,
+        phenomena: 0,
+        procedures: 0,
+        platforms: 0,
+        datasets: 0
+      }
+    );
+    if (paramfilter.type &amp;&amp; paramfilter.type !&#x3D;&#x3D; DatasetType.Timeseries) {
+      return of([service]);
+    }
+    const filter &#x3D; { $count: true, $top: 1 };
+    const locationsReq &#x3D; this.sta.getLocations(url, filter);
+    const obPropsReq &#x3D; this.sta.getObservedProperties(url, filter);
+    const thingsReq &#x3D; this.sta.getThings(url, filter);
+    const sensorsReq &#x3D; this.sta.getSensors(url, filter);
+    const datastreamsReq &#x3D; this.sta.getDatastreams(url, filter);
+    return forkJoin([locationsReq, obPropsReq, thingsReq, sensorsReq, datastreamsReq]).pipe(map(res &#x3D;&gt; {
+      service.quantities.categories &#x3D; res[1][&#x27;@iot.count&#x27;];
+      service.quantities.features &#x3D; res[0][&#x27;@iot.count&#x27;];
+      service.quantities.offerings &#x3D; res[2][&#x27;@iot.count&#x27;];
+      service.quantities.phenomena &#x3D; res[1][&#x27;@iot.count&#x27;];
+      service.quantities.procedures &#x3D; res[3][&#x27;@iot.count&#x27;];
+      service.quantities.platforms &#x3D; res[0][&#x27;@iot.count&#x27;];
+      service.quantities.datasets &#x3D; res[4][&#x27;@iot.count&#x27;];
+      return [service];
+    }));
+  }
+
+  // private createPlatform(loc: Location): Platform {
+  //   return {
+  //     id: loc[&#x27;@iot.id&#x27;],
+  //     label: loc.name,
+  //     platformType: PlatformTypes.stationary,
+  //     datasets: [],
+  //     geometry: loc.location as GeoJSON.Point,
+  //   };
+  // }
+
+  private createFilter(filterList: any[]): StaFilter&lt;StaSelectParams, StaExpandParams&gt; {
+    if (filterList.length &gt; 0) {
+      return { $filter: filterList.join(&#x27; and &#x27;) };
+    }
+    return {};
+  }
+
+  private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
+    return filter.type &amp;&amp; filter.type !&#x3D;&#x3D; DatasetType.Timeseries;
+  }
+
+}
+
+export const DatasetStaConnectorProvider &#x3D; {
+  provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+  useClass: StaApiV1Connector,
+  multi: true
+};
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'StaApiV1Connector.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

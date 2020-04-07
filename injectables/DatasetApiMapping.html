@@ -188,8 +188,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-mapping.service.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/api-mapping.service.ts:40</a></div>
                 </td>
             </tr>
 
@@ -390,11 +390,13 @@ export class DatasetApiMapping {
             } else {
                 this.http.get&lt;any[]&gt;(apiUrl).subscribe((result) &#x3D;&gt; {
                     let version &#x3D; DatasetApiVersion.V1;
-                    result.forEach((entry) &#x3D;&gt; {
-                        if (entry.id &#x3D;&#x3D;&#x3D; &#x27;platforms&#x27;) {
-                            version &#x3D; DatasetApiVersion.V2;
-                        }
-                    });
+                    if (result instanceof Array) {
+                        result.forEach((entry) &#x3D;&gt; {
+                            if (entry.id &#x3D;&#x3D;&#x3D; &#x27;platforms&#x27;) {
+                                version &#x3D; DatasetApiVersion.V2;
+                            }
+                        });
+                    }
                     this.cache.set(apiUrl, version);
                     this.confirmVersion(observer, version);
                 });

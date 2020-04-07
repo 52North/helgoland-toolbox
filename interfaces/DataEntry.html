@@ -120,7 +120,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">projects/helgoland/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/helgoland/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts:52</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -298,10 +298,11 @@
     ViewEncapsulation,
 } from &#x27;@angular/core&#x27;;
 import {
-    DatasetApiInterface,
     DatasetOptions,
     DatasetPresenterComponent,
-    IDataset,
+    DatasetType,
+    HelgolandServicesConnector,
+    HelgolandTrajectory,
     InternalIdHandler,
     LocatedTimeValueEntry,
     Time,
@@ -339,7 +340,7 @@ interface DataEntry extends LocatedTimeValueEntry {
 }
 
 interface DatasetConstellation {
-    dataset?: IDataset;
+    dataset?: HelgolandTrajectory;
     data?: LocatedTimeValueEntry[];
     yScale?: ScaleLinear&lt;number, number&gt;;
     drawOptions?: DrawOptions;
@@ -380,50 +381,50 @@ export class D3TrajectoryGraphComponent
     @ViewChild(&#x27;dthree&#x27;, { static: true })
     public d3Elem: ElementRef;
 
-    private datasetMap: Map&lt;string, DatasetConstellation&gt; &#x3D; new Map();
-    private rawSvg: any;
-    private graph: any;
-    private height: number;
-    private width: number;
-    private margin &#x3D; {
+    protected datasetMap: Map&lt;string, DatasetConstellation&gt; &#x3D; new Map();
+    protected rawSvg: any;
+    protected graph: any;
+    protected height: number;
+    protected width: number;
+    protected margin &#x3D; {
         top: 10,
         right: 10,
         bottom: 40,
         left: 40
     };
-    private maxLabelwidth &#x3D; 0;
-    private lineFun: d3.Line&lt;DataEntry&gt;;
-    private area: d3.Area&lt;DataEntry&gt;;
-    private xScaleBase: d3.ScaleLinear&lt;number, number&gt;;
-    private yScaleBase: d3.ScaleLinear&lt;number, number&gt;;
-    private background: any;
-    private focusG: any;
-    private highlightFocus: any;
-    private focuslabelTime: any;
-    private focuslabelY: any;
-    private yAxisGen: d3.Axis&lt;number | { valueOf(): number; }&gt;;
-    private baseValues: DataEntry[] &#x3D; [];
-    private dragging: boolean;
-    private dragStart: [number, number];
-    private dragCurrent: [number, number];
-    private dragRect: any;
-    private dragRectG: any;
-    private bufferSum: number;
-    private dataLength: number;
+    protected maxLabelwidth &#x3D; 0;
+    protected lineFun: d3.Line&lt;DataEntry&gt;;
+    protected area: d3.Area&lt;DataEntry&gt;;
+    protected xScaleBase: d3.ScaleLinear&lt;number, number&gt;;
+    protected yScaleBase: d3.ScaleLinear&lt;number, number&gt;;
+    protected background: any;
+    protected focusG: any;
+    protected highlightFocus: any;
+    protected focuslabelTime: any;
+    protected focuslabelY: any;
+    protected yAxisGen: d3.Axis&lt;number | { valueOf(): number; }&gt;;
+    protected baseValues: DataEntry[] &#x3D; [];
+    protected dragging: boolean;
+    protected dragStart: [number, number];
+    protected dragCurrent: [number, number];
+    protected dragRect: any;
+    protected dragRectG: any;
+    protected bufferSum: number;
+    protected dataLength: number;
 
-    private defaultGraphOptions: D3GraphOptions &#x3D; {
+    protected defaultGraphOptions: D3GraphOptions &#x3D; {
         axisType: D3AxisType.Distance,
         dotted: false
     };
 
     constructor(
         protected iterableDiffers: IterableDiffers,
-        protected api: DatasetApiInterface,
+        protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateService: TranslateService
     ) {
-        super(iterableDiffers, api, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
         this.presenterOptions &#x3D; this.defaultGraphOptions;
     }
 
@@ -474,10 +475,11 @@ export class D3TrajectoryGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.api.getDataset(id, url).subscribe((dataset) &#x3D;&gt; {
-            this.datasetMap.set(dataset.internalId, { dataset });
-            this.loadData(dataset);
-        });
+        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Trajectory })
+            .subscribe(dataset &#x3D;&gt; {
+                this.datasetMap.set(dataset.internalId, { dataset });
+                this.loadData(dataset);
+            });
     }
 
     protected removeDataset(internalId: string): void {
@@ -508,16 +510,13 @@ export class D3TrajectoryGraphComponent
         this.drawLineGraph();
     }
 
-    private loadData(dataset: IDataset) {
+    protected loadData(dataset: HelgolandTrajectory) {
         if (this.timespan &amp;&amp;
             this.datasetOptions.has(dataset.internalId) &amp;&amp;
             this.datasetOptions.get(dataset.internalId).visible) {
             const buffer &#x3D; this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option &#x3D; this.datasetOptions.get(dataset.internalId);
-            this.api.getData&lt;LocatedTimeValueEntry&gt;(dataset.id, dataset.url, buffer,
-                {
-                    generalize: option.generalize
-                })
+            this.servicesConnector.getDatasetData(dataset, buffer, { generalize: option.generalize })
                 .subscribe((result) &#x3D;&gt; {
                     this.dataLength &#x3D; result.values.length;
                     this.datasetMap.get(dataset.internalId).data &#x3D; result.values;
@@ -529,18 +528,19 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private processAllData() {
+    protected processAllData() {
         this.baseValues &#x3D; [];
         this.datasetIds.forEach((id) &#x3D;&gt; this.processDataForId(id));
     }
 
-    private processDataForId(internalId: string) {
-        if (this.datasetOptions.get(internalId).visible) {
-            const datasetEntry &#x3D; this.datasetMap.get(internalId);
+    protected processDataForId(internalId: string) {
+        const dataset &#x3D; this.datasetMap.get(internalId);
+        const options &#x3D; this.datasetOptions.get(internalId);
+        if (options.visible &amp;&amp; dataset.data &amp;&amp; dataset.data.length &gt; 0) {
             const firstEntry &#x3D; this.baseValues.length &#x3D;&#x3D;&#x3D; 0;
             let previous: DataEntry &#x3D; null;
-            if (datasetEntry &amp;&amp; datasetEntry.data &amp;&amp; datasetEntry.data.length &gt;&#x3D; 0) {
-                datasetEntry.data.forEach((elem, idx) &#x3D;&gt; {
+            if (dataset &amp;&amp; dataset.data &amp;&amp; dataset.data.length &gt;&#x3D; 0) {
+                dataset.data.forEach((elem, idx) &#x3D;&gt; {
                     if (firstEntry) {
                         const entry &#x3D; this.createDataEntry(internalId, elem, previous, idx);
                         if (this.selection) {
@@ -569,7 +569,7 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private createDataEntry(
+    protected createDataEntry(
         internalId: string,
         entry: LocatedTimeValueEntry,
         previous: DataEntry,
@@ -599,7 +599,7 @@ export class D3TrajectoryGraphComponent
         };
     }
 
-    private distanceBetween(latitude1, longitude1, latitude2, longitude2): number {
+    protected distanceBetween(latitude1, longitude1, latitude2, longitude2): number {
         const R &#x3D; 6371000;
         const rad &#x3D; Math.PI / 180;
         const lat1 &#x3D; latitude1 * rad;
@@ -611,25 +611,25 @@ export class D3TrajectoryGraphComponent
         return R * c;
     }
 
-    private calcYValue &#x3D; (d: DataEntry) &#x3D;&gt; {
+    protected calcYValue &#x3D; (d: DataEntry) &#x3D;&gt; {
         return this.yScaleBase(d.value);
     }
 
-    private calcXValue &#x3D; (d: DataEntry, i: number) &#x3D;&gt; {
+    protected calcXValue &#x3D; (d: DataEntry, i: number) &#x3D;&gt; {
         const xDiagCoord &#x3D; this.xScaleBase(this.getXValue(d));
         d.xDiagCoord &#x3D; xDiagCoord;
         return xDiagCoord;
     }
 
-    private calculateHeight(): number {
+    protected calculateHeight(): number {
         return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
-    private calculateWidth(): number {
+    protected calculateWidth(): number {
         return (this.d3Elem.nativeElement as HTMLElement).clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
-    private getXValue(data: DataEntry) {
+    protected getXValue(data: DataEntry) {
         switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return data.dist;
@@ -642,7 +642,7 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private drawDots(values: DataEntry[], yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
+    protected drawDots(values: DataEntry[], yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
         this.graph.selectAll(&#x27;dot&#x27;)
             .data(values)
             .enter().append(&#x27;circle&#x27;)
@@ -653,7 +653,7 @@ export class D3TrajectoryGraphComponent
             .attr(&#x27;cy&#x27;, (d: DataEntry) &#x3D;&gt; yScale(d[options.id]));
     }
 
-    private drawValueLine(values: DataEntry[], yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
+    protected drawValueLine(values: DataEntry[], yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
         this.graph.append(&#x27;svg:path&#x27;)
             .datum(values)
             .attr(&#x27;class&#x27;, &#x27;line&#x27;)
@@ -666,7 +666,7 @@ export class D3TrajectoryGraphComponent
                 .curve(curveLinear));
     }
 
-    private drawGraph(yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
+    protected drawGraph(yScale: d3.ScaleLinear&lt;number, number&gt;, options: DrawOptions) {
         if (this.presenterOptions.dotted) {
             this.drawDots(this.baseValues, yScale, options);
         } else {
@@ -674,7 +674,7 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private drawLineGraph() {
+    protected drawLineGraph() {
         if (!this.baseValues || this.baseValues.length &#x3D;&#x3D;&#x3D; 0 || !this.graph) {
             return;
         }
@@ -689,7 +689,7 @@ export class D3TrajectoryGraphComponent
         this.yScaleBase &#x3D; null;
 
         this.datasetMap.forEach((datasetEntry, id) &#x3D;&gt; {
-            if (this.datasetOptions.has(id) &amp;&amp; datasetEntry.data &amp;&amp; this.datasetOptions.get(id).visible) {
+            if (this.datasetOptions.has(id) &amp;&amp; datasetEntry.data &amp;&amp; datasetEntry.data.length &gt; 0 &amp;&amp; this.datasetOptions.get(id).visible) {
                 datasetEntry.drawOptions &#x3D; {
                     uom: datasetEntry.dataset.uom,
                     id: datasetEntry.dataset.internalId,
@@ -720,7 +720,7 @@ export class D3TrajectoryGraphComponent
         this.drawXAxis(this.bufferSum);
 
         this.datasetMap.forEach((entry, id) &#x3D;&gt; {
-            if (this.datasetOptions.has(id) &amp;&amp; this.datasetOptions.get(id).visible &amp;&amp; entry.data) {
+            if (this.datasetOptions.has(id) &amp;&amp; this.datasetOptions.get(id).visible &amp;&amp; entry.data &amp;&amp; entry.data.length &gt; 0) {
                 this.drawGraph(entry.yScale, entry.drawOptions);
             }
         });
@@ -769,7 +769,7 @@ export class D3TrajectoryGraphComponent
             .attr(&#x27;class&#x27;, &#x27;mouse-focus-label-y&#x27;);
     }
 
-    private mousemoveHandler &#x3D; () &#x3D;&gt; {
+    protected mousemoveHandler &#x3D; () &#x3D;&gt; {
         if (!this.baseValues || this.baseValues.length &#x3D;&#x3D;&#x3D; 0) {
             return;
         }
@@ -779,21 +779,21 @@ export class D3TrajectoryGraphComponent
         this.onHoverHighlight.emit(this.baseValues[idx].tick);
     }
 
-    private mouseoutHandler &#x3D; () &#x3D;&gt; {
+    protected mouseoutHandler &#x3D; () &#x3D;&gt; {
         this.hideDiagramIndicator();
     }
 
-    private dragStartHandler &#x3D; () &#x3D;&gt; {
+    protected dragStartHandler &#x3D; () &#x3D;&gt; {
         this.dragging &#x3D; false;
         this.dragStart &#x3D; mouse(this.background.node());
     }
 
-    private dragHandler &#x3D; () &#x3D;&gt; {
+    protected dragHandler &#x3D; () &#x3D;&gt; {
         this.dragging &#x3D; true;
         this.drawDragRectangle();
     }
 
-    private dragEndHandler &#x3D; () &#x3D;&gt; {
+    protected dragEndHandler &#x3D; () &#x3D;&gt; {
         if (!this.dragStart || !this.dragging) {
             this.onSelectionChangedFinished.emit({ from: 0, to: this.dataLength });
         } else {
@@ -806,14 +806,14 @@ export class D3TrajectoryGraphComponent
         this.resetDrag();
     }
 
-    private prepareRange(from: number, to: number): D3SelectionRange {
+    protected prepareRange(from: number, to: number): D3SelectionRange {
         if (from &lt;&#x3D; to) {
             return { from, to };
         }
         return { from: to, to: from };
     }
 
-    private drawDragRectangle() {
+    protected drawDragRectangle() {
         if (!this.dragStart) { return; }
 
         this.dragCurrent &#x3D; mouse(this.background.node());
@@ -841,7 +841,7 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private resetDrag() {
+    protected resetDrag() {
         if (this.dragRectG) {
             this.dragRectG.remove();
             this.dragRectG &#x3D; null;
@@ -849,11 +849,11 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private hideDiagramIndicator() {
+    protected hideDiagramIndicator() {
         this.focusG.style(&#x27;visibility&#x27;, &#x27;hidden&#x27;);
     }
 
-    private showDiagramIndicator &#x3D; (idx: number) &#x3D;&gt; {
+    protected showDiagramIndicator &#x3D; (idx: number) &#x3D;&gt; {
         const item &#x3D; this.baseValues[idx];
         this.focusG.style(&#x27;visibility&#x27;, &#x27;visible&#x27;);
         this.highlightFocus.attr(&#x27;x1&#x27;, item.xDiagCoord)
@@ -870,10 +870,10 @@ export class D3TrajectoryGraphComponent
         this.showBottomIndicatorLabel(item, onLeftSide);
     }
 
-    private showLabelValues(item: DataEntry, onLeftSide: boolean) {
+    protected showLabelValues(item: DataEntry, onLeftSide: boolean) {
         this.datasetMap.forEach((entry, id) &#x3D;&gt; {
             if (this.datasetOptions.get(id).visible) {
-                if (entry.focusLabel) {
+                if (entry.focusLabel &amp;&amp; entry.yScale &amp;&amp; item[id]) {
                     entry.focusLabel.text(item[id] + (entry.dataset.uom ? entry.dataset.uom : &#x27;&#x27;));
                     const entryX &#x3D; onLeftSide ?
                         item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(entry.focusLabel.node()).w;
@@ -890,14 +890,14 @@ export class D3TrajectoryGraphComponent
         });
     }
 
-    private showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
+    protected showTimeIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
         this.focuslabelTime.text(moment(item.timestamp).format(&#x27;DD.MM.YY HH:mm&#x27;));
         this.focuslabelTime
             .attr(&#x27;x&#x27;, onLeftSide ? item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(this.focuslabelTime.node()).w)
             .attr(&#x27;y&#x27;, 13);
     }
 
-    private showBottomIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
+    protected showBottomIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
         if (this.presenterOptions.axisType &#x3D;&#x3D;&#x3D; D3AxisType.Distance) {
             this.focuslabelY.text(item.dist + &#x27; km&#x27;);
         }
@@ -909,7 +909,7 @@ export class D3TrajectoryGraphComponent
             .attr(&#x27;x&#x27;, onLeftSide ? item.xDiagCoord + 2 : item.xDiagCoord - this.getDimensions(this.focuslabelY.node()).w);
     }
 
-    private getDimensions(el: any) {
+    protected getDimensions(el: any) {
         let w &#x3D; 0;
         let h &#x3D; 0;
         if (el) {
@@ -925,7 +925,7 @@ export class D3TrajectoryGraphComponent
         };
     }
 
-    private getItemForX(x: number, data: DataEntry[]) {
+    protected getItemForX(x: number, data: DataEntry[]) {
         const index &#x3D; this.xScaleBase.invert(x);
         const bisectDate &#x3D; bisector((d: DataEntry) &#x3D;&gt; {
             switch (this.presenterOptions.axisType) {
@@ -941,7 +941,7 @@ export class D3TrajectoryGraphComponent
         return bisectDate(this.baseValues, index);
     }
 
-    private drawYAxis(options: DrawOptions): any {
+    protected drawYAxis(options: DrawOptions): any {
         const range &#x3D; extent&lt;DataEntry, number&gt;(this.baseValues, (datum, index, array) &#x3D;&gt; {
             return datum[options.id]; // here with ID
         });
@@ -992,7 +992,7 @@ export class D3TrajectoryGraphComponent
         };
     }
 
-    private drawXAxis(buffer: number) {
+    protected drawXAxis(buffer: number) {
         this.xScaleBase &#x3D; scaleLinear()
             .domain(this.getXDomain(this.baseValues))
             .range([buffer, this.width]);
@@ -1034,7 +1034,7 @@ export class D3TrajectoryGraphComponent
             .text(this.getXAxisLabel());
     }
 
-    private getXDomain(values: DataEntry[]) {
+    protected getXDomain(values: DataEntry[]) {
         switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return [values[0].dist, values[values.length - 1].dist];
@@ -1045,7 +1045,7 @@ export class D3TrajectoryGraphComponent
         }
     }
 
-    private getXAxisLabel() {
+    protected getXAxisLabel() {
         switch (this.presenterOptions.axisType) {
             case D3AxisType.Distance:
                 return &#x27;Distance&#x27;;

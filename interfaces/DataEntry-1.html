@@ -142,7 +142,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>value:     <code>number | string</code>
+                                        <code>value:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -150,7 +150,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code>number | string</code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                                         </td>
                                     </tr>
@@ -234,7 +234,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Data, DatasetOptions, IDataset, MinMaxRange, Timespan, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from &#x27;@helgoland/core&#x27;;
 import { ScaleLinear } from &#x27;d3&#x27;;
 import { Duration, unitOfTime } from &#x27;moment&#x27;;
 
@@ -292,14 +292,14 @@ export interface D3GeneralDataPoint {
 
 export interface DataEntry {
     timestamp: number;
-    value: number | string;
+    value: number;
     xDiagCoord?: number;
     yDiagCoord?: number;
 }
 
 export interface InternalDataEntry {
     internalId: string;
-    id?: number;
+    hoverId: string;
     data: DataEntry[];
     selected?: boolean;
     options: DatasetOptions;
@@ -330,7 +330,7 @@ export interface InternalDataEntry {
     focusLabel?: any;
 }
 
-export interface DataConst extends IDataset {
+export interface DataConst extends HelgolandTimeseries {
     data?: Data&lt;TimeValueTuple&gt;;
 }
 

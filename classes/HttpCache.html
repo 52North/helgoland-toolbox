@@ -134,15 +134,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="8"
-                            class="link-to-prism">projects/helgoland/caching/src/lib/model.ts:8</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="11"
+                            class="link-to-prism">projects/helgoland/caching/src/lib/model.ts:11</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns a cached response, if any, or null if not present.</p>
+                    <div class="io-description"><p>Returns a cached response, if any, or null, if not present.</p>
 </div>
 
                     <div class="io-description">
@@ -221,8 +221,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="13"
-                            class="link-to-prism">projects/helgoland/caching/src/lib/model.ts:13</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">projects/helgoland/caching/src/lib/model.ts:16</a></div>
                 </td>
             </tr>
 
@@ -306,11 +306,14 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpEvent, HttpRequest, HttpResponse } from &#x27;@angular/common/http&#x27;;
+import { Timespan } from &#x27;@helgoland/core&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
+
+import { CachedIntersection, CachedObject } from &#x27;./get-data-cache/local-http-cache-interval&#x27;;
 
 export abstract class HttpCache {
     /**
-     * Returns a cached response, if any, or null if not present.
+     * Returns a cached response, if any, or null, if not present.
      */
     public abstract get(req: HttpRequest&lt;any&gt;, expirationAtMs?: number): HttpResponse&lt;any&gt; | null;
 
@@ -321,12 +324,29 @@ export abstract class HttpCache {
 }
 
 export abstract class OnGoingHttpCache {
-
     public abstract has(req: HttpRequest&lt;any&gt;): boolean;
     public abstract set(req: HttpRequest&lt;any&gt;, request: Observable&lt;HttpEvent&lt;any&gt;&gt;): void;
     public abstract observe(req: HttpRequest&lt;any&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
     public abstract clear(req: HttpRequest&lt;any&gt;): void;
 
+}
+
+export abstract class HttpCacheInterval {
+    /**
+     * Returns a cached response, if any, or null, if not present.
+     */
+    public abstract get(url: string, generalized: boolean): CachedObject[] | null;
+    /**
+     * Returns a cached response with intersecting timespans, if any, or null, if not present.
+     * Further returns an array of timespans that need to be requested (not covered by cached timespans),
+     * if any, or null, if only one cached object covers the requested timespan.
+     */
+    public abstract getIntersection(url: string, timespan: Timespan, generalized: boolean): CachedIntersection | null;
+    /**
+     * Saves new object into cache.
+     * &#x27;originReq&#x27; indicates, if the request is the original request (e.g. forceUpdate), so the cache can be filtered
+     */
+    public abstract put(url: string, obj: CachedObject, generalized: boolean, originReq?: boolean): void;
 }
 </code></pre>
     </div>

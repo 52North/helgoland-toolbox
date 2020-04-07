@@ -78,7 +78,7 @@ Registers and unregister an observer in the corresponding timeseries graph contr
                 <h3>Implements</h3>
             </p>
             <p class="comment">
-                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                            <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
                             <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
                             <code><a href="../interfaces/D3GraphObserver.html" target="_self" >D3GraphObserver</a></code>
             </p>
@@ -114,11 +114,16 @@ Registers and unregister an observer in the corresponding timeseries graph contr
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#graphInitialized">graphInitialized</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#ngOnInit">ngOnInit</a>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
                             </li>
                         </ul>
                     </td>
@@ -138,12 +143,12 @@ Registers and unregister an observer in the corresponding timeseries graph contr
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(d3Graph: <a href="../injectables/Time.html">D3TimeseriesGraphComponent</a>, graphHelper: <a href="../injectables/D3GraphHelperService.html">D3GraphHelperService</a>)</code>
+<code>constructor(graphId: <a href="../injectables/D3GraphId.html">D3GraphId</a>, graphs: <a href="../injectables/D3Graphs.html">D3Graphs</a>, graphHelper: <a href="../injectables/D3GraphHelperService.html">D3GraphHelperService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:54</a></div>
                             </td>
                         </tr>
 
@@ -161,10 +166,22 @@ Registers and unregister an observer in the corresponding timeseries graph contr
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>d3Graph</td>
+                                                        <td>graphId</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+                                                                        <code><a href="../injectables/D3GraphId.html" target="_self" >D3GraphId</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>graphs</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/D3Graphs.html" target="_self" >D3Graphs</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -224,8 +241,8 @@ Registers and unregister an observer in the corresponding timeseries graph contr
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="58"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:58</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:76</a></div>
                 </td>
             </tr>
 
@@ -276,6 +293,120 @@ Registers and unregister an observer in the corresponding timeseries graph contr
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="graphInitialized"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                            graphInitialized
+                        </b>
+                        <a href="#graphInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>graphInitialized(graph: <a href="../injectables/Time.html">D3TimeseriesGraphComponent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>graph</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnDestroy"></a>
                     <span class="name">
                         <b>
@@ -296,49 +427,8 @@ Registers and unregister an observer in the corresponding timeseries graph contr
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:54</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="ngOnInit"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            ngOnInit
-                        </b>
-                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>ngOnInit()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">projects/helgoland/d3/src/lib/d3-timeseries-graph/d3-timeseries-graph-control.ts:70</a></div>
                 </td>
             </tr>
 
@@ -364,11 +454,13 @@ Registers and unregister an observer in the corresponding timeseries graph contr
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, OnDestroy, OnInit } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewInit, OnDestroy } from &#x27;@angular/core&#x27;;
 import { Timespan } from &#x27;@helgoland/core&#x27;;
 
 import { D3GraphHelperService } from &#x27;../helper/d3-graph-helper.service&#x27;;
+import { D3GraphId } from &#x27;../helper/d3-graph-id.service&#x27;;
 import { InternalDataEntry, YAxis } from &#x27;../model/d3-general&#x27;;
+import { D3Graphs } from &#x27;./../helper/d3-graphs.service&#x27;;
 import { D3TimeseriesGraphComponent } from &#x27;./d3-timeseries-graph.component&#x27;;
 
 export interface D3GraphObserver {
@@ -379,6 +471,15 @@ export interface D3GraphObserver {
         graph: d3.Selection&lt;SVGSVGElement, any, any, any&gt;,
         timespan: Timespan
     ): void;
+    mousemoveBackground?();
+    mouseoverBackground?();
+    mouseoutBackground?();
+    dragStartBackground?();
+    dragMoveBackground?();
+    dragEndBackground?();
+    zoomStartBackground?();
+    zoomMoveBackground?();
+    zoomEndBackground?();
     adjustYAxis?(axis: YAxis): void;
     afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
 }
@@ -406,20 +507,27 @@ export interface D3GraphExtent {
  *      &lt;implementation-selector&gt;&lt;/implementation-selector&gt;
  * &lt;/n52-d3-timeseries-graph&gt;
  */
-export abstract class D3TimeseriesGraphControl implements OnInit, OnDestroy, D3GraphObserver {
+export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
 
     constructor(
-        @Inject(D3TimeseriesGraphComponent) protected d3Graph: D3TimeseriesGraphComponent,
+        protected graphId: D3GraphId,
+        protected graphs: D3Graphs,
         protected graphHelper: D3GraphHelperService
     ) { }
 
-    public ngOnInit(): void {
-        this.d3Graph.registerObserver(this);
+    public ngAfterViewInit(): void {
+        this.graphId.getId().subscribe(graphId &#x3D;&gt; this.graphs.getGraph(graphId).subscribe(graph &#x3D;&gt; {
+            // needs to be registered first, to react then on the callbacks
+            graph.registerObserver(this);
+            this.graphInitialized(graph);
+        }));
     }
 
     public ngOnDestroy(): void {
-        this.d3Graph.unregisterObserver(this);
+        this.graphId.getId().subscribe(graphId &#x3D;&gt; this.graphs.getGraph(graphId).subscribe(graph &#x3D;&gt; graph.unregisterObserver(this)));
     }
+
+    public abstract graphInitialized(graph: D3TimeseriesGraphComponent);
 
     public adjustYAxis?(axis: YAxis): void;
 

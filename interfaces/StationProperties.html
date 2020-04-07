@@ -135,8 +135,9 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ParameterConstellation, Timeseries } from &#x27;./dataset&#x27;;
 import { Parameter } from &#x27;./parameter&#x27;;
 
-export class Station {
+export class Station implements Parameter {
     public id: string;
+    public label: string;
     public geometry: GeoJSON.GeometryObject;
     public properties: StationProperties;
 }

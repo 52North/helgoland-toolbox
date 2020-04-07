@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/caching/src/lib/local-http-cache.ts</code>
+            <code>projects/helgoland/caching/src/lib/http-get-cache/local-http-cache.ts</code>
         </p>
 
 
@@ -80,7 +80,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">projects/helgoland/caching/src/lib/local-http-cache.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">projects/helgoland/caching/src/lib/http-get-cache/local-http-cache.ts:12</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -92,9 +92,10 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpRequest, HttpResponse } from &#x27;@angular/common/http&#x27;;
-import { Injectable } from &#x27;@angular/core&#x27;;
+import { Inject, Injectable, Optional } from &#x27;@angular/core&#x27;;
 
-import { HttpCache } from &#x27;./model&#x27;;
+import { CacheConfig, CacheConfigService } from &#x27;../config&#x27;;
+import { HttpCache } from &#x27;../model&#x27;;
 
 interface CachedItem {
     expirationAtMs: number;
@@ -109,6 +110,18 @@ interface Cache {
 export class LocalHttpCache extends HttpCache {
 
     private cache: Cache &#x3D; {};
+
+    /**
+     * Default caching duration
+     */
+    private cachingDuration &#x3D; 30000;
+
+    constructor(
+        @Optional() @Inject(CacheConfigService) config: CacheConfig
+    ) {
+        super();
+        if (config &amp;&amp; config.cachingDurationInMilliseconds) { this.cachingDuration &#x3D; config.cachingDurationInMilliseconds; }
+    }
 
     public get(req: HttpRequest&lt;any&gt;, expirationAtMs?: number): HttpResponse&lt;any&gt; {
         const key &#x3D; req.urlWithParams;
@@ -131,7 +144,7 @@ export class LocalHttpCache extends HttpCache {
 
     public put(req: HttpRequest&lt;any&gt;, resp: HttpResponse&lt;any&gt;, expirationAtMs?: number) {
         this.cache[req.urlWithParams] &#x3D; {
-            expirationAtMs: expirationAtMs || new Date().getTime() + 30000,
+            expirationAtMs: expirationAtMs || new Date().getTime() + this.cachingDuration,
             response: resp
         };
     }

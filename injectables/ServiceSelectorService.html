@@ -101,7 +101,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(apiInterface: <a href="../classes/DatasetApiInterface.html">DatasetApiInterface</a>)</code>
+<code>constructor(servicesConnector: <a href="../injectables/HelgolandServicesConnector.html">HelgolandServicesConnector</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -124,10 +124,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>apiInterface</td>
+                                                        <td>servicesConnector</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../classes/DatasetApiInterface.html" target="_self" >DatasetApiInterface</a></code>
+                                                                        <code><a href="../injectables/HelgolandServicesConnector.html" target="_self" >HelgolandServicesConnector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -166,7 +166,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchServicesOfAPI(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, blacklist: BlacklistedService[], filter: <a href="../interfaces/ParameterFilter.html">ParameterFilter</a>)</code>
+                    <code>fetchServicesOfAPI(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, blacklist: BlacklistedService[], filter: <a href="../classes/HelgolandParameterFilter.html">HelgolandParameterFilter</a>)</code>
                 </td>
             </tr>
 
@@ -220,7 +220,7 @@
                                 <tr>
                                     <td>filter</td>
                                     <td>
-                                                <code><a href="../interfaces/ParameterFilter.html" target="_self" >ParameterFilter</a></code>
+                                                <code><a href="../classes/HelgolandParameterFilter.html" target="_self" >HelgolandParameterFilter</a></code>
                                     </td>
 
                                     <td>
@@ -235,7 +235,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Service.html" target="_self" >Observable&lt;Service[]&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../interfaces/Service.html" target="_self" >Observable&lt;HelgolandService[]&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -348,23 +348,23 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { BlacklistedService, DatasetApiInterface, ParameterFilter, Service } from &#x27;@helgoland/core&#x27;;
+import { BlacklistedService, HelgolandService, HelgolandServicesConnector, HelgolandParameterFilter } from &#x27;@helgoland/core&#x27;;
 import { Observable, Observer } from &#x27;rxjs&#x27;;
 
 @Injectable()
 export class ServiceSelectorService {
 
     constructor(
-        protected apiInterface: DatasetApiInterface
+        protected servicesConnector: HelgolandServicesConnector
     ) { }
 
     public fetchServicesOfAPI(
         url: string,
         blacklist: BlacklistedService[],
-        filter: ParameterFilter
-    ): Observable&lt;Service[]&gt; {
-        return new Observable&lt;Service[]&gt;((observer: Observer&lt;Service[]&gt;) &#x3D;&gt; {
-            this.apiInterface.getServices(url, filter)
+        filter: HelgolandParameterFilter
+    ): Observable&lt;HelgolandService[]&gt; {
+        return new Observable&lt;HelgolandService[]&gt;((observer: Observer&lt;HelgolandService[]&gt;) &#x3D;&gt; {
+            this.servicesConnector.getServices(url, filter)
                 .subscribe(
                     (services) &#x3D;&gt; {
                         if (services &amp;&amp; services instanceof Array) {

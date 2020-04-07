@@ -85,6 +85,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#containsIn">containsIn</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#createTimespanOfInterval">createTimespanOfInterval</a>
                             </li>
                             <li>
@@ -126,6 +130,10 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#stepForward">stepForward</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#stepForwardCustom">stepForwardCustom</a>
                             </li>
                         </ul>
                     </td>
@@ -365,6 +373,90 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="containsIn"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            containsIn
+                        </b>
+                        <a href="#containsIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>containsIn(timeInterval: <a href="../injectables/Time.html">TimeInterval</a>, timestamp: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>timeInterval</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >TimeInterval</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>timestamp</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createTimespanOfInterval"></a>
                     <span class="name">
                         <b>
@@ -385,8 +477,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:54</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="70"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:70</a></div>
                 </td>
             </tr>
 
@@ -450,15 +542,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>generateTimespan(defaultTimeseriesTimeduration: MomentInputObject, align: "start" | "center" | "end")</code>
+                    <code>generateTimespan(defaultTimeseriesTimeduration: <a href="../classes/Input.html">MomentInputObject</a>, align: "start" | "center" | "end")</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:93</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:113</a></div>
                 </td>
             </tr>
 
@@ -480,7 +572,7 @@
                                 <tr>
                                     <td>defaultTimeseriesTimeduration</td>
                                     <td>
-                                            <code>MomentInputObject</code>
+                                                <code><a href="../classes/Input.html" target="_self" >MomentInputObject</a></code>
                                     </td>
 
                                     <td>
@@ -534,15 +626,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getBufferedTimespan(timespan: <a href="../injectables/Time.html">Timespan</a>, factor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    <code>getBufferedTimespan(timespan: <a href="../injectables/Time.html">Timespan</a>, factor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, maxBufferInMs?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="67"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:67</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:83</a></div>
                 </td>
             </tr>
 
@@ -581,6 +673,18 @@
 
                                     <td>
                                         No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>maxBufferInMs</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
                                     </td>
 
 
@@ -697,8 +801,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:108</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="128"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:128</a></div>
                 </td>
             </tr>
 
@@ -769,8 +873,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="86"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:86</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:106</a></div>
                 </td>
             </tr>
 
@@ -810,8 +914,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="78"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:78</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="98"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:98</a></div>
                 </td>
             </tr>
 
@@ -882,8 +986,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:57</a></div>
                 </td>
             </tr>
 
@@ -978,8 +1082,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="94"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:94</a></div>
                 </td>
             </tr>
 
@@ -1182,6 +1286,92 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stepForwardCustom"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            stepForwardCustom
+                        </b>
+                        <a href="#stepForwardCustom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>stepForwardCustom(timespan: <a href="../injectables/Time.html">Timespan</a>, interval: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">projects/helgoland/core/src/lib/time/time.service.ts:51</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Increase timespan by custom interval</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>timespan</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >Timespan</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>interval</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../injectables/Time.html" target="_self" >Timespan</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
@@ -1233,12 +1423,28 @@ export class Time {
         return new Timespan(from, to);
     }
 
+    /**
+     * Increase timespan by custom interval
+     * @param timespan
+     * @param interval
+     */
+    public stepForwardCustom(timespan: Timespan, interval: number): Timespan {
+        const from &#x3D; moment(timespan.from).add(interval).unix() * 1000;
+        const to &#x3D; moment(timespan.to).add(interval).unix() * 1000;
+        return new Timespan(from, to);
+    }
+
     public overlaps(timeInterval: TimeInterval, from: number, to: number): boolean {
         const timespan &#x3D; this.createTimespanOfInterval(timeInterval);
         if (timespan.from &lt;&#x3D; to &amp;&amp; timespan.to &gt;&#x3D; from) {
             return true;
         }
         return false;
+    }
+
+    public containsIn(timeInterval: TimeInterval, timestamp: number) {
+        const timespan &#x3D; this.createTimespanOfInterval(timeInterval);
+        return timespan.from &lt;&#x3D; timestamp &amp;&amp; timestamp &lt;&#x3D; timespan.to;
     }
 
     public createTimespanOfInterval(timeInterval: TimeInterval): Timespan {
@@ -1254,10 +1460,14 @@ export class Time {
         }
     }
 
-    public getBufferedTimespan(timespan: Timespan, factor: number): Timespan {
+    public getBufferedTimespan(timespan: Timespan, factor: number, maxBufferInMs?: number): Timespan {
         const durationMillis &#x3D; this.getDuration(timespan).asMilliseconds();
-        const from &#x3D; moment(timespan.from).subtract(durationMillis * factor).unix() * 1000;
-        const to &#x3D; moment(timespan.to).add(durationMillis * factor).unix() * 1000;
+        let buffer &#x3D; durationMillis * factor;
+        if (maxBufferInMs &amp;&amp; buffer &gt; maxBufferInMs) {
+            buffer &#x3D; maxBufferInMs;
+        }
+        const from &#x3D; timespan.from - buffer;
+        const to &#x3D; timespan.to + buffer;
         return new Timespan(from, to);
     }
 

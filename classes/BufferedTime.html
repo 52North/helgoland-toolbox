@@ -117,7 +117,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -193,7 +193,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -221,7 +221,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/core/src/lib/model/internal/timeInterval.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -250,17 +250,10 @@ export class Timespan extends TimeInterval {
 
     public to: number;
 
-    constructor(
-        from: number,
-        to?: number
-    ) {
+    constructor(from: number | Date, to?: number | Date) {
         super();
-        this.from &#x3D; from;
-        if (to) {
-            this.to &#x3D; to;
-        } else {
-            this.to &#x3D; from;
-        }
+        this.from &#x3D; from instanceof Date ? from.valueOf() : from;
+        this.to &#x3D; to ? (to instanceof Date ? to.valueOf() : to) : this.from;
     }
 
 }

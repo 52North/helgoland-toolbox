@@ -84,7 +84,15 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#createInternalId">createInternalId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#generateInternalId">generateInternalId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#instanceOfInternalDatasetId">instanceOfInternalDatasetId</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -108,6 +116,108 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createInternalId"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            createInternalId
+                        </b>
+                        <a href="#createInternalId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createInternalId(url: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/internal-id-handler.service.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an internal id out of the parameters</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>url</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>service url</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>service specific id</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>the internal id</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -140,7 +250,7 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Generates an internal id for the given dataset.</p>
+                    <div class="io-description"><p>Generates and set an internal id for the given dataset.</p>
 </div>
 
                     <div class="io-description">
@@ -191,6 +301,78 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="instanceOfInternalDatasetId"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            instanceOfInternalDatasetId
+                        </b>
+                        <a href="#instanceOfInternalDatasetId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>instanceOfInternalDatasetId(object: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/internal-id-handler.service.ts:57</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>object</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/InternalDatasetId.html" target="_self" >InternalDatasetId</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="resolveInternalId"></a>
                     <span class="name">
                         <b>
@@ -204,15 +386,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>resolveInternalId(internalId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>resolveInternalId(internalId: <a href="../classes/Dataset.html">string | InternalDatasetId</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/internal-id-handler.service.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">projects/helgoland/core/src/lib/dataset-api/internal-id-handler.service.ts:41</a></div>
                 </td>
             </tr>
 
@@ -237,7 +419,7 @@
                                 <tr>
                                     <td>internalId</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../classes/Dataset.html" target="_self" >string | InternalDatasetId</a></code>
                                     </td>
 
                                     <td>
@@ -291,7 +473,7 @@ export interface InternalDatasetId {
 export class InternalIdHandler {
 
   /**
-   * Generates an internal id for the given dataset.
+   * Generates and set an internal id for the given dataset.
    * @param dataset The dataset for which the internal id will be generated and saved.
    */
   public generateInternalId(dataset: IDataset) {
@@ -299,20 +481,38 @@ export class InternalIdHandler {
   }
 
   /**
+   * Creates an internal id out of the parameters
+   * @param url - service url
+   * @param id - service specific id
+   * @returns - the internal id
+   */
+  public createInternalId(url: string, id: string): string {
+    return url + INTERNAL_ID_SEPERATOR + id;
+  }
+
+  /**
    * Resolves the internal ID to the url and the API specific dataset id.
    * @param internalId The internal id as string
    * @returns Construct of url and API id
    */
-  public resolveInternalId(internalId: string): InternalDatasetId {
-    const split &#x3D; internalId.split(INTERNAL_ID_SEPERATOR);
-    if (split.length !&#x3D;&#x3D; 2) {
-      console.error(&#x27;InternalID &#x27; + internalId + &#x27; is not resolvable&#x27;);
-    } else {
-      return {
-        url: split[0],
-        id: split[1]
-      };
+  public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
+    if (typeof(internalId) &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      const split &#x3D; internalId.split(INTERNAL_ID_SEPERATOR);
+      if (split.length !&#x3D;&#x3D; 2) {
+        console.error(&#x27;InternalID &#x27; + internalId + &#x27; is not resolvable&#x27;);
+      } else {
+        return {
+          url: split[0],
+          id: split[1]
+        };
+      }
+    } else if (this.instanceOfInternalDatasetId(internalId)) {
+      return internalId;
     }
+  }
+
+  private instanceOfInternalDatasetId(object: any): object is InternalDatasetId {
+    return &#x27;id&#x27; in object &amp;&amp; &#x27;url&#x27; in object;
   }
 }
 </code></pre>

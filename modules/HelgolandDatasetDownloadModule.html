@@ -222,21 +222,19 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { CommonModule } from &#x27;@angular/common&#x27;;
-import { TranslateModule } from &#x27;@ngx-translate/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { NgModule } from &#x27;@angular/core&#x27;;
 import { HelgolandCoreModule } from &#x27;@helgoland/core&#x27;;
-import { MatDialogModule } from &#x27;@angular/material&#x27;;
+import { TranslateModule } from &#x27;@ngx-translate/core&#x27;;
 
-import { DatasetPermalinkDownloadComponent } from &#x27;./dataset-permalink-download/dataset-permalink-download.component&#x27;;
 import { DatasetExportComponent } from &#x27;./dataset-export/dataset-export.component&#x27;;
+import { DatasetPermalinkDownloadComponent } from &#x27;./dataset-permalink-download/dataset-permalink-download.component&#x27;;
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     HelgolandCoreModule,
-    MatDialogModule,
   ],
   declarations: [
     DatasetExportComponent,
