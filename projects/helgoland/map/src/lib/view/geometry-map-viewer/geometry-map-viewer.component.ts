@@ -26,7 +26,8 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     @Input()
     public customMarkerIcon: L.Icon;
 
-    private highlightGeometry: L.GeoJSON;
+    private highlightGeometryOnMap: L.GeoJSON;
+    private geometryOnMap: L.GeoJSON;
 
     private defaultStyle: L.PathOptions = {
         color: 'red',
@@ -79,21 +80,24 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     }
 
     private showHighlight() {
-        if (this.highlightGeometry) {
-            this.map.removeLayer(this.highlightGeometry);
+        if (this.highlightGeometryOnMap) {
+            this.map.removeLayer(this.highlightGeometryOnMap);
         }
-        this.highlightGeometry = L.geoJSON(this.highlight, {
+        this.highlightGeometryOnMap = L.geoJSON(this.highlight, {
             pointToLayer: (feature, latlng) => {
                 return L.circleMarker(latlng, this.highlightStyle);
             }
         });
-        this.highlightGeometry.setStyle(this.highlightStyle);
-        this.highlightGeometry.addTo(this.map);
+        this.highlightGeometryOnMap.setStyle(this.highlightStyle);
+        this.highlightGeometryOnMap.addTo(this.map);
     }
 
     private drawGeometry() {
         if (this.geometry) {
-            const geojson = L.geoJSON(this.geometry, {
+            if (this.geometryOnMap) {
+                this.map.removeLayer(this.geometryOnMap);
+            }
+            this.geometryOnMap = L.geoJSON(this.geometry, {
                 pointToLayer: (feature, latlng) => {
                     if (this.customMarkerIcon) {
                         return L.marker(latlng, {icon: this.customMarkerIcon});
@@ -103,11 +107,11 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
                 }
             });
 
-            geojson.setStyle(this.defaultStyle);
-            geojson.addTo(this.map);
+            this.geometryOnMap.setStyle(this.defaultStyle);
+            this.geometryOnMap.addTo(this.map);
 
             if (!this.avoidZoomToGeometry) {
-                this.map.fitBounds(geojson.getBounds());
+                this.map.fitBounds(this.geometryOnMap.getBounds());
             }
         }
     }
