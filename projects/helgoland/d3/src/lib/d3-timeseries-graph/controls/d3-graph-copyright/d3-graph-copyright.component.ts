@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
@@ -8,6 +8,7 @@ import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
+import { BaseType } from 'd3';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -15,12 +16,20 @@ import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component'
   styleUrls: ['./d3-graph-copyright.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl {
+export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implements OnChanges {
 
   /**
    * Copyright, which should be shown on the graph
    */
   @Input() copyright: D3Copyright;
+
+  private d3Graph: D3TimeseriesGraphComponent;
+  private copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
+
+  private labelRect: d3.Selection<BaseType, any, any, any>;
+  private labelText: d3.Selection<BaseType, any, any, any>;
+  private background: d3.Selection<SVGSVGElement, any, any, any>;
+  private graphExtent: D3GraphExtent;
 
   constructor(
     protected graphId: D3GraphId,
@@ -30,7 +39,15 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl {
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) { }
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.copyright && this.copyright) {
+      this.setText();
+    }
+  }
+
+  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+    this.d3Graph = graph;
+  }
 
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
@@ -39,32 +56,51 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl {
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ): void {
+    this.background = background;
+    this.graphExtent = graphExtent;
     if (this.copyright) {
-      let backgroundDim = this.graphHelper.getDimensions(background.node());
-      let x = 0;
+      if (!this.copyrightLayer) {
+        this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright');
+        this.createLabelRect();
+        this.createLabelText();
+        this.setText();
+      }
+    }
+  }
+
+  private createLabelText() {
+    this.labelText = this.copyrightLayer.append('svg:text')
+      .attr('class', 'copyright-text')
+      .style('pointer-events', 'none');
+  }
+
+  private createLabelRect() {
+    this.labelRect = this.copyrightLayer.append('svg:rect')
+      .attr('class', 'copyright-rect')
+      .style('fill', 'none')
+      .style('stroke', 'none')
+      .style('pointer-events', 'none');
+  }
+
+  private setText() {
+    if (this.copyrightLayer) {
+      let backgroundDim = this.graphHelper.getDimensions(this.background.node());
+      let x = 3;
       let y = 3;
-      const copyright = graph.append('g');
-      let copyrightLabel = copyright.append('svg:text')
-        .text(this.copyright.label)
-        .attr('class', 'copyright')
-        .style('pointer-events', 'none');
+      this.labelText.text(this.copyright.label);
       if (this.copyright.positionX === 'right') {
-        x = backgroundDim.w - graphExtent.margin.right - this.graphHelper.getDimensions(copyrightLabel.node()).w;
+        x = backgroundDim.w - this.graphExtent.margin.right - this.graphHelper.getDimensions(this.labelText.node()).w;
       }
       if (this.copyright.positionY === 'bottom') {
-        y = backgroundDim.h - graphExtent.margin.top * 2;
+        y = backgroundDim.h - this.graphExtent.margin.top * 2;
       }
-      let yTransform = y + this.graphHelper.getDimensions(copyrightLabel.node()).h - 3;
-      let xTransform = graphExtent.leftOffset + x;
-      copyrightLabel
+      let yTransform = y + this.graphHelper.getDimensions(this.labelText.node()).h - 3;
+      let xTransform = this.graphExtent.leftOffset + x;
+      this.labelText
         .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
-      copyright.append('svg:rect')
-        .attr('class', 'copyright')
-        .style('fill', 'none')
-        .style('stroke', 'none')
-        .style('pointer-events', 'none')
-        .attr('width', this.graphHelper.getDimensions(copyrightLabel.node()).w)
-        .attr('height', this.graphHelper.getDimensions(copyrightLabel.node()).h)
+
+      this.labelRect.attr('width', this.graphHelper.getDimensions(this.labelText.node()).w)
+        .attr('height', this.graphHelper.getDimensions(this.labelText.node()).h)
         .attr('transform', 'translate(' + xTransform + ', ' + y + ')');
     }
   }
