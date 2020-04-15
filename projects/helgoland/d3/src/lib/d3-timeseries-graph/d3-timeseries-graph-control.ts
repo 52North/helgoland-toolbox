@@ -38,6 +38,7 @@ export interface D3GraphExtent {
         bottom: number;
         left: number;
     };
+    xScale: d3.ScaleTime<number, number>;
 }
 
 /**

@@ -90,8 +90,6 @@ export interface InternalDataEntry {
         data: DataEntry[];
     }[];
     visible: boolean;
-    focusLabelRect?: any;
-    focusLabel?: any;
 }
 
 export interface DataConst extends HelgolandTimeseries {

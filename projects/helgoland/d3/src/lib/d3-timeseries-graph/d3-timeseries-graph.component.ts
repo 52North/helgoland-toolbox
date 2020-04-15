@@ -93,8 +93,6 @@ export class D3TimeseriesGraphComponent
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
     private focusG: d3.Selection<SVGGElement, any, any, any>;
-    private highlightFocus: any;
-    private focuslabelTime: any;
 
     // options for interaction
     private mousedownBrush: boolean;
@@ -110,10 +108,6 @@ export class D3TimeseriesGraphComponent
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
-    // private dotsObjects: any[];
-    private labelTimestamp: number[];
-    private labelXCoord: number[];
-    private distLabelXCoord: number[];
     private leftOffset: number;
 
     private height: number;
@@ -559,9 +553,10 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    public getDrawingLayer() {
+    public getDrawingLayer(id: string) {
         return this.rawSvg
             .insert('g', ':first-child')
+            .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
 
@@ -627,10 +622,6 @@ export class D3TimeseriesGraphComponent
         // create background rect
         if (!this.plotOptions.overview) {
             // execute when it is not an overview diagram
-            // mouse events hovering
-            if (this.plotOptions.hoverable) {
-                this.createLineHovering();
-            }
 
             this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
 
@@ -659,7 +650,8 @@ export class D3TimeseriesGraphComponent
                         width: this.width,
                         height: this.height,
                         leftOffset: this.leftOffset,
-                        margin: this.margin
+                        margin: this.margin,
+                        xScale: this.xScaleBase
                     };
                     e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan);
                 }
@@ -777,41 +769,6 @@ export class D3TimeseriesGraphComponent
                     });
                 }
             }
-        }
-    }
-
-    private createLineHovering() {
-        if (this.plotOptions.hoverStyle === HoveringStyle.line) {
-            this.background
-                .on('mousemove.focus', this.mousemoveHandler)
-                .on('mouseout.focus', this.mouseoutHandler);
-            // line inside graph
-            this.highlightFocus = this.focusG.append('svg:line')
-                .attr('class', 'mouse-focus-line')
-                .attr('x2', '0')
-                .attr('y2', '0')
-                .attr('x1', '0')
-                .attr('y1', '0')
-                .style('stroke', 'black')
-                .style('stroke-width', '1px');
-            this.preparedData.forEach((entry) => {
-                // label inside graph
-                entry.focusLabelRect = this.focusG.append('svg:rect')
-                    .attr('class', 'mouse-focus-label')
-                    .style('fill', 'white')
-                    .style('stroke', 'none')
-                    .style('pointer-events', 'none');
-                entry.focusLabel = this.focusG.append('svg:text')
-                    .attr('class', 'mouse-focus-label')
-                    .style('pointer-events', 'none')
-                    .style('fill', entry.options.color)
-                    .style('font-weight', 'lighter');
-                this.focuslabelTime = this.focusG.append('svg:text')
-                    .style('pointer-events', 'none')
-                    .attr('class', 'mouse-focus-time');
-            });
-        } else {
-            d3.select('g.d3line').attr('visibility', 'hidden');
         }
     }
 
@@ -1245,95 +1202,6 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    /**
-     * Function that shows labeling via mousmove.
-     */
-    private mousemoveHandler = (): void => {
-        const coords = d3.mouse(this.background.node());
-        this.labelTimestamp = [];
-        this.labelXCoord = [];
-        this.distLabelXCoord = [];
-        this.preparedData.forEach((entry, entryIdx) => {
-            const idx = this.getItemForX(coords[0] + this.leftOffset, entry.data);
-            this.showDiagramIndicator(entry, idx, coords[0], entryIdx);
-        });
-
-        let outputIds: string[] = [];
-        for (const key in this.highlightOutput.ids) {
-            if (this.highlightOutput.ids.hasOwnProperty(key)) {
-                outputIds.push(key);
-            }
-        }
-
-        if (outputIds.length <= 0) {
-            // do not show line in graph when no data available for timestamp
-            this.focusG.style('visibility', 'hidden');
-        } else {
-            let last = 0,
-                visible = false,
-                first = true,
-                labelArray: [d3.BaseType, d3.BaseType][] = [],
-                textRectArray: d3.BaseType[] = d3.selectAll('.focus-visibility').nodes();
-
-            // get and sort all text labels and rectangle of the text labels and combine related
-            for (let i = 0; i < textRectArray.length; i += 2) {
-                labelArray.push([textRectArray[i], textRectArray[i + 1]]);
-            }
-            // sory by y coordinate
-            labelArray.sort((a, b) => parseFloat(d3.select(a[0]).attr('y')) - parseFloat(d3.select(b[0]).attr('y')));
-
-            // translate if overlapping
-            labelArray.forEach((el) => {
-                // pairs of 2 objects (rectangle (equal) and label (odd))
-                d3.select(el[0])
-                    .attr('transform', (d, i, f) => {
-                        if (d3.select(el[0]).attr('visibility') !== 'hidden') {
-                            visible = true;
-                            let ycoord: number = parseFloat(d3.select(el[0]).attr('y'));
-                            let offset = 0;
-                            if (!first) {
-                                offset = Math.max(0, (last + 30) - ycoord);
-                                if (offset < 10) { offset = 10; }
-                            }
-                            if (offset > 0) {
-                                return 'translate(0, ' + offset + ')';
-                            }
-                        }
-                        return 'translate(0, 0)';
-                    });
-
-                d3.select(el[1])
-                    .attr('transform', (d, i, f) => {
-                        if (d3.select(el[1]).attr('visibility') !== 'hidden') {
-                            visible = true;
-                            let ycoord: number = parseFloat(d3.select(el[0]).attr('y'));
-                            let offset = 0;
-                            if (!first) {
-                                offset = Math.max(0, (last + 30) - ycoord);
-                                if (offset < 10) { offset = 10; }
-                            }
-                            last = offset + ycoord;
-                            if (offset > 0) {
-                                return 'translate(0, ' + offset + ')';
-                            }
-                        }
-                        return 'translate(0, 0)';
-                    });
-
-                if (visible) {
-                    first = false;
-                }
-
-            });
-        }
-        this.onHighlightChanged.emit(this.highlightOutput);
-    }
-
-    /**
-     * Function that hides the labeling inside the graph.
-     */
-    private mouseoutHandler = (): void => this.hideDiagramIndicator();
-
     private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
         let line = this.createLine(this.xScaleBase, yScaleBase);
 
@@ -1512,169 +1380,6 @@ export class D3TimeseriesGraphComponent
         if (d !== undefined) {
             this.hoveringService.hidePointHovering(d, entry);
         }
-    }
-
-    /**
-     * Function that returns the metadata of a specific entry in the dataset.
-     * @param x {Number} Coordinates of the mouse inside the diagram.
-     * @param data {DataEntry} Array with the data of each dataset entry.
-     */
-    private getItemForX(x: number, data: DataEntry[]): number {
-        const index = this.xScaleBase.invert(x);
-        const bisectDate = d3.bisector((d: DataEntry) => d.timestamp).left;
-        return bisectDate(data, index);
-    }
-
-    /**
-     * Function that disables the labeling.
-     */
-    private hideDiagramIndicator(): void {
-        this.focusG.style('visibility', 'hidden');
-        d3.selectAll('.focus-visibility')
-            .attr('visibility', 'hidden');
-    }
-
-    /**
-     * Function that enables the lableing of each dataset entry.
-     * @param entry {InternalDataEntry} Object containing the dataset.
-     * @param idx {Number} Number with the position of the dataset entry in the data array.
-     * @param xCoordMouse {Number} Number of the x coordinate of the mouse.
-     * @param entryIdx {Number} Number of the index of the entry.
-     */
-    private showDiagramIndicator = (entry: InternalDataEntry, idx: number, xCoordMouse: number, entryIdx: number): void => {
-        const item: DataEntry = entry.data[idx];
-        this.labelXCoord[entryIdx] = null;
-        this.distLabelXCoord[entryIdx] = null;
-
-        if (item !== undefined && item.yDiagCoord && item.value !== undefined) {
-            // create line where mouse is
-            this.focusG.style('visibility', 'visible');
-            // show label if data available for time
-            this.chVisLabel(entry, true, entryIdx);
-
-            let xMouseAndBuffer = xCoordMouse + this.leftOffset;
-            let labelBuffer = ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001)
-                * ((this.timespan.from / (this.timespan.to - this.timespan.from)) * 0.0001);
-
-            labelBuffer = Math.max(10, labelBuffer);
-
-            this.showLabelValues(entry, item);
-            this.showTimeIndicatorLabel(item, entryIdx, xMouseAndBuffer);
-
-            if (item.xDiagCoord >= this.background.node().getBBox().width + this.leftOffset || xMouseAndBuffer < item.xDiagCoord - labelBuffer) {
-                this.chVisLabel(entry, false, entryIdx);
-            }
-
-            if (xMouseAndBuffer < item.xDiagCoord) {
-                if (entry.data[idx - 1] && (Math.abs(entry.data[idx - 1].xDiagCoord - xMouseAndBuffer) < Math.abs(item.xDiagCoord - xMouseAndBuffer))) {
-                    this.chVisLabel(entry, false, entryIdx);
-                    // show closest element to mouse
-                    this.showLabelValues(entry, entry.data[idx - 1]);
-                    this.showTimeIndicatorLabel(entry.data[idx - 1], entryIdx, xMouseAndBuffer);
-                    this.chVisLabel(entry, true, entryIdx);
-
-                    // check for graph width and range between data point and mouse
-                    if (entry.data[idx - 1].xDiagCoord >= this.background.node().getBBox().width + this.leftOffset
-                        || entry.data[idx - 1].xDiagCoord <= this.leftOffset
-                        || entry.data[idx - 1].xDiagCoord + labelBuffer < xMouseAndBuffer) {
-                        this.chVisLabel(entry, false, entryIdx);
-                    }
-                }
-            }
-        } else {
-            // TODO: set hovering for labelbuffer after last and before first value of the graph
-            // hide label if no data available for time
-            this.chVisLabel(entry, false, entryIdx);
-        }
-    }
-
-    /**
-     * Function to change visibility of label and white rectangle inside graph (next to mouse-cursor line).
-     * @param entry {DataEntry} Object containing the dataset.
-     * @param visible {Boolean} Boolean giving information about visibility of a label.
-     */
-    private chVisLabel(entry: InternalDataEntry, visible: boolean, entryIdx: number): void {
-        if (visible) {
-            entry.focusLabel
-                .attr('visibility', 'visible')
-                .attr('class', 'focus-visibility');
-            entry.focusLabelRect
-                .attr('visibility', 'visible')
-                .attr('class', 'focus-visibility');
-        } else {
-            entry.focusLabel
-                .attr('visibility', 'hidden');
-            entry.focusLabelRect
-                .attr('visibility', 'hidden');
-
-            this.labelTimestamp[entryIdx] = null;
-            delete this.highlightOutput.ids[entry.internalId];
-        }
-    }
-
-    /**
-     * Function to show the labeling inside the graph.
-     * @param entry {DataEntry} Object containg the dataset.
-     * @param item {DataEntry} Object of the entry in the dataset.
-     */
-    private showLabelValues(entry: InternalDataEntry, item: DataEntry): void {
-        let onLeftSide: boolean = this.checkLeftSide(item.xDiagCoord);
-        if (entry.focusLabel) {
-            entry.focusLabel.text(item.value + (entry.axisOptions.uom ? entry.axisOptions.uom : ''));
-            const entryX: number = onLeftSide ?
-                item.xDiagCoord + 4 : item.xDiagCoord - this.graphHelper.getDimensions(entry.focusLabel.node()).w + 4;
-            entry.focusLabel
-                .attr('x', entryX)
-                .attr('y', item.yDiagCoord);
-            entry.focusLabelRect
-                .attr('x', entryX)
-                .attr('y', item.yDiagCoord - this.graphHelper.getDimensions(entry.focusLabel.node()).h + 3)
-                .attr('width', this.graphHelper.getDimensions(entry.focusLabel.node()).w)
-                .attr('height', this.graphHelper.getDimensions(entry.focusLabel.node()).h);
-
-            this.highlightOutput.ids[entry.internalId] = {
-                'timestamp': item.timestamp,
-                'value': item.value
-            };
-        } else {
-            delete this.highlightOutput.ids[entry.internalId];
-        }
-    }
-
-    /**
-     * Function to show the time labeling inside the graph.
-     * @param item {DataEntry} Object of the entry in the dataset.
-     * @param entryIdx {Number} Number of the index of the entry.
-     */
-    private showTimeIndicatorLabel(item: DataEntry, entryIdx: number, mouseCoord: number): void {
-        // timestamp is the time where the mouse-cursor is
-        this.labelTimestamp[entryIdx] = item.timestamp;
-        this.labelXCoord[entryIdx] = item.xDiagCoord;
-        this.distLabelXCoord[entryIdx] = Math.abs(mouseCoord - item.xDiagCoord);
-        let minXcoord = d3.min(this.distLabelXCoord);
-        let idxOfMin = this.distLabelXCoord.findIndex((elem) => elem === minXcoord);
-        let onLeftSide = this.checkLeftSide(item.xDiagCoord);
-        let right = this.labelXCoord[idxOfMin] + 2;
-        let left = this.labelXCoord[idxOfMin] - this.graphHelper.getDimensions(this.focuslabelTime.node()).w - 2;
-        this.focuslabelTime.text(moment(this.labelTimestamp[idxOfMin]).format('DD.MM.YY HH:mm'));
-        this.focuslabelTime
-            .attr('x', onLeftSide ? right : left)
-            .attr('y', 13);
-        this.highlightFocus
-            .attr('x1', this.labelXCoord[idxOfMin])
-            .attr('y1', 0)
-            .attr('x2', this.labelXCoord[idxOfMin])
-            .attr('y2', this.height)
-            .classed('hidden', false);
-        this.highlightOutput.timestamp = this.labelTimestamp[idxOfMin];
-    }
-
-    /**
-     * Function giving information if the mouse is on left side of the diagram.
-     * @param itemCoord {number} x coordinate of the value (e.g. mouse) to be checked
-     */
-    private checkLeftSide(itemCoord: number): boolean {
-        return ((this.background.node().getBBox().width + this.leftOffset) / 2 > itemCoord) ? true : false;
     }
 
     /**
