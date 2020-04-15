@@ -88,11 +88,10 @@ export class D3TimeseriesGraphComponent
     // DOM elements
     protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
     protected graph: d3.Selection<SVGSVGElement, any, any, any>;
-    protected graphFocus: d3.Selection<SVGGElement, any, any, any>;
     protected graphBody: any;
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
-    private focusG: d3.Selection<SVGGElement, any, any, any>;
+    private focusG: d3.Selection<SVGGElement, any, any, any>; // TODO: remove???
 
     // options for interaction
     private mousedownBrush: boolean;
@@ -145,6 +144,7 @@ export class D3TimeseriesGraphComponent
     };
 
     private lastHoverPositioning: number;
+    private graphInteraction: d3.Selection<SVGSVGElement, any, any, any>;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -177,10 +177,12 @@ export class D3TimeseriesGraphComponent
 
         this.graph = this.rawSvg
             .append<SVGSVGElement>('g')
+            .attr('id', `graph-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.graphFocus = this.rawSvg
-            .append('g')
+        this.graphInteraction = this.rawSvg
+            .append<SVGSVGElement>('g')
+            .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.mousedownBrush = false;
@@ -555,7 +557,7 @@ export class D3TimeseriesGraphComponent
 
     public getDrawingLayer(id: string) {
         return this.rawSvg
-            .insert('g', ':first-child')
+            .insert('g', `#interaction-layer-${this.currentTimeId}`)
             .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
@@ -580,7 +582,6 @@ export class D3TimeseriesGraphComponent
         this.height = this.calculateHeight();
         this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
         this.graph.selectAll('*').remove();
-        this.graphFocus.selectAll('*').remove();
 
         this.leftOffset = 0;
         this.yScaleBase = null;
@@ -605,8 +606,10 @@ export class D3TimeseriesGraphComponent
 
         if (!this.yScaleBase) { return; }
 
+        this.drawBaseGraph();
+
         // create background as rectangle providing panning
-        this.background = this.graph.append<SVGSVGElement>('svg:rect')
+        this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('id', 'backgroundRect')
@@ -614,8 +617,6 @@ export class D3TimeseriesGraphComponent
             .attr('stroke', 'none')
             .attr('pointer-events', 'all')
             .attr('transform', 'translate(' + this.leftOffset + ', 0)');
-
-        this.drawBaseGraph();
 
         this.addTimespanJumpButtons();
 
@@ -854,7 +855,6 @@ export class D3TimeseriesGraphComponent
      */
     protected drawAllCharts(): void {
         this.graph.selectAll('.diagram-path').remove();
-        this.focusG = this.graphFocus.append('g');
         if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
             // create label for point hovering
             this.hoveringService.initPointHovering(this.focusG);
