@@ -555,7 +555,7 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    public getDrawingLayer(id: string) {
+    public getDrawingLayer(id: string): d3.Selection<SVGGElement, any, any, any> {
         return this.rawSvg
             .insert('g', `#interaction-layer-${this.currentTimeId}`)
             .attr('id', id)

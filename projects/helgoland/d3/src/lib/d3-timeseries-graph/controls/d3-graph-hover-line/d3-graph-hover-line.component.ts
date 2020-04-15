@@ -80,6 +80,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   public mouseoutBackground() {
     if (!this.disableHovering) {
       this.hideHoverLineIndicator();
+      this.hideLabels();
     }
   }
 
@@ -185,7 +186,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   }
 
   private calcDist(entry: DataEntry, x: number) {
-    return Math.abs(this.graphExtent.xScale(entry.timestamp) - x);
+    return entry ? Math.abs(this.graphExtent.xScale(entry.timestamp) - x) : Infinity;
   }
 
   private showLabel(entry: InternalDataEntry, idx: number, xCoordMouse: number, entryIdx: number) {
