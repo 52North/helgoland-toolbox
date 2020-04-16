@@ -7,6 +7,9 @@ import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-gra
 import { D3GraphCopyrightComponent } from './d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 import { D3GraphHoverLineComponent } from './d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
 import {
+  D3GraphHoverPointComponent,
+} from './d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import {
   D3GraphPanZoomInteractionComponent,
 } from './d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 import { D3YAxisModifierComponent } from './d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
@@ -24,6 +27,7 @@ const COMPONENTS = [
   D3GeneralGraphComponent,
   D3GraphCopyrightComponent,
   D3GraphHoverLineComponent,
+  D3GraphHoverPointComponent,
   D3GraphPanZoomInteractionComponent,
   D3OverviewTimeseriesGraphComponent,
   D3TimeseriesGraphComponent,

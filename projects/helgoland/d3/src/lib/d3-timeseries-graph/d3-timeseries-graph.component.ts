@@ -91,8 +91,6 @@ export class D3TimeseriesGraphComponent
     protected graphBody: any;
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
-    private focusG: d3.Selection<SVGGElement, any, any, any>; // TODO: remove???
-
     // options for interaction
     private mousedownBrush: boolean;
 
@@ -280,6 +278,10 @@ export class D3TimeseriesGraphComponent
 
     public changeTime(from: number, to: number): void {
         this.onTimespanChanged.emit(new Timespan(from, to));
+    }
+
+    public getDataset(internalId: string) {
+        return this.datasetMap.get(internalId);
     }
 
     private loadAddedDataset(dataset: HelgolandDataset): void {
@@ -856,10 +858,6 @@ export class D3TimeseriesGraphComponent
      */
     protected drawAllCharts(): void {
         this.graph.selectAll('.diagram-path').remove();
-        if ((this.plotOptions.hoverStyle === HoveringStyle.point) && !this.plotOptions.overview) {
-            // create label for point hovering
-            this.hoveringService.initPointHovering(this.focusG);
-        }
         this.preparedData.forEach((entry) => this.drawChart(entry));
     }
 
@@ -1245,21 +1243,6 @@ export class D3TimeseriesGraphComponent
             .attr('cy', line.y())
             .attr('r', pointRadius);
 
-        if (this.plotOptions.hoverable && this.plotOptions.hoverStyle === HoveringStyle.point && !this.plotOptions.overview) {
-            this.graphBody.selectAll('.hoverDots')
-                .data(entry.data.filter((d) => typeof d.value === 'number'))
-                .enter().append('circle')
-                .attr('class', 'hoverDots')
-                .attr('id', (d: DataEntry) => 'hover-dot-' + d.timestamp + '-' + entry.hoverId)
-                .attr('stroke', 'transparent')
-                .attr('fill', 'transparent')
-                .attr('cx', line.x())
-                .attr('cy', line.y())
-                .attr('r', pointRadius + 3)
-                .on('mouseover', (d: DataEntry) => this.mouseOverPointHovering(d, entry))
-                .on('mouseout', (d: DataEntry) => this.mouseOutPointHovering(d, entry))
-                .on('mousedown', (d: DataEntry) => this.clickDataPoint(d, entry));
-        }
     }
 
     private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
@@ -1361,26 +1344,6 @@ export class D3TimeseriesGraphComponent
                 }
             })
             .curve(d3.curveLinear);
-    }
-
-    private mouseOverPointHovering(d: DataEntry, entry: InternalDataEntry) {
-        if (d !== undefined && d.xDiagCoord && d.yDiagCoord) {
-            this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
-
-            this.hoveringService.positioningPointHovering(d.xDiagCoord, d.yDiagCoord, entry.options.color, this.background);
-
-            this.highlightOutput = {
-                timestamp: d.timestamp,
-                ids: new Map().set(entry.internalId, { timestamp: d.timestamp, value: d.value })
-            };
-            this.onHighlightChanged.emit(this.highlightOutput);
-        }
-    }
-
-    private mouseOutPointHovering(d: DataEntry, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            this.hoveringService.hidePointHovering(d, entry);
-        }
     }
 
     /**

@@ -47,6 +47,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
 
   public graphInitialized(graph: D3TimeseriesGraphComponent) {
     this.d3Graph = graph;
+    this.d3Graph.redrawCompleteGraph();
   }
 
   public adjustBackground(

@@ -2,4 +2,7 @@
     <n52-d3-graph-pan-zoom-interaction></n52-d3-graph-pan-zoom-interaction>
     <n52-d3-graph-copyright [copyright]="plotOptions.copyright"></n52-d3-graph-copyright>
     <n52-d3-graph-hover-line *ngIf="plotOptions.hoverStyle === 'line'"></n52-d3-graph-hover-line>
+    <n52-d3-graph-hover-point *ngIf="plotOptions.hoverStyle === 'point'" [hoveringService]="hoveringService"
+        (onHighlightChanged)="onHighlightChanged.emit($event)">
+    </n52-d3-graph-hover-point>
 </div>
