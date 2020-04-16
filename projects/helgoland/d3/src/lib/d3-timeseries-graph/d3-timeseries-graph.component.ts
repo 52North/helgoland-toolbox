@@ -609,6 +609,7 @@ export class D3TimeseriesGraphComponent
         this.drawBaseGraph();
 
         // create background as rectangle providing panning
+        this.graphInteraction.selectAll('*').remove();
         this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
