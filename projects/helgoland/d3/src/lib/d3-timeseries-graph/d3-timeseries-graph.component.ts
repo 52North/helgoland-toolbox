@@ -91,9 +91,6 @@ export class D3TimeseriesGraphComponent
     protected graphBody: any;
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
-    // options for interaction
-    private mousedownBrush: boolean;
-
     // data types
     protected preparedData: InternalDataEntry[] = [];
     protected preparedAxes: Map<string, YAxisSettings> = new Map();
@@ -183,7 +180,6 @@ export class D3TimeseriesGraphComponent
             .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.mousedownBrush = false;
         this.redrawCompleteGraph();
     }
 
@@ -557,9 +553,9 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    public getDrawingLayer(id: string): d3.Selection<SVGGElement, any, any, any> {
+    public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
         return this.rawSvg
-            .insert('g', `#interaction-layer-${this.currentTimeId}`)
+            .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : null)
             .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
@@ -623,91 +619,39 @@ export class D3TimeseriesGraphComponent
 
         this.addTimespanJumpButtons();
 
-        // create background rect
-        if (!this.plotOptions.overview) {
-            // execute when it is not an overview diagram
+        this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
 
-            this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
+        this.background.on('mouseover', () => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground()));
 
-            this.background.on('mouseover', () => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground()));
+        this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
 
-            this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
-
-            if (this.plotOptions.togglePanZoom === false) {
-                this.background.call(d3.zoom()
-                    .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
-                    .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
-                    .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()))
-                );
-            } else {
-                this.background.call(d3.drag()
-                    .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
-                    .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
-                    .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()))
-                );
-            }
-
-            this.observer.forEach(e => {
-
-                if (e.adjustBackground) {
-                    const graphExtent: D3GraphExtent = {
-                        width: this.width,
-                        height: this.height,
-                        leftOffset: this.leftOffset,
-                        margin: this.margin,
-                        xScale: this.xScaleBase
-                    };
-                    e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan);
-                }
-            });
+        if (this.plotOptions.togglePanZoom === false) {
+            this.background.call(d3.zoom()
+                .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
+                .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
+                .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()))
+            );
         } else {
-            // execute when it is overview diagram
-            let interval: [number, number] = this.getXDomainByTimestamp();
-            let overviewTimespanInterval = [interval[0], interval[1]];
-
-            // create brush
-            let brush = d3.brushX()
-                .extent([[0, 0], [this.width, this.height]])
-                .on('end', () => {
-                    // on mouseclick change time after brush was moved
-                    if (this.mousedownBrush) {
-                        let timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1]);
-                        this.changeTime(timeByCoord[0], timeByCoord[1]);
-                    }
-                    this.mousedownBrush = false;
-                });
-
-            // add brush to svg
-            this.background = this.graph.append<SVGSVGElement>('g')
-                .attr('width', this.width)
-                .attr('height', this.height)
-                .attr('pointer-events', 'all')
-                .attr('class', 'brush')
-                .call(brush)
-                .call(brush.move, overviewTimespanInterval);
-
-            /**
-             * add event to selection to prevent unnecessary re-rendering of brush
-             * add style of brush selection here
-             * e.g. 'fill' for color,
-             * 'stroke' for borderline-color,
-             * 'stroke-dasharray' for customizing borderline-style
-             */
-            this.background.selectAll('.selection')
-                .attr('stroke', 'none')
-                .on('mousedown', () => this.mousedownBrush = true);
-
-            // do not allow clear selection
-            this.background.selectAll('.overlay')
-                .remove();
-
-            // add event to resizing handle to allow change time on resize
-            this.background.selectAll('.handle')
-                .style('fill', 'red')
-                .style('opacity', 0.3)
-                .attr('stroke', 'none')
-                .on('mousedown', () => this.mousedownBrush = true);
+            this.background.call(d3.drag()
+                .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
+                .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
+                .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()))
+            );
         }
+
+        this.observer.forEach(e => {
+
+            if (e.adjustBackground) {
+                const graphExtent: D3GraphExtent = {
+                    width: this.width,
+                    height: this.height,
+                    leftOffset: this.leftOffset,
+                    margin: this.margin,
+                    xScale: this.xScaleBase
+                };
+                e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan);
+            }
+        });
         this.drawBackground();
     }
 
@@ -859,62 +803,6 @@ export class D3TimeseriesGraphComponent
     protected drawAllCharts(): void {
         this.graph.selectAll('.diagram-path').remove();
         this.preparedData.forEach((entry) => this.drawChart(entry));
-    }
-
-    /**
-     * Function that calculates and returns the x diagram coordinate for the brush range
-     * for the overview diagram by the selected time interval of the main diagram.
-     * Calculate to get brush extent when main diagram time interval changes.
-     */
-    private getXDomainByTimestamp(): [number, number] {
-        /**
-         * calculate range of brush with timestamp and not diagram coordinates
-         * formula:
-         * brush_min =
-         * (overview_width / (overview_max - overview_min)) * (brush_min - overview_min)
-         * brus_max =
-         * (overview_width / (overview_max - overview_min)) * (brush_max - overview_min)
-         */
-
-        let minOverviewTimeInterval = this.timespan.from;
-        let maxOverviewTimeInterval = this.timespan.to;
-        let minDiagramTimestamp = this.mainTimeInterval.from;
-        let maxDiagramTimestamp = this.mainTimeInterval.to;
-        let diagramWidth = this.width;
-
-        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
-        let divOverviewTimeWidth = diagramWidth / diffOverviewTimeInterval;
-        let minCalcBrush: number = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
-        let maxCalcBrush: number = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
-
-        return [minCalcBrush, maxCalcBrush];
-    }
-
-    /**
-     * Function that calculates and returns the timestamp for the main diagram calculated
-     * by the selected coordinate of the brush range.
-     * @param minCalcBrush {Number} Number with the minimum coordinate of the selected brush range.
-     * @param maxCalcBrush {Number} Number with the maximum coordinate of the selected brush range.
-     */
-    private getTimestampByCoord(minCalcBrush: number, maxCalcBrush: number): [number, number] {
-        /**
-         * calculate range of brush with timestamp and not diagram coordinates
-         * formula:
-         * minDiagramTimestamp =
-         * ((minCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
-         * maxDiagramTimestamp =
-         * ((maxCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
-         */
-
-        let minOverviewTimeInterval = this.timespan.from;
-        let maxOverviewTimeInterval = this.timespan.to;
-        let diagramWidth = this.width;
-
-        let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
-        let minDiagramTimestamp: number = ((minCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
-        let maxDiagramTimestamp: number = ((maxCalcBrush / diagramWidth) * diffOverviewTimeInterval) + minOverviewTimeInterval;
-
-        return [minDiagramTimestamp, maxDiagramTimestamp];
     }
 
     /**

@@ -41,7 +41,6 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   private graphExtent: D3GraphExtent;
   private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
   private previous: HoveredElement;
-  private prevRadius: number;
 
   constructor(
     protected graphId: D3GraphId,

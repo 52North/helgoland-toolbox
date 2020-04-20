@@ -12,6 +12,8 @@ export { D3TimeseriesGraphComponent } from './lib/d3-timeseries-graph/d3-timeser
 export * from './lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
+export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
+export * from './lib/d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 
 export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';

@@ -5,4 +5,5 @@
     <n52-d3-graph-hover-point *ngIf="plotOptions.hoverStyle === 'point'" [hoveringService]="hoveringService"
         (onHighlightChanged)="onHighlightChanged.emit($event)">
     </n52-d3-graph-hover-point>
+    <n52-d3-graph-overview-selection *ngIf="plotOptions.overview" [mainTimeInterval]="mainTimeInterval"></n52-d3-graph-overview-selection>
 </div>
