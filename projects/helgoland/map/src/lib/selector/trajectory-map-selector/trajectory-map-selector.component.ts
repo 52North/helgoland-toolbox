@@ -12,13 +12,11 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import {
-    HasLoadableContent,
     HelgolandDataset,
     HelgolandLocatedProfileData,
     HelgolandProfile,
     HelgolandServicesConnector,
     LocatedProfileDataEntry,
-    Mixin,
     Timespan,
 } from '@helgoland/core';
 import * as L from 'leaflet';
@@ -32,7 +30,6 @@ import { TrajectoryResult } from '../model/trajectory-result';
     templateUrl: '../map-selector.component.html',
     styleUrls: ['../map-selector.component.scss']
 })
-@Mixin([HasLoadableContent])
 export class ProfileTrajectoryMapSelectorComponent
     extends MapSelectorComponent<TrajectoryResult>
     implements OnChanges, AfterViewInit {
@@ -83,7 +80,7 @@ export class ProfileTrajectoryMapSelectorComponent
     }
 
     protected drawGeometries() {
-        this.isContentLoading(true);
+        this.onContentLoading.emit(true);
         if (!this.serviceUrl) { return; }
         this.servicesConnector.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
             datasets.forEach((dataset) => {
@@ -106,7 +103,7 @@ export class ProfileTrajectoryMapSelectorComponent
                                 this.layer.addTo(this.map);
                                 this.zoomToMarkerBounds(this.layer.getBounds());
                             }
-                            this.isContentLoading(false);
+                            this.onContentLoading.emit(false);
                         });
                 }
             });

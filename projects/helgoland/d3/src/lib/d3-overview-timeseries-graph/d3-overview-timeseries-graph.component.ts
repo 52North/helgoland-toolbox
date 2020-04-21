@@ -5,11 +5,11 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnDestroy,
     Output,
     SimpleChanges,
-    OnDestroy,
 } from '@angular/core';
-import { DatasetOptions, HasLoadableContent, Mixin, Time, TimeInterval, Timespan } from '@helgoland/core';
+import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
 import { D3PlotOptions } from '../model/d3-plot-options';
 
@@ -18,8 +18,7 @@ import { D3PlotOptions } from '../model/d3-plot-options';
     templateUrl: './d3-overview-timeseries-graph.component.html',
     styleUrls: ['./d3-overview-timeseries-graph.component.scss']
 })
-@Mixin([HasLoadableContent])
-export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, HasLoadableContent, OnDestroy {
+export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     @Input()
     public datasetIds: string[];
@@ -47,8 +46,6 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
 
     @Output()
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
-
-    public isContentLoading: (loading: boolean) => void;
 
     public overviewTimespan: Timespan;
     public timespan: Timespan;
@@ -88,7 +85,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     }
 
     public onGraphLoading(loading: boolean) {
-        this.isContentLoading(loading);
+        this.onContentLoading.emit(loading);
     }
 
     private calculateOverviewRange() {

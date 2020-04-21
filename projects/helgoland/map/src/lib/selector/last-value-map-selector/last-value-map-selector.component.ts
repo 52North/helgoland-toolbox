@@ -11,10 +11,8 @@ import {
 } from '@angular/core';
 import {
   DatasetType,
-  HasLoadableContent,
   HelgolandServicesConnector,
   HelgolandTimeseries,
-  Mixin,
   StatusIntervalResolverService,
 } from '@helgoland/core';
 import { circleMarker, featureGroup, geoJSON, Layer, Marker, marker } from 'leaflet';
@@ -33,7 +31,6 @@ import { LastValueLabelGenerator, LastValuePresentation } from '../services/last
   templateUrl: '../map-selector.component.html',
   styleUrls: ['../map-selector.component.scss']
 })
-@Mixin([HasLoadableContent])
 export class LastValueMapSelectorComponent extends MapSelectorComponent<HelgolandTimeseries> implements AfterViewInit, DoCheck, OnChanges {
 
   /**
@@ -90,7 +87,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   }
 
   protected drawGeometries(): void {
-    this.isContentLoading(true);
+    this.onContentLoading.emit(true);
     if (this.lastValueSeriesIDs && this.lastValueSeriesIDs.length) {
       this.createMarkersBySeriesIDs(this.lastValueSeriesIDs);
     }
@@ -125,7 +122,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
         this.zoomToMarkerBounds(bounds);
         this.map.invalidateSize();
       }
-      this.isContentLoading(false);
+      this.onContentLoading.emit(false);
     });
     if (this.map) {
       this.markerFeatureGroup.addTo(this.map);

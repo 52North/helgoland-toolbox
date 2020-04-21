@@ -16,7 +16,6 @@ import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { DatasetOptions } from '../model/internal/options';
 import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
-import { HasLoadableContent } from '../model/mixins/has-loadable-content';
 import { Time } from '../time/time.service';
 import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { PresenterMessage } from './presenter-message';
@@ -29,7 +28,7 @@ export interface PresenterOptions { }
  * Abstract superclass for all components, which will present datasets.
  */
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions>
-    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
+    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
 
     /**
      * List of presented dataset ids.
@@ -98,8 +97,6 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
      */
     @Output()
     public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
-
-    public isContentLoading: (loading: boolean) => void;
 
     protected timespan: Timespan;
 
