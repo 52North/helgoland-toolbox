@@ -8,7 +8,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { HasLoadableContent, HelgolandParameterFilter } from '@helgoland/core';
+import { HelgolandParameterFilter } from '@helgoland/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
@@ -17,7 +17,7 @@ import { MarkerSelectorGenerator } from './model/marker-selector-generator';
 
 export abstract class MapSelectorComponent<T>
     extends CachedMapComponent
-    implements OnChanges, AfterViewInit, HasLoadableContent {
+    implements OnChanges, AfterViewInit {
 
     /**
      * @input The serviceUrl, where the selection should be loaded.
@@ -48,8 +48,6 @@ export abstract class MapSelectorComponent<T>
      */
     @Input()
     public fitBoundsMarkerOptions: L.FitBoundsOptions;
-
-    public isContentLoading: (loading: boolean) => void;
 
     @Output()
     public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();

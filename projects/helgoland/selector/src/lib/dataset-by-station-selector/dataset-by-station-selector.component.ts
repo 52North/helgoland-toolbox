@@ -6,6 +6,7 @@ import {
     HelgolandServicesConnector,
     HelgolandTimeseries,
 } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
 export class SelectableDataset extends HelgolandTimeseries {
     public selected: boolean;
@@ -38,7 +39,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public counter: number;
 
     constructor(
-        protected servicesConnector: HelgolandServicesConnector
+        protected servicesConnector: HelgolandServicesConnector,
+        public translateSrvc: TranslateService
     ) { }
 
     public ngOnInit() {

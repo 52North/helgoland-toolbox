@@ -73,8 +73,6 @@ export * from './lib/model/internal/dataset-table-data';
 export * from './lib/model/internal/timeInterval';
 export * from './lib/model/internal/options';
 export * from './lib/model/internal/id-cache';
-export * from './lib/model/mixins/Mixin.decorator';
-export * from './lib/model/mixins/has-loadable-content';
 export * from './lib/model/settings/settings';
 
 export * from './lib/notifier/notifier.service';

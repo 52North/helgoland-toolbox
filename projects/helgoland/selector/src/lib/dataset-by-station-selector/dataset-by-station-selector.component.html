@@ -7,11 +7,12 @@
             <n52-label-mapper [label]="timeseries.parameters.phenomenon.label"></n52-label-mapper>
         </div>
         <n52-label-mapper [label]="timeseries.parameters.procedure.label"></n52-label-mapper>
-        <span *ngIf="timeseries.parameters.category.label && timeseries.parameters.category.label != timeseries.parameters.phenomenon.label">({{timeseries.parameters.category.label}})</span>
+        <span
+            *ngIf="timeseries.parameters.category.label && timeseries.parameters.category.label != timeseries.parameters.phenomenon.label">({{timeseries.parameters.category.label}})</span>
         <div class="additionalInfo" *ngIf="timeseries.lastValue">
             <span>{{timeseries.lastValue.value}}</span>
             <span>{{timeseries.uom}}</span>
-            <span>({{timeseries.lastValue.timestamp| date: 'short'}})</span>
+            <span> ({{timeseries.lastValue.timestamp| date: 'short' : null : translateSrvc.currentLang}})</span>
         </div>
     </div>
 </div>
