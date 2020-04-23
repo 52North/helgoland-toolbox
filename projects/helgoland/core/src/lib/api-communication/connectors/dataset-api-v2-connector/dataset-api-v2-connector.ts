@@ -183,7 +183,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
     return this.api.getTimeseriesExtras(internalId.id, internalId.url);
   }
 
-  private createDataset(dataset: Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
+  protected createDataset(dataset: Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
     switch (filter.type) {
       case DatasetType.Timeseries:
         if (dataset.parameters) {
@@ -234,7 +234,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
     return new HelgolandDataset(dataset.id, url, dataset.label);
   }
 
-  private createV2Service(s: Service, filter: HelgolandParameterFilter): HelgolandService {
+  protected createV2Service(s: Service, filter: HelgolandParameterFilter): HelgolandService {
     const service = new HelgolandService(
       s.id,
       s.apiUrl,
@@ -280,7 +280,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
     return paramFilter;
   }
 
-  private createHelgolandPlatform(platform: Platform): HelgolandPlatform {
+  protected createHelgolandPlatform(platform: Platform): HelgolandPlatform {
     let datasets = [];
     if (platform.datasets && platform.datasets.length > 0) {
       datasets = platform.datasets.map(pf => pf.id);

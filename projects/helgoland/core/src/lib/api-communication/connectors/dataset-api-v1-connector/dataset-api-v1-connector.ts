@@ -154,7 +154,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
     return this.api.getTimeseriesExtras(internalId.id, internalId.url);
   }
 
-  private createService(service: Service, filter: HelgolandParameterFilter): HelgolandService {
+  protected createService(service: Service, filter: HelgolandParameterFilter): HelgolandService {
     let hasTimeseries = true;
     if (filter.type && filter.type !== DatasetType.Timeseries) {
       hasTimeseries = false;
@@ -207,7 +207,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
     );
   }
 
-  private createFilter(filter: HelgolandParameterFilter): ParameterFilter {
+  protected createFilter(filter: HelgolandParameterFilter): ParameterFilter {
     const paramFilter: ParameterFilter = {};
     if (filter.platform) { paramFilter.station = filter.platform; }
     if (filter.category) { paramFilter.category = filter.category; }
@@ -221,7 +221,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
     return paramFilter;
   }
 
-  private createDataFilter(filter: HelgolandDataFilter): DataParameterFilter {
+  protected createDataFilter(filter: HelgolandDataFilter): DataParameterFilter {
     const dataFilter: DataParameterFilter = {};
     if (filter.expanded) { dataFilter.expanded = filter.expanded; }
     if (filter.generalize) { dataFilter.generalize = filter.generalize; }
@@ -240,7 +240,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
     return new HelgolandPlatform(station.id, station.properties.label, datasets, station.geometry);
   }
 
-  private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
+  protected filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
     return filter.type && filter.type !== DatasetType.Timeseries;
   }
 

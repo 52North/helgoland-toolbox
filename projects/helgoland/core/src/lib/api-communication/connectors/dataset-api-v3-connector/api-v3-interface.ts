@@ -306,7 +306,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     return httpParams;
   }
 
-  private prepareDataset(ds: ApiV3Dataset, url: string): ApiV3Dataset {
+  protected prepareDataset(ds: ApiV3Dataset, url: string): ApiV3Dataset {
     ds.internalId = this.internalIdHander.createInternalId(url, ds.id);
     return ds;
   }

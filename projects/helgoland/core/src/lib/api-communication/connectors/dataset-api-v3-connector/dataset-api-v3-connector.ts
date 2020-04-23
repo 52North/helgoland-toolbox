@@ -58,8 +58,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   name = 'DatasetApiV3Connector';
 
   constructor(
-    private http: HttpService,
-    private api: ApiV3InterfaceService
+    protected http: HttpService,
+    protected api: ApiV3InterfaceService
   ) { }
 
   canHandle(url: string): Observable<boolean> {
@@ -134,7 +134,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return this.api.getDatasets(url, this.createFilter(filter)).pipe(map(res => res.map(ds => this.createDataset(ds, url))));
   }
 
-  private createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
+  protected createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
     if (!(ds.firstValue && ds.lastValue && ds.parameters)) {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
@@ -180,11 +180,11 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     }
   }
 
-  private createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
+  protected createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
     return new HelgolandPlatform(feature.id, feature.properties.label, [], feature.geometry);
   }
 
-  private createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
+  protected createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
     // TODO: remove fix for dataset count, use just service.quantities.datasets.total for dataset
     let datasets;
     switch (filter.type) {
@@ -290,15 +290,15 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return this.api.getDatasetExtras(internalId.id, internalId.url);
   }
 
-  private createRequestTimespan(timespan: Timespan): string {
+  protected createRequestTimespan(timespan: Timespan): string {
     return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
   }
 
-  private createTrajectoryData(res: Data<LocatedTimeValueEntry>): HelgolandTrajectoryData {
+  protected createTrajectoryData(res: Data<LocatedTimeValueEntry>): HelgolandTrajectoryData {
     return new HelgolandTrajectoryData(res.values);
   }
 
-  private createTimeseriesData(res: Data<TimeValueTuple>): HelgolandTimeseriesData {
+  protected createTimeseriesData(res: Data<TimeValueTuple>): HelgolandTimeseriesData {
     const data = new HelgolandTimeseriesData(res.values);
     data.referenceValues = res.referenceValues ? res.referenceValues : {};
     if (res.valueBeforeTimespan) {
@@ -310,7 +310,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return data;
   }
 
-  private createFilter(filter: HelgolandParameterFilter): ApiV3ParameterFilter {
+  protected createFilter(filter: HelgolandParameterFilter): ApiV3ParameterFilter {
     const apiFilter: ApiV3ParameterFilter = {};
     if (filter.category) { apiFilter.category = filter.category; }
     if (filter.offering) { apiFilter.offering = filter.offering; }
@@ -341,7 +341,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return apiFilter;
   }
 
-  private createStation(feature: ApiV3Feature): HelgolandPlatform {
+  protected createStation(feature: ApiV3Feature): HelgolandPlatform {
     const datasetIds = [];
     for (const key in feature.properties.datasets) {
       if (feature.properties.datasets.hasOwnProperty(key)) {
@@ -351,35 +351,35 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     return new HelgolandPlatform(feature.id, feature.properties.label, datasetIds, feature.geometry);
   }
 
-  private createCategory(category: ApiV3Category): Category {
+  protected createCategory(category: ApiV3Category): Category {
     return {
       id: category.id,
       label: category.label
     };
   }
 
-  private createOffering(offering: ApiV3Offering): Offering {
+  protected createOffering(offering: ApiV3Offering): Offering {
     return {
       id: offering.id,
       label: offering.label
     };
   }
 
-  private createPhenomenon(phenomenon: ApiV3Phenomenon): Phenomenon {
+  protected createPhenomenon(phenomenon: ApiV3Phenomenon): Phenomenon {
     return {
       id: phenomenon.id,
       label: phenomenon.label
     };
   }
 
-  private createProcedure(procedure: ApiV3Procedure): Procedure {
+  protected createProcedure(procedure: ApiV3Procedure): Procedure {
     return {
       id: procedure.id,
       label: procedure.label
     };
   }
 
-  private createFeature(feature: ApiV3Feature): Feature {
+  protected createFeature(feature: ApiV3Feature): Feature {
     return {
       id: feature.id,
       label: feature.properties.label

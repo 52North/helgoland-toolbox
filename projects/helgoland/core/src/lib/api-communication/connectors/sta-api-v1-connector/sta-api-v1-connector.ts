@@ -24,7 +24,7 @@ import {
   HelgolandDataset,
   HelgolandTimeseries,
 } from '../../model/internal/dataset';
-import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from '../../model/internal/filter';
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
 import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from './model/datasetreams';
@@ -47,8 +47,8 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   name = 'StaApiV1Connector';
 
   constructor(
-    private http: HttpService,
-    private sta: StaReadInterfaceService
+    protected http: HttpService,
+    protected sta: StaReadInterfaceService
   ) { }
 
   canHandle(url: string): Observable<boolean> {
@@ -86,7 +86,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       .pipe(map(things => things.value.map(t => this.createOffering(t))));
   }
 
-  private createOfferingsFilter(params: HelgolandParameterFilter): StaFilter<ThingSelectParams, ThingExpandParams> {
+  protected createOfferingsFilter(params: HelgolandParameterFilter): StaFilter<ThingSelectParams, ThingExpandParams> {
     if (params) {
       const filterList = [];
       return this.createFilter(filterList);
@@ -104,7 +104,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e))));
   }
 
-  private createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+  protected createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
     if (params) {
       const filterList = [];
       if (params.category) {
@@ -128,7 +128,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       .pipe(map(sensors => sensors.value.map(s => this.createProcedure(s))));
   }
 
-  private createProceduresFilter(params: HelgolandParameterFilter): StaFilter<SensorSelectParams, SensorExpandParams> {
+  protected createProceduresFilter(params: HelgolandParameterFilter): StaFilter<SensorSelectParams, SensorExpandParams> {
     if (params) {
       const filterList = [];
       if (params.category) {
@@ -156,7 +156,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       .pipe(map(locs => locs.value.map(l => this.createFeature(l))));
   }
 
-  private createFeaturesFilter(params: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+  protected createFeaturesFilter(params: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
     if (params) {
       const filterList = [];
       if (params.category) {
@@ -189,7 +189,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       .pipe(map(loc => this.createExtendedPlatform(loc)));
   }
 
-  private createCategoriesFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+  protected createCategoriesFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
     if (params) {
       const filterList = [];
       if (params.phenomenon) {
@@ -205,7 +205,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     }
   }
 
-  private createStationFilter(filter: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+  protected createStationFilter(filter: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
     if (filter) {
       if (filter.phenomenon) {
         return { $filter: `Things/Datastreams/ObservedProperty/id eq '${filter.phenomenon}'` };
@@ -227,7 +227,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       }));
   }
 
-  private createDatastreamFilter(params: DatasetFilter): StaFilter<DatastreamSelectParams, DatastreamExpandParams> {
+  protected createDatastreamFilter(params: DatasetFilter): StaFilter<DatastreamSelectParams, DatastreamExpandParams> {
     let filter: StaFilter<StaSelectParams, StaExpandParams> = {};
     if (params) {
       const filterList = [];
@@ -249,7 +249,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return filter;
   }
 
-  private requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable<HelgolandTimeseries> {
+  protected requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable<HelgolandTimeseries> {
     // get first and last timestamp
     if (ds.phenomenonTime && ds.phenomenonTime.indexOf('/')) {
       const firstLastDates = ds.phenomenonTime.split('/');
@@ -272,14 +272,14 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     }
   }
 
-  private createFirstLastValue(obs: Observation): FirstLastValue {
+  protected createFirstLastValue(obs: Observation): FirstLastValue {
     if (obs && obs.phenomenonTime && obs.result) {
       return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
     }
     return null;
   }
 
-  private createTimeFilter(time: string): string {
+  protected createTimeFilter(time: string): string {
     return `phenomenonTime eq ${time}`;
   }
 
@@ -303,16 +303,16 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return of({});
   }
 
-  private createTimespanFilter(timespan: Timespan): string {
+  protected createTimespanFilter(timespan: Timespan): string {
     const format = 'YYYY-MM-DDTHH:mm:ss.SSSZ';
     return `phenomenonTime ge ${moment(timespan.from).format(format)} and phenomenonTime le ${moment(timespan.to).format(format)}`;
   }
 
-  private createHelgolandPlatform(loc: Location): HelgolandPlatform {
+  protected createHelgolandPlatform(loc: Location): HelgolandPlatform {
     return new HelgolandPlatform(loc['@iot.id'], loc.name, [], loc.location);
   }
 
-  private createExtendedPlatform(loc: Location): HelgolandPlatform {
+  protected createExtendedPlatform(loc: Location): HelgolandPlatform {
     const platform = this.createHelgolandPlatform(loc);
     loc.Things.forEach(thing => {
       thing.Datastreams.forEach(ds => {
@@ -322,11 +322,11 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return platform;
   }
 
-  private createTimeseries(ds: Datastream, url: string): HelgolandDataset {
+  protected createTimeseries(ds: Datastream, url: string): HelgolandDataset {
     return new HelgolandDataset(ds['@iot.id'], url, ds.name);
   }
 
-  private createTsParameter(ds: Datastream, thing: Thing): ParameterConstellation {
+  protected createTsParameter(ds: Datastream, thing: Thing): ParameterConstellation {
     return {
       service: { id: DEFAULT_SERVICE_ID, label: DEFAULT_SERVICE_LABEL },
       offering: this.createOffering(thing),
@@ -337,7 +337,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     };
   }
 
-  private createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): HelgolandTimeseries {
+  protected createExpandedTimeseries(ds: Datastream, first: FirstLastValue, last: FirstLastValue, url: string): HelgolandTimeseries {
     const id = ds['@iot.id'];
     const label = ds.name;
     const uom = ds.unitOfMeasurement.symbol;
@@ -346,34 +346,34 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return new HelgolandTimeseries(id, url, label, uom, platform, first, last, [], null, parameter);
   }
 
-  private createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {
+  protected createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {
     const values = observations.map(obs => [new Date(obs.phenomenonTime).getTime(), parseFloat(obs.result as string)] as TimeValueTuple);
     const data = new HelgolandTimeseriesData(values);
     data.referenceValues = {};
     return data;
   }
 
-  private createFeature(loc: Location): Feature {
+  protected createFeature(loc: Location): Feature {
     return { id: loc['@iot.id'], label: loc.name };
   }
 
-  private createOffering(thing: Thing): Offering {
+  protected createOffering(thing: Thing): Offering {
     return { id: thing['@iot.id'], label: thing.name };
   }
 
-  private createPhenomenon(obsProp: ObservedProperty): Phenomenon {
+  protected createPhenomenon(obsProp: ObservedProperty): Phenomenon {
     return { id: obsProp['@iot.id'], label: obsProp.name };
   }
 
-  private createCategory(obsProp: ObservedProperty): Category {
+  protected createCategory(obsProp: ObservedProperty): Category {
     return { id: obsProp['@iot.id'], label: obsProp.name };
   }
 
-  private createProcedure(sensor: Sensor): Procedure {
+  protected createProcedure(sensor: Sensor): Procedure {
     return { id: sensor['@iot.id'], label: sensor.name };
   }
 
-  private createServices(url: string, paramfilter: HelgolandParameterFilter): Observable<HelgolandService[]> {
+  protected createServices(url: string, paramfilter: HelgolandParameterFilter): Observable<HelgolandService[]> {
     const service = new HelgolandService(
       DEFAULT_SERVICE_ID,
       url,
@@ -411,7 +411,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     }));
   }
 
-  // private createPlatform(loc: Location): Platform {
+  // protected createPlatform(loc: Location): Platform {
   //   return {
   //     id: loc['@iot.id'],
   //     label: loc.name,
@@ -421,14 +421,14 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   //   };
   // }
 
-  private createFilter(filterList: any[]): StaFilter<StaSelectParams, StaExpandParams> {
+  protected createFilter(filterList: any[]): StaFilter<StaSelectParams, StaExpandParams> {
     if (filterList.length > 0) {
       return { $filter: filterList.join(' and ') };
     }
     return {};
   }
 
-  private filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
+  protected filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {
     return filter.type && filter.type !== DatasetType.Timeseries;
   }
 
