@@ -180,7 +180,7 @@ export class D3TimeseriesGraphComponent
             .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        this.redrawCompleteGraph();
+        setTimeout(() => this.redrawCompleteGraph(), 1);
     }
 
     public ngOnDestroy() {
