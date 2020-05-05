@@ -24,7 +24,7 @@
 <div>
   <div *ngFor="let entry of additionalData[0].data; let i = index;">
     <div>
-      <span>{{entry.timestamp | date : 'medium'}}</span>
+      <span>{{entry.timestamp | tzDate : 'L LT z'}}</span>
       <span> | </span>
       <span>{{entry.value}}</span>
       <button mat-button (click)="removeEntry(i)">remove</button>

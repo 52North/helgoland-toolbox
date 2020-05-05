@@ -5,9 +5,9 @@
   <br>
   Unit - {{dataset.uom}}
   <br>
-  First Value - {{dataset.firstValue.timestamp | date}} - {{dataset.firstValue.value}}
+  First Value - {{dataset.firstValue.timestamp | tzDate: 'L'}} - {{dataset.firstValue.value}}
   <br>
-  Last Value - {{dataset.lastValue.timestamp | date}} - {{dataset.lastValue.value}}
+  Last Value - {{dataset.lastValue.timestamp | tzDate: 'L'}} - {{dataset.lastValue.value}}
   <br>
   <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" ng-model-options="{timezone: 'utc'}"
     [(ngModel)]="selectedStart">
