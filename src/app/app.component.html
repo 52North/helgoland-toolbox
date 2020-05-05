@@ -1,6 +1,9 @@
 <mat-sidenav-container class="example-sidenav-fab-container">
   <mat-sidenav #sidenav mode="side" opened="true">
     <n52-lang-selector [languageList]="languageList"></n52-lang-selector>
+    <div style="padding: 3px;">
+      <n52-timezone-selector></n52-timezone-selector>
+    </div>
     <mat-nav-list>
       <a mat-list-item routerLink="/eventing" routerLinkActive="active">Eventing</a>
       <a mat-list-item routerLink="/service-selector" routerLinkActive="active">Service Selector</a>

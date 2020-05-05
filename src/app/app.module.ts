@@ -66,6 +66,7 @@ import { ExportPopupComponent } from './components/export-popup/export-popup.com
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
+import { TimezoneSelectorComponent } from './components/timezone-selector/timezone-selector.component';
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
@@ -149,7 +150,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiagramExportComponent,
     NoDataEntryComponent,
     FacetSearchComponent,
-    SensormlComponent
+    SensormlComponent,
+    TimezoneSelectorComponent,
   ],
   imports: [
     BrowserModule,

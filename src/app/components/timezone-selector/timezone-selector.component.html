@@ -1,0 +1,9 @@
+<mat-form-field>
+    <mat-select [(value)]="timezone" (selectionChange)="changeTimezone($event)" placeholder="Select timezone">
+        <mat-option [value]="'America/New_York'">America/New_York</mat-option>
+        <mat-option [value]="'America/Tijuana'">America/Tijuana</mat-option>
+        <mat-option [value]="'Pacific/Honolulu'">Pacific/Honolulu</mat-option>
+        <mat-option [value]="'Europe/Berlin'">Europe/Berlin</mat-option>
+        <mat-option [value]="'Asia/Tokyo'">Asia/Tokyo</mat-option>
+    </mat-select>
+</mat-form-field>
