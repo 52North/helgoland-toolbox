@@ -1,4 +1,4 @@
 <div *ngFor="let ts of timeseries" (click)="timeseriesSelected(ts)">
   <div>{{ts.label}}</div>
-  <div class="small">{{ts.firstValue.timestamp | date: 'medium'}} - {{ts.lastValue.timestamp | date: 'medium'}}</div>
+  <div class="small">{{ts.firstValue.timestamp | tzDate: 'L LT z'}} - {{ts.lastValue.timestamp | tzDate: 'L LT z'}}</div>
 </div>

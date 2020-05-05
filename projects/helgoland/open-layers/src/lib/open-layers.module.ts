@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerAbstractComponent } from './controls/legend/ol-layer-abstract/ol-layer-abstract.component';
 import { OlLayerAnimateTimeComponent } from './controls/legend/ol-layer-animate-time/ol-layer-animate-time.component';
@@ -45,7 +46,8 @@ const COMPONENTS = [
   exports: COMPONENTS,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    HelgolandCoreModule,
   ]
 })
 export class HelgolandOpenLayersModule { }

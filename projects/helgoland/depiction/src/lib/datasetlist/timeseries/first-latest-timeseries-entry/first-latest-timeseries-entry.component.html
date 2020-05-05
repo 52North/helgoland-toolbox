@@ -1,4 +1,4 @@
 <span>{{procedureLabel}} - {{platformLabel}}</span>
 <span>Has Data: {{hasData}}</span>
-<button *ngIf="firstValue" (click)="jumpToFirstTimeStamp()">{{firstValue.value}} - {{firstValue.timestamp | date}}</button>
-<button *ngIf="lastValue" (click)="jumpToLastTimeStamp()">{{lastValue.value}} - {{lastValue.timestamp | date}}</button>
+<button *ngIf="firstValue" (click)="jumpToFirstTimeStamp()">{{firstValue.value}} - {{firstValue.timestamp | tzDate: 'L LT z'}}</button>
+<button *ngIf="lastValue" (click)="jumpToLastTimeStamp()">{{lastValue.value}} - {{lastValue.timestamp | tzDate: 'L LT z'}}</button>

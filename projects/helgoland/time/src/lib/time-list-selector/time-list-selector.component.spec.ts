@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TimeListSelectorComponent } from './time-list-selector.component';
 
@@ -8,7 +9,8 @@ describe('TimeListSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeListSelectorComponent]
+      declarations: [TimeListSelectorComponent],
+      imports: [HelgolandCoreModule]
     }).compileComponents();
   }));
 

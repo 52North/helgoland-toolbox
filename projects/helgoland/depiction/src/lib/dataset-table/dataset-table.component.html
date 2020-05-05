@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let row of this.preparedData">
-      <td>{{row.datetime | date: 'short'}}</td>
+      <td>{{row.datetime | tzDate: 'L LT z'}}</td>
       <td *ngFor="let value of row.values">{{value}}</td>
     </tr>
   </tbody>

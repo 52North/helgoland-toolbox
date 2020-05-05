@@ -13,6 +13,7 @@ import { DateProxyPipe } from './pipes/dateproxy/dateproxy.pipe';
 import { MatchLabelPipe } from './pipes/matchLabel/match-label.pipe';
 import { SumValuesService } from './processing/sum-values.service';
 import { SettingsService } from './settings/settings.service';
+import { TzDatePipe } from './time/date-tz.pipe';
 import { DefinedTimespanService } from './time/defined-timespan.service';
 import { Time } from './time/time.service';
 
@@ -36,14 +37,16 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
 @NgModule({
   declarations: [
     DateProxyPipe,
-    MatchLabelPipe
+    MatchLabelPipe,
+    TzDatePipe,
   ],
   imports: [
     HttpClientModule
   ],
   exports: [
     DateProxyPipe,
-    MatchLabelPipe
+    MatchLabelPipe,
+    TzDatePipe,
   ],
   providers: [
     ColorService,

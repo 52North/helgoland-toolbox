@@ -91,6 +91,8 @@ export * from './lib/status-check/status-check.service';
 
 export * from './lib/time/defined-timespan.service';
 export * from './lib/time/time.service';
+export * from './lib/time/timezone.service';
+export * from './lib/time/date-tz.pipe';
 
 export * from './lib/processing/sum-values.service';
 

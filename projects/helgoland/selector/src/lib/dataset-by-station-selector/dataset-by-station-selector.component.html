@@ -12,7 +12,7 @@
         <div class="additionalInfo" *ngIf="timeseries.lastValue">
             <span>{{timeseries.lastValue.value}}</span>
             <span>{{timeseries.uom}}</span>
-            <span> ({{timeseries.lastValue.timestamp| date: 'short' : null : translateSrvc.currentLang}})</span>
+            <span> ({{timeseries.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
         </div>
     </div>
 </div>
