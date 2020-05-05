@@ -143,7 +143,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
       const delaunay = Delaunay.from(e.data, d => d.xDiagCoord, d => d.yDiagCoord);
       const idx = delaunay.find(x, y);
 
-      if (idx != null) {
+      if (idx != null && !isNaN(idx)) {
         const datum = e.data[idx];
         const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
         if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
