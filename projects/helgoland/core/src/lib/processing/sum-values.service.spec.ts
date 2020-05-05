@@ -50,14 +50,13 @@ describe('SumValuesService', () => {
         [1558738800000, NaN],
         [1558742400000, NaN]
       ];
-      data.forEach(d => console.log(`${moment(d[0]).toLocaleString()} - ${d[1]}`));
       // for (let index = 0; index <= 100; index++) {
       //   const time = moment().minutes(index).seconds(0).milliseconds(0).unix() * 1000;
       //   const val: number | string = (index % 3 === 0) ? 1 : NaN;
       //   data.push([time, val]);
       // }
       const result = sumValues.sum('hour', moment.duration(2, 'hour'), data);
-      result.forEach(d => console.log(`${moment(d[0]).toLocaleString()} - ${d[1]}`));
+      expect(sumValues).toBeTruthy();
     })
   );
 
