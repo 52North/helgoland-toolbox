@@ -230,25 +230,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .ticks(ticks)
             .tickFormat(d => {
                 if (options.date) {
-                    const date = new Date(d.valueOf());
-
-                    const formatMillisecond = '.%L',
-                        formatSecond = ':%S',
-                        formatMinute = '%H:%M',
-                        formatHour = '%H:%M',
-                        formatDay = '%b %d',
-                        formatWeek = '%b %d',
-                        formatMonth = '%B',
-                        formatYear = '%Y';
-
-                    const format = d3.timeSecond(date) < date ? formatMillisecond
-                        : d3.timeMinute(date) < date ? formatSecond
-                            : d3.timeHour(date) < date ? formatMinute
-                                : d3.timeDay(date) < date ? formatHour
-                                    : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
-                                        : d3.timeYear(date) < date ? formatMonth
-                                            : formatYear;
-                    return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
+                    return this.timeFormatLocaleService.formatTime(d.valueOf());
                 } else {
                     return '' + d.valueOf();
                 }

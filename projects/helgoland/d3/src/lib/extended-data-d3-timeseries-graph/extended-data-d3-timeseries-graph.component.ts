@@ -15,6 +15,7 @@ import {
   InternalIdHandler,
   SumValuesService,
   Time,
+  TimezoneService,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -85,6 +86,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
     protected translateService: TranslateService,
+    protected timezoneSrvc: TimezoneService,
     protected sumValues: SumValuesService,
     protected rangeCalc: RangeCalculationsService,
     protected graphHelper: D3GraphHelperService,
@@ -99,6 +101,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       timeFormatLocaleService,
       colorService,
       translateService,
+      timezoneSrvc,
       sumValues,
       rangeCalc,
       graphHelper,

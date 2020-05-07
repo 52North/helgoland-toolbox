@@ -8,6 +8,7 @@
     "@types/geojson": "^7946.0.7",
     "class-transformer": "^0.2.3",
     "moment": "^2.24.0",
+    "moment-timezone": "0.5.28",
     "deep-equal": "^1.0.1"
   }
 }

@@ -10,6 +10,7 @@ import {
     Time,
     TimedDatasetOptions,
     Timespan,
+    TimezoneService,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
@@ -82,9 +83,10 @@ export class PlotlyProfileGraphComponent
         protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected translateSrvc: TranslateService
+        protected translateSrvc: TranslateService,
+        protected timezoneSrvc: TimezoneService
     ) {
-        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc, timezoneSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -93,6 +95,8 @@ export class PlotlyProfileGraphComponent
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+    protected onTimezoneChanged(timezone: string): void { }
 
     public reloadDataForDatasets(datasetIds: string[]): void {
         console.log('reload data at ' + new Date());

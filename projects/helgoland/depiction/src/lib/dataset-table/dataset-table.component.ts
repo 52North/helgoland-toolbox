@@ -9,6 +9,7 @@ import {
   HelgolandTimeseriesData,
   InternalIdHandler,
   Time,
+  TimezoneService,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
@@ -36,9 +37,10 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     protected servicesConnector: HelgolandServicesConnector,
     protected datasetIdResolver: InternalIdHandler,
     protected timeSrvc: Time,
-    protected translateSrvc: TranslateService
+    protected translateSrvc: TranslateService,
+    protected timezoneSrvc: TimezoneService
   ) {
-    super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
+    super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc, timezoneSrvc);
   }
 
   public ngOnInit() {
@@ -85,6 +87,8 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   }
 
   protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+  protected onTimezoneChanged(timezone: string): void { }
 
   public reloadDataForDatasets(datasetIds: string[]): void {
     // console.log('reload data at ' + new Date());

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { timeFormat, timeFormatLocale, TimeLocaleDefinition } from 'd3';
+import { TimezoneService } from '@helgoland/core';
+import moment from 'moment';
 
 /**
  * This service holds the translations for d3 charts time axis labels.
@@ -24,22 +24,59 @@ import { timeFormat, timeFormatLocale, TimeLocaleDefinition } from 'd3';
 })
 export class D3TimeFormatLocaleService {
 
-  private timeFormatLocaleMapper: Map<string, TimeLocaleDefinition> = new Map();
+  protected formatMillisecond = '.SSS';
+  protected formatSecond = ':ss';
+  protected formatMinute = 'HH:mm';
+  protected formatHour = 'HH:mm';
+  protected formatDay = 'MMM D';
+  protected formatWeek = 'MMM D';
+  protected formatMonth = 'MMMM';
+  protected formatYear = 'YYYY';
 
   constructor(
-    private translateService: TranslateService
+    protected timezoneSrvc: TimezoneService
   ) { }
 
-  public addTimeFormatLocale(localeCode: string, definition: TimeLocaleDefinition) {
-    this.timeFormatLocaleMapper.set(localeCode, definition);
+  public formatTime(time: number): string {
+    const curr = this.timezoneSrvc.createTzBasedDate(time);
+
+    const format = this.roundSecond(time) < curr ? this.formatMillisecond
+      : this.roundMinute(time) < curr ? this.formatSecond
+        : this.roundHour(time) < curr ? this.formatMinute
+          : this.roundDay(time) < curr ? this.formatHour
+            : this.roundMonth(time) < curr ? (this.roundWeek(time) < curr ? this.formatDay : this.formatWeek)
+              : this.roundYear(time) < curr ? this.formatMonth
+                : this.formatYear;
+
+    return moment(time).tz(this.timezoneSrvc.getTimezoneName()).format(format);
   }
 
-  public getTimeLocale(specifier: string): (date: Date) => string {
-    const langCode = this.translateService.currentLang;
-    if (this.timeFormatLocaleMapper.has(langCode)) {
-      return timeFormatLocale(this.timeFormatLocaleMapper.get(langCode)).format(specifier);
-    } else {
-      return timeFormat(specifier);
-    }
+  private roundMinute(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('minute');
   }
+
+  private roundSecond(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('second');
+  }
+
+  private roundYear(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('year');
+  }
+
+  private roundMonth(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('month');
+  }
+
+  private roundWeek(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('week');
+  }
+
+  private roundHour(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('hour');
+  }
+
+  private roundDay(time: number) {
+    return this.timezoneSrvc.createTzBasedDate(time).startOf('day');
+  }
+
 }

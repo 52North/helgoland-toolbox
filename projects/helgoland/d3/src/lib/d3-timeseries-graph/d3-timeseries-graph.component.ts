@@ -27,6 +27,7 @@ import {
     Time,
     Timespan,
     TimeValueTuple,
+    TimezoneService,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
@@ -148,6 +149,7 @@ export class D3TimeseriesGraphComponent
         protected timeFormatLocaleService: D3TimeFormatLocaleService,
         protected colorService: ColorService,
         protected translateService: TranslateService,
+        protected timezoneSrvc: TimezoneService,
         protected sumValues: SumValuesService,
         protected rangeCalc: RangeCalculationsService,
         protected graphHelper: D3GraphHelperService,
@@ -156,7 +158,7 @@ export class D3TimeseriesGraphComponent
         protected servicesConnector: HelgolandServicesConnector,
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
-        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -201,6 +203,10 @@ export class D3TimeseriesGraphComponent
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
+        this.redrawCompleteGraph();
+    }
+
+    protected onTimezoneChanged(): void {
         this.redrawCompleteGraph();
     }
 
@@ -813,30 +819,14 @@ export class D3TimeseriesGraphComponent
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
             .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
-            .range([bufferXrange, this.width]); // .nice(); // function which makes the "beautiful" (not used here, because the ticks are inconsistent with this function)
-        const tickCount = (this.width - this.leftOffset) / 80;
+            .range([bufferXrange, this.width]);
+
+        let ticks = this.calcTicks();
+
         let xAxis = d3.axisBottom(this.xScaleBase)
-            .tickFormat(d => {
-                const date = new Date(d.valueOf());
-
-                const formatMillisecond = '.%L',
-                    formatSecond = ':%S',
-                    formatMinute = '%H:%M',
-                    formatHour = '%H:%M',
-                    formatDay = '%b %d',
-                    formatWeek = '%b %d',
-                    formatMonth = '%B',
-                    formatYear = '%Y';
-
-                const format = d3.timeSecond(date) < date ? formatMillisecond
-                    : d3.timeMinute(date) < date ? formatSecond
-                        : d3.timeHour(date) < date ? formatMinute
-                            : d3.timeDay(date) < date ? formatHour
-                                : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
-                                    : d3.timeYear(date) < date ? formatMonth
-                                        : formatYear;
-                return this.timeFormatLocaleService.getTimeLocale(format)(new Date(d.valueOf()));
-            }).ticks(tickCount);
+            .tickFormat(d => this.timeFormatLocaleService.formatTime(d.valueOf()))
+            // .ticks(10); // TODO: cleanup
+            .tickValues(ticks);
 
         // update x axis
         this.graph.selectAll('.x.axis.bottom').remove();
@@ -883,6 +873,18 @@ export class D3TimeseriesGraphComponent
                 .style('text-anchor', 'middle')
                 .text('time');
         }
+    }
+
+    private calcTicks() {
+        const tickCount = (this.width - this.leftOffset) / 80;
+        const offset = this.timezoneSrvc.getOffsetToLocaleInMs();
+        const buffer = offset < (this.timespan.to - this.timespan.from) ? offset : this.timespan.to - this.timespan.from;
+        // let ticks = d3.scaleTime()
+        //     .domain([new Date(this.timespan.from - buffer), new Date(this.timespan.to + buffer)])
+        //     .ticks(tickCount);
+        // ticks = ticks.map(e => new Date(e.getTime() + offset));
+        let ticks = d3.scaleTime().domain([new Date(this.timespan.from), new Date(this.timespan.to)]).ticks(tickCount);
+        return ticks;
     }
 
     /**

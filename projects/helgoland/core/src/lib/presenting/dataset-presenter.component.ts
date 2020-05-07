@@ -12,12 +12,13 @@ import {
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
+import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { DatasetOptions } from '../model/internal/options';
 import { ResizableComponent } from '../model/internal/ResizableComponent';
 import { TimeInterval, Timespan } from '../model/internal/timeInterval';
 import { Time } from '../time/time.service';
-import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
+import { TimezoneService } from './../time/timezone.service';
 import { PresenterMessage } from './presenter-message';
 
 const equal = require('deep-equal');
@@ -103,18 +104,21 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     private datasetIdsDiffer: IterableDiffer<string>;
     private selectedDatasetIdsDiffer: IterableDiffer<string>;
     private langChangeSubscription: Subscription;
+    private timezoneSubscription: Subscription;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected translateService: TranslateService
+        protected translateService: TranslateService,
+        protected timezoneSrvc: TimezoneService
     ) {
         super();
         this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
         this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();
         this.langChangeSubscription = this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
+        this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe((tz: string) => this.onTimezoneChanged(tz));
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -129,6 +133,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     public ngOnDestroy(): void {
         this.langChangeSubscription.unsubscribe();
+        this.timezoneSubscription.unsubscribe();
     }
 
     public ngDoCheck(): void {
@@ -178,6 +183,8 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     }
 
     protected abstract onLanguageChanged(langChangeEvent: LangChangeEvent): void;
+
+    protected abstract onTimezoneChanged(timezone: string): void;
 
     protected abstract timeIntervalChanges(): void;
 

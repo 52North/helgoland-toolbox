@@ -8,7 +8,6 @@
     "@types/d3": "^5.7.2",
     "d3": "^5.9.7",
     "d3-delaunay": "^5.2.1",
-    "moment": "^2.24.0",
-    "moment-timezone": "0.5.28"
+    "moment": "^2.24.0"
   }
 }
