@@ -166,10 +166,12 @@ Now, once you update your library source code it will automatically be re-compil
 
 
 ## References
-- Federal Maritime and Hydrographic Agency (BSH), https://www.bsh.de/
-- Wupperverband, https://www.wupperverband.de/
-- SeaDataCloud, https://www.seadatanet.org/About-us/SeaDataCloud
-- WaCoDiS, https://wacodis.fbg-hsbo.de/
-- MuDak-WRM, https://www.mudak-wrm.kit.edu/
-- mVIZ, https://mviz.geo.tu-dresden.de/
+
+- [INSPIRE Download Service](http://inspire.ec.europa.eu/id/document/tg/download-sos) 
+- [Federal Maritime and Hydrographic Agency (BSH)](https://www.bsh.de/)
+- [Wupperverband](https://www.wupperverband.de/)
+- [SeaDataCloud](https://www.seadatanet.org/About-us/SeaDataCloud)
+- [WaCoDiS](https://wacodis.fbg-hsbo.de/)
+- [MuDak-WRM](https://www.mudak-wrm.kit.edu/)
+- [mVIZ](https://mviz.geo.tu-dresden.de/)
 - IRCEL-CELINE BelAir
