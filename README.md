@@ -43,9 +43,25 @@ Selectors
 - List Selector for observation data
 - Service Selector for data sources
 
-The work on the Helgoland Toolbox comprised
+The work on the Helgoland Toolbox comprised several evolutionary improvements and enhancements that were developed as part of several projects (e.g. WaCoDiS, MuDak-WRM. SeaDataCloudk BSH, Wupperverband Framework Contract). This include:
 
-**Benefits**
+- Enhancement to connect to instances of the OGC SensorThings API
+- Improved caching
+- Complementary mapping module based on open layers to support time-dependent background map layers
+- Enhanced data export functionality
+- Improvements in the diagram visualization
+- Facet search for observation data
+
+**Key Technologies:**
+
+- JavaScript
+- TypeScript
+- Angular
+- Leaflet
+- d3
+- Open Layers
+
+**Benefits:**
 
  - Reusable components for building client applications
  - Modules for visualizing different types of sensor data (time series, trajectories, profiles)
