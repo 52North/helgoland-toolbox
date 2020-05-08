@@ -174,4 +174,4 @@ Now, once you update your library source code it will automatically be re-compil
 - [WaCoDiS](https://wacodis.fbg-hsbo.de/)
 - [MuDak-WRM](https://www.mudak-wrm.kit.edu/)
 - [mVIZ](https://mviz.geo.tu-dresden.de/)
-- IRCEL-CELINE BelAir
+- [IRCEL-CELINE BelAir](https://52north.org/references/belair/)
