@@ -11,7 +11,7 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 ## Description
 
 ### Tools for Building Web Applications
-**Providing reusable Components for Building (Sensor Web) Client Applications**
+**Providing Reusable Components for Building (Sensor Web) Client Applications**
 
 52°North created the Helgoland Toolbox to facilitate the reuse of developments for Sensor Web client applications. It provides a range of modules that offer functionalities for building Web applications dealing with dynamic spatio-temporal data. The Helgoland Toolbox modules are used to build the 52°North Helgoland Sensor Web Viewer. Additional applications (e.g. the BelAir app, smle, or the developments resulting from the TaMIS project) are also built upon this library.
 
