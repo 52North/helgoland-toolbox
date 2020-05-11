@@ -52,6 +52,10 @@ The work on the Helgoland Toolbox comprised several evolutionary improvements an
 - Improvements in the diagram visualization
 - Facet search for observation data
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3830314/81534731-d1905380-9368-11ea-8c6f-213b96dd5c41.jpg" alt="Helgoland map view" width="75%"/>
+</p>
+
 **Key Technologies:**
 
 - JavaScript
