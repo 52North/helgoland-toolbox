@@ -12,6 +12,7 @@ import {
     Time,
     TimeseriesData,
     Timespan,
+    TimezoneService,
 } from '@helgoland/core';
 import {
     D3GeneralDataPoint,
@@ -23,7 +24,6 @@ import {
     HoveringStyle,
     InternalDataEntry,
 } from '@helgoland/d3';
-import * as moment from 'moment';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
@@ -34,8 +34,9 @@ class HoveringTestService extends D3SimpleHoveringService {
 
     protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
+        const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
         this.highlightText.append('text')
-            .text(`${stringedValue} ${entry.axisOptions.uom} ${moment.tz(d.timestamp, moment.tz.guess()).format('DD.MM.YY HH:mm zz')}`)
+            .text(`${stringedValue} ${entry.axisOptions.uom} ${timelabel}`)
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
             .style('fill', 'black');
@@ -72,7 +73,7 @@ export class GraphLegendComponent {
     public plotLanguage;
     public yaxisModifier = true;
 
-    public hoveringService = new HoveringTestService();
+    public hoveringService = new HoveringTestService(this.timezoneSrvc);
 
     public loadings: Set<string> = new Set();
 
@@ -118,6 +119,7 @@ export class GraphLegendComponent {
         private definedTime: DefinedTimespanService,
         protected internalIdHandler: InternalIdHandler,
         private http: HttpClient,
+        protected timezoneSrvc: TimezoneService
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());

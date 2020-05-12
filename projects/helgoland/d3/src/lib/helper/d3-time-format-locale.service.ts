@@ -38,7 +38,7 @@ export class D3TimeFormatLocaleService {
   ) { }
 
   public formatTime(time: number): string {
-    const curr = this.timezoneSrvc.createTzBasedDate(time);
+    const curr = this.timezoneSrvc.createTzDate(time);
 
     const format = this.roundSecond(time) < curr ? this.formatMillisecond
       : this.roundMinute(time) < curr ? this.formatSecond
@@ -52,31 +52,31 @@ export class D3TimeFormatLocaleService {
   }
 
   private roundMinute(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('minute');
+    return this.timezoneSrvc.createTzDate(time).startOf('minute');
   }
 
   private roundSecond(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('second');
+    return this.timezoneSrvc.createTzDate(time).startOf('second');
   }
 
   private roundYear(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('year');
+    return this.timezoneSrvc.createTzDate(time).startOf('year');
   }
 
   private roundMonth(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('month');
+    return this.timezoneSrvc.createTzDate(time).startOf('month');
   }
 
   private roundWeek(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('week');
+    return this.timezoneSrvc.createTzDate(time).startOf('week');
   }
 
   private roundHour(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('hour');
+    return this.timezoneSrvc.createTzDate(time).startOf('hour');
   }
 
   private roundDay(time: number) {
-    return this.timezoneSrvc.createTzBasedDate(time).startOf('day');
+    return this.timezoneSrvc.createTzDate(time).startOf('day');
   }
 
 }

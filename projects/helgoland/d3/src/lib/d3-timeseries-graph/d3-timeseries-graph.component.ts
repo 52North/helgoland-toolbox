@@ -73,7 +73,7 @@ export class D3TimeseriesGraphComponent
     @Input()
     public yaxisModifier: boolean;
 
-    @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService();
+    @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc);
 
     @Output()
     public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
@@ -159,8 +159,6 @@ export class D3TimeseriesGraphComponent
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
-        // this.timezoneSrvc.setTimezone('America/New_York');
-        // this.timezoneSrvc.setTimezone('Iran');
     }
 
     public ngAfterViewInit(): void {
@@ -883,8 +881,8 @@ export class D3TimeseriesGraphComponent
     }
 
     private ticks(ts: Timespan, interval: number) {
-        const start = this.timezoneSrvc.createTzBasedDate(ts.from);
-        const end = this.timezoneSrvc.createTzBasedDate(ts.to);
+        const start = this.timezoneSrvc.createTzDate(ts.from);
+        const end = this.timezoneSrvc.createTzDate(ts.to);
         const t = this.tickInterval(interval, ts.from, ts.to);
         let next = this.getFirstTick(start, t);
         const ticks: Date[] = [];

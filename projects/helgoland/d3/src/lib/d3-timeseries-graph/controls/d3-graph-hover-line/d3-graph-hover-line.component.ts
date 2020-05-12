@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Timespan } from '@helgoland/core';
+import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
-import moment from 'moment';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
@@ -40,7 +39,8 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   constructor(
     protected graphId: D3GraphId,
     protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected graphHelper: D3GraphHelperService,
+    protected timezoneSrvc: TimezoneService
   ) {
     super(graphId, graphs, graphHelper);
   }
@@ -154,7 +154,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     const time = this.graphExtent.xScale.invert(xPos);
 
     // draw label
-    d3.select(`#${TIME_LABEL_ID}`).text(moment(time).format('DD.MM.YY HH:mm'));
+    d3.select(`#${TIME_LABEL_ID}`).text(this.timezoneSrvc.formatTzDate(time));
     let onLeftSide = this.checkLeftSide(xPos);
     let right = xPos + 2;
     let left = xPos - this.graphHelper.getDimensions(d3.select(`#${TIME_LABEL_ID}`).node()).w - 2;

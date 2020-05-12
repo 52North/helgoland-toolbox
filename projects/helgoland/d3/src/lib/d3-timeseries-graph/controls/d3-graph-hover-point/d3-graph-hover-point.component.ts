@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Timespan } from '@helgoland/core';
+import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
 
@@ -29,7 +29,7 @@ interface HoveredElement {
 })
 export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
-  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService();
+  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc);
 
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
@@ -45,7 +45,8 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   constructor(
     protected graphId: D3GraphId,
     protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected graphHelper: D3GraphHelperService,
+    protected timezoneSrvc: TimezoneService
   ) {
     super(graphId, graphs, graphHelper);
   }

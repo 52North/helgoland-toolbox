@@ -1,9 +1,8 @@
 import 'moment-timezone';
 
 import { Injectable } from '@angular/core';
-import { HelgolandTimeseries } from '@helgoland/core';
+import { HelgolandTimeseries, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
-import moment from 'moment';
 
 import { DataEntry, InternalDataEntry } from '../../model/d3-general';
 import { D3GraphHelperService } from './../d3-graph-helper.service';
@@ -17,6 +16,12 @@ export class D3SimpleHoveringService extends D3HoveringService {
   protected graphHelper: D3GraphHelperService = new D3GraphHelperService();
 
   protected addLineWidth = 2; // value added to linewidth
+
+  constructor(
+    protected timezoneSrvc: TimezoneService
+  ) {
+    super();
+  }
 
   public initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
     this.highlightRect = elem.append('svg:rect');
@@ -85,7 +90,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
   protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
     let stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
     this.highlightText.append('text')
-      .text(`${stringedValue} ${entry.axisOptions.uom} ${moment.tz(d.timestamp, moment.tz.guess()).format('DD.MM.YY HH:mm zz')}`)
+      .text(`${stringedValue} ${entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
       .attr('class', 'mouseHoverDotLabel')
       .style('pointer-events', 'none')
       .style('fill', 'black');

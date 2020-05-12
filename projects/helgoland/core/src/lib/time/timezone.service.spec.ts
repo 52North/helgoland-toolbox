@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import moment from 'moment';
 
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HelgolandCoreModule } from '../core.module';
 import { TimezoneService } from './timezone.service';
 
 describe('TimezoneService', () => {
 
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [
+      HelgolandCoreModule,
+      TranslateTestingModule
+    ],
+  }));
 
   it('should be created', () => {
     const service: TimezoneService = TestBed.get(TimezoneService);
@@ -17,13 +23,6 @@ describe('TimezoneService', () => {
     const tz = 'America/New_York';
     service.setTimezone(tz);
     expect(service.getTimezoneName()).toBe(tz);
-    service.setTimezone();
-  });
-
-  it('should correct format with timezone', () => {
-    const service: TimezoneService = TestBed.get(TimezoneService);
-    service.setTimezone('America/New_York');
-    expect(service.formatDate(moment.utc('2020-05-01T12:00'), 'de', 'DD.MM.YY HH:mm z')).toBe('01.05.20 08:00 EDT');
     service.setTimezone();
   });
 
