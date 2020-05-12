@@ -899,7 +899,9 @@ export class D3TimeseriesGraphComponent
     }
 
     private round(date: moment.Moment, duration: moment.Duration) {
-        return moment(Math.ceil((+date) / (+duration)) * (+duration));
+        const offset = date.utcOffset() * 60 * 1000;
+        const part = (+date + offset) / (+duration);
+        return moment(Math.ceil(part) * (+duration) - offset);
     }
 
     private tickInterval(interval: number, start: number, stop: number): { interval: unitOfTime.DurationConstructor, step: number } {
