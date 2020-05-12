@@ -159,6 +159,8 @@ export class D3TimeseriesGraphComponent
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
+        // this.timezoneSrvc.setTimezone('America/New_York');
+        // this.timezoneSrvc.setTimezone('Iran');
     }
 
     public ngAfterViewInit(): void {
@@ -877,14 +879,82 @@ export class D3TimeseriesGraphComponent
 
     private calcTicks() {
         const tickCount = (this.width - this.leftOffset) / 80;
-        const offset = this.timezoneSrvc.getOffsetToLocaleInMs();
-        const buffer = offset < (this.timespan.to - this.timespan.from) ? offset : this.timespan.to - this.timespan.from;
-        // let ticks = d3.scaleTime()
-        //     .domain([new Date(this.timespan.from - buffer), new Date(this.timespan.to + buffer)])
-        //     .ticks(tickCount);
-        // ticks = ticks.map(e => new Date(e.getTime() + offset));
-        let ticks = d3.scaleTime().domain([new Date(this.timespan.from), new Date(this.timespan.to)]).ticks(tickCount);
+        return this.ticks(this.timespan, tickCount);
+    }
+
+    private ticks(ts: Timespan, interval: number) {
+        const start = this.timezoneSrvc.createTzBasedDate(ts.from);
+        const end = this.timezoneSrvc.createTzBasedDate(ts.to);
+        const t = this.tickInterval(interval, ts.from, ts.to);
+        let next = this.getFirstTick(start, t);
+        const ticks: Date[] = [];
+        while (next.isSameOrBefore(end)) {
+            const date = next.clone();
+            ticks.push(date.toDate());
+            next.add(t.step, t.interval);
+        }
         return ticks;
+    }
+
+    private getFirstTick(start: moment.Moment, t: { interval: unitOfTime.DurationConstructor; step: number; }) {
+        return this.round(start, moment.duration(t.step, t.interval));
+    }
+
+    private round(date: moment.Moment, duration: moment.Duration) {
+        return moment(Math.ceil((+date) / (+duration)) * (+duration));
+    }
+
+    private tickInterval(interval: number, start: number, stop: number): { interval: unitOfTime.DurationConstructor, step: number } {
+        const durationSecond = 1000,
+            durationMinute = durationSecond * 60,
+            durationHour = durationMinute * 60,
+            durationDay = durationHour * 24,
+            durationWeek = durationDay * 7,
+            durationMonth = durationDay * 30,
+            durationYear = durationDay * 365;
+        const tickIntervals: any[] = [
+            ['second', 1, durationSecond],
+            ['second', 5, 5 * durationSecond],
+            ['second', 15, 15 * durationSecond],
+            ['second', 30, 30 * durationSecond],
+            ['minute', 1, durationMinute],
+            ['minute', 5, 5 * durationMinute],
+            ['minute', 15, 15 * durationMinute],
+            ['minute', 30, 30 * durationMinute],
+            ['hour', 1, durationHour],
+            ['hour', 3, 3 * durationHour],
+            ['hour', 6, 6 * durationHour],
+            ['hour', 12, 12 * durationHour],
+            ['day', 1, durationDay],
+            ['day', 2, 2 * durationDay],
+            ['week', 1, durationWeek],
+            ['month', 1, durationMonth],
+            ['month', 3, 3 * durationMonth],
+            ['year', 1, durationYear]
+        ];
+        let step;
+        // If a desired tick count is specified, pick a reasonable tick interval
+        // based on the extent of the domain and a rough estimate of tick size.
+        // Otherwise, assume interval is already a time interval and use it.
+        let detectedInterval: unitOfTime.DurationConstructor;
+        let target = Math.abs(stop - start) / interval;
+        let i: number = d3.bisector(function (j) { return j[2]; }).right(tickIntervals, target);
+        if (i === tickIntervals.length) {
+            step = d3.tickStep(start / durationYear, stop / durationYear, interval);
+            detectedInterval = 'year';
+        } else if (i) {
+            const index = target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i;
+            let entry = tickIntervals[index];
+            step = entry[1];
+            detectedInterval = entry[0];
+        } else {
+            step = Math.max(d3.tickStep(start, stop, interval), 1);
+            detectedInterval = 'millisecond';
+        }
+        return {
+            interval: detectedInterval,
+            step: step
+        };
     }
 
     /**
