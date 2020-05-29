@@ -1,5 +1,5 @@
-import { TranslateService } from '@ngx-translate/core';
 import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { TimezoneService } from './timezone.service';
@@ -35,11 +35,11 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
     this.updateDate();
 
     if (!this.onTimezoneChanged) {
-      this.onTimezoneChanged = this.timezoneSrvc.timezoneChange.subscribe(res => this.updateDate());
+      this.onTimezoneChanged = this.timezoneSrvc.timezoneChange.subscribe(() => this.updateDate());
     }
 
     if (!this.onTranslationChanged) {
-      this.onTranslationChanged = this.translateSrvc.onLangChange.subscribe(res => this.updateDate());
+      this.onTranslationChanged = this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
     }
 
     return this.formattedDate;
