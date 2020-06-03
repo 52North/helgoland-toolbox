@@ -28,4 +28,10 @@ describe('InternalIdHandler', () => {
         expect(internalId.url).toBe('https://www.somewhere.com/api/');
     }));
 
+    it('should resolve internalId with double underscore', inject([InternalIdHandler], (service: InternalIdHandler) => {
+        const internalId = service.resolveInternalId('https://www.somewhere.com/api/__123__test');
+        expect(internalId.id).toBe('123__test');
+        expect(internalId.url).toBe('https://www.somewhere.com/api/');
+    }));
+
 });

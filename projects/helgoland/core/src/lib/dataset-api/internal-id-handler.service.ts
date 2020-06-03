@@ -39,15 +39,13 @@ export class InternalIdHandler {
    * @returns Construct of url and API id
    */
   public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
-    if (typeof(internalId) === 'string') {
-      const split = internalId.split(INTERNAL_ID_SEPERATOR);
-      if (split.length !== 2) {
-        console.error('InternalID ' + internalId + ' is not resolvable');
+    if (typeof (internalId) === 'string') {
+      if (internalId.indexOf(INTERNAL_ID_SEPERATOR) > 0) {
+        const url = internalId.substring(0, internalId.indexOf(INTERNAL_ID_SEPERATOR));
+        const id = internalId.substring(internalId.indexOf(INTERNAL_ID_SEPERATOR) + INTERNAL_ID_SEPERATOR.length);
+        return { url, id };
       } else {
-        return {
-          url: split[0],
-          id: split[1]
-        };
+        console.error('InternalID ' + internalId + ' is not resolvable');
       }
     } else if (this.instanceOfInternalDatasetId(internalId)) {
       return internalId;
