@@ -90,7 +90,7 @@ Install latest Node and NPM following the [instructions](https://nodejs.org/en/d
 
 ### Build the libraries
 
-- `npm run build:libs` for building the library once
+- `npm run lib:build` for building the library once
 
 ### Other commands
 
