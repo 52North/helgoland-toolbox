@@ -12,7 +12,7 @@ import jquery from 'jquery';
   templateUrl: './time-range-slider.component.html',
   styleUrls: [
     './time-range-slider.component.scss',
-    '../../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css'
+    '../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css'
   ],
   encapsulation: ViewEncapsulation.None
 })

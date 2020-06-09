@@ -1,0 +1,12 @@
+<button (click)="requestEvents()">Request Events</button>
+<button (click)="requestSubscriptions()">Request Subscriptions</button>
+<button (click)="requestPublications()">Request Publications</button>
+<button (click)="requestNotifications()">Request Notifications</button>
+
+<div *ngIf="loading">loading...</div>
+<div *ngIf="requestError">{{requestError}}</div>
+
+<pre *ngIf="eventResults">{{eventResults|json}}</pre>
+<pre *ngIf="subscriptionResults">{{subscriptionResults|json}}</pre>
+<pre *ngIf="publicationResults">{{publicationResults|json}}</pre>
+<pre *ngIf="notificationResults">{{notificationResults|json}}</pre>

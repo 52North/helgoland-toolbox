@@ -19,7 +19,7 @@ import { OlMapId } from '../services/mapid.service';
   template: '<div class="map" [attr.id]="mapId"></div>',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    '../../../../../../node_modules/ol/ol.css',
+    '../../../../../node_modules/ol/ol.css',
     'ol-map.component.scss'
   ],
   providers: [OlMapId]

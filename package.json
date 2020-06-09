@@ -59,10 +59,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.0",
+    "@angular/cdk": "^8.2.3",
     "@angular/common": "^8.2.0",
     "@angular/compiler": "^8.2.0",
     "@angular/core": "^8.2.0",
     "@angular/forms": "^8.2.0",
+    "@angular/material": "^8.2.3",
     "@angular/platform-browser": "^8.2.0",
     "@angular/platform-browser-dynamic": "^8.2.0",
     "@angular/router": "^8.2.0",
@@ -74,6 +76,7 @@
     "core-js": "^2.5.4",
     "d3": "^5.12.0",
     "d3-delaunay": "^5.2.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "leaflet": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
@@ -84,6 +87,7 @@
     "ol": "^6.3.1",
     "plotly.js": "^1.50.0",
     "rxjs": "~6.4.0",
+    "typescript-logging": "^0.6.3",
     "xlsx": "^0.15.1",
     "zone.js": "^0.9.1"
   },

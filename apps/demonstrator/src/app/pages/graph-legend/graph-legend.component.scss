@@ -1,0 +1,10 @@
+.diagram {
+    ::ng-deep {
+        #hovering-line-layer {
+            .hovering-line {
+                stroke: red;
+                stroke-width: 1px;
+            }
+        }
+    }
+}

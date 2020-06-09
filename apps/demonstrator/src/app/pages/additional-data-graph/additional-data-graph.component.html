@@ -1,0 +1,33 @@
+<div style="height: 500px;">
+  <n52-extended-data-d3-timeseries-graph [datasetIds]="datasetIds" [additionalData]="additionalData"
+    [selectedDatasetIds]="selectedIds" [datasetOptions]="datasetOptions" [timeInterval]="timespan"
+    [presenterOptions]="graphOptions" (onTimespanChanged)="timespanChanged($event)"
+    (onDatasetSelected)="setSelected($event)" (onContentLoading)="onGraphLoading($event)" #diagram>
+  </n52-extended-data-d3-timeseries-graph>
+</div>
+
+<div>Loading Graph: {{graphLoading}}</div>
+<button (click)="toggleTimer()">ToggleTimer</button>
+<n52-axes-options (onChangeYAxesVisibility)="graphOptions.yaxis = !graphOptions.yaxis"></n52-axes-options>
+<n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
+</n52-timespan-shift-selector>
+
+<ul *ngFor="let id of datasetIds">
+  <li>
+    <n52-configurable-timeseries-entry [datasetId]="id" [selected]="selectedIds.indexOf(id) > -1"
+      [datasetOptions]="datasetOptions.get(id)" (onDeleteDataset)="deleteTimeseries(id)"
+      (onSelectDataset)="selectTimeseries($event, id)" (onEditOptions)="editOption($event)">
+    </n52-configurable-timeseries-entry>
+  </li>
+</ul>
+
+<div>
+  <div *ngFor="let entry of additionalData[0].data; let i = index;">
+    <div>
+      <span>{{entry.timestamp | tzDate : 'L LT z'}}</span>
+      <span> | </span>
+      <span>{{entry.value}}</span>
+      <button mat-button (click)="removeEntry(i)">remove</button>
+    </div>
+  </div>
+</div>
