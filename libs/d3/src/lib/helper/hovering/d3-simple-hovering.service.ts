@@ -88,7 +88,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
   }
 
   protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
-    let stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
+    const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
     this.highlightText.append('text')
       .text(`${stringedValue} ${entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
       .attr('class', 'mouseHoverDotLabel')

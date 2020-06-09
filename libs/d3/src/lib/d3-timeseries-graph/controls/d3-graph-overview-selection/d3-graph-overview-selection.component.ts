@@ -58,16 +58,16 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       .attr('pointer-events', 'all')
       .attr('transform', 'translate(' + graphExtent.leftOffset + ', 0)');
 
-    let interval: [number, number] = this.getXDomainByTimestamp(timespan, graphExtent.width);
-    let overviewTimespanInterval = [interval[0], interval[1]];
+    const interval: [number, number] = this.getXDomainByTimestamp(timespan, graphExtent.width);
+    const overviewTimespanInterval = [interval[0], interval[1]];
 
     // create brush
-    let brush = d3.brushX()
+    const brush = d3.brushX()
       .extent([[0, 0], [graphExtent.width, graphExtent.height]])
       .on('end', () => {
         // on mouseclick change time after brush was moved
         if (this.mousedownBrush) {
-          let timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], timespan, graphExtent.width);
+          const timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], timespan, graphExtent.width);
           this.graphComp.changeTime(timeByCoord[0], timeByCoord[1]);
         }
         this.mousedownBrush = false;
@@ -117,15 +117,15 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
      * (overview_width / (overview_max - overview_min)) * (brush_max - overview_min)
      */
 
-    let minOverviewTimeInterval = timespan.from;
-    let maxOverviewTimeInterval = timespan.to;
-    let minDiagramTimestamp = this.mainTimeInterval.from;
-    let maxDiagramTimestamp = this.mainTimeInterval.to;
+    const minOverviewTimeInterval = timespan.from;
+    const maxOverviewTimeInterval = timespan.to;
+    const minDiagramTimestamp = this.mainTimeInterval.from;
+    const maxDiagramTimestamp = this.mainTimeInterval.to;
 
-    let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
-    let divOverviewTimeWidth = width / diffOverviewTimeInterval;
-    let minCalcBrush: number = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
-    let maxCalcBrush: number = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
+    const diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+    const divOverviewTimeWidth = width / diffOverviewTimeInterval;
+    const minCalcBrush: number = divOverviewTimeWidth * (minDiagramTimestamp - minOverviewTimeInterval);
+    const maxCalcBrush: number = divOverviewTimeWidth * (maxDiagramTimestamp - minOverviewTimeInterval);
 
     return [minCalcBrush, maxCalcBrush];
   }
@@ -146,12 +146,12 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
      * ((maxCalcBrush / overview_width) * (overview_max - overview_min)) + overview_min
      */
 
-    let minOverviewTimeInterval = timespan.from;
-    let maxOverviewTimeInterval = timespan.to;
+    const minOverviewTimeInterval = timespan.from;
+    const maxOverviewTimeInterval = timespan.to;
 
-    let diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
-    let minDiagramTimestamp: number = ((minCalcBrush / width) * diffOverviewTimeInterval) + minOverviewTimeInterval;
-    let maxDiagramTimestamp: number = ((maxCalcBrush / width) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+    const diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
+    const minDiagramTimestamp: number = ((minCalcBrush / width) * diffOverviewTimeInterval) + minOverviewTimeInterval;
+    const maxDiagramTimestamp: number = ((maxCalcBrush / width) * diffOverviewTimeInterval) + minOverviewTimeInterval;
 
     return [minDiagramTimestamp, maxDiagramTimestamp];
   }

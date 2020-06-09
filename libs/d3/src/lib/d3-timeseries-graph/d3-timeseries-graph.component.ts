@@ -228,7 +228,7 @@ export class D3TimeseriesGraphComponent
     protected removeDataset(internalId: string): void {
         this.datasetMap.delete(internalId);
         this.preparedAxes.delete(internalId);
-        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
+        const spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
         if (spliceIdx >= 0) {
             this.preparedData.splice(spliceIdx, 1);
             if (this.preparedData.length <= 0) {
@@ -405,7 +405,7 @@ export class D3TimeseriesGraphComponent
                 bar: barConfig
             };
 
-            let separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+            const separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
             if (options.separateYAxis) {
                 if (separationIdx < 0) {
                     this.listOfSeparation.push(dataset.internalId);
@@ -579,7 +579,7 @@ export class D3TimeseriesGraphComponent
         };
 
         this.preparedData.forEach((entry) => {
-            let idx: number = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
+            const idx: number = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
             if (idx < 0) { this.listOfUoms.push(entry.axisOptions.uom); }
         });
 
@@ -598,7 +598,7 @@ export class D3TimeseriesGraphComponent
             axis.first = (this.yScaleBase === null);
             axis.offset = this.leftOffset;
 
-            let yAxisResult = this.drawYaxis(axis);
+            const yAxisResult = this.drawYaxis(axis);
             if (this.yScaleBase === null) {
                 this.yScaleBase = yAxisResult.yScale;
                 this.leftOffset = yAxisResult.buffer;
@@ -821,9 +821,9 @@ export class D3TimeseriesGraphComponent
             .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
             .range([bufferXrange, this.width]);
 
-        let ticks = this.calcTicks();
+        const ticks = this.calcTicks();
 
-        let xAxis = d3.axisBottom(this.xScaleBase)
+        const xAxis = d3.axisBottom(this.xScaleBase)
             .tickFormat(d => this.timeFormatLocaleService.formatTime(d.valueOf()))
             // .ticks(10); // TODO: cleanup
             .tickValues(ticks);
@@ -884,7 +884,7 @@ export class D3TimeseriesGraphComponent
         const start = this.timezoneSrvc.createTzDate(ts.from);
         const end = this.timezoneSrvc.createTzDate(ts.to);
         const t = this.tickInterval(interval, ts.from, ts.to);
-        let next = this.getFirstTick(start, t);
+        const next = this.getFirstTick(start, t);
         const ticks: Date[] = [];
         while (next.isSameOrBefore(end)) {
             const date = next.clone();
@@ -937,14 +937,14 @@ export class D3TimeseriesGraphComponent
         // based on the extent of the domain and a rough estimate of tick size.
         // Otherwise, assume interval is already a time interval and use it.
         let detectedInterval: unitOfTime.DurationConstructor;
-        let target = Math.abs(stop - start) / interval;
-        let i: number = d3.bisector(function (j) { return j[2]; }).right(tickIntervals, target);
+        const target = Math.abs(stop - start) / interval;
+        const i: number = d3.bisector(function (j) { return j[2]; }).right(tickIntervals, target);
         if (i === tickIntervals.length) {
             step = d3.tickStep(start / durationYear, stop / durationYear, interval);
             detectedInterval = 'year';
         } else if (i) {
             const index = target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i;
-            let entry = tickIntervals[index];
+            const entry = tickIntervals[index];
             step = entry[1];
             detectedInterval = entry[0];
         } else {
@@ -963,7 +963,7 @@ export class D3TimeseriesGraphComponent
      * @param axis {DataEntry} Object containing a dataset.
      */
     private drawYaxis(axis: YAxis) {
-        let showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
+        const showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
 
         this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
@@ -992,7 +992,7 @@ export class D3TimeseriesGraphComponent
 
         // only if yAxis should be visible
         if (showAxis) {
-            let diagramHeight = this.height;
+            const diagramHeight = this.height;
             let axisHeight = axisElem.node().getBBox().height;
             if (this.yaxisModifier) {
                 axisHeight -= 180;
@@ -1027,21 +1027,21 @@ export class D3TimeseriesGraphComponent
             text.attr('y', 0 - textOff);
 
             if (text) {
-                let textWidth = text.node().getBBox().width;
-                let textHeight = text.node().getBBox().height;
-                let textPosition = {
+                const textWidth = text.node().getBBox().width;
+                const textHeight = text.node().getBBox().height;
+                const textPosition = {
                     x: text.node().getBBox().x,
                     y: text.node().getBBox().y
                 };
-                let axisradius = 4;
-                let startOfPoints = {
+                const axisradius = 4;
+                const startOfPoints = {
                     x: textPosition.y + textHeight / 2 + axisradius / 2, // + 2 because radius === 4
                     y: Math.abs(textPosition.x + textWidth) - axisradius * 2
                 };
                 let pointOffset = 0;
 
                 axis.ids.forEach((entryID) => {
-                    let dataentry = this.preparedData.find(el => el.internalId === entryID);
+                    const dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
                         if (dataentry.options.type) {
                             this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
@@ -1086,8 +1086,8 @@ export class D3TimeseriesGraphComponent
      * @param ids {Array} Array of Strings containing the Ids.
      */
     private highlightLine(ids: string[]): void {
-        let changeFalse: HighlightDataset[] = [];
-        let changeTrue: HighlightDataset[] = [];
+        const changeFalse: HighlightDataset[] = [];
+        const changeTrue: HighlightDataset[] = [];
         ids.forEach((ID) => {
             if (this.selectedDatasetIds.indexOf(ID) >= 0) {
                 changeFalse.push({ id: ID, change: false });
@@ -1134,7 +1134,7 @@ export class D3TimeseriesGraphComponent
             if (yaxis) {
                 // create body to clip graph
                 // unique ID generated through the current time (current time when initialized)
-                let querySelectorClip = 'clip' + this.currentTimeId;
+                const querySelectorClip = 'clip' + this.currentTimeId;
                 this.graph
                     .append('svg:clipPath')
                     .attr('class', 'diagram-path')
@@ -1162,7 +1162,7 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
-        let line = this.createLine(this.xScaleBase, yScaleBase);
+        const line = this.createLine(this.xScaleBase, yScaleBase);
 
         this.graphBody
             .append('svg:path')
@@ -1178,7 +1178,7 @@ export class D3TimeseriesGraphComponent
         const pointRadius = this.calculatePointRadius(entry);
 
         // create graph line
-        let line = this.createLine(this.xScaleBase, yScaleBase);
+        const line = this.createLine(this.xScaleBase, yScaleBase);
         // draw line
         this.graphBody
             .append('svg:path')
@@ -1240,10 +1240,10 @@ export class D3TimeseriesGraphComponent
 
     private mouseoverBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
         if (d !== undefined) {
-            let coords = d3.mouse(this.background.node());
-            let xCoord = coords[0];
-            let yCoord = coords[1];
-            let rectBack = this.background.node().getBBox();
+            const coords = d3.mouse(this.background.node());
+            const xCoord = coords[0];
+            const yCoord = coords[1];
+            const rectBack = this.background.node().getBBox();
             if (xCoord >= 0 && xCoord <= rectBack.width && yCoord >= 0 && yCoord <= rectBack.height) {
                 // highlight bar
                 d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
@@ -1264,9 +1264,9 @@ export class D3TimeseriesGraphComponent
     private mousemoveBarHovering(d: { value: number; timestamp: number; }, entry: InternalDataEntry) {
         const temp = new Date().getTime();
         if (d !== undefined && (temp - this.lastHoverPositioning > 50)) {
-            let coords = d3.mouse(this.background.node());
-            let xCoord = coords[0];
-            let yCoord = coords[1];
+            const coords = d3.mouse(this.background.node());
+            const xCoord = coords[0];
+            const yCoord = coords[1];
             this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
         }
     }
@@ -1315,29 +1315,28 @@ export class D3TimeseriesGraphComponent
     private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
         textObj.each(function (u: any, i: number, d: NodeList) {
             const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
-            let text = d3.select(this),
-                words = text.text().split(/\s+/).reverse(),
-                word,
-                line = [],
-                // lineNumber = 0,
-                lineHeight = (i === d.length - 1 ? 0.3 : 1.1), // ems
-                y = text.attr('y'),
-                dy = parseFloat(text.attr('dy')),
-                tspan = text.text(null).append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', dy + 'em');
+            let word;
+            const text = d3.select(this);
+            const words = text.text().split(/\s+/).reverse();
+            let line = [];
+            const lineHeight = (i === d.length - 1 ? 0.3 : 1.1); // ems
+            const y = text.attr('y');
+            const dy = parseFloat(text.attr('dy'));
+            let tspan = text.text(null).append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', dy + 'em');
             while (word = words.pop()) {
                 line.push(word);
                 tspan.text(line.join(' '));
-                let node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
-                let hasGreaterWidth: boolean = node.getComputedTextLength() > width;
-                let xyposition = xposition + (node.getComputedTextLength() / 2);
+                const node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
+                const hasGreaterWidth: boolean = node.getComputedTextLength() > width;
+                const xyposition = xposition + (node.getComputedTextLength() / 2);
                 node.setAttribute('x', '-' + '' + (xyposition + bufferYaxisModifier));
                 if (hasGreaterWidth) {
                     line.pop();
                     tspan.text(line.join(' '));
                     line = [word];
                     tspan = text.append('tspan').attr('x', 0 - xposition).attr('y', y).attr('dy', lineHeight + dy + 'em').text(word);
-                    let nodeGreater: SVGTSpanElement = <SVGTSpanElement>tspan.node();
-                    let xpositionGreater = xposition + (nodeGreater.getComputedTextLength());
+                    const nodeGreater: SVGTSpanElement = <SVGTSpanElement>tspan.node();
+                    const xpositionGreater = xposition + (nodeGreater.getComputedTextLength());
                     nodeGreater.setAttribute('x', '-' + '' + (xpositionGreater + bufferYaxisModifier));
                 }
             }

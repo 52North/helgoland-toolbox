@@ -20,6 +20,7 @@
             "main": "apps/demonstrator/src/main.ts",
             "polyfills": "apps/demonstrator/src/polyfills.ts",
             "tsConfig": "apps/demonstrator/tsconfig.app.json",
+            "showCircularDependencies": false,
             "aot": false,
             "assets": [
               "apps/demonstrator/src/favicon.ico",

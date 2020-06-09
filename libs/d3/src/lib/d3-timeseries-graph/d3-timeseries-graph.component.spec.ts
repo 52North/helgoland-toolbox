@@ -56,7 +56,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
   });
 
   it('should create svg', () => {
-    let compiled = fixture.debugElement.nativeElement;
+    const compiled = fixture.debugElement.nativeElement;
     expect(fixture.nativeElement.querySelector('svg')).not.toBe(null);
     expect(compiled.querySelector('svg')).not.toBe(null);
   });
@@ -79,8 +79,8 @@ describe('D3TimeseriesGraphComponent - raw', () => {
 describe('D3TimeseriesGraphComponent - function', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  let datasetID1 = 'https://www.fluggs.de/sos2/api/v1/__26';
-  let datasetID2 = 'https://geo.irceline.be/sos/api/v1/__6522';
+  const datasetID1 = 'https://www.fluggs.de/sos2/api/v1/__26';
+  const datasetID2 = 'https://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {

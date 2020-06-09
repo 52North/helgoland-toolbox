@@ -84,7 +84,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
 
   private setText() {
     if (this.copyrightLayer) {
-      let backgroundDim = this.graphHelper.getDimensions(this.background.node());
+      const backgroundDim = this.graphHelper.getDimensions(this.background.node());
       let x = 3;
       let y = 3;
       this.labelText.text(this.copyright.label);
@@ -94,8 +94,8 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
       if (this.copyright.positionY === 'bottom') {
         y = backgroundDim.h - this.graphExtent.margin.top * 2;
       }
-      let yTransform = y + this.graphHelper.getDimensions(this.labelText.node()).h - 3;
-      let xTransform = this.graphExtent.leftOffset + x;
+      const yTransform = y + this.graphHelper.getDimensions(this.labelText.node()).h - 3;
+      const xTransform = this.graphExtent.leftOffset + x;
       this.labelText
         .attr('transform', 'translate(' + xTransform + ', ' + yTransform + ')');
 

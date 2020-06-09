@@ -1,10 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { SettingsServiceTestingProvider } from '../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
-import { HelgolandLabelMapperModule } from './../../../../depiction/src/lib/label-mapper/label-mapper.module';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector.component';
 
 describe('DatasetByStationSelectorComponent', () => {

@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { FavoriteModule } from './favorite.module';
+import { HelgolandFavoriteModule } from './favorite.module';
 
 describe('EventingModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FavoriteModule],
+      imports: [HelgolandFavoriteModule],
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(FavoriteModule).toBeDefined();
+    expect(HelgolandFavoriteModule).toBeDefined();
   });
 });

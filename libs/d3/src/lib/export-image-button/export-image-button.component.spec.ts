@@ -10,7 +10,7 @@ describe('ExportImageButtonComponent', () => {
   let component: ExportImageButtonComponent;
   let fixture: ComponentFixture<ExportImageButtonComponent>;
 
-  let datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
+  const datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(async(() => {

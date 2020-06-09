@@ -121,7 +121,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     if (additionalDataChanges && this.additionalData && this.graph) {
       additionalDataChanges.forEachRemovedItem((removedItem) => {
         const id = this.generateAdditionalInternalId(removedItem.item);
-        let spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
+        const spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
         if (spliceIdx >= 0) {
           this.preparedData.splice(spliceIdx, 1);
         }
@@ -160,8 +160,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       this.additionalData.forEach(entry => {
         if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data && entry.data.length > 0) {
 
-          let options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-          let dataset = this.datasetMap.get(entry.linkedDatasetId);
+          const options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+          const dataset = this.datasetMap.get(entry.linkedDatasetId);
           const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId) > -1 || e.internalId.indexOf(entry.internalId) > -1);
           let dataEntry: InternalDataEntry;
           if (prepDataIdx === -1) {

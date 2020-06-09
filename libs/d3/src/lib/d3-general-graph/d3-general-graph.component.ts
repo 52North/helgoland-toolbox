@@ -101,7 +101,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             let data = [];
 
             this.generalD3Input.datasets.forEach((ds, index) => {
-                let dataset: D3GeneralDataset = {
+                const dataset: D3GeneralDataset = {
                     data: ds.data,
                     id: index
                 };
@@ -280,7 +280,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .attr('clip-path', 'url(#' + dataset.id + ')');
 
         // create line with dataset
-        let graphLine = d3.line<D3GeneralDataPoint>()
+        const graphLine = d3.line<D3GeneralDataPoint>()
             .defined(d => (!isNaN(d.x) && !isNaN(d.y)))
             .x((d) => {
                 const xCoord = this.axisOptions.xScale(d.x);
@@ -313,7 +313,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .enter().append('circle')
             .attr('class', 'graphDots')
             .attr('id', function (d) {
-                let datasetxCoordSplit = d.xCoord.toString().split('.')[0] + '-' + d.xCoord.toString().split('.')[1];
+                const datasetxCoordSplit = d.xCoord.toString().split('.')[0] + '-' + d.xCoord.toString().split('.')[1];
                 return 'dot-' + datasetxCoordSplit + '-' + dataset.id + '';
             })
             .attr('stroke', this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color)
@@ -329,7 +329,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
      * @param inputData {D3GeneralDataset[]} data containing an array with all datapoints and an id for each dataset
      */
     private createHoveringNet(inputData): void {
-        let data = inputData.map(function (series, i) {
+        const data = inputData.map(function (series, i) {
             series.data = series.data.map(function (point) {
                 point.series = i;
                 point[0] = point.x;
@@ -339,34 +339,34 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             return series;
         });
 
-        let x = d3.scaleLinear(),
+        const x = d3.scaleLinear(),
             y = d3.scaleLinear();
 
-        let vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
+        const vertices: [number, number][] = d3.merge(data.map(function (cl, lineIndex) {
             /**
              * cl = { data: [{0: number, 1: number, series: number, x: number, y: number}, {}, ...], id: number }
              * point = each point in a dataset
             */
-            let outputLine = cl.data.map(function (point, pointIndex) {
-                let outputPoint = [x(point.xCoord), y(point.yCoord), lineIndex, pointIndex, point, cl];
+            const outputLine = cl.data.map(function (point, pointIndex) {
+                const outputPoint = [x(point.xCoord), y(point.yCoord), lineIndex, pointIndex, point, cl];
                 return outputPoint; // adding series index to point because data is being flattened
             });
             return outputLine;
         }));
 
-        let left = this.buffer, // + this.margin.left,
+        const left = this.buffer, // + this.margin.left,
             top = this.margin.top,
             right = this.background.node().getBBox().width + this.buffer, // + this.margin.left,
             bottom = this.margin.top + this.background.node().getBBox().height;
 
         // filter dataset - delete all entries that are NaN
-        let verticesFiltered = vertices.filter(d => !isNaN(d[0]) || !isNaN(d[1]));
+        const verticesFiltered = vertices.filter(d => !isNaN(d[0]) || !isNaN(d[1]));
         const Diffvoronoi = d3.voronoi()
             .extent([[left, top], [right, bottom]]);
-        let diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
+        const diffVoronoi2 = Diffvoronoi.polygons(verticesFiltered);
 
-        let wrap = this.rawSvg.selectAll('g.d3line').data([verticesFiltered]);
-        let gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
+        const wrap = this.rawSvg.selectAll('g.d3line').data([verticesFiltered]);
+        const gEnter = wrap.enter().append('g').attr('class', 'd3line').append('g');
         gEnter.append('g').attr('class', 'point-paths');
 
         // to avoid no hovering for only one dataset without interaction the following lines are doubled
@@ -390,7 +390,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         pointPaths
             .attr('clip-path', function (d) {
                 if (d !== undefined) {
-                    let datasetxCoordSplit = d.data[4].xCoord.toString().split('.')[0] + '-' + d.data[4].xCoord.toString().split('.')[1];
+                    const datasetxCoordSplit = d.data[4].xCoord.toString().split('.')[0] + '-' + d.data[4].xCoord.toString().split('.')[1];
                     return 'url(#clip-' + d.data[5].id + '-' + datasetxCoordSplit + ')';
                 }
             })
@@ -402,16 +402,16 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .on('mousemove', (d) => {
                 if (d !== undefined) {
-                    let coords = d3.mouse(this.background.node());
-                    let dataset = d.data[4];
-                    let dist = this.calcDistanceHovering(dataset, coords);
-                    let radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
-                    let color = this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color;
+                    const coords = d3.mouse(this.background.node());
+                    const dataset = d.data[4];
+                    const dist = this.calcDistanceHovering(dataset, coords);
+                    const radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
+                    const color = this.plotOptions.graph ? this.plotOptions.graph.color : this.defaultGraphOptions.color;
                     if (dist <= 8) {
-                        let rectBack = this.background.node().getBBox();
+                        const rectBack = this.background.node().getBBox();
                         if (coords[0] >= 0 && coords[0] <= rectBack.width && coords[1] >= 0 && coords[1] <= rectBack.height) {
                             // highlight hovered dot
-                            let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                            const datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
                             d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
                                 .attr('opacity', 0.8)
                                 .attr('r', (radius * 2));
@@ -422,8 +422,8 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                                 .style('visibility', 'visible');
 
                             // create text for hovering label
-                            let text = this.plotOptions.date ? 'x: ' + moment(dataset.x).format('DD.MM.YY HH:mm') + ' y: ' + dataset.y : 'x: ' + dataset.x + ' y: ' + dataset.y;
-                            let dotLabel = this.highlightText
+                            const text = this.plotOptions.date ? 'x: ' + moment(dataset.x).format('DD.MM.YY HH:mm') + ' y: ' + dataset.y : 'x: ' + dataset.x + ' y: ' + dataset.y;
+                            const dotLabel = this.highlightText
                                 .text(text)
                                 .attr('class', 'mouseHoverDotLabel')
                                 .style('pointer-events', 'none')
@@ -434,8 +434,8 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
 
                             let rectX: number = dataset.xCoord + 15;
                             let rectY: number = dataset.yCoord;
-                            let rectW: number = this.getDimensions(dotLabel.node()).w + 8;
-                            let rectH: number = this.getDimensions(dotLabel.node()).h; // + 4;
+                            const rectW: number = this.getDimensions(dotLabel.node()).w + 8;
+                            const rectH: number = this.getDimensions(dotLabel.node()).h; // + 4;
 
                             if (!onLeftSide) {
                                 rectX = dataset.xCoord - 15 - rectW;
@@ -448,7 +448,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                             }
 
                             // create hovering label
-                            let dotRectangle = this.highlightRect
+                            const dotRectangle = this.highlightRect
                                 .attr('class', 'mouseHoverDotRect')
                                 .style('fill', 'white')
                                 .style('fill-opacity', 1)
@@ -472,7 +472,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                         }
                     } else {
                         // unhighlight hovered dot
-                        let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                        const datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
                         d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
                             .attr('opacity', 1)
                             .attr('r', radius);
@@ -487,10 +487,10 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
             })
             .on('mouseout', (d) => {
                 if (d !== undefined) {
-                    let dataset = d.data[4];
-                    let radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
+                    const dataset = d.data[4];
+                    const radius = this.plotOptions.graph ? this.plotOptions.graph.lines.pointRadius : this.defaultGraphOptions.lines.pointRadius;
                     // unhighlight hovered dot
-                    let datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
+                    const datasetxCoordSplit = dataset.xCoord.toString().split('.')[0] + '-' + dataset.xCoord.toString().split('.')[1];
                     d3.select('#dot-' + datasetxCoordSplit + '-' + d.data[5].id + '')
                         .attr('opacity', 1)
                         .attr('r', radius);
@@ -510,7 +510,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
      * @param coords {} Coordinates of the mouse.
      */
     private calcDistanceHovering(dataset: D3GeneralDataPoint, coords: [number, number]): number {
-        let mX = coords[0] + this.buffer,
+        const mX = coords[0] + this.buffer,
             mY = coords[1], // + this.margin.top,
             pX = dataset.xCoord,
             pY = dataset.yCoord;
@@ -520,7 +520,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
 
     private getRange(data: D3GeneralDataPoint[], selector: string): Range {
         // range for axis scale
-        let range: [number, number] = d3.extent(d3.values(data.map((d) => {
+        const range: [number, number] = d3.extent(d3.values(data.map((d) => {
             if ((!isNaN(d.x) && !isNaN(d.y))) {
                 return d[selector];
             }

@@ -113,11 +113,11 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
       if (!this.plotWhileDrag) {
         this.plotWhileDrag = true;
         this.dragTimeStart = new Date().valueOf();
-        let diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
-        let amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
-        let ratioTimestampDiagCoord = amountTimestamp / this.graphExtent.width;
-        let newTimeMin = this.dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
-        let newTimeMax = this.dragMoveRange[1] + (ratioTimestampDiagCoord * diff);
+        const diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
+        const amountTimestamp = this.dragMoveRange[1] - this.dragMoveRange[0];
+        const ratioTimestampDiagCoord = amountTimestamp / this.graphExtent.width;
+        const newTimeMin = this.dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
+        const newTimeMax = this.dragMoveRange[1] + (ratioTimestampDiagCoord * diff);
 
         this.xAxisRangePan = [newTimeMin, newTimeMax];
         this.d3Graph.setTimespan({ from: this.xAxisRangePan[0], to: this.xAxisRangePan[1] });
@@ -190,8 +190,8 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
  * @param end {Number} Number with the maximum diagram coordinate.
  */
   private getxDomain(start: number, end: number, graphExtent: D3GraphExtent, preparedData: any): [number, number] {
-    let domMinArr = [];
-    let domMaxArr = [];
+    const domMinArr = [];
+    const domMaxArr = [];
     let domMin: number;
     let domMax: number;
     let tmp;

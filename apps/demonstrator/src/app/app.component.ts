@@ -6,7 +6,7 @@ import { D3TimeFormatLocaleService } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'helgoland-toolbox-root',
+  selector: 'n52-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

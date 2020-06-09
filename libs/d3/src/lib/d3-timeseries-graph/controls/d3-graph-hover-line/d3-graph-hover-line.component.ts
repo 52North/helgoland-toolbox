@@ -155,9 +155,9 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
 
     // draw label
     d3.select(`#${TIME_LABEL_ID}`).text(this.timezoneSrvc.formatTzDate(time));
-    let onLeftSide = this.checkLeftSide(xPos);
-    let right = xPos + 2;
-    let left = xPos - this.graphHelper.getDimensions(d3.select(`#${TIME_LABEL_ID}`).node()).w - 2;
+    const onLeftSide = this.checkLeftSide(xPos);
+    const right = xPos + 2;
+    const left = xPos - this.graphHelper.getDimensions(d3.select(`#${TIME_LABEL_ID}`).node()).w - 2;
     d3.select(`#${TIME_LABEL_ID}`)
       .attr('x', onLeftSide ? right : left)
       .attr('y', 13);
