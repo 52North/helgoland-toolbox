@@ -1,135 +1,41 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "baseUrl": "./",
-    "importHelpers": true,
-    "module": "commonjs",
-    "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
     "paths": {
-      "@helgoland/core": [
-        "dist/helgoland/core"
-      ],
-      "@helgoland/core/*": [
-        "dist/helgoland/core/*"
-      ],
-      "@helgoland/map": [
-        "dist/helgoland/map"
-      ],
-      "@helgoland/map/*": [
-        "dist/helgoland/map/*"
-      ],
-      "@helgoland/caching": [
-        "dist/helgoland/caching"
-      ],
-      "@helgoland/caching/*": [
-        "dist/helgoland/caching/*"
-      ],
-      "@helgoland/control": [
-        "dist/helgoland/control"
-      ],
-      "@helgoland/control/*": [
-        "dist/helgoland/control/*"
-      ],
-      "@helgoland/depiction": [
-        "dist/helgoland/depiction"
-      ],
-      "@helgoland/depiction/*": [
-        "dist/helgoland/depiction/*"
-      ],
-      "@helgoland/favorite": [
-        "dist/helgoland/favorite"
-      ],
-      "@helgoland/favorite/*": [
-        "dist/helgoland/favorite/*"
-      ],
-      "@helgoland/modification": [
-        "dist/helgoland/modification"
-      ],
-      "@helgoland/modification/*": [
-        "dist/helgoland/modification/*"
-      ],
-      "@helgoland/permalink": [
-        "dist/helgoland/permalink"
-      ],
-      "@helgoland/permalink/*": [
-        "dist/helgoland/permalink/*"
-      ],
-      "@helgoland/selector": [
-        "dist/helgoland/selector"
-      ],
-      "@helgoland/selector/*": [
-        "dist/helgoland/selector/*"
-      ],
-      "@helgoland/time": [
-        "dist/helgoland/time"
-      ],
-      "@helgoland/time/*": [
-        "dist/helgoland/time/*"
-      ],
-      "@helgoland/d3": [
-        "dist/helgoland/d3"
-      ],
-      "@helgoland/d3/*": [
-        "dist/helgoland/d3/*"
-      ],
-      "@helgoland/plotly": [
-        "dist/helgoland/plotly"
-      ],
-      "@helgoland/plotly/*": [
-        "dist/helgoland/plotly/*"
-      ],
-      "@helgoland/time-range-slider": [
-        "dist/helgoland/time-range-slider"
-      ],
-      "@helgoland/time-range-slider/*": [
-        "dist/helgoland/time-range-slider/*"
-      ],
-      "@helgoland/auth": [
-        "dist/helgoland/auth"
-      ],
-      "@helgoland/auth/*": [
-        "dist/helgoland/auth/*"
-      ],
-      "@helgoland/eventing": [
-        "dist/helgoland/eventing"
-      ],
-      "@helgoland/eventing/*": [
-        "dist/helgoland/eventing/*"
-      ],
-      "@helgoland/facet-search": [
-        "dist/helgoland/facet-search"
-      ],
-      "@helgoland/facet-search/*": [
-        "dist/helgoland/facet-search/*"
-      ],
-      "@helgoland/open-layers": [
-        "dist/helgoland/open-layers"
-      ],
-      "@helgoland/open-layers/*": [
-        "dist/helgoland/open-layers/*"
-      ],
-      "@helgoland/sensorml": [
-        "dist/helgoland/sensorml"
-      ],
-      "@helgoland/sensorml/*": [
-        "dist/helgoland/sensorml/*"
-      ],
+      "@helgoland/core": ["libs/core/src/index.ts"],
+      "@helgoland/auth": ["libs/auth/src/index.ts"],
+      "@helgoland/d3": ["libs/d3/src/index.ts"],
+      "@helgoland/depiction": ["libs/depiction/src/index.ts"],
+      "@helgoland/control": ["libs/control/src/index.ts"],
+      "@helgoland/caching": ["libs/caching/src/index.ts"],
+      "@helgoland/eventing": ["libs/eventing/src/index.ts"],
+      "@helgoland/map": ["libs/map/src/index.ts"],
+      "@helgoland/favorite": ["libs/favorite/src/index.ts"],
+      "@helgoland/facet-search": ["libs/facet-search/src/index.ts"],
+      "@helgoland/modification": ["libs/modification/src/index.ts"],
+      "@helgoland/permalink": ["libs/permalink/src/index.ts"],
+      "@helgoland/plotly": ["libs/plotly/src/index.ts"],
+      "@helgoland/selector": ["libs/selector/src/index.ts"],
+      "@helgoland/sensorml": ["libs/sensorml/src/index.ts"],
+      "@helgoland/time": ["libs/time/src/index.ts"],
+      "@helgoland/time-range-slider": ["libs/time-range-slider/src/index.ts"],
+      "@helgoland/open-layers": ["libs/open-layers/src/index.ts"]
     }
-  }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

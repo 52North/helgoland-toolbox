@@ -1,0 +1,76 @@
+{
+  "npmScope": "helgoland-toolbox",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "demonstrator": {
+      "tags": []
+    },
+    "demonstrator-e2e": {
+      "tags": [],
+      "implicitDependencies": ["demonstrator"]
+    },
+    "core": {
+      "tags": []
+    },
+    "auth": {
+      "tags": []
+    },
+    "d3": {
+      "tags": []
+    },
+    "depiction": {
+      "tags": []
+    },
+    "control": {
+      "tags": []
+    },
+    "caching": {
+      "tags": []
+    },
+    "eventing": {
+      "tags": []
+    },
+    "map": {
+      "tags": []
+    },
+    "favorite": {
+      "tags": []
+    },
+    "facet-search": {
+      "tags": []
+    },
+    "modification": {
+      "tags": []
+    },
+    "permalink": {
+      "tags": []
+    },
+    "plotly": {
+      "tags": []
+    },
+    "selector": {
+      "tags": []
+    },
+    "sensorml": {
+      "tags": []
+    },
+    "time": {
+      "tags": []
+    },
+    "time-range-slider": {
+      "tags": []
+    },
+    "open-layers": {
+      "tags": []
+    }
+  }
+}
