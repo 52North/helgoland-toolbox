@@ -3,8 +3,8 @@ module.exports = {
   preset: '../../jest.config.js',
   coverageDirectory: '../../coverage/libs/sensorml',
   snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
+    'jest-preset-angular/AngularSnapshotSerializer.js',
+    'jest-preset-angular/HTMLCommentSerializer.js',
   ],
+  testEnvironment: "jest-environment-jsdom-fourteen"
 };
