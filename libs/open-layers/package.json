@@ -1,0 +1,10 @@
+{
+  "name": "@helgoland/open-layers",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "ol": "^6.0.1",
+    "@types/ol": "^5.3.5"
+  }
+}

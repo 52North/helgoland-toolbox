@@ -1,0 +1,13 @@
+{
+  "name": "@helgoland/d3",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@types/geojson": "^7946.0.7",
+    "@types/d3": "^5.7.2",
+    "d3": "^5.9.7",
+    "d3-delaunay": "^5.2.1",
+    "moment": "^2.24.0"
+  }
+}

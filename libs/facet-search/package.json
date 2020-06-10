@@ -1,0 +1,10 @@
+{
+  "name": "@helgoland/facet-search",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1"
+  }
+}

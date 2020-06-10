@@ -1,0 +1,11 @@
+{
+  "name": "@helgoland/time-range-slider",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@types/geojson": "^7946.0.7",
+    "bootstrap-slider": "^9.9.1",
+    "jquery": "^3.4.1"
+  }
+}

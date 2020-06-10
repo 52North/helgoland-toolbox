@@ -17,14 +17,23 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "paths": {
-      "@helgoland/core": ["libs/core/src/index.ts"],
+      "@helgoland/core": [
+        "dist/libs/core",
+        "libs/core/src/index.ts"
+      ],
       "@helgoland/auth": ["libs/auth/src/index.ts"],
       "@helgoland/d3": ["libs/d3/src/index.ts"],
-      "@helgoland/depiction": ["libs/depiction/src/index.ts"],
+      "@helgoland/depiction": [
+        "dist/libs/depiction",
+        "libs/depiction/src/index.ts"
+      ],
       "@helgoland/control": ["libs/control/src/index.ts"],
       "@helgoland/caching": ["libs/caching/src/index.ts"],
       "@helgoland/eventing": ["libs/eventing/src/index.ts"],
-      "@helgoland/map": ["libs/map/src/index.ts"],
+      "@helgoland/map": [
+        "dist/libs/map",
+        "libs/map/src/index.ts"
+      ],
       "@helgoland/favorite": ["libs/favorite/src/index.ts"],
       "@helgoland/facet-search": ["libs/facet-search/src/index.ts"],
       "@helgoland/modification": ["libs/modification/src/index.ts"],
@@ -34,8 +43,9 @@
       "@helgoland/sensorml": ["libs/sensorml/src/index.ts"],
       "@helgoland/time": ["libs/time/src/index.ts"],
       "@helgoland/time-range-slider": ["libs/time-range-slider/src/index.ts"],
-      "@helgoland/open-layers": ["libs/open-layers/src/index.ts"]
+      "@helgoland/open-layers": ["libs/open-layers/src/index.ts"],
+      "@helgoland-toolbox/test": ["libs/test/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp", "dist"]
 }

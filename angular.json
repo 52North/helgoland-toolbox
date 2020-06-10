@@ -10,7 +10,7 @@
       },
       "root": "apps/demonstrator",
       "sourceRoot": "apps/demonstrator/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -129,8 +129,15 @@
       "projectType": "library",
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -161,8 +168,15 @@
       "projectType": "library",
       "root": "libs/auth",
       "sourceRoot": "libs/auth/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/auth/tsconfig.lib.json",
+            "project": "libs/auth/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -193,8 +207,15 @@
       "projectType": "library",
       "root": "libs/d3",
       "sourceRoot": "libs/d3/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/d3/tsconfig.lib.json",
+            "project": "libs/d3/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -225,8 +246,15 @@
       "projectType": "library",
       "root": "libs/depiction",
       "sourceRoot": "libs/depiction/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/depiction/tsconfig.lib.json",
+            "project": "libs/depiction/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -257,8 +285,15 @@
       "projectType": "library",
       "root": "libs/control",
       "sourceRoot": "libs/control/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/control/tsconfig.lib.json",
+            "project": "libs/control/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -289,8 +324,15 @@
       "projectType": "library",
       "root": "libs/caching",
       "sourceRoot": "libs/caching/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/caching/tsconfig.lib.json",
+            "project": "libs/caching/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -321,8 +363,15 @@
       "projectType": "library",
       "root": "libs/eventing",
       "sourceRoot": "libs/eventing/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/eventing/tsconfig.lib.json",
+            "project": "libs/eventing/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -353,8 +402,15 @@
       "projectType": "library",
       "root": "libs/map",
       "sourceRoot": "libs/map/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/map/tsconfig.lib.json",
+            "project": "libs/map/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -385,8 +441,15 @@
       "projectType": "library",
       "root": "libs/favorite",
       "sourceRoot": "libs/favorite/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/favorite/tsconfig.lib.json",
+            "project": "libs/favorite/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -417,8 +480,15 @@
       "projectType": "library",
       "root": "libs/facet-search",
       "sourceRoot": "libs/facet-search/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/facet-search/tsconfig.lib.json",
+            "project": "libs/facet-search/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -449,8 +519,15 @@
       "projectType": "library",
       "root": "libs/modification",
       "sourceRoot": "libs/modification/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/modification/tsconfig.lib.json",
+            "project": "libs/modification/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -481,8 +558,15 @@
       "projectType": "library",
       "root": "libs/permalink",
       "sourceRoot": "libs/permalink/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/permalink/tsconfig.lib.json",
+            "project": "libs/permalink/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -513,8 +597,15 @@
       "projectType": "library",
       "root": "libs/plotly",
       "sourceRoot": "libs/plotly/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/plotly/tsconfig.lib.json",
+            "project": "libs/plotly/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -545,8 +636,15 @@
       "projectType": "library",
       "root": "libs/selector",
       "sourceRoot": "libs/selector/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/selector/tsconfig.lib.json",
+            "project": "libs/selector/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -577,8 +675,15 @@
       "projectType": "library",
       "root": "libs/sensorml",
       "sourceRoot": "libs/sensorml/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/sensorml/tsconfig.lib.json",
+            "project": "libs/sensorml/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -609,8 +714,15 @@
       "projectType": "library",
       "root": "libs/time",
       "sourceRoot": "libs/time/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/time/tsconfig.lib.json",
+            "project": "libs/time/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -641,8 +753,15 @@
       "projectType": "library",
       "root": "libs/time-range-slider",
       "sourceRoot": "libs/time-range-slider/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/time-range-slider/tsconfig.lib.json",
+            "project": "libs/time-range-slider/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -673,8 +792,15 @@
       "projectType": "library",
       "root": "libs/open-layers",
       "sourceRoot": "libs/open-layers/src",
-      "prefix": "helgoland-toolbox",
+      "prefix": "helgoland",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/open-layers/tsconfig.lib.json",
+            "project": "libs/open-layers/ng-package.json"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
