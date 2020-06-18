@@ -9,7 +9,71 @@
 
 This project contains [Angular](https://angular.io/) based Modules, Components, Injectables to build a sensor observation service based client.
 
-## Getting Started
+## Description
+
+### Tools for Building Web Applications
+**Providing Reusable Components for Building (Sensor Web) Client Applications**
+
+52°North created the Helgoland Toolbox to facilitate the reuse of developments for Sensor Web client applications. It provides a range of modules that offer functionalities for building Web applications dealing with dynamic spatio-temporal data. The Helgoland Toolbox modules are used to build the 52°North Helgoland Sensor Web Viewer. Additional applications (e.g. the BelAir app, smle, or the developments resulting from the TaMIS project) are also built upon this library.
+
+**Features:**
+
+The most important functional modules comprise:
+
+Core
+- Communication with the APIs
+- Important common services (local storage, time)
+- Central interfaces and abstract classes
+
+Caching
+- Request Caching with Angular Interceptors
+
+d3
+- Trajectory Graph component
+- Time Series Graph component
+
+Depiction
+- Legend entries
+- Table view of data
+
+Map
+- Controls (Geo-Search, Locate, Zoom, Extent)
+- Map Selector component
+
+Selectors
+- List Selector for observation data
+- Service Selector for data sources
+
+The work on the Helgoland Toolbox comprised several evolutionary improvements and enhancements that were developed as part of several projects (e.g. WaCoDiS, MuDak-WRM. SeaDataCloudk BSH, Wupperverband Framework Contract). This include:
+
+- Enhancement to connect to instances of the OGC SensorThings API
+- Improved caching
+- Complementary mapping module based on open layers to support time-dependent background map layers
+- Enhanced data export functionality
+- Improvements in the diagram visualization
+- Facet search for observation data
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3830314/81534731-d1905380-9368-11ea-8c6f-213b96dd5c41.jpg" alt="Helgoland map view" width="75%"/>
+</p>
+
+**Key Technologies:**
+
+- JavaScript
+- TypeScript
+- Angular
+- Leaflet
+- d3
+- Open Layers
+
+**Benefits:**
+
+ - Reusable components for building client applications
+ - Modules for visualizing different types of sensor data (time series, trajectories, profiles)
+ - Mapping modules
+ - Different components for data selection
+ 
+## Quick Start
 
 ### Dependencies
 
@@ -23,7 +87,13 @@ Install latest Node and NPM following the [instructions](https://nodejs.org/en/d
 - `clone` your fork to your local environment.
 - `npm install` to install required dependencies.
 
-### Start test application
+### Build the libraries
+
+- `npm run lib:build` for building the library once
+
+### Other commands
+
+#### Lint the complete code
 
 - `npm start` will start the test application, which provide views for the main modules and components
 - the app, and their corrensponding files can be found in the `src` folder
@@ -79,3 +149,15 @@ Install latest Node and NPM following the [instructions](https://nodejs.org/en/d
 
 - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
 - don't forget to add styles of nested dependencies
+
+
+## References
+
+- [INSPIRE Download Service](http://inspire.ec.europa.eu/id/document/tg/download-sos) 
+- [Federal Maritime and Hydrographic Agency (BSH)](https://www.bsh.de/)
+- [Wupperverband](https://www.wupperverband.de/)
+- [SeaDataCloud](https://www.seadatanet.org/About-us/SeaDataCloud)
+- [WaCoDiS](https://wacodis.fbg-hsbo.de/)
+- [MuDak-WRM](https://www.mudak-wrm.kit.edu/)
+- [mVIZ](https://mviz.geo.tu-dresden.de/)
+- [IRCEL-CELINE BelAir](https://52north.org/references/belair/)
