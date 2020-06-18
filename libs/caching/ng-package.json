@@ -3,5 +3,6 @@
   "dest": "../../dist/libs/caching",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [""]
 }

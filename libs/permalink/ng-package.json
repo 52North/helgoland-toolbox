@@ -3,5 +3,6 @@
   "dest": "../../dist/libs/permalink",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [""]
 }

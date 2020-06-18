@@ -3,5 +3,6 @@
   "dest": "../../dist/libs/time-range-slider",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [""]
 }

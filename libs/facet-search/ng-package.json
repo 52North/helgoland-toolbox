@@ -3,5 +3,6 @@
   "dest": "../../dist/libs/facet-search",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [""]
 }

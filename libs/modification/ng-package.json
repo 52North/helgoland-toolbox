@@ -3,5 +3,6 @@
   "dest": "../../dist/libs/modification",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [""]
 }
