@@ -1248,7 +1248,7 @@ export class D3TimeseriesGraphComponent
                 // highlight bar
                 d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
 
-                this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
+                // this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
 
                 this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
                 // generate output of highlighted data
@@ -1277,7 +1277,7 @@ export class D3TimeseriesGraphComponent
             d3.select(rectElems[idx])
                 .style('stroke-width', this.calculateLineWidth(entry));
             // make label invisible
-            this.hoveringService.hidePointHovering(d, entry);
+            // this.hoveringService.hidePointHovering(d, entry);
         }
     }
 

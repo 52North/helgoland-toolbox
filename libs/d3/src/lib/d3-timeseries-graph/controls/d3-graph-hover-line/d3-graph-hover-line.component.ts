@@ -14,8 +14,8 @@ interface Label {
   rect: d3.Selection<d3.BaseType, any, any, any>;
 }
 
-const HOVERLINE_ID = 'hover-line';
-const TIME_LABEL_ID = 'time-label';
+const HOVERLINE_CLASS = 'hover-line';
+const TIME_LABEL_CLASS = 'time-label';
 
 @Component({
   selector: 'n52-d3-graph-hover-line',
@@ -101,23 +101,23 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   }
 
   private createHoverLine() {
-    if (d3.select(`#${HOVERLINE_ID}`).empty()) {
+    if (this.drawLayer.select(`.${HOVERLINE_CLASS}`).empty()) {
       this.drawLayer.append('path')
-        .attr('id', HOVERLINE_ID)
+        .attr('class', HOVERLINE_CLASS)
         .style('opacity', '0');
     }
 
-    if (d3.select(`#${TIME_LABEL_ID}`).empty()) {
+    if (this.drawLayer.select(`.${TIME_LABEL_CLASS}`).empty()) {
       this.drawLayer.append('svg:text')
-        .attr('id', `${TIME_LABEL_ID}`)
+        .attr('class', `${TIME_LABEL_CLASS}`)
         .style('pointer-events', 'none');
     }
 
   }
 
   private hideHoverLineIndicator(): void {
-    d3.select(`#${HOVERLINE_ID}`).style('opacity', '0');
-    d3.select(`#${TIME_LABEL_ID}`).style('opacity', '0');
+    this.drawLayer.select(`.${HOVERLINE_CLASS}`).style('opacity', '0');
+    this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style('opacity', '0');
   }
 
   private hideLabels() {
@@ -128,8 +128,8 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   }
 
   private showHoverLineIndicator(): void {
-    d3.select(`#${HOVERLINE_ID}`).style('opacity', '1');
-    d3.select(`#${TIME_LABEL_ID}`).style('opacity', '1');
+    this.drawLayer.select(`.${HOVERLINE_CLASS}`).style('opacity', '1');
+    this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style('opacity', '1');
   }
 
   private moveHoverLineIndicator(): void {
@@ -148,17 +148,17 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   private drawLineIndicator(mouse: [number, number]) {
     const xPos = mouse[0] + this.graphExtent.leftOffset;
 
-    d3.select(`#${HOVERLINE_ID}`)
+    this.drawLayer.select(`.${HOVERLINE_CLASS}`)
       .attr('d', () => 'M' + (xPos) + ',' + this.graphExtent.height + ' ' + (xPos) + ',' + 0);
 
     const time = this.graphExtent.xScale.invert(xPos);
 
     // draw label
-    d3.select(`#${TIME_LABEL_ID}`).text(this.timezoneSrvc.formatTzDate(time));
+    this.drawLayer.select(`.${TIME_LABEL_CLASS}`).text(this.timezoneSrvc.formatTzDate(time));
     const onLeftSide = this.checkLeftSide(xPos);
     const right = xPos + 2;
-    const left = xPos - this.graphHelper.getDimensions(d3.select(`#${TIME_LABEL_ID}`).node()).w - 2;
-    d3.select(`#${TIME_LABEL_ID}`)
+    const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
+    this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
       .attr('x', onLeftSide ? right : left)
       .attr('y', 13);
   }
@@ -236,7 +236,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
    * @param item {DataEntry} Object of the entry in the dataset.
    */
   private positionLabel(entry: InternalDataEntry, label: Label, item: DataEntry): void {
-    label.text.text(item.value + (entry.axisOptions.uom ? entry.axisOptions.uom : ''));
+    label.text.text(`${item.value} ${(entry.axisOptions.uom ? entry.axisOptions.uom : '')}`);
 
     const entryX: number = this.checkLeftSide(item.xDiagCoord) ?
       item.xDiagCoord + 4 : item.xDiagCoord - this.graphHelper.getDimensions(label.text.node()).w - 4;
