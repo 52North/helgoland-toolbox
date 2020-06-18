@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/core/src/lib/dataset-api/internal-id-handler.service.ts</code>
+            <code>libs/core/src/lib/dataset-api/internal-id-handler.service.ts</code>
         </p>
 
 
@@ -199,15 +199,13 @@ export class InternalIdHandler {
    * @returns Construct of url and API id
    */
   public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
-    if (typeof(internalId) &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-      const split &#x3D; internalId.split(INTERNAL_ID_SEPERATOR);
-      if (split.length !&#x3D;&#x3D; 2) {
-        console.error(&#x27;InternalID &#x27; + internalId + &#x27; is not resolvable&#x27;);
+    if (typeof (internalId) &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+      if (internalId.indexOf(INTERNAL_ID_SEPERATOR) &gt; 0) {
+        const url &#x3D; internalId.substring(0, internalId.indexOf(INTERNAL_ID_SEPERATOR));
+        const id &#x3D; internalId.substring(internalId.indexOf(INTERNAL_ID_SEPERATOR) + INTERNAL_ID_SEPERATOR.length);
+        return { url, id };
       } else {
-        return {
-          url: split[0],
-          id: split[1]
-        };
+        console.error(&#x27;InternalID &#x27; + internalId + &#x27; is not resolvable&#x27;);
       }
     } else if (this.instanceOfInternalDatasetId(internalId)) {
       return internalId;
@@ -246,6 +244,7 @@ export class InternalIdHandler {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'InternalDatasetId.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

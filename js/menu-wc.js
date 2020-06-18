@@ -144,44 +144,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandControlModule-992e5735e93b90e992dc43faaea9a5b3"' :
                                             'id="xs-components-links-module-HelgolandControlModule-992e5735e93b90e992dc43faaea9a5b3"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -190,13 +162,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/HelgolandCoreModule.html" data-type="entity-link">HelgolandCoreModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' : 'data-target="#xs-injectables-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' }>
+                                        'data-target="#injectables-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' : 'data-target="#xs-injectables-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' :
-                                        'id="xs-injectables-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' :
+                                        'id="xs-injectables-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' }>
                                         <li class="link">
                                             <a href="injectables/ColorService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>ColorService</a>
@@ -241,20 +213,20 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#pipes-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' : 'data-target="#xs-pipes-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' }>
+                                            'data-target="#pipes-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' : 'data-target="#xs-pipes-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' }>
                                             <span class="icon ion-md-add"></span>
                                             <span>Pipes</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="pipes-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' :
-                                            'id="xs-pipes-links-module-HelgolandCoreModule-8d1c63d820f931a7e98ed9bf783a8404"' }>
-                                            <li class="link">
-                                                <a href="pipes/DateProxyPipe.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">DateProxyPipe</a>
-                                            </li>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="pipes-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' :
+                                            'id="xs-pipes-links-module-HelgolandCoreModule-64d451f62f40a0062ca3b57fb9e155f4"' }>
                                             <li class="link">
                                                 <a href="pipes/MatchLabelPipe.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">MatchLabelPipe</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="pipes/TzDatePipe.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">TzDatePipe</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -263,64 +235,36 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/HelgolandD3Module.html" data-type="entity-link">HelgolandD3Module</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' : 'data-target="#xs-components-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' }>
+                                            'data-target="#components-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' : 'data-target="#xs-components-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' :
-                                            'id="xs-components-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' :
+                                            'id="xs-components-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' : 'data-target="#xs-injectables-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' }>
+                                        'data-target="#injectables-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' : 'data-target="#xs-injectables-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' :
-                                        'id="xs-injectables-links-module-HelgolandD3Module-263b7156e577ff34e74fdc8a43712287"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' :
+                                        'id="xs-injectables-links-module-HelgolandD3Module-0c5e0c84ed9516ce2e9660f671a258f3"' }>
                                         <li class="link">
                                             <a href="injectables/D3TimeFormatLocaleService.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>D3TimeFormatLocaleService</a>
@@ -362,44 +306,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandDatasetlistModule-5789f64f2fb4ca0b17023fa196789b88"' :
                                             'id="xs-components-links-module-HelgolandDatasetlistModule-5789f64f2fb4ca0b17023fa196789b88"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -452,44 +368,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandFacetSearchModule-87b0836aeba184525d5f3f794613d979"' :
                                             'id="xs-components-links-module-HelgolandFacetSearchModule-87b0836aeba184525d5f3f794613d979"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -506,44 +394,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandFavoriteModule-c302589b85f4afd78fe1c862f17de4bd"' :
                                             'id="xs-components-links-module-HelgolandFavoriteModule-c302589b85f4afd78fe1c862f17de4bd"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -612,44 +472,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandLayerControlModule-3c5884d341884bcb88b1ebcc22ff94c8"' :
                                             'id="xs-components-links-module-HelgolandLayerControlModule-3c5884d341884bcb88b1ebcc22ff94c8"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -666,44 +498,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandMapControlModule-873b357c4f0f8df64179e2b313ddb439"' :
                                             'id="xs-components-links-module-HelgolandMapControlModule-873b357c4f0f8df64179e2b313ddb439"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -735,44 +539,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandMapModule-3bdb86e676b48c88feb249c983de26b1"' :
                                             'id="xs-components-links-module-HelgolandMapModule-3bdb86e676b48c88feb249c983de26b1"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -808,44 +584,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandMapSelectorModule-dd6794beb93990c90cb698f682942f6d"' :
                                             'id="xs-components-links-module-HelgolandMapSelectorModule-dd6794beb93990c90cb698f682942f6d"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -902,52 +650,24 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/HelgolandOpenLayersModule.html" data-type="entity-link">HelgolandOpenLayersModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-HelgolandOpenLayersModule-156ab9d448fb689c025338889fb3656e"' : 'data-target="#xs-components-links-module-HelgolandOpenLayersModule-156ab9d448fb689c025338889fb3656e"' }>
+                                            'data-target="#components-links-module-HelgolandOpenLayersModule-9fba075072e0db21298ded11743c0709"' : 'data-target="#xs-components-links-module-HelgolandOpenLayersModule-9fba075072e0db21298ded11743c0709"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandOpenLayersModule-156ab9d448fb689c025338889fb3656e"' :
-                                            'id="xs-components-links-module-HelgolandOpenLayersModule-156ab9d448fb689c025338889fb3656e"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandOpenLayersModule-9fba075072e0db21298ded11743c0709"' :
+                                            'id="xs-components-links-module-HelgolandOpenLayersModule-9fba075072e0db21298ded11743c0709"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -964,44 +684,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandPermalinkModule-f046783c8444473c845d5d046bc7f1af"' :
                                             'id="xs-components-links-module-HelgolandPermalinkModule-f046783c8444473c845d5d046bc7f1af"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -1092,44 +784,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandTimeModule-bb40fcbf4a3a3492eaf3ec99c7807417"' :
                                             'id="xs-components-links-module-HelgolandTimeModule-bb40fcbf4a3a3492eaf3ec99c7807417"' }>
                                             <li class="link">
-                                                <a href="components/D3GeneralGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GeneralGraphComponent</a>
+                                                <a href="components/BoolTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">BoolTogglerComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphCopyrightComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphCopyrightComponent</a>
+                                                <a href="components/RefreshButtonComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">RefreshButtonComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/D3GraphHoverLineComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphHoverLineComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3GraphPanZoomInteractionComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3GraphPanZoomInteractionComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3OverviewTimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3OverviewTimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TimeseriesGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3TrajectoryGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3TrajectoryGraphComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/D3YAxisModifierComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">D3YAxisModifierComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExportImageButtonComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExportImageButtonComponent</a>
-                                            </li>
-                                            <li class="link">
-                                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">ExtendedDataD3TimeseriesGraphComponent</a>
+                                                <a href="components/StringTogglerComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">StringTogglerComponent</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -1138,13 +802,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/HelgolandTimeRangeSliderModule.html" data-type="entity-link">HelgolandTimeRangeSliderModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' : 'data-target="#xs-components-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' }>
+                                            'data-target="#components-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' : 'data-target="#xs-components-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' :
-                                            'id="xs-components-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' :
+                                            'id="xs-components-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' }>
                                             <li class="link">
                                                 <a href="components/TimeRangeSliderComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">TimeRangeSliderComponent</a>
@@ -1153,13 +817,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' : 'data-target="#xs-injectables-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' }>
+                                        'data-target="#injectables-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' : 'data-target="#xs-injectables-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' :
-                                        'id="xs-injectables-links-module-HelgolandTimeRangeSliderModule-4f68406018f6bbd8804b86ce208a4697"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' :
+                                        'id="xs-injectables-links-module-HelgolandTimeRangeSliderModule-80de7ee5fb16594c8d3c3aa83ce5b4f3"' }>
                                         <li class="link">
                                             <a href="injectables/TimeRangeSliderCache.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>TimeRangeSliderCache</a>
@@ -1184,10 +848,43 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AutoUpdateTimespanComponent.html" data-type="entity-link">AutoUpdateTimespanComponent</a>
                             </li>
                             <li class="link">
-                                <a href="components/BoolTogglerComponent.html" data-type="entity-link">BoolTogglerComponent</a>
+                                <a href="components/ConfigurableTimeseriesEntryComponent.html" data-type="entity-link">ConfigurableTimeseriesEntryComponent</a>
                             </li>
                             <li class="link">
-                                <a href="components/ConfigurableTimeseriesEntryComponent.html" data-type="entity-link">ConfigurableTimeseriesEntryComponent</a>
+                                <a href="components/D3GeneralGraphComponent.html" data-type="entity-link">D3GeneralGraphComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3GraphCopyrightComponent.html" data-type="entity-link">D3GraphCopyrightComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3GraphHoverLineComponent.html" data-type="entity-link">D3GraphHoverLineComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3GraphHoverPointComponent.html" data-type="entity-link">D3GraphHoverPointComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3GraphOverviewSelectionComponent.html" data-type="entity-link">D3GraphOverviewSelectionComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3GraphPanZoomInteractionComponent.html" data-type="entity-link">D3GraphPanZoomInteractionComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3OverviewTimeseriesGraphComponent.html" data-type="entity-link">D3OverviewTimeseriesGraphComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3TimeseriesGraphComponent.html" data-type="entity-link">D3TimeseriesGraphComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3TrajectoryGraphComponent.html" data-type="entity-link">D3TrajectoryGraphComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/D3YAxisModifierComponent.html" data-type="entity-link">D3YAxisModifierComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/ExportImageButtonComponent.html" data-type="entity-link">ExportImageButtonComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/ExtendedDataD3TimeseriesGraphComponent.html" data-type="entity-link">ExtendedDataD3TimeseriesGraphComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/ExtentControlComponent.html" data-type="entity-link">ExtentControlComponent</a>
@@ -1274,9 +971,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/ProfileTrajectoryMapSelectorComponent.html" data-type="entity-link">ProfileTrajectoryMapSelectorComponent</a>
                             </li>
                             <li class="link">
-                                <a href="components/RefreshButtonComponent.html" data-type="entity-link">RefreshButtonComponent</a>
-                            </li>
-                            <li class="link">
                                 <a href="components/ResultListComponent.html" data-type="entity-link">ResultListComponent</a>
                             </li>
                             <li class="link">
@@ -1287,9 +981,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="components/StationMapSelectorComponent.html" data-type="entity-link">StationMapSelectorComponent</a>
-                            </li>
-                            <li class="link">
-                                <a href="components/StringTogglerComponent.html" data-type="entity-link">StringTogglerComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/TimeListSelectorComponent.html" data-type="entity-link">TimeListSelectorComponent</a>
@@ -1531,9 +1222,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/GmlEncoder.html" data-type="entity-link">GmlEncoder</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/HasLoadableContent.html" data-type="entity-link">HasLoadableContent</a>
                             </li>
                             <li class="link">
                                 <a href="classes/HelgolandDataset.html" data-type="entity-link">HelgolandDataset</a>
@@ -1900,6 +1588,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <a href="injectables/ApiV3InterfaceService.html" data-type="entity-link">ApiV3InterfaceService</a>
                                 </li>
                                 <li class="link">
+                                    <a href="injectables/BasicAuthInformerImplService.html" data-type="entity-link">BasicAuthInformerImplService</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/BasicAuthInterceptorService.html" data-type="entity-link">BasicAuthInterceptorService</a>
                                 </li>
                                 <li class="link">
@@ -1940,6 +1631,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/ExtendedSettingsService.html" data-type="entity-link">ExtendedSettingsService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ExtendedSettingsService-1.html" data-type="entity-link">ExtendedSettingsService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/FacetSearchConfig.html" data-type="entity-link">FacetSearchConfig</a>
@@ -1994,6 +1688,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/StatusCheckService.html" data-type="entity-link">StatusCheckService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TimezoneService.html" data-type="entity-link">TimezoneService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/VocabNercLabelMapperService.html" data-type="entity-link">VocabNercLabelMapperService</a>
@@ -2306,6 +2003,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/HistoricalLocationSelectParams.html" data-type="entity-link">HistoricalLocationSelectParams</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/HoveredElement.html" data-type="entity-link">HoveredElement</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/HttpRequestOptions.html" data-type="entity-link">HttpRequestOptions</a>
                             </li>
                             <li class="link">
@@ -2361,6 +2061,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/InternalWMSLayer.html" data-type="entity-link">InternalWMSLayer</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/Label.html" data-type="entity-link">Label</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/LabelMapperHandler.html" data-type="entity-link">LabelMapperHandler</a>

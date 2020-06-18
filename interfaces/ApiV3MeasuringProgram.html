@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/core/src/lib/api-communication/connectors/dataset-api-v3-connector/api-v3-interface.ts</code>
+            <code>libs/core/src/lib/api-communication/connectors/dataset-api-v3-connector/api-v3-interface.ts</code>
         </p>
 
 
@@ -387,7 +387,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     return httpParams;
   }
 
-  private prepareDataset(ds: ApiV3Dataset, url: string): ApiV3Dataset {
+  protected prepareDataset(ds: ApiV3Dataset, url: string): ApiV3Dataset {
     ds.internalId &#x3D; this.internalIdHander.createInternalId(url, ds.id);
     return ds;
   }
@@ -421,6 +421,7 @@ export class ApiV3InterfaceService extends ApiInterface {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'ApiV3MeasuringProgram.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

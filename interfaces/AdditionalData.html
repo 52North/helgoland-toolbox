@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/d3/src/lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component.ts</code>
+            <code>libs/d3/src/lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component.ts</code>
         </p>
 
             <p class="comment">
@@ -327,6 +327,7 @@ import {
   InternalIdHandler,
   SumValuesService,
   Time,
+  TimezoneService,
 } from &#x27;@helgoland/core&#x27;;
 import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
 
@@ -397,6 +398,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected timeFormatLocaleService: D3TimeFormatLocaleService,
     protected colorService: ColorService,
     protected translateService: TranslateService,
+    protected timezoneSrvc: TimezoneService,
     protected sumValues: SumValuesService,
     protected rangeCalc: RangeCalculationsService,
     protected graphHelper: D3GraphHelperService,
@@ -411,6 +413,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       timeFormatLocaleService,
       colorService,
       translateService,
+      timezoneSrvc,
       sumValues,
       rangeCalc,
       graphHelper,
@@ -430,7 +433,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     if (additionalDataChanges &amp;&amp; this.additionalData &amp;&amp; this.graph) {
       additionalDataChanges.forEachRemovedItem((removedItem) &#x3D;&gt; {
         const id &#x3D; this.generateAdditionalInternalId(removedItem.item);
-        let spliceIdx &#x3D; this.preparedData.findIndex((entry) &#x3D;&gt; entry.internalId &#x3D;&#x3D;&#x3D; id);
+        const spliceIdx &#x3D; this.preparedData.findIndex((entry) &#x3D;&gt; entry.internalId &#x3D;&#x3D;&#x3D; id);
         if (spliceIdx &gt;&#x3D; 0) {
           this.preparedData.splice(spliceIdx, 1);
         }
@@ -469,8 +472,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       this.additionalData.forEach(entry &#x3D;&gt; {
         if ((entry.linkedDatasetId || entry.yaxisLabel) &amp;&amp; entry.data &amp;&amp; entry.data.length &gt; 0) {
 
-          let options &#x3D; entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-          let dataset &#x3D; this.datasetMap.get(entry.linkedDatasetId);
+          const options &#x3D; entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
+          const dataset &#x3D; this.datasetMap.get(entry.linkedDatasetId);
           const prepDataIdx &#x3D; this.preparedData.findIndex(e &#x3D;&gt; e.internalId.indexOf(entry.linkedDatasetId) &gt; -1 || e.internalId.indexOf(entry.internalId) &gt; -1);
           let dataEntry: InternalDataEntry;
           if (prepDataIdx &#x3D;&#x3D;&#x3D; -1) {
@@ -547,6 +550,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'AdditionalData.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

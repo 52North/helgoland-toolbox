@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/core/src/lib/core.module.ts</code>
+            <code>libs/testing/settings.testing.ts</code>
         </p>
 
 
@@ -127,7 +127,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/helgoland/core/src/lib/core.module.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">libs/testing/settings.testing.ts:5</a></div>
                             </td>
                         </tr>
 
@@ -312,71 +312,21 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
-import { Injectable, NgModule } from &#x27;@angular/core&#x27;;
-
-import { ColorService } from &#x27;./color/color.service&#x27;;
-import { DatasetApiMapping } from &#x27;./dataset-api/api-mapping.service&#x27;;
-import { StatusIntervalResolverService } from &#x27;./dataset-api/helper/status-interval-resolver.service&#x27;;
-import { HttpService } from &#x27;./dataset-api/http.service&#x27;;
-import { InternalIdHandler } from &#x27;./dataset-api/internal-id-handler.service&#x27;;
-import { LocalStorage } from &#x27;./local-storage/local-storage.service&#x27;;
-import { Settings } from &#x27;./model/settings/settings&#x27;;
-import { NotifierService } from &#x27;./notifier/notifier.service&#x27;;
-import { DateProxyPipe } from &#x27;./pipes/dateproxy/dateproxy.pipe&#x27;;
-import { MatchLabelPipe } from &#x27;./pipes/matchLabel/match-label.pipe&#x27;;
-import { SumValuesService } from &#x27;./processing/sum-values.service&#x27;;
-import { SettingsService } from &#x27;./settings/settings.service&#x27;;
-import { DefinedTimespanService } from &#x27;./time/defined-timespan.service&#x27;;
-import { Time } from &#x27;./time/time.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Settings, SettingsService } from &#x27;@helgoland/core&#x27;;
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService&lt;Settings&gt; {
-  constructor() {
-    super();
-    this.setSettings({});
-  }
+    constructor() {
+        super();
+        this.setSettings({});
+    }
 }
 
-/**
- * The core module includes the following functionality:
- * - the communication to the different APIs
- * - describes the base internal model
- * - language handling
- * - settings handling
- * - some pipes
- * - time service for calculations
- */
-@NgModule({
-  declarations: [
-    DateProxyPipe,
-    MatchLabelPipe
-  ],
-  imports: [
-    HttpClientModule
-  ],
-  exports: [
-    DateProxyPipe,
-    MatchLabelPipe
-  ],
-  providers: [
-    ColorService,
-    DatasetApiMapping,
-    DefinedTimespanService,
-    InternalIdHandler,
-    LocalStorage,
-    NotifierService,
-    StatusIntervalResolverService,
-    SumValuesService,
-    HttpService,
-    Time,
-    {
-      provide: SettingsService,
-      useClass: ExtendedSettingsService
-    }
-  ]
-})
-export class HelgolandCoreModule { }
+export const SettingsServiceTestingProvider &#x3D; {
+    provide: SettingsService,
+    useClass: ExtendedSettingsService
+};
 </code></pre>
     </div>
 
@@ -411,6 +361,7 @@ export class HelgolandCoreModule { }
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
             var COMPODOC_CURRENT_PAGE_URL = 'ExtendedSettingsService.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

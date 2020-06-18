@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts</code>
+            <code>libs/depiction/src/lib/dataset-download/dataset-export/dataset-export.component.ts</code>
         </p>
 
             <p class="comment">
@@ -233,14 +233,16 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   ngOnInit() {
     // get timeseries metadata by internal id
     // e.g. https://www.fluggs.de/sos2/api/v1/__26
-    this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
-      ds &#x3D;&gt; {
-        this.dataset &#x3D; ds;
-        this.timespan &#x3D; new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
-        this.onMetadataChange.emit(ds);
-      },
-      error &#x3D;&gt; this.onError(error)
-    );
+    if (this.inputId) {
+      this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
+        ds &#x3D;&gt; {
+          this.dataset &#x3D; ds;
+          this.timespan &#x3D; new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
+          this.onMetadataChange.emit(ds);
+        },
+        error &#x3D;&gt; this.onError(error)
+      );
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -371,6 +373,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'ExportOptions.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -56,26 +56,14 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/d3/src/lib/helper/d3-time-format-locale.service.ts</code>
+            <code>libs/d3/src/lib/helper/d3-time-format-locale.service.ts</code>
         </p>
 
             <p class="comment">
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>This service holds the translations for d3 charts time axis labels.
-Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sample:</p>
-<p>addTimeFormatLocale(&#39;de&#39;,
-{
-   &#39;dateTime&#39;: &#39;%a %b %e %X %Y&#39;,
-   &#39;date&#39;: &#39;%d-%m-%Y&#39;,
-   &#39;time&#39;: &#39;%H:%M:%S&#39;,
-   &#39;periods&#39;: [&#39;AM&#39;, &#39;PM&#39;],
-   &#39;days&#39;: [&#39;Sonntag&#39;, &#39;Montag&#39;, &#39;Dienstag&#39;, &#39;Mittwoch&#39;, &#39;Donnerstag&#39;, &#39;Freitag&#39;, &#39;Samstag&#39;],
-   &#39;shortDays&#39;: [&#39;So&#39;, &#39;Mo&#39;, &#39;Di&#39;, &#39;Mi&#39;, &#39;Do&#39;, &#39;Fr&#39;, &#39;Sa&#39;],
-   &#39;months&#39;: [&#39;Januar&#39;, &#39;Februar&#39;, &#39;März&#39;, &#39;April&#39;, &#39;Mai&#39;, &#39;Juni&#39;, &#39;Juli&#39;, &#39;August&#39;, &#39;September&#39;, &#39;Oktober&#39;, &#39;November&#39;, &#39;Dezember&#39;],
-   &#39;shortMonths&#39;: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mär&#39;, &#39;Apr&#39;, &#39;Mai&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Okt&#39;, &#39;Nov&#39;, &#39;Dez&#39;]
-})</p>
+                <p>This service formats the time labels for the time axis in d3. Internationalisation will be managed by moment.</p>
 
             </p>
 
@@ -94,8 +82,36 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#timeFormatLocaleMapper">timeFormatLocaleMapper</a>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatDay">formatDay</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatHour">formatHour</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatMillisecond">formatMillisecond</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatMinute">formatMinute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatMonth">formatMonth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatSecond">formatSecond</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatWeek">formatWeek</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formatYear">formatYear</a>
                             </li>
                         </ul>
                     </td>
@@ -111,11 +127,35 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#addTimeFormatLocale">addTimeFormatLocale</a>
+                                <a href="#formatTime">formatTime</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
-                                <a href="#getTimeLocale">getTimeLocale</a>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundDay">roundDay</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundHour">roundHour</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundMinute">roundMinute</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundMonth">roundMonth</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundSecond">roundSecond</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundWeek">roundWeek</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#roundYear">roundYear</a>
                             </li>
                         </ul>
                     </td>
@@ -135,12 +175,12 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(translateService: <a href="../interfaces/Service.html">TranslateService</a>)</code>
+<code>constructor(timezoneSrvc: <a href="../injectables/TimezoneService.html">TimezoneService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/helgoland/d3/src/lib/helper/d3-time-format-locale.service.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -158,10 +198,10 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>translateService</td>
+                                                        <td>timezoneSrvc</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/Service.html" target="_self" >TranslateService</a></code>
+                                                                        <code><a href="../injectables/TimezoneService.html" target="_self" >TimezoneService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -187,28 +227,28 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="addTimeFormatLocale"></a>
+                    <a name="formatTime"></a>
                     <span class="name">
                         <b>
                             <span class="modifier">Public</span>
-                            addTimeFormatLocale
+                            formatTime
                         </b>
-                        <a href="#addTimeFormatLocale"><span class="icon ion-ios-link"></span></a>
+                        <a href="#formatTime"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>addTimeFormatLocale(localeCode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, definition: <a href="../injectables/Time.html">TimeLocaleDefinition</a>)</code>
+                    <code>formatTime(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/helper/d3-time-format-locale.service.ts:33</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:26</a></div>
                 </td>
             </tr>
 
@@ -228,93 +268,9 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>localeCode</td>
+                                    <td>time</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>definition</td>
-                                    <td>
-                                                <code><a href="../injectables/Time.html" target="_self" >TimeLocaleDefinition</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getTimeLocale"></a>
-                    <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            getTimeLocale
-                        </b>
-                        <a href="#getTimeLocale"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getTimeLocale(specifier: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">projects/helgoland/d3/src/lib/helper/d3-time-format-locale.service.ts:37</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>specifier</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
                                     </td>
 
                                     <td>
@@ -339,6 +295,510 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundDay"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundDay
+                        </b>
+                        <a href="#roundDay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundDay(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundHour"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundHour
+                        </b>
+                        <a href="#roundHour"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundHour(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundMinute"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundMinute
+                        </b>
+                        <a href="#roundMinute"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundMinute(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:40</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundMonth"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundMonth
+                        </b>
+                        <a href="#roundMonth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundMonth(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:52</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundSecond"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundSecond
+                        </b>
+                        <a href="#roundSecond"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundSecond(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:44</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundWeek"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundWeek
+                        </b>
+                        <a href="#roundWeek"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundWeek(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:56</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roundYear"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            roundYear
+                        </b>
+                        <a href="#roundYear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>roundYear(time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:48</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>time</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
             <section>
     
@@ -349,29 +809,260 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="timeFormatLocaleMapper"></a>
+                        <a name="formatDay"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Private</span>
-                            timeFormatLocaleMapper</b>
-                            <a href="#timeFormatLocaleMapper"><span class="icon ion-ios-link"></span></a>
+                                <span class="modifier">Protected</span>
+                            formatDay</b>
+                            <a href="#formatDay"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >Map&lt;string | TimeLocaleDefinition&gt;</a></code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>new Map()</code>
+                            <i>Default value : </i><code>&#x27;MMM D&#x27;</code>
                         </td>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">projects/helgoland/d3/src/lib/helper/d3-time-format-locale.service.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatHour"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatHour</b>
+                            <a href="#formatHour"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;HH:mm&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:16</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatMillisecond"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatMillisecond</b>
+                            <a href="#formatMillisecond"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;.SSS&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:13</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatMinute"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatMinute</b>
+                            <a href="#formatMinute"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;HH:mm&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:15</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatMonth"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatMonth</b>
+                            <a href="#formatMonth"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;MMMM&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatSecond"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatSecond</b>
+                            <a href="#formatSecond"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;:ss&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatWeek"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatWeek</b>
+                            <a href="#formatWeek"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;MMM D&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:18</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatYear"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formatYear</b>
+                            <a href="#formatYear"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;YYYY&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">libs/d3/src/lib/helper/d3-time-format-locale.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -385,49 +1076,72 @@ Add a new translation with the method &#39;addTimeFormatLocale&#39; like this sa
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
-import { timeFormat, timeFormatLocale, TimeLocaleDefinition } from &#x27;d3&#x27;;
+import { TimezoneService } from &#x27;@helgoland/core&#x27;;
+import moment from &#x27;moment&#x27;;
 
 /**
- * This service holds the translations for d3 charts time axis labels.
- * Add a new translation with the method &#x27;addTimeFormatLocale&#x27; like this sample:
- *
- * addTimeFormatLocale(&#x27;de&#x27;,
- * {
- *   &#x27;dateTime&#x27;: &#x27;%a %b %e %X %Y&#x27;,
- *   &#x27;date&#x27;: &#x27;%d-%m-%Y&#x27;,
- *   &#x27;time&#x27;: &#x27;%H:%M:%S&#x27;,
- *   &#x27;periods&#x27;: [&#x27;AM&#x27;, &#x27;PM&#x27;],
- *   &#x27;days&#x27;: [&#x27;Sonntag&#x27;, &#x27;Montag&#x27;, &#x27;Dienstag&#x27;, &#x27;Mittwoch&#x27;, &#x27;Donnerstag&#x27;, &#x27;Freitag&#x27;, &#x27;Samstag&#x27;],
- *   &#x27;shortDays&#x27;: [&#x27;So&#x27;, &#x27;Mo&#x27;, &#x27;Di&#x27;, &#x27;Mi&#x27;, &#x27;Do&#x27;, &#x27;Fr&#x27;, &#x27;Sa&#x27;],
- *   &#x27;months&#x27;: [&#x27;Januar&#x27;, &#x27;Februar&#x27;, &#x27;März&#x27;, &#x27;April&#x27;, &#x27;Mai&#x27;, &#x27;Juni&#x27;, &#x27;Juli&#x27;, &#x27;August&#x27;, &#x27;September&#x27;, &#x27;Oktober&#x27;, &#x27;November&#x27;, &#x27;Dezember&#x27;],
- *   &#x27;shortMonths&#x27;: [&#x27;Jan&#x27;, &#x27;Feb&#x27;, &#x27;Mär&#x27;, &#x27;Apr&#x27;, &#x27;Mai&#x27;, &#x27;Jun&#x27;, &#x27;Jul&#x27;, &#x27;Aug&#x27;, &#x27;Sep&#x27;, &#x27;Okt&#x27;, &#x27;Nov&#x27;, &#x27;Dez&#x27;]
- * })
- *
+ * This service formats the time labels for the time axis in d3. Internationalisation will be managed by moment.
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class D3TimeFormatLocaleService {
 
-  private timeFormatLocaleMapper: Map&lt;string, TimeLocaleDefinition&gt; &#x3D; new Map();
+  protected formatMillisecond &#x3D; &#x27;.SSS&#x27;;
+  protected formatSecond &#x3D; &#x27;:ss&#x27;;
+  protected formatMinute &#x3D; &#x27;HH:mm&#x27;;
+  protected formatHour &#x3D; &#x27;HH:mm&#x27;;
+  protected formatDay &#x3D; &#x27;MMM D&#x27;;
+  protected formatWeek &#x3D; &#x27;MMM D&#x27;;
+  protected formatMonth &#x3D; &#x27;MMMM&#x27;;
+  protected formatYear &#x3D; &#x27;YYYY&#x27;;
 
   constructor(
-    private translateService: TranslateService
+    protected timezoneSrvc: TimezoneService
   ) { }
 
-  public addTimeFormatLocale(localeCode: string, definition: TimeLocaleDefinition) {
-    this.timeFormatLocaleMapper.set(localeCode, definition);
+  public formatTime(time: number): string {
+    const curr &#x3D; this.timezoneSrvc.createTzDate(time);
+
+    const format &#x3D; this.roundSecond(time) &lt; curr ? this.formatMillisecond
+      : this.roundMinute(time) &lt; curr ? this.formatSecond
+        : this.roundHour(time) &lt; curr ? this.formatMinute
+          : this.roundDay(time) &lt; curr ? this.formatHour
+            : this.roundMonth(time) &lt; curr ? (this.roundWeek(time) &lt; curr ? this.formatDay : this.formatWeek)
+              : this.roundYear(time) &lt; curr ? this.formatMonth
+                : this.formatYear;
+
+    return this.timezoneSrvc.formatTzDate(moment(time), format);
   }
 
-  public getTimeLocale(specifier: string): (date: Date) &#x3D;&gt; string {
-    const langCode &#x3D; this.translateService.currentLang;
-    if (this.timeFormatLocaleMapper.has(langCode)) {
-      return timeFormatLocale(this.timeFormatLocaleMapper.get(langCode)).format(specifier);
-    } else {
-      return timeFormat(specifier);
-    }
+  private roundMinute(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;minute&#x27;);
   }
+
+  private roundSecond(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;second&#x27;);
+  }
+
+  private roundYear(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;year&#x27;);
+  }
+
+  private roundMonth(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;month&#x27;);
+  }
+
+  private roundWeek(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;week&#x27;);
+  }
+
+  private roundHour(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;hour&#x27;);
+  }
+
+  private roundDay(time: number) {
+    return this.timezoneSrvc.createTzDate(time).startOf(&#x27;day&#x27;);
+  }
+
 }
 </code></pre>
     </div>
@@ -463,6 +1177,7 @@ export class D3TimeFormatLocaleService {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
             var COMPODOC_CURRENT_PAGE_URL = 'D3TimeFormatLocaleService.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

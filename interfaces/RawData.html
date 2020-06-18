@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/plotly/src/lib/plotly-profile-graph/plotly-profile-graph.component.ts</code>
+            <code>libs/plotly/src/lib/plotly-profile-graph/plotly-profile-graph.component.ts</code>
         </p>
 
 
@@ -202,6 +202,7 @@ import {
     Time,
     TimedDatasetOptions,
     Timespan,
+    TimezoneService,
 } from &#x27;@helgoland/core&#x27;;
 import { LangChangeEvent, TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import * as d3 from &#x27;d3&#x27;;
@@ -274,9 +275,10 @@ export class PlotlyProfileGraphComponent
         protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected translateSrvc: TranslateService
+        protected translateSrvc: TranslateService,
+        protected timezoneSrvc: TimezoneService
     ) {
-        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc, timezoneSrvc);
     }
 
     public ngAfterViewInit(): void {
@@ -285,6 +287,8 @@ export class PlotlyProfileGraphComponent
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+    protected onTimezoneChanged(timezone: string): void { }
 
     public reloadDataForDatasets(datasetIds: string[]): void {
         console.log(&#x27;reload data at &#x27; + new Date());
@@ -571,6 +575,7 @@ interface Layout extends Partial&lt;any&gt; {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'RawData.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

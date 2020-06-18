@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts</code>
+            <code>libs/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts</code>
         </p>
 
             <p class="comment">
@@ -108,7 +108,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">libs/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:20</a></div>
                             </td>
                         </tr>
 
@@ -209,8 +209,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">projects/helgoland/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">libs/auth/src/lib/basic-auth/basic-auth-interceptor.service.ts:29</a></div>
                 </td>
             </tr>
 
@@ -296,6 +296,13 @@ import { BasicAuthServiceMaintainer } from &#x27;./basic-auth-service-maintainer
 import { BasicAuthService } from &#x27;./basic-auth.service&#x27;;
 
 /**
+ * Needs to be implemented to do the authentication for the given url.
+ */
+export abstract class BasicAuthInformer {
+  public abstract doBasicAuth(url: string): Observable&lt;boolean&gt;;
+}
+
+/**
  * Interceptor to a basic auth token if needed.
  */
 @Injectable()
@@ -352,13 +359,6 @@ export interface BasicAuthCredentials {
   username: string;
   password: string;
 }
-
-/**
- * Needs to be implemented to do the authentication for the given url.
- */
-export abstract class BasicAuthInformer {
-  public abstract doBasicAuth(url: string): Observable&lt;boolean&gt;;
-}
 </code></pre>
     </div>
 
@@ -393,6 +393,7 @@ export abstract class BasicAuthInformer {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
             var COMPODOC_CURRENT_PAGE_URL = 'BasicAuthInterceptorService.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

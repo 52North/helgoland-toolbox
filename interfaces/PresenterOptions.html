@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/core/src/lib/presenting/dataset-presenter.component.ts</code>
+            <code>libs/core/src/lib/presenting/dataset-presenter.component.ts</code>
         </p>
 
 
@@ -87,13 +87,13 @@
 import { LangChangeEvent, TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
 
+import { HelgolandServicesConnector } from &#x27;../api-communication/helgoland-services-connector&#x27;;
 import { InternalIdHandler } from &#x27;../dataset-api/internal-id-handler.service&#x27;;
 import { DatasetOptions } from &#x27;../model/internal/options&#x27;;
 import { ResizableComponent } from &#x27;../model/internal/ResizableComponent&#x27;;
 import { TimeInterval, Timespan } from &#x27;../model/internal/timeInterval&#x27;;
-import { HasLoadableContent } from &#x27;../model/mixins/has-loadable-content&#x27;;
 import { Time } from &#x27;../time/time.service&#x27;;
-import { HelgolandServicesConnector } from &#x27;../api-communication/helgoland-services-connector&#x27;;
+import { TimezoneService } from &#x27;./../time/timezone.service&#x27;;
 import { PresenterMessage } from &#x27;./presenter-message&#x27;;
 
 const equal &#x3D; require(&#x27;deep-equal&#x27;);
@@ -104,7 +104,7 @@ export interface PresenterOptions { }
  * Abstract superclass for all components, which will present datasets.
  */
 export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions&gt;
-    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy, HasLoadableContent {
+    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
 
     /**
      * List of presented dataset ids.
@@ -174,25 +174,26 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
     @Output()
     public dataLoaded: EventEmitter&lt;Set&lt;string&gt;&gt; &#x3D; new EventEmitter();
 
-    public isContentLoading: (loading: boolean) &#x3D;&gt; void;
-
     protected timespan: Timespan;
 
     private datasetIdsDiffer: IterableDiffer&lt;string&gt;;
     private selectedDatasetIdsDiffer: IterableDiffer&lt;string&gt;;
     private langChangeSubscription: Subscription;
+    private timezoneSubscription: Subscription;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected translateService: TranslateService
+        protected translateService: TranslateService,
+        protected timezoneSrvc: TimezoneService
     ) {
         super();
         this.datasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
         this.selectedDatasetIdsDiffer &#x3D; this.iterableDiffers.find([]).create();
         this.langChangeSubscription &#x3D; this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) &#x3D;&gt; this.onLanguageChanged(langChangeEvent));
+        this.timezoneSubscription &#x3D; this.timezoneSrvc.timezoneChange.subscribe((tz: string) &#x3D;&gt; this.onTimezoneChanged(tz));
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -207,6 +208,7 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
 
     public ngOnDestroy(): void {
         this.langChangeSubscription.unsubscribe();
+        this.timezoneSubscription.unsubscribe();
     }
 
     public ngDoCheck(): void {
@@ -257,6 +259,8 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
 
     protected abstract onLanguageChanged(langChangeEvent: LangChangeEvent): void;
 
+    protected abstract onTimezoneChanged(timezone: string): void;
+
     protected abstract timeIntervalChanges(): void;
 
     protected abstract addDataset(id: string, url: string): void;
@@ -300,6 +304,7 @@ export abstract class DatasetPresenterComponent&lt;T extends DatasetOptions | Da
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'PresenterOptions.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

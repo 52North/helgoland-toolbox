@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/helgoland/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts</code>
+            <code>libs/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts</code>
         </p>
 
 
@@ -120,7 +120,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">projects/helgoland/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">libs/d3/src/lib/d3-trajectory-graph/d3-trajectory-graph.component.ts:53</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -306,6 +306,7 @@ import {
     InternalIdHandler,
     LocatedTimeValueEntry,
     Time,
+    TimezoneService,
 } from &#x27;@helgoland/core&#x27;;
 import { LangChangeEvent, TranslateService } from &#x27;@ngx-translate/core&#x27;;
 import {
@@ -422,9 +423,10 @@ export class D3TrajectoryGraphComponent
         protected servicesConnector: HelgolandServicesConnector,
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
-        protected translateService: TranslateService
+        protected translateService: TranslateService,
+        protected timezoneSrvc: TimezoneService
     ) {
-        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService);
+        super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
         this.presenterOptions &#x3D; this.defaultGraphOptions;
     }
 
@@ -465,6 +467,8 @@ export class D3TrajectoryGraphComponent
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
+
+    protected onTimezoneChanged(timezone: string): void { }
 
     protected timeIntervalChanges(): void {
         this.datasetMap.forEach((entry) &#x3D;&gt; {
@@ -1085,6 +1089,7 @@ export class D3TrajectoryGraphComponent
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
             var COMPODOC_CURRENT_PAGE_URL = 'DataEntry.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

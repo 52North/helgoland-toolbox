@@ -1,0 +1,1927 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>helgoland-toolbox documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">helgoland-toolbox documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>D3GraphHoverPointComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+    </p>
+
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>n52-d3-graph-hover-point</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./d3-graph-hover-point.component.scss</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#background">background</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#d3Graph">d3Graph</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#disableHovering">disableHovering</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#drawLayer">drawLayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#graphExtent">graphExtent</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#graphLayer">graphLayer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#preparedData">preparedData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#previous">previous</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#adjustBackground">adjustBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#distance">distance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dragEndBackground">dragEndBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dragStartBackground">dragStartBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#findNearest">findNearest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#graphInitialized">graphInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#highlight">highlight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#mousemoveBackground">mousemoveBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mouseMoved">mouseMoved</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#unhighlight">unhighlight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#zoomEndBackground">zoomEndBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#zoomStartBackground">zoomStartBackground</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#adjustYAxis">adjustYAxis</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#graphInitialized">graphInitialized</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#hoveringService">hoveringService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onHighlightChanged">onHighlightChanged</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(graphId: <a href="../injectables/D3GraphId.html">D3GraphId</a>, graphs: <a href="../injectables/D3Graphs.html">D3Graphs</a>, graphHelper: <a href="../injectables/D3GraphHelperService.html">D3GraphHelperService</a>, timezoneSrvc: <a href="../injectables/TimezoneService.html">TimezoneService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>graphId</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/D3GraphId.html" target="_self" >D3GraphId</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>graphs</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/D3Graphs.html" target="_self" >D3Graphs</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>graphHelper</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/D3GraphHelperService.html" target="_self" >D3GraphHelperService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>timezoneSrvc</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TimezoneService.html" target="_self" >TimezoneService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hoveringService"></a>
+                        <b>hoveringService</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Service.html" target="_self" >D3HoveringService</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new D3SimpleHoveringService(this.timezoneSrvc)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onHighlightChanged"></a>
+                        <b>onHighlightChanged</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;HighlightOutput&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adjustBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            adjustBackground
+                        </b>
+                        <a href="#adjustBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adjustBackground(background: d3.Selection<SVGSVGElement | any | any | any>, graphExtent: <a href="../interfaces/D3GraphExtent.html">D3GraphExtent</a>, preparedData: InternalDataEntry[], graph: d3.Selection<SVGSVGElement | any | any | any>, timespan: <a href="../injectables/Time.html">Timespan</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>background</td>
+                                    <td>
+                                            <code>d3.Selection&lt;SVGSVGElement | any | any | any&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>graphExtent</td>
+                                    <td>
+                                                <code><a href="../interfaces/D3GraphExtent.html" target="_self" >D3GraphExtent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>preparedData</td>
+                                    <td>
+                                            <code>InternalDataEntry[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>graph</td>
+                                    <td>
+                                            <code>d3.Selection&lt;SVGSVGElement | any | any | any&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>timespan</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >Timespan</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="distance"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            distance
+                        </b>
+                        <a href="#distance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>distance(px: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, py: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, mx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, my: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:164</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>px</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>py</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>mx</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>my</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragEndBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            dragEndBackground
+                        </b>
+                        <a href="#dragEndBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>dragEndBackground()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dragStartBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            dragStartBackground
+                        </b>
+                        <a href="#dragStartBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>dragStartBackground()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:82</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findNearest"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            findNearest
+                        </b>
+                        <a href="#findNearest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findNearest(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>x</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>y</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/HoveredElement.html" target="_self" >HoveredElement</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="graphInitialized"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            graphInitialized
+                        </b>
+                        <a href="#graphInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>graphInitialized(graph: <a href="../injectables/Time.html">D3TimeseriesGraphComponent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>graph</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="highlight"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            highlight
+                        </b>
+                        <a href="#highlight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>highlight(nearest: <a href="../interfaces/HoveredElement.html">HoveredElement</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="109"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:109</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nearest</td>
+                                    <td>
+                                                <code><a href="../interfaces/HoveredElement.html" target="_self" >HoveredElement</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mousemoveBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            mousemoveBackground
+                        </b>
+                        <a href="#mousemoveBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mousemoveBackground()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:76</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mouseMoved"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            mouseMoved
+                        </b>
+                        <a href="#mouseMoved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mouseMoved()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:100</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unhighlight"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            unhighlight
+                        </b>
+                        <a href="#unhighlight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>unhighlight()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:132</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomEndBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            zoomEndBackground
+                        </b>
+                        <a href="#zoomEndBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomEndBackground()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:96</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="zoomStartBackground"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            zoomStartBackground
+                        </b>
+                        <a href="#zoomStartBackground"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>zoomStartBackground()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:87</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adjustYAxis"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Optional</span>
+                            adjustYAxis
+                        </b>
+                        <a href="#adjustYAxis"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adjustYAxis(axis: <a href="../interfaces/YAxis.html">YAxis</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:77</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>axis</td>
+                                    <td>
+                                                <code><a href="../interfaces/YAxis.html" target="_self" >YAxis</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="graphInitialized"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Abstract</span>
+                            graphInitialized
+                        </b>
+                        <a href="#graphInitialized"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>graphInitialized(graph: <a href="../injectables/Time.html">D3TimeseriesGraphComponent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:75</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>graph</td>
+                                    <td>
+                                                <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:63</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphControl</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../injectables/Time.html#source" target="_self" >D3TimeseriesGraphControl:71</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="background"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            background</b>
+                            <a href="#background"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>d3.Selection&lt;SVGSVGElement | any | any | any&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="d3Graph"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            d3Graph</b>
+                            <a href="#d3Graph"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/Time.html" target="_self" >D3TimeseriesGraphComponent</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disableHovering"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            disableHovering</b>
+                            <a href="#disableHovering"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="drawLayer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            drawLayer</b>
+                            <a href="#drawLayer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>d3.Selection&lt;SVGGElement | any | any | any&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="graphExtent"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            graphExtent</b>
+                            <a href="#graphExtent"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/D3GraphExtent.html" target="_self" >D3GraphExtent</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="graphLayer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            graphLayer</b>
+                            <a href="#graphLayer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>d3.Selection&lt;SVGSVGElement | any | any | any&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="preparedData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            preparedData</b>
+                            <a href="#preparedData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>InternalDataEntry[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="previous"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            previous</b>
+                            <a href="#previous"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/HoveredElement.html" target="_self" >HoveredElement</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">libs/d3/src/lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
+import { Timespan, TimezoneService } from &#x27;@helgoland/core&#x27;;
+import * as d3 from &#x27;d3&#x27;;
+import { Delaunay } from &#x27;d3-delaunay&#x27;;
+
+import { D3GraphHelperService } from &#x27;../../../helper/d3-graph-helper.service&#x27;;
+import { D3GraphId } from &#x27;../../../helper/d3-graph-id.service&#x27;;
+import { D3Graphs } from &#x27;../../../helper/d3-graphs.service&#x27;;
+import { D3HoveringService } from &#x27;../../../helper/hovering/d3-hovering-service&#x27;;
+import { D3SimpleHoveringService } from &#x27;../../../helper/hovering/d3-simple-hovering.service&#x27;;
+import { DataEntry, InternalDataEntry } from &#x27;../../../model/d3-general&#x27;;
+import { HighlightOutput } from &#x27;../../../model/d3-highlight&#x27;;
+import { D3GraphExtent, D3TimeseriesGraphControl } from &#x27;../../d3-timeseries-graph-control&#x27;;
+import { D3TimeseriesGraphComponent } from &#x27;../../d3-timeseries-graph.component&#x27;;
+import { HighlightValue } from &#x27;./../../../model/d3-highlight&#x27;;
+
+const MAXIMUM_POINT_DISTANCE &#x3D; 10;
+
+interface HoveredElement {
+  selection: d3.Selection&lt;d3.BaseType, any, any, any&gt;;
+  dataEntry: DataEntry;
+  internalEntry: InternalDataEntry;
+}
+
+@Component({
+  selector: &#x27;n52-d3-graph-hover-point&#x27;,
+  template: &#x27;&#x27;,
+  styleUrls: [&#x27;./d3-graph-hover-point.component.scss&#x27;]
+})
+export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
+
+  @Input() public hoveringService: D3HoveringService &#x3D; new D3SimpleHoveringService(this.timezoneSrvc);
+
+  @Output() public onHighlightChanged: EventEmitter&lt;HighlightOutput&gt; &#x3D; new EventEmitter();
+
+  private d3Graph: D3TimeseriesGraphComponent;
+  private drawLayer: d3.Selection&lt;SVGGElement, any, any, any&gt;;
+  private background: d3.Selection&lt;SVGSVGElement, any, any, any&gt;;
+  private disableHovering: boolean;
+  private preparedData: InternalDataEntry[];
+  private graphExtent: D3GraphExtent;
+  private graphLayer: d3.Selection&lt;SVGSVGElement, any, any, any&gt;;
+  private previous: HoveredElement;
+
+  constructor(
+    protected graphId: D3GraphId,
+    protected graphs: D3Graphs,
+    protected graphHelper: D3GraphHelperService,
+    protected timezoneSrvc: TimezoneService
+  ) {
+    super(graphId, graphs, graphHelper);
+  }
+
+  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+    this.d3Graph &#x3D; graph;
+    this.d3Graph.redrawCompleteGraph();
+  }
+
+  public adjustBackground(
+    background: d3.Selection&lt;SVGSVGElement, any, any, any&gt;,
+    graphExtent: D3GraphExtent,
+    preparedData: InternalDataEntry[],
+    graph: d3.Selection&lt;SVGSVGElement, any, any, any&gt;,
+    timespan: Timespan
+  ) {
+    if (!this.drawLayer) {
+      this.drawLayer &#x3D; this.d3Graph.getDrawingLayer(&#x27;hovering-point-layer&#x27;);
+      this.hoveringService.initPointHovering(this.drawLayer);
+    }
+    this.background &#x3D; background;
+    this.graphExtent &#x3D; graphExtent;
+    this.preparedData &#x3D; preparedData;
+    this.graphLayer &#x3D; graph;
+  }
+
+  public mousemoveBackground() {
+    if (!this.disableHovering) {
+      this.mouseMoved();
+    }
+  }
+
+  public dragStartBackground() {
+    this.unhighlight();
+    this.disableHovering &#x3D; true;
+  }
+
+  public zoomStartBackground() {
+    this.unhighlight();
+    this.disableHovering &#x3D; true;
+  }
+
+  public dragEndBackground() {
+    this.disableHovering &#x3D; false;
+  }
+
+  public zoomEndBackground() {
+    this.disableHovering &#x3D; false;
+  }
+
+  private mouseMoved() {
+    this.unhighlight();
+    const [mx, my] &#x3D; d3.mouse(this.background.node());
+    const nearest &#x3D; this.findNearest(mx + this.graphExtent.leftOffset, my);
+    if (nearest) {
+      this.highlight(nearest);
+    }
+  }
+
+  private highlight(nearest: HoveredElement) {
+    this.previous &#x3D; nearest;
+    const dataset &#x3D; this.d3Graph.getDataset(nearest.internalEntry.internalId);
+    this.hoveringService.showPointHovering(this.previous.dataEntry, this.previous.internalEntry, dataset);
+    this.hoveringService.positioningPointHovering(
+      this.previous.dataEntry.xDiagCoord,
+      this.previous.dataEntry.yDiagCoord,
+      this.previous.internalEntry.options.color,
+      this.background
+    );
+
+    const ids: Map&lt;string, HighlightValue&gt; &#x3D; new Map();
+    ids.set(this.previous.internalEntry.internalId, {
+      timestamp: this.previous.dataEntry.timestamp,
+      value: this.previous.dataEntry.value
+    });
+
+    this.onHighlightChanged.emit({
+      timestamp: this.previous.dataEntry.timestamp,
+      ids: ids
+    });
+  }
+
+  private unhighlight() {
+    if (this.previous) {
+      this.hoveringService.hidePointHovering(this.previous.dataEntry, this.previous.internalEntry);
+      this.previous &#x3D; null;
+    }
+  }
+
+  private findNearest(x: number, y: number): HoveredElement {
+    let nearest: HoveredElement &#x3D; null;
+    let nearestDist &#x3D; Infinity;
+
+    this.preparedData.forEach(e &#x3D;&gt; {
+      const delaunay &#x3D; Delaunay.from(e.data, d &#x3D;&gt; d.xDiagCoord, d &#x3D;&gt; d.yDiagCoord);
+      const idx &#x3D; delaunay.find(x, y);
+
+      if (idx !&#x3D; null &amp;&amp; !isNaN(idx)) {
+        const datum &#x3D; e.data[idx];
+        const distance &#x3D; this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
+        if (distance &lt;&#x3D; MAXIMUM_POINT_DISTANCE &amp;&amp; distance &lt; nearestDist) {
+          const id &#x3D; &#x60;dot-${datum.timestamp}-${e.hoverId}&#x60;;
+          nearest &#x3D; {
+            selection: this.graphLayer.select(&#x60;#${id}&#x60;),
+            internalEntry: e,
+            dataEntry: datum
+          };
+          nearestDist &#x3D; distance;
+        }
+      }
+    });
+    return nearest;
+  }
+
+  private distance(px: number, py: number, mx: number, my: number): number {
+    const a &#x3D; px - mx;
+    const b &#x3D; py - my;
+    return Math.sqrt(a * a + b * b);
+  }
+
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./d3-graph-hover-point.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div></div>'
+    var COMPONENTS = [{'name': 'AutoUpdateTimespanComponent', 'selector': 'n52-auto-update-timespan'},{'name': 'AxesOptionsComponent', 'selector': 'n52-axes-options'},{'name': 'BoolTogglerComponent', 'selector': 'n52-bool-toggler'},{'name': 'ColorSelectorComponent', 'selector': 'n52-color-selector'},{'name': 'ConfigurableTimeseriesEntryComponent', 'selector': 'n52-configurable-timeseries-entry'},{'name': 'D3GeneralGraphComponent', 'selector': 'n52-d3-general-graph'},{'name': 'D3GraphCopyrightComponent', 'selector': 'n52-d3-graph-copyright'},{'name': 'D3GraphHoverLineComponent', 'selector': 'n52-d3-graph-hover-line'},{'name': 'D3GraphHoverPointComponent', 'selector': 'n52-d3-graph-hover-point'},{'name': 'D3GraphOverviewSelectionComponent', 'selector': 'n52-d3-graph-overview-selection'},{'name': 'D3GraphPanZoomInteractionComponent', 'selector': 'n52-d3-graph-pan-zoom-interaction'},{'name': 'D3OverviewTimeseriesGraphComponent', 'selector': 'n52-d3-overview-timeseries-graph'},{'name': 'D3TimeseriesGraphComponent', 'selector': 'n52-d3-timeseries-graph'},{'name': 'D3TrajectoryGraphComponent', 'selector': 'n52-d3-trajectory-graph'},{'name': 'D3YAxisModifierComponent', 'selector': 'n52-d3-y-axis-modifier'},{'name': 'DatasetByStationSelectorComponent', 'selector': 'n52-dataset-by-station-selector'},{'name': 'DatasetExportComponent', 'selector': 'n52-dataset-export'},{'name': 'DatasetPermalinkDownloadComponent', 'selector': 'n52-dataset-permalink-download'},{'name': 'DatasetTableComponent', 'selector': 'n52-dataset-table'},{'name': 'DragOptionsComponent', 'selector': 'n52-drag-options'},{'name': 'ExportImageButtonComponent', 'selector': 'n52-export-image-button'},{'name': 'ExtendedDataD3TimeseriesGraphComponent', 'selector': 'n52-extended-data-d3-timeseries-graph'},{'name': 'ExtentControlComponent', 'selector': 'n52-extent-control'},{'name': 'FavoriteTogglerComponent', 'selector': 'n52-favorite-toggler'},{'name': 'FirstLatestTimeseriesEntryComponent', 'selector': 'n52-first-latest-timeseries-entry'},{'name': 'GeometryMapViewerComponent', 'selector': 'n52-geometry-map-viewer'},{'name': 'GeosearchControlComponent', 'selector': 'n52-geosearch-control'},{'name': 'LabelMapperComponent', 'selector': 'n52-label-mapper'},{'name': 'LastValueMapSelectorComponent', 'selector': 'n52-last-value-map-selector'},{'name': 'LayerOpacitySliderComponent', 'selector': 'n52-layer-opacity-slider'},{'name': 'LayerVisibleTogglerComponent', 'selector': 'n52-layer-visible-toggler'},{'name': 'ListSelectorComponent', 'selector': 'n52-list-selector'},{'name': 'LocateControlComponent', 'selector': 'n52-locate-control'},{'name': 'MinMaxRangeComponent', 'selector': 'n52-min-max-range'},{'name': 'MultiServiceFilterSelectorComponent', 'selector': 'n52-multi-service-filter-selector'},{'name': 'OlLayerAbstractComponent', 'selector': 'n52-ol-layer-abstract'},{'name': 'OlLayerAnimateTimeComponent', 'selector': 'n52-ol-layer-animate-time'},{'name': 'OlLayerComponent', 'selector': 'n52-ol-layer'},{'name': 'OlLayerLegendUrlComponent', 'selector': 'n52-ol-layer-legend-url'},{'name': 'OlLayerOpacitiySliderComponent', 'selector': 'n52-ol-layer-opacitiy-slider'},{'name': 'OlLayerTimeSelectorComponent', 'selector': 'n52-ol-layer-time-selector'},{'name': 'OlLayerTitleComponent', 'selector': 'n52-ol-layer-title'},{'name': 'OlLayerVisibilityTogglerComponent', 'selector': 'n52-ol-layer-visibility-toggler'},{'name': 'OlLayerZoomExtentComponent', 'selector': 'n52-ol-layer-zoom-extent'},{'name': 'OlMapComponent', 'selector': 'n52-ol-map'},{'name': 'OlMousePositionComponent', 'selector': 'n52-ol-mouse-position'},{'name': 'OlOverviewMapComponent', 'selector': 'n52-ol-overview-map'},{'name': 'OlStationSelectorLayerComponent', 'selector': 'n52-ol-station-selector-layer'},{'name': 'ParameterFacetComponent', 'selector': 'n52-parameter-facet'},{'name': 'PermalinkInMailComponent', 'selector': 'n52-permalink-in-mail'},{'name': 'PermalinkNewWindowComponent', 'selector': 'n52-permalink-new-window'},{'name': 'PermalinkToClipboardComponent', 'selector': 'n52-permalink-to-clipboard'},{'name': 'PlotlyProfileGraphComponent', 'selector': 'n52-plotly-profile-graph'},{'name': 'PredefinedTimespanSelectorComponent', 'selector': 'n52-predefined-timespan-selector'},{'name': 'ProfileEntryComponent', 'selector': 'n52-profile-entry'},{'name': 'ProfileTrajectoryMapSelectorComponent', 'selector': 'n52-profile-trajectory-map-selector'},{'name': 'RefreshButtonComponent', 'selector': 'n52-refresh-button'},{'name': 'ResultListComponent', 'selector': 'n52-result-list'},{'name': 'ResultMapComponent', 'selector': 'n52-result-map'},{'name': 'ServiceFilterSelectorComponent', 'selector': 'n52-service-filter-selector'},{'name': 'ServiceSelectorComponent', 'selector': 'n52-service-selector'},{'name': 'SimpleTimeseriesEntryComponent', 'selector': 'n52-simple-timeseries-entry'},{'name': 'StationMapSelectorComponent', 'selector': 'n52-station-map-selector'},{'name': 'StringTogglerComponent', 'selector': 'n52-string-toggler'},{'name': 'TimeListSelectorComponent', 'selector': 'n52-time-list-selector'},{'name': 'TimeRangeSliderComponent', 'selector': 'n52-time-range-slider'},{'name': 'TimeseriesEntryComponent', 'selector': 'n52-timeseries-entry'},{'name': 'TimespanButtonComponent', 'selector': 'n52-timespan-button'},{'name': 'TimespanShiftSelectorComponent', 'selector': 'n52-timespan-shift-selector'},{'name': 'TrajectoryEntryComponent', 'selector': 'n52-trajectory-entry'},{'name': 'ZoomControlComponent', 'selector': 'n52-zoom-control'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'D3GraphHoverPointComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'D3GraphHoverPointComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
