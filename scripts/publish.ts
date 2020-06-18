@@ -5,7 +5,7 @@ import { modules } from './utils';
 execSync('npm addUser', { stdio: 'inherit' });
 
 modules.forEach(p => {
-  exec('npm publish dist/helgoland/' + p + ' --access public', (error: Error | null, stdout: string, stderr: string) => {
+  exec('npm publish dist/libs/' + p + ' --access public', (error: Error | null, stdout: string, stderr: string) => {
     if (stderr) {
       console.log(stderr);
     } else {
