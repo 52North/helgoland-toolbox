@@ -109,7 +109,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   private highlight(nearest: HoveredElement) {
     this.previous = nearest;
     const dataset = this.d3Graph.getDataset(nearest.internalEntry.internalId);
-    this.hoveringService.showPointHovering(this.previous.dataEntry, this.previous.internalEntry, dataset);
+    this.hoveringService.showPointHovering(this.previous.dataEntry, this.previous.internalEntry, dataset, nearest.selection);
     this.hoveringService.positioningPointHovering(
       this.previous.dataEntry.xDiagCoord,
       this.previous.dataEntry.yDiagCoord,
@@ -131,7 +131,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
   private unhighlight() {
     if (this.previous) {
-      this.hoveringService.hidePointHovering(this.previous.dataEntry, this.previous.internalEntry);
+      this.hoveringService.hidePointHovering(this.previous.dataEntry, this.previous.internalEntry, this.previous.selection);
       this.previous = null;
     }
   }

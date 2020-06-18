@@ -28,23 +28,21 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.highlightText = elem.append('g');
   }
 
-  public hidePointHovering(d: DataEntry, entry: InternalDataEntry) {
+  public hidePointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     if (this.highlightRect) { this.highlightRect.style('visibility', 'hidden'); }
     if (this.highlightText) { this.highlightText.selectAll('*').remove(); }
     // unhighlight hovered dot
-    d3.select('#dot-' + d.timestamp + '-' + entry.hoverId)
+    pointElem
       .attr('opacity', 1)
       .attr('r', this.calculatePointRadius(entry));
   }
 
-  public showPointHovering(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+  public showPointHovering(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     if (this.highlightRect) { this.highlightRect.style('visibility', 'visible'); }
     if (this.highlightText) { this.highlightText.style('visibility', 'visible'); }
 
     // highlight hovered dot
-    d3.select('#dot-' + d.timestamp + '-' + entry.hoverId)
-      .attr('opacity', 0.8)
-      .attr('r', this.calculatePointRadius(entry) + 3);
+    pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
 
     this.setHoveringLabel(d, entry, timeseries);
   }
