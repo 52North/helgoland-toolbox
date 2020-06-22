@@ -246,7 +246,6 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   }
 
   private setConnector(url: string, connector: HelgolandServiceConnector, observer: Observer<HelgolandServiceConnector>) {
-    console.log(`Connector: ${url} works with ${connector.name}`);
     this.serviceMapping.set(url, connector);
     observer.next(connector);
     observer.complete();
