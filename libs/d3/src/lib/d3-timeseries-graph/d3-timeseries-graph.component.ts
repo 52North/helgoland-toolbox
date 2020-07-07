@@ -1192,7 +1192,7 @@ export class D3TimeseriesGraphComponent
 
         // draw line dots
         this.graphBody.selectAll('.graphDots')
-            .data(entry.data.filter((d) => typeof d.value === 'number'))
+            .data(entry.data.filter((d) => d.value && !isNaN(d.value)))
             .enter().append('circle')
             .attr('class', 'graphDots')
             .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
@@ -1283,25 +1283,14 @@ export class D3TimeseriesGraphComponent
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
         return d3.line<DataEntry>()
-            .defined((d) => typeof d.timestamp === 'number' && typeof d.value === 'number')
+            .defined((d) => (d.timestamp && !isNaN(d.timestamp)) && (d.value && !isNaN(d.value)))
             .x((d) => {
-                const xDiagCoord = xScaleBase(d.timestamp);
-                if (!isNaN(xDiagCoord)) {
-                    d.xDiagCoord = xDiagCoord;
-                    return xDiagCoord;
-                }
+                d.xDiagCoord = xScaleBase(d.timestamp);
+                return d.xDiagCoord;
             })
             .y((d) => {
-                if (typeof d.value === 'number') {
-                    const yDiagCoord = yScaleBase(d.value);
-                    if (!isNaN(yDiagCoord)) {
-                        d.yDiagCoord = yDiagCoord;
-                        return yDiagCoord;
-                    } else {
-                        // return value to avoid error with NaN in linepath while drag and drop in Google Chrome
-                        return 0;
-                    }
-                }
+                d.yDiagCoord = yScaleBase(d.value);
+                return d.yDiagCoord;
             })
             .curve(d3.curveLinear);
     }
