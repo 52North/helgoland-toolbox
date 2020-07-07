@@ -132,11 +132,12 @@ export interface ApiV3ParameterFilter {
   observationTypes?: ApiV3ObservationTypes[];
   valueTypes?: ApiV3ValueTypes[];
   expanded?: boolean;
-  feature?: string;
-  offering?: string;
-  phenomenon?: string;
-  category?: string;
-  procedure?: string;
+  datasets?: string[];
+  features?: string[];
+  offerings?: string[];
+  phenomena?: string[];
+  categories?: string[];
+  procedures?: string[];
   locale?: string;
 }
 
