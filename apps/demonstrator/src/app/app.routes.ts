@@ -13,6 +13,7 @@ import { OlComponent } from './pages/ol/ol.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
 import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
+import { SandboxComponent } from './pages/sandbox/sandbox.component';
 import { SensormlComponent } from './pages/sensorml/sensorml.component';
 import { ServiceFilterSelectorDemoPageComponent } from './pages/service-filter-selector/service-filter-selector.component';
 import { ServiceSelectorComponent } from './pages/service-selector/service-selector.component';
@@ -42,5 +43,6 @@ export const ROUTES: Routes = [
   { path: 'diagram-export', component: DiagramExportComponent },
   { path: 'facet-search', component: FacetSearchComponent },
   { path: 'sensorml', component: SensormlComponent },
+  { path: 'sandbox', component: SandboxComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
