@@ -22,7 +22,6 @@ import {
     HelgolandTimeseries,
     HelgolandTimeseriesData,
     InternalIdHandler,
-    MinMaxRange,
     SumValuesService,
     Time,
     Timespan,
@@ -466,19 +465,33 @@ export class D3TimeseriesGraphComponent
      */
     protected processData(entry: InternalDataEntry): void {
         if (entry.visible) {
-            let visualRange: MinMaxRange;
-            let rangeFixed = false;
+            let visualMin: number;
+            let visualMax: number;
+            let fixedMin = false;
+            let fixedMax = false;
+
             // set out of yAxisRange
-            if (entry.axisOptions.yAxisRange && entry.axisOptions.yAxisRange.min !== entry.axisOptions.yAxisRange.max) {
-                visualRange = entry.axisOptions.yAxisRange;
-                if (visualRange.min > visualRange.max) {
-                    const max = visualRange.min;
-                    visualRange.min = visualRange.max;
-                    visualRange.min = max;
+            if (entry.axisOptions.yAxisRange) {
+
+                if (!isNaN(entry.axisOptions.yAxisRange.min)) {
+                    visualMin = entry.axisOptions.yAxisRange.min;
+                    fixedMin = true;
                 }
-                rangeFixed = true;
-            } else {
-                // calculate default range
+
+                if (!isNaN(entry.axisOptions.yAxisRange.max)) {
+                    visualMax = entry.axisOptions.yAxisRange.max;
+                    fixedMax = true;
+                }
+
+                if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
+                    const temp = visualMin;
+                    visualMin = visualMax;
+                    visualMax = temp;
+                }
+            }
+
+            // set variable extend bounds
+            if (isNaN(visualMin) || isNaN(visualMax)) {
                 const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
                     if (typeof d.value === 'number') {
                         // with timespan restriction, it only selects values inside the selected timespan
@@ -491,29 +504,30 @@ export class D3TimeseriesGraphComponent
 
                 const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
-                const rangeMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
-                const rangeMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
-                const dataExtent = [rangeMin, rangeMax];
+                if (isNaN(visualMin)) {
+                    visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+                }
 
-                visualRange = {
-                    min: dataExtent[0],
-                    max: dataExtent[1]
-                };
+                if (isNaN(visualMax)) {
+                    visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+                }
             }
 
             // set out of zeroBasedAxis
             if (entry.axisOptions.zeroBased) {
-                if (visualRange.min > 0) {
-                    visualRange.min = 0;
+                if (visualMin > 0) {
+                    visualMin = 0;
                 }
-                if (visualRange.max < 0) {
-                    visualRange.max = 0;
+                if (visualMax < 0) {
+                    visualMax = 0;
                 }
             }
 
             this.preparedAxes.set(entry.internalId, {
-                rangeFixed,
-                visualRange,
+                visualMin,
+                visualMax,
+                fixedMin,
+                fixedMax,
                 entry
             });
         }
@@ -686,8 +700,9 @@ export class D3TimeseriesGraphComponent
                 // create sepearte axis
                 this.yAxes.push({
                     uom: axisSettings.entry.axisOptions.uom,
-                    range: axisSettings.visualRange,
-                    rangeFixed: axisSettings.rangeFixed,
+                    range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
+                    fixedMin: axisSettings.fixedMin,
+                    fixedMax: axisSettings.fixedMax,
                     selected: axisSettings.entry.selected,
                     seperate: true,
                     ids: [id],
@@ -700,14 +715,14 @@ export class D3TimeseriesGraphComponent
                     // add id to axis
                     axis.ids.push(id);
                     // update range for axis
-                    if (axisSettings.rangeFixed && axis.rangeFixed) {
-                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
-                    } else if (axisSettings.rangeFixed) {
-                        axis.range = axisSettings.visualRange;
-                        axis.rangeFixed = true;
-                    } else if (!axisSettings.rangeFixed && !axis.rangeFixed) {
-                        axis.range = this.rangeCalc.mergeRanges(axis.range, axisSettings.visualRange);
+                    if (!axis.fixedMin) {
+                        axis.range.min = Math.min(axis.range.min, axisSettings.visualMin);
                     }
+                    if (!axis.fixedMax) {
+                        axis.range.max = Math.max(axis.range.max, axisSettings.visualMax);
+                    }
+                    axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
+                    axis.fixedMax = axis.fixedMax || axisSettings.fixedMax;
                     // update selection
                     if (axis.selected) {
                         axis.selected = axisSettings.entry.selected;
@@ -715,10 +730,11 @@ export class D3TimeseriesGraphComponent
                 } else {
                     this.yAxes.push({
                         uom: axisSettings.entry.axisOptions.uom,
-                        range: axisSettings.visualRange,
+                        range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
+                        fixedMin: axisSettings.fixedMin,
+                        fixedMax: axisSettings.fixedMax,
                         seperate: false,
                         selected: axisSettings.entry.selected,
-                        rangeFixed: axisSettings.rangeFixed,
                         ids: [id]
                     });
                 }
@@ -970,7 +986,7 @@ export class D3TimeseriesGraphComponent
         // adjust to default extend
         axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
 
-        if (!axis.rangeFixed) { axis.range = this.rangeCalc.bufferRange(axis.range); }
+        this.rangeCalc.bufferUnfixedRange(axis);
 
         // range for y axis scale
         const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);

@@ -115,7 +115,8 @@ export interface YRanges {
 export interface YAxis {
     uom: string;
     range: MinMaxRange;
-    rangeFixed: boolean;
+    fixedMin: boolean;
+    fixedMax: boolean;
     ids: string[];
     seperate: boolean;
     selected: boolean;
@@ -126,7 +127,9 @@ export interface YAxis {
 }
 
 export interface YAxisSettings {
-    visualRange: MinMaxRange;
-    rangeFixed: boolean;
+    visualMin: number;
+    visualMax: number;
+    fixedMin: boolean;
+    fixedMax: boolean;
     entry: InternalDataEntry;
 }

@@ -118,8 +118,8 @@ export interface ReferenceValueOption {
  * @export
  */
 export interface MinMaxRange {
-    min: number;
-    max: number;
+    min?: number;
+    max?: number;
 }
 
 export class TimedDatasetOptions extends DatasetOptions {

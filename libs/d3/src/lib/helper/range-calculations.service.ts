@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
 
+import { YAxis } from '../model/d3-general';
+
 @Injectable({
   providedIn: 'root'
 })
 export class RangeCalculationsService {
+
+  public bufferUnfixedRange(axis: YAxis, factor: number = 0.1) {
+    const offset = (axis.range.max - axis.range.min) * factor;
+    if (!axis.fixedMin) { axis.range.min = axis.range.min - offset; }
+    if (!axis.fixedMax) { axis.range.max = axis.range.max + offset; }
+  }
 
   /**
    * Buffers the range with a given factor.
