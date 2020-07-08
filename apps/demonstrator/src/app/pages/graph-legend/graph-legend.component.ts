@@ -84,6 +84,7 @@ export class GraphLegendComponent {
         yaxis: true,
         copyright: {
             label: 'This should be bottom right and the text is long.',
+            link: 'https://52north.org/',
             positionX: 'right',
             positionY: 'bottom'
         },

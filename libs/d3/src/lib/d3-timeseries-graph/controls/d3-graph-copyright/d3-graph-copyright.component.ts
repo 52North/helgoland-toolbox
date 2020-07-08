@@ -69,9 +69,19 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
   }
 
   private createLabelText() {
-    this.labelText = this.copyrightLayer.append('svg:text')
-      .attr('class', 'copyright-text')
-      .style('pointer-events', 'none');
+    if (this.copyright.link) {
+      this.labelText = this.copyrightLayer.append('a')
+        .attr('href', this.copyright.link)
+        .attr('target', '_blank')
+        .attr('rel', 'noopener noreferrer')
+        .append('svg:text')
+        .attr('class', 'copyright-text')
+        .style('pointer-events', 'all');
+    } else {
+      this.labelText = this.copyrightLayer.append('svg:text')
+        .attr('class', 'copyright-text')
+        .style('pointer-events', 'none');
+    }
   }
 
   private createLabelRect() {

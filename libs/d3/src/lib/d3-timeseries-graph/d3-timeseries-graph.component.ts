@@ -122,6 +122,8 @@ export class D3TimeseriesGraphComponent
 
     private runningDataRequests: Map<string, Subscription> = new Map();
 
+    private copyrightPreset: d3.Selection<SVGGElement, any, any, any>;
+
     // default plot options
     public plotOptions: D3PlotOptions = {
         showReferenceValues: false,
@@ -574,10 +576,14 @@ export class D3TimeseriesGraphComponent
     }
 
     public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
-        return this.rawSvg
-            .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : null)
-            .attr('id', id)
-            .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+        if (id === 'copyright') {
+            return this.copyrightPreset.attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+        } else {
+            return this.rawSvg
+                .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : null)
+                .attr('id', id)
+                .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
+        }
     }
 
     /**
@@ -625,6 +631,11 @@ export class D3TimeseriesGraphComponent
         if (!this.yScaleBase) { return; }
 
         this.drawBaseGraph();
+
+        // need to draw copyrightlabel / preset first to show above background - hovering
+        this.copyrightPreset = this.rawSvg
+            .insert('g', null)
+            .attr('id', 'copyright');
 
         // create background as rectangle providing panning
         this.graphInteraction.selectAll('*').remove();
