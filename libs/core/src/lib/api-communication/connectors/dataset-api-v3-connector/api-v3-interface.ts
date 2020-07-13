@@ -35,7 +35,8 @@ export interface ApiV3Feature extends ApiV3Parameter {
           label: string;
         }
       }
-    }
+    },
+    children?: ApiV3Feature[];
   };
   type: string;
   geometry: GeoJSON.GeometryObject;

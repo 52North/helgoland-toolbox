@@ -135,6 +135,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
+    // later TODO ?
     if (!(ds.firstValue && ds.lastValue && ds.parameters)) {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
@@ -149,7 +150,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     }
     if (ds.parameters) {
       category = { id: ds.parameters.category.id, label: ds.parameters.category.label };
-      feature = { id: ds.feature.id, label: ds.feature.properties.label };
+      feature = { id: ds.feature.id, label: ds.feature.properties.label }; // , properties: ds.feature.properties };
       offering = { id: ds.parameters.offering.id, label: ds.parameters.offering.label };
       phenomenon = { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label };
       procedure = { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label };
@@ -181,7 +182,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
-    return new HelgolandPlatform(feature.id, feature.properties.label, [], feature.geometry);
+    return new HelgolandPlatform(feature.id, feature.properties.label, [], feature.geometry); // , feature.properties);
   }
 
   protected createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
@@ -348,7 +349,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         datasetIds.push(key);
       }
     }
-    return new HelgolandPlatform(feature.id, feature.properties.label, datasetIds, feature.geometry);
+    return new HelgolandPlatform(feature.id, feature.properties.label, datasetIds, feature.geometry); // , feature.properties);
   }
 
   protected createCategory(category: ApiV3Category): Category {
@@ -380,10 +381,30 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createFeature(feature: ApiV3Feature): Feature {
-    return {
-      id: feature.id,
-      label: feature.properties.label
-    };
+    const children: Parameter[] = [];
+
+    if (feature.properties.children && feature.properties.children.length > 0) {
+      for (const idx in feature.properties.children) {
+        if (feature.properties.children[idx]) {
+          const childFeature = this.createFeature(feature.properties.children[idx]);
+          children.push(childFeature);
+        }
+      }
+    }
+
+    if (children && children.length > 0) {
+      return {
+        id: feature.id,
+        label: feature.properties.label,
+        children: children
+      };
+    } else {
+      return {
+        id: feature.id,
+        label: feature.properties.label
+      };
+    }
+
   }
 
 }

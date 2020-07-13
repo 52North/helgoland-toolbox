@@ -137,16 +137,54 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
                 url,
                 service
             };
+            let children;
+            if (entry.children && entry.children.length > 0) {
+                children = this.setChildrenFilter(entry.children, prevfilter, url, service);
+            }
             const item = this.items.find(e => e.label === entry.label);
+            if (item) {
+                if (children) { item.children = children; }
+                if (!item.filterList.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
+                    item.filterList.push(filter);
+                }
+            } else {
+                entry.filterList = [filter];
+                if (children) { entry.children = children; }
+                this.items.push(entry);
+            }
+        });
+        console.log(this.items);
+    }
+
+    private setChildrenFilter(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): FilteredParameter[] {
+        const childrenItems: FilteredParameter[] = [];
+        res.forEach(entry => {
+
+            if (entry.children && entry.children.length > 0) {
+                const newChildrenItems = this.setChildrenFilter(entry.children, prevfilter, url, service);
+                entry.children = newChildrenItems;
+            }
+
+
+            entry.selected = this.selected === entry.label;
+            const filter: Filter = {
+                filter: prevfilter,
+                itemId: entry.id,
+                url,
+                service
+            };
+            const item = childrenItems.find(e => e.label === entry.label);
             if (item) {
                 if (!item.filterList.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
                     item.filterList.push(filter);
                 }
             } else {
                 entry.filterList = [filter];
-                this.items.push(entry);
+                childrenItems.push(entry);
             }
         });
+
+        return childrenItems;
     }
 
     private deselectAllItems() {

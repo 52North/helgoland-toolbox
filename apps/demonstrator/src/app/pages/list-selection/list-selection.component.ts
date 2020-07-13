@@ -27,7 +27,8 @@ export class ListSelectionComponent {
     constructor() {
         this.selectedProviderList.push({
             id: '1',
-            url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/'
+            url: 'http://localhost:8080/dao-impl-webapp/api/'
+            // url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/'
         });
     }
 
