@@ -72,7 +72,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@nrwl/angular": "8.12.11",
     "bootstrap-slider": "^10.6.2",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "core-js": "^2.5.4",
     "d3": "^5.12.0",
     "d3-delaunay": "^5.2.1",
