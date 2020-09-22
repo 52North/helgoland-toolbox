@@ -1,4 +1,4 @@
-import { AfterViewInit, Host } from '@angular/core';
+import { AfterViewInit, Directive, Host } from '@angular/core';
 import Map from 'ol/Map.js';
 
 import { OlMapService } from './services/map.service';
@@ -8,6 +8,7 @@ import { OlMapId } from './services/mapid.service';
 /**
  * Defines an abstract class, which must be implemented by every additional component
  */
+@Directive()
 export abstract class OlBaseComponent implements AfterViewInit {
 
   /**

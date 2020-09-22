@@ -1,4 +1,4 @@
-import { AfterViewInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, OnDestroy } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
@@ -52,6 +52,7 @@ export interface D3GraphExtent {
  *      <implementation-selector></implementation-selector>
  * </n52-d3-timeseries-graph>
  */
+@Directive()
 export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
 
     constructor(

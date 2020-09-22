@@ -1,8 +1,9 @@
-import { Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Language } from './model/language';
 
+@Directive()
 export abstract class LocalSelectorComponent implements OnChanges {
 
     @Input()

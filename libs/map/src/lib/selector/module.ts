@@ -40,7 +40,7 @@ export interface HelgolandMapSelectorModuleConfig {
     ]
 })
 export class HelgolandMapSelectorModule {
-    static forRoot(config?: HelgolandMapSelectorModuleConfig): ModuleWithProviders {
+    static forRoot(config?: HelgolandMapSelectorModuleConfig): ModuleWithProviders<HelgolandMapSelectorModule> {
         return {
             ngModule: HelgolandMapSelectorModule,
             providers: [

@@ -1,5 +1,6 @@
-import { HostListener } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 
+@Directive()
 export abstract class ResizableComponent {
 
     @HostListener('window:resize', ['$event'])

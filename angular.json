@@ -4,7 +4,7 @@
     "demonstrator": {
       "projectType": "application",
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       },
@@ -20,15 +20,12 @@
             "main": "apps/demonstrator/src/main.ts",
             "polyfills": "apps/demonstrator/src/polyfills.ts",
             "tsConfig": "apps/demonstrator/tsconfig.app.json",
-            "showCircularDependencies": false,
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/demonstrator/src/favicon.ico",
               "apps/demonstrator/src/assets"
             ],
-            "styles": [
-              "apps/demonstrator/src/styles.scss"
-            ],
+            "styles": ["apps/demonstrator/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -44,7 +41,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -87,18 +83,14 @@
               "apps/demonstrator/tsconfig.app.json",
               "apps/demonstrator/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/demonstrator/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/demonstrator/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/demonstrator/jest.config.js",
-            "tsConfig": "apps/demonstrator/tsconfig.spec.json",
-            "setupFile": "apps/demonstrator/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
@@ -124,13 +116,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/demonstrator-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/demonstrator-e2e/**"
-            ]
+            "tsConfig": ["apps/demonstrator-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/demonstrator-e2e/**/*"]
           }
         }
       }
@@ -142,13 +129,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/core"],
           "options": {
             "tsConfig": "libs/core/tsconfig.lib.json",
             "project": "libs/core/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/core/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -158,24 +148,19 @@
               "libs/core/tsconfig.lib.json",
               "libs/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/core/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/core/jest.config.js",
-            "tsConfig": "libs/core/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/core/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -187,13 +172,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/auth"],
           "options": {
             "tsConfig": "libs/auth/tsconfig.lib.json",
             "project": "libs/auth/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/auth/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -203,24 +191,19 @@
               "libs/auth/tsconfig.lib.json",
               "libs/auth/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/auth/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/auth/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/auth/jest.config.js",
-            "tsConfig": "libs/auth/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/auth/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -232,13 +215,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/d3"],
           "options": {
             "tsConfig": "libs/d3/tsconfig.lib.json",
             "project": "libs/d3/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/d3/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -248,24 +234,19 @@
               "libs/d3/tsconfig.lib.json",
               "libs/d3/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/d3/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/d3/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/d3/jest.config.js",
-            "tsConfig": "libs/d3/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/d3/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -277,13 +258,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/depiction"],
           "options": {
             "tsConfig": "libs/depiction/tsconfig.lib.json",
             "project": "libs/depiction/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/depiction/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -293,24 +277,19 @@
               "libs/depiction/tsconfig.lib.json",
               "libs/depiction/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/depiction/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/depiction/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/depiction/jest.config.js",
-            "tsConfig": "libs/depiction/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/depiction/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -322,13 +301,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/control"],
           "options": {
             "tsConfig": "libs/control/tsconfig.lib.json",
             "project": "libs/control/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/control/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -338,24 +320,19 @@
               "libs/control/tsconfig.lib.json",
               "libs/control/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/control/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/control/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/control/jest.config.js",
-            "tsConfig": "libs/control/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/control/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -367,13 +344,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/caching"],
           "options": {
             "tsConfig": "libs/caching/tsconfig.lib.json",
             "project": "libs/caching/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/caching/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -383,24 +363,19 @@
               "libs/caching/tsconfig.lib.json",
               "libs/caching/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/caching/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/caching/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/caching/jest.config.js",
-            "tsConfig": "libs/caching/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/caching/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -412,13 +387,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/eventing"],
           "options": {
             "tsConfig": "libs/eventing/tsconfig.lib.json",
             "project": "libs/eventing/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/eventing/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -428,24 +406,19 @@
               "libs/eventing/tsconfig.lib.json",
               "libs/eventing/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/eventing/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/eventing/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/eventing/jest.config.js",
-            "tsConfig": "libs/eventing/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/eventing/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -457,13 +430,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/map"],
           "options": {
             "tsConfig": "libs/map/tsconfig.lib.json",
             "project": "libs/map/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/map/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -473,24 +449,19 @@
               "libs/map/tsconfig.lib.json",
               "libs/map/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/map/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/map/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/map/jest.config.js",
-            "tsConfig": "libs/map/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/map/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -502,13 +473,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/favorite"],
           "options": {
             "tsConfig": "libs/favorite/tsconfig.lib.json",
             "project": "libs/favorite/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/favorite/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -518,24 +492,19 @@
               "libs/favorite/tsconfig.lib.json",
               "libs/favorite/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/favorite/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/favorite/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/favorite/jest.config.js",
-            "tsConfig": "libs/favorite/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/favorite/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -547,13 +516,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/facet-search"],
           "options": {
             "tsConfig": "libs/facet-search/tsconfig.lib.json",
             "project": "libs/facet-search/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/facet-search/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -563,24 +535,19 @@
               "libs/facet-search/tsconfig.lib.json",
               "libs/facet-search/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/facet-search/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/facet-search/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/facet-search/jest.config.js",
-            "tsConfig": "libs/facet-search/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/facet-search/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -592,13 +559,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/modification"],
           "options": {
             "tsConfig": "libs/modification/tsconfig.lib.json",
             "project": "libs/modification/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/modification/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -608,24 +578,19 @@
               "libs/modification/tsconfig.lib.json",
               "libs/modification/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/modification/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/modification/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/modification/jest.config.js",
-            "tsConfig": "libs/modification/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/modification/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -637,13 +602,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/permalink"],
           "options": {
             "tsConfig": "libs/permalink/tsconfig.lib.json",
             "project": "libs/permalink/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/permalink/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -653,24 +621,19 @@
               "libs/permalink/tsconfig.lib.json",
               "libs/permalink/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/permalink/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/permalink/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/permalink/jest.config.js",
-            "tsConfig": "libs/permalink/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/permalink/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -682,13 +645,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/plotly"],
           "options": {
             "tsConfig": "libs/plotly/tsconfig.lib.json",
             "project": "libs/plotly/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/plotly/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -698,24 +664,19 @@
               "libs/plotly/tsconfig.lib.json",
               "libs/plotly/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/plotly/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/plotly/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/plotly/jest.config.js",
-            "tsConfig": "libs/plotly/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/plotly/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -727,13 +688,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/selector"],
           "options": {
             "tsConfig": "libs/selector/tsconfig.lib.json",
             "project": "libs/selector/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/selector/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -743,24 +707,19 @@
               "libs/selector/tsconfig.lib.json",
               "libs/selector/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/selector/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/selector/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/selector/jest.config.js",
-            "tsConfig": "libs/selector/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/selector/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -772,13 +731,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/sensorml"],
           "options": {
             "tsConfig": "libs/sensorml/tsconfig.lib.json",
             "project": "libs/sensorml/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/sensorml/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -788,24 +750,19 @@
               "libs/sensorml/tsconfig.lib.json",
               "libs/sensorml/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/sensorml/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/sensorml/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/sensorml/jest.config.js",
-            "tsConfig": "libs/sensorml/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/sensorml/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -817,13 +774,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/time"],
           "options": {
             "tsConfig": "libs/time/tsconfig.lib.json",
             "project": "libs/time/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/time/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -833,24 +793,19 @@
               "libs/time/tsconfig.lib.json",
               "libs/time/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/time/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/time/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/time/jest.config.js",
-            "tsConfig": "libs/time/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/time/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -862,13 +817,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/time-range-slider"],
           "options": {
             "tsConfig": "libs/time-range-slider/tsconfig.lib.json",
             "project": "libs/time-range-slider/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/time-range-slider/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -878,24 +836,19 @@
               "libs/time-range-slider/tsconfig.lib.json",
               "libs/time-range-slider/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/time-range-slider/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/time-range-slider/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/time-range-slider/jest.config.js",
-            "tsConfig": "libs/time-range-slider/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/time-range-slider/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -907,13 +860,16 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@nrwl/angular:package",
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "outputs": ["libs/open-layers"],
           "options": {
             "tsConfig": "libs/open-layers/tsconfig.lib.json",
             "project": "libs/open-layers/ng-package.json"
           },
           "configurations": {
-            "production": {}
+            "production": {
+              "tsConfig": "libs/open-layers/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -923,24 +879,19 @@
               "libs/open-layers/tsconfig.lib.json",
               "libs/open-layers/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/open-layers/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/open-layers/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/open-layers/jest.config.js",
-            "tsConfig": "libs/open-layers/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/open-layers/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
       "schematics": {
-        "@nrwl/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       }
@@ -950,6 +901,40 @@
     "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
     "@nrwl/angular:application": {
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"

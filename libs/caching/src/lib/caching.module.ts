@@ -51,7 +51,7 @@ const HTTP_GET_PROVIDERS = [
 })
 export class HelgolandCachingModule {
 
-  static forRoot(config: CacheConfig): ModuleWithProviders {
+  static forRoot(config: CacheConfig): ModuleWithProviders<HelgolandCachingModule> {
     return {
       ngModule: HelgolandCachingModule,
       providers: [

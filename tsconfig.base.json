@@ -8,7 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "module": "esnext",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
@@ -17,23 +17,14 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "paths": {
-      "@helgoland/core": [
-        "dist/libs/core",
-        "libs/core/src/index.ts"
-      ],
+      "@helgoland/core": ["dist/libs/core", "libs/core/src/index.ts"],
       "@helgoland/auth": ["libs/auth/src/index.ts"],
       "@helgoland/d3": ["libs/d3/src/index.ts"],
-      "@helgoland/depiction": [
-        "dist/libs/depiction",
-        "libs/depiction/src/index.ts"
-      ],
+      "@helgoland/depiction": ["dist/libs/depiction", "libs/depiction/src/index.ts"],
       "@helgoland/control": ["libs/control/src/index.ts"],
       "@helgoland/caching": ["libs/caching/src/index.ts"],
       "@helgoland/eventing": ["libs/eventing/src/index.ts"],
-      "@helgoland/map": [
-        "dist/libs/map",
-        "libs/map/src/index.ts"
-      ],
+      "@helgoland/map": ["dist/libs/map", "libs/map/src/index.ts"],
       "@helgoland/favorite": ["libs/favorite/src/index.ts"],
       "@helgoland/facet-search": ["libs/facet-search/src/index.ts"],
       "@helgoland/modification": ["libs/modification/src/index.ts"],
@@ -47,5 +38,5 @@
       "@helgoland-toolbox/test": ["libs/test/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp", "dist"]
+  "exclude": ["node_modules", "tmp"]
 }

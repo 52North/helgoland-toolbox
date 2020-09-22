@@ -17,7 +17,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
    */
   @Input() timeInterval = 2000;
 
-  private interval: NodeJS.Timeout;
+  private interval: number;
 
   constructor(
     protected wmsCaps: WmsCapabilitiesService
@@ -31,7 +31,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
     // find index in list
     let idx = this.timeDimensions.findIndex(e => e.getTime() === this.currentTime.getTime());
     // start animation
-    this.interval = setInterval(() => {
+    this.interval = window.setInterval(() => {
       idx++;
       if (idx >= this.timeDimensions.length) { idx = 0; }
       this.setTime(this.timeDimensions[idx]);

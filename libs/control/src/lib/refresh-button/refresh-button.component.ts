@@ -16,7 +16,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   @Output()
   public refreshing: EventEmitter<boolean> = new EventEmitter();
 
-  private interval: NodeJS.Timer;
+  private interval: number;
 
   constructor(
     protected settings: SettingsService<Settings>
@@ -52,7 +52,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   }
 
   private startRefreshInterval() {
-    this.interval = setInterval(() => this.refresh(), this.refreshInterval * 1000);
+    this.interval = window.setInterval(() => this.refresh(), this.refreshInterval * 1000);
   }
 
   private stopRefreshInterval() {

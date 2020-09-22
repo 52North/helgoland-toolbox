@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     ChangeDetectorRef,
+    Directive,
     EventEmitter,
     Input,
     KeyValueDiffers,
@@ -15,6 +16,7 @@ import { CachedMapComponent } from '../base/cached-map-component';
 import { MapCache } from '../base/map-cache.service';
 import { MarkerSelectorGenerator } from './model/marker-selector-generator';
 
+@Directive()
 export abstract class MapSelectorComponent<T>
     extends CachedMapComponent
     implements OnChanges, AfterViewInit {

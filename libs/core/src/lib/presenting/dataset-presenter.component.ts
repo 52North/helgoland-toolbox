@@ -1,4 +1,5 @@
 import {
+    Directive,
     DoCheck,
     EventEmitter,
     Input,
@@ -28,6 +29,7 @@ export interface PresenterOptions { }
 /**
  * Abstract superclass for all components, which will present datasets.
  */
+@Directive()
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions>
     extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
 
