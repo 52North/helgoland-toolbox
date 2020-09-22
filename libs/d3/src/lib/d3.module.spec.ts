@@ -1,8 +1,9 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { HelgolandD3Module } from './d3.module';
 
 describe('D3Module', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandD3Module],
     }).compileComponents();

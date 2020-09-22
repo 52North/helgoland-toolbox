@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PermalinkNewWindowComponent } from './permalink-new-window.component';
 
@@ -6,11 +6,11 @@ describe('PermalinkNewWindowComponent', () => {
   let component: PermalinkNewWindowComponent;
   let fixture: ComponentFixture<PermalinkNewWindowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PermalinkNewWindowComponent ]
+      declarations: [PermalinkNewWindowComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

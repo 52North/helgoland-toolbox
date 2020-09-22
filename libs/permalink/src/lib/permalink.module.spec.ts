@@ -1,8 +1,9 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { HelgolandPermalinkModule } from './permalink.module';
 
 describe('PermalinkModule', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandPermalinkModule],
     }).compileComponents();

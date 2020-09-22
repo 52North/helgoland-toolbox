@@ -64,12 +64,12 @@ describe('HelgolandservicesConnectorService', () => {
   }));
 
   it('should be created', () => {
-    const service: HelgolandServicesConnector = TestBed.get(HelgolandServicesConnector);
+    const service: HelgolandServicesConnector = TestBed.inject(HelgolandServicesConnector);
     expect(service).toBeTruthy();
   });
 
   it('should be created', () => {
-    const service: HelgolandServicesConnector = TestBed.get(HelgolandServicesConnector);
+    const service: HelgolandServicesConnector = TestBed.inject(HelgolandServicesConnector);
     const urls = [
       // 'https://calgary-aq-sta.sensorup.com/v1.0/',
       // 'https://www.fluggs.de/sos2/api/v1/',

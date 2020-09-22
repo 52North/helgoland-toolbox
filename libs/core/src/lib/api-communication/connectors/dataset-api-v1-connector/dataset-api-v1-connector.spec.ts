@@ -21,7 +21,7 @@ describe('DatasetApiV1Connector', () => {
   }));
 
   it('should be created', () => {
-    const service: DatasetApiV1Connector = TestBed.get(DatasetApiV1Connector);
+    const service: DatasetApiV1Connector = TestBed.inject(DatasetApiV1Connector);
     expect(service).toBeTruthy();
   });
 });

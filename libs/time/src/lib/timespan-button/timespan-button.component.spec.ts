@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DefinedTimespanService } from '@helgoland/core';
 
 import { TimespanButtonComponent } from './timespan-button.component';
@@ -7,7 +7,7 @@ describe('TimespanButtonComponent', () => {
   let component: TimespanButtonComponent;
   let fixture: ComponentFixture<TimespanButtonComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [
         DefinedTimespanService

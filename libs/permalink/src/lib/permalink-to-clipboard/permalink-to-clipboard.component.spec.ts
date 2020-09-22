@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { PermalinkToClipboardComponent } from './permalink-to-clipboard.component';
@@ -7,7 +7,7 @@ describe('PermalinkToClipboardComponent', () => {
   let component: PermalinkToClipboardComponent;
   let fixture: ComponentFixture<PermalinkToClipboardComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         ClipboardModule

@@ -1,5 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
     DatasetApiInterface,
     HelgolandCoreModule,
@@ -40,7 +40,7 @@ describe('StationMapSelectorComponent', () => {
     let fixture: ComponentFixture<StationMapSelectorComponent>;
     let httpTestingController: HttpTestingController;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientTestingModule,
@@ -59,7 +59,7 @@ describe('StationMapSelectorComponent', () => {
     }));
 
     beforeEach(() => {
-        httpTestingController = TestBed.get(HttpTestingController);
+        httpTestingController = TestBed.inject(HttpTestingController);
         fixture = TestBed.createComponent(StationMapSelectorComponent);
         (fixture.nativeElement as HTMLElement).style.height = '500px';
         component = fixture.componentInstance;

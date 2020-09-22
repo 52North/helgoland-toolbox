@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -8,7 +8,7 @@ describe('OlLayerTimeSelectorComponent', () => {
   let component: OlLayerTimeSelectorComponent;
   let fixture: ComponentFixture<OlLayerTimeSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OlLayerTimeSelectorComponent],
       imports: [FormsModule, HelgolandCoreModule]

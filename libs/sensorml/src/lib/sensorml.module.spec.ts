@@ -1,8 +1,9 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { HelgolandSensormlModule } from './sensorml.module';
 
 describe('SensormlModule', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandSensormlModule],
     }).compileComponents();

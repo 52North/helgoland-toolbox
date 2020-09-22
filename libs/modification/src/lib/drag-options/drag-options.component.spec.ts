@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DragOptionsComponent } from './drag-options.component';
 
@@ -6,7 +6,7 @@ describe('DragOptionsComponent', () => {
   let component: DragOptionsComponent;
   let fixture: ComponentFixture<DragOptionsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DragOptionsComponent]
     }).compileComponents();

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DefinedTimespanService, SettingsService } from '@helgoland/core';
 
 import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector.component';
@@ -7,7 +7,7 @@ describe('PredefinedTimespanSelectorComponent', () => {
   let component: PredefinedTimespanSelectorComponent;
   let fixture: ComponentFixture<PredefinedTimespanSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [
         SettingsService,

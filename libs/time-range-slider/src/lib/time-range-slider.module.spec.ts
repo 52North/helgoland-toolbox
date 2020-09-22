@@ -1,8 +1,9 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { HelgolandTimeRangeSliderModule } from './time-range-slider.module';
 
 describe('TimeRangeSliderModule', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandTimeRangeSliderModule],
     }).compileComponents();

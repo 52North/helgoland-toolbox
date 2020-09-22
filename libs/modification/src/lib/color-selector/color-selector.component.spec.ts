@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { ColorSelectorComponent } from './color-selector.component';
@@ -7,7 +7,7 @@ describe('ColorSelectorComponent', () => {
   let component: ColorSelectorComponent;
   let fixture: ComponentFixture<ColorSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         ColorPickerModule

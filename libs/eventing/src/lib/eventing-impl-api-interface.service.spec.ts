@@ -29,7 +29,7 @@ describe('EventingImplApiInterface', () => {
         HelgolandCoreModule
       ]
     });
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OlOverviewMapComponent } from './ol-overview-map.component';
 
@@ -6,11 +6,11 @@ describe('OlOverviewMapComponent', () => {
   let component: OlOverviewMapComponent;
   let fixture: ComponentFixture<OlOverviewMapComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlOverviewMapComponent ]
+      declarations: [OlOverviewMapComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

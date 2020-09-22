@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MapCache } from '../../base/map-cache.service';
 import { ExtentControlComponent } from './extent.component';
@@ -7,7 +7,7 @@ describe('ExtentControlComponent', () => {
   let component: ExtentControlComponent;
   let fixture: ComponentFixture<ExtentControlComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [
         MapCache

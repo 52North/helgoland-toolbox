@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
@@ -9,7 +9,7 @@ describe('FirstLatestTimeseriesEntryComponent', () => {
   let component: FirstLatestTimeseriesEntryComponent;
   let fixture: ComponentFixture<FirstLatestTimeseriesEntryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

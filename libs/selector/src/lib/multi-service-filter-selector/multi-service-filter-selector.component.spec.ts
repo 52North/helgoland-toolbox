@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
@@ -11,7 +11,7 @@ describe('MultiServiceFilterSelectorComponent', () => {
   let component: MultiServiceFilterSelectorComponent;
   let fixture: ComponentFixture<MultiServiceFilterSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
@@ -43,7 +43,7 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
 
   let fixtureInterval: number;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,

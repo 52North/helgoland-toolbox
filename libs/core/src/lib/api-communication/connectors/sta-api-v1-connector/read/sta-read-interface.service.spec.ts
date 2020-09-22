@@ -29,12 +29,12 @@ describe('StaImplInterfaceService', () => {
   }));
 
   it('should be created', () => {
-    const service: StaReadInterfaceService = TestBed.get(StaReadInterfaceService);
+    const service: StaReadInterfaceService = TestBed.inject(StaReadInterfaceService);
     expect(service).toBeTruthy();
   });
 
   it('should fetch things', () => {
-    const read: StaReadInterfaceService = TestBed.get(StaReadInterfaceService);
+    const read: StaReadInterfaceService = TestBed.inject(StaReadInterfaceService);
     expect(read).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerZoomExtentComponent } from './ol-layer-zoom-extent.component';
@@ -7,7 +7,7 @@ describe('OlLayerZoomExtentComponent', () => {
   let component: OlLayerZoomExtentComponent;
   let fixture: ComponentFixture<OlLayerZoomExtentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OlLayerZoomExtentComponent],
       imports: [HelgolandCoreModule]

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OlLayerComponent } from './ol-layer.component';
 
@@ -6,11 +6,11 @@ describe('OlLayerComponent', () => {
   let component: OlLayerComponent;
   let fixture: ComponentFixture<OlLayerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlLayerComponent ]
+      declarations: [OlLayerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

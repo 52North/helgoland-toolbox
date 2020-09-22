@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
 
 import { SettingsServiceTestingProvider } from '../../../../testing/settings.testing';
@@ -13,7 +13,7 @@ describe('ExportImageButtonComponent', () => {
   const datasetID1 = 'http://www.fluggs.de/sos2/api/v1/__49';
   let definedTimespanSrvc: DefinedTimespanService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

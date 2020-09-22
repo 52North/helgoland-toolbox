@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerAbstractComponent } from './ol-layer-abstract.component';
@@ -7,7 +7,7 @@ describe('OlLayerAbstractComponent', () => {
   let component: OlLayerAbstractComponent;
   let fixture: ComponentFixture<OlLayerAbstractComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OlLayerAbstractComponent],
       imports: [HelgolandCoreModule]

@@ -14,12 +14,12 @@ describe('TimezoneService', () => {
   }));
 
   it('should be created', () => {
-    const service: TimezoneService = TestBed.get(TimezoneService);
+    const service: TimezoneService = TestBed.inject(TimezoneService);
     expect(service).toBeTruthy();
   });
 
   it('should set timezone', () => {
-    const service: TimezoneService = TestBed.get(TimezoneService);
+    const service: TimezoneService = TestBed.inject(TimezoneService);
     const tz = 'America/New_York';
     service.setTimezone(tz);
     expect(service.getTimezoneName()).toBe(tz);

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandMapModule } from '@helgoland/map';
 
 import { HelgolandFacetSearchModule } from '../../facet-search.module';
@@ -9,7 +9,7 @@ describe('ResultMapComponent', () => {
   let component: ResultMapComponent;
   let fixture: ComponentFixture<ResultMapComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandMapModule, HelgolandFacetSearchModule],
       declarations: []

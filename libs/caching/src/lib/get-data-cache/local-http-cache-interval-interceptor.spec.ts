@@ -26,8 +26,8 @@ describe('LocalHttpCacheIntervalInterceptor', () => {
         HttpCacheInterval
       ]
     });
-    apiSrvc = TestBed.get(DatasetImplApiInterface);
-    definedTimespanSrvc = TestBed.get(DefinedTimespanService);
+    apiSrvc = TestBed.inject(DatasetImplApiInterface);
+    definedTimespanSrvc = TestBed.inject(DefinedTimespanService);
   });
 
   it('should be created', inject([LocalHttpCacheIntervalInterceptor], (service: LocalHttpCacheIntervalInterceptor) => {

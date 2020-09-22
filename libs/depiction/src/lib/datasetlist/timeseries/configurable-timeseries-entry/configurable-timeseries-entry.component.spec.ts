@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
@@ -9,7 +9,7 @@ describe('ConfigurableTimeseriesEntryComponent', () => {
   let component: ConfigurableTimeseriesEntryComponent;
   let fixture: ComponentFixture<ConfigurableTimeseriesEntryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

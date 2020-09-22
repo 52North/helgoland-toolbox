@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SettingsService } from '@helgoland/core';
 
 import { LabelMapperComponent } from './label-mapper.component';
@@ -9,7 +9,7 @@ describe('LabelMapperComponent', () => {
   let component: LabelMapperComponent;
   let fixture: ComponentFixture<LabelMapperComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
       providers: [LabelMapperService, SettingsService],

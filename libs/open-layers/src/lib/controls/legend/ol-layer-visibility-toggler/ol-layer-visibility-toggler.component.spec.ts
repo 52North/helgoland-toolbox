@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OlLayerVisibilityTogglerComponent } from './ol-layer-visibility-toggler.component';
 
@@ -6,11 +6,11 @@ describe('OlLayerVisibilityTogglerComponent', () => {
   let component: OlLayerVisibilityTogglerComponent;
   let fixture: ComponentFixture<OlLayerVisibilityTogglerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlLayerVisibilityTogglerComponent ]
+      declarations: [OlLayerVisibilityTogglerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

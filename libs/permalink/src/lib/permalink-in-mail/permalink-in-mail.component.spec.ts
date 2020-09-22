@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PermalinkInMailComponent } from './permalink-in-mail.component';
 
@@ -6,7 +6,7 @@ describe('PermalinkInMailComponent', () => {
   let component: PermalinkInMailComponent;
   let fixture: ComponentFixture<PermalinkInMailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PermalinkInMailComponent]
     }).compileComponents();

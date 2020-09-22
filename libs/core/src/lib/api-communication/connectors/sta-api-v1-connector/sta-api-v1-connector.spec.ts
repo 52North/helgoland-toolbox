@@ -11,7 +11,7 @@ describe('StaApiV1Connector', () => {
   }));
 
   it('should be created', () => {
-    const service: StaApiV1Connector = TestBed.get(StaApiV1Connector);
+    const service: StaApiV1Connector = TestBed.inject(StaApiV1Connector);
     expect(service).toBeTruthy();
   });
 });

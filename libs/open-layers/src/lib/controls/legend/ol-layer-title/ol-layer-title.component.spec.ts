@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerTitleComponent } from './ol-layer-title.component';
@@ -7,7 +7,7 @@ describe('OlLayerTitleComponent', () => {
   let component: OlLayerTitleComponent;
   let fixture: ComponentFixture<OlLayerTitleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OlLayerTitleComponent],
       imports: [HelgolandCoreModule]

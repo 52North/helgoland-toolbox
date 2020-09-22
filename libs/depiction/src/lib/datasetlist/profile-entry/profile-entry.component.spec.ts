@@ -1,17 +1,17 @@
-import { DatasetApiInterfaceTesting } from './../../../../../testing/dataset-api-interface.testing';
-import { TranslateTestingModule } from './../../../../../testing/translate.testing.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule, SettingsService } from '@helgoland/core';
 
 import { LabelMapperComponent } from '../../label-mapper/label-mapper.component';
 import { LabelMapperService } from '../../label-mapper/label-mapper.service';
+import { DatasetApiInterfaceTesting } from './../../../../../testing/dataset-api-interface.testing';
+import { TranslateTestingModule } from './../../../../../testing/translate.testing.module';
 import { ProfileEntryComponent } from './profile-entry.component';
 
 describe('ProfileEntryComponent', () => {
   let component: ProfileEntryComponent;
   let fixture: ComponentFixture<ProfileEntryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

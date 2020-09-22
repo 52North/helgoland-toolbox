@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MapCache } from '../../base/map-cache.service';
 import { LayerVisibleTogglerComponent } from './layer-visible-toggler.component';
@@ -7,7 +7,7 @@ describe('LayerVisibleTogglerComponent', () => {
   let component: LayerVisibleTogglerComponent;
   let fixture: ComponentFixture<LayerVisibleTogglerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LayerVisibleTogglerComponent],
       providers: [MapCache]

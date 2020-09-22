@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DatasetType, HelgolandCoreModule } from '@helgoland/core';
 
 import { SettingsServiceTestingProvider } from '../../../../testing/settings.testing';
@@ -11,7 +11,7 @@ describe('ServiceSelectorComponent', () => {
   let component: ServiceSelectorComponent;
   let fixture: ComponentFixture<ServiceSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,

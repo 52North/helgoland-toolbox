@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
-import { DatasetExportComponent } from './dataset-export.component';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DatasetExportComponent } from './dataset-export.component';
 
 describe('DatasetExportComponent', () => {
   let component: DatasetExportComponent;
   let fixture: ComponentFixture<DatasetExportComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

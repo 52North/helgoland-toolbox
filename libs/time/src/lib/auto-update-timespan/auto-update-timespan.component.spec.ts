@@ -1,13 +1,13 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { AutoUpdateTimespanComponent } from './auto-update-timespan.component';
-import { HelgolandCoreModule, Time, Timespan } from '@helgoland/core';
 
 describe('AutoUpdateTimespanComponent', () => {
   let component: AutoUpdateTimespanComponent;
   let fixture: ComponentFixture<AutoUpdateTimespanComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule

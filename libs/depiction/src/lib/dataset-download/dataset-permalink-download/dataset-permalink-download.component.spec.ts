@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download.component';
-
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
+
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download.component';
 
 describe('DatasetPermalinkDownloadComponent', () => {
   let component: DatasetPermalinkDownloadComponent;
   let fixture: ComponentFixture<DatasetPermalinkDownloadComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DatasetPermalinkDownloadComponent],
       imports: [

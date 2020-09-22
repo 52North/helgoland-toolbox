@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerAnimateTimeComponent } from './ol-layer-animate-time.component';
@@ -7,7 +7,7 @@ describe('OlLayerAnimateTimeComponent', () => {
   let component: OlLayerAnimateTimeComponent;
   let fixture: ComponentFixture<OlLayerAnimateTimeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OlLayerAnimateTimeComponent],
       imports: [HelgolandCoreModule]

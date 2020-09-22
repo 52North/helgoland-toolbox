@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   DatasetApiV1ConnectorProvider,
   DatasetApiV2ConnectorProvider,
@@ -23,7 +23,7 @@ describe('D3OverviewTimeseriesGraphComponent', () => {
   const datasetID1 = 'https://www.fluggs.de/sos2/api/v1/__26';
   const datasetID2 = 'https://www.fluggs.de/sos2/api/v1/__139';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [
         DatasetApiInterfaceTesting,

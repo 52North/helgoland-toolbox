@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StringTogglerComponent } from './string-toggler.component';
 
@@ -6,11 +6,11 @@ describe('StringTogglerComponent', () => {
   let component: StringTogglerComponent;
   let fixture: ComponentFixture<StringTogglerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StringTogglerComponent ]
+      declarations: [StringTogglerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

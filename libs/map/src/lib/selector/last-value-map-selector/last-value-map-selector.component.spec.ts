@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from '@helgoland/core';
 
 import { MapCache } from '../../base/map-cache.service';
@@ -14,7 +14,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
   let component: LastValueMapSelectorComponent;
   let fixture: ComponentFixture<LastValueMapSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,

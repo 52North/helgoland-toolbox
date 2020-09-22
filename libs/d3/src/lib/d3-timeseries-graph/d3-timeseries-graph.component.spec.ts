@@ -1,7 +1,6 @@
-import { BasicAuthTestingProviders } from './../../../../testing/basic-auth.testing';
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { BasicAuthInterceptorService, BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   DatasetApiV1ConnectorProvider,
@@ -17,6 +16,7 @@ import {
 
 import { HelgolandD3Module } from '../d3.module';
 import { HoveringStyle } from '../model/d3-plot-options';
+import { BasicAuthTestingProviders } from './../../../../testing/basic-auth.testing';
 import { DatasetApiInterfaceTesting } from './../../../../testing/dataset-api-interface.testing';
 import { SettingsServiceTestingProvider } from './../../../../testing/settings.testing';
 import { TranslateTestingModule } from './../../../../testing/translate.testing.module';
@@ -26,7 +26,7 @@ describe('D3TimeseriesGraphComponent - raw', () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
@@ -83,7 +83,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
   const datasetID2 = 'https://geo.irceline.be/sos/api/v1/__6522';
   let definedTimespanSrvc: DefinedTimespanService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,

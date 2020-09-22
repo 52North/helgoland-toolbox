@@ -9,7 +9,7 @@ describe('WmsCapabilitiesService', () => {
   }));
 
   it('should be created', () => {
-    const service: WmsCapabilitiesService = TestBed.get(WmsCapabilitiesService);
+    const service: WmsCapabilitiesService = TestBed.inject(WmsCapabilitiesService);
     expect(service).toBeTruthy();
   });
 

@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
     DatasetApiV1ConnectorProvider,
     DatasetApiV3ConnectorProvider,
@@ -20,7 +20,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
     let component: ExtendedDataD3TimeseriesGraphComponent;
     let fixture: ComponentFixture<ExtendedDataD3TimeseriesGraphComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 HttpClientModule,

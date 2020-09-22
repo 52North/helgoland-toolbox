@@ -8,7 +8,7 @@ describe('D3DataSimpleGeneralizer', () => {
   }));
 
   it('should be created', () => {
-    const service: D3DataSimpleGeneralizer = TestBed.get(D3DataSimpleGeneralizer);
+    const service: D3DataSimpleGeneralizer = TestBed.inject(D3DataSimpleGeneralizer);
     expect(service).toBeTruthy();
   });
 });

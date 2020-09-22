@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { DatasetApiInterfaceTesting } from './../../../../testing/dataset-api-interface.testing';
@@ -11,7 +11,7 @@ describe('PlotlyProfileGraphComponent', () => {
   let component: PlotlyProfileGraphComponent;
   let fixture: ComponentFixture<PlotlyProfileGraphComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,

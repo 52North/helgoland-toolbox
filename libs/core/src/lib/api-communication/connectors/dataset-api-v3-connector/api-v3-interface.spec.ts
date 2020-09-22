@@ -27,7 +27,7 @@ describe('ApiV3InterfaceService', () => {
   }));
 
   it('should be created', () => {
-    const service: ApiV3InterfaceService = TestBed.get(ApiV3InterfaceService);
+    const service: ApiV3InterfaceService = TestBed.inject(ApiV3InterfaceService);
     // const timespan: Timespan = new Timespan(new Date(2010, 1, 1), new Date(2020, 1, 1));
     // service.getSamplings('', {
     //   timespan: encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format()),

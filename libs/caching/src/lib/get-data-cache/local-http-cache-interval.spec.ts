@@ -20,7 +20,7 @@ describe('LocalHttpCacheInterval', () => {
                 DefinedTimespanService
             ]
         });
-        defTsSrvc = TestBed.get(DefinedTimespanService);
+        defTsSrvc = TestBed.inject(DefinedTimespanService);
     });
 
     it('should be created', inject([LocalHttpCacheInterval], (service: LocalHttpCacheInterval) => {

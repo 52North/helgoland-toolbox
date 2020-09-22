@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
 import { TranslateTestingModule } from './../../../../testing/translate.testing.module';
@@ -8,7 +8,7 @@ describe('TimespanShiftSelectorComponent', () => {
   let component: TimespanShiftSelectorComponent;
   let fixture: ComponentFixture<TimespanShiftSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandCoreModule,

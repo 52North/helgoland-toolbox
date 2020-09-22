@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HelgolandFacetSearchModule } from './../../facet-search.module';
 import { FacetSearchService } from './../../facet-search.service';
@@ -8,7 +8,7 @@ describe('ParameterFacetComponent', () => {
   let component: ParameterFacetComponent;
   let fixture: ComponentFixture<ParameterFacetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandFacetSearchModule]
     }).compileComponents();

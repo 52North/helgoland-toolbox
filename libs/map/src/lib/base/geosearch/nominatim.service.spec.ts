@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { Point } from 'geojson';
 
@@ -27,7 +27,7 @@ describe('NominatimService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should search with point geometry in result', async(() => {
+  it('should search with point geometry in result', waitForAsync(() => {
     nominatimService.searchTerm('gent', {
       asPointGeometry: true,
       addressdetails: true,
@@ -38,7 +38,7 @@ describe('NominatimService', () => {
     });
   }));
 
-  it('should reverse search', async(() => {
+  it('should reverse search', waitForAsync(() => {
     const point: Point = {
       type: 'Point',
       coordinates: [51.9350437, 7.6520628]

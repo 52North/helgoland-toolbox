@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
@@ -27,7 +27,7 @@ describe('ListSelectorComponent', () => {
   let component: ListSelectorComponent;
   let fixture: ComponentFixture<ListSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
@@ -62,7 +62,7 @@ describe('ListSelectorComponent', () => {
   let fixture: ComponentFixture<ListSelectorComponent>;
   let fixtureInterval: number;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
