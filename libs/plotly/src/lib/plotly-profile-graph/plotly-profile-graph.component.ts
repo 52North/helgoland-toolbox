@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, IterableDiffers, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, IterableDiffers, Output } from '@angular/core';
 import {
     DatasetPresenterComponent,
     DatasetType,
@@ -13,18 +13,13 @@ import {
     TimezoneService,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { PlotlyService } from 'angular-plotly.js';
 import * as d3 from 'd3';
-import * as Plotly from 'plotly.js';
 
 interface RawData {
     dataset: HelgolandProfile;
     datas: ProfileDataEntry[];
     options: TimedDatasetOptions[];
-}
-
-interface ExtendedScatterData extends Partial<Plotly.ScatterData> {
-    timestamp: number;
-    id: string;
 }
 
 const LINE_WIDTH_SELECTED = 5;
@@ -44,16 +39,12 @@ export class PlotlyProfileGraphComponent
     @Output()
     public onHighlight: EventEmitter<PresenterHighlight> = new EventEmitter();
 
-    @ViewChild('plotly', { static: true })
-    public plotlyElem: ElementRef;
-
-    private plotlyArea: any;
-    private preparedData: ExtendedScatterData[] = [];
+    public preparedData = [];
     private rawData: Map<string, RawData> = new Map();
     private counterXAxis = 0;
     private counterYAxis = 0;
 
-    private layout: Layout = {
+    public layout = {
         autosize: true,
         showlegend: false,
         dragmode: 'pan',
@@ -67,7 +58,7 @@ export class PlotlyProfileGraphComponent
         hovermode: 'closest'
     };
 
-    private settings: Partial<any> = {
+    public config: Partial<any> = {
         displayModeBar: false,
         modeBarButtonsToRemove: [
             'sendDataToCloud',
@@ -84,14 +75,14 @@ export class PlotlyProfileGraphComponent
         protected datasetIdResolver: InternalIdHandler,
         protected timeSrvc: Time,
         protected translateSrvc: TranslateService,
-        protected timezoneSrvc: TimezoneService
+        protected timezoneSrvc: TimezoneService,
+        protected plotlyService: PlotlyService
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc, timezoneSrvc);
     }
 
     public ngAfterViewInit(): void {
-        this.plotlyArea = this.plotlyElem.nativeElement;
-        this.drawChart();
+        this.processData();
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
@@ -124,7 +115,7 @@ export class PlotlyProfileGraphComponent
                                 });
                             }
                         }
-                        this.drawChart();
+                        this.processData();
                     });
                 }
             });
@@ -133,15 +124,15 @@ export class PlotlyProfileGraphComponent
 
     protected removeDataset(internalId: string): void {
         this.rawData.delete(internalId);
-        this.drawChart();
+        this.processData();
     }
 
     protected setSelectedId(internalId: string): void {
-        this.drawChart();
+        this.processData();
     }
 
     protected removeSelectedId(internalId: string): void {
-        this.drawChart();
+        this.processData();
     }
 
     // tslint:disable-next-line:no-empty
@@ -160,13 +151,11 @@ export class PlotlyProfileGraphComponent
                 this.rawData.get(internalId).options.splice(removedIdx, 1);
                 this.rawData.get(internalId).datas.splice(removedIdx, 1);
             }
-            this.drawChart();
+            this.processData();
         }
     }
 
-    protected onResize(): void {
-        this.redrawChart();
-    }
+    protected onResize(): void { }
 
     private processData() {
         this.clearLayout();
@@ -181,7 +170,7 @@ export class PlotlyProfileGraphComponent
                         x.push(entry.value);
                         y.push(entry.vertical);
                     });
-                    const prepared: ExtendedScatterData = {
+                    const prepared: any = {
                         x,
                         y,
                         type: 'scatter',
@@ -309,20 +298,9 @@ export class PlotlyProfileGraphComponent
         }
     }
 
-    private drawChart() {
-        if (this.plotlyArea && this.rawData.size > 0) {
-            this.processData();
-            Plotly.newPlot(this.plotlyArea, this.preparedData, this.layout, this.settings);
-            this.plotlyArea.on('plotly_hover', (entry: any) => {
-                if (entry.points.length === 1) {
-                    this.onHighlight.emit({
-                        internalId: entry.points[0].data.id,
-                        dataIndex: entry.points[0].pointNumber
-                    });
-                }
-            });
-        }
-    }
+    // private drawChart() {
+    //     this.processData();
+    // }
 
     private clearLayout() {
         // todo remove yaxis
@@ -340,18 +318,4 @@ export class PlotlyProfileGraphComponent
         this.preparedData = [];
     }
 
-    private redrawChart() {
-        if (this.plotlyArea) {
-            Plotly.relayout(this.plotlyArea, {});
-        }
-    }
-}
-
-interface ScatterData extends Partial<any> {
-    id: string;
-    timestamp: number;
-}
-
-interface Layout extends Partial<any> {
-    [key: string]: any;
 }

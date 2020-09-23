@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
 
+import { HelgolandPlotlyModule } from '../plotly.module';
 import { DatasetApiInterfaceTesting } from './../../../../testing/dataset-api-interface.testing';
 import { SettingsServiceTestingProvider } from './../../../../testing/settings.testing';
 import { TranslateTestingModule } from './../../../../testing/translate.testing.module';
@@ -16,13 +16,13 @@ describe('PlotlyProfileGraphComponent', () => {
       imports: [
         HttpClientModule,
         TranslateTestingModule,
-        HelgolandCoreModule
+        HelgolandPlotlyModule
       ],
       providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider
       ],
-      declarations: [PlotlyProfileGraphComponent]
+      declarations: []
     }).compileComponents();
   }));
 
