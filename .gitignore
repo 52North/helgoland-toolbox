@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-helgoland-*.21.tgz
+helgoland-*.tgz
 
 # dependencies
 /node_modules

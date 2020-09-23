@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { catchError, mergeMap, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
@@ -216,7 +216,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
     return this.sta.aggregatePaging(this.sta.getDatastreams(url, this.createDatastreamFilter(filter)))
-      .pipe(flatMap(ds => {
+      .pipe(mergeMap(ds => {
         return forkJoin(ds.value.map(d => {
           if (filter.expanded) {
             return this.requestExpandedTimeseries(d, url);
@@ -286,7 +286,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of(null); }
     return this.sta.getDatastream(internalId.url, internalId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
-      .pipe(flatMap(ds => this.requestExpandedTimeseries(ds, internalId.url)));
+      .pipe(mergeMap(ds => this.requestExpandedTimeseries(ds, internalId.url)));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {

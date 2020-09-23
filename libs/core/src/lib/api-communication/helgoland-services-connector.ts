@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 
 import { InternalDatasetId, InternalIdHandler } from '../dataset-api/internal-id-handler.service';
 import { Category } from '../model/dataset-api/category';
@@ -48,55 +48,55 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   ) { }
 
   getServices(url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandService[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getServices(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getServices(url, filter)));
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter = {}): Observable<Category[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getCategories(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getCategories(url, filter)));
   }
 
   getCategory(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Category> {
-    return this.getConnector(url).pipe(flatMap(h => h.getCategory(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getCategory(id, url, filter)));
   }
 
   getOfferings(url: string, filter: HelgolandParameterFilter = {}): Observable<Offering[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getOfferings(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getOfferings(url, filter)));
   }
 
   getOffering(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Offering> {
-    return this.getConnector(url).pipe(flatMap(h => h.getOffering(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getOffering(id, url, filter)));
   }
 
   getPhenomena(url: string, filter: HelgolandParameterFilter = {}): Observable<Phenomenon[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getPhenomena(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getPhenomena(url, filter)));
   }
 
   getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Phenomenon> {
-    return this.getConnector(url).pipe(flatMap(h => h.getPhenomenon(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getPhenomenon(id, url, filter)));
   }
 
   getProcedures(url: string, filter: HelgolandParameterFilter = {}): Observable<Procedure[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getProcedures(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getProcedures(url, filter)));
   }
 
   getProcedure(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Procedure> {
-    return this.getConnector(url).pipe(flatMap(h => h.getProcedure(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getProcedure(id, url, filter)));
   }
 
   getFeatures(url: string, filter: HelgolandParameterFilter = {}): Observable<Feature[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getFeatures(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getFeatures(url, filter)));
   }
 
   getFeature(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<Feature> {
-    return this.getConnector(url).pipe(flatMap(h => h.getFeature(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getFeature(id, url, filter)));
   }
 
   getPlatforms(url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandPlatform[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getPlatforms(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getPlatforms(url, filter)));
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandPlatform> {
-    return this.getConnector(url).pipe(flatMap(h => h.getPlatform(id, url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getPlatform(id, url, filter)));
   }
 
   getDatasets(url: string, filter: {
@@ -138,7 +138,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   getDatasets(internalId: string | InternalDatasetId, filter?: DatasetFilter): Observable<HelgolandDataset[]>;
 
   getDatasets(url: string, filter: DatasetFilter = {}): Observable<HelgolandDataset[]> {
-    return this.getConnector(url).pipe(flatMap(h => h.getDatasets(url, filter)));
+    return this.getConnector(url).pipe(mergeMap(h => h.getDatasets(url, filter)));
   }
 
   getDataset(internalId: string | InternalDatasetId, filter: {
@@ -181,7 +181,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
 
   getDataset(internalId: string | InternalDatasetId, filter: DatasetFilter = {}): Observable<HelgolandDataset> {
     internalId = this.internalIdHandler.resolveInternalId(internalId);
-    return this.getConnector(internalId.url).pipe(flatMap(h => h.getDataset(internalId, filter)));
+    return this.getConnector(internalId.url).pipe(mergeMap(h => h.getDataset(internalId, filter)));
   }
 
   getDatasetData(dataset: HelgolandTimeseries, timespan: Timespan, filter?: HelgolandDataFilter): Observable<HelgolandTimeseriesData>;
@@ -191,17 +191,17 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   getDatasetData(dataset: HelgolandTrajectory, timespan: Timespan, filter?: HelgolandDataFilter): Observable<HelgolandTrajectoryData>;
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter = {}): Observable<HelgolandData> {
-    return this.getConnector(dataset.url).pipe(flatMap(h => h.getDatasetData(dataset, timespan, filter)));
+    return this.getConnector(dataset.url).pipe(mergeMap(h => h.getDatasetData(dataset, timespan, filter)));
   }
 
   createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams = {}): Observable<string> {
     internalId = this.internalIdHandler.resolveInternalId(internalId);
-    return this.getConnector(internalId.url).pipe(flatMap(h => h.createCsvDataExportLink(internalId, params)));
+    return this.getConnector(internalId.url).pipe(mergeMap(h => h.createCsvDataExportLink(internalId, params)));
   }
 
   getDatasetExtras(internalId: string | InternalDatasetId): Observable<DatasetExtras> {
     internalId = this.internalIdHandler.resolveInternalId(internalId);
-    return this.getConnector(internalId.url).pipe(flatMap(h => h.getDatasetExtras(internalId)));
+    return this.getConnector(internalId.url).pipe(mergeMap(h => h.getDatasetExtras(internalId)));
   }
 
   private getConnector(url: string): Observable<HelgolandServiceConnector> {
