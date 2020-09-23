@@ -2,7 +2,13 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/depiction",
   "lib": {
-    "entryFile": "src/index.ts"
+    "entryFile": "src/index.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "moment": "moment",
+      "xlsx": "xlsx",
+      "@ngx-translate/core": "@ngx-translate/core"
+    }
   },
   "whitelistedNonPeerDependencies": [""]
 }

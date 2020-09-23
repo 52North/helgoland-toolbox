@@ -2,7 +2,13 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/plotly",
   "lib": {
-    "entryFile": "src/index.ts"
+    "entryFile": "src/index.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "d3": "d3",
+      "@ngx-translate/core": "@ngx-translate/core",
+      "angular-plotly.js": "angular-plotly.js"
+    }
   },
   "whitelistedNonPeerDependencies": [""]
 }
