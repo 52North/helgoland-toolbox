@@ -6,5 +6,6 @@ export function Required(target: object, propertyKey: string) {
     set(value) {
       Object.defineProperty(target, propertyKey, { value, writable: true, configurable: true });
     },
+    configurable: true
   });
 }

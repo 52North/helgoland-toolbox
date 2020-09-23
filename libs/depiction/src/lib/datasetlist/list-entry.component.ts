@@ -1,4 +1,4 @@
-import { EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
  *  - can be deleted, which also triggers an output event
  *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
  */
+@Directive()
 export abstract class ListEntryComponent implements OnInit, OnDestroy {
 
     @Input()
