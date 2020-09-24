@@ -3,10 +3,10 @@
   "version": "1.0.0-beta.23",
   "license": "Apache-2.0",
   "dependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
     "@types/geojson": "^7946.0.7",
-    "bootstrap-slider": "^9.9.1",
+    "bootstrap-slider": "^11.0.2",
     "jquery": "^3.4.1"
   }
 }

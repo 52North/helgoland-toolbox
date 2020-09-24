@@ -3,8 +3,9 @@
   "version": "1.0.0-beta.23",
   "license": "Apache-2.0",
   "dependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
-    "plotly.js": "^1.48.3"
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
+    "plotly.js": "^1.54.5",
+    "angular-plotly.js": "^3.0.0"
   }
 }

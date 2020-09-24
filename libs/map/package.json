@@ -3,12 +3,12 @@
   "version": "1.0.0-beta.23",
   "license": "Apache-2.0",
   "dependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
     "@types/geojson": "^7946.0.7",
-    "@types/leaflet": "^1.5.0",
-    "@types/leaflet.markercluster": "^1.4.0",
-    "leaflet": "^1.6.0",
+    "@types/leaflet": "^1.5.17",
+    "@types/leaflet.markercluster": "^1.4.2",
+    "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.4.1"
   }
 }
