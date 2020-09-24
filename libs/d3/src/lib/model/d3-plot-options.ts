@@ -87,6 +87,7 @@ export interface D3PlotOptions {
 
 export interface D3Copyright {
     label: string;
+    link?: string;
     positionX?: 'right' | 'left';
     positionY?: 'top' | 'bottom';
 }
