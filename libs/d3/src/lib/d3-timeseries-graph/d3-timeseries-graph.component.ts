@@ -622,6 +622,9 @@ export class D3TimeseriesGraphComponent
             axis.yScale = yAxisResult.yScale;
         });
 
+        // cancel drawing, without enough space
+        if ((this.width - this.leftOffset) <= 0 || this.height <= 0) { return; }
+
         if (!this.yScaleBase) { return; }
 
         this.drawBaseGraph();
@@ -716,10 +719,10 @@ export class D3TimeseriesGraphComponent
                     axis.ids.push(id);
                     // update range for axis
                     if (!axis.fixedMin) {
-                        axis.range.min = Math.min(axis.range.min, axisSettings.visualMin);
+                        axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
                     }
                     if (!axis.fixedMax) {
-                        axis.range.max = Math.max(axis.range.max, axisSettings.visualMax);
+                        axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
                     }
                     axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
                     axis.fixedMax = axis.fixedMax || axisSettings.fixedMax;
