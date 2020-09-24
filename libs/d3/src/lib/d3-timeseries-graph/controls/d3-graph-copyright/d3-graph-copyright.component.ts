@@ -60,7 +60,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     this.graphExtent = graphExtent;
     if (this.copyright) {
       if (!this.copyrightLayer) {
-        this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright');
+        this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
         this.createLabelRect();
         this.createLabelText();
         this.setText();
