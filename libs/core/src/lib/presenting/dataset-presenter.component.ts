@@ -22,8 +22,6 @@ import { Time } from '../time/time.service';
 import { TimezoneService } from './../time/timezone.service';
 import { PresenterMessage } from './presenter-message';
 
-const equal = require('deep-equal');
-
 export interface PresenterOptions { }
 
 /**
@@ -159,7 +157,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             });
         }
 
-        if (!equal(this.oldPresenterOptions, this.presenterOptions)) {
+        if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
             this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
             const options = Object.assign({}, this.presenterOptions);
             this.presenterOptionsChanged(options);
@@ -169,12 +167,39 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             const firstChange = this.oldDatasetOptions === undefined;
             if (firstChange) { this.oldDatasetOptions = new Map(); }
             this.datasetOptions.forEach((value, key) => {
-                if (!equal(value, this.oldDatasetOptions.get(key))) {
+                if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
                     this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions.get(key)));
                     this.datasetOptionsChanged(key, value, firstChange);
                 }
             });
         }
+    }
+
+    protected deepEqual(obj1, obj2) {
+
+        if (obj1 === obj2) // it's just the same object. No need to compare.
+            return true;
+
+        if (!obj1 || !obj2) return false;
+
+        if (this.isPrimitive(obj1) && this.isPrimitive(obj2)) // compare primitives
+            return obj1 === obj2;
+
+        if (Object.keys(obj1).length !== Object.keys(obj2).length)
+            return false;
+
+        // compare objects with same number of keys
+        for (const key in obj1) {
+            if (Object.prototype.hasOwnProperty.call(obj1, key)) {
+                if (!(key in obj2)) return false; //other object doesn't have this prop
+                if (!this.deepEqual(obj1[key], obj2[key])) return false;
+            }
+        }
+        return true;
+    }
+
+    protected isPrimitive(obj) {
+        return (obj !== Object(obj));
     }
 
     public abstract reloadDataForDatasets(datasets: string[]): void;
