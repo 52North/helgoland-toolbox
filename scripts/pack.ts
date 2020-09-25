@@ -5,5 +5,6 @@ import { modules } from './utils';
 modules.forEach(p => {
   exec('npm pack dist/libs/' + p, (error: Error | null, stdout: string, stderr: string) => {
     console.log('Packed module \'' + p + '\'');
+    exec('mv helgoland-* ../npm-builds -f');
   });
 });
