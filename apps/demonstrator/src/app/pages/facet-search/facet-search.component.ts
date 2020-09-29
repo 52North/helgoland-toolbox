@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { DatasetType, HelgolandServicesConnector, HelgolandTimeseries, Timeseries, Timespan } from '@helgoland/core';
 import { FacetSearchService, ParameterFacetType } from '@helgoland/facet-search';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -34,8 +35,21 @@ export class FacetSearchComponent {
 
   constructor(
     private servicesConnector: HelgolandServicesConnector,
+    private translate: TranslateService,
     public facetSearch: FacetSearchService
   ) {
+    this.translate.onLangChange.subscribe(_ => {
+      this.fetchDatasets();
+    });
+
+    this.facetSearch.getResults().subscribe(ts => {
+      this.resultCount = ts.length;
+      this.fetchTime();
+      this.resetAllDisabled = !this.facetSearch.areFacetsSelected();
+    });
+  }
+
+  private fetchDatasets() {
     forkJoin([
       this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
@@ -54,12 +68,6 @@ export class FacetSearchComponent {
         });
       });
       this.facetSearch.setTimeseries(complete);
-    });
-
-    this.facetSearch.getResults().subscribe(ts => {
-      this.resultCount = ts.length;
-      this.fetchTime();
-      this.resetAllDisabled = !this.facetSearch.areFacetsSelected();
     });
   }
 

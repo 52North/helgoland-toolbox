@@ -15,6 +15,7 @@ export enum ParameterFacetSort {
 }
 
 export interface FacetParameter {
+    id: string;
     label: string;
     count: number;
     selected: boolean;
