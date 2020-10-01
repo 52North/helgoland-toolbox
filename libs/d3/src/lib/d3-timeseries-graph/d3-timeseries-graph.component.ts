@@ -114,7 +114,6 @@ export class D3TimeseriesGraphComponent
     };
     private maxLabelwidth = 0;
     private addLineWidth = 2; // value added to linewidth
-    private loadingCounter = 0;
     private loadingData: Set<string> = new Set();
     private currentTimeId: string;
 
@@ -297,9 +296,7 @@ export class D3TimeseriesGraphComponent
     // load data of dataset
     private loadDatasetData(dataset: HelgolandTimeseries, force: boolean): void {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
-        if (this.loadingCounter === 0) { this.onContentLoading.emit(true); }
-        this.loadingCounter++;
-
+        
         if (this.timespan) {
             if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
                 && dataset.firstValue
@@ -308,6 +305,7 @@ export class D3TimeseriesGraphComponent
                 this.prepareData(dataset, new HelgolandTimeseriesData([]));
                 this.onCompleteLoadingData(dataset);
             } else {
+                if (this.loadingData.size === 0) { this.onContentLoading.emit(true); }
                 const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
                 this.loadingData.add(dataset.internalId);
                 this.dataLoaded.emit(this.loadingData);
@@ -340,8 +338,7 @@ export class D3TimeseriesGraphComponent
         this.runningDataRequests.delete(dataset.internalId);
         this.loadingData.delete(dataset.internalId);
         this.dataLoaded.emit(this.loadingData);
-        this.loadingCounter--;
-        if (this.loadingCounter === 0) { this.onContentLoading.emit(false); }
+        if (this.loadingData.size === 0) { this.onContentLoading.emit(false); }
     }
 
     /**
