@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -15,15 +15,17 @@ import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component'
   styleUrls: ['./d3-graph-overview-selection.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl {
+export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
 
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  @Input() public mainTimeInterval: Timespan;
+  @Input() public selectionTimeInterval: Timespan;
 
   private mousedownBrush: boolean;
   private graphComp: D3TimeseriesGraphComponent;
-  overview: d3.Selection<SVGSVGElement, any, any, any>;
-  drawLayer: d3.Selection<SVGGElement, any, any, any>;
+  private overview: d3.Selection<SVGSVGElement, any, any, any>;
+  private drawLayer: d3.Selection<SVGGElement, any, any, any>;
+  private completeTimespan: Timespan;
+  private graphExtent: D3GraphExtent;
 
   constructor(
     protected graphId: D3GraphId,
@@ -31,6 +33,12 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     protected graphHelper: D3GraphHelperService
   ) {
     super(graphId, graphs, graphHelper);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectionTimeInterval) {
+      this.drawOverviewSelection();
+    }
   }
 
   public graphInitialized(graph: D3TimeseriesGraphComponent) {
@@ -48,26 +56,35 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
     }
 
+    this.completeTimespan = timespan;
+    this.graphExtent = graphExtent;
+
+    this.drawOverviewSelection();
+  }
+
+  private drawOverviewSelection() {
+    if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent) { return; }
+
     this.drawLayer.selectAll('*').remove();
     this.drawLayer.append<SVGSVGElement>('svg:rect')
-      .attr('width', graphExtent.width - graphExtent.leftOffset)
-      .attr('height', graphExtent.height)
+      .attr('width', this.graphExtent.width - this.graphExtent.leftOffset)
+      .attr('height', this.graphExtent.height)
       .attr('id', 'backgroundRect')
       .attr('fill', 'none')
       .attr('stroke', 'none')
       .attr('pointer-events', 'all')
-      .attr('transform', 'translate(' + graphExtent.leftOffset + ', 0)');
+      .attr('transform', 'translate(' + this.graphExtent.leftOffset + ', 0)');
 
-    const interval: [number, number] = this.getXDomainByTimestamp(timespan, graphExtent.width);
+    const interval: [number, number] = this.getXDomainByTimestamp(this.completeTimespan, this.graphExtent.width);
     const overviewTimespanInterval = [interval[0], interval[1]];
 
     // create brush
     const brush = d3.brushX()
-      .extent([[0, 0], [graphExtent.width, graphExtent.height]])
+      .extent([[0, 0], [this.graphExtent.width, this.graphExtent.height]])
       .on('end', () => {
         // on mouseclick change time after brush was moved
         if (this.mousedownBrush) {
-          const timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], timespan, graphExtent.width);
+          const timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], this.completeTimespan, this.graphExtent.width);
           this.graphComp.changeTime(timeByCoord[0], timeByCoord[1]);
         }
         this.mousedownBrush = false;
@@ -75,8 +92,8 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
 
     // add brush to svg
     this.overview = this.drawLayer.append<SVGSVGElement>('g')
-      .attr('width', graphExtent.width)
-      .attr('height', graphExtent.height)
+      .attr('width', this.graphExtent.width)
+      .attr('height', this.graphExtent.height)
       .attr('pointer-events', 'all')
       .attr('class', 'brush')
       .call(brush)
@@ -119,8 +136,8 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
 
     const minOverviewTimeInterval = timespan.from;
     const maxOverviewTimeInterval = timespan.to;
-    const minDiagramTimestamp = this.mainTimeInterval.from;
-    const maxDiagramTimestamp = this.mainTimeInterval.to;
+    const minDiagramTimestamp = this.selectionTimeInterval.from;
+    const maxDiagramTimestamp = this.selectionTimeInterval.to;
 
     const diffOverviewTimeInterval = maxOverviewTimeInterval - minOverviewTimeInterval;
     const divOverviewTimeWidth = width / diffOverviewTimeInterval;
