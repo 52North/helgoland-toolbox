@@ -24,6 +24,7 @@ import {
     HoveringStyle,
     InternalDataEntry,
 } from '@helgoland/d3';
+import moment from 'moment';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
@@ -130,7 +131,7 @@ export class GraphLegendComponent {
             this.datasetOptions.set(entry, option);
         });
 
-        this.timespan = this.definedTime.getInterval(DefinedTimespan.TODAY_YESTERDAY);
+        this.timespan = this.time.createByDurationWithEnd(moment.duration(2, "days"), new Date(), 'hour');
     }
 
     public timespanChanged(timespan: Timespan) {

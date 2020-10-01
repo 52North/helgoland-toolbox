@@ -29,6 +29,15 @@ export class Time {
         return timespan.from + (timespan.to - timespan.from) / 2;
     }
 
+    public createByDurationWithEnd(d: moment.Duration, end: number | Date, endOf?: moment.unitOfTime.StartOf): Timespan {
+        const mEnd = moment(end);
+        if (endOf) {
+            mEnd.endOf(endOf);
+        }
+        const mStart = moment(mEnd).subtract(d);
+        return new Timespan(mStart.toDate(), mEnd.toDate());
+    }
+
     public stepBack(timespan: Timespan): Timespan {
         const d = this.getDuration(timespan);
         const from = moment(timespan.from).subtract(d).unix() * 1000;
