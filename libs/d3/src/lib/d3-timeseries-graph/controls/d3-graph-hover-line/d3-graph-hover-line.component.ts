@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -24,6 +24,10 @@ const TIME_LABEL_CLASS = 'time-label';
   encapsulation: ViewEncapsulation.None
 })
 export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
+
+  @Input() showLabels = true;
+
+  @Input() showTimelLabel = true;
 
   private d3Graph: D3TimeseriesGraphComponent;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
@@ -137,10 +141,12 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     if (this.lastDraw + this.drawLatency < time) {
       const mouse = d3.mouse(this.background.node());
       this.drawLineIndicator(mouse);
-      this.preparedData.forEach((entry, entryIdx) => {
-        const idx = this.getItemForX(mouse[0] + this.graphExtent.leftOffset, entry.data);
-        this.showLabel(entry, idx, mouse[0], entryIdx);
-      });
+      if (this.showLabels) {
+        this.preparedData.forEach((entry, entryIdx) => {
+          const idx = this.getItemForX(mouse[0] + this.graphExtent.leftOffset, entry.data);
+          this.showLabel(entry, idx, mouse[0], entryIdx);
+        });
+      }
       this.lastDraw = time;
     }
   }
@@ -151,16 +157,22 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     this.drawLayer.select(`.${HOVERLINE_CLASS}`)
       .attr('d', () => 'M' + (xPos) + ',' + this.graphExtent.height + ' ' + (xPos) + ',' + 0);
 
-    const time = this.graphExtent.xScale.invert(xPos);
+    this.drawTimeLabel(xPos);
+  }
 
-    // draw label
-    this.drawLayer.select(`.${TIME_LABEL_CLASS}`).text(this.timezoneSrvc.formatTzDate(time));
-    const onLeftSide = this.checkLeftSide(xPos);
-    const right = xPos + 2;
-    const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
-    this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
-      .attr('x', onLeftSide ? right : left)
-      .attr('y', 13);
+  private drawTimeLabel(xPos: number) {
+    if (this.showTimelLabel) {
+      const time = this.graphExtent.xScale.invert(xPos);
+
+      // draw label
+      this.drawLayer.select(`.${TIME_LABEL_CLASS}`).text(this.timezoneSrvc.formatTzDate(time));
+      const onLeftSide = this.checkLeftSide(xPos);
+      const right = xPos + 2;
+      const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
+      this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
+        .attr('x', onLeftSide ? right : left)
+        .attr('y', 13);
+    }
   }
 
   private getItemForX(xCoord: number, data: DataEntry[]): number {
