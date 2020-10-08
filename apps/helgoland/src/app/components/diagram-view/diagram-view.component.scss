@@ -1,5 +1,11 @@
 :host {
-    div {
+    .container {
         height: 100%;
+
+        .legend {
+            width: 300px;
+        }
+
+        .content {}
     }
 }
