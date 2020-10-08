@@ -895,6 +895,127 @@
           "style": "scss"
         }
       }
+    },
+    "helgoland": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/helgoland",
+      "sourceRoot": "apps/helgoland/src",
+      "prefix": "helgoland-toolbox",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/helgoland",
+            "index": "apps/helgoland/src/index.html",
+            "main": "apps/helgoland/src/main.ts",
+            "polyfills": "apps/helgoland/src/polyfills.ts",
+            "tsConfig": "apps/helgoland/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/helgoland/src/favicon.ico",
+              "apps/helgoland/src/assets"
+            ],
+            "styles": ["apps/helgoland/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/helgoland/src/environments/environment.ts",
+                  "with": "apps/helgoland/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "helgoland:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "helgoland:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "helgoland:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/helgoland/tsconfig.app.json",
+              "apps/helgoland/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/helgoland/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/helgoland/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "helgoland-e2e": {
+      "root": "apps/helgoland-e2e",
+      "sourceRoot": "apps/helgoland-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/helgoland-e2e/cypress.json",
+            "tsConfig": "apps/helgoland-e2e/tsconfig.e2e.json",
+            "devServerTarget": "helgoland:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "helgoland:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/helgoland-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/helgoland-e2e/**/*"]
+          }
+        }
+      }
     }
   },
   "cli": {

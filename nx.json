@@ -21,6 +21,13 @@
       "tags": [],
       "implicitDependencies": ["demonstrator"]
     },
+    "helgoland": {
+      "tags": []
+    },
+    "helgoland-e2e": {
+      "tags": [],
+      "implicitDependencies": ["helgoland"]
+    },
     "core": {
       "tags": []
     },
