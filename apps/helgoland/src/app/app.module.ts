@@ -1,16 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+import { AppComponent } from './app.component';
+import { DiagramViewComponent } from './components/diagram-view/diagram-view.component';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DiagramViewComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    RouterModule.forRoot([
+      {
+        path: '**',
+        pathMatch: 'full',
+        component: DiagramViewComponent
+      }
+    ], { initialNavigation: 'enabled' }),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

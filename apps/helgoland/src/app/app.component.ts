@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'helgoland-toolbox-root',
+  selector: 'helgoland-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
