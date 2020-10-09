@@ -28,8 +28,6 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public timespan;
 
-  public yaxisModifier = true;
-
   public d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
     togglePanZoom: true,
@@ -56,7 +54,9 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public diagramConfig: DiagramConfig = {
     overviewVisible: true,
-    yaxisVisible: true
+    yaxisVisible: true,
+    yaxisModifier: true,
+    hoverstyle: 'none'
   };
 
   constructor(
@@ -107,13 +107,16 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ModalDiagramSettingsComponent, {
       data: {
         overviewVisible: this.diagramConfig.overviewVisible,
-        yaxisVisible: this.diagramConfig.yaxisVisible
+        yaxisVisible: this.diagramConfig.yaxisVisible,
+        yaxisModifier: this.diagramConfig.yaxisModifier,
+        hoverstyle: this.diagramConfig.hoverstyle
       } as DiagramConfig
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.diagramConfig = result;
+        this.d3diagramOptions.hoverStyle = HoveringStyle[this.diagramConfig.hoverstyle];
         this.d3diagramOptions.yaxis = this.diagramConfig.yaxisVisible;
       }
     })

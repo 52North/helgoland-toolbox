@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -56,7 +58,9 @@ export function HttpTranslateLoaderFactory(http: HttpClient) {
     HelgolandCoreModule,
     HelgolandD3Module,
     MatButtonModule,
+    MatButtonToggleModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatIconModule,
     MatListModule,
     MatSidenavModule,

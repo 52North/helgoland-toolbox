@@ -1,17 +1,37 @@
 <h1 mat-dialog-title>{{ 'diagram-settings.title' | translate }}</h1>
 <div>
-  <div>
+
+  <p>
     <mat-slide-toggle [checked]="diagramConfig.yaxisVisible" (change)="diagramConfig.yaxisVisible = $event.checked">
       {{ 'diagram-settings.yaxis-visible' | translate }}
     </mat-slide-toggle>
-  </div>
+  </p>
 
-  <div>
+  <p>
+    <mat-slide-toggle [checked]="diagramConfig.yaxisModifier" (change)="diagramConfig.yaxisModifier = $event.checked">
+      {{ 'diagram-settings.yaxis-modifier-visible' | translate }}
+    </mat-slide-toggle>
+  </p>
+
+  <p>
     <mat-slide-toggle [checked]="diagramConfig.overviewVisible"
       (change)="diagramConfig.overviewVisible = $event.checked">
       {{ 'diagram-settings.overview-visible' | translate }}
     </mat-slide-toggle>
-  </div>
+  </p>
+
+  <p>
+    <span>
+      {{ 'diagram-settings.hoverstyle' | translate }}
+    </span>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="diagramConfig.hoverstyle"
+      (change)="diagramConfig.hoverstyle = $event.value">
+      <mat-button-toggle value="none">{{ 'diagram-settings.hoverstyle.none' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="point">{{ 'diagram-settings.hoverstyle.point' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="line">{{ 'diagram-settings.hoverstyle.line' | translate }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </p>
+
 </div>
 <div mat-dialog-actions>
   <div style="flex: 1"></div>

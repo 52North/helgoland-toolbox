@@ -1,5 +1,10 @@
 {
 	"diagram-settings.title": "Diagram settings",
-	"diagram-settings.yaxis-visible": "Y axis visible",
-	"diagram-settings.overview-visible": "Overview diagram visible"
+	"diagram-settings.yaxis-visible": "Y-axis visible",
+	"diagram-settings.yaxis-modifier-visible": "Y-axis modification",
+	"diagram-settings.overview-visible": "Overview diagram visible",
+	"diagram-settings.hoverstyle": "Hovering option",
+	"diagram-settings.hoverstyle.none": "None",
+	"diagram-settings.hoverstyle.point": "Point",
+	"diagram-settings.hoverstyle.line": "Line"
 }

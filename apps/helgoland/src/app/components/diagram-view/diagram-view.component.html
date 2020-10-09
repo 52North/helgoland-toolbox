@@ -29,10 +29,9 @@
 
       <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
         [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-        [yaxisModifier]="yaxisModifier" (onTimespanChanged)="timespanChanged($event)"
+        (onTimespanChanged)="timespanChanged($event)"
         (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
-        <!-- <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
-        <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line> -->
+        <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
       </n52-d3-timeseries-graph>
     </div>
 

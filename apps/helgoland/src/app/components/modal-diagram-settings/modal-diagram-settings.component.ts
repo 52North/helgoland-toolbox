@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface DiagramConfig {
   yaxisVisible: boolean;
   overviewVisible: boolean;
+  yaxisModifier: boolean;
+  hoverstyle: string;
 }
 
 @Component({
@@ -11,15 +13,11 @@ export interface DiagramConfig {
   templateUrl: './modal-diagram-settings.component.html',
   styleUrls: ['./modal-diagram-settings.component.scss']
 })
-export class ModalDiagramSettingsComponent implements OnInit {
+export class ModalDiagramSettingsComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ModalDiagramSettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public diagramConfig: DiagramConfig
   ) { }
-
-  ngOnInit(): void {
-    console.log(this.diagramConfig);
-  }
 
 }

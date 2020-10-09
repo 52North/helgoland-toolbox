@@ -1,5 +1,10 @@
 {
 	"diagram-settings.title": "Diagramm Einstellungen",
 	"diagram-settings.yaxis-visible": "Y-Achse(n) sichtbar",
-	"diagram-settings.overview-visible": "Übersichtsdiagram sichtbar"
+	"diagram-settings.yaxis-modifier-visible": "Y-Achsen Modifizierung",
+	"diagram-settings.overview-visible": "Übersichtsdiagram sichtbar",
+	"diagram-settings.hoverstyle": "Tooltip im Diagram",
+	"diagram-settings.hoverstyle.none": "Kein",
+	"diagram-settings.hoverstyle.point": "Punkt",
+	"diagram-settings.hoverstyle.line": "Linie"
 }
