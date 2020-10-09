@@ -87,6 +87,7 @@
     "ngx-color-picker": "^8.2.0",
     "ol": "^6.3.1",
     "plotly.js": "^1.54.5",
+    "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "typescript-logging": "^0.6.3",
