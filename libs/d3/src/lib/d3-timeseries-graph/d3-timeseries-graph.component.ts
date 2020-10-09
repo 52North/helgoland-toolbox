@@ -33,6 +33,8 @@ import * as d3 from 'd3';
 import moment, { unitOfTime } from 'moment';
 import { Subscription } from 'rxjs';
 
+import ResizeObserver from 'resize-observer-polyfill';
+
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
@@ -180,7 +182,10 @@ export class D3TimeseriesGraphComponent
             .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        setTimeout(() => this.redrawCompleteGraph(), 1);
+        new ResizeObserver(() => {
+            console.log(`ResizeObserver redraw`);
+            return this.redrawCompleteGraph();
+        }).observe(this.d3Elem.nativeElement);
     }
 
     public ngOnDestroy() {
@@ -268,7 +273,6 @@ export class D3TimeseriesGraphComponent
     }
 
     protected onResize(): void {
-        this.redrawCompleteGraph();
     }
 
     public centerTime(timestamp: number): void {
@@ -331,6 +335,8 @@ export class D3TimeseriesGraphComponent
                     this.runningDataRequests.set(dataset.internalId, request);
                 }
             }
+        } else {
+            this.graphId.getId().subscribe(id => console.warn(`No timespan is configured for graph with ID: ${id}`));
         }
     }
 
