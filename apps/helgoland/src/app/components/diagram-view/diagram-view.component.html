@@ -1,15 +1,47 @@
 <mat-sidenav-container class="container">
 
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
-    class="legend">
-    Legend
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start">
+    <div class="legend">
+      <div class="entries"></div>
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span class="spacer"></span>
+          <button mat-icon-button>
+            <mat-icon>settings</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
-    <button mat-icon-button (click)="snav.toggle()" [hidden]="!mobileQuery.matches">
+    <button class="legend-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    Content
+
+    <div class="diagram">
+      <button class="diagram-settings" mat-mini-fab color="none" (click)="openDiagramSettings()">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+        [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
+        [yaxisModifier]="yaxisModifier" (onTimespanChanged)="timespanChanged($event)"
+        (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
+        <!-- <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
+        <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line> -->
+      </n52-d3-timeseries-graph>
+    </div>
+
+    <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
+      <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
+        [presenterOptions]="d3overviewOptions" [timeInterval]="timespan"
+        (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)">
+      </n52-d3-overview-timeseries-graph>
+    </div>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

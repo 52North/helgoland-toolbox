@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ 'diagram-settings.title' | translate }}</h1>
+<div>
+  <div>
+    <mat-slide-toggle [checked]="diagramConfig.yaxisVisible" (change)="diagramConfig.yaxisVisible = $event.checked">
+      {{ 'diagram-settings.yaxis-visible' | translate }}
+    </mat-slide-toggle>
+  </div>
+
+  <div>
+    <mat-slide-toggle [checked]="diagramConfig.overviewVisible"
+      (change)="diagramConfig.overviewVisible = $event.checked">
+      {{ 'diagram-settings.overview-visible' | translate }}
+    </mat-slide-toggle>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div style="flex: 1"></div>
+  <button mat-button [mat-dialog-close]="diagramConfig" cdkFocusInitial>Ok</button>
+</div>
