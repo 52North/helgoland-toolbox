@@ -31,9 +31,8 @@ import {
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment, { unitOfTime } from 'moment';
-import { Subscription } from 'rxjs';
-
 import ResizeObserver from 'resize-observer-polyfill';
+import { Subscription } from 'rxjs';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
@@ -182,10 +181,7 @@ export class D3TimeseriesGraphComponent
             .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        new ResizeObserver(() => {
-            console.log(`ResizeObserver redraw`);
-            return this.redrawCompleteGraph();
-        }).observe(this.d3Elem.nativeElement);
+        new ResizeObserver(() => this.redrawCompleteGraph()).observe(this.d3Elem.nativeElement);
     }
 
     public ngOnDestroy() {
@@ -300,7 +296,7 @@ export class D3TimeseriesGraphComponent
     // load data of dataset
     private loadDatasetData(dataset: HelgolandTimeseries, force: boolean): void {
         const datasetOptions = this.datasetOptions.get(dataset.internalId);
-        
+
         if (this.timespan) {
             if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
                 && dataset.firstValue
