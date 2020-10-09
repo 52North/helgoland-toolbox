@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
+import { BaseType } from 'd3';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
@@ -8,7 +9,6 @@ import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
-import { BaseType } from 'd3';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -59,12 +59,14 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     this.background = background;
     this.graphExtent = graphExtent;
     if (this.copyright) {
-      if (!this.copyrightLayer) {
-        this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
-        this.createLabelRect();
-        this.createLabelText();
-        this.setText();
+      if (this.copyrightLayer) {
+        this.copyrightLayer.remove();
+        this.copyrightLayer = null;
       }
+      this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
+      this.createLabelRect();
+      this.createLabelText();
+      this.setText();
     }
   }
 
