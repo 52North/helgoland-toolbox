@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ 'map-config.title' | translate }}</h1>
+<div>
+
+  <p>
+    <mat-slide-toggle [checked]="mapConfig.cluster" (change)="mapConfig.cluster = $event.checked">
+      {{ 'map-config.cluster-marker' | translate }}
+    </mat-slide-toggle>
+  </p>
+
+  <p style="max-height: 300px; overflow: auto;">
+    <helgoland-toolbox-service-list-selector [datasetApiList]="datasetApis" [selectedService]="mapConfig.selectedService"
+      [supportStations]="true" (onServiceSelected)="serviceSelected($event)"></helgoland-toolbox-service-list-selector>
+  </p>
+
+</div>
+<div mat-dialog-actions>
+  <div style="flex: 1"></div>
+  <button mat-button [mat-dialog-close]="mapConfig" cdkFocusInitial>{{'controls.ok' | translate}}</button>
+</div>

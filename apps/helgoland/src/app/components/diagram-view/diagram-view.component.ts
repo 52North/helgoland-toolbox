@@ -1,3 +1,4 @@
+import { AppRouterService } from './../../services/app-router.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +15,7 @@ import { DiagramConfig, ModalDiagramSettingsComponent } from './../modal-diagram
 })
 export class DiagramViewComponent implements OnInit, OnDestroy {
 
-  mobileQuery: MediaQueryList;
+  public mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
 
@@ -65,6 +66,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private timeSrvc: Time,
     private color: ColorService,
+    public appRouter: AppRouterService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();

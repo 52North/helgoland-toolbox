@@ -1,10 +1,19 @@
 {
-	"diagram-settings.title": "Diagramm Einstellungen",
-	"diagram-settings.yaxis-visible": "Y-Achse(n) sichtbar",
-	"diagram-settings.yaxis-modifier-visible": "Y-Achsen Modifizierung",
-	"diagram-settings.overview-visible": "Übersichtsdiagram sichtbar",
-	"diagram-settings.hoverstyle": "Tooltip im Diagram",
-	"diagram-settings.hoverstyle.none": "Kein",
-	"diagram-settings.hoverstyle.point": "Punkt",
-	"diagram-settings.hoverstyle.line": "Linie"
+	"add.timeseries.menu.map": "Füge Zeitreihe über Karte hinzu",
+	"add.timeseries.menu.list": "Füge Zeitreihe über List hinzu",
+	"map-view.select-all-phenomena": "Zeige alle Phänomene",
+	"diagram-config.title": "Diagrammkonfiguration",
+	"diagram-config.yaxis-visible": "Y-Achse(n) sichtbar",
+	"diagram-config.yaxis-modifier-visible": "Y-Achsen Modifizierung",
+	"diagram-config.overview-visible": "Übersichtsdiagram sichtbar",
+	"diagram-config.hoverstyle": "Tooltip im Diagram",
+	"diagram-config.hoverstyle.none": "Kein",
+	"diagram-config.hoverstyle.point": "Punkt",
+	"diagram-config.hoverstyle.line": "Linie",
+	"controls.ok": "Ok",
+	"map-config.title": "Kartenkonfiguration",
+	"map-config.cluster-marker": "Marker gruppieren",
+	"service-selector.platforms": "Stationen",
+	"service-selector.datasets": "Datensätze",
+	"service-selector.phenomena": "Phänomene"
 }

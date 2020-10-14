@@ -1,10 +1,19 @@
 {
-	"diagram-settings.title": "Diagram settings",
-	"diagram-settings.yaxis-visible": "Y-axis visible",
-	"diagram-settings.yaxis-modifier-visible": "Y-axis modification",
-	"diagram-settings.overview-visible": "Overview diagram visible",
-	"diagram-settings.hoverstyle": "Hovering option",
-	"diagram-settings.hoverstyle.none": "None",
-	"diagram-settings.hoverstyle.point": "Point",
-	"diagram-settings.hoverstyle.line": "Line"
+	"add.timeseries.menu.map": "Add timeseries by map",
+	"add.timeseries.menu.list": "All timeseries by list",
+	"map-view.select-all-phenomena": "Select all phenomena",
+	"diagram-config.title": "Diagram configuration",
+	"diagram-config.yaxis-visible": "Y-axis visible",
+	"diagram-config.yaxis-modifier-visible": "Y-axis modification",
+	"diagram-config.overview-visible": "Overview diagram visible",
+	"diagram-config.hoverstyle": "Hovering option",
+	"diagram-config.hoverstyle.none": "None",
+	"diagram-config.hoverstyle.point": "Point",
+	"diagram-config.hoverstyle.line": "Line",
+	"controls.ok": "OK",
+	"map-config.title": "Map configuration",
+	"map-config.cluster-marker": "Cluster marker",
+	"service-selector.platforms": "Stations",
+	"service-selector.datasets": "Datasets",
+	"service-selector.phenomena": "Phenomena"
 }

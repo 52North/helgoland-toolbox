@@ -1,0 +1,12 @@
+<div *ngIf="loading">
+  loading...
+</div>
+<div *ngIf="!loading && items?.length === 0">
+  no results found
+</div>
+
+<mat-selection-list #parameters [multiple]="false" (selectionChange)="selectionChanged($event)">
+  <mat-list-option *ngFor="let item of items" [value]="item.id" [selected]="item.id === selectionId">
+    {{item.label}}
+  </mat-list-option>
+</mat-selection-list>

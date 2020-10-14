@@ -1,15 +1,20 @@
+<mat-menu #addtsMenu="matMenu">
+  <button mat-menu-item (click)="appRouter.toMapSelection()">{{'add.timeseries.menu.map' | translate}}</button>
+  <button mat-menu-item>{{'add.timeseries.menu.list' | translate}}</button>
+</mat-menu>
+
 <mat-sidenav-container class="container">
 
   <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start">
     <div class="legend">
       <div class="entries"></div>
-      <mat-toolbar color="primary">
+      <mat-toolbar>
         <mat-toolbar-row>
-          <span class="spacer"></span>
           <button mat-icon-button>
             <mat-icon>settings</mat-icon>
           </button>
-          <button mat-icon-button>
+          <div style="flex:1;"></div>
+          <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
             <mat-icon>add</mat-icon>
           </button>
         </mat-toolbar-row>
@@ -29,16 +34,17 @@
 
       <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
         [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-        (onTimespanChanged)="timespanChanged($event)"
-        (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
-        <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
+        (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
+        (onContentLoading)="onDiagramLoading($event)" #diagram>
+        <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
+        </n52-d3-y-axis-modifier>
       </n52-d3-timeseries-graph>
     </div>
 
     <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
       <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-        [presenterOptions]="d3overviewOptions" [timeInterval]="timespan"
-        (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)">
+        [presenterOptions]="d3overviewOptions" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"
+        (onContentLoading)="onOverviewLoading($event)">
       </n52-d3-overview-timeseries-graph>
     </div>
   </mat-sidenav-content>
