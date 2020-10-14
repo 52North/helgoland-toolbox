@@ -72,7 +72,7 @@ export class FacetSearchComponent {
   }
 
   public onSelectedTs(ts: Timeseries) {
-    alert(`Clicked: ${ts.label}`);
+    console.log(`${ts.label} is clicked`);
   }
 
   public toggleResultView() {
