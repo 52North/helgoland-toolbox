@@ -10,6 +10,6 @@
     "d3": "^5.9.7",
     "d3-delaunay": "^5.2.1",
     "moment": "^2.24.0",
-    "resize-observer-polyfill": "^1.5.1",
+    "resize-observer-polyfill": "^1.5.1"
   }
 }
