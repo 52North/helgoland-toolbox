@@ -2,10 +2,7 @@ import { Timespan } from './../internal/timeInterval';
 
 export interface Settings {
     datasetApis?: DatasetApi[];
-    defaultService?: {
-        serviceId: string;
-        apiUrl: string;
-    };
+    defaultService?: ConfigService;
     providerBlackList?: BlacklistedService[];
     proxyUrl?: string;
     proxyUrlsStartWith?: string[];
@@ -22,10 +19,12 @@ export interface DatasetApi {
     basicAuth?: boolean;
 }
 
-export interface BlacklistedService {
+export interface ConfigService {
     serviceId: string;
     apiUrl: string;
 }
+
+export interface BlacklistedService extends ConfigService { }
 
 export interface TimespanPreset {
     name: string;
