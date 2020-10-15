@@ -107,7 +107,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   private createStationGeometry(station: HelgolandPlatform, url: string): L.GeoJSON {
     if (station) {
       const geometry = geoJSON(station.geometry);
-      geometry.on('click', () => this.selected.emit({ station, url }));
+      geometry.on('mouseup', () => this.selected.emit({ station, url }));
       return geometry;
     }
   }
@@ -115,7 +115,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   private createTsGeometry(ts: HelgolandTimeseries) {
     if (ts.platform) {
       const geometry = geoJSON(ts.platform.geometry);
-      geometry.on('click', () => this.selected.emit(ts));
+      geometry.on('mouseup', () => this.selected.emit(ts));
       return geometry;
     }
   }
