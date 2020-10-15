@@ -7,12 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
   DatasetApiV1ConnectorProvider,
@@ -75,10 +77,14 @@ export const ROUTES = [
       }
     }),
     BrowserAnimationsModule,
+    HelgolandCachingModule.forRoot({
+      cachingDurationInMilliseconds: 300000,
+      getDataCacheActive: false
+    }),
     HelgolandCoreModule,
     HelgolandD3Module,
-    HelgolandMapSelectorModule,
     HelgolandLabelMapperModule,
+    HelgolandMapSelectorModule,
     HelgolandSelectorModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -87,6 +93,7 @@ export const ROUTES = [
     MatIconModule,
     MatListModule,
     MatMenuModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatSlideToggleModule,
     MatToolbarModule,

@@ -9,10 +9,22 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
+import { icon, Marker } from 'leaflet';
 
 import { appConfig } from './../../../environments/environment';
 import { AppRouterService } from './../../services/app-router.service';
 import { MapConfig, ModalMapSettingsComponent } from './../modal-map-settings/modal-map-settings.component';
+
+Marker.prototype.options.icon = icon({
+  iconRetinaUrl: 'assets/img/marker-icon-2x.png',
+  iconUrl: 'assets/img/marker-icon.png',
+  shadowUrl: 'assets/img/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
 
 @Component({
   selector: 'helgoland-toolbox-map-selection-view',
@@ -29,6 +41,7 @@ export class MapSelectionViewComponent implements OnInit {
   public selectedPhenomenonId: string;
 
   public stationFilter: HelgolandParameterFilter;
+  public phenomenonFilter: HelgolandParameterFilter;
 
   public cluster = true;
 
@@ -47,7 +60,7 @@ export class MapSelectionViewComponent implements OnInit {
   ngOnInit(): void {
     this.serviceConnector.getServices(appConfig.defaultService.apiUrl).subscribe(services => {
       this.selectedService = services.find(e => e.id === appConfig.defaultService.serviceId);
-      this.updateStationFilter();
+      this.updateFilter();
     });
   }
 
@@ -68,26 +81,31 @@ export class MapSelectionViewComponent implements OnInit {
       if (newConf) {
         this.cluster = newConf.cluster;
         this.selectedService = newConf.selectedService;
+        this.updateFilter();
       }
     })
   }
 
   public onPhenomenonSelected(phenomenon: Phenomenon) {
     this.selectedPhenomenonId = phenomenon.id;
-    this.updateStationFilter();
+    this.updateFilter();
   }
 
   public selectAllPhenomena() {
     this.selectedPhenomenonId = null;
-    this.updateStationFilter();
+    this.updateFilter();
   }
 
-  private updateStationFilter() {
+  private updateFilter() {
     this.stationFilter = {
       type: DatasetType.Timeseries,
       service: this.selectedService.id
     }
     if (this.selectedPhenomenonId) { this.stationFilter.phenomenon = this.selectedPhenomenonId; }
+
+    this.phenomenonFilter = {
+      service: this.selectedService.id
+    }
   }
 
 }

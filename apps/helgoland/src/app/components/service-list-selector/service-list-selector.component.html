@@ -1,29 +1,23 @@
-<div *ngIf="loadingCount > 0">
-  <span>Requesting {{loadingCount}} providers...</span>
-</div>
-
 <div *ngFor="let item of unResolvableServices">
   <div style="color: red;">{{item.name}} is currently not reachable</div>
 </div>
 
-<div class="service-list">
+<mat-progress-bar *ngIf="loadingCount > 0" mode="indeterminate"></mat-progress-bar>
 
-  <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectService($event.option.value)">
-    <mat-list-option *ngFor="let service of services" [value]="service" [selected]="isSelected(service)">
-      <div mat-line>{{service.label}} ({{service.type}}, {{service.version}})</div>
-      <div mat-line>{{service.apiUrl}}</div>
-      <div mat-line>
-        <span *ngIf="service.quantities.platforms !== undefined">
-          {{service.quantities.platforms}} {{'service-selector.platforms' | translate}} - 
-        </span>
-        <span *ngIf="service.quantities.datasets !== undefined">
-          {{service.quantities.datasets}} {{'service-selector.datasets' | translate}} - 
-        </span>
-        <span>
-          {{service.quantities.phenomena}} {{'service-selector.phenomena' | translate}}
-        </span>
-      </div>
-    </mat-list-option>
-  </mat-selection-list>
-
-</div>
+<mat-selection-list #shoes [multiple]="false" (selectionChange)="selectService($event.option.value)">
+  <mat-list-option *ngFor="let service of services" [value]="service" [selected]="isSelected(service)">
+    <div mat-line>{{service.label}} ({{service.type}}, {{service.version}})</div>
+    <div mat-line>{{service.apiUrl}}</div>
+    <div mat-line>
+      <span *ngIf="service.quantities.platforms !== undefined">
+        {{service.quantities.platforms}} {{'service-selector.platforms' | translate}} -
+      </span>
+      <span *ngIf="service.quantities.datasets !== undefined">
+        {{service.quantities.datasets}} {{'service-selector.datasets' | translate}} -
+      </span>
+      <span>
+        {{service.quantities.phenomena}} {{'service-selector.phenomena' | translate}}
+      </span>
+    </div>
+  </mat-list-option>
+</mat-selection-list>
