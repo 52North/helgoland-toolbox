@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - "10"
+  - 14
 dist: trusty
 sudo: required
 branches:
   only:
   - develop
-  - upgradeToNg8
+  - feature/ng10
 before_script:
   - npm install -g @angular/cli
 script:
