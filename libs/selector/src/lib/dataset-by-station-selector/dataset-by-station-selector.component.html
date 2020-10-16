@@ -1,4 +1,4 @@
-<div class="item" *ngFor="let timeseries of timeseriesList" (click)="toggle(timeseries)">
+<div class="item" *ngFor="let timeseries of phenomenonMatchedList" (click)="toggle(timeseries)">
     <div *ngIf="counter">
         {{counter}} timeseries are loading...
     </div>
