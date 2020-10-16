@@ -1,4 +1,3 @@
-import { AppRouterService } from './../../services/app-router.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +5,8 @@ import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
 import moment from 'moment';
 
+import { AppRouterService } from './../../services/app-router.service';
+import { TimeseriesService } from './../../services/timeseries-service.service';
 import { DiagramConfig, ModalDiagramSettingsComponent } from './../modal-diagram-settings/modal-diagram-settings.component';
 
 @Component({
@@ -19,15 +20,11 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   private _mobileQueryListener: () => void;
 
-  public datasetIds = [
-    'https://www.fluggs.de/sos2/api/v1/__26',
-  ];
+  public datasetIds = [];
 
   public selectedIds: string[] = [];
 
   public datasetOptions: Map<string, DatasetOptions> = new Map();
-
-  public timespan;
 
   public d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
@@ -64,8 +61,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private dialog: MatDialog,
-    private timeSrvc: Time,
-    private color: ColorService,
+    public timeseries: TimeseriesService,
     public appRouter: AppRouterService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
@@ -78,19 +74,13 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.timespan = this.timeSrvc.createByDurationWithEnd(moment.duration(7, 'days'), new Date(), 'day');
-
-    this.datasetIds.forEach((entry) => {
-      const option = new DatasetOptions(entry, this.color.getColor());
-      option.generalize = true;
-      option.lineWidth = 2;
-      option.pointRadius = 4;
-      this.datasetOptions.set(entry, option);
-    });
+    this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
+    this.setDatasets();
   }
 
-  public timespanChanged(timespan: Timespan) {
-    this.timespan = timespan;
+  private setDatasets() {
+    this.datasetIds = this.timeseries.datasetIds;
+    this.datasetOptions = this.timeseries.datasetOptions;
   }
 
   public setSelected(selectedIds: string[]) {

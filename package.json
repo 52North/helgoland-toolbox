@@ -56,7 +56,7 @@
     "update": "ng update @nrwl/workspace",
     "workspace-schematic": "nx workspace-schematic",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "i18n:extract": "ngx-translate-extract --input ./apps/helgoland/src --output ./apps/helgoland/src/assets/i18n/{en,de}.json --clean --format json"
+    "i18n:extract": "ngx-translate-extract --input ./apps/helgoland/src --output ./apps/helgoland/src/assets/i18n/{en,de}.json --clean --format --sort json"
   },
   "private": true,
   "dependencies": {

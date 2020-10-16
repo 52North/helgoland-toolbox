@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{station.label}}</h1>
+<div>
+
+  <p>
+    {{ 'dataset-by-station.hint' | translate }}
+  </p>
+
+  <mat-selection-list (selectionChange)="adjustSelection($event)">
+    <mat-list-option *ngFor="let ds of phenomenonMatchedList" [value]="ds" [selected]="ds.selected">
+      <div mat-line>
+        <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+      </div>
+      <div mat-line>
+        <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+        <span
+          *ngIf="ds.parameters.category.label && ds.parameters.category.label != ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+      </div>
+      <div mat-line *ngIf="ds.lastValue">
+        <span>{{ds.lastValue.value}}</span>
+        <span>{{ds.uom}}</span>
+        <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-accordion *ngIf="othersList.length > 0">
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'dataset-by-station.show-additional-datasets' | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-selection-list (selectionChange)="adjustSelection($event)">
+        <mat-list-option *ngFor="let ds of othersList" [value]="ds" [selected]="ds.selected">
+          <div mat-line>
+            <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+          </div>
+          <div mat-line>
+            <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+            <span
+              *ngIf="ds.parameters.category.label && ds.parameters.category.label != ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+          </div>
+          <div mat-line *ngIf="ds.lastValue">
+            <span>{{ds.lastValue.value}}</span>
+            <span>{{ds.uom}}</span>
+            <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close [matBadge]="timeseries.datasetIds.length" (click)="appRouter.toDiagram()">{{'controls.to-diagram' | translate}}</button>
+  <div style="flex: 1"></div>
+  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+</div>

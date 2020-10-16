@@ -13,6 +13,10 @@ import { icon, Marker } from 'leaflet';
 
 import { appConfig } from './../../../environments/environment';
 import { AppRouterService } from './../../services/app-router.service';
+import { TimeseriesService } from './../../services/timeseries-service.service';
+import {
+  ModalDatasetByStationSelectorComponent,
+} from './../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from './../modal-map-settings/modal-map-settings.component';
 
 Marker.prototype.options.icon = icon({
@@ -51,6 +55,7 @@ export class MapSelectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
+    public timeseries: TimeseriesService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
@@ -65,9 +70,18 @@ export class MapSelectionViewComponent implements OnInit {
   }
 
   public onStationSelected(station: HelgolandPlatform) {
-    debugger;
-    // this.station = station;
-    // this.modalService.open(this.modalTemplate);
+    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent);
+    dialogRef.componentInstance.station = station;
+    dialogRef.componentInstance.url = this.selectedService.apiUrl;
+    dialogRef.componentInstance.phenomenonId = this.selectedPhenomenonId;
+
+    dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
+      if (newConf) {
+        this.cluster = newConf.cluster;
+        this.selectedService = newConf.selectedService;
+        this.updateFilter();
+      }
+    })
   }
 
   public openMapSettings() {

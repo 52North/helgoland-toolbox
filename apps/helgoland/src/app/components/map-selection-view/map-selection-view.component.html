@@ -13,7 +13,7 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <button mat-icon-button (click)="appRouter.toDiagram()">
-            <mat-icon>arrow_back</mat-icon>
+            <mat-icon [matBadge]="timeseries.datasetIds.length" matBadgeColor="accent">show_chart</mat-icon>
           </button>
           <div style="flex:1;"></div>
           <button mat-icon-button (click)="openMapSettings()">

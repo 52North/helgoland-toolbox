@@ -33,8 +33,8 @@
       </button>
 
       <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-        [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-        (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
+        [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
+        (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
         (onContentLoading)="onDiagramLoading($event)" #diagram>
         <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
         </n52-d3-y-axis-modifier>
@@ -43,8 +43,8 @@
 
     <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
       <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-        [presenterOptions]="d3overviewOptions" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"
-        (onContentLoading)="onOverviewLoading($event)">
+        [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
+        (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
       </n52-d3-overview-timeseries-graph>
     </div>
   </mat-sidenav-content>

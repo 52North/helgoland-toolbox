@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -34,6 +36,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { DiagramViewComponent } from './components/diagram-view/diagram-view.component';
 import { MapSelectionViewComponent } from './components/map-selection-view/map-selection-view.component';
+import {
+  ModalDatasetByStationSelectorComponent,
+} from './components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { ModalDiagramSettingsComponent } from './components/modal-diagram-settings/modal-diagram-settings.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
@@ -60,10 +65,11 @@ export const ROUTES = [
   declarations: [
     AppComponent,
     DiagramViewComponent,
-    ModalDiagramSettingsComponent,
     MapSelectionViewComponent,
-    PhenomenonListSelectorComponent,
+    ModalDatasetByStationSelectorComponent,
+    ModalDiagramSettingsComponent,
     ModalMapSettingsComponent,
+    PhenomenonListSelectorComponent,
     ServiceListSelectorComponent,
   ],
   imports: [
@@ -86,9 +92,11 @@ export const ROUTES = [
     HelgolandLabelMapperModule,
     HelgolandMapSelectorModule,
     HelgolandSelectorModule,
+    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatDialogModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatListModule,
