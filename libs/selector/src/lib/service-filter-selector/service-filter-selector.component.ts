@@ -48,7 +48,7 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.endpoint) {
+        if (changes.endpoint || changes.filter || changes.serviceUrl) {
             this.loadItems();
         }
     }
