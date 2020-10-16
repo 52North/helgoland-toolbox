@@ -34,7 +34,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
     @Output()
     public onSelectionChanged: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
 
-    public timeseriesList: SelectableDataset[] = [];
+    public phenomenonMatchedList: SelectableDataset[] = [];
+    public othersList: SelectableDataset[] = [];
 
     public counter: number;
 
@@ -70,12 +71,20 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     protected prepareResult(result: SelectableDataset, selection: boolean) {
         result.selected = selection;
-        this.timeseriesList.push(result);
+        if (this.phenomenonId) {
+            if (result.parameters.phenomenon.id === this.phenomenonId) {
+                this.phenomenonMatchedList.push(result);    
+            } else {
+                this.othersList.push(result);
+            }
+        } else {
+            this.phenomenonMatchedList.push(result);
+        }
         this.updateSelection();
     }
 
     private updateSelection() {
-        const selection = this.timeseriesList.filter((entry) => entry.selected);
+        const selection = this.phenomenonMatchedList.filter((entry) => entry.selected);
         this.onSelectionChanged.emit(selection);
     }
 
