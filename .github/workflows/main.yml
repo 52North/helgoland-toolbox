@@ -1,9 +1,6 @@
 name: Deploy
 
-on:
-  push:
-    branches:
-      - feature/helgoland3
+on: push
 
 jobs:
   build:
