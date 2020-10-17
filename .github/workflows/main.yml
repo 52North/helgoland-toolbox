@@ -12,3 +12,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "helgoland" #Must be unique in Heroku
           heroku_email: "j.schulte@52north.org"
+          usedocker: true
