@@ -11,13 +11,13 @@ import {
 } from '@helgoland/core';
 import { icon, Marker } from 'leaflet';
 
-import { appConfig } from './../../../environments/environment';
-import { AppRouterService } from './../../services/app-router.service';
-import { TimeseriesService } from './../../services/timeseries-service.service';
 import {
   ModalDatasetByStationSelectorComponent,
-} from './../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
-import { MapConfig, ModalMapSettingsComponent } from './../modal-map-settings/modal-map-settings.component';
+} from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
+import { MapConfig, ModalMapSettingsComponent } from '../../components/modal-map-settings/modal-map-settings.component';
+import { appConfig } from './../../../environments/env-settings';
+import { AppRouterService } from './../../services/app-router.service';
+import { TimeseriesService } from './../../services/timeseries-service.service';
 
 Marker.prototype.options.icon = icon({
   iconRetinaUrl: 'assets/img/marker-icon-2x.png',

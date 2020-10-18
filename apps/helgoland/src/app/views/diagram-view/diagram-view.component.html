@@ -7,7 +7,15 @@
 
   <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start">
     <div class="legend">
-      <div class="entries"></div>
+      <mat-list class="entries">
+        <mat-list-item *ngFor="let id of datasetIds">
+          <helgoland-toolbox-legend-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
+            [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
+            (onSelectDataset)="selectTimeseries($event, id)" (onSelectDate)="jumpToDate($event)"
+            (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
+            (onShowGeometry)="showGeometry($event)"></helgoland-toolbox-legend-entry>
+        </mat-list-item>
+      </mat-list>
       <mat-toolbar>
         <mat-toolbar-row>
           <button mat-icon-button>

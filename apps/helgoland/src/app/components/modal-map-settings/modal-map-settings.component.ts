@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatasetApi, HelgolandService } from '@helgoland/core';
 
-import { appConfig } from './../../../environments/environment';
+import { appConfig } from './../../../environments/env-settings';
 
 export interface MapConfig {
   cluster: boolean;

@@ -1,13 +1,15 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ColorService, DatasetOptions, Time, Timespan } from '@helgoland/core';
+import { DatasetOptions } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
-import moment from 'moment';
 
+import {
+  DiagramConfig,
+  ModalDiagramSettingsComponent,
+} from '../../components/modal-diagram-settings/modal-diagram-settings.component';
 import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
-import { DiagramConfig, ModalDiagramSettingsComponent } from './../modal-diagram-settings/modal-diagram-settings.component';
 
 @Component({
   selector: 'helgoland-toolbox-diagram-view',
@@ -113,5 +115,11 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  public isSelected() {
+  }
+
+  
+
 
 }
