@@ -7,19 +7,25 @@
 
   <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start">
     <div class="legend">
-      <mat-list class="entries">
-        <mat-list-item *ngFor="let id of datasetIds">
-          <helgoland-toolbox-legend-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
-            [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-            (onSelectDataset)="selectTimeseries($event, id)" (onSelectDate)="jumpToDate($event)"
-            (onUpdateOptions)="updateOptions($event, id)" (onEditOptions)="editOption($event)"
-            (onShowGeometry)="showGeometry($event)"></helgoland-toolbox-legend-entry>
-        </mat-list-item>
-      </mat-list>
+      <div class="entries">
+        <mat-accordion [multi]="true">
+          <div *ngFor="let id of datasetIds">
+            <helgoland-toolbox-legend-entry [datasetId]="id" [selected]="isSelected(id)"
+              [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
+              (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
+              (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
+              (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
+            </helgoland-toolbox-legend-entry>
+          </div>
+        </mat-accordion>
+      </div>
       <mat-toolbar>
         <mat-toolbar-row>
           <button mat-icon-button>
             <mat-icon>settings</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()">
+            <mat-icon color="accent">priority_high</mat-icon>
           </button>
           <div style="flex:1;"></div>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">

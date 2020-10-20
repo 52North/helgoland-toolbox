@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -13,5 +15,6 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     translate.use('de');
+    registerLocaleData(localeDe);
   }
 }

@@ -35,7 +35,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
-// import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
+import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import {
   ModalDatasetByStationSelectorComponent,
 } from './components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
@@ -67,13 +67,13 @@ export const ROUTES = [
   declarations: [
     AppComponent,
     DiagramViewComponent,
+    LegendEntryComponent,
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
     ModalMapSettingsComponent,
     PhenomenonListSelectorComponent,
     ServiceListSelectorComponent,
-    // LegendEntryComponent,
   ],
   imports: [
     BrowserModule,

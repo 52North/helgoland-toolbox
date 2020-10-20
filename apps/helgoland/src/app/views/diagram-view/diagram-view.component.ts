@@ -1,7 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatasetOptions } from '@helgoland/core';
+import { DatasetOptions, Time, Timespan } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
 
 import {
@@ -64,7 +64,8 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     private media: MediaMatcher,
     private dialog: MatDialog,
     public timeseries: TimeseriesService,
-    public appRouter: AppRouterService
+    public appRouter: AppRouterService,
+    private time: Time
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
@@ -116,10 +117,46 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     })
   }
 
-  public isSelected() {
+  public jumpToDate(date: Date) {
+    this.timeseries.timespan = this.time.centerTimespan(this.timeseries.timespan, date);
   }
 
-  
+  private updateTime(timespan: Timespan) {
+    this.timeseries.timespan = timespan;
+    // this.timeseriesService.setTimespan(timespan);
+    // this.timespan = timespan;
+  }
 
+  public isSelected(internalId: string) {
+    return this.selectedIds.find(e => e === internalId);
+  }
+
+  public selectTimeseries(selected: boolean, internalId: string) {
+    if (selected) {
+      this.selectedIds.push(internalId);
+    } else {
+      this.selectedIds.splice(this.selectedIds.findIndex(entry => entry === internalId), 1);
+    }
+  }
+
+  public clearSelection() {
+    this.selectedIds = [];
+  }
+
+  public deleteTimeseries(internalId: string) {
+    this.timeseries.removeDataset(internalId);
+  }
+
+  public showGeometry(geometry: GeoJSON.GeoJsonObject) {
+    debugger;
+  }
+
+  public editOption(options: DatasetOptions) {
+    debugger;
+  }
+
+  public updateOptions(options: DatasetOptions, internalId: string) {
+    this.timeseries.updateDatasetOptions(options, internalId);
+  }
 
 }

@@ -1,0 +1,29 @@
+mat-expansion-panel {
+    border-radius: 0px !important;
+    border-right: 5px solid;
+
+    mat-panel-title {
+        display: flex;
+        flex: 1;
+        align-items: center;
+    
+        .title {
+            &.noData {
+                color: lightgray;
+            }
+        }
+    }
+
+    .small-label {
+        font-size: 90%;
+    }
+    
+    .entry-line {
+        &.clickable {
+            :hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
