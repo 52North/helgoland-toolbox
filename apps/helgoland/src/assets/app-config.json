@@ -32,5 +32,15 @@
             "name": "STA-Test",
             "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
         }
+    ],
+    "languages": [
+        {
+            "label": "Deutsch",
+            "code": "de"
+        },
+        {
+            "label": "English",
+            "code": "en"
+        }
     ]
 }

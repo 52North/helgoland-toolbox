@@ -1,3 +1,4 @@
+import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -36,6 +37,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
+import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
+import { LanguageSelectorComponent } from './components/main-config/language-selector/language-selector.component';
+import {
+  ModalMainConfigButtonComponent,
+} from './components/main-config/modal-main-config-button/modal-main-config-button.component';
+import { ModalMainConfigComponent } from './components/main-config/modal-main-config/modal-main-config.component';
+import { VersionInfoComponent } from './components/main-config/version-info/version-info.component';
 import {
   ModalDatasetByStationSelectorComponent,
 } from './components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
@@ -71,9 +79,14 @@ export const ROUTES = [
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
+    ModalMainConfigComponent,
     ModalMapSettingsComponent,
     PhenomenonListSelectorComponent,
     ServiceListSelectorComponent,
+    LanguageSelectorComponent,
+    ClearStorageComponent,
+    VersionInfoComponent,
+    ModalMainConfigButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +119,7 @@ export const ROUTES = [
     MatIconModule,
     MatListModule,
     MatMenuModule,
+    MatSelectModule,
     MatProgressBarModule,
     MatSidenavModule,
     MatSlideToggleModule,

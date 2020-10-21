@@ -21,9 +21,7 @@
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
-          <button mat-icon-button>
-            <mat-icon>settings</mat-icon>
-          </button>
+          <helgoland-toolbox-modal-main-config-button></helgoland-toolbox-modal-main-config-button>
           <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()">
             <mat-icon color="accent">priority_high</mat-icon>
           </button>

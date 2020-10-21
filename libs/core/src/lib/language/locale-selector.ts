@@ -17,16 +17,15 @@ export abstract class LocalSelectorComponent implements OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.languageList) {
-            this.setCurrentLang();
+            this.updateCurrentLang();
         }
     }
 
     public setLanguage(lang: Language) {
-        this.translate.use(lang.code);
-        this.setCurrentLang();
+        this.translate.use(lang.code).subscribe(() => this.updateCurrentLang());
     }
 
-    private setCurrentLang() {
+    protected updateCurrentLang() {
         this.currentLang = this.languageList.find((e) => e.code === this.translate.currentLang);
     }
 
