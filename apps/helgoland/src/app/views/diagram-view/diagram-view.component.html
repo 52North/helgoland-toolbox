@@ -1,6 +1,6 @@
 <mat-menu #addtsMenu="matMenu">
-  <button mat-menu-item (click)="appRouter.toMapSelection()">{{'add.timeseries.menu.map' | translate}}</button>
-  <button mat-menu-item>{{'add.timeseries.menu.list' | translate}}</button>
+  <button mat-menu-item (click)="appRouter.toMapSelection()">{{'diagram-view.add-timeseries.map' | translate}}</button>
+  <button mat-menu-item>{{'diagram-view.add-timeseries.list' | translate}}</button>
 </mat-menu>
 
 <mat-sidenav-container class="container">
@@ -26,6 +26,9 @@
             <mat-icon color="accent">priority_high</mat-icon>
           </button>
           <div style="flex:1;"></div>
+          <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
+            <mat-icon>clear</mat-icon>
+          </button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
             <mat-icon>add</mat-icon>
           </button>
@@ -39,26 +42,39 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="diagram">
-      <button class="diagram-settings" mat-mini-fab color="none" (click)="openDiagramSettings()">
-        <mat-icon>settings</mat-icon>
-      </button>
-
-      <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-        [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
-        (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
-        (onContentLoading)="onDiagramLoading($event)" #diagram>
-        <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
-        </n52-d3-y-axis-modifier>
-      </n52-d3-timeseries-graph>
+    <div *ngIf="datasetIds.length === 0" class="no-timeseries">
+      {{'diagram-view.no-timeseries.hint' | translate}}
+      <div><button mat-button>{{'diagram-view.add-timeseries.map' | translate}}</button></div>
+      <div><button mat-button>{{'diagram-view.add-timeseries.list' | translate}}</button></div>
     </div>
 
-    <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
-      <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-        [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
-        (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
-      </n52-d3-overview-timeseries-graph>
+    <div *ngIf="datasetIds.length > 0" class="diagrams">
+      <div class="diagram">
+
+        <helgoland-toolbox-loading-overlay *ngIf="diagramLoading"></helgoland-toolbox-loading-overlay>
+
+        <button class="diagram-settings" mat-mini-fab color="none" (click)="openDiagramSettings()">
+          <mat-icon>settings</mat-icon>
+        </button>
+
+        <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+          [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
+          (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
+          (onContentLoading)="onDiagramLoading($event)" #diagram>
+          <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
+          </n52-d3-y-axis-modifier>
+        </n52-d3-timeseries-graph>
+      </div>
+
+      <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
+        <helgoland-toolbox-loading-overlay *ngIf="overviewLoading"></helgoland-toolbox-loading-overlay>
+        <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
+          [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
+          (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
+        </n52-d3-overview-timeseries-graph>
+      </div>
     </div>
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

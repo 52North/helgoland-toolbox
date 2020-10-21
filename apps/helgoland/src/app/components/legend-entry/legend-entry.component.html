@@ -1,13 +1,11 @@
-<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions.color}">
+<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}">
-        <div>
-          <n52-label-mapper label="{{phenomenonLabel}}"></n52-label-mapper>
-          <span *ngIf="uom">
-            <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
-          </span>
-        </div>
+        <n52-label-mapper label="{{phenomenonLabel}}"></n52-label-mapper>
+        <span *ngIf="uom">
+          <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
+        </span>
         <div>{{dataset?.platform.label}}</div>
       </div>
       <div style="flex: 1"></div>
@@ -58,4 +56,5 @@
       </mat-slide-toggle>
     </div>
   </div>
+  <helgoland-toolbox-loading-overlay *ngIf="loading"></helgoland-toolbox-loading-overlay>
 </mat-expansion-panel>

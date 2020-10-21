@@ -1,4 +1,3 @@
-import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -12,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,6 +37,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
+import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
 import { LanguageSelectorComponent } from './components/main-config/language-selector/language-selector.component';
 import {
@@ -87,6 +88,7 @@ export const ROUTES = [
     ClearStorageComponent,
     VersionInfoComponent,
     ModalMainConfigButtonComponent,
+    LoadingOverlayComponent,
   ],
   imports: [
     BrowserModule,

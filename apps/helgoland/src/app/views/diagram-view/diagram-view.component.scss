@@ -20,27 +20,43 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            justify-content: center;
 
             .legend-button {
                 position: absolute;
                 left: 0;
                 top: 0;
+                z-index: 10;
             }
 
-            .diagram {
-                flex: 1;
-                position: relative;
-
-                .diagram-settings {
-                    position: absolute;
-                    right: 5px;
-                    top: 5px;
-                    z-index: 10;
+            .no-timeseries {
+                align-self: center;
+                text-align: center;
+                div:first-child {
+                    padding-top: 20px;
                 }
             }
 
-            .overview-diagram {
-                flex: 0 0 100px;
+            .diagrams {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+
+                .diagram {
+                    flex: 1;
+                    position: relative;
+
+                    .diagram-settings {
+                        position: absolute;
+                        right: 5px;
+                        top: 5px;
+                        z-index: 10;
+                    }
+                }
+
+                .overview-diagram {
+                    flex: 0 0 100px;
+                }
             }
         }
     }

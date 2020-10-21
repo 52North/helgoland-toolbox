@@ -91,11 +91,11 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   }
 
   public onDiagramLoading(loading: boolean) {
-    this.diagramLoading = loading;
+    setTimeout(() => this.diagramLoading = loading);
   }
 
   public onOverviewLoading(loading: boolean) {
-    this.overviewLoading = loading;
+    setTimeout(() => this.overviewLoading = loading);
   }
 
   public openDiagramSettings() {
@@ -141,6 +141,10 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public clearSelection() {
     this.selectedIds = [];
+  }
+
+  public removeAllTimeseries() {
+    this.timeseries.removeAllDatasets();
   }
 
   public deleteTimeseries(internalId: string) {
