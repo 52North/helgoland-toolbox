@@ -9,6 +9,7 @@ RUN npm install
 
 # copy the app and build it
 COPY . /usr/src/app
+RUN npm run versions-script
 RUN npm run build:prod
 
 FROM nginx:alpine

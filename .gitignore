@@ -42,3 +42,6 @@ Thumbs.db
 
 # compiled documentation
 documentation
+
+
+apps/helgoland/src/environments/versions.ts
