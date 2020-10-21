@@ -1,5 +1,5 @@
-import { MatSelectionListChange } from '@angular/material/list';
 import { Component } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 import { HelgolandServicesConnector } from '@helgoland/core';
 import { DatasetByStationSelectorComponent, SelectableDataset } from '@helgoland/selector';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,13 +31,11 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
   }
 
   public adjustSelection(change: MatSelectionListChange) {
-    const temp = change.option.value as SelectableDataset;
-    if (temp.selected) {
-      this.timeseries.removeDataset(temp.internalId);
-      // temp.selected = false;
+    const id = (change.option.value as SelectableDataset).internalId;
+    if (change.option.selected) {
+      this.timeseries.addDataset(id);
     } else {
-      this.timeseries.addDataset(temp.internalId);
-      // temp.selected = true;
+      this.timeseries.removeDataset(id);
     }
   }
 

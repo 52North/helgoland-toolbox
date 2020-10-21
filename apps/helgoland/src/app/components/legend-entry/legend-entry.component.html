@@ -50,7 +50,7 @@
       <span> {{lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
       <span>({{lastValue.value}} {{uom}})</span>
     </div>
-    <div *ngIf="dataset?.referenceValues">
+    <div *ngIf="dataset?.referenceValues.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
       <mat-slide-toggle *ngFor="let ref of dataset.referenceValues" [checked]="ref.visible"
         (toggleChange)="toggleReferenceValue(ref)">
