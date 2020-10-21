@@ -44,8 +44,9 @@ export class TimezoneService {
     return this.currentTimezone.name;
   }
 
-  public formatTzDate(date: moment.Moment | Date | number, format?: string): string {
+  public formatTzDate(date: moment.Moment | Date | number | string, format?: string): string {
     if (typeof (date) === 'number') { date = moment(date); }
+    if (typeof (date) === 'string') { date = moment(date); }
     if (date instanceof Date) { date = moment(date); }
     if (this.translateSrvc.currentLang) { moment.locale(this.translateSrvc.currentLang); }
     if (!format) { format = 'L LT z'; }
