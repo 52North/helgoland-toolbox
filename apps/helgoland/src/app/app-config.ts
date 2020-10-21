@@ -1,4 +1,8 @@
-import { AppConfig } from './../model/app-config';
+import { Settings } from '@helgoland/core';
+
+export interface AppConfig extends Settings {
+
+}
 
 export let appConfig: AppConfig;
 

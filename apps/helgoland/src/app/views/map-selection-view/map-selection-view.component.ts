@@ -15,7 +15,7 @@ import {
   ModalDatasetByStationSelectorComponent,
 } from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from '../../components/modal-map-settings/modal-map-settings.component';
-import { appConfig } from './../../../environments/env-settings';
+import { appConfig } from './../../app-config';
 import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 

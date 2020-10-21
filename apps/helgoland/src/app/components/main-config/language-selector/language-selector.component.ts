@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LocalSelectorComponent } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { appConfig } from './../../../../environments/env-settings';
+import { appConfig } from './../../../app-config';
 
 @Component({
   selector: 'helgoland-toolbox-language-selector',
