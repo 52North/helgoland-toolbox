@@ -1,23 +1,33 @@
 :host {
   display: flex;
-  flex-direction: column;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  justify-content: center;
+  align-items: center;
 
-  .header {
-    flex: 0;
-  }
-
-  .content {
+  .wrapper {
     flex: 1;
-    overflow: auto;
-  }
+    display: flex;
+    flex-direction: column;
+    max-height: 1000px;
+    height: 100%;
+    max-width: 2000px;
 
-  .footer {
-    flex: 0;
+    .header {
+      flex: 0;
+    }
+
+    .content {
+      flex: 1;
+      overflow: auto;
+    }
+
+    .footer {
+      flex: 0;
+    }
   }
 
 }
