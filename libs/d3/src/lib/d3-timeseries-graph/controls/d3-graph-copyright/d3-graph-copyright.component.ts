@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import { BaseType } from 'd3';
 
@@ -16,7 +16,7 @@ import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component'
   styleUrls: ['./d3-graph-copyright.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implements OnChanges {
+export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implements OnChanges, OnDestroy {
 
   /**
    * Copyright, which should be shown on the graph
@@ -59,14 +59,22 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     this.background = background;
     this.graphExtent = graphExtent;
     if (this.copyright) {
-      if (this.copyrightLayer) {
-        this.copyrightLayer.remove();
-        this.copyrightLayer = null;
-      }
+      this.clearLayer();
       this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
       this.createLabelRect();
       this.createLabelText();
       this.setText();
+    }
+  }
+
+  public cleanUp() {
+    this.clearLayer();
+  }
+
+  private clearLayer() {
+    if (this.copyrightLayer) {
+      this.copyrightLayer.remove();
+      this.copyrightLayer = null;
     }
   }
 

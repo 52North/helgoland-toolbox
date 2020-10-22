@@ -62,6 +62,13 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     this.drawOverviewSelection();
   }
 
+  public cleanUp() {
+    if (this.drawLayer) {
+      this.drawLayer.remove();
+      this.drawLayer = null;
+    }
+  }
+
   private drawOverviewSelection() {
     if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent) { return; }
 
