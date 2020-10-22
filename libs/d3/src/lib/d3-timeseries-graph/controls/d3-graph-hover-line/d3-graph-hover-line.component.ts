@@ -66,6 +66,13 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     this.preparedData = preparedData;
   }
 
+  public cleanUp() {
+    if (this.drawLayer) {
+      this.drawLayer.remove();
+      this.drawLayer = null;
+    }
+  }
+
   public mousemoveBackground() {
     if (!this.disableHovering) {
       this.moveHoverLineIndicator();
