@@ -15,6 +15,7 @@ export interface D3GraphObserver {
         graph: d3.Selection<SVGSVGElement, any, any, any>,
         timespan: Timespan
     ): void;
+    cleanUp?();
     mousemoveBackground?();
     mouseoverBackground?();
     mouseoutBackground?();
@@ -71,11 +72,16 @@ export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestr
 
     public ngOnDestroy(): void {
         this.graphId.getId().subscribe(graphId => this.graphs.getGraph(graphId).subscribe(graph => graph.unregisterObserver(this)));
+        if (this.cleanUp) {
+            this.cleanUp();
+        }
     }
 
     public abstract graphInitialized(graph: D3TimeseriesGraphComponent);
 
     public adjustYAxis?(axis: YAxis): void;
+
+    public cleanUp?(): void;
 
 }
 

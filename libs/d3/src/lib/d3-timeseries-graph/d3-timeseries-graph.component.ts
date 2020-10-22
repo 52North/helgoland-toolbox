@@ -599,6 +599,8 @@ export class D3TimeseriesGraphComponent
         this.height = this.calculateHeight();
         this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
         this.graph.selectAll('*').remove();
+        this.graphInteraction.selectAll('*').remove();
+        this.observer.forEach(e => e.cleanUp && e.cleanUp());
 
         this.leftOffset = 0;
         this.yScaleBase = null;
@@ -629,7 +631,6 @@ export class D3TimeseriesGraphComponent
         this.drawBaseGraph();
 
         // create background as rectangle providing panning
-        this.graphInteraction.selectAll('*').remove();
         this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
