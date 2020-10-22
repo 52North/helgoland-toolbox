@@ -42,11 +42,11 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
       this.onTranslationChanged = this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
     }
 
-    return this.formattedDate;
+    return this.timezoneSrvc.formatTzDate(this.date, this.format);
   }
 
   protected updateDate() {
-    setTimeout(() => this.formattedDate = this.timezoneSrvc.formatTzDate(this.date, this.format));
+    this.formattedDate = this.timezoneSrvc.formatTzDate(this.date, this.format);
   }
 
   ngOnDestroy(): void {
