@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -30,12 +32,21 @@ import {
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule, HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
+import { EditLabelComponent } from './components/edit-label/edit-label.component';
+import {
+  FavoriteToggleButtonComponent,
+} from './components/favorites/favorite-toggle-button/favorite-toggle-button.component';
+import {
+  ModalFavoriteListButtonComponent,
+} from './components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
+import { ModalFavoriteListComponent } from './components/favorites/modal-favorite-list/modal-favorite-list.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
@@ -75,20 +86,24 @@ export const ROUTES = [
 @NgModule({
   declarations: [
     AppComponent,
+    ClearStorageComponent,
     DiagramViewComponent,
+    FavoriteToggleButtonComponent,
+    LanguageSelectorComponent,
     LegendEntryComponent,
+    LoadingOverlayComponent,
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
+    ModalFavoriteListButtonComponent,
+    ModalFavoriteListComponent,
+    ModalMainConfigButtonComponent,
     ModalMainConfigComponent,
     ModalMapSettingsComponent,
     PhenomenonListSelectorComponent,
     ServiceListSelectorComponent,
-    LanguageSelectorComponent,
-    ClearStorageComponent,
     VersionInfoComponent,
-    ModalMainConfigButtonComponent,
-    LoadingOverlayComponent,
+    EditLabelComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,8 +127,11 @@ export const ROUTES = [
     HelgolandLabelMapperModule,
     HelgolandMapSelectorModule,
     HelgolandSelectorModule,
+    HelgolandFavoriteModule,
     MatBadgeModule,
     MatButtonModule,
+    MatInputModule,
+    MatCardModule,
     MatButtonToggleModule,
     MatDialogModule,
     MatExpansionModule,

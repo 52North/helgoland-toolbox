@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input #input matInput [value]="label" (change)="change($event.target.value)">
+</mat-form-field>
+
+<button mat-icon-button (click)="clear()">
+  <mat-icon>clear</mat-icon>
+</button>
+<button mat-icon-button (click)="confirm()">
+  <mat-icon>check</mat-icon>
+</button>

@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>{{'favorites.title' | translate}}</h1>
+<div style="max-height: 50vh; overflow: auto;">
+
+  <mat-card *ngFor="let item of singles" style="margin-bottom: 10px;">
+    <div *ngIf="!item.editMode" class="fav-title">
+      <span style="flex: 1;">{{item.label}}</span>
+      <button mat-icon-button (click)="item.editMode = true">
+        <mat-icon>create</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="item.editMode" class="fav-title">
+      <helgoland-toolbox-edit-label [label]="item.label"
+        (labelChanged)="setFavLabel(item, $event); item.editMode = false;"></helgoland-toolbox-edit-label>
+    </div>
+    <div class="fav-additional">
+      {{item.favorite.parameters.phenomenon.label}} - {{item.favorite.parameters.feature.label}}
+    </div>
+    <div class="fav-actions">
+      <button mat-icon-button (click)="deleteFav(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div style="flex: 1"></div>
+      <button mat-button (click)="addSingleToDiagram(item)">
+        {{'favorites.single-favorite.add-to-diagram' | translate}}
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card *ngFor="let group of groups" style="margin-bottom: 10px;">
+
+    <div *ngIf="!group.editMode" class="fav-title">
+      <span style="flex: 1;">{{group.label}}</span>
+      <button mat-icon-button (click)="group.editMode = true">
+        <mat-icon>create</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="group.editMode" class="fav-title">
+      <helgoland-toolbox-edit-label [label]="group.label"
+        (labelChanged)="setFavLabel(group, $event); group.editMode = false;"></helgoland-toolbox-edit-label>
+    </div>
+    <div class="fav-additional" *ngFor="let fav of group.favorites">
+      {{fav.dataset.parameters.phenomenon.label}} - {{fav.dataset.parameters.feature.label}}
+    </div>
+    <div class="fav-actions">
+      <button mat-icon-button (click)="deleteFav(group)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div style="flex: 1"></div>
+      <button mat-button (click)="addGroupToDiagram(group)">
+        {{'favorites.single-favorite.add-to-diagram' | translate}}
+      </button>
+    </div>
+  </mat-card>
+
+</div>
+<div mat-dialog-actions>
+  <button *ngIf="timeseriesSrvc.hasDatasets()" mat-raised-button
+    (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
+  <div style="flex: 1"></div>
+  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+</div>

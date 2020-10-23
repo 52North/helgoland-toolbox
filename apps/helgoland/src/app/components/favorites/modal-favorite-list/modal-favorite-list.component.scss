@@ -1,0 +1,15 @@
+:host {
+    .fav-title {
+        display: flex;
+        align-items: center;
+    }
+
+    .fav-additional {
+        font-size: 80%;
+        color: grey;
+    }
+
+    .fav-actions {
+        display: flex;
+    }
+}

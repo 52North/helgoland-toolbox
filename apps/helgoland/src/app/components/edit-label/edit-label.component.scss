@@ -1,0 +1,9 @@
+:host {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    mat-form-field{
+        flex: 1;
+    }
+}

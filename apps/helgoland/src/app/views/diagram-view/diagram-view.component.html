@@ -29,6 +29,7 @@
           <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
             <mat-icon>clear</mat-icon>
           </button>
+          <helgoland-toolbox-modal-favorite-list-button style="margin-right: 10px;"></helgoland-toolbox-modal-favorite-list-button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
             <mat-icon>add</mat-icon>
           </button>
@@ -44,7 +45,11 @@
 
     <div *ngIf="datasetIds.length === 0" class="no-timeseries">
       {{'diagram-view.no-timeseries.hint' | translate}}
-      <div><button mat-button>{{'diagram-view.add-timeseries.map' | translate}}</button></div>
+      <div>
+        <button mat-button (click)="appRouter.toMapSelection()">
+          {{'diagram-view.add-timeseries.map' | translate}}
+        </button>
+      </div>
       <div><button mat-button>{{'diagram-view.add-timeseries.list' | translate}}</button></div>
     </div>
 
