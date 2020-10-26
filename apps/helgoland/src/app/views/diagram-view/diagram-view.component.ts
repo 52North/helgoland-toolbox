@@ -8,6 +8,9 @@ import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
+import {
+  ModalEditTimeseriesOptionsComponent,
+} from '../../components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
@@ -156,7 +159,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   }
 
   public editOption(options: DatasetOptions) {
-    debugger;
+    const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, { data: options });
   }
 
   public updateOptions(options: DatasetOptions, internalId: string) {

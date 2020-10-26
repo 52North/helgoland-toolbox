@@ -1,6 +1,12 @@
+import {
+  MAT_COLOR_FORMATS,
+  NGX_MAT_COLOR_FORMATS,
+  NgxMatColorPickerModule,
+} from '@angular-material-components/color-picker';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -16,6 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,6 +67,9 @@ import {
   ModalDatasetByStationSelectorComponent,
 } from './components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { ModalDiagramSettingsComponent } from './components/modal-diagram-settings/modal-diagram-settings.component';
+import {
+  ModalEditTimeseriesOptionsComponent,
+} from './components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
@@ -104,10 +114,13 @@ export const ROUTES = [
     ServiceListSelectorComponent,
     VersionInfoComponent,
     EditLabelComponent,
+    ModalEditTimeseriesOptionsComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(ROUTES, { initialNavigation: 'enabled' }),
     TranslateModule.forRoot({
       loader: {
@@ -124,32 +137,35 @@ export const ROUTES = [
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
+    HelgolandFavoriteModule,
     HelgolandLabelMapperModule,
     HelgolandMapSelectorModule,
     HelgolandSelectorModule,
-    HelgolandFavoriteModule,
     MatBadgeModule,
     MatButtonModule,
-    MatInputModule,
-    MatCardModule,
     MatButtonToggleModule,
+    MatCardModule,
     MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatSelectModule,
     MatProgressBarModule,
+    MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSliderModule,
     MatToolbarModule,
+    NgxMatColorPickerModule
   ],
   providers: [
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
     },
+    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
     DatasetApiV1ConnectorProvider,
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,
