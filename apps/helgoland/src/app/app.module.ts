@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -73,6 +75,7 @@ import {
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
+import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
@@ -115,6 +118,7 @@ export const ROUTES = [
     VersionInfoComponent,
     EditLabelComponent,
     ModalEditTimeseriesOptionsComponent,
+    GeneralTimeSelectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -145,6 +149,8 @@ export const ROUTES = [
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
     MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -166,6 +172,7 @@ export const ROUTES = [
       useClass: SplittedDataDatasetApiInterface
     },
     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     DatasetApiV1ConnectorProvider,
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,

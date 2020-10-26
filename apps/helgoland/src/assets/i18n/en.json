@@ -38,5 +38,16 @@
 	"modal-edit-timeseries-options.title": "Change timeseries styles",
 	"service-selector.datasets": "Datasets",
 	"service-selector.phenomena": "Phenomena",
-	"service-selector.platforms": "Stations"
+	"service-selector.platforms": "Stations",
+	"time-selection.custom-range": "Custom time range",
+	"time-selection.predefined.current-month": "Current month",
+	"time-selection.predefined.current-week": "Current week",
+	"time-selection.predefined.current-year": "Current year",
+	"time-selection.predefined.last-hour": "Last hour",
+	"time-selection.predefined.last-month": "Last month",
+	"time-selection.predefined.last-week": "Last week",
+	"time-selection.predefined.last-year": "Last year",
+	"time-selection.predefined.today": "Today",
+	"time-selection.predefined.today_yesterday": "Today and yesterday",
+	"time-selection.predefined.yesterday": "Yesterday"
 }

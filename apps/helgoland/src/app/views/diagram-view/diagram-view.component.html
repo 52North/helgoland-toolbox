@@ -29,7 +29,8 @@
           <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
             <mat-icon>clear</mat-icon>
           </button>
-          <helgoland-toolbox-modal-favorite-list-button style="margin-right: 10px;"></helgoland-toolbox-modal-favorite-list-button>
+          <helgoland-toolbox-modal-favorite-list-button style="margin-right: 10px;">
+          </helgoland-toolbox-modal-favorite-list-button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
             <mat-icon>add</mat-icon>
           </button>
@@ -69,6 +70,12 @@
           <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
           </n52-d3-y-axis-modifier>
         </n52-d3-timeseries-graph>
+      </div>
+
+      <div>
+        <helgoland-toolbox-general-time-selection [timespan]="timeseries.timespan"
+          (timespanChanged)="timeseries.timespan = $event">
+        </helgoland-toolbox-general-time-selection>
       </div>
 
       <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">

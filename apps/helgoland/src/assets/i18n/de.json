@@ -38,5 +38,16 @@
 	"modal-edit-timeseries-options.title": "Zeitreihendarstellung ändern",
 	"service-selector.datasets": "Datensätze",
 	"service-selector.phenomena": "Phänomene",
-	"service-selector.platforms": "Stationen"
+	"service-selector.platforms": "Stationen",
+	"time-selection.custom-range": "Individueller Zeitraum",
+	"time-selection.predefined.current-month": "Derzeitiger Monat",
+	"time-selection.predefined.current-week": "Derzeitige Woche",
+	"time-selection.predefined.current-year": "Derzeitiges Jahr",
+	"time-selection.predefined.last-hour": "Letzte Stunde",
+	"time-selection.predefined.last-month": "Letzter Monat",
+	"time-selection.predefined.last-week": "Letzte Woche",
+	"time-selection.predefined.last-year": "Letztes Jahr",
+	"time-selection.predefined.today": "Heute",
+	"time-selection.predefined.today_yesterday": "Heute und Gestern",
+	"time-selection.predefined.yesterday": "Gestern"
 }
