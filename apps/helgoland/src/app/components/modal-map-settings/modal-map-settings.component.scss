@@ -1,0 +1,14 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    * + * {
+        margin-top: 10px;
+    }
+
+    .full-height {
+        flex: 1;
+        overflow: auto;
+    }
+}

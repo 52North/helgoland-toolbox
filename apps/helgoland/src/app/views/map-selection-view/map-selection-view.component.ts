@@ -70,7 +70,7 @@ export class MapSelectionViewComponent implements OnInit {
   }
 
   public onStationSelected(station: HelgolandPlatform) {
-    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent);
+    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent, { maxWidth: '100%' });
     dialogRef.componentInstance.station = station;
     dialogRef.componentInstance.url = this.selectedService.apiUrl;
     dialogRef.componentInstance.phenomenonId = this.selectedPhenomenonId;
@@ -89,7 +89,10 @@ export class MapSelectionViewComponent implements OnInit {
       cluster: this.cluster,
       selectedService: this.selectedService
     }
-    const dialogRef = this.dialog.open(ModalMapSettingsComponent, { data: conf });
+    const dialogRef = this.dialog.open(ModalMapSettingsComponent, {
+      data: conf,
+      maxWidth: '100%'
+    });
 
     dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
       if (newConf) {
