@@ -9,6 +9,7 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
+import { MultiServiceFilter } from '@helgoland/selector';
 import { icon, Marker } from 'leaflet';
 
 import {
@@ -45,7 +46,7 @@ export class MapSelectionViewComponent implements OnInit {
   public selectedPhenomenonId: string;
 
   public stationFilter: HelgolandParameterFilter;
-  public phenomenonFilter: HelgolandParameterFilter;
+  public phenomenonFilter: MultiServiceFilter[];
 
   public cluster = true;
 
@@ -120,9 +121,12 @@ export class MapSelectionViewComponent implements OnInit {
     }
     if (this.selectedPhenomenonId) { this.stationFilter.phenomenon = this.selectedPhenomenonId; }
 
-    this.phenomenonFilter = {
-      service: this.selectedService.id
-    }
+    this.phenomenonFilter = [{
+      url: this.selectedService.apiUrl,
+      filter: {
+        service: this.selectedService.id
+      }
+    }]
   }
 
 }

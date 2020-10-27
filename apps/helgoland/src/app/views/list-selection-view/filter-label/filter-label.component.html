@@ -1,0 +1,20 @@
+<span [ngSwitch]="filter">
+  <span *ngSwitchCase="'category'">
+    {{'list-selection.filter.category' | translate}}
+  </span>
+  <span *ngSwitchCase="'feature'">
+    {{'list-selection.filter.feature' | translate}}
+  </span>
+  <span *ngSwitchCase="'phenomenon'">
+    {{'list-selection.filter.phenomenon' | translate}}
+  </span>
+  <span *ngSwitchCase="'procedure'">
+    {{'list-selection.filter.procedure' | translate}}
+  </span>
+  <span *ngSwitchCase="'timeseries'">
+    {{'list-selection.filter.timeseries' | translate}}
+  </span>
+  <span *ngSwitchDefault>
+    {{filter}}
+  </span>
+</span>

@@ -1,0 +1,56 @@
+<div class="list-selection-wrapper">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span *ngIf="!entry.selectedFilter">
+            {{'list-selection.select-a-filter' | translate}}
+          </span>
+          <span *ngIf="entry.selectedFilter">
+            <helgoland-toolbox-filter-label [filter]="entry.selectedFilter"></helgoland-toolbox-filter-label>
+          </span>
+          <span *ngIf="entry?.selectedItem">
+            : {{entry?.selectedItem?.label}}
+          </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="filter-selection">
+        <mat-button-toggle-group>
+          <mat-button-toggle *ngFor="let filter of entry.possibleFilters" value="filter"
+            (click)="entry.selectedFilter = filter">
+            <helgoland-toolbox-filter-label [filter]="filter"></helgoland-toolbox-filter-label>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div [ngSwitch]="entry.selectedFilter" class="item-list">
+        <helgoland-toolbox-phenomenon-list-selector *ngSwitchCase="'category'" [endpoint]="'category'"
+          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        </helgoland-toolbox-phenomenon-list-selector>
+        <helgoland-toolbox-phenomenon-list-selector *ngSwitchCase="'feature'" [endpoint]="'feature'"
+          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        </helgoland-toolbox-phenomenon-list-selector>
+        <helgoland-toolbox-phenomenon-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="'phenomenon'"
+          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        </helgoland-toolbox-phenomenon-list-selector>
+        <helgoland-toolbox-phenomenon-list-selector *ngSwitchCase="'procedure'" [endpoint]="'procedure'"
+          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        </helgoland-toolbox-phenomenon-list-selector>
+        <helgoland-toolbox-timeseries-list-selector *ngSwitchCase="'timeseries'" [endpoint]="'dataset'"
+          [filterList]="entry.apiFilter">
+        </helgoland-toolbox-timeseries-list-selector>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<mat-toolbar>
+  <button mat-icon-button (click)="appRouter.toDiagram()">
+    <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
+  </button>
+
+  <button mat-icon-button (click)="openListSettings()">
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

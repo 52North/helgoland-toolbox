@@ -76,9 +76,13 @@ import { ModalMapSettingsComponent } from './components/modal-map-settings/modal
 import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
-import { MAP_SELECTION_ROUTE } from './services/app-router.service';
+import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
+import { FilterLabelComponent } from './views/list-selection-view/filter-label/filter-label.component';
+import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
+import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
+import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 
 export function HttpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -88,6 +92,10 @@ export const ROUTES = [
   {
     path: MAP_SELECTION_ROUTE,
     component: MapSelectionViewComponent
+  },
+  {
+    path: LIST_SELECTION_ROUTE,
+    component: ListSelectionViewComponent
   },
   {
     path: '**',
@@ -101,13 +109,17 @@ export const ROUTES = [
     AppComponent,
     ClearStorageComponent,
     DiagramViewComponent,
+    EditLabelComponent,
     FavoriteToggleButtonComponent,
+    GeneralTimeSelectionComponent,
     LanguageSelectorComponent,
     LegendEntryComponent,
+    ListSelectionViewComponent,
     LoadingOverlayComponent,
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
+    ModalEditTimeseriesOptionsComponent,
     ModalFavoriteListButtonComponent,
     ModalFavoriteListComponent,
     ModalMainConfigButtonComponent,
@@ -116,9 +128,9 @@ export const ROUTES = [
     PhenomenonListSelectorComponent,
     ServiceListSelectorComponent,
     VersionInfoComponent,
-    EditLabelComponent,
-    ModalEditTimeseriesOptionsComponent,
-    GeneralTimeSelectionComponent,
+    ModalListSettingsComponent,
+    FilterLabelComponent,
+    TimeseriesListSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -150,7 +162,6 @@ export const ROUTES = [
     MatButtonToggleModule,
     MatCardModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -158,6 +169,7 @@ export const ROUTES = [
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatMomentDateModule,
     MatProgressBarModule,
     MatSelectModule,
     MatSidenavModule,

@@ -5,9 +5,8 @@
       <button mat-button color="primary" (click)="selectAllPhenomena()" [disabled]="!selectedPhenomenonId"
         style="width: 100%;">{{'map-view.select-all-phenomena' | translate}}</button>
       <div class="phenomenon-list">
-        <helgoland-toolbox-phenomenon-list-selector [endpoint]="'phenomenon'" [serviceUrl]="selectedService.apiUrl"
-          [filter]="phenomenonFilter" [selectionId]="selectedPhenomenonId"
-          (onItemSelected)="onPhenomenonSelected($event)">
+        <helgoland-toolbox-phenomenon-list-selector [endpoint]="'phenomenon'" [selectionId]="selectedPhenomenonId"
+          [filterList]="phenomenonFilter" (onItemSelected)="onPhenomenonSelected($event)">
         </helgoland-toolbox-phenomenon-list-selector>
       </div>
       <mat-toolbar>
