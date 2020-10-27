@@ -70,6 +70,22 @@ export class ListSelectionViewComponent implements OnInit {
     })
   }
 
+  public selectFilter(entry: FilterListEntry, filter: Filter) {
+    if (entry.selectedFilter === Filter.CATEGORY) {
+      delete entry.apiFilter[0].filter.category;
+    }
+    if (entry.selectedFilter === Filter.FEATURE) {
+      delete entry.apiFilter[0].filter.feature;
+    }
+    if (entry.selectedFilter === Filter.PHENOMENON) {
+      delete entry.apiFilter[0].filter.phenomenon;
+    }
+    if (entry.selectedFilter === Filter.PROCEDURE) {
+      delete entry.apiFilter[0].filter.procedure;
+    }
+    entry.selectedFilter = filter;
+  }
+
   public itemSelected(filter: FilterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;

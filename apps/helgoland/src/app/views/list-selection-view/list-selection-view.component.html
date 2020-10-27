@@ -18,7 +18,7 @@
       <div class="filter-selection">
         <mat-button-toggle-group>
           <mat-button-toggle *ngFor="let filter of entry.possibleFilters" value="filter"
-            (click)="entry.selectedFilter = filter">
+            (click)="selectFilter(entry, filter)">
             <helgoland-toolbox-filter-label [filter]="filter"></helgoland-toolbox-filter-label>
           </mat-button-toggle>
         </mat-button-toggle-group>
