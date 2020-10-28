@@ -9,7 +9,7 @@ export interface DiagramConfig {
 }
 
 @Component({
-  selector: 'helgoland-toolbox-modal-diagram-settings',
+  selector: 'helgoland-modal-diagram-settings',
   templateUrl: './modal-diagram-settings.component.html',
   styleUrls: ['./modal-diagram-settings.component.scss']
 })

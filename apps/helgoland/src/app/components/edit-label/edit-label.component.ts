@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'helgoland-toolbox-edit-label',
+  selector: 'helgoland-edit-label',
   templateUrl: './edit-label.component.html',
   styleUrls: ['./edit-label.component.scss']
 })

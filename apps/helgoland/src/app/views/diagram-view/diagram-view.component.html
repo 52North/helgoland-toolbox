@@ -14,18 +14,18 @@
       <div class="entries">
         <mat-accordion [multi]="true">
           <div *ngFor="let id of datasetIds">
-            <helgoland-toolbox-legend-entry [datasetId]="id" [selected]="isSelected(id)"
+            <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
               [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
               (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
               (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
               (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
-            </helgoland-toolbox-legend-entry>
+            </helgoland-legend-entry>
           </div>
         </mat-accordion>
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
-          <helgoland-toolbox-modal-main-config-button></helgoland-toolbox-modal-main-config-button>
+          <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
           <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()">
             <mat-icon color="accent">priority_high</mat-icon>
           </button>
@@ -33,8 +33,8 @@
           <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
             <mat-icon>clear</mat-icon>
           </button>
-          <helgoland-toolbox-modal-favorite-list-button style="margin-right: 10px;">
-          </helgoland-toolbox-modal-favorite-list-button>
+          <helgoland-modal-favorite-list-button style="margin-right: 10px;">
+          </helgoland-modal-favorite-list-button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
             <mat-icon>add</mat-icon>
           </button>
@@ -65,7 +65,7 @@
     <div *ngIf="datasetIds.length > 0" class="diagrams">
       <div class="diagram">
 
-        <helgoland-toolbox-loading-overlay *ngIf="diagramLoading"></helgoland-toolbox-loading-overlay>
+        <helgoland-loading-overlay *ngIf="diagramLoading"></helgoland-loading-overlay>
 
         <button class="diagram-settings" mat-mini-fab color="none" (click)="openDiagramSettings()">
           <mat-icon>settings</mat-icon>
@@ -81,13 +81,13 @@
       </div>
 
       <div>
-        <helgoland-toolbox-general-time-selection [timespan]="timeseries.timespan"
+        <helgoland-general-time-selection [timespan]="timeseries.timespan"
           (timespanChanged)="timeseries.timespan = $event">
-        </helgoland-toolbox-general-time-selection>
+        </helgoland-general-time-selection>
       </div>
 
       <div class="overview-diagram" *ngIf="diagramConfig.overviewVisible">
-        <helgoland-toolbox-loading-overlay *ngIf="overviewLoading"></helgoland-toolbox-loading-overlay>
+        <helgoland-loading-overlay *ngIf="overviewLoading"></helgoland-loading-overlay>
         <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
           [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
           (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">

@@ -10,7 +10,7 @@ export interface MapConfig {
 }
 
 @Component({
-  selector: 'helgoland-toolbox-modal-map-settings',
+  selector: 'helgoland-modal-map-settings',
   templateUrl: './modal-map-settings.component.html',
   styleUrls: ['./modal-map-settings.component.scss']
 })

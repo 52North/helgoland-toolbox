@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { appConfig } from './../../../app-config';
 
 @Component({
-  selector: 'helgoland-toolbox-language-selector',
+  selector: 'helgoland-language-selector',
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss']
 })

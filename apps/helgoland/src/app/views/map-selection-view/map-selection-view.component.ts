@@ -32,7 +32,7 @@ Marker.prototype.options.icon = icon({
 });
 
 @Component({
-  selector: 'helgoland-toolbox-map-selection-view',
+  selector: 'helgoland-map-selection-view',
   templateUrl: './map-selection-view.component.html',
   styleUrls: ['./map-selection-view.component.scss']
 })

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config.component';
 
 @Component({
-  selector: 'helgoland-toolbox-modal-main-config-button',
+  selector: 'helgoland-modal-main-config-button',
   templateUrl: './modal-main-config-button.component.html',
   styleUrls: ['./modal-main-config-button.component.scss']
 })

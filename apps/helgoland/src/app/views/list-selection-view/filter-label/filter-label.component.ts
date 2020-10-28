@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Filter } from '../list-selection-view.component';
 
 @Component({
-  selector: 'helgoland-toolbox-filter-label',
+  selector: 'helgoland-filter-label',
   templateUrl: './filter-label.component.html',
   styleUrls: ['./filter-label.component.scss']
 })

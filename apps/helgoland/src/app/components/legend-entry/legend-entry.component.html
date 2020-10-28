@@ -34,8 +34,8 @@
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()">
         <mat-icon [ngStyle]="{'color': datasetOptions.color}">create</mat-icon>
       </button>
-      <helgoland-toolbox-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
-      </helgoland-toolbox-favorite-toggle-button>
+      <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
+      </helgoland-favorite-toggle-button>
     </div>
     <div class="entry-line clickable" *ngIf="firstValue" (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
@@ -55,5 +55,5 @@
       </mat-slide-toggle>
     </div>
   </div>
-  <helgoland-toolbox-loading-overlay *ngIf="loading"></helgoland-toolbox-loading-overlay>
+  <helgoland-loading-overlay *ngIf="loading"></helgoland-loading-overlay>
 </mat-expansion-panel>

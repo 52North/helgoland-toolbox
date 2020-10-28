@@ -8,7 +8,7 @@ import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
-  selector: 'helgoland-toolbox-modal-dataset-by-station-selector',
+  selector: 'helgoland-modal-dataset-by-station-selector',
   templateUrl: './modal-dataset-by-station-selector.component.html',
   styleUrls: ['./modal-dataset-by-station-selector.component.scss']
 })

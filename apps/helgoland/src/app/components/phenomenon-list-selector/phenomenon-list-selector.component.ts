@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
-  selector: 'helgoland-toolbox-phenomenon-list-selector',
+  selector: 'helgoland-phenomenon-list-selector',
   templateUrl: './phenomenon-list-selector.component.html',
   styleUrls: ['./phenomenon-list-selector.component.scss']
 })

@@ -5,7 +5,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DefinedTimespan, DefinedTimespanService, Time, Timespan } from '@helgoland/core';
 
 @Component({
-  selector: 'helgoland-toolbox-general-time-selection',
+  selector: 'helgoland-general-time-selection',
   templateUrl: './general-time-selection.component.html',
   styleUrls: ['./general-time-selection.component.scss']
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FavoriteTogglerComponent } from '@helgoland/favorite';
 
 @Component({
-  selector: 'helgoland-toolbox-favorite-toggle-button',
+  selector: 'helgoland-favorite-toggle-button',
   templateUrl: './favorite-toggle-button.component.html',
   styleUrls: ['./favorite-toggle-button.component.scss']
 })

@@ -5,7 +5,7 @@ import { FavoriteService } from '@helgoland/favorite';
 import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favorite-list.component';
 
 @Component({
-  selector: 'helgoland-toolbox-modal-favorite-list-button',
+  selector: 'helgoland-modal-favorite-list-button',
   templateUrl: './modal-favorite-list-button.component.html',
   styleUrls: ['./modal-favorite-list-button.component.scss']
 })

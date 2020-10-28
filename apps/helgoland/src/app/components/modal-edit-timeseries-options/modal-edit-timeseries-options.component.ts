@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatasetOptions } from '@helgoland/core';
 
 @Component({
-  selector: 'helgoland-toolbox-modal-edit-timeseries-options',
+  selector: 'helgoland-modal-edit-timeseries-options',
   templateUrl: './modal-edit-timeseries-options.component.html',
   styleUrls: ['./modal-edit-timeseries-options.component.scss']
 })

@@ -9,8 +9,8 @@
       </button>
     </div>
     <div *ngIf="item.editMode" class="fav-title">
-      <helgoland-toolbox-edit-label [label]="item.label"
-        (labelChanged)="setFavLabel(item, $event); item.editMode = false;"></helgoland-toolbox-edit-label>
+      <helgoland-edit-label [label]="item.label"
+        (labelChanged)="setFavLabel(item, $event); item.editMode = false;"></helgoland-edit-label>
     </div>
     <div class="fav-additional">
       {{item.favorite.parameters.phenomenon.label}} - {{item.favorite.parameters.feature.label}}
@@ -35,8 +35,8 @@
       </button>
     </div>
     <div *ngIf="group.editMode" class="fav-title">
-      <helgoland-toolbox-edit-label [label]="group.label"
-        (labelChanged)="setFavLabel(group, $event); group.editMode = false;"></helgoland-toolbox-edit-label>
+      <helgoland-edit-label [label]="group.label"
+        (labelChanged)="setFavLabel(group, $event); group.editMode = false;"></helgoland-edit-label>
     </div>
     <div class="fav-additional" *ngFor="let fav of group.favorites">
       {{fav.dataset.parameters.phenomenon.label}} - {{fav.dataset.parameters.feature.label}}

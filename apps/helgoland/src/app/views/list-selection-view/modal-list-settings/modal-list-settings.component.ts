@@ -9,7 +9,7 @@ export interface ListConfig {
 }
 
 @Component({
-  selector: 'helgoland-toolbox-modal-list-settings',
+  selector: 'helgoland-modal-list-settings',
   templateUrl: './modal-list-settings.component.html',
   styleUrls: ['./modal-list-settings.component.scss']
 })

@@ -25,7 +25,7 @@ interface FilterListEntry {
 }
 
 @Component({
-  selector: 'helgoland-toolbox-list-selection-view',
+  selector: 'helgoland-list-selection-view',
   templateUrl: './list-selection-view.component.html',
   styleUrls: ['./list-selection-view.component.scss']
 })

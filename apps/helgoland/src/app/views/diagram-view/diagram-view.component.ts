@@ -15,7 +15,7 @@ import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
-  selector: 'helgoland-toolbox-diagram-view',
+  selector: 'helgoland-diagram-view',
   templateUrl: './diagram-view.component.html',
   styleUrls: ['./diagram-view.component.scss']
 })
