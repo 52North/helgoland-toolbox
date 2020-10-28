@@ -75,7 +75,7 @@ import {
   ModalEditTimeseriesOptionsComponent,
 } from './components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
-import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
+import { ParameterListSelectorComponent } from './components/phenomenon-list-selector/parameter-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
 import { ShareButtonComponent } from './components/share-button/share-button.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
@@ -128,7 +128,7 @@ export const ROUTES = [
     ModalMainConfigButtonComponent,
     ModalMainConfigComponent,
     ModalMapSettingsComponent,
-    PhenomenonListSelectorComponent,
+    ParameterListSelectorComponent,
     ServiceListSelectorComponent,
     VersionInfoComponent,
     ModalListSettingsComponent,

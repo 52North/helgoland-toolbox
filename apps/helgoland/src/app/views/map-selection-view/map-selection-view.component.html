@@ -9,9 +9,9 @@
       <button mat-button color="primary" (click)="selectAllPhenomena()" [disabled]="!selectedPhenomenonId"
         style="width: 100%;">{{'map-view.select-all-phenomena' | translate}}</button>
       <div class="phenomenon-list">
-        <helgoland-phenomenon-list-selector [endpoint]="'phenomenon'" [selectionId]="selectedPhenomenonId"
+        <helgoland-parameter-list-selector [endpoint]="'phenomenon'" [selectionId]="selectedPhenomenonId"
           [filterList]="phenomenonFilter" (onItemSelected)="onPhenomenonSelected($event)">
-        </helgoland-phenomenon-list-selector>
+        </helgoland-parameter-list-selector>
       </div>
       <mat-toolbar>
         <mat-toolbar-row>

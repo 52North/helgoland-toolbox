@@ -7,11 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
-  selector: 'helgoland-phenomenon-list-selector',
-  templateUrl: './phenomenon-list-selector.component.html',
-  styleUrls: ['./phenomenon-list-selector.component.scss']
+  selector: 'helgoland-parameter-list-selector',
+  templateUrl: './parameter-list-selector.component.html',
+  styleUrls: ['./parameter-list-selector.component.scss']
 })
-export class PhenomenonListSelectorComponent extends MultiServiceFilterSelectorComponent implements OnInit {
+export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent implements OnInit {
 
   @ViewChild(MatSelectionList) list: MatSelectionList;
 

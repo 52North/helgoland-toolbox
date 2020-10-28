@@ -24,18 +24,18 @@
         </mat-button-toggle-group>
       </div>
       <div [ngSwitch]="entry.selectedFilter" class="item-list">
-        <helgoland-phenomenon-list-selector *ngSwitchCase="'category'" [endpoint]="'category'"
+        <helgoland-parameter-list-selector *ngSwitchCase="'category'" [endpoint]="'category'"
           [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-phenomenon-list-selector>
-        <helgoland-phenomenon-list-selector *ngSwitchCase="'feature'" [endpoint]="'feature'"
+        </helgoland-parameter-list-selector>
+        <helgoland-parameter-list-selector *ngSwitchCase="'feature'" [endpoint]="'feature'"
           [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-phenomenon-list-selector>
-        <helgoland-phenomenon-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="'phenomenon'"
+        </helgoland-parameter-list-selector>
+        <helgoland-parameter-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="'phenomenon'"
           [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-phenomenon-list-selector>
-        <helgoland-phenomenon-list-selector *ngSwitchCase="'procedure'" [endpoint]="'procedure'"
+        </helgoland-parameter-list-selector>
+        <helgoland-parameter-list-selector *ngSwitchCase="'procedure'" [endpoint]="'procedure'"
           [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-phenomenon-list-selector>
+        </helgoland-parameter-list-selector>
         <helgoland-timeseries-list-selector *ngSwitchCase="'timeseries'" [endpoint]="'dataset'"
           [filterList]="entry.apiFilter">
         </helgoland-timeseries-list-selector>
