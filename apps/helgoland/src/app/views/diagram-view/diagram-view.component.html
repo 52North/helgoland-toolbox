@@ -33,6 +33,7 @@
           <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
             <mat-icon>clear</mat-icon>
           </button>
+          <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
           <helgoland-modal-favorite-list-button style="margin-right: 10px;">
           </helgoland-modal-favorite-list-button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">

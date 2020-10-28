@@ -43,6 +43,8 @@
 	"modal-edit-timeseries-options.null-based": "Null based",
 	"modal-edit-timeseries-options.point-radius": "Point radius",
 	"modal-edit-timeseries-options.title": "Change timeseries styles",
+	"permalink.copy-to-clipboard": "The link is copied to the clipboard",
+	"permalink.copy-to-clipboard-error": "An error occured, while creating the link",
 	"service-selector.datasets": "Datasets",
 	"service-selector.phenomena": "Phenomena",
 	"service-selector.platforms": "Stations",

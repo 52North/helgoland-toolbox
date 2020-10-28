@@ -3,6 +3,7 @@ import {
   NGX_MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
 } from '@angular-material-components/color-picker';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -75,14 +77,15 @@ import {
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { PhenomenonListSelectorComponent } from './components/phenomenon-list-selector/phenomenon-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
+import { ShareButtonComponent } from './components/share-button/share-button.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
+import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { FilterLabelComponent } from './views/list-selection-view/filter-label/filter-label.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
-import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 
 export function HttpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -131,6 +134,7 @@ export const ROUTES = [
     ModalListSettingsComponent,
     FilterLabelComponent,
     TimeseriesListSelectorComponent,
+    ShareButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -150,6 +154,7 @@ export const ROUTES = [
       cachingDurationInMilliseconds: 300000,
       getDataCacheActive: false
     }),
+    ClipboardModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
@@ -175,6 +180,7 @@ export const ROUTES = [
     MatSidenavModule,
     MatSlideToggleModule,
     MatSliderModule,
+    MatSnackBarModule,
     MatToolbarModule,
     NgxMatColorPickerModule
   ],

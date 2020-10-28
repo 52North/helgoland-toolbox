@@ -1,7 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatasetOptions, Time, Timespan } from '@helgoland/core';
+import { DatasetOptions, Time } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from '../../components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
+import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
 @Component({
   selector: 'helgoland-diagram-view',
@@ -68,6 +69,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     public timeseries: TimeseriesService,
     public appRouter: AppRouterService,
+    public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
@@ -80,6 +82,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.permalinkSrvc.validatePeramlink();
     this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     this.setDatasets();
   }
@@ -122,12 +125,6 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public jumpToDate(date: Date) {
     this.timeseries.timespan = this.time.centerTimespan(this.timeseries.timespan, date);
-  }
-
-  private updateTime(timespan: Timespan) {
-    this.timeseries.timespan = timespan;
-    // this.timeseriesService.setTimespan(timespan);
-    // this.timespan = timespan;
   }
 
   public isSelected(internalId: string) {
