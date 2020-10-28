@@ -31,10 +31,6 @@
         {
             "name": "STA-Test",
             "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
-        },
-        {
-            "name": "BSH",
-            "url": "http://192.168.52.242:8080/52n-sos-webapp/api/"
         }
     ],
     "languages": [

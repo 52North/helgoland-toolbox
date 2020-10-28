@@ -6,6 +6,7 @@ import { MultiServiceFilter } from '@helgoland/selector';
 import { appConfig } from '../../app-config';
 import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from '../../services/timeseries-service.service';
+import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
 
 export enum Filter {
@@ -57,7 +58,7 @@ export class ListSelectionViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ModalListSettingsComponent, {
       data: conf,
-      maxWidth: '100%'
+      maxWidth: DIALOG_MAX_WIDTH
     });
 
     dialogRef.afterClosed().subscribe((newConf: ListConfig) => {

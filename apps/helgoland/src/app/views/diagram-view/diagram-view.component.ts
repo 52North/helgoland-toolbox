@@ -40,7 +40,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     showTimeLabel: false,
     hoverStyle: HoveringStyle.none,
     copyright: {
-      label: 'This should be bottom right and the text is long.',
+      label: '',
       link: 'https://52north.org/',
       positionX: 'right',
       positionY: 'bottom'
@@ -149,10 +149,6 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public deleteTimeseries(internalId: string) {
     this.timeseries.removeDataset(internalId);
-  }
-
-  public showGeometry(geometry: GeoJSON.GeoJsonObject) {
-    debugger;
   }
 
   public editOption(options: DatasetOptions) {

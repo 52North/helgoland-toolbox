@@ -17,6 +17,7 @@ import {
 } from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from '../../components/modal-map-settings/modal-map-settings.component';
 import { appConfig } from './../../app-config';
+import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
@@ -71,7 +72,7 @@ export class MapSelectionViewComponent implements OnInit {
   }
 
   public onStationSelected(station: HelgolandPlatform) {
-    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent, { maxWidth: '100%' });
+    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent, { maxWidth: DIALOG_MAX_WIDTH });
     dialogRef.componentInstance.station = station;
     dialogRef.componentInstance.url = this.selectedService.apiUrl;
     dialogRef.componentInstance.phenomenonId = this.selectedPhenomenonId;
@@ -92,7 +93,7 @@ export class MapSelectionViewComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ModalMapSettingsComponent, {
       data: conf,
-      maxWidth: '100%'
+      maxWidth: DIALOG_MAX_WIDTH
     });
 
     dialogRef.afterClosed().subscribe((newConf: MapConfig) => {

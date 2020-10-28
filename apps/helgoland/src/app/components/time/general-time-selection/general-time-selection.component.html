@@ -3,9 +3,15 @@
   <button mat-icon-button (click)="back()">
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()">{{timespan.from | tzDate : 'L LT z'}}
+  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()" class="desktop-only">
+    {{timespan.from | tzDate : 'L LT z'}}
     &nbsp;&ndash;&nbsp;
-    {{timespan.to | tzDate : 'L LT z'}}</button>
+    {{timespan.to | tzDate : 'L LT z'}}
+  </button>
+  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()" class="mobile-only">
+    <div>{{timespan.from | tzDate : 'L LT z'}}</div>
+    <div>{{timespan.to | tzDate : 'L LT z'}}</div>
+  </button>
   <button mat-icon-button (click)="forward()">
     <mat-icon>arrow_forward</mat-icon>
   </button>

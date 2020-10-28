@@ -10,6 +10,11 @@
         padding: 20px;
         align-self: center;
 
+        @media only screen and (max-width: 500px) {
+            // width: 100%;
+            min-width: 95%;
+        }
+
         .filter-selection {
             display: flex;
             flex-direction: row;
