@@ -46,7 +46,7 @@
     </div>
     <div *ngIf="dataset?.referenceValues.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
-      <mat-slide-toggle *ngFor="let ref of dataset.referenceValues" [checked]="ref.visible"
+      <mat-slide-toggle *ngFor="let ref of dataset.referenceValues" [checked]="ref.visible" color="primary"
         (toggleChange)="toggleReferenceValue(ref)">
         <span [ngStyle]="{color: ref.color}">{{ref.label}}</span>
       </mat-slide-toggle>

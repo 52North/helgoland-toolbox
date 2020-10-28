@@ -1,11 +1,11 @@
 @import '../../../variables.scss';
 
-:host {
+helgoland-diagram-view {
     .container {
         height: 100%;
 
         .legend {
-            background-color: #f5f5f5;
+            // background-color: #f5f5f5;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -70,6 +70,23 @@
                     flex: 0 0 100px;
                 }
             }
+        }
+    }
+
+    .d3 text.yaxisTextLabel {
+        font: unset;
+    }
+}
+
+.dark-theme {
+    .d3 {
+        text.yaxisTextLabel {
+            fill: white;
+        }
+
+        .axis-button-line {
+            fill: white;
+            stroke: white;
         }
     }
 }

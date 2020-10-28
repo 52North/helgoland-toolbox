@@ -1,5 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatasetOptions, Time } from '@helgoland/core';
 import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
@@ -18,7 +18,8 @@ import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 @Component({
   selector: 'helgoland-diagram-view',
   templateUrl: './diagram-view.component.html',
-  styleUrls: ['./diagram-view.component.scss']
+  styleUrls: ['./diagram-view.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DiagramViewComponent implements OnInit, OnDestroy {
 

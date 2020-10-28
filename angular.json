@@ -921,7 +921,6 @@
               "apps/helgoland/src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/helgoland/src/styles.scss"
             ],
             "scripts": []

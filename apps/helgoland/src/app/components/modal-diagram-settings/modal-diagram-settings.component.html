@@ -2,19 +2,21 @@
 <div>
 
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.yaxisVisible" (change)="diagramConfig.yaxisVisible = $event.checked">
+    <mat-slide-toggle [checked]="diagramConfig.yaxisVisible" color="primary"
+      (change)="diagramConfig.yaxisVisible = $event.checked">
       {{ 'diagram-config.yaxis-visible' | translate }}
     </mat-slide-toggle>
   </p>
 
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.yaxisModifier" (change)="diagramConfig.yaxisModifier = $event.checked">
+    <mat-slide-toggle [checked]="diagramConfig.yaxisModifier" color="primary"
+      (change)="diagramConfig.yaxisModifier = $event.checked">
       {{ 'diagram-config.yaxis-modifier-visible' | translate }}
     </mat-slide-toggle>
   </p>
 
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.overviewVisible"
+    <mat-slide-toggle [checked]="diagramConfig.overviewVisible" color="primary"
       (change)="diagramConfig.overviewVisible = $event.checked">
       {{ 'diagram-config.overview-visible' | translate }}
     </mat-slide-toggle>

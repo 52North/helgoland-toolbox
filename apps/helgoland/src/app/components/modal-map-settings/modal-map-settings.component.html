@@ -1,14 +1,13 @@
 <h1 mat-dialog-title>{{ 'map-config.title' | translate }}</h1>
 <mat-dialog-content>
 
-  <mat-slide-toggle [checked]="mapConfig.cluster" (change)="mapConfig.cluster = $event.checked">
+  <mat-slide-toggle [checked]="mapConfig.cluster" color="primary" (change)="mapConfig.cluster = $event.checked">
     {{ 'map-config.cluster-marker' | translate }}
   </mat-slide-toggle>
 
   <div class="full-height">
-    <helgoland-service-list-selector [datasetApiList]="datasetApis"
-      [selectedService]="mapConfig.selectedService" [supportStations]="true"
-      (onServiceSelected)="serviceSelected($event)"></helgoland-service-list-selector>
+    <helgoland-service-list-selector [datasetApiList]="datasetApis" [selectedService]="mapConfig.selectedService"
+      [supportStations]="true" (onServiceSelected)="serviceSelected($event)"></helgoland-service-list-selector>
   </div>
 
 </mat-dialog-content>

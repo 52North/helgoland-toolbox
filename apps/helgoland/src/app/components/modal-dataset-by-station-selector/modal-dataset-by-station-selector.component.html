@@ -7,7 +7,7 @@
 
   <div class="full-height">
     <mat-selection-list (selectionChange)="adjustSelection($event)">
-      <mat-list-option *ngFor="let ds of phenomenonMatchedList" [value]="ds" [selected]="ds.selected">
+      <mat-list-option *ngFor="let ds of phenomenonMatchedList" color="primary" [value]="ds" [selected]="ds.selected">
         <div mat-line>
           <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
         </div>
@@ -33,7 +33,7 @@
             {{ 'dataset-by-station.show-additional-datasets' | translate }}
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-selection-list (selectionChange)="adjustSelection($event)">
+        <mat-selection-list color="primary" (selectionChange)="adjustSelection($event)">
           <mat-list-option *ngFor="let ds of othersList" [value]="ds" [selected]="ds.selected">
             <div mat-line>
               <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
