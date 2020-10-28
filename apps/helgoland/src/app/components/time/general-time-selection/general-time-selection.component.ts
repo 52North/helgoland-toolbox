@@ -17,7 +17,7 @@ export class GeneralTimeSelectionComponent implements OnInit {
   public TODAY_YESTERDAY = DefinedTimespan.TODAY_YESTERDAY
   public CURRENT_WEEK = DefinedTimespan.CURRENT_WEEK;
   public LAST_WEEK = DefinedTimespan.LAST_WEEK;
-  public CURRENT_MONTH = DefinedTimespan.CURRENT_YEAR;
+  public CURRENT_MONTH = DefinedTimespan.CURRENT_MONTH;
   public LAST_MONTH = DefinedTimespan.LAST_MONTH;
   public CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
   public LAST_YEAR = DefinedTimespan.LAST_YEAR;
