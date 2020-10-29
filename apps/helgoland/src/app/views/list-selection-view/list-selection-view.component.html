@@ -1,4 +1,7 @@
 <div class="list-selection-wrapper">
+  <button class="local-settings-button" mat-icon-button mat-mini-fab color="none" (click)="openListSettings()">
+    <mat-icon>settings</mat-icon>
+  </button>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">
       <mat-expansion-panel-header>
@@ -46,11 +49,9 @@
 </div>
 
 <mat-toolbar>
+  <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
+  <div style="flex: 1;"></div>
   <button mat-icon-button (click)="appRouter.toDiagram()">
     <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
-  </button>
-
-  <button mat-icon-button (click)="openListSettings()">
-    <mat-icon>settings</mat-icon>
   </button>
 </mat-toolbar>

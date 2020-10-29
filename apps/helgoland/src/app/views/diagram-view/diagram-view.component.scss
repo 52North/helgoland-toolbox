@@ -57,13 +57,6 @@ helgoland-diagram-view {
                 .diagram {
                     flex: 1;
                     position: relative;
-
-                    .diagram-settings {
-                        position: absolute;
-                        right: 5px;
-                        top: 5px;
-                        z-index: 10;
-                    }
                 }
 
                 .overview-diagram {
