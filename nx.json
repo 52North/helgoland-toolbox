@@ -28,6 +28,13 @@
       "tags": [],
       "implicitDependencies": ["helgoland"]
     },
+    "helgoland-trajectories": {
+      "tags": []
+    },
+    "helgoland-trajectories-e2e": {
+      "tags": [],
+      "implicitDependencies": ["helgoland-trajectories"]
+    },
     "core": {
       "tags": []
     },
