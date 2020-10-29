@@ -3,14 +3,14 @@
 
   <div>
     {{ 'modal-edit-timeseries-options.line-width' | translate }}
-    <mat-slider class="example-margin" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
+    <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
       [(ngModel)]="options.lineWidth">
     </mat-slider>
   </div>
 
   <div>
     {{ 'modal-edit-timeseries-options.point-radius' | translate }}
-    <mat-slider class="example-margin" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
+    <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
       [(ngModel)]="options.pointRadius">
     </mat-slider>
   </div>
@@ -28,14 +28,9 @@
   </p>
 
   <div>
-    <mat-form-field>
-      <input matInput [ngxMatColorPicker]="picker" [formControl]="colorCtr">
-      <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-      <ngx-mat-color-picker #picker></ngx-mat-color-picker>
-    </mat-form-field>
-    <button mat-icon-button (click)="confirmColor()">
-      <mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
+    {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
+    <button mat-raised-button [colorPicker]="options.color" (colorPickerSelect)="confirmColor($event)"
+      [ngStyle]="{'background-color': options.color}">&nbsp;</button>
   </div>
 
 </div>

@@ -1,6 +1,4 @@
-import { Color, stringInputToObject } from '@angular-material-components/color-picker';
-import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatasetOptions } from '@helgoland/core';
 
@@ -9,26 +7,17 @@ import { DatasetOptions } from '@helgoland/core';
   templateUrl: './modal-edit-timeseries-options.component.html',
   styleUrls: ['./modal-edit-timeseries-options.component.scss']
 })
-export class ModalEditTimeseriesOptionsComponent implements OnInit {
+export class ModalEditTimeseriesOptionsComponent {
 
-  colorCtr: AbstractControl = new FormControl(null);
+  public adjustedColor: string;
 
   constructor(
     public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
     @Inject(MAT_DIALOG_DATA) public options: DatasetOptions
   ) { }
 
-  ngOnInit(): void {
-    this.initColor();
-  }
-
-  private initColor() {
-    const col = stringInputToObject(this.options.color);
-    this.colorCtr.setValue(new Color(col.r, col.g, col.b, col.a));
-  }
-
-  confirmColor() {
-    this.options.color = (this.colorCtr.value as Color).toHexString();
+  confirmColor(color: string) {
+    this.options.color = color;
   }
 
 }

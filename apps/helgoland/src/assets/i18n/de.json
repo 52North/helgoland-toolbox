@@ -38,6 +38,7 @@
 	"map-config.cluster-marker": "Marker gruppieren",
 	"map-config.title": "Kartenkonfiguration",
 	"map-view.select-all-phenomena": "Zeige alle Phänomene",
+	"modal-edit-timeseries-options.adjust-color": "Farbe ändern",
 	"modal-edit-timeseries-options.generalizeData": "Daten generalisieren",
 	"modal-edit-timeseries-options.line-width": "Linienbreite",
 	"modal-edit-timeseries-options.null-based": "Null-basiert",

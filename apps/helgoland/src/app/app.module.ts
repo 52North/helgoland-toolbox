@@ -1,8 +1,3 @@
-import {
-  MAT_COLOR_FORMATS,
-  NGX_MAT_COLOR_FORMATS,
-  NgxMatColorPickerModule,
-} from '@angular-material-components/color-picker';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -48,6 +43,7 @@ import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { EditLabelComponent } from './components/edit-label/edit-label.component';
@@ -155,6 +151,7 @@ export const ROUTES = [
       getDataCacheActive: false
     }),
     ClipboardModule,
+    ColorPickerModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
@@ -181,15 +178,13 @@ export const ROUTES = [
     MatSlideToggleModule,
     MatSliderModule,
     MatSnackBarModule,
-    MatToolbarModule,
-    NgxMatColorPickerModule
+    MatToolbarModule
   ],
   providers: [
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
     },
-    { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     DatasetApiV1ConnectorProvider,
     DatasetApiV2ConnectorProvider,

@@ -63,7 +63,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-material-components/color-picker": "^4.0.2",
     "@angular/animations": "^10.0.0",
     "@angular/cdk": "^10.2.2",
     "@angular/common": "^10.0.0",
@@ -90,7 +89,7 @@
     "moment": "^2.28.0",
     "moment-timezone": "^0.5.31",
     "ngx-clipboard": "^13.0.1",
-    "ngx-color-picker": "^10.0.1",
+    "ngx-color-picker": "^10.1.0",
     "ol": "^6.4.3",
     "plotly.js": "^1.54.5",
     "resize-observer-polyfill": "^1.5.1",
