@@ -1,0 +1,87 @@
+{
+    "id": "1",
+    "href": "http://api/dataset/1",
+    "domainId": "03cd18d9-27ab-48dd-a9e6-86c9240dfeee",
+    "label": "Dataset label",
+    "extras": [
+        "license",
+        "resultTimes"
+    ],
+    "datasetType": "timeseries",
+    "observationType": "simple",
+    "valueType": "quantity",
+    "mobile": false,
+    "insitu": true,
+    "hasSamplings": false,
+    "uom": "m",
+    "originTimezone": "CET",
+    "samplingTimeStart": "2009-02-21T00:00:00.000+01:00",
+    "samplingTimeEnd": "2019-02-21T11:55:00.000+01:00",
+    "feature": {
+        "id": "1",
+        "properties": {
+            "label": "Feature-Label",
+            "href": "http://api/features/1",
+            "domainId": "Feature domainId"
+        },
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                7.5,
+                51.1
+            ]
+        }
+    },
+    "referenceValues": [
+        {
+            "referenceValueId": "282",
+            "label": "Mittlerer Hochwasserabfluss"
+        },
+        {
+            "referenceValueId": "281",
+            "label": "Mittelwasserabfluss"
+        },
+        {
+            "referenceValueId": "280",
+            "label": "Mittlerer Niedrigwasserabfluss"
+        }
+    ],
+    "parameters": {
+        "phenomenon": {
+            "id": "2",
+            "href": "http://api/phenomena/2",
+            "domainId": "Abfluss",
+            "label": "Abfluss"
+        },
+        "procedure": {
+            "id": "254",
+            "href": "http://api/procedures/254",
+            "domainId": "Einzelwerte",
+            "label": "Einzelwerte"
+        },
+        "category": {
+            "id": "7",
+            "href": "http://api/categories/7",
+            "domainId": "Gewaesser",
+            "label": "Gewässer"
+        },
+        "offering": {
+            "id": "254",
+            "href": "http://api/offerings/254",
+            "domainId": "Zeitreihen_Einzelwerte",
+            "label": "Zeitreihen für Prozedur Einzelwerte"
+        },
+        "service": {
+            "id": "1",
+            "href": "http://api/services/1",
+            "label": "Wupperverband Sensor Web REST Service"
+        },
+        "platform": {
+            "id": "54",
+            "href": "http://api/platforms/54",
+            "domainId": "Holzwipper",
+            "label": "Holzwipper"
+        }
+    }
+}

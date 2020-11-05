@@ -51,7 +51,8 @@ export class FacetSearchComponent {
 
   private fetchDatasets() {
     forkJoin([
-      this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      this.servicesConnector.getDatasets('mocked-apiv3', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesConnector.getDatasets('http://192.168.52.242:8080/52n-sos-webapp/api/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
       //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }

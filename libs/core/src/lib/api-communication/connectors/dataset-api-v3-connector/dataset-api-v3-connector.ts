@@ -135,7 +135,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createDataset(ds: ApiV3Dataset, url: string): HelgolandDataset {
-    if (!(ds.firstValue && ds.lastValue && ds.parameters)) {
+    if (!ds.parameters) {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
