@@ -10,6 +10,7 @@ import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.serv
 import { Data } from '../../../model/dataset-api/data';
 import { HttpRequestOptions } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
+import { ReferenceValue, RenderingHints } from './../../../model/dataset-api/dataset';
 
 export interface ApiV3Parameter {
   id?: string;
@@ -78,6 +79,7 @@ export interface ApiV3Service extends ApiV3Parameter {
 export interface ApiV3Dataset extends ApiV3Parameter {
   datasetType: ApiV3DatasetTypes;
   observationType: string;
+  extras?: string[];
   internalId: string;
   valueType: string;
   mobile: boolean;
@@ -90,6 +92,7 @@ export interface ApiV3Dataset extends ApiV3Parameter {
   firstValue: ApiV3FirstLastValue;
   lastValue: ApiV3FirstLastValue;
   hasSamplings: boolean;
+  referenceValues?: ReferenceValue[];
   parameters: {
     phenomenon: ApiV3Phenomenon,
     procedure: ApiV3Procedure,
@@ -102,6 +105,14 @@ export interface ApiV3Dataset extends ApiV3Parameter {
     },
     platforms: ApiV3Platform
   };
+}
+
+export interface Apiv3DatasetExtras extends DatasetExtras {
+  renderingHints?: RenderingHints;
+}
+
+export interface ApiV3DatasetExtrasFilter {
+  fields: string[];
 }
 
 export interface ApiV3FirstLastValue {
@@ -145,6 +156,7 @@ export interface ApiV3DatasetDataFilter {
   timespan?: string;
   format?: string;
   unixTime?: boolean;
+  expanded?: boolean;
 }
 
 export interface ApiV3Sampler extends ApiV3Parameter { }
@@ -264,12 +276,17 @@ export class ApiV3InterfaceService extends ApiInterface {
 
   public getDatasetData<T>(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<T>> {
     const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
-    return this.requestApi<Data<T>>(url, this.prepareParams(params));
+    return this.requestApi<Data<T>>(url, this.prepareParams(params)).pipe(
+      map(res => {
+        if (params.expanded) { res = res[id]; }
+        return res;
+      })
+    );
   }
 
-  public getDatasetExtras(id: string, apiUrl: string): Observable<DatasetExtras> {
-    const url = this.createRequestUrl(apiUrl, 'timeseries', id);
-    return this.requestApi<DatasetExtras>(url + '/extras');
+  public getDatasetExtras(id: string, apiUrl: string, params?: ApiV3DatasetExtrasFilter): Observable<Apiv3DatasetExtras> {
+    const url = this.createRequestUrl(apiUrl, 'datasets', id);
+    return this.requestApi<DatasetExtras>(url + '/extras', this.prepareParams(params));
   }
 
   public getSamplings(apiUrl: string, params?: ApiV3SamplingsFilter, options?: HttpRequestOptions): Observable<ApiV3Sampling[]> {
