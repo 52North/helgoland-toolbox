@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, Observable, Observer, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
@@ -159,7 +159,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     switch (ds.datasetType) {
       case ApiV3DatasetTypes.Timeseries:
         if (ds.observationType === ApiV3ObservationTypes.Simple && (ds.valueType === ApiV3ValueTypes.Quantity || ds.valueType === ApiV3ValueTypes.Count)) {
-          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, this.createHelgolandPlatform(ds.feature), firstValue, lastValue, [], null,
+          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, this.createHelgolandPlatform(ds.feature), firstValue, lastValue, ds.referenceValues, null,
             { category, feature, offering, phenomenon, procedure, service }
           );
         } else {
@@ -220,11 +220,36 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
-    return this.api.getDataset(internalId.id, internalId.url, filter).pipe(map(res => this.createDataset(res, internalId.url)));
+    return new Observable((observer: Observer<HelgolandDataset>) => {
+      this.api.getDataset(internalId.id, internalId.url, filter).subscribe(
+        res => {
+          const dataset = this.createDataset(res, internalId.url);
+          const idx = res.extras.findIndex(e => e === 'renderingHints');
+          if (dataset instanceof HelgolandTimeseries && idx >= 0) {
+            this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ['renderingHints'] }).subscribe(
+              extras => {
+                dataset.renderingHints = extras.renderingHints;
+                observer.next(dataset);
+                observer.complete();
+              },
+              error => {
+                observer.error(error);
+                observer.complete();
+              })
+          } else {
+            observer.next(dataset);
+            observer.complete();
+          }
+        },
+        error => {
+          observer.error(error);
+          observer.complete();
+        }
+      );
+    });
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
-
     if (dataset instanceof HelgolandTimeseries) {
       const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
       if ((timespan.to - timespan.from) > maxTimeExtent) {
@@ -233,8 +258,9 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         let end = moment(timespan.from).endOf('year');
         while (start.isBefore(moment(timespan.to))) {
           const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
+          const params = { timespan: this.createRequestTimespan(chunkSpan), format: 'flot', expanded: filter.expanded };
           requests.push(
-            this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(chunkSpan), format: 'flot' })
+            this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
               .pipe(map(res => this.createTimeseriesData(res)))
           );
           start = end.add(1, 'millisecond');
@@ -261,7 +287,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return mergedResult;
         }));
       } else {
-        return this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), format: 'flot' })
+        const params = { timespan: this.createRequestTimespan(timespan), format: 'flot', expanded: filter.expanded };
+        return this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
           .pipe(map(res => this.createTimeseriesData(res)));
       }
     }

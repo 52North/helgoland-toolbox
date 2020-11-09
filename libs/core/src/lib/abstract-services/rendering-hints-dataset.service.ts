@@ -29,7 +29,7 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         });
     }
 
-    private async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+    protected async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
         this.datasetIds.push(timeseries.internalId);
         this.datasetOptions.set(timeseries.internalId, this.createOptionsOfRenderingHints(timeseries));
         this.datasetIdsChanged.emit(this.datasetIds);
@@ -37,7 +37,7 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         resolve(true);
     }
 
-    private createOptionsOfRenderingHints(timeseries: HelgolandTimeseries): T {
+    protected createOptionsOfRenderingHints(timeseries: HelgolandTimeseries): T {
         const options = this.createStyles(timeseries.internalId) as DatasetOptions;
         if (timeseries.renderingHints) {
             if (timeseries.renderingHints.properties && timeseries.renderingHints.properties.color) {
@@ -58,15 +58,24 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
     }
 
 
-    private handleLineRenderingHints(lineHints: LineRenderingHints, options: DatasetOptions) {
+    protected handleLineRenderingHints(lineHints: LineRenderingHints, options: DatasetOptions) {
         if (lineHints.properties.width) {
             options.lineWidth = Math.round(parseFloat(lineHints.properties.width));
         }
     }
 
-    private handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
-        if (barHints.properties.width) {
+    protected handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
+        options.type = 'bar';
+        if (barHints && barHints.properties.width) {
             options.lineWidth = Math.round(parseFloat(barHints.properties.width));
+        }
+        if (barHints && barHints.properties.interval) {
+            if (barHints.properties.interval === 'byDay') {
+                options.barPeriod = 'P1D';
+            }
+            if (barHints.properties.interval === 'byHour') {
+                options.barPeriod = 'PT1H';
+            }
         }
     }
 }
