@@ -220,10 +220,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: BasicAuthInformerImplService
     },
     {
-      provide: ApiV3InterfaceService,
-      useClass: MockedApiV3InterfaceService
-    },
-    {
       provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
       useClass: MockedDatasetApiV3Connector,
       multi: true

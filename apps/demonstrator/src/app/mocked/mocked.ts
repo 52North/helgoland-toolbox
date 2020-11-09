@@ -8,7 +8,6 @@ import {
     HttpService,
 } from '@helgoland/core';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import dataset from './dataset.json';
 
