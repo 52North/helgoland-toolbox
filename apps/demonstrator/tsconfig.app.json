@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": false,
+    "resolveJsonModule": true,
     "outDir": "../../dist/out-tsc",
     "types": [
       "node"
