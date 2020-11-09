@@ -131,7 +131,7 @@ export class GraphLegendComponent {
             this.datasetOptions.set(entry, option);
         });
 
-        this.timespan = this.time.createByDurationWithEnd(moment.duration(2, "days"), new Date(), 'hour');
+        this.timespan = this.time.createByDurationWithEnd(moment.duration(5, "days"), new Date().getTime() - 1000 * 60 * 60 * 24 * 1, 'day');
     }
 
     public timespanChanged(timespan: Timespan) {

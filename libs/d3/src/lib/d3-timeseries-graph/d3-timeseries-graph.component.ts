@@ -987,7 +987,7 @@ export class D3TimeseriesGraphComponent
         this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // adjust to default extend
-        axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
+        this.rangeCalc.setDefaultExtendIfUndefined(axis);
 
         this.rangeCalc.bufferUnfixedRange(axis);
 
