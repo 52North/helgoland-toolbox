@@ -72,9 +72,11 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         if (barHints && barHints.properties.interval) {
             if (barHints.properties.interval === 'byDay') {
                 options.barPeriod = 'P1D';
+                options.barStartOf = 'day';
             }
             if (barHints.properties.interval === 'byHour') {
                 options.barPeriod = 'PT1H';
+                options.barStartOf = 'hour';
             }
         }
     }
