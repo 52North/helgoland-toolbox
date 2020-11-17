@@ -987,7 +987,7 @@ export class D3TimeseriesGraphComponent
         this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // adjust to default extend
-        axis.range = this.rangeCalc.setDefaultExtendIfUndefined(axis.range);
+        this.rangeCalc.setDefaultExtendIfUndefined(axis);
 
         this.rangeCalc.bufferUnfixedRange(axis);
 
@@ -1226,7 +1226,7 @@ export class D3TimeseriesGraphComponent
 
     private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
-        const paddingAfter = 5;
+        const paddingAfter = 1;
         const periodInMs = entry.bar.period.asMilliseconds();
 
         const bars = this.graphBody.selectAll('.bar')

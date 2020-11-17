@@ -7,6 +7,7 @@ export * from './lib/base/map-cache.service';
 export * from './lib/base/map-handler.service';
 export * from './lib/base/map-options';
 export * from './lib/base/cached-map-component';
+export * from './lib/base/configuration/configuration';
 export * from './lib/base/geosearch/geosearch';
 export * from './lib/base/geosearch/nominatim.service';
 export * from './lib/base/geocure/geocure-layer';

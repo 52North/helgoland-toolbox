@@ -45,19 +45,21 @@ export class RangeCalculationsService {
    * Sets range to default interval of -1 to 1, if min and max of range are not set.
    * @param range {MinMaxRange} range to be set
    */
-  public setDefaultExtendIfUndefined(range: MinMaxRange): MinMaxRange {
-    let min = -1;
-    let max = 1;
-    if (range !== undefined && range !== null) {
-      if (range.min !== range.max) {
-        min = range.min;
-        max = range.max;
-      } else {
-        min += range.min;
-        max += range.max;
+  public setDefaultExtendIfUndefined(axis: YAxis) {
+    if (axis.range !== undefined && axis.range !== null) {
+      if (axis.range.min === axis.range.max) {
+        if (axis.fixedMin && !axis.fixedMax) {
+          axis.range.max = axis.range.min + 1;
+        }
+        if (!axis.fixedMin && axis.fixedMax) {
+          axis.range.min = axis.range.max - 1;
+        }
+        if (!axis.fixedMin && !axis.fixedMax) {
+          axis.range.min = -1;
+          axis.range.max = 1;
+        }
       }
     }
-    return { min, max };
   }
 
 }

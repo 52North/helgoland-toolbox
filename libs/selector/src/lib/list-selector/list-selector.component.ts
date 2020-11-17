@@ -67,6 +67,7 @@ export class ListSelectorComponent implements OnChanges {
                 // disable parameterList
                 for (let i = 1; i < this.parameters.length; i++) {
                     this.parameters[i].isDisabled = true;
+                    this.parameters[i].headerAddition = '';
                 }
             }
         }
