@@ -1,0 +1,11 @@
+{
+	"chart-styling.dotted": "Dotted",
+	"chart-styling.xaxis-option.distance": "Distanz",
+	"chart-styling.xaxis-option.ticks": "Ticks",
+	"chart-styling.xaxis-option.time": "Time",
+	"chart-styling.xaxis.header": "X-Achse",
+	"controls.close": "Close",
+	"main-config.title": "General Configuration",
+	"main-view.header.mobile-platform": "Mobile Platform",
+	"main-view.header.path": "Path"
+}

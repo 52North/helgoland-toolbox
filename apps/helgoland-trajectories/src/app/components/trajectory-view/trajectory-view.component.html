@@ -1,0 +1,53 @@
+<div class="header">
+  <helgoland-trajectory-label [trajectory]="trajectory"></helgoland-trajectory-label>
+</div>
+
+<div class="content">
+  <div class="map">
+    <n52-geometry-map-viewer class="map" mapId="trajectory" [geometry]="geometry" [highlight]="highlightGeometry"
+      [zoomTo]="zoomToGeometry"></n52-geometry-map-viewer>
+  </div>
+  <div class="chart-wrapper">
+    <div class="legend-wrapper">
+      <div class="legend">
+        legende
+      </div>
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <button mat-icon-button (click)="openMainConfig()">
+            <mat-icon>settings</mat-icon>
+          </button>
+          <div style="flex:1;"></div>
+          <button mat-mini-fab (click)="openSelection()" color="accent">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <div class="chart">
+      <button class="chart-config-button" mat-mini-fab color="none" [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
+        [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
+        (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
+        (onHoverHighlight)="onChartHighlightChanged($event)"></n52-d3-trajectory-graph>
+    </div>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu" class="chart-styling-menu">
+  <div class="title">{{'chart-styling.xaxis.header' | translate}}</div>
+  <div mat-menu-item *ngFor="let at of axisTypes" (click)="setXaxisType(at.type)">
+    <mat-radio-button color="primary" [checked]="isXaxisTypeSelected(at.type)">
+      {{at.label | translate}}
+    </mat-radio-button>
+  </div>
+  <mat-divider></mat-divider>
+  <div mat-menu-item (click)="toggleDotted()">
+    <mat-slide-toggle class="example-margin" color="primary" [checked]="graphOptions.dotted">
+      {{'chart-styling.dotted' | translate}}
+    </mat-slide-toggle>
+  </div>
+</mat-menu>

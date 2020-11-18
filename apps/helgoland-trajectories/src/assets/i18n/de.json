@@ -1,0 +1,11 @@
+{
+	"chart-styling.dotted": "gepunktet darstellen",
+	"chart-styling.xaxis-option.distance": "Distanz",
+	"chart-styling.xaxis-option.ticks": "Messpunkte",
+	"chart-styling.xaxis-option.time": "Zeit",
+	"chart-styling.xaxis.header": "X-Achse",
+	"controls.close": "Schließen",
+	"main-config.title": "Allgemeine Einstellungen",
+	"main-view.header.mobile-platform": "Mobile Platform",
+	"main-view.header.path": "Pfad"
+}
