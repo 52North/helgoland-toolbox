@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { versions } from '../../../../environments/versions';
-import { LayoutModeService } from './../../../services/layout-mode.service';
+import { LayoutModeService } from '../../services/layout-mode.service';
+import { versions } from './../../../../../../versions';
 
 @Component({
-  selector: 'helgoland-version-info',
+  selector: 'helgoland-common-version-info',
   templateUrl: './version-info.component.html',
   styleUrls: ['./version-info.component.scss']
 })

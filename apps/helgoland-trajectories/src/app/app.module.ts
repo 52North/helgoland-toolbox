@@ -23,15 +23,22 @@ import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction';
 import { HelgolandMapViewModule } from '@helgoland/map';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { forkJoin, from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { HelgolandCommonModule } from './../../../../libs/helgoland-common/src/lib/helgoland-common.module';
 import { AppComponent } from './app.component';
 import { ModalMainConfigComponent } from './components/modal-main-config/modal-main-config.component';
 import { TrajectoryLabelComponent } from './components/trajectory-label/trajectory-label.component';
 import { TrajectoryViewComponent } from './components/trajectory-view/trajectory-view.component';
 
-export function HttpTranslateLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export class AppTranslateLoader implements TranslateLoader {
+  getTranslation(lang: string): Observable<any> {
+    return forkJoin([
+      from(import(`../assets/i18n/${lang}.json`)),
+      from(import(`../../../../libs/helgoland-common/src/i18n/${lang}.json`))
+    ]).pipe(map(res => Object.assign(res[0].default, res[1].default)))
+  }
 }
 
 @NgModule({
@@ -47,8 +54,7 @@ export function HttpTranslateLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpTranslateLoaderFactory,
-        deps: [HttpClient]
+        useClass: AppTranslateLoader
       }
     }),
     BrowserAnimationsModule,
@@ -62,6 +68,7 @@ export function HttpTranslateLoaderFactory(http: HttpClient) {
     MatRadioModule,
     MatSlideToggleModule,
     MatToolbarModule,
+    HelgolandCommonModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandMapViewModule,

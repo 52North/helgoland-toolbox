@@ -1,6 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -42,9 +41,11 @@ import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { forkJoin, from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { HelgolandCommonModule } from './../../../../libs/helgoland-common/src/lib/helgoland-common.module';
 import { AppComponent } from './app.component';
 import { EditLabelComponent } from './components/edit-label/edit-label.component';
 import {
@@ -57,12 +58,10 @@ import { ModalFavoriteListComponent } from './components/favorites/modal-favorit
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
-import { LanguageSelectorComponent } from './components/main-config/language-selector/language-selector.component';
 import {
   ModalMainConfigButtonComponent,
 } from './components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { ModalMainConfigComponent } from './components/main-config/modal-main-config/modal-main-config.component';
-import { VersionInfoComponent } from './components/main-config/version-info/version-info.component';
 import {
   ModalDatasetByStationSelectorComponent,
 } from './components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
@@ -83,8 +82,13 @@ import { ListSelectionViewComponent } from './views/list-selection-view/list-sel
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
 
-export function HttpTranslateLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export class AppTranslateLoader implements TranslateLoader {
+  getTranslation(lang: string): Observable<any> {
+    return forkJoin([
+      from(import(`../assets/i18n/${lang}.json`)),
+      from(import(`../../../../libs/helgoland-common/src/i18n/${lang}.json`))
+    ]).pipe(map(res => Object.assign(res[0].default, res[1].default)))
+  }
 }
 
 export const ROUTES = [
@@ -111,7 +115,6 @@ export const ROUTES = [
     EditLabelComponent,
     FavoriteToggleButtonComponent,
     GeneralTimeSelectionComponent,
-    LanguageSelectorComponent,
     LegendEntryComponent,
     ListSelectionViewComponent,
     LoadingOverlayComponent,
@@ -126,7 +129,6 @@ export const ROUTES = [
     ModalMapSettingsComponent,
     ParameterListSelectorComponent,
     ServiceListSelectorComponent,
-    VersionInfoComponent,
     ModalListSettingsComponent,
     FilterLabelComponent,
     TimeseriesListSelectorComponent,
@@ -141,8 +143,7 @@ export const ROUTES = [
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpTranslateLoaderFactory,
-        deps: [HttpClient]
+        useClass: AppTranslateLoader
       }
     }),
     BrowserAnimationsModule,
@@ -152,6 +153,7 @@ export const ROUTES = [
     }),
     ClipboardModule,
     ColorPickerModule,
+    HelgolandCommonModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,

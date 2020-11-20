@@ -1150,6 +1150,36 @@
           }
         }
       }
+    },
+    "helgoland-common": {
+      "projectType": "library",
+      "root": "libs/helgoland-common",
+      "sourceRoot": "libs/helgoland-common/src",
+      "prefix": "helgoland-toolbox",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/helgoland-common/tsconfig.lib.json",
+              "libs/helgoland-common/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/helgoland-common/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/helgoland-common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

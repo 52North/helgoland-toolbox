@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "resolveJsonModule": true,
     "types": []
   },
   "files": ["src/main.ts", "src/polyfills.ts"]

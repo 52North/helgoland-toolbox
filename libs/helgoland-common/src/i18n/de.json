@@ -1,0 +1,6 @@
+{
+	"main-config.language-selector.placeholder": "Sprache wählen",
+	"main-config.version.build-time": "Build time",
+	"main-config.version.git-commit": "Commit",
+	"main-config.version.toolbox-version": "Version"
+}

@@ -1,3 +1,4 @@
+import { appConfig } from './../../../app-config';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,8 @@ import { Component } from '@angular/core';
   templateUrl: './modal-main-config.component.html',
   styleUrls: ['./modal-main-config.component.scss']
 })
-export class ModalMainConfigComponent { }
+export class ModalMainConfigComponent { 
+
+  public languages = appConfig.languages;
+
+}
