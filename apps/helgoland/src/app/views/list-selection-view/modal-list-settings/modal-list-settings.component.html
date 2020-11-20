@@ -2,9 +2,9 @@
 <mat-dialog-content>
 
   <div class="full-height">
-    <helgoland-service-list-selector [datasetApiList]="datasetApis"
+    <helgoland-common-service-list-selector [datasetApiList]="datasetApis"
       [selectedService]="listConfig.selectedService" [supportStations]="true"
-      (onServiceSelected)="serviceSelected($event)"></helgoland-service-list-selector>
+      (onServiceSelected)="serviceSelected($event)"></helgoland-common-service-list-selector>
   </div>
 
 </mat-dialog-content>

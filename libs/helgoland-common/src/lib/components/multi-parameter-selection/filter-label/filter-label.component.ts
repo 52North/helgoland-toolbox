@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 
-import { Filter } from '../list-selection-view.component';
+import { ParameterType } from '../model';
+
 
 @Component({
-  selector: 'helgoland-filter-label',
+  selector: 'helgoland-common-parameter-type-label',
   templateUrl: './filter-label.component.html',
   styleUrls: ['./filter-label.component.scss']
 })
 export class FilterLabelComponent {
 
-  @Input() filter: Filter;
+  @Input() filter: ParameterType;
 
 }

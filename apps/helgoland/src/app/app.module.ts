@@ -70,14 +70,11 @@ import {
   ModalEditTimeseriesOptionsComponent,
 } from './components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
-import { ParameterListSelectorComponent } from './components/phenomenon-list-selector/parameter-list-selector.component';
-import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
 import { ShareButtonComponent } from './components/share-button/share-button.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
-import { FilterLabelComponent } from './views/list-selection-view/filter-label/filter-label.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
@@ -127,10 +124,7 @@ export const ROUTES = [
     ModalMainConfigButtonComponent,
     ModalMainConfigComponent,
     ModalMapSettingsComponent,
-    ParameterListSelectorComponent,
-    ServiceListSelectorComponent,
     ModalListSettingsComponent,
-    FilterLabelComponent,
     TimeseriesListSelectorComponent,
     ShareButtonComponent,
   ],

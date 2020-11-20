@@ -1,6 +1,15 @@
 {
+	"list-selection.filter.category": "Category",
+	"list-selection.filter.feature": "Station",
+	"list-selection.filter.phenomenon": "Phenomenon",
+	"list-selection.filter.procedure": "Sensor",
+	"list-selection.filter.timeseries": "Timeseries",
+	"list-selection.filter.provider": "Provider",
 	"main-config.language-selector.placeholder": "Choose language",
 	"main-config.version.build-time": "Build time",
 	"main-config.version.git-commit": "Commit",
-	"main-config.version.toolbox-version": "Version"
+	"main-config.version.toolbox-version": "Version",
+	"service-selector.datasets": "Datasets",
+	"service-selector.phenomena": "Phenomena",
+	"service-selector.platforms": "Stations"
 }

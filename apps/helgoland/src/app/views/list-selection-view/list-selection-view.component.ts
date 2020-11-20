@@ -3,27 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
 import { MultiServiceFilter } from '@helgoland/selector';
 
+import {
+  ParameterType,
+  ParamterListEntry,
+} from '../../../../../../libs/helgoland-common/src/lib/components/multi-parameter-selection/model';
 import { appConfig } from '../../app-config';
 import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from '../../services/timeseries-service.service';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
-
-export enum Filter {
-  CATEGORY = 'category',
-  FEATURE = 'feature',
-  PHENOMENON = 'phenomenon',
-  PROCEDURE = 'procedure',
-  TIMESERIES = 'timeseries'
-}
-
-interface FilterListEntry {
-  selectedFilter?: Filter;
-  selectedItem?: Parameter;
-  apiFilter: MultiServiceFilter[];
-  expanded: boolean;
-  possibleFilters: Filter[];
-}
 
 @Component({
   selector: 'helgoland-list-selection-view',
@@ -36,7 +24,7 @@ export class ListSelectionViewComponent implements OnInit {
 
   public activeFilterCount: number;
 
-  public filterList: FilterListEntry[];
+  public filterList: ParamterListEntry[];
 
   constructor(
     private dialog: MatDialog,
@@ -71,23 +59,23 @@ export class ListSelectionViewComponent implements OnInit {
     })
   }
 
-  public selectFilter(entry: FilterListEntry, filter: Filter) {
-    if (entry.selectedFilter === Filter.CATEGORY) {
+  public selectFilter(entry: ParamterListEntry, filter: ParameterType) {
+    if (entry.selectedFilter === ParameterType.CATEGORY) {
       delete entry.apiFilter[0].filter.category;
     }
-    if (entry.selectedFilter === Filter.FEATURE) {
+    if (entry.selectedFilter === ParameterType.FEATURE) {
       delete entry.apiFilter[0].filter.feature;
     }
-    if (entry.selectedFilter === Filter.PHENOMENON) {
+    if (entry.selectedFilter === ParameterType.PHENOMENON) {
       delete entry.apiFilter[0].filter.phenomenon;
     }
-    if (entry.selectedFilter === Filter.PROCEDURE) {
+    if (entry.selectedFilter === ParameterType.PROCEDURE) {
       delete entry.apiFilter[0].filter.procedure;
     }
     entry.selectedFilter = filter;
   }
 
-  public itemSelected(filter: FilterListEntry, item: Parameter) {
+  public itemSelected(filter: ParamterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;
 
@@ -95,12 +83,7 @@ export class ListSelectionViewComponent implements OnInit {
     const fi = this.filterList.findIndex(e => e === filter);
     this.filterList.splice(fi + 1);
 
-    const possibleFilters: Filter[] = []
-    for (const f in Filter) {
-      if (typeof f === 'string') {
-        possibleFilters.push(Filter[f]);
-      }
-    }
+    const possibleFilters: ParameterType[] = [ParameterType.CATEGORY, ParameterType.FEATURE, ParameterType.PHENOMENON, ParameterType.PROCEDURE, ParameterType.TIMESERIES];
     for (let index = 0; index < this.filterList.length; index++) {
       const f = this.filterList[index].selectedFilter;
       const idx = possibleFilters.findIndex(e => e === f);
@@ -110,16 +93,16 @@ export class ListSelectionViewComponent implements OnInit {
     // add new Entry
     const apiFilter: MultiServiceFilter[] = [...filter.apiFilter];
     switch (filter.selectedFilter) {
-      case Filter.CATEGORY:
+      case ParameterType.CATEGORY:
         apiFilter[0].filter.category = item.id
         break;
-      case Filter.FEATURE:
+      case ParameterType.FEATURE:
         apiFilter[0].filter.feature = item.id
         break;
-      case Filter.PHENOMENON:
+      case ParameterType.PHENOMENON:
         apiFilter[0].filter.phenomenon = item.id
         break;
-      case Filter.PROCEDURE:
+      case ParameterType.PROCEDURE:
         apiFilter[0].filter.procedure = item.id
         break;
     }
@@ -134,7 +117,7 @@ export class ListSelectionViewComponent implements OnInit {
     this.filterList = [];
     this.filterList.push({
       expanded: true,
-      possibleFilters: [Filter.CATEGORY, Filter.FEATURE, Filter.PHENOMENON, Filter.PROCEDURE],
+      possibleFilters: [ParameterType.CATEGORY, ParameterType.FEATURE, ParameterType.PHENOMENON, ParameterType.PROCEDURE],
       apiFilter: [{
         url: this.selectedService.apiUrl,
         filter: {

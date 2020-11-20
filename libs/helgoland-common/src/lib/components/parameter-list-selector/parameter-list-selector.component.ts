@@ -4,10 +4,8 @@ import { HelgolandServicesConnector } from '@helgoland/core';
 import { MultiServiceFilterSelectorComponent } from '@helgoland/selector';
 import { TranslateService } from '@ngx-translate/core';
 
-import { TimeseriesService } from './../../services/timeseries-service.service';
-
 @Component({
-  selector: 'helgoland-parameter-list-selector',
+  selector: 'helgoland-common-parameter-list-selector',
   templateUrl: './parameter-list-selector.component.html',
   styleUrls: ['./parameter-list-selector.component.scss']
 })
@@ -18,7 +16,6 @@ export class ParameterListSelectorComponent extends MultiServiceFilterSelectorCo
   constructor(
     protected translate: TranslateService,
     protected servicesConnector: HelgolandServicesConnector,
-    protected timeseriesSrvc: TimeseriesService
   ) {
     super(servicesConnector, translate);
   }

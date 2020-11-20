@@ -6,8 +6,8 @@
   </mat-slide-toggle>
 
   <div class="full-height">
-    <helgoland-service-list-selector [datasetApiList]="datasetApis" [selectedService]="mapConfig.selectedService"
-      [supportStations]="true" (onServiceSelected)="serviceSelected($event)"></helgoland-service-list-selector>
+    <helgoland-common-service-list-selector [datasetApiList]="datasetApis" [selectedService]="mapConfig.selectedService"
+      [supportStations]="true" (onServiceSelected)="serviceSelected($event)"></helgoland-common-service-list-selector>
   </div>
 
 </mat-dialog-content>
