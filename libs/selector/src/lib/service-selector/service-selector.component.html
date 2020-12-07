@@ -18,7 +18,7 @@
       <span>{{'service-selector.phenomena' | translate}}: {{service.quantities.phenomena}}</span>
     </div>
   </div>
-  <div *ngFor="let item of unResolvableServices">
-    <div style="color: red;">{{item.name}} is currently not reachable</div>
+  <div *ngIf="showUnresolvableServices">
+    <div *ngFor="let item of unResolvableServices" style="color: red;">{{item.name}} is currently not reachable</div>
   </div>
 </div>

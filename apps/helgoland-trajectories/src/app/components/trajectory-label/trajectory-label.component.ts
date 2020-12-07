@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HelgolandTrajectory } from '@helgoland/core';
 
 @Component({
-  selector: 'helgoland-trajectory-label',
+  selector: 'helgoland-trajectories-label',
   templateUrl: './trajectory-label.component.html',
   styleUrls: ['./trajectory-label.component.scss']
 })

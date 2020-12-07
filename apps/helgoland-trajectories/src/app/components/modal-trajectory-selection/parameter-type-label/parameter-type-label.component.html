@@ -1,0 +1,20 @@
+<span [ngSwitch]="parameterType">
+  <span *ngSwitchCase="'provider'">
+    {{'list-selection.parameter-type.provider' | translate}}
+  </span>
+  <span *ngSwitchCase="'platform'">
+    {{'list-selection.parameter-type.platform' | translate}}
+  </span>
+  <span *ngSwitchCase="'offering'">
+    {{'list-selection.parameter-type.offering' | translate}}
+  </span>
+  <span *ngSwitchCase="'phenomenon'">
+    {{'list-selection.parameter-type.phenomenon' | translate}}
+  </span>
+  <span *ngSwitchCase="'feature'">
+    {{'list-selection.parameter-type.feature' | translate}}
+  </span>
+  <span *ngSwitchDefault>
+    '{{parameterType}}' not implemented
+  </span>
+</span>

@@ -4,8 +4,8 @@ import { HelgolandService, HelgolandServicesConnector, Parameter } from '@helgol
 import { MultiServiceFilter } from '@helgoland/selector';
 
 import {
+  ParameterListEntry,
   ParameterType,
-  ParamterListEntry,
 } from '../../../../../../libs/helgoland-common/src/lib/components/multi-parameter-selection/model';
 import { appConfig } from '../../app-config';
 import { AppRouterService } from '../../services/app-router.service';
@@ -24,7 +24,7 @@ export class ListSelectionViewComponent implements OnInit {
 
   public activeFilterCount: number;
 
-  public filterList: ParamterListEntry[];
+  public filterList: ParameterListEntry[];
 
   constructor(
     private dialog: MatDialog,
@@ -59,7 +59,7 @@ export class ListSelectionViewComponent implements OnInit {
     })
   }
 
-  public selectFilter(entry: ParamterListEntry, filter: ParameterType) {
+  public selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.CATEGORY) {
       delete entry.apiFilter[0].filter.category;
     }
@@ -75,7 +75,7 @@ export class ListSelectionViewComponent implements OnInit {
     entry.selectedFilter = filter;
   }
 
-  public itemSelected(filter: ParamterListEntry, item: Parameter) {
+  public itemSelected(filter: ParameterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;
 

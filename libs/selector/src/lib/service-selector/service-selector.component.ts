@@ -68,7 +68,7 @@ export class ServiceSelectorComponent implements OnInit {
                             });
                         },
                         (error) => {
-                            if (this.showUnresolvableServices) { this.unResolvableServices.push(api); }
+                            this.unResolvableServices.push(api);
                             this.loadingCount--;
                         });
             });

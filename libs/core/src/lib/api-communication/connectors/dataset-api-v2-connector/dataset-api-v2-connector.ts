@@ -78,7 +78,6 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
   }
 
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
-    filter.expanded = true;
     return this.api.getPlatforms(url, this.createFilter(filter)).pipe(
       map(res => res instanceof Array ? res.map(pf => this.createHelgolandPlatform(pf)) : [])
     );

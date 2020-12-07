@@ -20,6 +20,12 @@ export class TrajectoriesService extends DatasetService<DatasetOptions> {
     }
   }
 
+  public addAdditionalDataset(internalId: string, arg1: { visible: boolean; }) {
+    const options = this.createStyles(internalId);
+    options.visible = false;
+    this.addDataset(internalId, options);
+  }
+
   protected createStyles(internalId: string): DatasetOptions {
     return new DatasetOptions(internalId, this.colorSrvc.getColor());
   }

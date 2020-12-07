@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DiagramViewComponent } from './diagram-view.component';
 
@@ -6,11 +6,11 @@ describe('DiagramViewComponent', () => {
   let component: DiagramViewComponent;
   let fixture: ComponentFixture<DiagramViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiagramViewComponent ]
+      declarations: [DiagramViewComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

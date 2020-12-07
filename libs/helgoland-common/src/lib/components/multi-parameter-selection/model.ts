@@ -4,13 +4,15 @@ import { MultiServiceFilter } from '@helgoland/selector';
 export enum ParameterType {
     CATEGORY = 'category',
     FEATURE = 'feature',
+    OFFERING = 'offering',
     PHENOMENON = 'phenomenon',
+    PLATFORM = 'platform',
     PROCEDURE = 'procedure',
+    PROVIDER = 'provider',
     TIMESERIES = 'timeseries',
-    PROVIDER = 'provider'
 }
 
-export interface ParamterListEntry {
+export interface ParameterListEntry {
     selectedFilter?: ParameterType;
     selectedItem?: Parameter;
     apiFilter: MultiServiceFilter[];

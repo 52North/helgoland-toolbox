@@ -5,7 +5,14 @@
 	"chart-styling.xaxis-option.time": "Zeit",
 	"chart-styling.xaxis.header": "X-Achse",
 	"controls.close": "Schließen",
+	"list-selection.parameter-type.feature": "Pfad",
+	"list-selection.parameter-type.offering": "Offering",
+	"list-selection.parameter-type.phenomenon": "Phänomen",
+	"list-selection.parameter-type.platform": "Mobile Platform",
+	"list-selection.parameter-type.provider": "Anbieter",
+	"list-selection.select-a-filter": "Filter auswählen",
 	"main-config.title": "Allgemeine Einstellungen",
 	"main-view.header.mobile-platform": "Mobile Platform",
-	"main-view.header.path": "Pfad"
+	"main-view.header.path": "Pfad",
+	"selection.modal-title": "Auswahl einer Trajectory"
 }

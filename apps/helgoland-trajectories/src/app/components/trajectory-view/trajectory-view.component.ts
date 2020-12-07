@@ -13,9 +13,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { TrajectoriesService } from '../../services/trajectories.service';
 import { ModalMainConfigComponent } from './../modal-main-config/modal-main-config.component';
+import { ModalTrajectorySelectionComponent } from './../modal-trajectory-selection/modal-trajectory-selection.component';
 
 @Component({
-  selector: 'helgoland-trajectory-view',
+  selector: 'helgoland-trajectories-view',
   templateUrl: './trajectory-view.component.html',
   styleUrls: ['./trajectory-view.component.scss']
 })
@@ -29,7 +30,7 @@ export class TrajectoryViewComponent implements OnInit {
   public zoomToGeometry: GeoJSON.LineString;
   public graphData: LocatedTimeValueEntry[];
   public loading: boolean;
-  public datasetIds: string[];
+  public datasetIds: string[] = [];
   public options: Map<string, DatasetOptions>;
   public selection: D3SelectionRange;
 
@@ -52,12 +53,40 @@ export class TrajectoryViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initializeView();
+
+    this.trajectorySrvc.datasetIdsChanged.subscribe((ids: string[]) => {
+      if (ids.length > 0) {
+        if (this.datasetIds.length === 0 || this.datasetIds[0] !== this.trajectorySrvc.mainTrajectoryId) {
+          this.loadTrajectory(this.trajectorySrvc.mainTrajectoryId);
+        }
+      }
+    })
+  }
+
+  private initializeView() {
     const internalId = this.trajectorySrvc.mainTrajectoryId;
+    if (!internalId) {
+      this.openSelection(true);
+    } else {
+      this.loadTrajectory(internalId);
+    }
+  }
+
+  private loadTrajectory(internalId: string) {
+    this.loading = true;
     this.datasetIds = this.trajectorySrvc.datasetIds;
     this.options = this.trajectorySrvc.datasetOptions;
     this.servicesConnector.getDataset(internalId, { type: DatasetType.Trajectory }).subscribe(
       trajectory => {
         this.trajectory = trajectory;
+        this.servicesConnector.getDatasets(trajectory.url, { type: DatasetType.Trajectory, feature: trajectory.parameters.feature.id }).subscribe(res => {
+          res.forEach(e => {
+            if (e.internalId !== internalId) {
+              this.trajectorySrvc.addAdditionalDataset(e.internalId, { visible: false });
+            }
+          })
+        });
         this.timespan = new Timespan(trajectory.firstValue.timestamp, trajectory.lastValue.timestamp);
         this.selectedTimespan = this.timespan;
         this.servicesConnector.getDatasetData(trajectory, this.timespan).subscribe(
@@ -115,8 +144,8 @@ export class TrajectoryViewComponent implements OnInit {
     this.graphOptions.dotted = !this.graphOptions.dotted;
   }
 
-  public openSelection() {
-    debugger;
+  public openSelection(disableClose = false) {
+    this.dialog.open(ModalTrajectorySelectionComponent, { disableClose });
   }
 
   public openMainConfig() {

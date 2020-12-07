@@ -1,7 +1,3 @@
-<div *ngFor="let item of unResolvableServices">
-  <div style="color: red;">{{item.name}} is currently not reachable</div>
-</div>
-
 <mat-progress-bar *ngIf="loadingCount > 0" mode="indeterminate"></mat-progress-bar>
 
 <mat-selection-list #shoes [multiple]="false" (selectionChange)="selectService($event.option.value)">
@@ -21,3 +17,7 @@
     </div>
   </mat-list-option>
 </mat-selection-list>
+
+<div class="unresolvable-services">
+  <div *ngFor="let item of unResolvableServices">{{item.url}} is currently not reachable</div>
+</div>

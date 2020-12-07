@@ -1,8 +1,8 @@
 <div class="header">
-  <helgoland-trajectory-label [trajectory]="trajectory"></helgoland-trajectory-label>
+  <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
 </div>
 
-<div class="content">
+<div class="content" *ngIf="trajectory">
   <div class="map">
     <n52-geometry-map-viewer class="map" mapId="trajectory" [geometry]="geometry" [highlight]="highlightGeometry"
       [zoomTo]="zoomToGeometry"></n52-geometry-map-viewer>
@@ -10,7 +10,7 @@
   <div class="chart-wrapper">
     <div class="legend-wrapper">
       <div class="legend">
-        legende
+        <div *ngFor="let item of datasetIds">{{item}}</div>
       </div>
       <mat-toolbar>
         <mat-toolbar-row>

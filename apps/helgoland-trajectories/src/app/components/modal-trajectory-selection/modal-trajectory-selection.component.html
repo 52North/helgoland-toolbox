@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{'selection.modal-title' | translate}}</h1>
+<mat-dialog-content>
+
+  <div class="full-height">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span *ngIf="!entry.selectedFilter">
+              {{'list-selection.select-a-filter' | translate}}
+            </span>
+            <span *ngIf="entry.selectedFilter">
+              <helgoland-trajectories-parameter-type-label [parameterType]="entry.selectedFilter">
+              </helgoland-trajectories-parameter-type-label>
+            </span>
+            <span *ngIf="entry?.selectedItem">
+              : {{entry?.selectedItem?.label}}
+            </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+  
+        <div class="filter-selection" *ngIf="entry.possibleFilters.length > 1">
+          <mat-button-toggle-group>
+            <mat-button-toggle *ngFor="let filter of entry.possibleFilters" value="filter"
+              (click)="selectFilter(entry, filter)">
+              <helgoland-trajectories-parameter-type-label [parameterType]="filter">
+              </helgoland-trajectories-parameter-type-label>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+  
+        <div [ngSwitch]="entry.selectedFilter" class="item-list">
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'offering'" [endpoint]="'offering'"
+            [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+          </helgoland-common-parameter-list-selector>
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'feature'" [endpoint]="'feature'"
+            [filterList]="entry.apiFilter" (onItemSelected)="featureSelected(entry, $event)">
+          </helgoland-common-parameter-list-selector>
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'platform'" [endpoint]="'platform'"
+            [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+          </helgoland-common-parameter-list-selector>
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="'phenomenon'"
+            [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+          </helgoland-common-parameter-list-selector>
+          <helgoland-common-service-list-selector *ngSwitchCase="'provider'" [datasetApiList]="datasetApis"
+            [filter]="providerFilter" [supportStations]="true" (onServiceSelected)="serviceSelected($event)">
+          </helgoland-common-service-list-selector>
+        </div>
+  
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+</mat-dialog-content>
+<div mat-dialog-actions *ngIf="!dialogRef.disableClose">
+  <div style="flex: 1"></div>
+  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+</div>
