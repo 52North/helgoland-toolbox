@@ -11,7 +11,10 @@
   <div class="chart-wrapper">
     <div class="legend-wrapper">
       <div class="legend">
-        <div *ngFor="let item of datasetIds">{{item}}</div>
+        <div *ngFor="let id of datasetIds">
+          <helgoland-trajectories-legend-entry [datasetId]="id" [datasetOptions]="options.get(id)">
+          </helgoland-trajectories-legend-entry>
+        </div>
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
