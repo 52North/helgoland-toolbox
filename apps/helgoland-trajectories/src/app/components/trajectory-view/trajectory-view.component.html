@@ -1,5 +1,6 @@
 <div class="header">
   <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
+  <helgoland-loading-overlay *ngIf="loading"></helgoland-loading-overlay>
 </div>
 
 <div class="content" *ngIf="trajectory">

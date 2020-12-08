@@ -6,5 +6,6 @@ export * from './lib/components/service-list-selector/service-list-selector.comp
 export * from './lib/components/version-info/version-info.component';
 export * from './lib/components/multi-parameter-selection/model';
 export * from './lib/components/multi-parameter-selection/filter-label/filter-label.component';
+export * from './lib/components/loading-overlay/loading-overlay.component';
 
 export * from './lib/services/layout-mode.service';

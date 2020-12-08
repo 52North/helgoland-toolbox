@@ -10,6 +10,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
+import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { FilterLabelComponent } from './components/multi-parameter-selection/filter-label/filter-label.component';
 import { ParameterListSelectorComponent } from './components/parameter-list-selector/parameter-list-selector.component';
 import { ServiceListSelectorComponent } from './components/service-list-selector/service-list-selector.component';
@@ -18,6 +19,7 @@ import { VersionInfoComponent } from './components/version-info/version-info.com
 const COMPONENTS = [
   FilterLabelComponent,
   LanguageSelectorComponent,
+  LoadingOverlayComponent,
   ParameterListSelectorComponent,
   ServiceListSelectorComponent,
   VersionInfoComponent,

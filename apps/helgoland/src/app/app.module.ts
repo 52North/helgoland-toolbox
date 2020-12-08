@@ -56,7 +56,6 @@ import {
 } from './components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import { ModalFavoriteListComponent } from './components/favorites/modal-favorite-list/modal-favorite-list.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
-import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
 import {
   ModalMainConfigButtonComponent,
@@ -114,7 +113,6 @@ export const ROUTES = [
     GeneralTimeSelectionComponent,
     LegendEntryComponent,
     ListSelectionViewComponent,
-    LoadingOverlayComponent,
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
