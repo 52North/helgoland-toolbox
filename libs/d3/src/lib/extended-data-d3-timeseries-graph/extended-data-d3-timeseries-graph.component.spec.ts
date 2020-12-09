@@ -45,7 +45,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         component = fixture.componentInstance;
     });
 
-    it('should have a dataset', () => {
+    xit('should have a dataset', () => {
         const datasetID1 = 'https://geo.irceline.be/sos/api/v1/__6522';
         const datasetOptions: Map<string, DatasetOptions> = new Map();
         setNewTimespan(component);
