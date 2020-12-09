@@ -34,6 +34,8 @@
     "affected:test": "nx affected:test",
     "build": "ng build",
     "build:prod": "ng build --prod",
+    "build:timeseries:prod": "ng build helgoland --prod",
+    "build:trajectories:prod": "ng build helgoland-trajectories --prod",
     "compodoc": "./node_modules/.bin/compodoc libs -p tsconfig.doc.json --includes docs",
     "dep-graph": "nx dep-graph",
     "e2e": "ng e2e",
