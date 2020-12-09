@@ -2,15 +2,15 @@
   "datasetApis": [
     {
       "name": "nexos.demo.52north",
-      "url": "http://nexos.demo.52north.org/52n-sos-nexos-test/api/"
+      "url": "https://nexos.demo.52north.org/52n-sos-nexos-test/api/"
     },
     {
       "name": "codm.hzg.de",
-      "url": "http://codm.hzg.de/52n-sos-webapp/api/v1/"
+      "url": "https://codm.hzg.de/52n-sos-webapp/api/v1/"
     },
     {
       "name": "eurofleets",
-      "url": "http://eurofleets.utm.csic.es/sos/api/"
+      "url": "https://eurofleets.utm.csic.es/sos/api/"
     }
   ],
   "languages": [
