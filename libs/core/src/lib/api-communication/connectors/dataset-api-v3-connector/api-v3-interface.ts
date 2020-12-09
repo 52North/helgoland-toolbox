@@ -149,6 +149,8 @@ export interface ApiV3ParameterFilter {
   phenomena?: string[];
   categories?: string[];
   procedures?: string[];
+  platforms?: string[];
+  services?: string[];
   locale?: string;
 }
 
