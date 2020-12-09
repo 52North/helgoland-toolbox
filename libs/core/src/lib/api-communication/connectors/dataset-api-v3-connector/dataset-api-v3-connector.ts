@@ -339,6 +339,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
   protected createFilter(filter: HelgolandParameterFilter): ApiV3ParameterFilter {
     const apiFilter: ApiV3ParameterFilter = {};
+    if (filter.service) { apiFilter.services = [filter.service]; }
+    if (filter.platform) { apiFilter.platforms = [filter.platform]; }
     if (filter.category) { apiFilter.categories = [filter.category]; }
     if (filter.offering) { apiFilter.offerings = [filter.offering]; }
     if (filter.phenomenon) { apiFilter.phenomena = [filter.phenomenon]; }
