@@ -140,6 +140,8 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  public showGeometry(geometry: GeoJSON.GeoJsonObject) { }
+
   public clearSelection() {
     this.selectedIds = [];
   }

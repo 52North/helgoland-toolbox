@@ -22,6 +22,7 @@
             <mat-icon>settings</mat-icon>
           </button>
           <div style="flex:1;"></div>
+          <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
           <button mat-mini-fab (click)="openSelection()" color="accent">
             <mat-icon>add</mat-icon>
           </button>

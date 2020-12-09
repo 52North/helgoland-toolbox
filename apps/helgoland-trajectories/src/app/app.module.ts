@@ -15,6 +15,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import {
   DatasetApiInterface,
   DatasetApiV2ConnectorProvider,
@@ -67,6 +68,11 @@ export class AppTranslateLoader implements TranslateLoader {
   imports: [
     BrowserModule,
     FormsModule,
+    RouterModule.forRoot([{
+      path: '**',
+      pathMatch: 'full',
+      component: TrajectoryViewComponent
+    }], { initialNavigation: 'enabled' }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

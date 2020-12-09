@@ -69,7 +69,6 @@ import {
   ModalEditTimeseriesOptionsComponent,
 } from './components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
-import { ShareButtonComponent } from './components/share-button/share-button.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
@@ -124,7 +123,6 @@ export const ROUTES = [
     ModalMapSettingsComponent,
     ModalListSettingsComponent,
     TimeseriesListSelectorComponent,
-    ShareButtonComponent,
   ],
   imports: [
     BrowserModule,

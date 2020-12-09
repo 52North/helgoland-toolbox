@@ -12,6 +12,7 @@ import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 import { TrajectoriesService } from '../../services/trajectories.service';
+import { TrajectoryViewPermalinkService } from './../../services/trajectory-view-permalink.service';
 import { ModalMainConfigComponent } from './../modal-main-config/modal-main-config.component';
 import { ModalTrajectorySelectionComponent } from './../modal-trajectory-selection/modal-trajectory-selection.component';
 
@@ -48,20 +49,23 @@ export class TrajectoryViewComponent implements OnInit {
   constructor(
     public trajectorySrvc: TrajectoriesService,
     public translateSrvc: TranslateService,
+    public permalinkSrvc: TrajectoryViewPermalinkService,
     private dialog: MatDialog,
     private servicesConnector: HelgolandServicesConnector,
   ) { }
 
   ngOnInit(): void {
-    this.initializeView();
+    this.permalinkSrvc.validatePeramlink().subscribe(_ => {
+      this.initializeView();
 
-    this.trajectorySrvc.datasetIdsChanged.subscribe((ids: string[]) => {
-      if (ids.length > 0) {
-        if (this.datasetIds.length === 0 || this.datasetIds[0] !== this.trajectorySrvc.mainTrajectoryId) {
-          this.loadTrajectory(this.trajectorySrvc.mainTrajectoryId);
+      this.trajectorySrvc.datasetIdsChanged.subscribe((ids: string[]) => {
+        if (ids.length > 0) {
+          if (this.datasetIds.length === 0 || this.datasetIds[0] !== this.trajectorySrvc.mainTrajectoryId) {
+            this.loadTrajectory(this.trajectorySrvc.mainTrajectoryId);
+          }
         }
-      }
-    })
+      })
+    });
   }
 
   private initializeView() {

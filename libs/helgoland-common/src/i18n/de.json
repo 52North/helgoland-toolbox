@@ -1,4 +1,5 @@
 {
+	"controls.ok": "Ok",
 	"list-selection.filter.category": "Kategorie",
 	"list-selection.filter.feature": "Station",
 	"list-selection.filter.phenomenon": "Phänomen",
@@ -9,6 +10,8 @@
 	"main-config.version.build-time": "Build time",
 	"main-config.version.git-commit": "Commit",
 	"main-config.version.toolbox-version": "Version",
+	"permalink.copy-to-clipboard": "Der Sharelink befindet sich in der Zwischenablage",
+	"permalink.copy-to-clipboard-error": "Es ist ein Fehler bei der Erstellung des Sharelinks aufgetreten",
 	"service-selector.datasets": "Datensätze",
 	"service-selector.phenomena": "Phänomene",
 	"service-selector.platforms": "Stationen"

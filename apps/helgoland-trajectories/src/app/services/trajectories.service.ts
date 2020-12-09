@@ -10,8 +10,6 @@ export class TrajectoriesService extends DatasetService<DatasetOptions> {
     private colorSrvc: ColorService
   ) {
     super();
-    // TODO: remove
-    this.addDataset('http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_361637');
   }
 
   public get mainTrajectoryId(): string {
