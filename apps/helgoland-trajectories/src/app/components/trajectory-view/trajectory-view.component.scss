@@ -1,5 +1,3 @@
-@import '../../../../../general/themes.scss';
-
 :host {
     max-height: 100%;
     height: 100%;
@@ -53,11 +51,4 @@
         text-align: center;
     }
 
-    .mat-menu-item.selected {
-        background-color: mat-color($mat-primary, 'main');
-
-        &:hover {
-            background-color: darken($color: mat-color($mat-primary, 'main'), $amount: 10%);
-        }
-    }
 }
