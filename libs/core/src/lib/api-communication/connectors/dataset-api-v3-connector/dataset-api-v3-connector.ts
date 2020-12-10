@@ -148,11 +148,11 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       lastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
     }
     if (ds.parameters) {
-      category = { id: ds.parameters.category.id, label: ds.parameters.category.label };
-      feature = { id: ds.feature.id, label: ds.feature.properties.label };
-      offering = { id: ds.parameters.offering.id, label: ds.parameters.offering.label };
-      phenomenon = { id: ds.parameters.phenomenon.id, label: ds.parameters.phenomenon.label };
-      procedure = { id: ds.parameters.procedure.id, label: ds.parameters.procedure.label };
+      category = this.createCategory(ds.parameters.category);
+      feature = this.createFeature(ds.feature);
+      offering = this.createOffering(ds.parameters.offering);
+      phenomenon = this.createPhenomenon(ds.parameters.phenomenon);
+      procedure = this.createProcedure(ds.parameters.procedure);
       service = { id: ds.parameters.service.id, label: ds.parameters.service.label };
       platform = { id: ds.parameters.service.id, label: ds.parameters.service.label, platformType: PlatformTypes.stationary };
     }
@@ -409,10 +409,12 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createFeature(feature: ApiV3Feature): Feature {
-    return {
+    const f: Feature = {
       id: feature.id,
       label: feature.properties.label
     };
+    if (feature.properties && feature.properties.domainId) { f.domainId = feature.properties.domainId }
+    return f;
   }
 
 }
