@@ -1,4 +1,5 @@
 import { DatasetTypes, PlatformTypes } from './enums';
+import { Feature } from './feature';
 import { Parameter } from './parameter';
 import { Station } from './station';
 
@@ -16,7 +17,7 @@ export interface IDataset extends Parameter {
 export class ParameterConstellation {
     public service: Parameter;
     public offering: Parameter;
-    public feature: Parameter;
+    public feature: Feature;
     public procedure: Parameter;
     public phenomenon: Parameter;
     public category: Parameter;
