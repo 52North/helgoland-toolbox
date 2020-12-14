@@ -6,15 +6,15 @@
     "datasetApis": [
         {
             "name": "nexos.demo.52north",
-            "url": "http://nexos.demo.52north.org/52n-sos-nexos-test/api/"
+            "url": "https://nexos.demo.52north.org/52n-sos-nexos-test/api/"
         },
         {
             "name": "codm.hzg.de",
-            "url": "http://codm.hzg.de/52n-sos-webapp/api/v1/"
+            "url": "https://codm.hzg.de/52n-sos-webapp/api/v1/"
         },
         {
             "name": "sensorwebclient-webapp-stable",
-            "url": "http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/"
+            "url": "https://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/"
         },
         {
             "name": "geo.irceline.be",
@@ -26,7 +26,7 @@
         },
         {
             "name": "52north - Sensorwebtestbed",
-            "url": "http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/"
+            "url": "https://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/"
         },
         {
             "name": "STA-Test",
