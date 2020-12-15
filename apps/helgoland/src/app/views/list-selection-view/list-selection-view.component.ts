@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
+import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
 import { MultiServiceFilter } from '@helgoland/selector';
 
 import {
@@ -121,7 +121,8 @@ export class ListSelectionViewComponent implements OnInit {
       apiFilter: [{
         url: this.selectedService.apiUrl,
         filter: {
-          service: this.selectedService.id
+          service: this.selectedService.id,
+          type: DatasetType.Timeseries
         }
       }]
     });
