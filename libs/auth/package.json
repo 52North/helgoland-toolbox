@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/auth",
-  "version": "10.0.0-beta.6",
+  "version": "10.0.0-beta.7",
   "license": "Apache-2.0",
   "dependencies": {
     "@angular/common": "^10.0.0",
