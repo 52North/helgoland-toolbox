@@ -55,9 +55,12 @@ export class ListSelectorComponent implements OnChanges {
                 }
                 // create filterlist for first parameter entry
                 this.parameters[0].filterList = this.providerList.map((entry) => {
+                    const filter: HelgolandParameterFilter = {};
+                    if (entry.id) { filter.service = entry.id };
+                    if (this.filter.type) { filter.type = this.filter.type }
                     return {
                         url: entry.url,
-                        filter: { service: entry.id }
+                        filter
                     };
                 }) as MultiServiceFilter[];
                 this.listSelectorService.providerList = this.providerList;
