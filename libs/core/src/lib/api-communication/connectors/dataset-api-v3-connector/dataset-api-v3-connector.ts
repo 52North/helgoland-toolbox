@@ -163,12 +163,12 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       phenomenon = this.createPhenomenon(ds.parameters.phenomenon);
       procedure = this.createProcedure(ds.parameters.procedure);
       service = { id: ds.parameters.service.id, label: ds.parameters.service.label };
-      platform = { id: ds.parameters.service.id, label: ds.parameters.service.label, platformType: PlatformTypes.stationary };
+      platform = { id: ds.parameters.platform.id, label: ds.parameters.platform.label, platformType: PlatformTypes.stationary };
     }
     switch (ds.datasetType) {
       case ApiV3DatasetTypes.Timeseries:
         if (ds.observationType === ApiV3ObservationTypes.Simple && (ds.valueType === ApiV3ValueTypes.Quantity || ds.valueType === ApiV3ValueTypes.Count)) {
-          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, this.createHelgolandPlatform(ds.feature), firstValue, lastValue, ds.referenceValues, null,
+          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, []), firstValue, lastValue, ds.referenceValues, null,
             { category, feature, offering, phenomenon, procedure, service }
           );
         } else {
