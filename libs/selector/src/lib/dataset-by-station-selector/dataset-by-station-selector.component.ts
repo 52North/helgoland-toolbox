@@ -46,7 +46,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
     public ngOnInit() {
         if (this.station) {
-            this.servicesConnector.getPlatform(this.station.id, this.url)
+            this.servicesConnector.getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
                 .subscribe((station) => {
                     this.station = station;
                     this.counter = 0;
@@ -73,7 +73,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
         result.selected = selection;
         if (this.phenomenonId) {
             if (result.parameters.phenomenon.id === this.phenomenonId) {
-                this.phenomenonMatchedList.push(result);    
+                this.phenomenonMatchedList.push(result);
             } else {
                 this.othersList.push(result);
             }

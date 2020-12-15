@@ -237,7 +237,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
         }
       }
     }
-    return new HelgolandPlatform(station.id, station.properties.label, datasets, station.geometry);
+    return new HelgolandPlatform(station.id || station.properties.id, station.properties.label, datasets, station.geometry);
   }
 
   protected filterTimeseriesMatchesNot(filter: HelgolandParameterFilter): boolean {

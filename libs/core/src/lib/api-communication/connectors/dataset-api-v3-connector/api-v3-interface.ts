@@ -103,7 +103,7 @@ export interface ApiV3Dataset extends ApiV3Parameter {
       href: string;
       label: string;
     },
-    platforms: ApiV3Platform
+    platform: ApiV3Platform
   };
 }
 

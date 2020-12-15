@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IDataset, Provider } from '@helgoland/core';
+import { DatasetType, HelgolandParameterFilter, IDataset, Provider } from '@helgoland/core';
 import { ListSelectorParameter } from '@helgoland/selector';
 
 @Component({
@@ -23,6 +23,8 @@ export class ListSelectionComponent {
     }];
 
     public selectedProviderList: Provider[] = [];
+
+    public parameterFilter: HelgolandParameterFilter = { type: DatasetType.Timeseries }
 
     constructor() {
         this.selectedProviderList.push({
