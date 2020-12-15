@@ -266,6 +266,16 @@ export class ApiV3InterfaceService extends ApiInterface {
     return this.requestApi<ApiV3Procedure>(url, this.prepareParams(params), options);
   }
 
+  public getPlatforms(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Platform[]> {
+    const url = this.createRequestUrl(apiUrl, 'platforms');
+    return this.requestApi<ApiV3Platform[]>(url, this.prepareParams(params), options);
+  }
+
+  public getPlatform(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Platform> {
+    const url = this.createRequestUrl(apiUrl, 'platforms', id);
+    return this.requestApi<ApiV3Platform>(url, this.prepareParams(params), options);
+  }
+
   public getDatasets(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Dataset[]> {
     const url = this.createRequestUrl(apiUrl, 'datasets');
     return this.requestApi<ApiV3Dataset[]>(url, this.prepareParams(params), options).pipe(map(res => res.map(e => this.prepareDataset(e, apiUrl))));

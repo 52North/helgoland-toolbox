@@ -45,6 +45,7 @@ import {
   ApiV3Offering,
   ApiV3ParameterFilter,
   ApiV3Phenomenon,
+  ApiV3Platform,
   ApiV3Procedure,
   ApiV3Service,
   ApiV3ValueTypes,
@@ -123,11 +124,19 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
-    return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
+    if (filter.type === DatasetType.Timeseries) {
+      return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
+    } else {
+      return this.api.getPlatforms(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createHelgolandPlatform(f))));
+    }
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
-    return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
+    if (filter.type === DatasetType.Timeseries) {
+      return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
+    } else {
+      return this.api.getPlatform(id, url, this.createFilter(filter)).pipe(map(res => this.createHelgolandPlatform(res)));
+    }
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
@@ -180,8 +189,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     }
   }
 
-  protected createHelgolandPlatform(feature: ApiV3Feature): HelgolandPlatform {
-    return new HelgolandPlatform(feature.id, feature.properties.label, [], feature.geometry);
+  protected createHelgolandPlatform(feature: ApiV3Platform): HelgolandPlatform {
+    return new HelgolandPlatform(feature.id, feature.label, []);
   }
 
   protected createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
