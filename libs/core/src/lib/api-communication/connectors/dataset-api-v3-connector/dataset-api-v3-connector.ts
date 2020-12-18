@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
-import { Data, LocatedTimeValueEntry, TimeValueTuple } from '../../../model/dataset-api/data';
+import { Data, LocatedTimeValueEntry, ProfileDataEntry, TimeValueTuple } from '../../../model/dataset-api/data';
 import { FirstLastValue, PlatformParameter } from '../../../model/dataset-api/dataset';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
@@ -20,6 +20,7 @@ import { HelgolandServiceConnector } from '../../interfaces/service-connector-in
 import {
   HelgolandData,
   HelgolandDataFilter,
+  HelgolandProfileData,
   HelgolandTimeseriesData,
   HelgolandTrajectoryData,
 } from '../../model/internal/data';
@@ -38,6 +39,7 @@ import { HelgolandProfile, HelgolandTrajectory } from './../../model/internal/da
 import {
   ApiV3Category,
   ApiV3Dataset,
+  ApiV3DatasetDataFilter,
   ApiV3DatasetTypes,
   ApiV3Feature,
   ApiV3InterfaceService,
@@ -124,19 +126,12 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
-    if (filter.type === DatasetType.Timeseries) {
-      return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
-    } else {
-      return this.api.getPlatforms(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createHelgolandPlatform(f))));
-    }
+    // features are used as platforms in v3 
+    return this.api.getFeatures(url, this.createFilter(filter)).pipe(map(res => res.map(f => this.createStation(f))));
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
-    if (filter.type === DatasetType.Timeseries) {
-      return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
-    } else {
-      return this.api.getPlatform(id, url, this.createFilter(filter)).pipe(map(res => this.createHelgolandPlatform(res)));
-    }
+    return this.api.getFeature(id, url, this.createFilter(filter)).pipe(map(res => this.createStation(res)));
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
@@ -171,8 +166,12 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, []), firstValue, lastValue, ds.referenceValues, null,
             { category, feature, offering, phenomenon, procedure, service }
           );
+        } else if (ds.observationType === ApiV3ObservationTypes.Profil) {
+          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, false, ds.firstValue as any, ds.lastValue as any,
+            { category, feature, offering, phenomenon, procedure, service, platform }
+          )
         } else {
-          return new HelgolandDataset(ds.id, url, ds.label);
+          console.error(`'${ds.datasetType}' not implemented`);
         }
       case ApiV3DatasetTypes.Trajectory:
         if (ds.observationType === ApiV3ObservationTypes.Profil) {
@@ -267,7 +266,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         let end = moment(timespan.from).endOf('year');
         while (start.isBefore(moment(timespan.to))) {
           const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
-          const params = { timespan: this.createRequestTimespan(chunkSpan), format: 'flot', expanded: filter.expanded };
+          const params: ApiV3DatasetDataFilter = { timespan: this.createRequestTimespan(chunkSpan), format: 'flot' };
+          if (filter.expanded !== undefined) { params.expanded = filter.expanded };
           requests.push(
             this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
               .pipe(map(res => this.createTimeseriesData(res)))
@@ -296,7 +296,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return mergedResult;
         }));
       } else {
-        const params = { timespan: this.createRequestTimespan(timespan), format: 'flot', expanded: filter.expanded };
+        const params: ApiV3DatasetDataFilter = { timespan: this.createRequestTimespan(timespan), format: 'flot' };
+        if (filter.expanded !== undefined) { params.expanded = filter.expanded };
         return this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
           .pipe(map(res => this.createTimeseriesData(res)));
       }
@@ -305,6 +306,11 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     if (dataset instanceof HelgolandTrajectory) {
       return this.api.getDatasetData<LocatedTimeValueEntry>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), unixTime: true })
         .pipe(map(res => this.createTrajectoryData(res)));
+    }
+
+    if (dataset instanceof HelgolandProfile) {
+      return this.api.getDatasetData<ProfileDataEntry>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), unixTime: true })
+        .pipe(map(res => this.createProfileData(res)));
     }
   }
 
@@ -332,6 +338,10 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
   protected createTrajectoryData(res: Data<LocatedTimeValueEntry>): HelgolandTrajectoryData {
     return new HelgolandTrajectoryData(res.values);
+  }
+
+  protected createProfileData(res: Data<ProfileDataEntry>): HelgolandProfileData {
+    return new HelgolandProfileData(res.values);
   }
 
   protected createTimeseriesData(res: Data<TimeValueTuple>): HelgolandTimeseriesData {
