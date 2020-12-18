@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HelgolandMapSelectorModule } from '../module';
 import { PlatformMapViewerComponent } from './platform-map-viewer.component';
 
 describe('PlatformMapViewerComponent', () => {
@@ -8,9 +9,12 @@ describe('PlatformMapViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlatformMapViewerComponent ]
+      imports: [
+        HelgolandMapSelectorModule
+      ],
+      declarations: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

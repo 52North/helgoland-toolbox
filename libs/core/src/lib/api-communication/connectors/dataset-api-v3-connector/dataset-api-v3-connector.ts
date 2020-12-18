@@ -172,6 +172,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           )
         } else {
           console.error(`'${ds.datasetType}' not implemented`);
+          break;
         }
       case ApiV3DatasetTypes.Trajectory:
         if (ds.observationType === ApiV3ObservationTypes.Profil) {
