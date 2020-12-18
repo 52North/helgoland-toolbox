@@ -117,7 +117,7 @@ export interface ApiV3DatasetExtrasFilter {
 
 export interface ApiV3FirstLastValue {
   timestamp: string;
-  value: number;
+  value: any;
 }
 
 export enum ApiV3DatasetTypes {
