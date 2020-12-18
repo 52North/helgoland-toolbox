@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/caching",
-  "version": "8.0.6",
+  "version": "8.0.7",
   "license": "Apache-2.0",
   "dependencies": {
     "@angular/common": "^8.2.14",
