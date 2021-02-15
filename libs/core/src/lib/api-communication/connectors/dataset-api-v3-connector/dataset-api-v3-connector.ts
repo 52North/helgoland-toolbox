@@ -144,7 +144,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     }
     let firstValue: FirstLastValue, lastValue: FirstLastValue;
     let category: Parameter, feature: Parameter, offering: Parameter, phenomenon: Parameter, procedure: Parameter, service: Parameter;
-    let platform: PlatformParameter;
+    let platformParam: PlatformParameter;
     if (ds.firstValue) {
       firstValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
     }
@@ -158,17 +158,23 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       phenomenon = this.createPhenomenon(ds.parameters.phenomenon);
       procedure = this.createProcedure(ds.parameters.procedure);
       service = { id: ds.parameters.service.id, label: ds.parameters.service.label };
-      platform = { id: ds.parameters.platform.id, label: ds.parameters.platform.label, platformType: PlatformTypes.stationary };
+      platformParam = { id: ds.parameters.platform.id, label: ds.parameters.platform.label, platformType: PlatformTypes.stationary };
     }
     switch (ds.datasetType) {
       case ApiV3DatasetTypes.Timeseries:
         if (ds.observationType === ApiV3ObservationTypes.Simple && (ds.valueType === ApiV3ValueTypes.Quantity || ds.valueType === ApiV3ValueTypes.Count)) {
-          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, []), firstValue, lastValue, ds.referenceValues, null,
+          let platform: HelgolandPlatform;
+          if (ds.feature && ds.feature.geometry) {
+            platform = new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, [], ds.feature.geometry);
+          } else {
+            platform = new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, []);
+          }
+          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, platform, firstValue, lastValue, ds.referenceValues, null,
             { category, feature, offering, phenomenon, procedure, service }
           );
         } else if (ds.observationType === ApiV3ObservationTypes.Profil) {
           return new HelgolandProfile(ds.id, url, ds.label, ds.uom, false, ds.firstValue as any, ds.lastValue as any,
-            { category, feature, offering, phenomenon, procedure, service, platform }
+            { category, feature, offering, phenomenon, procedure, service, platform: platformParam }
           )
         } else {
           console.error(`'${ds.datasetType}' not implemented`);
@@ -176,9 +182,9 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         }
       case ApiV3DatasetTypes.Trajectory:
         if (ds.observationType === ApiV3ObservationTypes.Profil) {
-          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, true, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform });
+          return new HelgolandProfile(ds.id, url, ds.label, ds.uom, true, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform: platformParam });
         } else {
-          return new HelgolandTrajectory(ds.id, url, ds.label, ds.uom, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform });
+          return new HelgolandTrajectory(ds.id, url, ds.label, ds.uom, firstValue, lastValue, { category, feature, offering, phenomenon, procedure, service, platform: platformParam });
         }
       case ApiV3DatasetTypes.Profile:
       case ApiV3DatasetTypes.IndividualObservation:
