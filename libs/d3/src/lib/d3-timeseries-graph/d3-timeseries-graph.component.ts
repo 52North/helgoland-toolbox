@@ -1211,7 +1211,7 @@ export class D3TimeseriesGraphComponent
 
         // draw line dots
         this.graphBody.selectAll('.graphDots')
-            .data(entry.data.filter((d) => d.value && !isNaN(d.value)))
+            .data(entry.data.filter((d) => !isNaN(d.value)))
             .enter().append('circle')
             .attr('class', 'graphDots')
             .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
@@ -1302,7 +1302,9 @@ export class D3TimeseriesGraphComponent
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
         return d3.line<DataEntry>()
-            .defined((d) => (d.timestamp && !isNaN(d.timestamp)) && (d.value && !isNaN(d.value)))
+            .defined((d) => {
+                return (!isNaN(d.timestamp)) && (!isNaN(d.value));
+            })
             .x((d) => {
                 d.xDiagCoord = xScaleBase(d.timestamp);
                 return d.xDiagCoord;
