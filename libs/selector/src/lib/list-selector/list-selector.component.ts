@@ -20,7 +20,7 @@ export class ListSelectorComponent implements OnChanges {
     public parameters: ListSelectorParameter[];
 
     @Input()
-    public filter: HelgolandParameterFilter;
+    public filter: HelgolandParameterFilter = {};
 
     @Input()
     public providerList: FilteredProvider[];
@@ -54,6 +54,7 @@ export class ListSelectorComponent implements OnChanges {
                     this.listSelectorService.cache.set(this.selectorId, this.parameters);
                 }
                 // create filterlist for first parameter entry
+                this.parameters[0].headerAddition = '';
                 this.parameters[0].filterList = this.providerList.map((entry) => {
                     const filter: HelgolandParameterFilter = {};
                     if (entry.id) { filter.service = entry.id };
