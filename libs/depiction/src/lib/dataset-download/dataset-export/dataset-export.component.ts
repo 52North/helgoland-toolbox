@@ -128,14 +128,17 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   }
   private prepareData(dataset: HelgolandTimeseries, result: HelgolandTimeseriesData, dwType: DownloadType): void {
     console.log('Preparing data ...');
-    const valueHeader = dataset.parameters.phenomenon.label + '_(' + dataset.uom + ')';
     let exportData: xlsxExport = [
       ['Station', dataset.parameters.feature.label],
-      ['Lat', dataset.platform.geometry['coordinates'][1]],
-      ['Lon', dataset.platform.geometry['coordinates'][0]],
-      // ['Timezone', ''],
-      ['TIME', valueHeader],
     ];
+
+    if (dataset.platform.geometry && dataset.platform.geometry.type === 'Point') {
+      exportData.push(['Latitude', dataset.platform.geometry['coordinates'][1]]);
+      exportData.push(['Longitude', dataset.platform.geometry['coordinates'][0]]);
+    }
+
+    const phenomenonLabel = dataset.parameters.phenomenon.label + ' (' + dataset.uom + ')';
+    exportData.push(['Phenomenon', phenomenonLabel])
 
     // TODO: change momentJS date format based on timezone ( this.timezone )
     exportData = exportData.concat(result.values.map(el => [moment(el[0]).format(), el[1]]));
