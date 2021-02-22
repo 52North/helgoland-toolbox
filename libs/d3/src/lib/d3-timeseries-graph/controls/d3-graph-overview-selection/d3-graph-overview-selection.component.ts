@@ -115,7 +115,8 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
      */
     this.overview.selectAll('.selection')
       .attr('stroke', 'none')
-      .on('mousedown', () => this.mousedownBrush = true);
+      .on('mousedown', () => this.mousedownBrush = true)
+      .on('touchmove', () => this.mousedownBrush = true)
 
     // do not allow clear selection
     this.overview.selectAll('.overlay').remove();
@@ -123,7 +124,8 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     // add event to resizing handle to allow change time on resize
     this.overview.selectAll('.handle')
       .attr('stroke', 'none')
-      .on('mousedown', () => this.mousedownBrush = true);
+      .on('mousedown', () => this.mousedownBrush = true)
+      .on('touchmove', () => this.mousedownBrush = true)
   }
 
   /**

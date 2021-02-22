@@ -1246,8 +1246,8 @@ export class D3TimeseriesGraphComponent
                 }
                 return width - paddingBefore - paddingAfter;
             })
-            .attr('y', (d: DataEntry) => typeof d.value === 'number' ? yScaleBase(d.value) : 0)
-            .attr('height', (d: DataEntry) => (typeof d.value === 'number') ? this.height - yScaleBase(d.value) : 0);
+            .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
+            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
 
         if (this.plotOptions.hoverStyle === HoveringStyle.point) {
             bars
