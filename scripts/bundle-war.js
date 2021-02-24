@@ -4,7 +4,8 @@ const fs = require('fs');
 const pjson = require('../package.json');
 
 let apptype = 'helgoland';
-// const appname = pjson.name;
+let appname = apptype;
+
 const xmlAsText = `<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
@@ -22,9 +23,11 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     </error-page>
 </web-app>`;
 
+console.log(`args: ${process.argv}`);
+
 if (process.argv.length > 2) {
-  if (process.argv[2] === 'helgoland' || process.argv[2] === 'helgoland-trajectories') {
-    apptype = process.argv[2];
+  if (process.argv[2]) {
+    appname = process.argv[2];
   }
 }
 
@@ -44,11 +47,11 @@ fs.writeFile('./web.xml', xmlAsText, (errWrite) => {
 function buildApplication() {
   console.log(`Build application ${apptype}`);
   execSync(
-    `rm -rf dist/${apptype} && ng build ${apptype} --prod --base-href=/${apptype}/`,
+    `rm -rf dist/${apptype} && ng build ${apptype} --prod --base-href=/${appname}/`,
     { stdio: [0, 1, 2] }
   );
 
-  const out = `dist/${apptype}.war`;
+  const out = `dist/${appname}.war`;
   const output = fs.createWriteStream(out);
   const archive = archiver('zip', {
     zlib: { level: 9 }
