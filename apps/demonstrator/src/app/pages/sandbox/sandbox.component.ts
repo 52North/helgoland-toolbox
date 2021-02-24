@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelgolandPlatform, HelgolandServicesConnector } from '@helgoland/core';
 
 @Component({
     templateUrl: './sandbox.component.html',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SandboxComponent implements OnInit {
 
+    platforms: HelgolandPlatform[];
+
     constructor(
+        private servicesConnector: HelgolandServicesConnector
     ) { }
 
     public ngOnInit(): void {
+        this.servicesConnector.getPlatforms('url').subscribe(res => this.platforms = res);
+    }
+
+    public selected(platform: HelgolandPlatform) {
+        console.log(platform);
     }
 
 }

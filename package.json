@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "10.0.0-beta.7",
+  "version": "10.0.0-beta.8",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -114,7 +114,7 @@
     "@componizer/schematics": "0.0.5",
     "@nrwl/cypress": "^10.2.1",
     "@nrwl/jest": "^10.2.1",
-    "@nrwl/nx-cloud": "latest",
+    "@nrwl/nx-cloud": "^10.1.9",
     "@nrwl/workspace": "^10.2.1",
     "@types/d3": "^5.7.2",
     "@types/d3-delaunay": "^4.1.0",

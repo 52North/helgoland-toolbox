@@ -37,3 +37,4 @@ export * from './lib/selector/last-value-map-selector/last-value-map-selector.co
 export * from './lib/selector/trajectory-map-selector/trajectory-map-selector.component';
 export * from './lib/selector/services/last-value-label-generator.service';
 export * from './lib/selector/services/last-value-label-generator.interface';
+export * from './lib/selector/platform-map-viewer/platform-map-viewer.component';
