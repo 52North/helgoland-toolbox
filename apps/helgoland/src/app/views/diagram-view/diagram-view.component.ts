@@ -39,7 +39,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     generalizeAllways: false,
     yaxis: true, // configurable
     showTimeLabel: false,
-    hoverStyle: HoveringStyle.none,
+    hoverStyle: HoveringStyle.point,
     copyright: {
       label: '',
       link: 'https://52north.org/',
