@@ -61,6 +61,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "versions-script": "node scripts/git.version.js",
+    "bundle-war": "node scripts/bundle-war.js",
     "i18n:extract:helgoland": "ngx-translate-extract --input ./apps/helgoland/src --output ./apps/helgoland/src/assets/i18n/*.json --clean --format --sort json",
     "i18n:extract:helgoland-common": "ngx-translate-extract --input ./libs/helgoland-common/src --output ./libs/helgoland-common/src/i18n/*.json --clean --format --sort json",
     "i18n:extract:trajectories": "ngx-translate-extract --input ./apps/helgoland-trajectories/src --output ./apps/helgoland-trajectories/src/assets/i18n/*.json --clean --format --sort json"
@@ -82,6 +83,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@nrwl/angular": "^10.2.1",
     "angular-plotly.js": "^3.0.0",
+    "archiver": "^5.2.0",
     "bootstrap-slider": "^11.0.2",
     "class-transformer": "^0.3.1",
     "d3": "^5.12.0",
