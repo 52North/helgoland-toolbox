@@ -45,6 +45,7 @@ import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../mo
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
 import { UrlGenerator } from './../../helper/url-generator';
+import { HelgolandServiceQuantities } from './../../model/internal/service';
 
 @Injectable({
   providedIn: 'root'
@@ -235,23 +236,20 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
   }
 
   protected createV2Service(s: Service, filter: HelgolandParameterFilter): HelgolandService {
-    const service = new HelgolandService(
-      s.id,
-      s.apiUrl,
-      s.label,
-      s.type,
-      s.version,
-      {
-        categories: s.quantities.categories,
-        features: s.quantities.features,
-        offerings: s.quantities.offerings,
-        phenomena: s.quantities.phenomena,
-        procedures: s.quantities.procedures,
-        datasets: s.quantities.datasets,
-        platforms: 0 + (s.quantities.platforms ? s.quantities.platforms : 0) + (s.quantities.stations ? s.quantities.stations : 0),
-      }
-    );
-    return service;
+    const id = s.id;
+    const apiUrl = s.apiUrl;
+    const label = s.label;
+    const type = s.type;
+    const version = s.version;
+    const quantities: HelgolandServiceQuantities = {};
+    if (s.quantities && s.quantities.categories !== undefined) { quantities.categories = s.quantities.categories }
+    if (s.quantities && s.quantities.features !== undefined) { quantities.features = s.quantities.features }
+    if (s.quantities && s.quantities.offerings !== undefined) { quantities.offerings = s.quantities.offerings }
+    if (s.quantities && s.quantities.phenomena !== undefined) { quantities.phenomena = s.quantities.phenomena }
+    if (s.quantities && s.quantities.procedures !== undefined) { quantities.procedures = s.quantities.procedures }
+    if (s.quantities && s.quantities.datasets !== undefined) { quantities.datasets = s.quantities.datasets }
+    if (s.quantities) { quantities.platforms = 0 + (s.quantities.platforms ? s.quantities.platforms : 0) + (s.quantities.stations ? s.quantities.stations : 0) }
+    return new HelgolandService(id, apiUrl, label, type, version, quantities);
   }
 
   protected createFilter(filter: HelgolandParameterFilter): ParameterFilter {
@@ -267,16 +265,16 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
       case DatasetType.Profile:
         paramFilter.valueTypes = 'quantity-profile';
     }
-    if (filter.platformType) { paramFilter.platformTypes = filter.platformType; }
-    if (filter.platform) { paramFilter.platforms = filter.platform; }
-    if (filter.category) { paramFilter.category = filter.category; }
-    if (filter.offering) { paramFilter.offering = filter.offering; }
-    if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }
-    if (filter.procedure) { paramFilter.procedure = filter.procedure; }
-    if (filter.feature) { paramFilter.feature = filter.feature; }
-    if (filter.expanded) { paramFilter.expanded = filter.expanded; }
-    if (filter.lang) { paramFilter.lang = filter.lang; }
-    if (filter.service) { paramFilter.service = filter.service; }
+    if (filter.platformType !== undefined) { paramFilter.platformTypes = filter.platformType; }
+    if (filter.platform !== undefined) { paramFilter.platforms = filter.platform; }
+    if (filter.category !== undefined) { paramFilter.category = filter.category; }
+    if (filter.offering !== undefined) { paramFilter.offering = filter.offering; }
+    if (filter.phenomenon !== undefined) { paramFilter.phenomenon = filter.phenomenon; }
+    if (filter.procedure !== undefined) { paramFilter.procedure = filter.procedure; }
+    if (filter.feature !== undefined) { paramFilter.feature = filter.feature; }
+    if (filter.expanded !== undefined) { paramFilter.expanded = filter.expanded; }
+    if (filter.lang !== undefined) { paramFilter.lang = filter.lang; }
+    if (filter.service !== undefined) { paramFilter.service = filter.service; }
     return paramFilter;
   }
 

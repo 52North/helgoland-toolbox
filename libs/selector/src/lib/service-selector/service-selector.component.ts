@@ -56,7 +56,7 @@ export class ServiceSelectorComponent implements OnInit {
                             this.loadingCount--;
                             if (res && res instanceof Array) {
                                 res.forEach((entry) => {
-                                    if (entry.quantities.datasets) {
+                                    if (entry.quantities.datasets || (this.filter && !this.filter.expanded)) {
                                         this.services.push(entry);
                                     }
                                 });

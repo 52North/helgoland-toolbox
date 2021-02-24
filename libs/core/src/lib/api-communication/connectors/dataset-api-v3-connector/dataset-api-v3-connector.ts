@@ -36,6 +36,7 @@ import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
 import { PlatformTypes } from './../../../model/dataset-api/enums';
 import { HelgolandProfile, HelgolandTrajectory } from './../../model/internal/dataset';
+import { HelgolandServiceQuantities } from './../../model/internal/service';
 import {
   ApiV3Category,
   ApiV3Dataset,
@@ -80,8 +81,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   getServices(url: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]> {
-    const clone = Object.create(filter);
-    clone.expanded = true;
+    const clone = Object.create(filter) as HelgolandParameterFilter;
+    if (clone.expanded === undefined) { clone.expanded = true }
     return this.api.getServices(url, this.createFilter(clone)).pipe(map(res => res.map(s => this.createService(s, url, filter))));
   }
 
@@ -200,38 +201,36 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createService(service: ApiV3Service, url: string, filter: HelgolandParameterFilter): HelgolandService {
-    // TODO: remove fix for dataset count, use just service.quantities.datasets.total for dataset
     let datasets;
-    switch (filter.type) {
-      case DatasetType.Timeseries:
-        datasets = service.quantities.datasets.timeseries;
-        break;
-      case DatasetType.Trajectory:
-        datasets = service.quantities.datasets.trajectories;
-        break;
-      case DatasetType.Profile:
-        datasets = service.quantities.datasets.profiles;
-        break;
-      default:
-        datasets = service.quantities.datasets.total;
-        break;
-    }
-    return new HelgolandService(
-      service.id,
-      url,
-      service.label,
-      service.type,
-      service.version,
-      {
-        categories: service.quantities.categories,
-        features: service.quantities.features,
-        offerings: service.quantities.offerings,
-        phenomena: service.quantities.phenomena,
-        procedures: service.quantities.procedures,
-        datasets: datasets,
-        platforms: service.quantities.platforms
+    const id = service.id;
+    const label = service.label;
+    const type = service.type;
+    const version = service.version;
+    const quantities: HelgolandServiceQuantities = {};
+    if (service.quantities) {
+      switch (filter.type) {
+        case DatasetType.Timeseries:
+          datasets = service.quantities.datasets.timeseries;
+          break;
+        case DatasetType.Trajectory:
+          datasets = service.quantities.datasets.trajectories;
+          break;
+        case DatasetType.Profile:
+          datasets = service.quantities.datasets.profiles;
+          break;
+        default:
+          datasets = service.quantities.datasets.total;
+          break;
       }
-    );
+      quantities.categories = service.quantities.categories;
+      quantities.features = service.quantities.features;
+      quantities.offerings = service.quantities.offerings;
+      quantities.phenomena = service.quantities.phenomena;
+      quantities.procedures = service.quantities.procedures;
+      quantities.datasets = datasets;
+      quantities.platforms = service.quantities.platforms;
+    }
+    return new HelgolandService(id, url, label, type, version, quantities);
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
