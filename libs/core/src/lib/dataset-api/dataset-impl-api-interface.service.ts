@@ -34,7 +34,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     public getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]> {
         const url = this.createRequestUrl(apiUrl, 'services');
         if (params) {
-            params.expanded = true;
+            if (params.expanded === undefined) params.expanded = true;
         } else {
             params = { expanded: true };
         }
