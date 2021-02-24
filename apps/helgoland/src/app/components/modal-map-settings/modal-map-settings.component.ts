@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DatasetApi, HelgolandService } from '@helgoland/core';
+import { BlacklistedService, DatasetApi, DatasetType, HelgolandParameterFilter, HelgolandService } from '@helgoland/core';
 
 import { appConfig } from './../../app-config';
 
@@ -17,12 +17,16 @@ export interface MapConfig {
 export class ModalMapSettingsComponent {
 
   public datasetApis: DatasetApi[];
+  public blacklist: BlacklistedService[];
+
+  public filter: HelgolandParameterFilter = { type: DatasetType.Timeseries, expanded: true };
 
   constructor(
     public dialogRef: MatDialogRef<ModalMapSettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig
   ) {
     this.datasetApis = appConfig.datasetApis;
+    this.blacklist = appConfig.providerBlackList;
   }
 
   public serviceSelected(service: HelgolandService) {
