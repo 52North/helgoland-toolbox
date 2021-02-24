@@ -5,6 +5,8 @@
     {{ 'dataset-by-station.hint' | translate }}
   </p>
 
+  <mat-progress-bar mode="indeterminate" *ngIf="counter"></mat-progress-bar>
+
   <div class="full-height">
     <mat-selection-list (selectionChange)="adjustSelection($event)">
       <mat-list-option *ngFor="let ds of phenomenonMatchedList" color="primary" [value]="ds" [selected]="ds.selected">

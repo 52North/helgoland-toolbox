@@ -29,7 +29,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
   public filterList: ParameterListEntry[] = [];
 
   public providerFilter: HelgolandParameterFilter = {
-    type: DatasetType.Trajectory
+    type: DatasetType.Trajectory,
+    expanded: false
   }
 
   constructor(

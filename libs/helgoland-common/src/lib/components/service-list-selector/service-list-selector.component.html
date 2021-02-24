@@ -1,8 +1,15 @@
 <mat-progress-bar *ngIf="loadingCount > 0" mode="indeterminate"></mat-progress-bar>
 
-<mat-selection-list #shoes [multiple]="false" (selectionChange)="selectService($event.option.value)">
+<mat-selection-list [multiple]="false" (selectionChange)="selectService($event.option.value)">
   <mat-list-option *ngFor="let service of services" [value]="service" [selected]="isSelected(service)">
-    <div mat-line>{{service.label}} ({{service.type}}, {{service.version}})</div>
+    <div mat-line>
+      <span>
+        {{service.label}}
+      </span>
+      <span *ngIf="service.type || service.version">
+        ({{service.type}}, {{service.version}})
+      </span>
+    </div>
     <div mat-line>{{service.apiUrl}}</div>
     <div mat-line>
       <span *ngIf="service.quantities.platforms !== undefined">
@@ -11,7 +18,7 @@
       <span *ngIf="service.quantities.datasets !== undefined">
         {{service.quantities.datasets}} {{'service-selector.datasets' | translate}} -
       </span>
-      <span>
+      <span *ngIf="service.quantities.phenomena !== undefined">
         {{service.quantities.phenomena}} {{'service-selector.phenomena' | translate}}
       </span>
     </div>
