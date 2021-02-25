@@ -6,7 +6,7 @@
     (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
     (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
     <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
-    <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line>
+    <!-- <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line> -->
   </n52-d3-timeseries-graph>
 </div>
 <div>

@@ -133,6 +133,9 @@ export class D3TimeseriesGraphComponent
         yaxis: true,
         overview: false,
         showTimeLabel: true,
+        timeRangeLabel: {
+            show: false
+        },
         requestBeforeAfterValues: false,
         timespanBufferFactor: 0.2,
         sendDataRequestOnlyIfDatasetTimespanCovered: true
@@ -536,7 +539,10 @@ export class D3TimeseriesGraphComponent
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom + (this.plotOptions.showTimeLabel ? 0 : 20);
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight
+            - this.margin.top
+            - this.margin.bottom
+            + (this.plotOptions.showTimeLabel || (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) ? 0 : 20);
     }
 
     /**
@@ -630,6 +636,8 @@ export class D3TimeseriesGraphComponent
 
         this.drawBaseGraph();
 
+        this.drawTimeRangeLabels();
+
         // create background as rectangle providing panning
         this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
@@ -676,6 +684,23 @@ export class D3TimeseriesGraphComponent
             }
         });
         this.drawBackground();
+    }
+
+    protected drawTimeRangeLabels() {
+        if (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) {
+            this.graph.append('text')
+                .attr('class', 'x axis time-range from')
+                .attr('x', this.leftOffset)
+                .attr('y', this.height + this.margin.bottom - 5)
+                .style('text-anchor', 'start')
+                .text(this.timezoneSrvc.formatTzDate(this.timespan.from, this.plotOptions.timeRangeLabel.format));
+            this.graph.append('text')
+                .attr('class', 'x axis time-range to')
+                .attr('x', this.width)
+                .attr('y', this.height + this.margin.bottom - 5)
+                .style('text-anchor', 'end')
+                .text(this.timezoneSrvc.formatTzDate(this.timespan.to, this.plotOptions.timeRangeLabel.format));
+        }
     }
 
     private isNotDrawable() {
