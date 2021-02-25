@@ -466,73 +466,71 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing dataset related data.
      */
     protected processData(entry: InternalDataEntry): void {
-        if (entry.visible) {
-            let visualMin: number;
-            let visualMax: number;
-            let fixedMin = false;
-            let fixedMax = false;
+        let visualMin: number;
+        let visualMax: number;
+        let fixedMin = false;
+        let fixedMax = false;
 
-            // set out of yAxisRange
-            if (entry.axisOptions.yAxisRange) {
+        // set out of yAxisRange
+        if (entry.axisOptions.yAxisRange) {
 
-                if (!isNaN(entry.axisOptions.yAxisRange.min)) {
-                    visualMin = entry.axisOptions.yAxisRange.min;
-                    fixedMin = true;
-                }
-
-                if (!isNaN(entry.axisOptions.yAxisRange.max)) {
-                    visualMax = entry.axisOptions.yAxisRange.max;
-                    fixedMax = true;
-                }
-
-                if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
-                    const temp = visualMin;
-                    visualMin = visualMax;
-                    visualMax = temp;
-                }
+            if (!isNaN(entry.axisOptions.yAxisRange.min)) {
+                visualMin = entry.axisOptions.yAxisRange.min;
+                fixedMin = true;
             }
 
-            // set variable extend bounds
-            if (isNaN(visualMin) || isNaN(visualMax)) {
-                const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
-                    if (typeof d.value === 'number') {
-                        // with timespan restriction, it only selects values inside the selected timespan
-                        // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-                        return d.value;
-                    } else {
-                        return null;
-                    }
-                });
-
-                const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
-
-                if (isNaN(visualMin)) {
-                    visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
-                }
-
-                if (isNaN(visualMax)) {
-                    visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
-                }
+            if (!isNaN(entry.axisOptions.yAxisRange.max)) {
+                visualMax = entry.axisOptions.yAxisRange.max;
+                fixedMax = true;
             }
 
-            // set out of zeroBasedAxis
-            if (entry.axisOptions.zeroBased) {
-                if (visualMin > 0) {
-                    visualMin = 0;
-                }
-                if (visualMax < 0) {
-                    visualMax = 0;
-                }
+            if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
+                const temp = visualMin;
+                visualMin = visualMax;
+                visualMax = temp;
             }
-
-            this.preparedAxes.set(entry.internalId, {
-                visualMin,
-                visualMax,
-                fixedMin,
-                fixedMax,
-                entry
-            });
         }
+
+        // set variable extend bounds
+        if (isNaN(visualMin) || isNaN(visualMax)) {
+            const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
+                // if (typeof d.value === 'number') {
+                if (!isNaN(d.value)) {
+                    // with timespan restriction, it only selects values inside the selected timespan
+                    if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                } else {
+                    return null;
+                }
+            });
+
+            const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
+
+            if (isNaN(visualMin)) {
+                visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+            }
+
+            if (isNaN(visualMax)) {
+                visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+            }
+        }
+
+        // set out of zeroBasedAxis
+        if (entry.axisOptions.zeroBased) {
+            if (visualMin > 0) {
+                visualMin = 0;
+            }
+            if (visualMax < 0) {
+                visualMax = 0;
+            }
+        }
+
+        this.preparedAxes.set(entry.internalId, {
+            visualMin,
+            visualMax,
+            fixedMin,
+            fixedMax,
+            entry
+        });
     }
 
     /**
