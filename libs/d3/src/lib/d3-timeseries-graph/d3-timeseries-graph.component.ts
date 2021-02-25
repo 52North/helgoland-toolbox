@@ -1233,6 +1233,7 @@ export class D3TimeseriesGraphComponent
             .data(entry.data)
             .enter().append('rect')
             .attr('class', 'bar')
+            .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + entry.hoverId)
             .style('fill', entry.options.color)
             .style('stroke-dasharray', entry.options.lineDashArray)
             .style('stroke', entry.options.color)
@@ -1248,56 +1249,6 @@ export class D3TimeseriesGraphComponent
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
             .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
-
-        if (this.plotOptions.hoverStyle === HoveringStyle.point) {
-            bars
-                .on('mouseover', (d: { value: number, timestamp: number }, idx: number, rectElems: any[]) => this.mouseoverBarHovering(d, rectElems, idx, entry))
-                .on('mousemove', (d: { value: number, timestamp: number }) => this.mousemoveBarHovering(d, entry))
-                .on('mouseout', (d: { value: number, timestamp: number }, idx: number, rectElems: any[]) => this.mouseoutBarHovering(d, rectElems, idx, entry));
-        }
-    }
-
-    private mouseoverBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            const coords = d3.mouse(this.background.node());
-            const xCoord = coords[0];
-            const yCoord = coords[1];
-            const rectBack = this.background.node().getBBox();
-            if (xCoord >= 0 && xCoord <= rectBack.width && yCoord >= 0 && yCoord <= rectBack.height) {
-                // highlight bar
-                d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
-
-                // this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
-
-                this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
-                // generate output of highlighted data
-                this.highlightOutput = {
-                    timestamp: d.timestamp,
-                    ids: new Map().set(entry.internalId, { timestamp: d.timestamp, value: d.value })
-                };
-                this.onHighlightChanged.emit(this.highlightOutput);
-            }
-        }
-    }
-
-    private mousemoveBarHovering(d: { value: number; timestamp: number; }, entry: InternalDataEntry) {
-        const temp = new Date().getTime();
-        if (d !== undefined && (temp - this.lastHoverPositioning > 50)) {
-            const coords = d3.mouse(this.background.node());
-            const xCoord = coords[0];
-            const yCoord = coords[1];
-            this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
-        }
-    }
-
-    private mouseoutBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            // unhighlight hovered dot
-            d3.select(rectElems[idx])
-                .style('stroke-width', this.calculateLineWidth(entry));
-            // make label invisible
-            // this.hoveringService.hidePointHovering(d, entry);
-        }
     }
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
