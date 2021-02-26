@@ -497,7 +497,8 @@ export class D3TimeseriesGraphComponent
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
-                    if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                    // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                    return d.value;
                 } else {
                     return null;
                 }
