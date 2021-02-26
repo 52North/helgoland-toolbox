@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
+import moment from 'moment';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
@@ -210,16 +211,17 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     let nearest;
     this.preparedData.some(e => {
       if (e.options.type === 'bar') {
+        time = moment(time).subtract(e.options.barPeriod).valueOf();
         const idx = e.data.findIndex(d => d.timestamp > time);
-        if (idx >= -1 && e.data[idx - 1]) {
-          const id = `bar-${e.data[idx - 1].timestamp}-${e.hoverId}`;
+        if (idx > -1 && e.data[idx]) {
+          const id = `bar-${e.data[idx].timestamp}-${e.hoverId}`;
           const match = this.graphLayer.select(`#${id}`);
           const barHeight = match.attr('height') && Number.parseFloat(match.attr('height'));
           if (barHeight > height) {
             nearest = {
               selection: match,
               internalEntry: e,
-              dataEntry: e.data[idx - 1]
+              dataEntry: e.data[idx]
             };
             return true;
           }
