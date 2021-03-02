@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -43,6 +44,7 @@ const COMPONENTS = [
     MatProgressBarModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatTooltipModule,
     TranslateModule,
   ],
   declarations: COMPONENTS,

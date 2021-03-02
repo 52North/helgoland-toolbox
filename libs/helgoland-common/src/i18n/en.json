@@ -14,5 +14,6 @@
 	"permalink.copy-to-clipboard-error": "An error occured, while creating the link",
 	"service-selector.datasets": "Datasets",
 	"service-selector.phenomena": "Phenomena",
-	"service-selector.platforms": "Stations"
+	"service-selector.platforms": "Stations",
+	"share-button.tooltip": "Share current state"
 }

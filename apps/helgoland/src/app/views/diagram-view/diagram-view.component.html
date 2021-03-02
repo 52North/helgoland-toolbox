@@ -9,7 +9,8 @@
 
 <mat-sidenav-container class="container">
 
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start" autoFocus="false">
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
+    autoFocus="false">
     <div class="legend">
       <button class="legend-menu-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
         <mat-icon>menu</mat-icon>
@@ -29,17 +30,20 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
-          <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()">
-            <mat-icon color="accent">priority_high</mat-icon>
+          <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()"
+            matTooltip="{{'diagram-view.clear-selection.tooltip' | translate}}">
+            <mat-icon color="accent">remove_done</mat-icon>
           </button>
           <div style="flex:1;"></div>
-          <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()">
+          <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()"
+            matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
             <mat-icon>clear</mat-icon>
           </button>
           <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
           <helgoland-modal-favorite-list-button style="margin-right: 10px;">
           </helgoland-modal-favorite-list-button>
-          <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent">
+          <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent"
+            matTooltip="{{'diagram-view.add-button.tooltip' | translate}}">
             <mat-icon>add</mat-icon>
           </button>
         </mat-toolbar-row>
@@ -73,7 +77,7 @@
         <helgoland-loading-overlay *ngIf="diagramLoading"></helgoland-loading-overlay>
 
         <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()">
-          <mat-icon>settings</mat-icon>
+          <mat-icon>query_stats</mat-icon>
         </button>
 
         <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
