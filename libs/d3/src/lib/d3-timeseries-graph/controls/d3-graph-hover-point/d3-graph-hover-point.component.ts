@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
+import moment from 'moment';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
@@ -40,7 +41,10 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   private preparedData: InternalDataEntry[];
   private graphExtent: D3GraphExtent;
   private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
-  private previous: HoveredElement;
+  private previousPoint: HoveredElement;
+
+  private previousBar: HoveredElement;
+  private prevBarOpacity: string;
 
   constructor(
     protected graphId: D3GraphId,
@@ -79,6 +83,10 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     }
   }
 
+  public mouseoutBackground() {
+    this.unhighlight();
+  }
+
   public dragStartBackground() {
     this.unhighlight();
     this.disableHovering = true;
@@ -99,66 +107,133 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
   private mouseMoved() {
     this.unhighlight();
-    const [mx, my] = d3.mouse(this.background.node());
-    const nearest = this.findNearest(mx + this.graphExtent.leftOffset, my);
-    if (nearest) {
-      this.highlight(nearest);
+    const pos = this.getCurrentMousePosition();
+    const nearestPoint = this.findNearestPoint(pos.x, pos.y);
+    if (nearestPoint) {
+      this.highlightPoint(nearestPoint);
+    } else {
+      const time = this.graphExtent.xScale.invert(pos.x).getTime();
+      const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
+      if (nearestBar) {
+        this.highlightBar(nearestBar);
+      }
     }
   }
 
-  private highlight(nearest: HoveredElement) {
-    this.previous = nearest;
-    const dataset = this.d3Graph.getDataset(nearest.internalEntry.internalId);
-    this.hoveringService.showPointHovering(this.previous.dataEntry, this.previous.internalEntry, dataset, nearest.selection);
+  private highlightPoint(nearestPoint: HoveredElement) {
+    this.previousPoint = nearestPoint;
+    const dataset = this.d3Graph.getDataset(nearestPoint.internalEntry.internalId);
+    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
     this.hoveringService.positioningPointHovering(
-      this.previous.dataEntry.xDiagCoord,
-      this.previous.dataEntry.yDiagCoord,
-      this.previous.internalEntry.options.color,
+      this.previousPoint.dataEntry.xDiagCoord,
+      this.previousPoint.dataEntry.yDiagCoord,
+      this.previousPoint.internalEntry.options.color,
       this.background
     );
 
     const ids: Map<string, HighlightValue> = new Map();
-    ids.set(this.previous.internalEntry.internalId, {
-      timestamp: this.previous.dataEntry.timestamp,
-      value: this.previous.dataEntry.value
+    ids.set(this.previousPoint.internalEntry.internalId, {
+      timestamp: this.previousPoint.dataEntry.timestamp,
+      value: this.previousPoint.dataEntry.value
     });
 
     this.onHighlightChanged.emit({
-      timestamp: this.previous.dataEntry.timestamp,
+      timestamp: this.previousPoint.dataEntry.timestamp,
       ids: ids
     });
   }
 
+  private highlightBar(nearestBar: HoveredElement) {
+    this.previousBar = nearestBar;
+    this.prevBarOpacity = this.previousBar.selection.style('fill-opacity');
+    const dataset = this.d3Graph.getDataset(this.previousBar.internalEntry.internalId);
+    this.hoveringService.showPointHovering(this.previousBar.dataEntry, this.previousBar.internalEntry, dataset, this.previousBar.selection);
+
+    // centered on bar
+    // const barX = Number.parseFloat(nearestBar.selection.attr('x'));
+    // const barY = Number.parseFloat(nearestBar.selection.attr('y'));
+    // const barHeight = Number.parseFloat(nearestBar.selection.attr('height'));
+    // const barWidth = Number.parseFloat(nearestBar.selection.attr('width'));
+    // const x = barX + barWidth / 2;
+    // const y = barY + barHeight / 2;
+
+    // mouse position
+    const pos = this.getCurrentMousePosition();
+    this.hoveringService.positioningPointHovering(
+      pos.x,
+      pos.y,
+      this.previousBar.internalEntry.options.color,
+      this.background
+    );
+    this.previousBar.selection.style('fill-opacity', '0.6');
+  }
+
   private unhighlight() {
-    if (this.previous) {
-      this.hoveringService.hidePointHovering(this.previous.dataEntry, this.previous.internalEntry, this.previous.selection);
-      this.previous = null;
+    if (this.previousPoint) {
+      this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, this.previousPoint.selection);
+      this.previousPoint = null;
+    }
+    if (this.previousBar) {
+      this.hoveringService.hidePointHovering(this.previousBar.dataEntry, this.previousBar.internalEntry, this.previousBar.selection);
+      this.previousBar.selection.style('fill-opacity', this.prevBarOpacity);
+      this.previousBar = null;
     }
   }
 
-  private findNearest(x: number, y: number): HoveredElement {
+  private findNearestPoint(x: number, y: number): HoveredElement {
     let nearest: HoveredElement = null;
     let nearestDist = Infinity;
 
     this.preparedData.forEach(e => {
-      const delaunay = Delaunay.from(e.data, d => d.xDiagCoord, d => d.yDiagCoord);
-      const idx = delaunay.find(x, y);
+      if (e.options.type === 'line') {
+        const delaunay = Delaunay.from(e.data, d => d.xDiagCoord, d => d.yDiagCoord);
+        const idx = delaunay.find(x, y);
 
-      if (idx != null && !isNaN(idx)) {
-        const datum = e.data[idx];
-        const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
-        if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
-          const id = `dot-${datum.timestamp}-${e.hoverId}`;
-          nearest = {
-            selection: this.graphLayer.select(`#${id}`),
-            internalEntry: e,
-            dataEntry: datum
-          };
-          nearestDist = distance;
+        if (idx != null && !isNaN(idx)) {
+          const datum = e.data[idx];
+          const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
+          if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
+            const id = `dot-${datum.timestamp}-${e.hoverId}`;
+            nearest = {
+              selection: this.graphLayer.select(`#${id}`),
+              internalEntry: e,
+              dataEntry: datum
+            };
+            nearestDist = distance;
+          }
         }
       }
     });
     return nearest;
+  }
+
+  private findNearestBar(time: number, height: number): HoveredElement {
+    let nearest;
+    this.preparedData.some(e => {
+      if (e.options.type === 'bar') {
+        time = moment(time).subtract(e.options.barPeriod).valueOf();
+        const idx = e.data.findIndex(d => d.timestamp > time);
+        if (idx > -1 && e.data[idx]) {
+          const id = `bar-${e.data[idx].timestamp}-${e.hoverId}`;
+          const match = this.graphLayer.select(`#${id}`);
+          const barHeight = match.attr('height') && Number.parseFloat(match.attr('height'));
+          if (barHeight > height) {
+            nearest = {
+              selection: match,
+              internalEntry: e,
+              dataEntry: e.data[idx]
+            };
+            return true;
+          }
+        }
+      }
+    });
+    return nearest;
+  }
+
+  private getCurrentMousePosition(): { x: number, y: number } {
+    const [x, y] = d3.mouse(this.background.node());
+    return { x: x + this.graphExtent.leftOffset, y };
   }
 
   private distance(px: number, py: number, mx: number, my: number): number {

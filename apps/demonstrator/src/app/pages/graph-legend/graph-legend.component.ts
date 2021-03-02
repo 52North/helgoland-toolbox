@@ -83,12 +83,16 @@ export class GraphLegendComponent {
         togglePanZoom: true,
         generalizeAllways: false,
         yaxis: true,
-        hoverStyle: HoveringStyle.none,
+        hoverStyle: HoveringStyle.point,
         copyright: {
             label: 'This should be bottom right and the text is long.',
             link: 'https://52north.org/',
             positionX: 'right',
             positionY: 'bottom'
+        },
+        showTimeLabel: false,
+        timeRangeLabel: {
+            show: true
         },
         groupYaxis: true
     };

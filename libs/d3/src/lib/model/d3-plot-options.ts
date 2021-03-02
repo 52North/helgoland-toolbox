@@ -83,6 +83,14 @@ export interface D3PlotOptions {
      * Sends request only, when the corresponding dataset has values inside the request timespan. So the first and last values must cover the timespan.
      */
     sendDataRequestOnlyIfDatasetTimespanCovered?: boolean;
+
+    /**
+     * Configures an optional timerange label with start and end under the diagram
+     */
+    timeRangeLabel?: {
+        show: boolean;
+        format?: string;
+    }
 }
 
 export interface D3Copyright {

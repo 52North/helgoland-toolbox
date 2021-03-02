@@ -133,6 +133,9 @@ export class D3TimeseriesGraphComponent
         yaxis: true,
         overview: false,
         showTimeLabel: true,
+        timeRangeLabel: {
+            show: false
+        },
         requestBeforeAfterValues: false,
         timespanBufferFactor: 0.2,
         sendDataRequestOnlyIfDatasetTimespanCovered: true
@@ -463,80 +466,82 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing dataset related data.
      */
     protected processData(entry: InternalDataEntry): void {
-        if (entry.visible) {
-            let visualMin: number;
-            let visualMax: number;
-            let fixedMin = false;
-            let fixedMax = false;
+        let visualMin: number;
+        let visualMax: number;
+        let fixedMin = false;
+        let fixedMax = false;
 
-            // set out of yAxisRange
-            if (entry.axisOptions.yAxisRange) {
+        // set out of yAxisRange
+        if (entry.axisOptions.yAxisRange) {
 
-                if (!isNaN(entry.axisOptions.yAxisRange.min)) {
-                    visualMin = entry.axisOptions.yAxisRange.min;
-                    fixedMin = true;
-                }
-
-                if (!isNaN(entry.axisOptions.yAxisRange.max)) {
-                    visualMax = entry.axisOptions.yAxisRange.max;
-                    fixedMax = true;
-                }
-
-                if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
-                    const temp = visualMin;
-                    visualMin = visualMax;
-                    visualMax = temp;
-                }
+            if (!isNaN(entry.axisOptions.yAxisRange.min)) {
+                visualMin = entry.axisOptions.yAxisRange.min;
+                fixedMin = true;
             }
 
-            // set variable extend bounds
-            if (isNaN(visualMin) || isNaN(visualMax)) {
-                const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
-                    if (typeof d.value === 'number') {
-                        // with timespan restriction, it only selects values inside the selected timespan
-                        // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-                        return d.value;
-                    } else {
-                        return null;
-                    }
-                });
-
-                const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
-
-                if (isNaN(visualMin)) {
-                    visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
-                }
-
-                if (isNaN(visualMax)) {
-                    visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
-                }
+            if (!isNaN(entry.axisOptions.yAxisRange.max)) {
+                visualMax = entry.axisOptions.yAxisRange.max;
+                fixedMax = true;
             }
 
-            // set out of zeroBasedAxis
-            if (entry.axisOptions.zeroBased) {
-                if (visualMin > 0) {
-                    visualMin = 0;
-                }
-                if (visualMax < 0) {
-                    visualMax = 0;
-                }
+            if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
+                const temp = visualMin;
+                visualMin = visualMax;
+                visualMax = temp;
             }
-
-            this.preparedAxes.set(entry.internalId, {
-                visualMin,
-                visualMax,
-                fixedMin,
-                fixedMax,
-                entry
-            });
         }
+
+        // set variable extend bounds
+        if (isNaN(visualMin) || isNaN(visualMax)) {
+            const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
+                // if (typeof d.value === 'number') {
+                if (!isNaN(d.value)) {
+                    // with timespan restriction, it only selects values inside the selected timespan
+                    // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                    return d.value;
+                } else {
+                    return null;
+                }
+            });
+
+            const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
+
+            if (isNaN(visualMin)) {
+                visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+            }
+
+            if (isNaN(visualMax)) {
+                visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+            }
+        }
+
+        // set out of zeroBasedAxis
+        if (entry.axisOptions.zeroBased) {
+            if (visualMin > 0) {
+                visualMin = 0;
+            }
+            if (visualMax < 0) {
+                visualMax = 0;
+            }
+        }
+
+        this.preparedAxes.set(entry.internalId, {
+            visualMin,
+            visualMax,
+            fixedMin,
+            fixedMax,
+            entry
+        });
     }
 
     /**
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom + (this.plotOptions.showTimeLabel ? 0 : 20);
+        return (this.d3Elem.nativeElement as HTMLElement).clientHeight
+            - this.margin.top
+            - this.margin.bottom
+            + (this.plotOptions.showTimeLabel || (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) ? 0 : 20);
     }
 
     /**
@@ -630,6 +635,8 @@ export class D3TimeseriesGraphComponent
 
         this.drawBaseGraph();
 
+        this.drawTimeRangeLabels();
+
         // create background as rectangle providing panning
         this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
@@ -676,6 +683,23 @@ export class D3TimeseriesGraphComponent
             }
         });
         this.drawBackground();
+    }
+
+    protected drawTimeRangeLabels() {
+        if (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) {
+            this.graph.append('text')
+                .attr('class', 'x axis time-range from')
+                .attr('x', this.leftOffset)
+                .attr('y', this.height + this.margin.bottom - 5)
+                .style('text-anchor', 'start')
+                .text(this.timezoneSrvc.formatTzDate(this.timespan.from, this.plotOptions.timeRangeLabel.format));
+            this.graph.append('text')
+                .attr('class', 'x axis time-range to')
+                .attr('x', this.width)
+                .attr('y', this.height + this.margin.bottom - 5)
+                .style('text-anchor', 'end')
+                .text(this.timezoneSrvc.formatTzDate(this.timespan.to, this.plotOptions.timeRangeLabel.format));
+        }
     }
 
     private isNotDrawable() {
@@ -1233,6 +1257,7 @@ export class D3TimeseriesGraphComponent
             .data(entry.data)
             .enter().append('rect')
             .attr('class', 'bar')
+            .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + entry.hoverId)
             .style('fill', entry.options.color)
             .style('stroke-dasharray', entry.options.lineDashArray)
             .style('stroke', entry.options.color)
@@ -1248,56 +1273,6 @@ export class D3TimeseriesGraphComponent
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
             .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
-
-        if (this.plotOptions.hoverStyle === HoveringStyle.point) {
-            bars
-                .on('mouseover', (d: { value: number, timestamp: number }, idx: number, rectElems: any[]) => this.mouseoverBarHovering(d, rectElems, idx, entry))
-                .on('mousemove', (d: { value: number, timestamp: number }) => this.mousemoveBarHovering(d, entry))
-                .on('mouseout', (d: { value: number, timestamp: number }, idx: number, rectElems: any[]) => this.mouseoutBarHovering(d, rectElems, idx, entry));
-        }
-    }
-
-    private mouseoverBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            const coords = d3.mouse(this.background.node());
-            const xCoord = coords[0];
-            const yCoord = coords[1];
-            const rectBack = this.background.node().getBBox();
-            if (xCoord >= 0 && xCoord <= rectBack.width && yCoord >= 0 && yCoord <= rectBack.height) {
-                // highlight bar
-                d3.select(rectElems[idx]).style('stroke-width', this.calculateLineWidth(entry) + 2);
-
-                // this.hoveringService.showPointHovering(d, entry, this.datasetMap.get(entry.internalId));
-
-                this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
-                // generate output of highlighted data
-                this.highlightOutput = {
-                    timestamp: d.timestamp,
-                    ids: new Map().set(entry.internalId, { timestamp: d.timestamp, value: d.value })
-                };
-                this.onHighlightChanged.emit(this.highlightOutput);
-            }
-        }
-    }
-
-    private mousemoveBarHovering(d: { value: number; timestamp: number; }, entry: InternalDataEntry) {
-        const temp = new Date().getTime();
-        if (d !== undefined && (temp - this.lastHoverPositioning > 50)) {
-            const coords = d3.mouse(this.background.node());
-            const xCoord = coords[0];
-            const yCoord = coords[1];
-            this.hoveringService.positioningPointHovering(xCoord, yCoord, entry.options.color, this.background);
-        }
-    }
-
-    private mouseoutBarHovering(d: { value: number; timestamp: number; }, rectElems: any[], idx: number, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            // unhighlight hovered dot
-            d3.select(rectElems[idx])
-                .style('stroke-width', this.calculateLineWidth(entry));
-            // make label invisible
-            // this.hoveringService.hidePointHovering(d, entry);
-        }
     }
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {

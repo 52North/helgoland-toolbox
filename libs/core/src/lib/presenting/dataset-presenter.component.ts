@@ -137,6 +137,13 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     }
 
     public ngDoCheck(): void {
+
+        if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
+            this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
+            const options = Object.assign({}, this.presenterOptions);
+            this.presenterOptionsChanged(options);
+        }
+
         const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds);
         if (datasetIdsChanges) {
             datasetIdsChanges.forEachAddedItem((addedItem) => {
@@ -155,12 +162,6 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             selectedDatasetIdsChanges.forEachRemovedItem((removedItem) => {
                 this.removeSelectedId(removedItem.item);
             });
-        }
-
-        if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
-            this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
-            const options = Object.assign({}, this.presenterOptions);
-            this.presenterOptionsChanged(options);
         }
 
         if (this.datasetOptions) {
