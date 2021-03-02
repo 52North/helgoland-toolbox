@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  BarRenderingHints,
   ColorService,
   DatasetOptions,
   HelgolandServicesConnector,
@@ -46,6 +47,11 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     options.lineWidth = 2;
     options.pointRadius = 2;
     return options;
+  }
+
+  protected handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
+    super.handleBarRenderingHints(barHints, options);
+    options.yAxisRange = { min: 0 };
   }
 
   protected saveState(): void {

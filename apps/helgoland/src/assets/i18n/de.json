@@ -42,6 +42,7 @@
 	"map-selection-view.go-to-chart.tooltip": "Zeitreihenansicht",
 	"map-selection-view.select-all-phenomena": "Zeige alle Phänomene",
 	"modal-edit-timeseries-options.adjust-color": "Farbe ändern",
+	"modal-edit-timeseries-options.adjust-color-confirm-button": "Ok",
 	"modal-edit-timeseries-options.generalizeData": "Daten generalisieren",
 	"modal-edit-timeseries-options.line-width": "Linienbreite",
 	"modal-edit-timeseries-options.null-based": "Null-basiert",

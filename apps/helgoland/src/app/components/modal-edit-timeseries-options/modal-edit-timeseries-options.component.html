@@ -30,6 +30,8 @@
   <div>
     {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
     <button mat-raised-button [colorPicker]="options.color" (colorPickerSelect)="confirmColor($event)"
+      [cpOKButton]="true" [cpOKButtonText]="'modal-edit-timeseries-options.adjust-color-confirm-button' | translate"
+      [cpOKButtonClass]="'mat-focus-indicator mat-raised-button mat-button-base'"
       [ngStyle]="{'background-color': options.color}">&nbsp;</button>
   </div>
 
