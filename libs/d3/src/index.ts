@@ -15,6 +15,7 @@ export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-h
 export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
+export * from './lib/d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
 
 export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
 

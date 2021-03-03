@@ -47,6 +47,10 @@ import { D3Graphs } from './../helper/d3-graphs.service';
 import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
+import {
+    D3TimeseriesGraphErrorHandler,
+    D3TimeseriesSimpleGraphErrorHandler,
+} from './d3-timeseries-graph-error-handler.service';
 
 interface HighlightDataset {
     id: string;
@@ -158,6 +162,7 @@ export class D3TimeseriesGraphComponent
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
         protected servicesConnector: HelgolandServicesConnector,
+        @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
@@ -223,7 +228,7 @@ export class D3TimeseriesGraphComponent
     protected addDataset(id: string, url: string): void {
         this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Timeseries }).subscribe(
             res => this.loadAddedDataset(res),
-            error => console.error(error)
+            error => this.errorHandler.handleDatasetLoadError(error)
         );
     }
 
@@ -325,8 +330,7 @@ export class D3TimeseriesGraphComponent
                         this.onCompleteLoadingData(dataset);
                     },
                     (error) => {
-                        console.error(error);
-                        // TODO: handle errored get Data requests
+                        this.errorHandler.handleDataLoadError(error, dataset);
                         this.onCompleteLoadingData(dataset);
                     }
                 );
