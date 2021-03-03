@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HelgolandMapSelectorModule } from '../module';
 import { PlatformMapViewerComponent } from './platform-map-viewer.component';
@@ -7,7 +7,7 @@ describe('PlatformMapViewerComponent', () => {
   let component: PlatformMapViewerComponent;
   let fixture: ComponentFixture<PlatformMapViewerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HelgolandMapSelectorModule
