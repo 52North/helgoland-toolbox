@@ -36,7 +36,7 @@ import {
   HelgolandCoreModule,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
-import { HelgolandD3Module } from '@helgoland/d3';
+import { D3TimeseriesGraphErrorHandler, HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule, HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
@@ -73,6 +73,7 @@ import { ModalMapSettingsComponent } from './components/modal-map-settings/modal
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
+import { CustomD3TimeseriesGraphErrorHandler } from './services/timeseries-graph-error-handler';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
@@ -178,6 +179,10 @@ export const ROUTES = [
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: D3TimeseriesGraphErrorHandler,
+      useClass: CustomD3TimeseriesGraphErrorHandler
     },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     DatasetApiV1ConnectorProvider,
