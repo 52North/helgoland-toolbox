@@ -1,5 +1,6 @@
 import { Settings } from '@helgoland/core';
 
+// tslint:disable-next-line: no-empty-interface
 export interface AppConfig extends Settings {
 
 }

@@ -1,8 +1,8 @@
 {
   "extends": "../../tslint.json",
   "rules": {
-    "directive-selector": [true, "attribute", "helgolandCommon", "camelCase"],
-    "component-selector": [true, "element", "helgoland-common", "kebab-case"]
+    "directive-selector": [true, "attribute", "helgoland", "camelCase"],
+    "component-selector": [true, "element", "helgoland", "kebab-case"]
   },
   "linterOptions": {
     "exclude": ["!**/*"]
