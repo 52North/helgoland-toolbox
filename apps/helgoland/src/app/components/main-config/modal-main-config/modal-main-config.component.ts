@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class ModalMainConfigComponent { 
 
-  public languages = appConfig.languages;
+  public languages = appConfig?.languages;
 
 }

@@ -26,7 +26,7 @@ export abstract class LocalSelectorComponent implements OnChanges {
     }
 
     protected updateCurrentLang() {
-        this.currentLang = this.languageList.find((e) => e.code === this.translate.currentLang);
+        this.currentLang = this.languageList?.find((e) => e.code === this.translate.currentLang);
     }
 
 }

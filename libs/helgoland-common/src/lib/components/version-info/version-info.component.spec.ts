@@ -1,5 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
+import { TranslateTestingModule } from './../../../../../testing/translate.testing.module';
 import { VersionInfoComponent } from './version-info.component';
 
 describe('VersionInfoComponent', () => {
@@ -8,9 +11,14 @@ describe('VersionInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VersionInfoComponent ]
+      declarations: [VersionInfoComponent],
+      imports: [
+        TranslateTestingModule,
+        HelgolandCoreModule,
+        HttpClientModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

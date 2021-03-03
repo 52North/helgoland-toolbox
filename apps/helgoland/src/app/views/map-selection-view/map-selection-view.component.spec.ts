@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { MapSelectionViewComponent } from './map-selection-view.component';
 
@@ -8,9 +11,13 @@ describe('MapSelectionViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MapSelectionViewComponent ]
-    })
-    .compileComponents();
+      declarations: [MapSelectionViewComponent],
+      imports: [
+        MatDialogModule,
+        HelgolandCoreModule,
+        RouterTestingModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

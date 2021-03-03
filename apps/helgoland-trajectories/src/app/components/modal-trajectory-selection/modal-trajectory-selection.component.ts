@@ -24,7 +24,7 @@ import { TrajectoriesService } from './../../services/trajectories.service';
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
 
-  public datasetApis: DatasetApi[] = appConfig.datasetApis;
+  public datasetApis: DatasetApi[] = appConfig?.datasetApis;
 
   public filterList: ParameterListEntry[] = [];
 

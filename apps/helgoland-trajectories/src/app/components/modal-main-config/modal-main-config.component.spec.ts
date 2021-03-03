@@ -1,5 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { HelgolandCommonModule } from '../../../../../../libs/helgoland-common/src/lib/helgoland-common.module';
+import { TranslateTestingModule } from './../../../../../../libs/testing/translate.testing.module';
 import { ModalMainConfigComponent } from './modal-main-config.component';
 
 describe('ModalMainConfigComponent', () => {
@@ -8,9 +12,14 @@ describe('ModalMainConfigComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalMainConfigComponent ]
-    })
-    .compileComponents();
+      declarations: [ModalMainConfigComponent],
+      imports: [
+        TranslateTestingModule,
+        BrowserAnimationsModule,
+        HelgolandCommonModule,
+        HttpClientModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

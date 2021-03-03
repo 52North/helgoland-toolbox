@@ -1,4 +1,9 @@
+import { ColorPickerModule } from 'ngx-color-picker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TranslateTestingModule } from './../../../../../../libs/testing/translate.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { LegendEntryComponent } from './legend-entry.component';
 
@@ -8,9 +13,15 @@ describe('LegendEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LegendEntryComponent ]
-    })
-    .compileComponents();
+      declarations: [LegendEntryComponent],
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        MatCheckboxModule,
+        MatIconModule,
+        ColorPickerModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

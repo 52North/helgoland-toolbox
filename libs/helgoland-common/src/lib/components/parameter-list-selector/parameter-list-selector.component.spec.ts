@@ -1,5 +1,9 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { HelgolandCoreModule } from '@helgoland/core';
 
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { ParameterListSelectorComponent } from './parameter-list-selector.component';
 
 describe('ParameterListSelectorComponent', () => {
@@ -8,9 +12,14 @@ describe('ParameterListSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ParameterListSelectorComponent]
-    })
-      .compileComponents();
+      declarations: [ParameterListSelectorComponent],
+      imports: [
+        TranslateTestingModule,
+        HelgolandCoreModule,
+        HttpClientModule,
+        MatListModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

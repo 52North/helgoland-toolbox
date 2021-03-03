@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { EditLabelComponent } from './edit-label.component';
 
@@ -8,9 +12,14 @@ describe('EditLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [EditLabelComponent],
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        NoopAnimationsModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

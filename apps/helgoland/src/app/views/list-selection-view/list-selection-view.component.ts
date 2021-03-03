@@ -34,7 +34,7 @@ export class ListSelectionViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.serviceConnector.getServices(appConfig.defaultService.apiUrl).subscribe(services => {
+    this.serviceConnector.getServices(appConfig?.defaultService.apiUrl).subscribe(services => {
       this.selectedService = services.find(e => e.id === appConfig.defaultService.serviceId);
       this.resetView();
     });

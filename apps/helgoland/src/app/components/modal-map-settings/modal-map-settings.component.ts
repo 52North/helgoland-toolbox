@@ -25,8 +25,8 @@ export class ModalMapSettingsComponent {
     public dialogRef: MatDialogRef<ModalMapSettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig
   ) {
-    this.datasetApis = appConfig.datasetApis;
-    this.blacklist = appConfig.providerBlackList;
+    this.datasetApis = appConfig?.datasetApis;
+    this.blacklist = appConfig?.providerBlackList;
   }
 
   public serviceSelected(service: HelgolandService) {

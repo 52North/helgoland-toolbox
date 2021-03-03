@@ -1,4 +1,9 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 
 import { ShareButtonComponent } from './share-button.component';
 
@@ -8,9 +13,15 @@ describe('ShareButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [ShareButtonComponent],
+      imports: [
+        MatSnackBarModule,
+        HttpClientModule,
+        MatIconModule,
+        MatTooltipModule,
+        TranslateTestingModule,
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

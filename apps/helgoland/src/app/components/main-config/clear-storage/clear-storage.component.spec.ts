@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
+import { TranslateTestingModule } from './../../../../../../../libs/testing/translate.testing.module';
 import { ClearStorageComponent } from './clear-storage.component';
 
 describe('ClearStorageComponent', () => {
@@ -8,9 +10,12 @@ describe('ClearStorageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClearStorageComponent ]
-    })
-    .compileComponents();
+      declarations: [ClearStorageComponent],
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

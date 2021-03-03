@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { HelgolandCoreModule } from '@helgoland/core';
 
+import { TranslateTestingModule } from '../../../../../../libs/testing/translate.testing.module';
 import { TimeseriesListSelectorComponent } from './timeseries-list-selector.component';
 
 describe('TimeseriesListSelectorComponent', () => {
@@ -8,9 +11,13 @@ describe('TimeseriesListSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimeseriesListSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [TimeseriesListSelectorComponent],
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        MatListModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -74,12 +74,15 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     private time: Time
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
-    this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
-    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+    // this._mobileQueryListener = () => {
+    //   debugger;
+    //   return this.changeDetectorRef.detectChanges();
+    // };
+    // this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
-    this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+    // this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
 
   ngOnInit(): void {

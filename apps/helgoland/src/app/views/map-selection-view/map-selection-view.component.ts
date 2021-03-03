@@ -61,11 +61,11 @@ export class MapSelectionViewComponent implements OnInit {
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
-    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+    // this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
   ngOnInit(): void {
-    this.serviceConnector.getServices(appConfig.defaultService.apiUrl).subscribe(services => {
+    this.serviceConnector.getServices(appConfig?.defaultService.apiUrl).subscribe(services => {
       this.selectedService = services.find(e => e.id === appConfig.defaultService.serviceId);
       this.updateFilter();
     });

@@ -1,4 +1,4 @@
-<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
+<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions?.color}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}">
@@ -30,11 +30,11 @@
       </button>
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
         matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
-        <mat-icon>{{datasetOptions.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-icon>{{datasetOptions?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <mat-icon [ngStyle]="{'color': datasetOptions.color}">create</mat-icon>
+        <mat-icon [ngStyle]="{'color': datasetOptions?.color}">create</mat-icon>
       </button>
       <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
       </helgoland-favorite-toggle-button>

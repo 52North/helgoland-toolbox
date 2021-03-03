@@ -21,7 +21,7 @@ export class ModalListSettingsComponent {
     public dialogRef: MatDialogRef<ModalListSettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig
   ) {
-    this.datasetApis = appConfig.datasetApis;
+    this.datasetApis = appConfig?.datasetApis;
   }
 
   public serviceSelected(service: HelgolandService) {
