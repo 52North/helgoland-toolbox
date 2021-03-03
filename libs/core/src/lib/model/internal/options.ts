@@ -39,7 +39,7 @@ export class DatasetOptions {
     /**
      * auto zoom when range selection
      */
-    autoRangeSelection?: boolean = false;
+    public autoRangeSelection?: boolean = false;
 
     /**
      * marker to request dataset data generalized
