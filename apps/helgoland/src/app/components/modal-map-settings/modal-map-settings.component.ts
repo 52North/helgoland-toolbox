@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BlacklistedService, DatasetApi, DatasetType, HelgolandParameterFilter, HelgolandService } from '@helgoland/core';
 
-import { appConfig } from './../../app-config';
+import { ConfigurationService } from '../../services/configuration.service';
 
 export interface MapConfig {
   cluster: boolean;
@@ -23,10 +23,11 @@ export class ModalMapSettingsComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ModalMapSettingsComponent>,
+    private configSrvc: ConfigurationService,
     @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig
   ) {
-    this.datasetApis = appConfig?.datasetApis;
-    this.blacklist = appConfig?.providerBlackList;
+    this.datasetApis = this.configSrvc.configuration?.datasetApis;
+    this.blacklist = this.configSrvc.configuration?.providerBlackList;
   }
 
   public serviceSelected(service: HelgolandService) {

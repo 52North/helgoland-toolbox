@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DatasetApi, HelgolandService } from '@helgoland/core';
 
-import { appConfig } from '../../../app-config';
+import { ConfigurationService } from './../../../services/configuration.service';
 
 export interface ListConfig {
   selectedService: HelgolandService;
@@ -19,9 +19,10 @@ export class ModalListSettingsComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ModalListSettingsComponent>,
+    private configSrvc: ConfigurationService,
     @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig
   ) {
-    this.datasetApis = appConfig?.datasetApis;
+    this.datasetApis = this.configSrvc.configuration?.datasetApis;
   }
 
   public serviceSelected(service: HelgolandService) {

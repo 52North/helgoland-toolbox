@@ -1,7 +1,4 @@
-import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'helgoland-root',
@@ -10,12 +7,4 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'helgoland';
-
-  constructor(
-    private translate: TranslateService
-  ) {
-    const browserLang = translate.getBrowserLang() || 'en';
-    translate.use(browserLang);
-    registerLocaleData(localeDe);
-  }
 }

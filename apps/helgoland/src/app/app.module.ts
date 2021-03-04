@@ -1,6 +1,7 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -41,7 +42,7 @@ import { HelgolandDatasetlistModule, HelgolandLabelMapperModule } from '@helgola
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -73,6 +74,7 @@ import { ModalMapSettingsComponent } from './components/modal-map-settings/modal
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
+import { AppConfig, ConfigurationService } from './services/configuration.service';
 import { CustomD3TimeseriesGraphErrorHandler } from './services/timeseries-graph-error-handler';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
@@ -103,6 +105,23 @@ export const ROUTES = [
     component: DiagramViewComponent
   }
 ];
+
+export function initApplication(configService: ConfigurationService, translate: TranslateService): () => Promise<void> {
+  return () => configService.loadConfiguration().then((config: AppConfig) => {
+    registerLocaleData(localeDe);
+    let lang = translate.getBrowserLang() || 'en';
+    const url = window.location.href;
+    const name = 'locale';
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (results && results[2]) {
+      const match = config.languages.find(e => e.code === results[2]);
+      if (match) { lang = match.code; }
+    }
+    translate.setDefaultLang(lang);
+    return translate.use(lang).toPromise();
+  });
+}
 
 @NgModule({
   declarations: [
@@ -183,6 +202,12 @@ export const ROUTES = [
     {
       provide: D3TimeseriesGraphErrorHandler,
       useClass: CustomD3TimeseriesGraphErrorHandler
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApplication,
+      deps: [ConfigurationService, TranslateService],
+      multi: true
     },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     DatasetApiV1ConnectorProvider,

@@ -7,10 +7,10 @@ import {
   ParameterListEntry,
   ParameterType,
 } from '../../../../../../libs/helgoland-common/src/lib/components/multi-parameter-selection/model';
-import { appConfig } from '../../app-config';
 import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from '../../services/timeseries-service.service';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
+import { ConfigurationService } from './../../services/configuration.service';
 import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
 
 @Component({
@@ -30,12 +30,13 @@ export class ListSelectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService
+    public timeseries: TimeseriesService,
+    private configSrvc: ConfigurationService
   ) { }
 
   ngOnInit(): void {
-    this.serviceConnector.getServices(appConfig?.defaultService.apiUrl).subscribe(services => {
-      this.selectedService = services.find(e => e.id === appConfig.defaultService.serviceId);
+    this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe(services => {
+      this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
       this.resetView();
     });
   }

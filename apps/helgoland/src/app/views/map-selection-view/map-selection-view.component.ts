@@ -16,9 +16,9 @@ import {
   ModalDatasetByStationSelectorComponent,
 } from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from '../../components/modal-map-settings/modal-map-settings.component';
-import { appConfig } from './../../app-config';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { AppRouterService } from './../../services/app-router.service';
+import { ConfigurationService } from './../../services/configuration.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 Marker.prototype.options.icon = icon({
@@ -57,7 +57,8 @@ export class MapSelectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService
+    public timeseries: TimeseriesService,
+    private configSrvc: ConfigurationService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
@@ -65,8 +66,8 @@ export class MapSelectionViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.serviceConnector.getServices(appConfig?.defaultService.apiUrl).subscribe(services => {
-      this.selectedService = services.find(e => e.id === appConfig.defaultService.serviceId);
+    this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe(services => {
+      this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
       this.updateFilter();
     });
   }
