@@ -226,7 +226,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Timeseries }).subscribe(
+        this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries  }).subscribe(
             res => this.loadAddedDataset(res),
             error => this.errorHandler.handleDatasetLoadError(error)
         );

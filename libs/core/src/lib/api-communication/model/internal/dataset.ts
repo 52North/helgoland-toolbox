@@ -89,6 +89,6 @@ export interface DatasetFilter {
     offering?: string;
     service?: string;
     expanded?: boolean;
-    lang?: string;
+    locale?: string;
     type?: DatasetType;
 }

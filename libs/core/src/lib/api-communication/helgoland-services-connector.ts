@@ -107,7 +107,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Timeseries
   }): Observable<HelgolandTimeseries[]>;
 
@@ -119,7 +119,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Trajectory
   }): Observable<HelgolandTrajectory[]>;
 
@@ -131,7 +131,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Profile
   }): Observable<HelgolandProfile[]>;
 
@@ -149,7 +149,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Timeseries
   }): Observable<HelgolandTimeseries>;
 
@@ -161,7 +161,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Trajectory
   }): Observable<HelgolandTrajectory>;
 
@@ -173,7 +173,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
     offering?: string,
     service?: string,
     expanded?: boolean,
-    lang?: string,
+    locale?: string,
     type: DatasetType.Profile
   }): Observable<HelgolandProfile>;
 

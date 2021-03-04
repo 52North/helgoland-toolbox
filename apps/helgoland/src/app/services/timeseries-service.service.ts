@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
@@ -9,6 +9,7 @@ import {
   Time,
   Timespan,
 } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
 const TIMESERIES_OPTIONS_CACHE_PARAM = 'timeseriesOptions';
@@ -25,9 +26,10 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
   constructor(
     protected serviceConnector: HelgolandServicesConnector,
     protected localStorage: LocalStorage,
-    protected timeSrvc: Time
+    protected timeSrvc: Time,
+    @Optional() protected translateSrvc?: TranslateService
   ) {
-    super(serviceConnector);
+    super(serviceConnector, translateSrvc);
     this.initTimespan();
     this.loadState();
   }

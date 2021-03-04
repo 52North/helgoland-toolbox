@@ -39,9 +39,9 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
     super(internalIdHandler, translateSrvc);
   }
 
-  protected loadDataset(lang?: string): void {
+  protected loadDataset(locale?: string): void {
     const params: DatasetFilter = {};
-    if (lang) { params.lang = lang; }
+    if (locale) { params.locale = locale; }
     this.loading = true;
     this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Timeseries })
       .subscribe(dataset => this.setDataset(dataset));

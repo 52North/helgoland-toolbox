@@ -1,13 +1,17 @@
+import { Optional } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+
+import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { DatasetType, HelgolandTimeseries } from '../api-communication/model/internal/dataset';
 import { BarRenderingHints, LineRenderingHints } from '../model/dataset-api/dataset';
 import { DatasetOptions } from '../model/internal/options';
-import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
 import { DatasetService } from './dataset.service';
 
 export abstract class RenderingHintsDatasetService<T extends DatasetOptions | DatasetOptions[]> extends DatasetService<T> {
 
     constructor(
-        protected servicesConnector: HelgolandServicesConnector
+        protected servicesConnector: HelgolandServicesConnector,
+        @Optional() protected translateSrvc?: TranslateService
     ) {
         super();
     }
@@ -22,7 +26,9 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
                     this.saveState();
                     resolve(true);
                 } else {
-                    this.servicesConnector.getDataset(internalId, { type: DatasetType.Timeseries })
+                    const params: any = {};
+                    if (this.translateSrvc) { params.locale = this.translateSrvc.currentLang };
+                    this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Timeseries })
                         .subscribe(dataset => this.addLoadedDataset(dataset, resolve));
                 }
             }
