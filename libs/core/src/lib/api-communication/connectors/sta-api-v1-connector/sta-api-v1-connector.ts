@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, mergeMap, map } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
@@ -67,6 +67,10 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   getServices(apiUrl: string, params: HelgolandParameterFilter): Observable<HelgolandService[]> {
     return this.createServices(apiUrl, params);
+  }
+
+  getService(id: string, url: string, params: HelgolandParameterFilter): Observable<HelgolandService> {
+    return this.createServices(url, params).pipe(map(res => res[0]));
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {

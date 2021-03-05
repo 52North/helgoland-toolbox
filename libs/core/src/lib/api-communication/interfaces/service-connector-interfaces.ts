@@ -42,7 +42,8 @@ export interface HelgolandServiceInterface {
 
     createCsvDataExportLink(internalId: string | InternalDatasetId, params?: HelgolandCsvExportLinkParams): Observable<string>;
 
-    getServices(apiUrl: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]>;
+    getServices(url: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]>;
+    getService(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandService>;
 }
 
 export interface HelgolandServiceConnector extends HelgolandServiceInterface {

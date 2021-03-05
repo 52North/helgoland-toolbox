@@ -78,6 +78,10 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
       .pipe(map(res => res.map(s => this.createV2Service(s, filter))));
   }
 
+  getService(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandService> {
+    return this.api.getService(id, url, this.createFilter(filter)).pipe(map(s => this.createV2Service(s, filter)));
+  }
+
   getPlatforms(url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform[]> {
     return this.api.getPlatforms(url, this.createFilter(filter)).pipe(
       map(res => res instanceof Array ? res.map(pf => this.createHelgolandPlatform(pf)) : [])

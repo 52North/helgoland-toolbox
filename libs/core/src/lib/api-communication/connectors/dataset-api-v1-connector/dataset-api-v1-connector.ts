@@ -3,29 +3,33 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DatasetApiInterface } from '../../../dataset-api/api-interface';
+import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import { TimeValueTuple } from '../../../model/dataset-api/data';
+import { FirstLastValue, IDataset, Timeseries } from '../../../model/dataset-api/dataset';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
 import { Phenomenon } from '../../../model/dataset-api/phenomenon';
 import { Procedure } from '../../../model/dataset-api/procedure';
 import { Service } from '../../../model/dataset-api/service';
 import { Station } from '../../../model/dataset-api/station';
-import { ParameterFilter } from '../../../model/internal/http-requests';
+import { DataParameterFilter, ParameterFilter } from '../../../model/internal/http-requests';
 import { Timespan } from '../../../model/internal/timeInterval';
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
+import { UrlGenerator } from '../../helper/url-generator';
 import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
-import { DatasetExtras, DatasetFilter, DatasetType, HelgolandDataset } from '../../model/internal/dataset';
-import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from '../../model/internal/filter';
-import { HttpService } from '../../../dataset-api/http.service';
-import { FirstLastValue, IDataset, Timeseries } from '../../../model/dataset-api/dataset';
-import { DataParameterFilter } from '../../../model/internal/http-requests';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
-import { HelgolandTimeseries } from '../../model/internal/dataset';
+import {
+  DatasetExtras,
+  DatasetFilter,
+  DatasetType,
+  HelgolandDataset,
+  HelgolandTimeseries,
+} from '../../model/internal/dataset';
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
-import { UrlGenerator } from '../../helper/url-generator';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +60,10 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
   getServices(url: string, filter: HelgolandParameterFilter): Observable<HelgolandService[]> {
     return this.api.getServices(url, this.createFilter(filter))
       .pipe(map(res => res.map(s => this.createService(s, filter))));
+  }
+
+  getService(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandService> {
+    return this.api.getService(id, url, this.createFilter(filter)).pipe(map(s => this.createService(s, filter)));
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {

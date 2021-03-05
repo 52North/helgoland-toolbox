@@ -216,6 +216,11 @@ export class ApiV3InterfaceService extends ApiInterface {
     return this.requestApi<ApiV3Service[]>(url, this.prepareParams(params), options);
   }
 
+  public getService(id: string, apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Service> {
+    const url = this.createRequestUrl(apiUrl, 'services', id);
+    return this.requestApi<ApiV3Service>(url, this.prepareParams(params), options);
+  }
+
   public getCategories(apiUrl: string, params?: ApiV3ParameterFilter, options?: HttpRequestOptions): Observable<ApiV3Category[]> {
     const url = this.createRequestUrl(apiUrl, 'categories');
     return this.requestApi<ApiV3Category[]>(url, this.prepareParams(params), options);

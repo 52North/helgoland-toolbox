@@ -28,7 +28,7 @@ import {
   HelgolandTimeseries,
   HelgolandTrajectory,
 } from './model/internal/dataset';
-import { HelgolandParameterFilter, HelgolandCsvExportLinkParams } from './model/internal/filter';
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from './model/internal/filter';
 import { HelgolandPlatform } from './model/internal/platform';
 import { HelgolandService } from './model/internal/service';
 
@@ -49,6 +49,10 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
 
   getServices(url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandService[]> {
     return this.getConnector(url).pipe(mergeMap(h => h.getServices(url, filter)));
+  }
+
+  getService(id: string, url: string, filter: HelgolandParameterFilter = {}): Observable<HelgolandService> {
+    return this.getConnector(url).pipe(mergeMap(h => h.getService(id, url, filter)));
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter = {}): Observable<Category[]> {
