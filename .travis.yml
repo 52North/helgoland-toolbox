@@ -10,7 +10,7 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint
+  - node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng test
   - npm run lib:build
-  - npm test
 
 # deploy to registry ...
