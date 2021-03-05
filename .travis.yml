@@ -12,6 +12,7 @@ branches:
 before_script:
   - npm install -g @angular/cli
 script:
+  - npm versions-script
   - ng lint
   - npm run lib:build
   - npm test
