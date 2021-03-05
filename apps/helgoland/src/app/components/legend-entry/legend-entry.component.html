@@ -1,12 +1,15 @@
 <mat-expansion-panel [ngStyle]="{'border-color': datasetOptions?.color}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <div class="title" [ngClass]="{'noData': !hasData}">
+      <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
         <n52-label-mapper label="{{phenomenonLabel}}"></n52-label-mapper>
         <span *ngIf="uom">
           <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
         </span>
         <div>{{dataset?.platform.label}}</div>
+      </div>
+      <div class="title error" *ngIf="error">
+        Error occured, while loading {{datasetId}}
       </div>
       <div style="flex: 1"></div>
       <button mat-icon-button (click)="removeDataset(); $event.stopPropagation()"
@@ -15,7 +18,7 @@
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div>
+  <mat-expansion-panel-content *ngIf="!loading && !error">
     <div class="small-label">
       <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
       <span *ngIf="categoryLabel != phenomenonLabel">
@@ -57,6 +60,6 @@
         </mat-slide-toggle>
       </div>
     </div>
-  </div>
+  </mat-expansion-panel-content>
   <helgoland-loading-overlay *ngIf="loading"></helgoland-loading-overlay>
 </mat-expansion-panel>
