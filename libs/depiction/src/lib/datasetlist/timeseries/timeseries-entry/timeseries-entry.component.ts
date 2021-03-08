@@ -38,7 +38,7 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
         protected internalIdHandler: InternalIdHandler,
         protected color: ColorService,
         protected refValCache: ReferenceValueColorCache,
-        protected translateSrvc: TranslateService
+        public translateSrvc: TranslateService
     ) {
         super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
     }

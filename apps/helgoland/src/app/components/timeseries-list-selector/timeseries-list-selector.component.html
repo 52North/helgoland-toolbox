@@ -6,7 +6,8 @@
 </div>
 
 <mat-selection-list #parameters [multiple]="true" (selectionChange)="selectionChanged($event)">
-  <mat-list-option *ngFor="let item of items" [value]="item" color="primary" [selected]="timeseriesSrvc.hasDataset(item.internalId)">
+  <mat-list-option *ngFor="let item of items" [value]="item" color="primary"
+    [selected]="timeseriesSrvc.hasDataset(item.internalId)">
     {{item.label}}
   </mat-list-option>
 </mat-selection-list>

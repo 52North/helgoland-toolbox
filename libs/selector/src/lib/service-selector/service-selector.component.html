@@ -9,8 +9,8 @@
     </div>
     <div class="small" *ngIf="service.apiUrl">{{'service-selector.service-url' | translate}}: {{service.apiUrl}}</div>
     <div class="small">
-      <span *ngIf="service.quantities.stations !== undefined">{{'service-selector.stations' | translate}}:
-        {{service.quantities.stations}}</span>
+      <span *ngIf="service.quantities.platforms">{{'service-selector.stations' | translate}}:
+        {{service.quantities.platforms}}</span>
       <span *ngIf="service.quantities.platforms !== undefined">{{'service-selector.platforms' | translate}}:
         {{service.quantities.platforms}}</span>
       <span *ngIf="service.quantities.datasets !== undefined">{{'service-selector.datasets' | translate}}:

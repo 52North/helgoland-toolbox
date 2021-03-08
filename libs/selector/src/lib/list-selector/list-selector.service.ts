@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { FilteredProvider, HelgolandParameterFilter } from '@helgoland/core';
+import { FilteredProvider } from '@helgoland/core';
 
-interface ExtendedFilter extends HelgolandParameterFilter {
-    [key: string]: any;
-}
+import {
+    MultiServiceFilter,
+    MultiServiceFilterEndpoint,
+} from '../multi-service-filter-selector/multi-service-filter-selector.component';
 
 export interface ListSelectorParameter {
     header: string;
-    type: string;
+    type: MultiServiceFilterEndpoint;
     selected?: string;
     isDisabled?: boolean;
     headerAddition?: string;
-    filterList?: ExtendedFilter[];
+    filterList?: MultiServiceFilter[];
 }
 
 @Injectable()

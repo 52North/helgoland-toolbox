@@ -30,16 +30,16 @@
         </div>
   
         <div [ngSwitch]="entry.selectedFilter" class="item-list">
-          <helgoland-common-parameter-list-selector *ngSwitchCase="'offering'" [endpoint]="'offering'"
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'offering'" [endpoint]="filterEnpoints.offering"
             [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
           </helgoland-common-parameter-list-selector>
-          <helgoland-common-parameter-list-selector *ngSwitchCase="'feature'" [endpoint]="'feature'"
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'feature'" [endpoint]="filterEnpoints.feature"
             [filterList]="entry.apiFilter" (onItemSelected)="featureSelected(entry, $event)">
           </helgoland-common-parameter-list-selector>
-          <helgoland-common-parameter-list-selector *ngSwitchCase="'platform'" [endpoint]="'platform'"
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'platform'" [endpoint]="filterEnpoints.platform"
             [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
           </helgoland-common-parameter-list-selector>
-          <helgoland-common-parameter-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="'phenomenon'"
+          <helgoland-common-parameter-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="filterEnpoints.phenomenon"
             [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
           </helgoland-common-parameter-list-selector>
           <helgoland-common-service-list-selector *ngSwitchCase="'provider'" [datasetApiList]="datasetApis"

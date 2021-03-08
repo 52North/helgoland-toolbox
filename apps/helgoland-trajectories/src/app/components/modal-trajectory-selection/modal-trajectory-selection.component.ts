@@ -8,7 +8,7 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import { MultiServiceFilter } from '@helgoland/selector';
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 
 import {
   ParameterListEntry,
@@ -32,6 +32,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     type: DatasetType.Trajectory,
     expanded: false
   }
+
+  public filterEnpoints = MultiServiceFilterEndpoint;
 
   constructor(
     public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,

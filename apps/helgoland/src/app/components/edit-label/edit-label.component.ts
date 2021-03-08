@@ -15,6 +15,7 @@ import {
   styleUrls: ['./edit-label.component.scss']
 })
 export class EditLabelComponent implements AfterViewInit {
+
   @Input() label: string;
 
   @Output() labelChanged: EventEmitter<string> = new EventEmitter();
@@ -32,8 +33,8 @@ export class EditLabelComponent implements AfterViewInit {
     this.cd.detectChanges();
   }
 
-  public change(newLabel) {
-    this.editedLabel = newLabel;
+  public changeLabel(updatedLabel: string) {
+    this.editedLabel = updatedLabel;
   }
 
   public clear() {

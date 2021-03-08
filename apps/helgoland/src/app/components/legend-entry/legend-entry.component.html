@@ -18,7 +18,7 @@
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <mat-expansion-panel-content *ngIf="!loading && !error">
+  <div *ngIf="!loading && !error">
     <div class="small-label">
       <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
       <span *ngIf="categoryLabel != phenomenonLabel">
@@ -60,6 +60,6 @@
         </mat-slide-toggle>
       </div>
     </div>
-  </mat-expansion-panel-content>
+  </div>
   <helgoland-loading-overlay *ngIf="loading"></helgoland-loading-overlay>
 </mat-expansion-panel>

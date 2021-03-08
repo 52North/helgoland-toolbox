@@ -1,5 +1,5 @@
 <mat-form-field>
-  <input #input matInput [value]="label" (change)="change($event.target.value)">
+  <input #input matInput [ngModel]="label" (ngModelChange)="changeLabel($event)">
 </mat-form-field>
 
 <button mat-icon-button (click)="clear()">

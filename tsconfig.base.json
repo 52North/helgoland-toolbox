@@ -42,5 +42,8 @@
       "@helgoland-toolbox/helgoland-common": ["libs/helgoland-common/src/index.ts"]
     }
   },
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  },
   "exclude": ["node_modules", "tmp"]
 }

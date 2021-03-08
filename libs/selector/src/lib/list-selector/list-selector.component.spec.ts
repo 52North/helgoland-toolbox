@@ -18,6 +18,7 @@ import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { SettingsServiceTestingProvider } from '../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
 import {
+  MultiServiceFilterEndpoint,
   MultiServiceFilterSelectorComponent,
 } from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorComponent } from './list-selector.component';
@@ -103,16 +104,16 @@ describe('ListSelectorComponent', () => {
     };
     component.parameters = [
       {
-        type: 'category',
+        type: MultiServiceFilterEndpoint.category,
         header: 'Category'
       }, {
-        type: 'feature',
+        type: MultiServiceFilterEndpoint.feature,
         header: 'Feature'
       }, {
-        type: 'phenomenon',
+        type: MultiServiceFilterEndpoint.phenomenon,
         header: 'Phenomenon'
       }, {
-        type: 'procedure',
+        type: MultiServiceFilterEndpoint.procedure,
         header: 'Procedure'
       }
     ];
