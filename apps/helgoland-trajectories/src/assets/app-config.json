@@ -3,14 +3,6 @@
     {
       "name": "nexos.demo.52north",
       "url": "https://nexos.demo.52north.org/52n-sos-nexos-test/api/"
-    },
-    {
-      "name": "codm.hzg.de",
-      "url": "https://codm.hzg.de/52n-sos-webapp/api/v1/"
-    },
-    {
-      "name": "eurofleets",
-      "url": "https://eurofleets.utm.csic.es/sos/api/"
     }
   ],
   "languages": [
