@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { appConfig } from '../../app-config';
+import { ConfigurationService } from './../../services/configuration.service';
 
 @Component({
   selector: 'helgoland-trajectories-modal-main-config',
@@ -9,6 +9,10 @@ import { appConfig } from '../../app-config';
 })
 export class ModalMainConfigComponent {
 
-  public languages = appConfig?.languages;
+  public languages = this.configSrvc.configuration?.languages;
+
+  constructor(
+    private configSrvc: ConfigurationService
+  ) { }
 
 }

@@ -10,11 +10,11 @@ import {
 } from '@helgoland/core';
 import { MultiServiceFilter } from '@helgoland/selector';
 
-import { appConfig } from '../../app-config';
 import {
   ParameterListEntry,
   ParameterType,
 } from './../../../../../../libs/helgoland-common/src/lib/components/multi-parameter-selection/model';
+import { ConfigurationService } from './../../services/configuration.service';
 import { TrajectoriesService } from './../../services/trajectories.service';
 
 @Component({
@@ -24,7 +24,7 @@ import { TrajectoriesService } from './../../services/trajectories.service';
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
 
-  public datasetApis: DatasetApi[] = appConfig?.datasetApis;
+  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis;
 
   public filterList: ParameterListEntry[] = [];
 
@@ -35,6 +35,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
+    private configSrvc: ConfigurationService,
     private servicesConnector: HelgolandServicesConnector,
     private trajectorySrvc: TrajectoriesService
   ) { }
