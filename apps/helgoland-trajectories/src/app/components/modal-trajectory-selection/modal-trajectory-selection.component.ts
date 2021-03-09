@@ -132,7 +132,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     const dsFilter = filter.apiFilter[0].filter;
     this.servicesConnector.getDatasets(url, dsFilter).subscribe(res => {
       if (res.length > 0) {
-        this.trajectorySrvc.addDataset(res[0].internalId);
+        this.trajectorySrvc.mainTrajectoryId = res[0].internalId;
         this.dialogRef.close();
       }
     })
