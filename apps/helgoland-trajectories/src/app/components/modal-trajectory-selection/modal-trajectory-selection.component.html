@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{'selection.modal-title' | translate}}</h1>
 <mat-dialog-content>
-
+  <helgoland-loading-overlay *ngIf="datasetsLoading"></helgoland-loading-overlay>
   <div class="full-height">
     <mat-accordion>
       <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">

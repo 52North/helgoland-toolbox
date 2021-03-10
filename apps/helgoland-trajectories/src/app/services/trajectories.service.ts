@@ -39,7 +39,6 @@ export class TrajectoriesService {
   }
 
   public set mainTrajectoryId(id: string) {
-    debugger;
     this.internalId = id;
     this.loadTrajectory();
   }
