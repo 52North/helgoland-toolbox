@@ -18,13 +18,14 @@
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
-          <button mat-icon-button (click)="openMainConfig()">
+          <button mat-icon-button (click)="openMainConfig()" matTooltip="{{'main-config-button.tooltip' | translate}}">
             <mat-icon>settings</mat-icon>
           </button>
           <div style="flex:1;"></div>
           <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
-          <button mat-mini-fab (click)="openSelection()" color="accent">
-            <mat-icon>add</mat-icon>
+          <button mat-mini-fab (click)="openSelection()" color="accent"
+            matTooltip="{{'trajectory-view.change-trajectory' | translate}}">
+            <mat-icon>find_replace</mat-icon>
           </button>
         </mat-toolbar-row>
       </mat-toolbar>

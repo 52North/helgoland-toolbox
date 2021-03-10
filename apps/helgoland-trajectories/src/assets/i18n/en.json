@@ -11,8 +11,10 @@
 	"list-selection.parameter-type.platform": "Mobile platform",
 	"list-selection.parameter-type.provider": "Provider",
 	"list-selection.select-a-filter": "Select a filter",
+	"main-config-button.tooltip": "Common settings",
 	"main-config.title": "General Configuration",
 	"main-view.header.mobile-platform": "Mobile Platform",
 	"main-view.header.path": "Path",
-	"selection.modal-title": "Trajectory selection"
+	"selection.modal-title": "Trajectory selection",
+	"trajectory-view.change-trajectory": "Select trajectory"
 }
