@@ -16,5 +16,6 @@
 	"main-view.header.mobile-platform": "Mobile Platform",
 	"main-view.header.path": "Pfad",
 	"selection.modal-title": "Auswahl einer Trajektorie",
-	"trajectory-view.change-trajectory": "Trajektorie auswählen"
+	"trajectory-view.change-trajectory": "Trajektorie auswählen",
+	"trajectory-view.loading-trajectory": "Trajektorie wird geladen"
 }

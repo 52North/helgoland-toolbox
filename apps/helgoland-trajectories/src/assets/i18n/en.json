@@ -16,5 +16,6 @@
 	"main-view.header.mobile-platform": "Mobile Platform",
 	"main-view.header.path": "Path",
 	"selection.modal-title": "Trajectory selection",
-	"trajectory-view.change-trajectory": "Select trajectory"
+	"trajectory-view.change-trajectory": "Select trajectory",
+	"trajectory-view.loading-trajectory": "Loading trajectory"
 }

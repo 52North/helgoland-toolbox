@@ -74,7 +74,7 @@
     <div *ngIf="datasetIds.length > 0" class="diagrams">
       <div class="diagram">
 
-        <helgoland-loading-overlay *ngIf="diagramLoading"></helgoland-loading-overlay>
+        <helgoland-loading-overlay-progress-bar *ngIf="diagramLoading"></helgoland-loading-overlay-progress-bar>
 
         <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()">
           <mat-icon>query_stats</mat-icon>
@@ -96,7 +96,7 @@
       </div>
 
       <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
-        <helgoland-loading-overlay *ngIf="overviewLoading"></helgoland-loading-overlay>
+        <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
         <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
           [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
           (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
