@@ -232,15 +232,23 @@ export class D3TrajectoryGraphComponent
         if (this.timespan &&
             this.datasetOptions.has(dataset.internalId) &&
             this.datasetOptions.get(dataset.internalId).visible) {
+            this.onContentLoading.next(true);
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option = this.datasetOptions.get(dataset.internalId);
             this.servicesConnector.getDatasetData(dataset, buffer, { generalize: option.generalize })
-                .subscribe((result) => {
-                    this.dataLength = result.values.length;
-                    this.datasetMap.get(dataset.internalId).data = result.values;
-                    this.processDataForId(dataset.internalId);
-                    this.drawLineGraph();
-                });
+                .subscribe(
+                    (result) => {
+                        this.dataLength = result.values.length;
+                        this.datasetMap.get(dataset.internalId).data = result.values;
+                        this.processDataForId(dataset.internalId);
+                        this.drawLineGraph();
+                        this.onContentLoading.next(false);
+                    },
+                    error => {
+                        debugger;
+                        this.onContentLoading.next(false);
+                    }
+                );
         } else {
             this.drawLineGraph();
         }

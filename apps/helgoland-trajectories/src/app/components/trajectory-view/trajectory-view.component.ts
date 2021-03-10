@@ -31,6 +31,7 @@ export class TrajectoryViewComponent implements OnInit {
     axisType: D3AxisType.Time,
     dotted: false
   };
+  public trajectoryGraphLoading: boolean;
 
   public axisTypes = [
     { type: D3AxisType.Distance, label: this.translateSrvc.instant('chart-styling.xaxis-option.distance') },
@@ -107,6 +108,10 @@ export class TrajectoryViewComponent implements OnInit {
 
   public openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
+  }
+
+  public setGraphLoading(loading: boolean) {
+    setTimeout(() => this.trajectoryGraphLoading = loading);
   }
 
 }
