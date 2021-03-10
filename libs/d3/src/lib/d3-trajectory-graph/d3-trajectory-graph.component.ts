@@ -193,7 +193,7 @@ export class D3TrajectoryGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Trajectory })
+        this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Trajectory })
             .subscribe(dataset => {
                 this.datasetMap.set(dataset.internalId, { dataset });
                 this.loadData(dataset);
@@ -245,7 +245,7 @@ export class D3TrajectoryGraphComponent
                         this.onContentLoading.next(false);
                     },
                     error => {
-                        debugger;
+                        console.error(`Error while loading data for ${dataset.internalId}: ${error}`);
                         this.onContentLoading.next(false);
                     }
                 );
