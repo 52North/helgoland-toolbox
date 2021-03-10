@@ -131,8 +131,8 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     this.timeseries.timespan = this.time.centerTimespan(this.timeseries.timespan, date);
   }
 
-  public isSelected(internalId: string) {
-    return this.selectedIds.find(e => e === internalId);
+  public isSelected(internalId: string): boolean {
+    return !!this.selectedIds.find(e => e === internalId);
   }
 
   public selectTimeseries(selected: boolean, internalId: string) {

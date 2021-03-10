@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
+    DatasetFilter,
     DatasetOptions,
     DatasetType,
-    HelgolandParameterFilter,
     HelgolandServicesConnector,
     HelgolandTrajectory,
     InternalIdHandler,
@@ -47,9 +47,9 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
         this.onEditOptions.emit(options);
     }
 
-    protected loadDataset(lang?: string): void {
-        const params: HelgolandParameterFilter = {};
-        if (lang) { params.lang = lang; }
+    protected loadDataset(locale?: string): void {
+        const params: DatasetFilter = {};
+        if (locale) { params.locale = locale; }
         this.loading = true;
         this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })
             .subscribe(

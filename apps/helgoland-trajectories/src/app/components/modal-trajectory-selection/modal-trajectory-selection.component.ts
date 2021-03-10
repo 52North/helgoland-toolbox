@@ -8,13 +8,13 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import { MultiServiceFilter } from '@helgoland/selector';
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 
-import { appConfig } from '../../app-config';
 import {
   ParameterListEntry,
   ParameterType,
 } from './../../../../../../libs/helgoland-common/src/lib/components/multi-parameter-selection/model';
+import { ConfigurationService } from './../../services/configuration.service';
 import { TrajectoriesService } from './../../services/trajectories.service';
 
 @Component({
@@ -24,7 +24,9 @@ import { TrajectoriesService } from './../../services/trajectories.service';
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
 
-  public datasetApis: DatasetApi[] = appConfig?.datasetApis;
+  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis;
+
+  public datasetsLoading: boolean;
 
   public filterList: ParameterListEntry[] = [];
 
@@ -33,8 +35,11 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     expanded: false
   }
 
+  public filterEnpoints = MultiServiceFilterEndpoint;
+
   constructor(
     public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
+    private configSrvc: ConfigurationService,
     private servicesConnector: HelgolandServicesConnector,
     private trajectorySrvc: TrajectoriesService
   ) { }
@@ -108,7 +113,14 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       default:
         throw new Error(`not implemented for ${filter.selectedFilter}`);
     }
-    const possibleFilters = [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON, ParameterType.FEATURE];
+    const possibleFilters = [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON];
+
+    // only allow feature filter, if previously platform and offering or phenomenon are selected
+    const previousFilter = this.filterList.map(e => e.selectedFilter);
+    if (previousFilter.indexOf(ParameterType.PLATFORM) > -1 &&
+      (previousFilter.indexOf(ParameterType.OFFERING) > -1 || previousFilter.indexOf(ParameterType.PHENOMENON) > -1)) {
+      possibleFilters.push(ParameterType.FEATURE);
+    }
     for (let index = 0; index < this.filterList.length; index++) {
       const f = this.filterList[index].selectedFilter;
       const idx = possibleFilters.findIndex(e => e === f);
@@ -127,11 +139,14 @@ export class ModalTrajectorySelectionComponent implements OnInit {
   public featureSelected(filter: ParameterListEntry, item: Parameter) {
     const url = filter.apiFilter[0].url;
     const dsFilter = filter.apiFilter[0].filter;
+    dsFilter.feature = item.id;
+    this.datasetsLoading = true;
     this.servicesConnector.getDatasets(url, dsFilter).subscribe(res => {
       if (res.length > 0) {
-        this.trajectorySrvc.addDataset(res[0].internalId);
+        this.trajectorySrvc.mainTrajectoryId = res[0].internalId;
         this.dialogRef.close();
       }
+      this.datasetsLoading = false;
     })
   }
 

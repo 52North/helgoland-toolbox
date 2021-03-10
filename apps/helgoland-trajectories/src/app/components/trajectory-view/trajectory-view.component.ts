@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  DatasetOptions,
-  DatasetType,
-  HelgolandServicesConnector,
-  HelgolandTrajectory,
-  LocatedTimeValueEntry,
-  Timespan,
-} from '@helgoland/core';
+import { DatasetOptions, HelgolandTrajectory, Timespan } from '@helgoland/core';
 import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,7 +22,6 @@ export class TrajectoryViewComponent implements OnInit {
   public geometry: GeoJSON.LineString;
   public highlightGeometry: GeoJSON.GeoJsonObject;
   public zoomToGeometry: GeoJSON.LineString;
-  public graphData: LocatedTimeValueEntry[];
   public loading: boolean;
   public datasetIds: string[] = [];
   public options: Map<string, DatasetOptions>;
@@ -39,6 +31,7 @@ export class TrajectoryViewComponent implements OnInit {
     axisType: D3AxisType.Time,
     dotted: false
   };
+  public trajectoryGraphLoading: boolean;
 
   public axisTypes = [
     { type: D3AxisType.Distance, label: this.translateSrvc.instant('chart-styling.xaxis-option.distance') },
@@ -50,62 +43,28 @@ export class TrajectoryViewComponent implements OnInit {
     public trajectorySrvc: TrajectoriesService,
     public translateSrvc: TranslateService,
     public permalinkSrvc: TrajectoryViewPermalinkService,
-    private dialog: MatDialog,
-    private servicesConnector: HelgolandServicesConnector,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink().subscribe(_ => {
       this.initializeView();
-
-      this.trajectorySrvc.datasetIdsChanged.subscribe((ids: string[]) => {
-        if (ids.length > 0) {
-          if (this.datasetIds.length === 0 || this.datasetIds[0] !== this.trajectorySrvc.mainTrajectoryId) {
-            this.loadTrajectory(this.trajectorySrvc.mainTrajectoryId);
-          }
-        }
-      })
     });
+
+    this.trajectorySrvc.loading.subscribe(loading => this.loading = loading);
+    this.trajectorySrvc.result.subscribe(res => {
+      this.trajectory = res.trajectory;
+      this.timespan = res.timespan;
+      this.geometry = res.geometry;
+      this.datasetIds = res.datasetIds;
+      this.options = res.options;
+    })
   }
 
   private initializeView() {
-    const internalId = this.trajectorySrvc.mainTrajectoryId;
-    if (!internalId) {
+    if (!this.trajectorySrvc.mainTrajectoryId) {
       this.openSelection(true);
-    } else {
-      this.loadTrajectory(internalId);
     }
-  }
-
-  private loadTrajectory(internalId: string) {
-    this.loading = true;
-    this.datasetIds = this.trajectorySrvc.datasetIds;
-    this.options = this.trajectorySrvc.datasetOptions;
-    this.servicesConnector.getDataset(internalId, { type: DatasetType.Trajectory }).subscribe(
-      trajectory => {
-        this.trajectory = trajectory;
-        this.servicesConnector.getDatasets(trajectory.url, { type: DatasetType.Trajectory, feature: trajectory.parameters.feature.id }).subscribe(res => {
-          res.forEach(e => {
-            if (e.internalId !== internalId) {
-              this.trajectorySrvc.addAdditionalDataset(e.internalId, { visible: false });
-            }
-          })
-        });
-        this.timespan = new Timespan(trajectory.firstValue.timestamp, trajectory.lastValue.timestamp);
-        this.selectedTimespan = this.timespan;
-        this.servicesConnector.getDatasetData(trajectory, this.timespan).subscribe(
-          data => {
-            this.geometry = {
-              type: 'LineString',
-              coordinates: []
-            };
-            this.graphData = data.values;
-            data.values.forEach(entry => this.geometry.coordinates.push(entry.geometry.coordinates));
-            this.loading = false;
-          }
-        );
-      }
-    );
   }
 
   public onChartSelectionChanged(range: D3SelectionRange) {
@@ -122,11 +81,6 @@ export class TrajectoryViewComponent implements OnInit {
       type: 'LineString',
       coordinates: this.geometry.coordinates.slice(range.from, range.to)
     };
-    if (this.graphData) {
-      const from = this.graphData[this.selection.from].timestamp;
-      const to = this.selection.to < this.graphData.length ? this.graphData[this.selection.to].timestamp : this.timespan.to;
-      this.selectedTimespan = new Timespan(from, to);
-    }
   }
 
   public onChartHighlightChanged(idx: number) {
@@ -154,6 +108,10 @@ export class TrajectoryViewComponent implements OnInit {
 
   public openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
+  }
+
+  public setGraphLoading(loading: boolean) {
+    setTimeout(() => this.trajectoryGraphLoading = loading);
   }
 
 }

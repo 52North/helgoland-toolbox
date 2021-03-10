@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
-import { MultiServiceFilter } from '@helgoland/selector';
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 
 import {
   ParameterListEntry,
@@ -25,6 +25,8 @@ export class ListSelectionViewComponent implements OnInit {
   public activeFilterCount: number;
 
   public filterList: ParameterListEntry[];
+
+  public filterEndpoints = MultiServiceFilterEndpoint;
 
   constructor(
     private dialog: MatDialog,

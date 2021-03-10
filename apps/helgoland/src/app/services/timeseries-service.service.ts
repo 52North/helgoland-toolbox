@@ -63,7 +63,7 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
 
   protected loadState(): void {
     const options = this.localStorage.loadArray<DatasetOptions>(TIMESERIES_OPTIONS_CACHE_PARAM);
-    if (options) { options.forEach(e => this.datasetOptions.set(e.internalId, e)); }
+    if (options && options.length) { options.forEach(e => this.datasetOptions.set(e.internalId, e)); }
     this.datasetIds = this.localStorage.loadArray<string>(TIMESERIES_IDS_CACHE_PARAM) || [];
   }
 

@@ -141,11 +141,11 @@ export class FacetSearchServiceImpl implements FacetSearchService {
   private setFilteredTimeseries() {
     if (this.facets.size > 0 || this.selectedTimespan) {
       this.filteredTimeseries = this.timeseries.filter(e => {
-        const matchCategory = this.checkFacet(ParameterFacetType.category, e.parameters.category.id);
-        const matchFeature = this.checkFacet(ParameterFacetType.feature, e.parameters.feature.id);
-        const matchOffering = this.checkFacet(ParameterFacetType.offering, e.parameters.offering.id);
-        const matchPhenomenon = this.checkFacet(ParameterFacetType.phenomenon, e.parameters.phenomenon.id);
-        const matchProcedure = this.checkFacet(ParameterFacetType.procedure, e.parameters.procedure.id);
+        const matchCategory = e.parameters.category ? this.checkFacet(ParameterFacetType.category, e.parameters.category.id) : true;
+        const matchFeature = e.parameters.feature ? this.checkFacet(ParameterFacetType.feature, e.parameters.feature.id) : true;
+        const matchOffering = e.parameters.offering ? this.checkFacet(ParameterFacetType.offering, e.parameters.offering.id) : true;
+        const matchPhenomenon = e.parameters.phenomenon ? this.checkFacet(ParameterFacetType.phenomenon, e.parameters.phenomenon.id) : true;
+        const matchProcedure = e.parameters.procedure ? this.checkFacet(ParameterFacetType.procedure, e.parameters.procedure.id) : true;
         const matchTimespan = this.checkTimespan(e);
         return matchCategory && matchFeature && matchOffering && matchPhenomenon && matchProcedure && matchTimespan;
       });
@@ -159,8 +159,9 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   private checkTimespan(ts: HelgolandTimeseries): boolean {
     if (this.selectedTimespan) {
-      const checkfrom = this.selectedTimespan.from <= ts.lastValue.timestamp && this.selectedTimespan.to >= ts.firstValue.timestamp;
-      return checkfrom;
+      const checkfrom = ts.lastValue && ts.lastValue.timestamp ? this.selectedTimespan.from <= ts.lastValue.timestamp : true;
+      const checkTo = ts.firstValue && ts.firstValue.timestamp ? this.selectedTimespan.to >= ts.firstValue.timestamp : true;
+      return checkfrom && checkTo;
     }
     return true;
   }

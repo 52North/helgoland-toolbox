@@ -9,7 +9,7 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
-import { MultiServiceFilter } from '@helgoland/selector';
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 import { icon, Marker } from 'leaflet';
 
 import {
@@ -48,6 +48,8 @@ export class MapSelectionViewComponent implements OnInit {
 
   public stationFilter: HelgolandParameterFilter;
   public phenomenonFilter: MultiServiceFilter[];
+
+  public phenomenonEndpoint = MultiServiceFilterEndpoint.phenomenon;
 
   public cluster = true;
 

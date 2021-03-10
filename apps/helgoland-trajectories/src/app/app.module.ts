@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -27,7 +29,7 @@ import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction';
 import { HelgolandMapViewModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -45,6 +47,7 @@ import {
 } from './components/modal-trajectory-selection/parameter-type-label/parameter-type-label.component';
 import { TrajectoryLabelComponent } from './components/trajectory-label/trajectory-label.component';
 import { TrajectoryViewComponent } from './components/trajectory-view/trajectory-view.component';
+import { AppConfig, ConfigurationService } from './services/configuration.service';
 
 export class AppTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -53,6 +56,23 @@ export class AppTranslateLoader implements TranslateLoader {
       from(import(`../../../../libs/helgoland-common/src/i18n/${lang}.json`))
     ]).pipe(map(res => Object.assign(res[0].default, res[1].default)))
   }
+}
+
+export function initApplication(configService: ConfigurationService, translate: TranslateService): () => Promise<void> {
+  return () => configService.loadConfiguration().then((config: AppConfig) => {
+    registerLocaleData(localeDe);
+    let lang = translate.getBrowserLang() || 'en';
+    const url = window.location.href;
+    const name = 'locale';
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (results && results[2]) {
+      const match = config.languages.find(e => e.code === results[2]);
+      if (match) { lang = match.code; }
+    }
+    translate.setDefaultLang(lang);
+    return translate.use(lang).toPromise();
+  });
 }
 
 @NgModule({
@@ -109,6 +129,12 @@ export class AppTranslateLoader implements TranslateLoader {
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApplication,
+      deps: [ConfigurationService, TranslateService],
+      multi: true
     },
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,

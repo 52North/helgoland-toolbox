@@ -33,11 +33,12 @@
       <button class="chart-config-button" mat-mini-fab color="none" [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>
-
+      <helgoland-loading-overlay *ngIf="trajectoryGraphLoading"></helgoland-loading-overlay>
       <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
         [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
         (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
-        (onHoverHighlight)="onChartHighlightChanged($event)"></n52-d3-trajectory-graph>
+        (onContentLoading)="setGraphLoading($event)" (onHoverHighlight)="onChartHighlightChanged($event)">
+      </n52-d3-trajectory-graph>
     </div>
   </div>
 </div>

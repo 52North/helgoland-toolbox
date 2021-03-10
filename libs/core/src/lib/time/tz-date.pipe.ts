@@ -10,7 +10,7 @@ import { TimezoneService } from './timezone.service';
 })
 export class TzDatePipe implements PipeTransform, OnDestroy {
 
-  date: Date | number;
+  date: Date | number | string;
   format: string;
   formattedDate: string = '';
   onTimezoneChanged: Subscription;
@@ -21,7 +21,7 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
     private translateSrvc: TranslateService
   ) { }
 
-  transform(date: Date | number, ...args: any[]): any {
+  transform(date: Date | number | string, ...args: any[]): any {
     if (!date) {
       return date;
     }

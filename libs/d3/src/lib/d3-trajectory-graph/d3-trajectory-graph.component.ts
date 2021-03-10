@@ -193,7 +193,7 @@ export class D3TrajectoryGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Trajectory })
+        this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Trajectory })
             .subscribe(dataset => {
                 this.datasetMap.set(dataset.internalId, { dataset });
                 this.loadData(dataset);
@@ -232,15 +232,23 @@ export class D3TrajectoryGraphComponent
         if (this.timespan &&
             this.datasetOptions.has(dataset.internalId) &&
             this.datasetOptions.get(dataset.internalId).visible) {
+            this.onContentLoading.next(true);
             const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
             const option = this.datasetOptions.get(dataset.internalId);
             this.servicesConnector.getDatasetData(dataset, buffer, { generalize: option.generalize })
-                .subscribe((result) => {
-                    this.dataLength = result.values.length;
-                    this.datasetMap.get(dataset.internalId).data = result.values;
-                    this.processDataForId(dataset.internalId);
-                    this.drawLineGraph();
-                });
+                .subscribe(
+                    (result) => {
+                        this.dataLength = result.values.length;
+                        this.datasetMap.get(dataset.internalId).data = result.values;
+                        this.processDataForId(dataset.internalId);
+                        this.drawLineGraph();
+                        this.onContentLoading.next(false);
+                    },
+                    error => {
+                        console.error(`Error while loading data for ${dataset.internalId}: ${error}`);
+                        this.onContentLoading.next(false);
+                    }
+                );
         } else {
             this.drawLineGraph();
         }
@@ -362,7 +370,7 @@ export class D3TrajectoryGraphComponent
 
     protected drawDots(values: DataEntry[], yScale: d3.ScaleLinear<number, number>, options: DrawOptions) {
         this.graph.selectAll('dot')
-            .data(values)
+            .data(values.filter((d) => !isNaN(d[options.id])))
             .enter().append('circle')
             .attr('stroke', options.color)
             .attr('r', 1.5)
@@ -373,7 +381,7 @@ export class D3TrajectoryGraphComponent
 
     protected drawValueLine(values: DataEntry[], yScale: d3.ScaleLinear<number, number>, options: DrawOptions) {
         this.graph.append('svg:path')
-            .datum(values)
+            .datum(values.filter((d) => !isNaN(d[options.id])))
             .attr('class', 'line')
             .attr('fill', 'none')
             .attr('stroke', options.color)

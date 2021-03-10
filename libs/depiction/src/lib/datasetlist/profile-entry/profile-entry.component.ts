@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     DatasetType,
     HelgolandLocatedProfileData,
-    HelgolandParameterFilter,
     HelgolandProfile,
     HelgolandServicesConnector,
     InternalIdHandler,
@@ -12,6 +11,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
+import { DatasetFilter } from './../../../../../core/src/lib/api-communication/model/internal/dataset';
 
 @Component({
     selector: 'n52-profile-entry',
@@ -85,9 +85,9 @@ export class ProfileEntryComponent extends ListEntryComponent {
         }
     }
 
-    protected loadDataset(lang?: string) {
-        const params: HelgolandParameterFilter = {};
-        if (lang) { params.lang = lang; }
+    protected loadDataset(locale?: string) {
+        const params: DatasetFilter = {};
+        if (locale) { params.locale = locale; }
         this.loading = true;
         this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Profile }).subscribe(
             dataset => this.dataset = dataset,

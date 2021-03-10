@@ -11,6 +11,9 @@ mat-expansion-panel {
             &.noData {
                 color: lightgray;
             }
+            &.error {
+                color: lightcoral;
+            }
         }
     }
 

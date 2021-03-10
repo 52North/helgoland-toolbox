@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
     url: string;
+    itemId?: string;
     filter?: HelgolandParameterFilter;
 }
 
@@ -157,5 +158,6 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
 export interface FilteredParameter extends Parameter {
     filterList?: Filter[];
+    internalId?: string;
     selected?: boolean;
 }

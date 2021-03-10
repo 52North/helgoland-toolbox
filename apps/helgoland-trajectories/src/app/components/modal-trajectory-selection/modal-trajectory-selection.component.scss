@@ -1,10 +1,12 @@
 :host {
+
     mat-dialog-content {
         display: flex;
         flex-direction: column;
         overflow: auto;
         height: 60vh;
         padding: 5px 24px;
+        position: relative;
 
         .filter-selection {
             display: flex;

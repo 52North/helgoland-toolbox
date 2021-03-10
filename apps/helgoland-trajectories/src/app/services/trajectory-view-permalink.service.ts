@@ -24,7 +24,7 @@ export class TrajectoryViewPermalinkService extends PermalinkService<Observable<
       this.activatedRoute.queryParams.subscribe(params => {
         if (params[PARAM_ID]) {
           const id = params[PARAM_ID] as string;
-          this.trajectorySrvc.addDataset(id);
+          this.trajectorySrvc.mainTrajectoryId = id;
         }
         observer.next();
         observer.complete();
