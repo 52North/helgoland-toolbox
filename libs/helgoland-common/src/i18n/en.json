@@ -6,6 +6,7 @@
 	"list-selection.filter.procedure": "Sensor",
 	"list-selection.filter.provider": "Provider",
 	"list-selection.filter.timeseries": "Timeseries",
+	"main-config.clear-storage": "Clear and restart",
 	"main-config.language-selector.placeholder": "Choose language",
 	"main-config.version.build-time": "Build time",
 	"main-config.version.git-commit": "Commit",

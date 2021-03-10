@@ -58,7 +58,6 @@ import {
 } from './components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import { ModalFavoriteListComponent } from './components/favorites/modal-favorite-list/modal-favorite-list.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
-import { ClearStorageComponent } from './components/main-config/clear-storage/clear-storage.component';
 import {
   ModalMainConfigButtonComponent,
 } from './components/main-config/modal-main-config-button/modal-main-config-button.component';
@@ -126,7 +125,6 @@ export function initApplication(configService: ConfigurationService, translate: 
 @NgModule({
   declarations: [
     AppComponent,
-    ClearStorageComponent,
     DiagramViewComponent,
     EditLabelComponent,
     FavoriteToggleButtonComponent,

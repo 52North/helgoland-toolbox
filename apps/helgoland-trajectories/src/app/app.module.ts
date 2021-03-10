@@ -15,6 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -104,13 +105,13 @@ export function initApplication(configService: ConfigurationService, translate: 
       cachingDurationInMilliseconds: 300000,
       getDataCacheActive: false
     }),
+    ColorPickerModule,
     HelgolandCommonModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
     HelgolandMapViewModule,
     HelgolandSelectorModule,
-    ColorPickerModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCheckboxModule,
@@ -124,6 +125,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     MatRadioModule,
     MatSlideToggleModule,
     MatToolbarModule,
+    MatTooltipModule,
   ],
   providers: [
     {

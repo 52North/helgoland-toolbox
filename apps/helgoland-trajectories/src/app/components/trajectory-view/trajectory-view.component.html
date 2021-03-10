@@ -1,6 +1,7 @@
 <div class="header">
   <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
-  <helgoland-loading-overlay *ngIf="loading"></helgoland-loading-overlay>
+  <helgoland-loading-overlay-spinner *ngIf="loading" loadingHint="{{'trajectory-view.loading-trajectory' | translate}}">
+  </helgoland-loading-overlay-spinner>
 </div>
 
 <div class="content" *ngIf="trajectory">
@@ -18,13 +19,14 @@
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
-          <button mat-icon-button (click)="openMainConfig()">
+          <button mat-icon-button (click)="openMainConfig()" matTooltip="{{'main-config-button.tooltip' | translate}}">
             <mat-icon>settings</mat-icon>
           </button>
           <div style="flex:1;"></div>
           <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
-          <button mat-mini-fab (click)="openSelection()" color="accent">
-            <mat-icon>add</mat-icon>
+          <button mat-mini-fab (click)="openSelection()" color="accent"
+            matTooltip="{{'trajectory-view.change-trajectory' | translate}}">
+            <mat-icon>find_replace</mat-icon>
           </button>
         </mat-toolbar-row>
       </mat-toolbar>
@@ -33,7 +35,7 @@
       <button class="chart-config-button" mat-mini-fab color="none" [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>
-      <helgoland-loading-overlay *ngIf="trajectoryGraphLoading"></helgoland-loading-overlay>
+      <helgoland-loading-overlay-progress-bar *ngIf="trajectoryGraphLoading"></helgoland-loading-overlay-progress-bar>
       <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
         [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
         (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
