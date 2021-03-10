@@ -370,7 +370,7 @@ export class D3TrajectoryGraphComponent
 
     protected drawDots(values: DataEntry[], yScale: d3.ScaleLinear<number, number>, options: DrawOptions) {
         this.graph.selectAll('dot')
-            .data(values)
+            .data(values.filter((d) => !isNaN(d[options.id])))
             .enter().append('circle')
             .attr('stroke', options.color)
             .attr('r', 1.5)
@@ -381,7 +381,7 @@ export class D3TrajectoryGraphComponent
 
     protected drawValueLine(values: DataEntry[], yScale: d3.ScaleLinear<number, number>, options: DrawOptions) {
         this.graph.append('svg:path')
-            .datum(values)
+            .datum(values.filter((d) => !isNaN(d[options.id])))
             .attr('class', 'line')
             .attr('fill', 'none')
             .attr('stroke', options.color)
