@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { LocalStorage } from '@helgoland/core';
 
 @Component({
-  selector: 'helgoland-clear-storage',
-  templateUrl: './clear-storage.component.html',
-  styleUrls: ['./clear-storage.component.scss']
+  selector: 'helgoland-clear-storage-button',
+  templateUrl: './clear-storage-button.component.html',
+  styleUrls: ['./clear-storage-button.component.scss']
 })
-export class ClearStorageComponent {
+export class ClearStorageButtonComponent {
 
   constructor(
     public localStorage: LocalStorage

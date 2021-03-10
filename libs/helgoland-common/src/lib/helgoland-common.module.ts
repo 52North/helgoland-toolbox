@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ClearStorageButtonComponent } from './components/clear-storage-button/clear-storage-button.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { FilterLabelComponent } from './components/multi-parameter-selection/filter-label/filter-label.component';
@@ -22,6 +23,7 @@ import { ShareButtonComponent } from './components/share-button/share-button.com
 import { VersionInfoComponent } from './components/version-info/version-info.component';
 
 const COMPONENTS = [
+  ClearStorageButtonComponent,
   FilterLabelComponent,
   LanguageSelectorComponent,
   LoadingOverlayComponent,
