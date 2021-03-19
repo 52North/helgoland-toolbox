@@ -4,6 +4,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HelgolandCoreModule } from '@helgoland/core';
@@ -20,14 +21,15 @@ describe('GeneralTimeSelectionComponent', () => {
       declarations: [GeneralTimeSelectionComponent],
       imports: [
         HelgolandCoreModule,
-        MatMenuModule,
-        TranslateTestingModule,
+        MatDatepickerModule,
         MatDividerModule,
         MatFormFieldModule,
-        MatDatepickerModule,
+        MatIconModule,
+        MatMenuModule,
         MatMomentDateModule,
         NoopAnimationsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TranslateTestingModule,
       ]
     }).compileComponents();
   });

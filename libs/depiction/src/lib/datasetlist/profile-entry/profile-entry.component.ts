@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
+    DatasetFilter,
     DatasetType,
     HelgolandLocatedProfileData,
     HelgolandProfile,
@@ -11,7 +12,6 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
-import { DatasetFilter } from './../../../../../core/src/lib/api-communication/model/internal/dataset';
 
 @Component({
     selector: 'n52-profile-entry',

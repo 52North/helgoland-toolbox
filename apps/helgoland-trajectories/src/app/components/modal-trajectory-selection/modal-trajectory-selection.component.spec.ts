@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,13 +22,14 @@ describe('ModalTrajectorySelectionComponent', () => {
         ParameterTypeLabelComponent
       ],
       imports: [
-        MatDialogModule,
-        HelgolandCoreModule,
         HelgolandCommonModule,
+        HelgolandCoreModule,
         HelgolandSelectorModule,
-        TranslateTestingModule,
+        MatButtonToggleModule,
+        MatDialogModule,
         MatExpansionModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateTestingModule,
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} }

@@ -1,9 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../../libs/testing/translate.testing.module';
 import { ModalDatasetByStationSelectorComponent } from './modal-dataset-by-station-selector.component';
@@ -17,11 +20,14 @@ describe('ModalDatasetByStationSelectorComponent', () => {
       declarations: [ModalDatasetByStationSelectorComponent],
       imports: [
         HelgolandCoreModule,
-        TranslateTestingModule,
-        RouterTestingModule,
+        HelgolandLabelMapperModule,
+        MatBadgeModule,
         MatDialogModule,
+        MatExpansionModule,
         MatListModule,
-        MatBadgeModule
+        MatProgressBarModule,
+        RouterTestingModule,
+        TranslateTestingModule,
       ]
     }).compileComponents();
   });

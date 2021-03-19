@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { TranslateTestingModule } from './../../../../../../../libs/testing/translate.testing.module';
 import { ParameterTypeLabelComponent } from './parameter-type-label.component';
 
 describe('ParameterTypeLabelComponent', () => {
@@ -8,9 +9,11 @@ describe('ParameterTypeLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ParameterTypeLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [ParameterTypeLabelComponent],
+      imports: [
+        TranslateTestingModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
