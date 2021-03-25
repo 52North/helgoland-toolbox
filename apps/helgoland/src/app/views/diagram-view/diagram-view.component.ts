@@ -159,6 +159,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public editOption(options: DatasetOptions) {
     const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, { data: options });
+    dialogRef.afterClosed().subscribe(_ => this.timeseries.updateDatasetOptions(options, options.internalId))
   }
 
   public updateOptions(options: DatasetOptions, internalId: string) {
