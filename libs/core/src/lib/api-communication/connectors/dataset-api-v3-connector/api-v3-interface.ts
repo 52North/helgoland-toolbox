@@ -156,6 +156,7 @@ export interface ApiV3ParameterFilter {
 
 export interface ApiV3DatasetDataFilter {
   timespan?: string;
+  generalize?: boolean;
   format?: string;
   unixTime?: boolean;
   expanded?: boolean;

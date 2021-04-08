@@ -152,8 +152,8 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
       reqParams.set('timespan', generator.createTimespanRequestParam(params.timespan));
     }
     if (params.lang) { reqParams.set('locale', params.lang); }
-    if (params.generalize) { reqParams.set('locale', params.generalize.toString()); }
-    if (params.zip) { reqParams.set('locale', params.zip.toString()); }
+    if (params.generalize) { reqParams.set('generalize', params.generalize.toString()); }
+    if (params.zip) { reqParams.set('zip', params.zip.toString()); }
     reqParams.set('bom', 'true');
     return of(generator.addUrlParams(url, reqParams));
   }

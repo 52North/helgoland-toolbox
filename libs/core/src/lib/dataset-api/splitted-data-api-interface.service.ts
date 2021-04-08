@@ -62,26 +62,22 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                     for (const key in previous.referenceValues) {
                         if (previous.referenceValues.hasOwnProperty(key) && current.referenceValues.hasOwnProperty(key)) {
                             const refVal = previous.referenceValues[key];
-                            if (refVal instanceof Array) {
-                                next.referenceValues[key] = refVal.concat(current.referenceValues[key]);
-                            } else {
-                                const currRefValData = (current.referenceValues[key] as never) as Data<T>;
-                                const prevRefValData = (refVal as Data<T>);
-                                const nextRefValData: Data<T> = {
-                                    referenceValues: {},
-                                    values: []
-                                };
-                                if (prevRefValData.values && currRefValData.values) {
-                                    nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
-                                }
-                                if (prevRefValData.valueBeforeTimespan) {
-                                    nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
-                                }
-                                if (currRefValData.valueAfterTimespan) {
-                                    nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
-                                }
-                                next.referenceValues[key] = nextRefValData as never;
+                            const currRefValData = (current.referenceValues[key] as never) as Data<T>;
+                            const prevRefValData = (refVal as Data<T>);
+                            const nextRefValData: Data<T> = {
+                                referenceValues: {},
+                                values: []
+                            };
+                            if (prevRefValData.values && currRefValData.values) {
+                                nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
                             }
+                            if (prevRefValData.valueBeforeTimespan) {
+                                nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
+                            }
+                            if (currRefValData.valueAfterTimespan) {
+                                nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                            }
+                            next.referenceValues[key] = nextRefValData as never;
                         }
                     }
                     return next;
@@ -141,26 +137,22 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
                     for (const key in previous.referenceValues) {
                         if (previous.referenceValues.hasOwnProperty(key) && current.referenceValues.hasOwnProperty(key)) {
                             const refVal = previous.referenceValues[key];
-                            if (refVal instanceof Array) {
-                                next.referenceValues[key] = refVal.concat(current.referenceValues[key]);
-                            } else {
-                                const currRefValData = (current.referenceValues[key] as never) as Data<T>;
-                                const prevRefValData = (refVal as Data<T>);
-                                const nextRefValData: Data<T> = {
-                                    referenceValues: {},
-                                    values: []
-                                };
-                                if (prevRefValData.values && currRefValData.values) {
-                                    nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
-                                }
-                                if (prevRefValData.valueBeforeTimespan) {
-                                    nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
-                                }
-                                if (currRefValData.valueAfterTimespan) {
-                                    nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
-                                }
-                                next.referenceValues[key] = nextRefValData as never;
+                            const currRefValData = (current.referenceValues[key] as never) as Data<T>;
+                            const prevRefValData = (refVal as Data<T>);
+                            const nextRefValData: Data<T> = {
+                                referenceValues: {},
+                                values: []
+                            };
+                            if (prevRefValData.values && currRefValData.values) {
+                                nextRefValData.values = prevRefValData.values.concat(currRefValData.values);
                             }
+                            if (prevRefValData.valueBeforeTimespan) {
+                                nextRefValData.valueBeforeTimespan = prevRefValData.valueBeforeTimespan;
+                            }
+                            if (currRefValData.valueAfterTimespan) {
+                                nextRefValData.valueAfterTimespan = currRefValData.valueAfterTimespan;
+                            }
+                            next.referenceValues[key] = nextRefValData as never;
                         }
                     }
                     return next;

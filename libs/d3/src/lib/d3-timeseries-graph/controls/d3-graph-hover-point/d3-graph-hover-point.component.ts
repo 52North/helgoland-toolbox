@@ -220,7 +220,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   }
 
   private findNearestBar(time: number, height: number): BarHoverElement[] {
-    let nearest: BarHoverElement[] = [];
+    const nearest: BarHoverElement[] = [];
     this.preparedData.every(e => {
       if (e.options.type === 'bar') {
         const shiftedTime = moment(time).subtract(e.options.barPeriod).valueOf();

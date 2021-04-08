@@ -36,7 +36,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   public d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
     togglePanZoom: true,
-    generalizeAllways: false,
+    generalizeAllways: true,
     yaxis: true, // configurable
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
