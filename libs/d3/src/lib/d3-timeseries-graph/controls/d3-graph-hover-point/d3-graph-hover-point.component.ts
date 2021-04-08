@@ -13,6 +13,7 @@ import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
 import { HighlightOutput } from '../../../model/d3-highlight';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
+import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
 
 const MAXIMUM_POINT_DISTANCE = 10;
@@ -21,6 +22,10 @@ interface HoveredElement {
   selection: d3.Selection<d3.BaseType, any, any, any>;
   dataEntry: DataEntry;
   internalEntry: InternalDataEntry;
+}
+
+interface BarHoverElement extends HoveredElement {
+  previousOpacity?: string;
 }
 
 @Component({
@@ -43,8 +48,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
   private previousPoint: HoveredElement;
 
-  private previousBar: HoveredElement;
-  private prevBarOpacity: string;
+  private previousBars: BarHoverElement[] = [];
 
   constructor(
     protected graphId: D3GraphId,
@@ -115,7 +119,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
       const time = this.graphExtent.xScale.invert(pos.x).getTime();
       const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
       if (nearestBar) {
-        this.highlightBar(nearestBar);
+        this.highlightBars(nearestBar);
       }
     }
   }
@@ -143,29 +147,33 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     });
   }
 
-  private highlightBar(nearestBar: HoveredElement) {
-    this.previousBar = nearestBar;
-    this.prevBarOpacity = this.previousBar.selection.style('fill-opacity');
-    const dataset = this.d3Graph.getDataset(this.previousBar.internalEntry.internalId);
-    this.hoveringService.showPointHovering(this.previousBar.dataEntry, this.previousBar.internalEntry, dataset, this.previousBar.selection);
+  private highlightBars(nearestBars: BarHoverElement[]) {
+    const elements: HoveringElement[] = [];
+    // add hovering tooltip to array
+    nearestBars.forEach(nearestBar => {
+      this.previousBars.push(nearestBar);
+      nearestBar.previousOpacity = nearestBar.selection.style('fill-opacity');
+      const dataset = this.d3Graph.getDataset(nearestBar.internalEntry.internalId);
+      elements.push({
+        dataEntry: nearestBar.dataEntry,
+        entry: nearestBar.internalEntry,
+        timeseries: dataset,
+        element: nearestBar.selection
+      })
+      // this.hoveringService.showPointHovering(nearestBar.dataEntry, nearestBar.internalEntry, dataset, nearestBar.selection);
+      // centered on bar
+      // const barX = Number.parseFloat(nearestBar.selection.attr('x'));
+      // const barY = Number.parseFloat(nearestBar.selection.attr('y'));
+      // const barHeight = Number.parseFloat(nearestBar.selection.attr('height'));
+      // const barWidth = Number.parseFloat(nearestBar.selection.attr('width'));
+      // const x = barX + barWidth / 2;
+      // const y = barY + barHeight / 2;
 
-    // centered on bar
-    // const barX = Number.parseFloat(nearestBar.selection.attr('x'));
-    // const barY = Number.parseFloat(nearestBar.selection.attr('y'));
-    // const barHeight = Number.parseFloat(nearestBar.selection.attr('height'));
-    // const barWidth = Number.parseFloat(nearestBar.selection.attr('width'));
-    // const x = barX + barWidth / 2;
-    // const y = barY + barHeight / 2;
-
-    // mouse position
+      // mouse position
+      nearestBar.selection.style('fill-opacity', '0.6');
+    });
     const pos = this.getCurrentMousePosition();
-    this.hoveringService.positioningPointHovering(
-      pos.x,
-      pos.y,
-      this.previousBar.internalEntry.options.color,
-      this.background
-    );
-    this.previousBar.selection.style('fill-opacity', '0.6');
+    this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
   }
 
   private unhighlight() {
@@ -173,11 +181,15 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
       this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, this.previousPoint.selection);
       this.previousPoint = null;
     }
-    if (this.previousBar) {
-      this.hoveringService.hidePointHovering(this.previousBar.dataEntry, this.previousBar.internalEntry, this.previousBar.selection);
-      this.previousBar.selection.style('fill-opacity', this.prevBarOpacity);
-      this.previousBar = null;
+    if (this.previousBars.length) {
+      for (let i = this.previousBars.length - 1; i >= 0; i--) {
+        const bar = this.previousBars[i];
+        this.hoveringService.hidePointHovering(bar.dataEntry, bar.internalEntry, bar.selection);
+        bar.selection.style('fill-opacity', bar.previousOpacity);
+        this.previousBars.splice(i, 1);
+      }
     }
+    this.hoveringService.removeTooltip();
   }
 
   private findNearestPoint(x: number, y: number): HoveredElement {
@@ -207,26 +219,27 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     return nearest;
   }
 
-  private findNearestBar(time: number, height: number): HoveredElement {
-    let nearest;
-    this.preparedData.some(e => {
+  private findNearestBar(time: number, height: number): BarHoverElement[] {
+    let nearest: BarHoverElement[] = [];
+    this.preparedData.every(e => {
       if (e.options.type === 'bar') {
-        time = moment(time).subtract(e.options.barPeriod).valueOf();
-        const idx = e.data.findIndex(d => d.timestamp > time);
+        const shiftedTime = moment(time).subtract(e.options.barPeriod).valueOf();
+        const idx = e.data.findIndex(d => d.timestamp > shiftedTime);
         if (idx > -1 && e.data[idx]) {
           const id = `bar-${e.data[idx].timestamp}-${e.hoverId}`;
           const match = this.graphLayer.select(`#${id}`);
           const barHeight = match.attr('height') && Number.parseFloat(match.attr('height'));
           if (barHeight > height) {
-            nearest = {
+            nearest.push({
               selection: match,
               internalEntry: e,
               dataEntry: e.data[idx]
-            };
+            });
             return true;
           }
         }
       }
+      return true;
     });
     return nearest;
   }
