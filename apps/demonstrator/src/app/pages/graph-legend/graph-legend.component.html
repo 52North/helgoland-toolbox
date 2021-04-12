@@ -12,7 +12,7 @@
 <div>
   <span>Loading Graph: {{graphLoading}} - {{listLoadings()}}</span>
   <n52-export-image-button title="Exported Diagram" [datasetOptions]="datasetOptions" [datasetIds]="datasetIds"
-    [timespan]="timespan" showLegend="true" showFirstLastDate="true">
+    [timespan]="timespan" [showLegend]="true" [showFirstLastDate]="true">
   </n52-export-image-button>
 </div>
 <div style="height: 200px;">
@@ -51,7 +51,7 @@
     <div *ngFor="let id of datasetIds">
       <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
         (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
         (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
       <n52-dataset-permalink-download [internalId]="internalIdHandler.resolveInternalId(id)" [timeInterval]="timespan"
@@ -65,7 +65,7 @@
     <div *ngFor="let id of datasetIds">
       <n52-first-latest-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
         [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
         (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
         (onSelectDate)="dateChanged($event)"></n52-first-latest-timeseries-entry>
     </div>
@@ -76,7 +76,7 @@
     <div *ngFor="let id of datasetIds">
       <n52-configurable-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
         [datasetOptions]="datasetOptions.get(id)" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event, id)"
+        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
         (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
       </n52-configurable-timeseries-entry>
     </div>

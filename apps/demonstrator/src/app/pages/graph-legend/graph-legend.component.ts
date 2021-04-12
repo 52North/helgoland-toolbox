@@ -124,7 +124,7 @@ export class GraphLegendComponent {
         private dialog: MatDialog,
         private time: Time,
         private definedTime: DefinedTimespanService,
-        protected internalIdHandler: InternalIdHandler,
+        public internalIdHandler: InternalIdHandler,
         private http: HttpClient,
         protected timezoneSrvc: TimezoneService
     ) {

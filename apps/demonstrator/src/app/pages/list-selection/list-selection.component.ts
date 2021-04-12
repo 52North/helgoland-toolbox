@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DatasetType, HelgolandParameterFilter, IDataset, Provider } from '@helgoland/core';
-import { ListSelectorParameter } from '@helgoland/selector';
+import { DatasetType, FilteredProvider, HelgolandDataset, HelgolandParameterFilter } from '@helgoland/core';
+import { ListSelectorParameter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 
 @Component({
     templateUrl: './list-selection.component.html',
@@ -9,31 +9,32 @@ import { ListSelectorParameter } from '@helgoland/selector';
 export class ListSelectionComponent {
 
     public categoryParams: ListSelectorParameter[] = [{
-        type: 'platform',
+        type: MultiServiceFilterEndpoint.platform,
         header: 'Platform'
     }, {
-        type: 'feature',
+        type: MultiServiceFilterEndpoint.feature,
         header: 'Station'
     }, {
-        type: 'phenomenon',
+        type: MultiServiceFilterEndpoint.phenomenon,
         header: 'Phänomen'
     }, {
-        type: 'procedure',
+        type: MultiServiceFilterEndpoint.procedure,
         header: 'Sensor'
     }];
 
-    public selectedProviderList: Provider[] = [];
+    public selectedProviderList: FilteredProvider[] = [];
 
     public parameterFilter: HelgolandParameterFilter = { type: DatasetType.Timeseries }
 
     constructor() {
         this.selectedProviderList.push({
             id: '1',
-            url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/'
+            url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/',
+            filter: {}
         });
     }
 
-    public onDatasetSelected(datasets: IDataset[]) {
+    public onDatasetSelected(datasets: HelgolandDataset[]) {
         datasets.forEach((dataset) => console.log('Select Dataset: ' + dataset.label + ' with ID: ' + dataset.id));
     }
 

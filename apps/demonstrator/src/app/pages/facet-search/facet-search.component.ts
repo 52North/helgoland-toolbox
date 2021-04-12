@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { DatasetType, HelgolandServicesConnector, HelgolandTimeseries, Timeseries, Timespan } from '@helgoland/core';
-import { FacetSearchService, ParameterFacetType } from '@helgoland/facet-search';
+import { DatasetType, HelgolandPlatform, HelgolandServicesConnector, HelgolandTimeseries, Timeseries, Timespan } from '@helgoland/core';
+import { FacetSearchService, ParameterFacetSort, ParameterFacetType } from '@helgoland/facet-search';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
@@ -19,6 +19,8 @@ export class FacetSearchComponent {
   public offeringType: ParameterFacetType = ParameterFacetType.offering;
   public phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
   public procedureType: ParameterFacetType = ParameterFacetType.procedure;
+
+  public featureSort: ParameterFacetSort = ParameterFacetSort.ascAlphabet;
 
   public categoryAutocomplete: string;
   public featureAutocomplete: string;
@@ -72,8 +74,8 @@ export class FacetSearchComponent {
     });
   }
 
-  public onSelectedTs(ts: Timeseries) {
-    console.log(`${ts.label} is clicked`);
+  public onSelectedTs(ts: HelgolandTimeseries | { station: HelgolandPlatform; url: string; }) {
+    console.log(`${ts} is clicked`);
   }
 
   public toggleResultView() {
@@ -90,6 +92,10 @@ export class FacetSearchComponent {
 
   public setEnd(end: MatDatepickerInputEvent<Date>) {
     this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
+  }
+
+  public setAutocomplete(acString: string, evt: any) {
+    acString = evt.target.value;
   }
 
   private fetchTime() {

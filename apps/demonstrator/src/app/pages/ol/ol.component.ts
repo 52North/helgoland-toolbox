@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import { OlMapService } from '@helgoland/open-layers';
 import { Layer } from 'ol/layer';
-import BaseLayer from 'ol/layer/Base';
 import TileLayer from 'ol/layer/Tile';
 import { OSM, TileWMS } from 'ol/source';
 
@@ -13,7 +12,7 @@ import { OSM, TileWMS } from 'ol/source';
 })
 export class OlComponent implements OnInit {
 
-  public layers: BaseLayer[] = [];
+  public layers: Layer[] = [];
 
   public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 

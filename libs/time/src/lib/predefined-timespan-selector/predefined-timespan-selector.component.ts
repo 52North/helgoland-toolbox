@@ -75,9 +75,9 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     }
   }
 
-  public timespanChanged(preset: TimespanPreset) {
+  public timespanChanged(preset: ParsedTimespanPreset) {
     // construct new Timespan
-    this.timespan = new Timespan(parseInt(preset.timespan.from, 10), parseInt(preset.timespan.to, 10));
+    this.timespan = new Timespan(preset.timespan.from, preset.timespan.to);
     // publicise new timespan
     this.onTimespanChange.emit(this.timespan);
   }

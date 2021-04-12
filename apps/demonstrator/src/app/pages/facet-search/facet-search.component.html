@@ -5,7 +5,7 @@
                 <div class="facet-header-label">Category</div>
                 <div class="autocomplete">
                     <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="categoryAutocomplete = $event.target.value">
+                        (input)="setAutocomplete(categoryAutocomplete, $event)">
                 </div>
             </div>
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="categoryType"
@@ -16,7 +16,7 @@
                 <div class="facet-header-label ">Procedure</div>
                 <div class="autocomplete">
                     <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="procedureAutocomplete = $event.target.value">
+                        (input)="setAutocomplete(procedureAutocomplete, $event)">
                 </div>
             </div>
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="procedureType"
@@ -27,18 +27,18 @@
                 <div class="facet-header-label">Feature</div>
                 <div class="autocomplete ">
                     <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="featureAutocomplete = $event.target.value">
+                        (input)="setAutocomplete(featureAutocomplete, $event)">
                 </div>
             </div>
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="featureType"
-                [textualFilter]="featureAutocomplete" [sort]="'ascAlphabet'"></n52-parameter-facet>
+                [textualFilter]="featureAutocomplete" [sort]="featureSort"></n52-parameter-facet>
         </div>
         <div class="facet">
             <div class="facet-header">
                 <div class="facet-header-label">Phenomenon</div>
                 <div class="autocomplete">
                     <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="phenomenonAutocomplete = $event.target.value">
+                        (input)="setAutocomplete(phenomenonAutocomplete, $event)">
                 </div>
             </div>
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="phenomenonType"
@@ -49,7 +49,7 @@
                 <div class="facet-header-label">Offering</div>
                 <div class="autocomplete">
                     <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="offeringAutocomplete = $event.target.value">
+                        (input)="setAutocomplete(offeringAutocomplete, $event)">
                 </div>
             </div>
             <n52-parameter-facet [facetSearchService]="facetSearch" [type]="offeringType"
