@@ -7,13 +7,21 @@ import {
   Injector,
   Input,
 } from '@angular/core';
-import { DatasetOptions, DatasetType, HelgolandServicesConnector, Time, Timespan } from '@helgoland/core';
+import {
+  DatasetOptions,
+  DatasetType,
+  HelgolandServicesConnector,
+  HelgolandTimeseries,
+  Time,
+  Timespan,
+} from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3PlotOptions } from '../model/d3-plot-options';
 
 const wrapperClassName = 'export-diagram-wrapper';
 
@@ -74,6 +82,15 @@ export class ExportImageButtonComponent {
    */
   @Input() showFirstLastDate: boolean;
 
+  /**
+   * Presenter Options for the exported image
+   */
+  @Input() presenterOptions: D3PlotOptions = {
+    showTimeLabel: false,
+    showReferenceValues: true,
+    grid: true
+  }
+
   public loading: boolean;
 
   private internalHeight: number;
@@ -103,10 +120,7 @@ export class ExportImageButtonComponent {
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
     comp.instance.setTimespan(this.timespan);
-    comp.instance.presenterOptions = {
-      showTimeLabel: false,
-      grid: true
-    };
+    comp.instance.presenterOptions = this.presenterOptions;
 
     comp.instance.onContentLoading.subscribe(loadFinished => {
       if (loadFinished) {
@@ -173,7 +187,7 @@ export class ExportImageButtonComponent {
             if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
               const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
               this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-              label.append<SVGGraphicsElement>('svg:text').text(ts.label);
+              label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
               this.internalHeight += 25;
               return {
                 label,
@@ -199,6 +213,10 @@ export class ExportImageButtonComponent {
     } else {
       return of(null);
     }
+  }
+
+  private createLabelText(ts: HelgolandTimeseries) {
+    return `${ts.parameters.phenomenon.label}, ${ts.parameters.procedure.label}, ${ts.parameters.feature.label}`;
   }
 
   private addTitle(element: SVGSVGElement) {
