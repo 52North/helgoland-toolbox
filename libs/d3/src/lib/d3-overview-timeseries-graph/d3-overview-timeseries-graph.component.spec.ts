@@ -20,8 +20,8 @@ import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-gra
 describe('D3OverviewTimeseriesGraphComponent', () => {
   let component: D3OverviewTimeseriesGraphComponent;
   let fixture: ComponentFixture<D3OverviewTimeseriesGraphComponent>;
-  const datasetID1 = 'https://www.fluggs.de/sos2/api/v1/__26';
-  const datasetID2 = 'https://www.fluggs.de/sos2/api/v1/__139';
+  const datasetID1 = 'https://fluggs.wupperverband.de/sos2/api/v1/__26';
+  const datasetID2 = 'https://fluggs.wupperverband.de/sos2/api/v1/__139';
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({

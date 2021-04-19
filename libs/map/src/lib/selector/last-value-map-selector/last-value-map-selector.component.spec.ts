@@ -45,15 +45,15 @@ describe('LastValueMapSelectorComponent with external Data', () => {
   it('should create', (done) => {
     component.lastValuePresentation = LastValuePresentation.Textual;
     component.lastValueSeriesIDs = [
-      'https://www.fluggs.de/sos2/api/v1/__51',
-      'https://www.fluggs.de/sos2/api/v1/__78',
-      'https://www.fluggs.de/sos2/api/v1/__95'
+      'https://fluggs.wupperverband.de/sos2/api/v1/__51',
+      'https://fluggs.wupperverband.de/sos2/api/v1/__78',
+      'https://fluggs.wupperverband.de/sos2/api/v1/__95'
     ];
     component.onSelected.subscribe(res => console.log(res));
     fixture.detectChanges();
 
     setTimeout(() => {
-      component.lastValueSeriesIDs.push('https://www.fluggs.de/sos2/api/v1/__54');
+      component.lastValueSeriesIDs.push('https://fluggs.wupperverband.de/sos2/api/v1/__54');
       // component.lastValueSeriesIDs.splice(1, 1);
       // component.fitBounds = [[49.5, 3.27], [51.5, 5.67]];
       fixture.detectChanges();

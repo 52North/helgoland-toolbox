@@ -62,7 +62,7 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
     fixture = TestBed.createComponent(MultiServiceFilterSelectorComponent);
     component = fixture.componentInstance;
     component.filterList = [
-      { url: 'https://www.fluggs.de/sos2/api/v1/' },
+      { url: 'https://fluggs.wupperverband.de/sos2/api/v1/' },
       { url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', filter: { feature: '14' } }
     ];
     component.endpoint = MultiServiceFilterEndpoint.offering;

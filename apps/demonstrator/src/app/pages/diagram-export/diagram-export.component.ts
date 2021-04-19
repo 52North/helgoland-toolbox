@@ -17,10 +17,10 @@ export class DiagramExportComponent implements OnInit {
   public datasetOptions: Map<string, DatasetOptions> = new Map();
 
   public datasetIds = [
-    'http://www.fluggs.de/sos2/api/v1/__26',
-    'http://www.fluggs.de/sos2/api/v1/__49',
-    'http://www.fluggs.de/sos2/api/v1/__51',
-    'http://www.fluggs.de/sos2/api/v1/__72',
+    'http://fluggs.wupperverband.de/sos2/api/v1/__26',
+    'http://fluggs.wupperverband.de/sos2/api/v1/__49',
+    'http://fluggs.wupperverband.de/sos2/api/v1/__51',
+    'http://fluggs.wupperverband.de/sos2/api/v1/__72',
   ];
 
   public timespan: Timespan;

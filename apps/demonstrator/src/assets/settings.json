@@ -24,8 +24,8 @@
             "url": "https://geo.irceline.be/sos/api/v1/"
         },
         {
-            "name": "fluggs.de",
-            "url": "https://www.fluggs.de/sos2/api/v1/"
+            "name": "fluggs.wupperverband.de",
+            "url": "https://fluggs.wupperverband.de/sos2/api/v1/"
         },
         {
             "name": "52north - Sensorwebtestbed",

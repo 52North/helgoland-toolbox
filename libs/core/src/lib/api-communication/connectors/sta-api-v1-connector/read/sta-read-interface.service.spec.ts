@@ -10,7 +10,7 @@ import { StaInsertInterfaceService } from '../insert/sta-insert-interface.servic
 import { StaReadInterfaceService } from './sta-read-interface.service';
 
 const staUrl = 'http://docker.srv.int.52north.org:8081/sta/';
-const fluggs = 'https://www.fluggs.de/sos2/api/v1/';
+const fluggs = 'https://fluggs.wupperverband.de/sos2/api/v1/';
 
 describe('StaImplInterfaceService', () => {
   beforeEach(() => TestBed.configureTestingModule({
