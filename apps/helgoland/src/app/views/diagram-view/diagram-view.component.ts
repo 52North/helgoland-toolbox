@@ -59,9 +59,9 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public diagramConfig: DiagramConfig = {
     overviewVisible: true,
-    yaxisVisible: true,
+    yaxisVisible: this.d3diagramOptions.yaxis,
     yaxisModifier: true,
-    hoverstyle: 'none'
+    hoverstyle: this.d3diagramOptions.hoverStyle
   };
 
   constructor(
