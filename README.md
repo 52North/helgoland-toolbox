@@ -99,6 +99,17 @@ Install latest Node and NPM following the [instructions](https://nodejs.org/en/d
 
 <!-- TODO: check how toos, if their are still valid -->
 
+## References
+
+The software is in operational use by the following organizations or within the following projects.
+- [Federal Maritime and Hydrographic Agency (BSH)](https://www.bsh.de/)
+- [Wupperverband](https://www.wupperverband.de/)
+- [SeaDataCloud](https://www.seadatanet.org/About-us/SeaDataCloud)
+- [WaCoDiS](https://wacodis.fbg-hsbo.de/)
+- [MuDak-WRM](https://www.mudak-wrm.kit.edu/)
+- [mVIZ](https://mviz.geo.tu-dresden.de/)
+- [EMODnet Data Ingestion Portal](https://www.emodnet-ingestion.eu/)
+
 ## Development
 
 - different moduls are in the projects folder
