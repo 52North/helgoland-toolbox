@@ -21,7 +21,7 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 The most important functional modules comprise:
 
 Core
-- Communication with the APIs
+- Communication with the APIs (Helgoland API and OGC SensorThings API)
 - Important common services (local storage, time)
 - Central interfaces and abstract classes
 
@@ -42,16 +42,10 @@ Map
 
 Selectors
 - List Selector for observation data
-- Service Selector for data sources
+- Service Selector for data sources.
 
-The work on the Helgoland Toolbox comprised several evolutionary improvements and enhancements that were developed as part of several projects (e.g. WaCoDiS, MuDak-WRM. SeaDataCloudk BSH, Wupperverband Framework Contract). This include:
-
-- Enhancement to connect to instances of the OGC SensorThings API
-- Improved caching
-- Complementary mapping module based on open layers to support time-dependent background map layers
-- Enhanced data export functionality
-- Improvements in the diagram visualization
-- Facet search for observation data
+The work on the Helgoland Toolbox focused on improving Helgoland Toolbox’s support of the OGC SensorThings API standard. A dedicated layer to improve the abstraction of underlying data sources enables the Helgoland Sensor Web Viewer to consume data directly from OGC compliant SensorThings API instances as well as connect to the 52°North Helgoland API.
+Research covered experimenting on how to achieve the integration of access-controlled data sources and incorporation of near-real time data streams via MQTT. For this purpose, we developed a dedicated dashboard for visualizing research vessel tracking data based on our toolbox. This development was part of the EMODnet Ingestion 2 project.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/3830314/81534731-d1905380-9368-11ea-8c6f-213b96dd5c41.jpg" alt="Helgoland map view" width="75%"/>
@@ -59,11 +53,11 @@ The work on the Helgoland Toolbox comprised several evolutionary improvements an
 
 **Key Technologies:**
 
-- JavaScript
-- TypeScript
-- Angular
-- Leaflet
-- d3
+- [JavaScript](https://www.javascript.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Angular](https://angular.io/)
+- [Leaflet](https://leafletjs.com/)
+- [d3](https://d3js.org/)
 - Open Layers
 
 **Benefits:**
