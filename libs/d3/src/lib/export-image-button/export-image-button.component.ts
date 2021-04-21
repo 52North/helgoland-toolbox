@@ -122,27 +122,31 @@ export class ExportImageButtonComponent {
     comp.instance.setTimespan(this.timespan);
     comp.instance.presenterOptions = this.presenterOptions;
 
+    let count = this.datasetIds.length;
     comp.instance.onContentLoading.subscribe(loadFinished => {
       if (loadFinished) {
-        setTimeout(() => {
-          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
-          const svgElem = document.querySelector<SVGSVGElement>(temp);
-          if (svgElem) {
-            this.diagramAdjustments(svgElem).subscribe(() => {
-              switch (this.exportType) {
-                case 'svg':
-                  this.createSvgDownload(svgElem);
-                  break;
-                case 'png':
-                default:
-                  this.createPngImageDownload(svgElem);
-                  break;
-              }
-              this.removeComponentFromBody(comp);
-              this.loading = false;
-            });
-          }
-        }, 1000);
+        count--;
+        if (count === 0) {
+          setTimeout(() => {
+            const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+            const svgElem = document.querySelector<SVGSVGElement>(temp);
+            if (svgElem) {
+              this.diagramAdjustments(svgElem).subscribe(() => {
+                switch (this.exportType) {
+                  case 'svg':
+                    this.createSvgDownload(svgElem);
+                    break;
+                  case 'png':
+                  default:
+                    this.createPngImageDownload(svgElem);
+                    break;
+                }
+                this.removeComponentFromBody(comp);
+                this.loading = false;
+              });
+            }
+          }, 1000);
+        }
       }
     });
   }
