@@ -773,14 +773,6 @@ export class D3TimeseriesGraphComponent
         }
     }
 
-    private clickDataPoint(d: DataEntry, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            const timeseries = this.datasetMap.get(entry.internalId) as HelgolandTimeseries;
-            const data = new HelgolandTimeseriesData([[d.timestamp, d.value as number]]);
-            this.onClickDataPoint.emit({ timeseries, data });
-        }
-    }
-
     private addTimespanJumpButtons(): void {
         let dataVisible = false;
         let formerTimestamp = null;
