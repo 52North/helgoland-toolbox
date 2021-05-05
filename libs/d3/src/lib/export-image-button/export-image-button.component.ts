@@ -115,6 +115,10 @@ export class ExportImageButtonComponent {
     this.internalHeight = this.height;
     this.internalWidth = this.width;
 
+    if (this.showFirstLastDate && !this.presenterOptions.timeRangeLabel) {
+      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' }
+    }
+
     const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
@@ -124,7 +128,7 @@ export class ExportImageButtonComponent {
 
     let count = this.datasetIds.length;
     comp.instance.onContentLoading.subscribe(loadFinished => {
-      if (loadFinished) {
+      if (!loadFinished) {
         count--;
         if (count === 0) {
           setTimeout(() => {
@@ -160,25 +164,7 @@ export class ExportImageButtonComponent {
 
     this.addTitle(svgElem);
 
-    this.addFirstLastDate(svgElem);
-
     return this.addLegend(svgElem);
-  }
-
-  private addFirstLastDate(element: SVGSVGElement) {
-    if (this.showFirstLastDate) {
-      this.internalHeight += 20;
-      const selection = d3.select(element);
-      const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
-
-      const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.from).toLocaleDateString());
-      const firstDateWidth = firstDate.node().getBBox().width;
-      firstDate.attr('x', (this.internalWidth - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (this.internalHeight));
-
-      const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.to).toLocaleDateString());
-      const lastDateWidth = lastDate.node().getBBox().width;
-      lastDate.attr('x', (this.internalWidth - lastDateWidth)).attr('y', (this.internalHeight));
-    }
   }
 
   private addLegend(element: SVGSVGElement): Observable<void> {
@@ -186,25 +172,27 @@ export class ExportImageButtonComponent {
       const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
-        obs.push(
-          this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
-            if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-              const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
-              this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-              label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
-              this.internalHeight += 25;
-              return {
-                label,
-                xPos: this.internalHeight - 10
-              };
-            } else {
-              return {
-                label: null,
-                xPos: 0
-              };
-            }
-          }))
-        );
+        if (option.visible) {
+          obs.push(
+            this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
+              if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+                const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+                label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
+                this.internalHeight += 25;
+                return {
+                  label,
+                  xPos: this.internalHeight - 10
+                };
+              } else {
+                return {
+                  label: null,
+                  xPos: 0
+                };
+              }
+            }))
+          );
+        }
       });
       return forkJoin(obs).pipe(map(elem => {
         const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
