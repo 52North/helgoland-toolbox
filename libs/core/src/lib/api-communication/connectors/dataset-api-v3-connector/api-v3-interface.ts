@@ -151,6 +151,7 @@ export interface ApiV3ParameterFilter {
   procedures?: string[];
   platforms?: string[];
   services?: string[];
+  select?: string[];
   locale?: string;
 }
 

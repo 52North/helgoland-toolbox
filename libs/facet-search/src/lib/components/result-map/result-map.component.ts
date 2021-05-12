@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from '@angular/core';
-import { HelgolandPlatform, HelgolandTimeseries, Required } from '@helgoland/core';
+import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ElementRef } from '@angular/core';
+import { Required } from '@helgoland/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 
-import { FacetSearchService } from '../../facet-search.service';
+import { FacetSearchElement, FacetSearchElementFeature, FacetSearchService } from '../../facet-search-model';
 
-delete L.Icon.Default.prototype['_getIconUrl'];
+delete (L.Icon.Default as any).prototype['_getIconUrl'];
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: './assets/images/leaflet/marker-icon-2x.png',
   iconUrl: './assets/images/leaflet/marker-icon.png',
@@ -33,7 +33,9 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public nextResultsZoom = true;
 
-  @Output() public selected: EventEmitter<HelgolandTimeseries | { station: HelgolandPlatform, url: string }> = new EventEmitter();
+  @Output() public selectedFeature: EventEmitter<{ feature: FacetSearchElementFeature, url: string }> = new EventEmitter();
+
+  @Output() public selectedEntry: EventEmitter<FacetSearchElement> = new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup;
   private resultsSubs: Subscription;
@@ -63,7 +65,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private fetchResults(ts: HelgolandTimeseries[]) {
+  private fetchResults(entries: FacetSearchElement[]) {
     if (this.map) {
       if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
       if (this.cluster) {
@@ -72,24 +74,26 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         this.markerFeatureGroup = L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const stations = new Map<string, { station: HelgolandPlatform, url: string }>();
-        ts.forEach(e => {
-          const id = `${e.platform.id}-${e.url}`;
-          if (!stations.has(id)) {
-            stations.set(id, { station: e.platform, url: e.url });
+        const features = new Map<string, {feature: FacetSearchElementFeature, url: string}>();
+        entries.forEach(e => {
+          if (e.feature) {
+            const id = `${e.feature.id}-${e.url}`;
+            if (!features.has(id)) {
+              features.set(id, {feature: e.feature, url: e.url});
+            }
           }
         });
-        stations.forEach(v => {
-          const station = this.createStationGeometry(v.station, v.url);
-          if (station) { this.markerFeatureGroup.addLayer(station); }
+        features.forEach(v => {
+          const geom = this.createFeatureGeometry(v);
+          if (geom) { this.markerFeatureGroup.addLayer(geom); }
         });
-        if (stations.size === 1 && this.selectSingleStation) {
-          const entry = stations.get(stations.keys().next().value);
-          this.selected.emit({ station: entry.station, url: entry.url });
+        if (features.size === 1 && this.selectSingleStation) {
+          const entry = features.get(features.keys().next().value);
+          this.selectedFeature.emit(entry);
         }
       } else {
-        ts.forEach(e => {
-          const marker = this.createTsGeometry(e);
+        entries.forEach(e => {
+          const marker = this.createEntryGeometry(e.feature);
           if (marker) { this.markerFeatureGroup.addLayer(marker); }
         });
       }
@@ -104,18 +108,18 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createStationGeometry(station: HelgolandPlatform, url: string): L.GeoJSON {
-    if (station) {
-      const geometry = geoJSON(station.geometry);
-      geometry.on('mouseup', () => this.selected.emit({ station, url }));
+  private createFeatureGeometry(elem: {feature: FacetSearchElementFeature, url: string}): L.GeoJSON | undefined {
+    if (elem.feature) {
+      const geometry = geoJSON(elem.feature.geometry);
+      geometry.on('mouseup', () => this.selectedFeature.emit(elem));
       return geometry;
     }
   }
 
-  private createTsGeometry(ts: HelgolandTimeseries) {
-    if (ts.platform) {
-      const geometry = geoJSON(ts.platform.geometry);
-      geometry.on('mouseup', () => this.selected.emit(ts));
+  private createEntryGeometry(entry: FacetSearchElement) {
+    if (entry.feature?.geometry) {
+      const geometry = geoJSON(entry.feature.geometry);
+      geometry.on('mouseup', () => this.selectedEntry.emit(entry));
       return geometry;
     }
   }
