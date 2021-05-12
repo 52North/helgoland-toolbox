@@ -7,8 +7,16 @@ import {
   Timeseries,
   Timespan,
 } from '@helgoland/core';
-import { convertFromApiV3Dataset, FacetEntry, FacetEntryFeature, FacetSearchService, ParameterFacetSort, ParameterFacetType } from '@helgoland/facet-search';
+import {
+  convertFromApiV3Dataset,
+  FacetSearchElement,
+  FacetSearchService,
+  ParameterFacetSort,
+  ParameterFacetType,
+} from '@helgoland/facet-search';
 import { TranslateService } from '@ngx-translate/core';
+
+import { FacetSearchElementFeature } from './../../../../../../libs/facet-search/src/lib/facet-search-model';
 
 @Component({
   selector: 'n52-facet-search',
@@ -87,17 +95,17 @@ export class FacetSearchComponent {
       select: ['label', 'parameters/procedure', 'parameters/phenomenon', 'parameters/category', 'feature']
     }
     this.apiv3.getDatasets(url, filter).subscribe(res => {
-      const entries: FacetEntry[] = res.map(e => convertFromApiV3Dataset(e, url));
+      const entries: FacetSearchElement[] = res.map(e => convertFromApiV3Dataset(e, url));
       console.log(entries[0]);
       this.facetSearch.setEntries(entries);
     })
   }
 
-  public onSelectedEntry(entry: FacetEntry) {
+  public onSelectedEntry(entry: FacetSearchElement) {
     console.log(entry);
   }
 
-  public onSelectedFeature(elem: { feature: FacetEntryFeature, url: string }) {
+  public onSelectedFeature(elem: { feature: FacetSearchElementFeature, url: string }) {
     console.log(elem);
   }
 
