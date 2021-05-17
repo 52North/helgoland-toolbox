@@ -8,5 +8,5 @@
       "jquery": "jquery"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

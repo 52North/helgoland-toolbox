@@ -29,5 +29,5 @@
       "ol/layer/Tile": "ol/layer/Tile"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

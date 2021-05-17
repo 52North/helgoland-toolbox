@@ -10,5 +10,5 @@
       "@ngx-translate/core": "@ngx-translate/core"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

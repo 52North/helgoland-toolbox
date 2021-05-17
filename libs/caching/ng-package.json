@@ -9,5 +9,5 @@
       "moment": "moment"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

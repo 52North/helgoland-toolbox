@@ -20,13 +20,18 @@
             "main": "apps/demonstrator/src/main.ts",
             "polyfills": "apps/demonstrator/src/polyfills.ts",
             "tsConfig": "apps/demonstrator/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/demonstrator/src/favicon.ico",
               "apps/demonstrator/src/assets"
             ],
             "styles": ["apps/demonstrator/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -39,7 +44,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -129,7 +133,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/core"],
           "options": {
             "tsConfig": "libs/core/tsconfig.lib.json",
@@ -172,7 +176,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/auth"],
           "options": {
             "tsConfig": "libs/auth/tsconfig.lib.json",
@@ -215,7 +219,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/d3"],
           "options": {
             "tsConfig": "libs/d3/tsconfig.lib.json",
@@ -258,7 +262,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/depiction"],
           "options": {
             "tsConfig": "libs/depiction/tsconfig.lib.json",
@@ -301,7 +305,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/control"],
           "options": {
             "tsConfig": "libs/control/tsconfig.lib.json",
@@ -344,7 +348,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/caching"],
           "options": {
             "tsConfig": "libs/caching/tsconfig.lib.json",
@@ -387,7 +391,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/eventing"],
           "options": {
             "tsConfig": "libs/eventing/tsconfig.lib.json",
@@ -430,7 +434,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/map"],
           "options": {
             "tsConfig": "libs/map/tsconfig.lib.json",
@@ -473,7 +477,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/favorite"],
           "options": {
             "tsConfig": "libs/favorite/tsconfig.lib.json",
@@ -516,7 +520,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/facet-search"],
           "options": {
             "tsConfig": "libs/facet-search/tsconfig.lib.json",
@@ -559,7 +563,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/modification"],
           "options": {
             "tsConfig": "libs/modification/tsconfig.lib.json",
@@ -602,7 +606,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/permalink"],
           "options": {
             "tsConfig": "libs/permalink/tsconfig.lib.json",
@@ -645,7 +649,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/plotly"],
           "options": {
             "tsConfig": "libs/plotly/tsconfig.lib.json",
@@ -688,7 +692,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/selector"],
           "options": {
             "tsConfig": "libs/selector/tsconfig.lib.json",
@@ -731,7 +735,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/sensorml"],
           "options": {
             "tsConfig": "libs/sensorml/tsconfig.lib.json",
@@ -774,7 +778,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/time"],
           "options": {
             "tsConfig": "libs/time/tsconfig.lib.json",
@@ -817,7 +821,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/time-range-slider"],
           "options": {
             "tsConfig": "libs/time-range-slider/tsconfig.lib.json",
@@ -860,7 +864,7 @@
       "prefix": "helgoland",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "outputs": ["libs/open-layers"],
           "options": {
             "tsConfig": "libs/open-layers/tsconfig.lib.json",
@@ -915,7 +919,6 @@
             "main": "apps/helgoland/src/main.ts",
             "polyfills": "apps/helgoland/src/polyfills.ts",
             "tsConfig": "apps/helgoland/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/helgoland/src/favicon.ico",
               "apps/helgoland/src/assets"
@@ -923,7 +926,13 @@
             "styles": [
               "apps/helgoland/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -936,7 +945,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -1042,13 +1050,18 @@
             "main": "apps/helgoland-trajectories/src/main.ts",
             "polyfills": "apps/helgoland-trajectories/src/polyfills.ts",
             "tsConfig": "apps/helgoland-trajectories/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/helgoland-trajectories/src/favicon.ico",
               "apps/helgoland-trajectories/src/assets"
             ],
             "styles": ["apps/helgoland-trajectories/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -1061,7 +1074,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

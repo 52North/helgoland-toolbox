@@ -93,7 +93,7 @@ export function initApplication(configService: ConfigurationService, translate: 
       path: '**',
       pathMatch: 'full',
       component: TrajectoryViewComponent
-    }], { initialNavigation: 'enabled' }),
+    }], { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

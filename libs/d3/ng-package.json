@@ -11,5 +11,5 @@
       "d3-delaunay": "d3-delaunay"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

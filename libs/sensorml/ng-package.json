@@ -7,5 +7,5 @@
       "typescript-logging": "typescript-logging"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

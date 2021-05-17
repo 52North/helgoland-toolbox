@@ -7,5 +7,5 @@
       "ngx-clipboard": "ngx-clipboard"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

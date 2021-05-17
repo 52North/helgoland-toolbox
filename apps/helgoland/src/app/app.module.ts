@@ -148,7 +148,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(ROUTES, { initialNavigation: 'enabled' }),
+    RouterModule.forRoot(ROUTES, { initialNavigation: 'enabled', relativeLinkResolution: 'legacy' }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

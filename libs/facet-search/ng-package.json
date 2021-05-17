@@ -9,5 +9,5 @@
       "leaflet": "leaflet"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

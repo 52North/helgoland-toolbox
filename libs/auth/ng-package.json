@@ -7,5 +7,5 @@
       "@helgoland/core": "@helgoland/core"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

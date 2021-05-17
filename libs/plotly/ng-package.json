@@ -10,5 +10,5 @@
       "angular-plotly.js": "angular-plotly.js"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }

@@ -8,5 +8,5 @@
       "ngx-color-picker": "ngx-color-picker"
     }
   },
-  "whitelistedNonPeerDependencies": [""]
+  "allowedNonPeerDependencies": [""]
 }
