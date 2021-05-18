@@ -53,16 +53,19 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * Inform, when a station is selected
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * Inform, when no stations are found
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
   private map: Map;

@@ -21,7 +21,7 @@ import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
   styleUrls: ['./diagram-view.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DiagramViewComponent implements OnInit, OnDestroy {
+export class DiagramViewComponent implements OnInit {
 
   public mobileQuery: MediaQueryList;
 
@@ -81,9 +81,9 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
     // this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
-  ngOnDestroy(): void {
-    // this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
-  }
+  // ngOnDestroy(): void {
+  //   this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  // }
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();

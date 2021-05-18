@@ -31,6 +31,7 @@ export class ServiceSelectorComponent implements OnInit {
     @Input()
     public showUnresolvableServices: boolean;
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onServiceSelected: EventEmitter<HelgolandService> = new EventEmitter<HelgolandService>();
 

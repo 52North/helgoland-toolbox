@@ -19,11 +19,13 @@ export class GeosearchControlComponent extends MapControlComponent {
     /**
      * Returns the search result.
      */
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
 
     /**
      * Informs, when the search is triggered.
      */
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
     public result: GeoSearchResult;

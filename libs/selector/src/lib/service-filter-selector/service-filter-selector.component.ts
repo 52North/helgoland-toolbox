@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import {
-    HelgolandParameterFilter,
-    HelgolandServicesConnector,
-    LanguageChangNotifier,
-    Parameter,
-} from '@helgoland/core';
+import { HelgolandParameterFilter, HelgolandServicesConnector, LanguageChangNotifier, Parameter } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -28,12 +23,15 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     @Input()
     public selectionId: string;
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onItemSelected: EventEmitter<Parameter> = new EventEmitter<Parameter>();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<Parameter[]>();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
 

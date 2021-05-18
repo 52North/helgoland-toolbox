@@ -24,7 +24,9 @@
               "apps/demonstrator/src/favicon.ico",
               "apps/demonstrator/src/assets"
             ],
-            "styles": ["apps/demonstrator/src/styles.scss"],
+            "styles": [
+              "apps/demonstrator/src/styles.scss"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -81,13 +83,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "apps/demonstrator/tsconfig.app.json",
-              "apps/demonstrator/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/demonstrator/**/*"]
+            "lintFilePatterns": [
+              "apps/demonstrator/**/*.ts",
+              "apps/demonstrator/**/*.html"
+            ]
           }
         },
         "test": {
@@ -95,33 +96,6 @@
           "options": {
             "jestConfig": "apps/demonstrator/jest.config.js",
             "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "demonstrator-e2e": {
-      "root": "apps/demonstrator-e2e",
-      "sourceRoot": "apps/demonstrator-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/demonstrator-e2e/cypress.json",
-            "tsConfig": "apps/demonstrator-e2e/tsconfig.e2e.json",
-            "devServerTarget": "demonstrator:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "demonstrator:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/demonstrator-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/demonstrator-e2e/**/*"]
           }
         }
       }
@@ -134,7 +108,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/core"],
+          "outputs": [
+            "libs/core"
+          ],
           "options": {
             "tsConfig": "libs/core/tsconfig.lib.json",
             "project": "libs/core/ng-package.json"
@@ -146,13 +122,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/core/tsconfig.lib.json",
-              "libs/core/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/core/**/*"]
+            "lintFilePatterns": [
+              "libs/core/**/*.ts",
+              "libs/core/**/*.html"
+            ]
           }
         },
         "test": {
@@ -177,7 +152,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/auth"],
+          "outputs": [
+            "libs/auth"
+          ],
           "options": {
             "tsConfig": "libs/auth/tsconfig.lib.json",
             "project": "libs/auth/ng-package.json"
@@ -189,13 +166,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/auth/tsconfig.lib.json",
-              "libs/auth/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/auth/**/*"]
+            "lintFilePatterns": [
+              "libs/auth/**/*.ts",
+              "libs/auth/**/*.html"
+            ]
           }
         },
         "test": {
@@ -220,7 +196,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/d3"],
+          "outputs": [
+            "libs/d3"
+          ],
           "options": {
             "tsConfig": "libs/d3/tsconfig.lib.json",
             "project": "libs/d3/ng-package.json"
@@ -232,13 +210,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/d3/tsconfig.lib.json",
-              "libs/d3/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/d3/**/*"]
+            "lintFilePatterns": [
+              "libs/d3/**/*.ts",
+              "libs/d3/**/*.html"
+            ]
           }
         },
         "test": {
@@ -263,7 +240,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/depiction"],
+          "outputs": [
+            "libs/depiction"
+          ],
           "options": {
             "tsConfig": "libs/depiction/tsconfig.lib.json",
             "project": "libs/depiction/ng-package.json"
@@ -275,13 +254,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/depiction/tsconfig.lib.json",
-              "libs/depiction/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/depiction/**/*"]
+            "lintFilePatterns": [
+              "libs/depiction/**/*.ts",
+              "libs/depiction/**/*.html"
+            ]
           }
         },
         "test": {
@@ -306,7 +284,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/control"],
+          "outputs": [
+            "libs/control"
+          ],
           "options": {
             "tsConfig": "libs/control/tsconfig.lib.json",
             "project": "libs/control/ng-package.json"
@@ -318,13 +298,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/control/tsconfig.lib.json",
-              "libs/control/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/control/**/*"]
+            "lintFilePatterns": [
+              "libs/control/**/*.ts",
+              "libs/control/**/*.html"
+            ]
           }
         },
         "test": {
@@ -349,7 +328,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/caching"],
+          "outputs": [
+            "libs/caching"
+          ],
           "options": {
             "tsConfig": "libs/caching/tsconfig.lib.json",
             "project": "libs/caching/ng-package.json"
@@ -361,13 +342,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/caching/tsconfig.lib.json",
-              "libs/caching/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/caching/**/*"]
+            "lintFilePatterns": [
+              "libs/caching/**/*.ts",
+              "libs/caching/**/*.html"
+            ]
           }
         },
         "test": {
@@ -392,7 +372,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/eventing"],
+          "outputs": [
+            "libs/eventing"
+          ],
           "options": {
             "tsConfig": "libs/eventing/tsconfig.lib.json",
             "project": "libs/eventing/ng-package.json"
@@ -404,13 +386,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/eventing/tsconfig.lib.json",
-              "libs/eventing/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/eventing/**/*"]
+            "lintFilePatterns": [
+              "libs/eventing/**/*.ts",
+              "libs/eventing/**/*.html"
+            ]
           }
         },
         "test": {
@@ -435,7 +416,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/map"],
+          "outputs": [
+            "libs/map"
+          ],
           "options": {
             "tsConfig": "libs/map/tsconfig.lib.json",
             "project": "libs/map/ng-package.json"
@@ -447,13 +430,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/map/tsconfig.lib.json",
-              "libs/map/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/map/**/*"]
+            "lintFilePatterns": [
+              "libs/map/**/*.ts",
+              "libs/map/**/*.html"
+            ]
           }
         },
         "test": {
@@ -478,7 +460,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/favorite"],
+          "outputs": [
+            "libs/favorite"
+          ],
           "options": {
             "tsConfig": "libs/favorite/tsconfig.lib.json",
             "project": "libs/favorite/ng-package.json"
@@ -490,13 +474,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/favorite/tsconfig.lib.json",
-              "libs/favorite/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/favorite/**/*"]
+            "lintFilePatterns": [
+              "libs/favorite/**/*.ts",
+              "libs/favorite/**/*.html"
+            ]
           }
         },
         "test": {
@@ -521,7 +504,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/facet-search"],
+          "outputs": [
+            "libs/facet-search"
+          ],
           "options": {
             "tsConfig": "libs/facet-search/tsconfig.lib.json",
             "project": "libs/facet-search/ng-package.json"
@@ -533,13 +518,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/facet-search/tsconfig.lib.json",
-              "libs/facet-search/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/facet-search/**/*"]
+            "lintFilePatterns": [
+              "libs/facet-search/**/*.ts",
+              "libs/facet-search/**/*.html"
+            ]
           }
         },
         "test": {
@@ -564,7 +548,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/modification"],
+          "outputs": [
+            "libs/modification"
+          ],
           "options": {
             "tsConfig": "libs/modification/tsconfig.lib.json",
             "project": "libs/modification/ng-package.json"
@@ -576,13 +562,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/modification/tsconfig.lib.json",
-              "libs/modification/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/modification/**/*"]
+            "lintFilePatterns": [
+              "libs/modification/**/*.ts",
+              "libs/modification/**/*.html"
+            ]
           }
         },
         "test": {
@@ -607,7 +592,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/permalink"],
+          "outputs": [
+            "libs/permalink"
+          ],
           "options": {
             "tsConfig": "libs/permalink/tsconfig.lib.json",
             "project": "libs/permalink/ng-package.json"
@@ -619,13 +606,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/permalink/tsconfig.lib.json",
-              "libs/permalink/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/permalink/**/*"]
+            "lintFilePatterns": [
+              "libs/permalink/**/*.ts",
+              "libs/permalink/**/*.html"
+            ]
           }
         },
         "test": {
@@ -650,7 +636,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/plotly"],
+          "outputs": [
+            "libs/plotly"
+          ],
           "options": {
             "tsConfig": "libs/plotly/tsconfig.lib.json",
             "project": "libs/plotly/ng-package.json"
@@ -662,13 +650,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/plotly/tsconfig.lib.json",
-              "libs/plotly/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/plotly/**/*"]
+            "lintFilePatterns": [
+              "libs/plotly/**/*.ts",
+              "libs/plotly/**/*.html"
+            ]
           }
         },
         "test": {
@@ -693,7 +680,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/selector"],
+          "outputs": [
+            "libs/selector"
+          ],
           "options": {
             "tsConfig": "libs/selector/tsconfig.lib.json",
             "project": "libs/selector/ng-package.json"
@@ -705,13 +694,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/selector/tsconfig.lib.json",
-              "libs/selector/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/selector/**/*"]
+            "lintFilePatterns": [
+              "libs/selector/**/*.ts",
+              "libs/selector/**/*.html"
+            ]
           }
         },
         "test": {
@@ -736,7 +724,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/sensorml"],
+          "outputs": [
+            "libs/sensorml"
+          ],
           "options": {
             "tsConfig": "libs/sensorml/tsconfig.lib.json",
             "project": "libs/sensorml/ng-package.json"
@@ -748,13 +738,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/sensorml/tsconfig.lib.json",
-              "libs/sensorml/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/sensorml/**/*"]
+            "lintFilePatterns": [
+              "libs/sensorml/**/*.ts",
+              "libs/sensorml/**/*.html"
+            ]
           }
         },
         "test": {
@@ -779,7 +768,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/time"],
+          "outputs": [
+            "libs/time"
+          ],
           "options": {
             "tsConfig": "libs/time/tsconfig.lib.json",
             "project": "libs/time/ng-package.json"
@@ -791,13 +782,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/time/tsconfig.lib.json",
-              "libs/time/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/time/**/*"]
+            "lintFilePatterns": [
+              "libs/time/**/*.ts",
+              "libs/time/**/*.html"
+            ]
           }
         },
         "test": {
@@ -822,7 +812,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/time-range-slider"],
+          "outputs": [
+            "libs/time-range-slider"
+          ],
           "options": {
             "tsConfig": "libs/time-range-slider/tsconfig.lib.json",
             "project": "libs/time-range-slider/ng-package.json"
@@ -834,13 +826,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/time-range-slider/tsconfig.lib.json",
-              "libs/time-range-slider/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/time-range-slider/**/*"]
+            "lintFilePatterns": [
+              "libs/time-range-slider/**/*.ts",
+              "libs/time-range-slider/**/*.html"
+            ]
           }
         },
         "test": {
@@ -865,7 +856,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": ["libs/open-layers"],
+          "outputs": [
+            "libs/open-layers"
+          ],
           "options": {
             "tsConfig": "libs/open-layers/tsconfig.lib.json",
             "project": "libs/open-layers/ng-package.json"
@@ -877,13 +870,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/open-layers/tsconfig.lib.json",
-              "libs/open-layers/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/open-layers/**/*"]
+            "lintFilePatterns": [
+              "libs/open-layers/**/*.ts",
+              "libs/open-layers/**/*.html"
+            ]
           }
         },
         "test": {
@@ -982,16 +974,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "apps/helgoland/tsconfig.app.json",
-              "apps/helgoland/tsconfig.spec.json",
-              "apps/helgoland/tsconfig.editor.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/helgoland/**/*"
+            "lintFilePatterns": [
+              "apps/helgoland/**/*.ts",
+              "apps/helgoland/**/*.html"
             ]
           }
         },
@@ -1000,33 +987,6 @@
           "options": {
             "jestConfig": "apps/helgoland/jest.config.js",
             "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "helgoland-e2e": {
-      "root": "apps/helgoland-e2e",
-      "sourceRoot": "apps/helgoland-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/helgoland-e2e/cypress.json",
-            "tsConfig": "apps/helgoland-e2e/tsconfig.e2e.json",
-            "devServerTarget": "helgoland:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "helgoland:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/helgoland-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/helgoland-e2e/**/*"]
           }
         }
       }
@@ -1054,7 +1014,9 @@
               "apps/helgoland-trajectories/src/favicon.ico",
               "apps/helgoland-trajectories/src/assets"
             ],
-            "styles": ["apps/helgoland-trajectories/src/styles.scss"],
+            "styles": [
+              "apps/helgoland-trajectories/src/styles.scss"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -1111,16 +1073,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "apps/helgoland-trajectories/tsconfig.app.json",
-              "apps/helgoland-trajectories/tsconfig.spec.json",
-              "apps/helgoland-trajectories/tsconfig.editor.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/helgoland-trajectories/**/*"
+            "lintFilePatterns": [
+              "apps/helgoland-trajectories/**/*.ts",
+              "apps/helgoland-trajectories/**/*.html"
             ]
           }
         },
@@ -1133,36 +1090,6 @@
         }
       }
     },
-    "helgoland-trajectories-e2e": {
-      "root": "apps/helgoland-trajectories-e2e",
-      "sourceRoot": "apps/helgoland-trajectories-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/helgoland-trajectories-e2e/cypress.json",
-            "tsConfig": "apps/helgoland-trajectories-e2e/tsconfig.e2e.json",
-            "devServerTarget": "helgoland-trajectories:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "helgoland-trajectories:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/helgoland-trajectories-e2e/tsconfig.e2e.json"],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/helgoland-trajectories-e2e/**/*"
-            ]
-          }
-        }
-      }
-    },
     "helgoland-common": {
       "projectType": "library",
       "root": "libs/helgoland-common",
@@ -1170,13 +1097,12 @@
       "prefix": "helgoland-toolbox",
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/helgoland-common/tsconfig.lib.json",
-              "libs/helgoland-common/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/helgoland-common/**/*"]
+            "lintFilePatterns": [
+              "libs/helgoland-common/**/*.ts",
+              "libs/helgoland-common/**/*.html"
+            ]
           }
         },
         "test": {
@@ -1195,7 +1121,7 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "schematics": {
     "@nrwl/workspace": {

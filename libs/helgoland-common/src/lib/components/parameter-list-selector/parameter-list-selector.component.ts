@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { HelgolandServicesConnector } from '@helgoland/core';
 import { MultiServiceFilterSelectorComponent } from '@helgoland/selector';
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './parameter-list-selector.component.html',
   styleUrls: ['./parameter-list-selector.component.scss']
 })
-export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent implements OnInit {
+export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
 
   @ViewChild(MatSelectionList) list: MatSelectionList;
 
@@ -19,8 +19,6 @@ export class ParameterListSelectorComponent extends MultiServiceFilterSelectorCo
   ) {
     super(servicesConnector, translate);
   }
-
-  ngOnInit(): void { }
 
   public selectionChanged(selection: MatSelectionListChange) {
     const match = this.items.find(e => e.id === selection.option.value);

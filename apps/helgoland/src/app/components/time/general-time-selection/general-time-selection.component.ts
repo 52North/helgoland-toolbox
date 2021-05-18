@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -9,7 +9,7 @@ import { DefinedTimespan, DefinedTimespanService, Time, Timespan } from '@helgol
   templateUrl: './general-time-selection.component.html',
   styleUrls: ['./general-time-selection.component.scss']
 })
-export class GeneralTimeSelectionComponent implements OnInit {
+export class GeneralTimeSelectionComponent {
 
   public LASTHOUR = DefinedTimespan.LASTHOUR;
   public TODAY = DefinedTimespan.TODAY;
@@ -39,9 +39,6 @@ export class GeneralTimeSelectionComponent implements OnInit {
     protected timeSrvc: Time,
     protected definedTimeSrvc: DefinedTimespanService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   back() {
     this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan));

@@ -51,11 +51,13 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * returns the metadata of the selected dataset to be visualized
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> = new EventEmitter();
 
   /**
    * Output to inform the loading status, while file is created
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor(

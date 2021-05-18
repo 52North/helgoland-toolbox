@@ -21,7 +21,7 @@
   <div *ngIf="!loading && !error">
     <div class="small-label">
       <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
-      <span *ngIf="categoryLabel != phenomenonLabel">
+      <span *ngIf="categoryLabel !== phenomenonLabel">
         - <n52-label-mapper label="{{categoryLabel}}"></n52-label-mapper>
       </span>
     </div>

@@ -12,6 +12,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   @Input()
   public timespan: Timespan;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
@@ -39,7 +40,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   }
 
   public isSafeMomentExpression(expression: string): boolean {
-    // tslint:disable:max-line-length
+    /* eslint-disable max-len */
     // regex checks whether code to be eval'ed adhers to syntax given in https://momentjs.com/docs/#/manipulating/
     // explanation:               Start with "moment()"   Possible functions: add(number, string) and subtract(number, string)                            Further possible functions: startOf(string) and endOf(string)                           Further possible functions: year(number), ..., milliseconds(number).                         functions can be chained infinitely, or not at all
     // further explanation:       This is a MUST.         The strings have to be out of the options described in the docs (shortcuts permitted)           Again, the strings have to be out of a strict set.                                      These set the corresponding part of the Moment object to the number given.                   |  (i.e. "moment()" is the minimal case matched)
@@ -68,7 +69,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     // just to be sure not to eval() something nasty
     if (this.isSafeMomentExpression(expression)) {
       // if satisfied, eval the inputs -> the ._d property contains the corresponding Date objects from which the Timespan can be constructed
-      // tslint:disable-next-line:no-eval
+      // eslint-disable-next-line no-eval
       return eval(expression)._d;
     } else {
       return null;

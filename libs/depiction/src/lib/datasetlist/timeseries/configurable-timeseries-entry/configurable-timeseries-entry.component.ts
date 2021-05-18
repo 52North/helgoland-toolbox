@@ -22,12 +22,15 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   @Input()
   public highlight: boolean;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 

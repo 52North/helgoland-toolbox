@@ -9,6 +9,7 @@ export class PermalinkNewWindowComponent {
   @Input()
   public url: string;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onTriggered: EventEmitter<void> = new EventEmitter<void>();
 

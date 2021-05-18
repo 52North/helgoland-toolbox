@@ -2,10 +2,9 @@ import 'bootstrap-slider';
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
+import jquery from 'jquery';
 
 import { TimeRangeSliderCache } from './time-range-slider.service';
-
-import jquery from 'jquery';
 
 @Component({
   selector: 'n52-time-range-slider',
@@ -24,6 +23,7 @@ export class TimeRangeSliderComponent implements OnChanges {
   @Input()
   public timeList: number[];
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 

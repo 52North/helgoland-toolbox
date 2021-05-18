@@ -26,6 +26,7 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
 
   @Input() public customMarkerIcon: L.Icon;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onSelectedPlatform: EventEmitter<HelgolandPlatform> = new EventEmitter();
 
   private geometryOnMap: L.GeoJSON;

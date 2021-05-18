@@ -38,12 +38,15 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     @Input()
     public reloadForDatasets: string[];
 
-    @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() 
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
-    @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() 
     public onLoading: EventEmitter<boolean> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 

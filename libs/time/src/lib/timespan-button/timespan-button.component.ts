@@ -16,6 +16,7 @@ export class TimespanButtonComponent {
   @Input()
   public timespanFunc: () => Timespan;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 

@@ -16,7 +16,7 @@
         <div mat-line>
           <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
           <span
-            *ngIf="ds.parameters.category.label && ds.parameters.category.label != ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+            *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
         </div>
         <div mat-line *ngIf="ds.lastValue">
           <span>{{ds.lastValue.value}}</span>
@@ -43,7 +43,7 @@
             <div mat-line>
               <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
               <span
-                *ngIf="ds.parameters.category.label && ds.parameters.category.label != ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+                *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
             </div>
             <div mat-line *ngIf="ds.lastValue">
               <span>{{ds.lastValue.value}}</span>

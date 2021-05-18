@@ -37,6 +37,7 @@ export class ProfileTrajectoryMapSelectorComponent
     @Input()
     public selectedTimespan: Timespan;
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onTimeListDetermined: EventEmitter<number[]> = new EventEmitter();
 

@@ -23,18 +23,23 @@ export class ProfileEntryComponent extends ListEntryComponent {
     @Input()
     public datasetOptions: TimedDatasetOptions[];
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onUpdateOptions: EventEmitter<TimedDatasetOptions[]> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onDeleteDatasetOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onOpenInCombiView: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 

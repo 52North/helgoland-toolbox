@@ -6,15 +6,11 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
   templateUrl: './sensorml.component.html',
   styleUrls: ['./sensorml.component.css']
 })
-export class SensormlComponent implements OnInit {
+export class SensormlComponent {
 
   public readerResult: string;
   public error: string;
   public description: AbstractProcess;
-
-  constructor() { }
-
-  ngOnInit() { }
 
   public changeListener($event): void {
     const file: File = $event.target.files[0];

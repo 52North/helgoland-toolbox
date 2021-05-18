@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 import {
     Directive,
     DoCheck,
@@ -14,7 +15,7 @@ import {
 import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
-import { LayerOptions, LayerMap } from './map-options';
+import { LayerMap, LayerOptions } from './map-options';
 
 const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
 const DEFAULT_BASE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';

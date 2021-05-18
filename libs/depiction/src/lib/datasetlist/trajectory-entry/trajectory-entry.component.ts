@@ -20,9 +20,11 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     @Input()
     public datasetOptions: DatasetOptions;
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 

@@ -36,6 +36,7 @@ export class PlotlyProfileGraphComponent
     extends DatasetPresenterComponent<TimedDatasetOptions[], any>
     implements AfterViewInit {
 
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
     public onHighlight: EventEmitter<PresenterHighlight> = new EventEmitter();
 
@@ -93,7 +94,7 @@ export class PlotlyProfileGraphComponent
         console.log('reload data at ' + new Date());
     }
 
-    // tslint:disable-next-line:no-empty
+    // eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
     protected timeIntervalChanges(): void { }
 
     protected addDataset(id: string, url: string): void {
@@ -135,7 +136,7 @@ export class PlotlyProfileGraphComponent
         this.processData();
     }
 
-    // tslint:disable-next-line:no-empty
+    // eslint-disable-next-line no-empty, @typescript-eslint/no-empty-function
     protected presenterOptionsChanged(options: any): void { }
 
     protected datasetOptionsChanged(internalId: string, options: TimedDatasetOptions[], firstChange: boolean): void {

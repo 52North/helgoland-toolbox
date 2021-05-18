@@ -5,14 +5,9 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
   templateUrl: './loading-overlay-progress-bar.component.html',
   styleUrls: ['./loading-overlay-progress-bar.component.scss']
 })
-export class LoadingOverlayProgressBarComponent implements OnInit {
+export class LoadingOverlayProgressBarComponent {
 
   @Input() progressBarPosition: 'top' | 'bottom';
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   @HostBinding('style.align-items') get alignItems() {
     switch (this.progressBarPosition) {

@@ -21,6 +21,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   @Input()
   public timeInterval: TimeInterval;
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
   public onSelectDate: EventEmitter<Date> = new EventEmitter();
 

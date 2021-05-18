@@ -37,6 +37,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
   @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc);
 
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
   private d3Graph: D3TimeseriesGraphComponent;

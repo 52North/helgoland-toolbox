@@ -11,7 +11,7 @@
     <div class="small">
       <n52-label-mapper label="{{dataset?.parameters.procedure.label}}"></n52-label-mapper>
     </div>
-    <div class="small" *ngIf="dataset?.parameters.category.label != dataset?.parameters.phenomenon.label">
+    <div class="small" *ngIf="dataset?.parameters.category.label !== dataset?.parameters.phenomenon.label">
       <n52-label-mapper label="{{dataset?.parameters.category.label}}"></n52-label-mapper>
     </div>
   </div>

@@ -29,6 +29,7 @@ export interface PresenterOptions { }
  */
 @Directive()
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions>
+    // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
 
     /**
@@ -72,32 +73,31 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
     /**
      * Event with a list of selected datasets.
      */
-    @Output()
-    public onDatasetSelected: EventEmitter<string[]> = new EventEmitter();
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() public onDatasetSelected: EventEmitter<string[]> = new EventEmitter();
 
     /**
      * Event when the timespan in the presentation is adjusted.
      */
-    @Output()
-    public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
     /**
      * Event, when there occured a message in the component.
      */
-    @Output()
-    public onMessageThrown: EventEmitter<PresenterMessage> = new EventEmitter();
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() public onMessageThrown: EventEmitter<PresenterMessage> = new EventEmitter();
 
     /**
      * Event flag, while there is data loaded in the component.
      */
-    @Output()
-    public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+    @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
     /**
      * Event, which triggers list of datasets where data is currently loaded.
      */
-    @Output()
-    public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
+    @Output() public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
 
     protected timespan: Timespan;
 
@@ -121,6 +121,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe((tz: string) => this.onTimezoneChanged(tz));
     }
 
+    // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.timeInterval && this.timeInterval) {
             this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
@@ -131,11 +132,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         }
     }
 
-    public ngOnDestroy(): void {
-        this.langChangeSubscription.unsubscribe();
-        this.timezoneSubscription.unsubscribe();
-    }
-
+    // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngDoCheck(): void {
 
         if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
@@ -174,6 +171,12 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
                 }
             });
         }
+    }
+
+    // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
+    public ngOnDestroy(): void {
+        this.langChangeSubscription.unsubscribe();
+        this.timezoneSubscription.unsubscribe();
     }
 
     protected deepEqual(obj1, obj2) {
