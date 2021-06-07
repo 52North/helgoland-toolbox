@@ -1,6 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -177,7 +178,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCheckboxModule,
     MatDialogModule,
     MatDatepickerModule,
-    // MatNativeDateModule,
+    MatMomentDateModule,
     BrowserAnimationsModule,
     HelgolandSelectorModule,
     HelgolandCachingModule.forRoot({

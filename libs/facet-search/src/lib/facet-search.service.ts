@@ -1,22 +1,15 @@
 import { Injectable, Optional } from '@angular/core';
-import { HelgolandTimeseries, Parameter, Timespan } from '@helgoland/core';
+import { Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { FacetParameter, ParameterFacetSort, ParameterFacetType } from './facet-search-model';
-
-export abstract class FacetSearchService {
-  abstract getResults(): Observable<HelgolandTimeseries[]>;
-  abstract getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
-  abstract selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
-  abstract setTimeseries(timeseries: HelgolandTimeseries[]);
-  abstract getFilteredResults(): HelgolandTimeseries[];
-  abstract setSelectedTimespan(timespan: Timespan);
-  abstract getSelectedTimespan(): Timespan;
-  abstract getFilteredTimespan(): Timespan;
-  abstract getCompleteTimespan(): Timespan;
-  abstract resetAllFacets();
-  abstract areFacetsSelected(): boolean;
-}
+import {
+  FacetSearchElement,
+  FacetSearchElementParameter,
+  FacetParameter,
+  FacetSearchService,
+  ParameterFacetSort,
+  ParameterFacetType,
+} from './facet-search-model';
 
 @Injectable()
 export class FacetSearchConfig {
@@ -26,15 +19,15 @@ export class FacetSearchConfig {
 @Injectable()
 export class FacetSearchServiceImpl implements FacetSearchService {
 
-  private onResultsChanged: ReplaySubject<HelgolandTimeseries[]> = new ReplaySubject(1);
+  private onResultsChanged: ReplaySubject<FacetSearchElement[]> = new ReplaySubject(1);
 
   private facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
-  private timeseries: HelgolandTimeseries[];
+  private entries: FacetSearchElement[];
 
   private selectedTimespan: Timespan;
 
-  private filteredTimeseries: HelgolandTimeseries[];
+  private filteredEntries: FacetSearchElement[];
 
   private nullable = false;
 
@@ -44,42 +37,48 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     if (config && config.showZeroValues) { this.nullable = config.showZeroValues; }
   }
 
-  public setTimeseries(ts: HelgolandTimeseries[]) {
-    this.timeseries = ts;
-    this.setFilteredTimeseries();
+  public setEntries(ts: FacetSearchElement[]) {
+    this.entries = ts;
+    this.setFilteredEntries();
   }
 
-  public getResults(): Observable<HelgolandTimeseries[]> {
+  public getResults(): Observable<FacetSearchElement[]> {
     return this.onResultsChanged.asObservable();
   }
 
   public getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[] {
     let params: FacetParameter[] = [];
-    if (this.filteredTimeseries) {
+    if (this.filteredEntries) {
       switch (type) {
         case ParameterFacetType.category:
           if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.category); }
-          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.parameters.category));
+          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.category));
           break;
         case ParameterFacetType.feature:
           if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.feature); }
-          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.parameters.feature));
+          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.feature));
           break;
         case ParameterFacetType.offering:
           if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.offering); }
-          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.parameters.offering));
+          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.offering));
           break;
         case ParameterFacetType.phenomenon:
           if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.phenomenon); }
-          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.parameters.phenomenon));
+          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.phenomenon));
           break;
         case ParameterFacetType.procedure:
           if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.procedure); }
-          this.filteredTimeseries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.parameters.procedure));
+          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.procedure));
           break;
       }
     }
     return this.sortParameters(params, sort);
+  }
+
+  public getSelectedParameter(type: ParameterFacetType): FacetParameter {
+    if (this.facets.has(type)) {
+      return this.facets.get(type);
+    }
   }
 
   public selectParameter(type: ParameterFacetType, parameter: FacetParameter) {
@@ -88,24 +87,24 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     } else {
       this.facets.delete(type);
     }
-    this.setFilteredTimeseries();
+    this.setFilteredEntries();
   }
 
   public areFacetsSelected(): boolean {
     return this.facets.size > 0 || !!this.selectedTimespan;
   }
 
-  public getFilteredResults(): HelgolandTimeseries[] {
-    return this.filteredTimeseries;
+  public getFilteredResults(): FacetSearchElement[] {
+    return this.filteredEntries;
   }
 
   public getCompleteTimespan(): Timespan {
-    return this.createTimespan(this.timeseries);
+    return this.createTimespan(this.entries);
   }
 
   public setSelectedTimespan(timespan: Timespan) {
     this.selectedTimespan = timespan;
-    this.setFilteredTimeseries();
+    this.setFilteredEntries();
   }
 
   public getSelectedTimespan(): Timespan {
@@ -113,20 +112,20 @@ export class FacetSearchServiceImpl implements FacetSearchService {
   }
 
   public getFilteredTimespan(): Timespan {
-    return this.createTimespan(this.filteredTimeseries);
+    return this.createTimespan(this.filteredEntries);
   }
 
   public resetAllFacets() {
     this.facets.clear();
     this.selectedTimespan = null;
-    this.setFilteredTimeseries();
+    this.setFilteredEntries();
   }
 
-  private createTimespan(timeseriesList: HelgolandTimeseries[]): Timespan {
+  private createTimespan(entries: FacetSearchElement[]): Timespan {
     let timespan: Timespan = null;
-    if (timeseriesList.length > 0) {
+    if (entries.length > 0) {
       timespan = { from: Infinity, to: 0 };
-      timeseriesList.forEach(e => {
+      entries.forEach(e => {
         if (e.firstValue && e.lastValue) {
           if (e.firstValue.timestamp < timespan.from) { timespan.from = e.firstValue.timestamp; }
           if (e.lastValue.timestamp > timespan.to) { timespan.to = e.lastValue.timestamp; }
@@ -138,26 +137,26 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     }
   }
 
-  private setFilteredTimeseries() {
+  private setFilteredEntries() {
     if (this.facets.size > 0 || this.selectedTimespan) {
-      this.filteredTimeseries = this.timeseries.filter(e => {
-        const matchCategory = e.parameters.category ? this.checkFacet(ParameterFacetType.category, e.parameters.category.id) : true;
-        const matchFeature = e.parameters.feature ? this.checkFacet(ParameterFacetType.feature, e.parameters.feature.id) : true;
-        const matchOffering = e.parameters.offering ? this.checkFacet(ParameterFacetType.offering, e.parameters.offering.id) : true;
-        const matchPhenomenon = e.parameters.phenomenon ? this.checkFacet(ParameterFacetType.phenomenon, e.parameters.phenomenon.id) : true;
-        const matchProcedure = e.parameters.procedure ? this.checkFacet(ParameterFacetType.procedure, e.parameters.procedure.id) : true;
+      this.filteredEntries = this.entries.filter(e => {
+        const matchCategory = e.category ? this.checkFacet(ParameterFacetType.category, e.category.id) : true;
+        const matchFeature = e.feature ? this.checkFacet(ParameterFacetType.feature, e.feature.id) : true;
+        const matchOffering = e.offering ? this.checkFacet(ParameterFacetType.offering, e.offering.id) : true;
+        const matchPhenomenon = e.phenomenon ? this.checkFacet(ParameterFacetType.phenomenon, e.phenomenon.id) : true;
+        const matchProcedure = e.procedure ? this.checkFacet(ParameterFacetType.procedure, e.procedure.id) : true;
         const matchTimespan = this.checkTimespan(e);
         return matchCategory && matchFeature && matchOffering && matchPhenomenon && matchProcedure && matchTimespan;
       });
     } else {
-      this.filteredTimeseries = this.timeseries;
+      this.filteredEntries = this.entries;
     }
-    if (this.filteredTimeseries) {
-      this.onResultsChanged.next(this.filteredTimeseries);
+    if (this.filteredEntries) {
+      this.onResultsChanged.next(this.filteredEntries);
     }
   }
 
-  private checkTimespan(ts: HelgolandTimeseries): boolean {
+  private checkTimespan(ts: FacetSearchElement): boolean {
     if (this.selectedTimespan) {
       const checkfrom = ts.lastValue && ts.lastValue.timestamp ? this.selectedTimespan.from <= ts.lastValue.timestamp : true;
       const checkTo = ts.firstValue && ts.firstValue.timestamp ? this.selectedTimespan.to >= ts.firstValue.timestamp : true;
@@ -190,29 +189,31 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return list;
   }
 
-  private addParameter(list: FacetParameter[], type: ParameterFacetType, entry: Parameter) {
-    const existing = list.find(e => e.label === entry.label);
-    if (existing) {
-      existing.count += 1;
-    } else {
-      list.push({
-        id: entry.id,
-        label: entry.label,
-        count: 1,
-        selected: this.checkSelection(type, entry.id)
-      });
+  private addParameter(list: FacetParameter[], type: ParameterFacetType, entry: FacetSearchElementParameter) {
+    if (entry) {
+      const existing = list.find(e => e.label === entry.label);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        list.push({
+          id: entry.id,
+          label: entry.label,
+          count: 1,
+          selected: this.checkSelection(type, entry.id)
+        });
+      }
     }
   }
 
   private createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
     const params: FacetParameter[] = [];
-    this.timeseries.forEach(ts => {
-      if (!params.find(e => e.label === ts.parameters[type].label)) {
+    this.entries.forEach(ts => {
+      if (ts[type] && !params.find(e => e.label === ts[type].label)) {
         params.push({
-          id: ts.parameters[type].id,
-          label: ts.parameters[type].label,
+          id: ts[type].id,
+          label: ts[type].label,
           count: 0,
-          selected: this.checkSelection(type, ts.parameters[type].id)
+          selected: this.checkSelection(type, ts[type].id)
         });
       }
     });

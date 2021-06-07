@@ -5,7 +5,8 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { ParameterFacetComponent } from './components/parameter-facet/parameter-facet.component';
 import { ResultListComponent } from './components/result-list/result-list.component';
 import { ResultMapComponent } from './components/result-map/result-map.component';
-import { FacetSearchService, FacetSearchServiceImpl } from './facet-search.service';
+import { FacetSearchService } from './facet-search-model';
+import { FacetSearchServiceImpl } from './facet-search.service';
 
 const COMPONENTS = [
   ParameterFacetComponent,

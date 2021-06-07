@@ -1,7 +1,7 @@
 import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 
+import { FacetSearchService } from '../../facet-search-model';
 import { HelgolandFacetSearchModule } from '../../facet-search.module';
-import { FacetSearchService } from '../../facet-search.service';
 import { ResultListComponent } from './result-list.component';
 
 describe('ResultListComponent', () => {

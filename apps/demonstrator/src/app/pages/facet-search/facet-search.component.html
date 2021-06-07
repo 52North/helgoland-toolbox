@@ -1,96 +1,88 @@
 <div class="content">
-    <div class="facets">
-        <div class="facet">
-            <div class="facet-header">
-                <div class="facet-header-label">Category</div>
-                <div class="autocomplete">
-                    <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="setAutocomplete(categoryAutocomplete, $event)">
-                </div>
-            </div>
-            <n52-parameter-facet [facetSearchService]="facetSearch" [type]="categoryType"
-                [textualFilter]="categoryAutocomplete"></n52-parameter-facet>
+  <div class="facets">
+    <div class="facet">
+      <div class="facet-header">
+        <div class="facet-header-label">Category</div>
+        <div class="autocomplete">
+          <input type="text" class="form-control" placeholder="Autocomplete"
+            (input)="setAutocomplete(categoryAutocomplete, $event)">
         </div>
-        <div class="facet">
-            <div class="facet-header">
-                <div class="facet-header-label ">Procedure</div>
-                <div class="autocomplete">
-                    <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="setAutocomplete(procedureAutocomplete, $event)">
-                </div>
-            </div>
-            <n52-parameter-facet [facetSearchService]="facetSearch" [type]="procedureType"
-                [textualFilter]="procedureAutocomplete"></n52-parameter-facet>
-        </div>
-        <div class="facet">
-            <div class="facet-header">
-                <div class="facet-header-label">Feature</div>
-                <div class="autocomplete ">
-                    <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="setAutocomplete(featureAutocomplete, $event)">
-                </div>
-            </div>
-            <n52-parameter-facet [facetSearchService]="facetSearch" [type]="featureType"
-                [textualFilter]="featureAutocomplete" [sort]="featureSort"></n52-parameter-facet>
-        </div>
-        <div class="facet">
-            <div class="facet-header">
-                <div class="facet-header-label">Phenomenon</div>
-                <div class="autocomplete">
-                    <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="setAutocomplete(phenomenonAutocomplete, $event)">
-                </div>
-            </div>
-            <n52-parameter-facet [facetSearchService]="facetSearch" [type]="phenomenonType"
-                [textualFilter]="phenomenonAutocomplete"></n52-parameter-facet>
-        </div>
-        <div class="facet">
-            <div class="facet-header">
-                <div class="facet-header-label">Offering</div>
-                <div class="autocomplete">
-                    <input type="text" class="form-control" placeholder="Autocomplete"
-                        (input)="setAutocomplete(offeringAutocomplete, $event)">
-                </div>
-            </div>
-            <n52-parameter-facet [facetSearchService]="facetSearch" [type]="offeringType"
-                [textualFilter]="offeringAutocomplete"></n52-parameter-facet>
-        </div>
-        <div class="facet" *ngIf="selectedStart && selectedEnd">
-            <div class="facet-header">
-                <div class="facet-header-label">Timeframe</div>
-            </div>
-            <div>
-                <input matInput [matDatepicker]="pickerFrom" [value]="selectedStart" (dateChange)="setStart($event)">
-                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFrom></mat-datepicker>
-            </div>
-            <div>
-                <input matInput [matDatepicker]="pickerTo" [value]="selectedEnd" (dateChange)="setEnd($event)">
-                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
-            </div>
-        </div>
-        <button mat-button [disabled]="resetAllDisabled" (click)="resetAllFacets()">reset all facets</button>
+      </div>
+      <n52-parameter-facet [facetSearchService]="facetSearch" [type]="categoryType"
+        [textualFilter]="categoryAutocomplete"></n52-parameter-facet>
     </div>
-    <div class="results">
-        <div class="toggle-bar">
-            <span>
-                {{resultCount}} Datasets found
-            </span>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-"
-                    [ngClass]="{'btn-primary': !showMap, 'btn-outline-primary': showMap}"
-                    (click)="toggleResultView()">List</button>
-                <button type="button" class="btn" [ngClass]="{'btn-primary': showMap, 'btn-outline-primary': !showMap}"
-                    (click)="toggleResultView()">Map</button>
-            </div>
+    <div class="facet">
+      <div class="facet-header">
+        <div class="facet-header-label ">Procedure</div>
+        <div class="autocomplete">
+          <input type="text" class="form-control" placeholder="Autocomplete"
+            (input)="setAutocomplete(procedureAutocomplete, $event)">
         </div>
-        <div class="result-content">
-            <n52-result-list *ngIf="!showMap" [facetSearchService]="facetSearch" (selected)="onSelectedTs($event)">
-            </n52-result-list>
-            <n52-result-map *ngIf="showMap" [facetSearchService]="facetSearch" [cluster]="true"
-                [aggregateToStations]="true" [autoZoomToResults]="false" (selected)="onSelectedTs($event)">
-            </n52-result-map>
-        </div>
+      </div>
+      <n52-parameter-facet [facetSearchService]="facetSearch" [type]="procedureType"
+        [textualFilter]="procedureAutocomplete"></n52-parameter-facet>
     </div>
+    <div class="facet">
+      <div class="facet-header">
+        <div class="facet-header-label">Feature</div>
+        <div class="autocomplete ">
+          <input type="text" class="form-control" placeholder="Autocomplete"
+            (input)="setAutocomplete(featureAutocomplete, $event)">
+        </div>
+      </div>
+      <n52-parameter-facet [facetSearchService]="facetSearch" [type]="featureType" [textualFilter]="featureAutocomplete"
+        [sort]="featureSort"></n52-parameter-facet>
+    </div>
+    <div class="facet">
+      <div class="facet-header">
+        <div class="facet-header-label">Phenomenon</div>
+        <div class="autocomplete">
+          <input type="text" class="form-control" placeholder="Autocomplete"
+            (input)="setAutocomplete(phenomenonAutocomplete, $event)">
+        </div>
+      </div>
+      <n52-parameter-facet [facetSearchService]="facetSearch" [type]="phenomenonType"
+        [textualFilter]="phenomenonAutocomplete"></n52-parameter-facet>
+    </div>
+    <div class="facet">
+      <div class="facet-header">
+        <div class="facet-header-label">Offering</div>
+        <div class="autocomplete">
+          <input type="text" class="form-control" placeholder="Autocomplete"
+            (input)="setAutocomplete(offeringAutocomplete, $event)">
+        </div>
+      </div>
+      <n52-parameter-facet [facetSearchService]="facetSearch" [type]="offeringType"
+        [textualFilter]="offeringAutocomplete"></n52-parameter-facet>
+    </div>
+    <div class="facet" *ngIf="selectedStart && selectedEnd" style="display: flex; flex-direction: row; flex: 0 0 auto;">
+      <input matInput [matDatepicker]="pickerFrom" [value]="selectedStart" (dateChange)="setStart($event)">
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+      <input matInput [matDatepicker]="pickerTo" [value]="selectedEnd" (dateChange)="setEnd($event)">
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </div>
+    <button mat-button [disabled]="resetAllDisabled" (click)="resetAllFacets()">reset all facets</button>
+  </div>
+  <div class="results">
+    <div class="toggle-bar">
+      <span>
+        {{resultCount}} Datasets found
+      </span>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-" [ngClass]="{'btn-primary': !showMap, 'btn-outline-primary': showMap}"
+          (click)="toggleResultView()">List</button>
+        <button type="button" class="btn" [ngClass]="{'btn-primary': showMap, 'btn-outline-primary': !showMap}"
+          (click)="toggleResultView()">Map</button>
+      </div>
+    </div>
+    <div class="result-content">
+      <n52-result-list *ngIf="!showMap" [facetSearchService]="facetSearch" (selected)="onSelectedEntry($event)">
+      </n52-result-list>
+      <n52-result-map *ngIf="showMap" [facetSearchService]="facetSearch" [cluster]="true" [aggregateToStations]="true"
+        [autoZoomToResults]="false" (selectedEntry)="onSelectedEntry($event)" (selectedFeature)="onSelectedFeature($event)">
+      </n52-result-map>
+    </div>
+  </div>
 </div>
