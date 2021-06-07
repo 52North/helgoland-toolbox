@@ -18,7 +18,7 @@ export class ReferenceValues<T extends IDataEntry> {
 
 export interface TimeValueEntry extends IDataEntry {
     timestamp: number;
-    value: number;
+    value: number | null;
 }
 
 export type TimeValueTuple = [number, number];
