@@ -1,55 +1,874 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "newProjectRoot": "projects",
   "projects": {
-    "demonstrator": {
+    "helgoland-toolbox": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
-      "root": "apps/demonstrator",
-      "sourceRoot": "apps/demonstrator/src",
-      "prefix": "helgoland",
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/demonstrator",
-            "index": "apps/demonstrator/src/index.html",
-            "main": "apps/demonstrator/src/main.ts",
-            "polyfills": "apps/demonstrator/src/polyfills.ts",
-            "tsConfig": "apps/demonstrator/tsconfig.app.json",
+            "outputPath": "dist/helgoland-toolbox",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
-              "apps/demonstrator/src/favicon.ico",
-              "apps/demonstrator/src/assets"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
-              "apps/demonstrator/src/styles.scss"
+              "src/styles.scss"
             ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
+              "budgets": [
                 {
-                  "replace": "apps/demonstrator/src/environments/environment.ts",
-                  "with": "apps/demonstrator/src/environments/environment.prod.ts"
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "helgoland-toolbox:build:production"
+            },
+            "development": {
+              "browserTarget": "helgoland-toolbox:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "helgoland-toolbox:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/core": {
+      "projectType": "library",
+      "root": "projects/helgoland/core",
+      "sourceRoot": "projects/helgoland/core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/core/src/test.ts",
+            "tsConfig": "projects/helgoland/core/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/core/**/*.ts",
+              "projects/helgoland/core/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/auth": {
+      "projectType": "library",
+      "root": "projects/helgoland/auth",
+      "sourceRoot": "projects/helgoland/auth/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/auth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/auth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/auth/src/test.ts",
+            "tsConfig": "projects/helgoland/auth/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/auth/**/*.ts",
+              "projects/helgoland/auth/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/caching": {
+      "projectType": "library",
+      "root": "projects/helgoland/caching",
+      "sourceRoot": "projects/helgoland/caching/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/caching/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/caching/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/caching/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/caching/src/test.ts",
+            "tsConfig": "projects/helgoland/caching/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/caching/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/caching/**/*.ts",
+              "projects/helgoland/caching/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/control": {
+      "projectType": "library",
+      "root": "projects/helgoland/control",
+      "sourceRoot": "projects/helgoland/control/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/control/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/control/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/control/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/control/src/test.ts",
+            "tsConfig": "projects/helgoland/control/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/control/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/control/**/*.ts",
+              "projects/helgoland/control/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/d3": {
+      "projectType": "library",
+      "root": "projects/helgoland/d3",
+      "sourceRoot": "projects/helgoland/d3/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/d3/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/d3/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/d3/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/d3/src/test.ts",
+            "tsConfig": "projects/helgoland/d3/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/d3/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/d3/**/*.ts",
+              "projects/helgoland/d3/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/depiction": {
+      "projectType": "library",
+      "root": "projects/helgoland/depiction",
+      "sourceRoot": "projects/helgoland/depiction/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/depiction/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/depiction/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/depiction/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/depiction/src/test.ts",
+            "tsConfig": "projects/helgoland/depiction/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/depiction/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/depiction/**/*.ts",
+              "projects/helgoland/depiction/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/eventing": {
+      "projectType": "library",
+      "root": "projects/helgoland/eventing",
+      "sourceRoot": "projects/helgoland/eventing/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/eventing/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/eventing/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/eventing/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/eventing/src/test.ts",
+            "tsConfig": "projects/helgoland/eventing/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/eventing/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/eventing/**/*.ts",
+              "projects/helgoland/eventing/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/facet-search": {
+      "projectType": "library",
+      "root": "projects/helgoland/facet-search",
+      "sourceRoot": "projects/helgoland/facet-search/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/facet-search/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/facet-search/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/facet-search/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/facet-search/src/test.ts",
+            "tsConfig": "projects/helgoland/facet-search/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/facet-search/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/facet-search/**/*.ts",
+              "projects/helgoland/facet-search/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/map": {
+      "projectType": "library",
+      "root": "projects/helgoland/map",
+      "sourceRoot": "projects/helgoland/map/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/map/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/map/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/map/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/map/src/test.ts",
+            "tsConfig": "projects/helgoland/map/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/map/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/map/**/*.ts",
+              "projects/helgoland/map/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/favorite": {
+      "projectType": "library",
+      "root": "projects/helgoland/favorite",
+      "sourceRoot": "projects/helgoland/favorite/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/favorite/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/favorite/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/favorite/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/favorite/src/test.ts",
+            "tsConfig": "projects/helgoland/favorite/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/favorite/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/favorite/**/*.ts",
+              "projects/helgoland/favorite/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/modification": {
+      "projectType": "library",
+      "root": "projects/helgoland/modification",
+      "sourceRoot": "projects/helgoland/modification/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/modification/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/modification/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/modification/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/modification/src/test.ts",
+            "tsConfig": "projects/helgoland/modification/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/modification/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/modification/**/*.ts",
+              "projects/helgoland/modification/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/permalink": {
+      "projectType": "library",
+      "root": "projects/helgoland/permalink",
+      "sourceRoot": "projects/helgoland/permalink/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/permalink/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/permalink/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/permalink/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/permalink/src/test.ts",
+            "tsConfig": "projects/helgoland/permalink/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/permalink/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/permalink/**/*.ts",
+              "projects/helgoland/permalink/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/plotly": {
+      "projectType": "library",
+      "root": "projects/helgoland/plotly",
+      "sourceRoot": "projects/helgoland/plotly/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/plotly/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/plotly/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/plotly/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/plotly/src/test.ts",
+            "tsConfig": "projects/helgoland/plotly/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/plotly/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/plotly/**/*.ts",
+              "projects/helgoland/plotly/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/selector": {
+      "projectType": "library",
+      "root": "projects/helgoland/selector",
+      "sourceRoot": "projects/helgoland/selector/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/selector/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/selector/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/selector/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/selector/src/test.ts",
+            "tsConfig": "projects/helgoland/selector/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/selector/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/selector/**/*.ts",
+              "projects/helgoland/selector/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/sensorml": {
+      "projectType": "library",
+      "root": "projects/helgoland/sensorml",
+      "sourceRoot": "projects/helgoland/sensorml/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/sensorml/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/sensorml/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/sensorml/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/sensorml/src/test.ts",
+            "tsConfig": "projects/helgoland/sensorml/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/sensorml/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/sensorml/**/*.ts",
+              "projects/helgoland/sensorml/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/time": {
+      "projectType": "library",
+      "root": "projects/helgoland/time",
+      "sourceRoot": "projects/helgoland/time/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/time/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/time/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/time/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/time/src/test.ts",
+            "tsConfig": "projects/helgoland/time/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/time/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/time/**/*.ts",
+              "projects/helgoland/time/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/time-range-slider": {
+      "projectType": "library",
+      "root": "projects/helgoland/time-range-slider",
+      "sourceRoot": "projects/helgoland/time-range-slider/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/time-range-slider/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/time-range-slider/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/time-range-slider/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/time-range-slider/src/test.ts",
+            "tsConfig": "projects/helgoland/time-range-slider/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/time-range-slider/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/time-range-slider/**/*.ts",
+              "projects/helgoland/time-range-slider/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@helgoland/open-layers": {
+      "projectType": "library",
+      "root": "projects/helgoland/open-layers",
+      "sourceRoot": "projects/helgoland/open-layers/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland/open-layers/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland/open-layers/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland/open-layers/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland/open-layers/src/test.ts",
+            "tsConfig": "projects/helgoland/open-layers/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland/open-layers/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland/open-layers/**/*.ts",
+              "projects/helgoland/open-layers/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "helgoland-timeseries": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/helgoland-timeseries",
+      "sourceRoot": "projects/helgoland-timeseries/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/helgoland-timeseries",
+            "index": "projects/helgoland-timeseries/src/index.html",
+            "main": "projects/helgoland-timeseries/src/main.ts",
+            "polyfills": "projects/helgoland-timeseries/src/polyfills.ts",
+            "tsConfig": "projects/helgoland-timeseries/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/helgoland-timeseries/src/favicon.ico",
+              "projects/helgoland-timeseries/src/assets"
+            ],
+            "styles": [
+              "projects/helgoland-timeseries/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
               "budgets": [
                 {
                   "type": "initial",
@@ -61,932 +880,109 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "demonstrator:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "demonstrator:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "demonstrator:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/demonstrator/**/*.ts",
-              "apps/demonstrator/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/demonstrator/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "core": {
-      "projectType": "library",
-      "root": "libs/core",
-      "sourceRoot": "libs/core/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/core"
-          ],
-          "options": {
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "project": "libs/core/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/core/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/core/**/*.ts",
-              "libs/core/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "auth": {
-      "projectType": "library",
-      "root": "libs/auth",
-      "sourceRoot": "libs/auth/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/auth"
-          ],
-          "options": {
-            "tsConfig": "libs/auth/tsconfig.lib.json",
-            "project": "libs/auth/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/auth/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/auth/**/*.ts",
-              "libs/auth/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/auth/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "d3": {
-      "projectType": "library",
-      "root": "libs/d3",
-      "sourceRoot": "libs/d3/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/d3"
-          ],
-          "options": {
-            "tsConfig": "libs/d3/tsconfig.lib.json",
-            "project": "libs/d3/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/d3/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/d3/**/*.ts",
-              "libs/d3/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/d3/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "depiction": {
-      "projectType": "library",
-      "root": "libs/depiction",
-      "sourceRoot": "libs/depiction/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/depiction"
-          ],
-          "options": {
-            "tsConfig": "libs/depiction/tsconfig.lib.json",
-            "project": "libs/depiction/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/depiction/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/depiction/**/*.ts",
-              "libs/depiction/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/depiction/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "control": {
-      "projectType": "library",
-      "root": "libs/control",
-      "sourceRoot": "libs/control/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/control"
-          ],
-          "options": {
-            "tsConfig": "libs/control/tsconfig.lib.json",
-            "project": "libs/control/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/control/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/control/**/*.ts",
-              "libs/control/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/control/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "caching": {
-      "projectType": "library",
-      "root": "libs/caching",
-      "sourceRoot": "libs/caching/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/caching"
-          ],
-          "options": {
-            "tsConfig": "libs/caching/tsconfig.lib.json",
-            "project": "libs/caching/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/caching/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/caching/**/*.ts",
-              "libs/caching/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/caching/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "eventing": {
-      "projectType": "library",
-      "root": "libs/eventing",
-      "sourceRoot": "libs/eventing/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/eventing"
-          ],
-          "options": {
-            "tsConfig": "libs/eventing/tsconfig.lib.json",
-            "project": "libs/eventing/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/eventing/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/eventing/**/*.ts",
-              "libs/eventing/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/eventing/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "map": {
-      "projectType": "library",
-      "root": "libs/map",
-      "sourceRoot": "libs/map/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/map"
-          ],
-          "options": {
-            "tsConfig": "libs/map/tsconfig.lib.json",
-            "project": "libs/map/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/map/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/map/**/*.ts",
-              "libs/map/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/map/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "favorite": {
-      "projectType": "library",
-      "root": "libs/favorite",
-      "sourceRoot": "libs/favorite/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/favorite"
-          ],
-          "options": {
-            "tsConfig": "libs/favorite/tsconfig.lib.json",
-            "project": "libs/favorite/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/favorite/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/favorite/**/*.ts",
-              "libs/favorite/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/favorite/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "facet-search": {
-      "projectType": "library",
-      "root": "libs/facet-search",
-      "sourceRoot": "libs/facet-search/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/facet-search"
-          ],
-          "options": {
-            "tsConfig": "libs/facet-search/tsconfig.lib.json",
-            "project": "libs/facet-search/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/facet-search/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/facet-search/**/*.ts",
-              "libs/facet-search/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/facet-search/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "modification": {
-      "projectType": "library",
-      "root": "libs/modification",
-      "sourceRoot": "libs/modification/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/modification"
-          ],
-          "options": {
-            "tsConfig": "libs/modification/tsconfig.lib.json",
-            "project": "libs/modification/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/modification/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/modification/**/*.ts",
-              "libs/modification/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/modification/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "permalink": {
-      "projectType": "library",
-      "root": "libs/permalink",
-      "sourceRoot": "libs/permalink/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/permalink"
-          ],
-          "options": {
-            "tsConfig": "libs/permalink/tsconfig.lib.json",
-            "project": "libs/permalink/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/permalink/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/permalink/**/*.ts",
-              "libs/permalink/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/permalink/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "plotly": {
-      "projectType": "library",
-      "root": "libs/plotly",
-      "sourceRoot": "libs/plotly/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/plotly"
-          ],
-          "options": {
-            "tsConfig": "libs/plotly/tsconfig.lib.json",
-            "project": "libs/plotly/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/plotly/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/plotly/**/*.ts",
-              "libs/plotly/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/plotly/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "selector": {
-      "projectType": "library",
-      "root": "libs/selector",
-      "sourceRoot": "libs/selector/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/selector"
-          ],
-          "options": {
-            "tsConfig": "libs/selector/tsconfig.lib.json",
-            "project": "libs/selector/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/selector/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/selector/**/*.ts",
-              "libs/selector/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/selector/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "sensorml": {
-      "projectType": "library",
-      "root": "libs/sensorml",
-      "sourceRoot": "libs/sensorml/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/sensorml"
-          ],
-          "options": {
-            "tsConfig": "libs/sensorml/tsconfig.lib.json",
-            "project": "libs/sensorml/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/sensorml/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/sensorml/**/*.ts",
-              "libs/sensorml/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/sensorml/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "time": {
-      "projectType": "library",
-      "root": "libs/time",
-      "sourceRoot": "libs/time/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/time"
-          ],
-          "options": {
-            "tsConfig": "libs/time/tsconfig.lib.json",
-            "project": "libs/time/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/time/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/time/**/*.ts",
-              "libs/time/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/time/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "time-range-slider": {
-      "projectType": "library",
-      "root": "libs/time-range-slider",
-      "sourceRoot": "libs/time-range-slider/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/time-range-slider"
-          ],
-          "options": {
-            "tsConfig": "libs/time-range-slider/tsconfig.lib.json",
-            "project": "libs/time-range-slider/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/time-range-slider/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/time-range-slider/**/*.ts",
-              "libs/time-range-slider/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/time-range-slider/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "open-layers": {
-      "projectType": "library",
-      "root": "libs/open-layers",
-      "sourceRoot": "libs/open-layers/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "outputs": [
-            "libs/open-layers"
-          ],
-          "options": {
-            "tsConfig": "libs/open-layers/tsconfig.lib.json",
-            "project": "libs/open-layers/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/open-layers/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/open-layers/**/*.ts",
-              "libs/open-layers/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/open-layers/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "helgoland": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/helgoland",
-      "sourceRoot": "apps/helgoland/src",
-      "prefix": "helgoland",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/helgoland",
-            "index": "apps/helgoland/src/index.html",
-            "main": "apps/helgoland/src/main.ts",
-            "polyfills": "apps/helgoland/src/polyfills.ts",
-            "tsConfig": "apps/helgoland/tsconfig.app.json",
-            "assets": [
-              "apps/helgoland/src/favicon.ico",
-              "apps/helgoland/src/assets"
-            ],
-            "styles": [
-              "apps/helgoland/src/styles.scss"
-            ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
+              ],
               "fileReplacements": [
                 {
-                  "replace": "apps/helgoland/src/environments/environment.ts",
-                  "with": "apps/helgoland/src/environments/environment.prod.ts"
+                  "replace": "projects/helgoland-timeseries/src/environments/environment.ts",
+                  "with": "projects/helgoland-timeseries/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "helgoland:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "helgoland:build:production"
+              "browserTarget": "helgoland-timeseries:build:production"
+            },
+            "development": {
+              "browserTarget": "helgoland-timeseries:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "helgoland:build"
+            "browserTarget": "helgoland-timeseries:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland-timeseries/src/test.ts",
+            "polyfills": "projects/helgoland-timeseries/src/polyfills.ts",
+            "tsConfig": "projects/helgoland-timeseries/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland-timeseries/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/helgoland-timeseries/src/favicon.ico",
+              "projects/helgoland-timeseries/src/assets"
+            ],
+            "styles": [
+              "projects/helgoland-timeseries/src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "apps/helgoland/**/*.ts",
-              "apps/helgoland/**/*.html"
+              "projects/helgoland-timeseries/**/*.ts",
+              "projects/helgoland-timeseries/**/*.html"
             ]
           }
+        }
+      }
+    },
+    "helgoland-common": {
+      "projectType": "library",
+      "root": "projects/helgoland-common",
+      "sourceRoot": "projects/helgoland-common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/helgoland-common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helgoland-common/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helgoland-common/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "jestConfig": "apps/helgoland/jest.config.js",
-            "passWithNoTests": true
+            "main": "projects/helgoland-common/src/test.ts",
+            "tsConfig": "projects/helgoland-common/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland-common/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/helgoland-common/**/*.ts",
+              "projects/helgoland-common/**/*.html"
+            ]
           }
         }
       }
@@ -996,50 +992,35 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
-      "root": "apps/helgoland-trajectories",
-      "sourceRoot": "apps/helgoland-trajectories/src",
-      "prefix": "helgoland-trajectories",
+      "root": "projects/helgoland-trajectories",
+      "sourceRoot": "projects/helgoland-trajectories/src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/helgoland-trajectories",
-            "index": "apps/helgoland-trajectories/src/index.html",
-            "main": "apps/helgoland-trajectories/src/main.ts",
-            "polyfills": "apps/helgoland-trajectories/src/polyfills.ts",
-            "tsConfig": "apps/helgoland-trajectories/tsconfig.app.json",
+            "outputPath": "dist/helgoland-trajectories",
+            "index": "projects/helgoland-trajectories/src/index.html",
+            "main": "projects/helgoland-trajectories/src/main.ts",
+            "polyfills": "projects/helgoland-trajectories/src/polyfills.ts",
+            "tsConfig": "projects/helgoland-trajectories/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
-              "apps/helgoland-trajectories/src/favicon.ico",
-              "apps/helgoland-trajectories/src/assets"
+              "projects/helgoland-trajectories/src/favicon.ico",
+              "projects/helgoland-trajectories/src/assets"
             ],
             "styles": [
-              "apps/helgoland-trajectories/src/styles.scss"
+              "projects/helgoland-trajectories/src/styles.scss"
             ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/helgoland-trajectories/src/environments/environment.ts",
-                  "with": "apps/helgoland-trajectories/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -1051,20 +1032,37 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/helgoland-trajectories/src/environments/environment.ts",
+                  "with": "projects/helgoland-trajectories/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "helgoland-trajectories:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "helgoland-trajectories:build:production"
+            },
+            "development": {
+              "browserTarget": "helgoland-trajectories:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -1072,99 +1070,38 @@
             "browserTarget": "helgoland-trajectories:build"
           }
         },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/helgoland-trajectories/src/test.ts",
+            "polyfills": "projects/helgoland-trajectories/src/polyfills.ts",
+            "tsConfig": "projects/helgoland-trajectories/tsconfig.spec.json",
+            "karmaConfig": "projects/helgoland-trajectories/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/helgoland-trajectories/src/favicon.ico",
+              "projects/helgoland-trajectories/src/assets"
+            ],
+            "styles": [
+              "projects/helgoland-trajectories/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "apps/helgoland-trajectories/**/*.ts",
-              "apps/helgoland-trajectories/**/*.html"
+              "projects/helgoland-trajectories/**/*.ts",
+              "projects/helgoland-trajectories/**/*.html"
             ]
           }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/helgoland-trajectories/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "helgoland-common": {
-      "projectType": "library",
-      "root": "libs/helgoland-common",
-      "sourceRoot": "libs/helgoland-common/src",
-      "prefix": "helgoland-toolbox",
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/helgoland-common/**/*.ts",
-              "libs/helgoland-common/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/helgoland-common/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
         }
       }
     }
   },
+  "defaultProject": "helgoland-toolbox",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "helgoland"
+  }
 }

@@ -2,25 +2,22 @@ import { readFile, writeFile } from 'jsonfile';
 
 import { modules } from './utils';
 
-readFile('./package.json', (err, obj) => {
-  console.log(`bump to version ${obj.version}`);
-  // console.log(obj.dependencies);
-  modules.forEach(p => {
-    const packageFile = './libs/' + p + '/package.json';
-    readFile(packageFile, (e, packageJson) => {
-      packageJson.version = obj.version;
-      // console.log(packageJson.dependencies);
-      for (const key in packageJson.dependencies) {
-        if (Object.prototype.hasOwnProperty.call(packageJson.dependencies, key)) {
-          // const element = packageJson.dependencies[key];
-          if (obj.dependencies[key]) {
-            packageJson.dependencies[key] = obj.dependencies[key];
-          } else {
-            console.error(`Could not found ${key} in main package.json`);
-          }
+readFile('./package.json', (err, packageMain) => {
+  console.log(`bump to version ${packageMain.version}`);
+  modules.forEach(lib => {
+    const packageFile = './projects/helgoland/' + lib + '/package.json';
+    readFile(packageFile, (e, packageLib) => {
+      packageLib.version = packageMain.version;
+      for (const key in packageLib.dependencies) {
+        if (packageMain.dependencies[key]) {
+          packageLib.dependencies[key] = packageMain.dependencies[key];
+        } else if (packageMain.devDependencies[key]) {
+          packageLib.dependencies[key] = packageMain.devDependencies[key];
+        } else {
+          console.error(`Could not found ${key} in main package.json for lib ${lib}`);
         }
       }
-      writeFile('./libs/' + p + '/package.json', packageJson, { spaces: 2 }, (error) => {
+      writeFile('./projects/helgoland/' + lib + '/package.json', packageLib, { spaces: 2 }, (error) => {
         if (error) { console.error(error); }
       });
     });

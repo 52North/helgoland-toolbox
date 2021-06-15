@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/helgoland/selector",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "@helgoland/depiction": "@helgoland/depiction",
+      "@ngx-translate/core": "@ngx-translate/core"
+    }
+  },
+  "allowedNonPeerDependencies": [""]
+}

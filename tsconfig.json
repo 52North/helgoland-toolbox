@@ -1,49 +1,111 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
+    "paths": {
+      "@helgoland/auth": [
+        "dist/helgoland/auth",
+        "projects/helgoland/auth/src/public-api.ts"
+      ],
+      "@helgoland/caching": [
+        "dist/helgoland/caching",
+        "projects/helgoland/caching/src/public-api.ts"
+      ],
+      "@helgoland/control": [
+        "dist/helgoland/control",
+        "projects/helgoland/control/src/public-api.ts",
+      ],
+      "@helgoland/core": [
+        "dist/helgoland/core",
+        "projects/helgoland/core/src/public-api.ts"
+      ],
+      "@helgoland/d3": [
+        "dist/helgoland/d3",
+        "projects/helgoland/d3/src/public-api.ts",
+      ],
+      "@helgoland/depiction": [
+        "dist/helgoland/depiction",
+        "projects/helgoland/depiction/src/public-api.ts",
+      ],
+      "@helgoland/eventing": [
+        "dist/helgoland/eventing",
+        "projects/helgoland/eventing/src/public-api.ts",
+      ],
+      "@helgoland/facet-search": [
+        "dist/helgoland/facet-search",
+        "projects/helgoland/facet-search/src/public-api.ts",
+      ],
+      "@helgoland/favorite": [
+        "dist/helgoland/favorite",
+        "projects/helgoland/favorite/src/public-api.ts",
+      ],
+      "@helgoland/map": [
+        "dist/helgoland/map",
+        "projects/helgoland/map/src/public-api.ts",
+      ],
+      "@helgoland/modification": [
+        "dist/helgoland/modification",
+        "projects/helgoland/modification/src/public-api.ts",
+      ],
+      "@helgoland/open-layers": [
+        "dist/helgoland/open-layers",
+        "projects/helgoland/open-layers/src/public-api.ts",
+      ],
+      "@helgoland/permalink": [
+        "dist/helgoland/permalink",
+        "projects/helgoland/permalink/src/public-api.ts",
+      ],
+      "@helgoland/plotly": [
+        "dist/helgoland/plotly",
+        "projects/helgoland/plotly/src/public-api.ts",
+      ],
+      "@helgoland/selector": [
+        "dist/helgoland/selector",
+        "projects/helgoland/selector/src/public-api.ts",
+      ],
+      "@helgoland/sensorml": [
+        "dist/helgoland/sensorml",
+        "projects/helgoland/sensorml/src/public-api.ts",
+      ],
+      "@helgoland/time": [
+        "dist/helgoland/time",
+        "projects/helgoland/time/src/public-api.ts",
+      ],
+      "@helgoland/time-range-slider": [
+        "dist/helgoland/time-range-slider",
+        "projects/helgoland/time-range-slider/src/public-api.ts",
+      ],
+      "helgoland-common": [
+        "dist/helgoland-common",
+        "projects/helgoland-common/src/public-api.ts",
+      ]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    /* move to true */
+    "strict": false,
+    /* move to true */
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "paths": {
-      "@helgoland/core": ["dist/libs/core", "libs/core/src/index.ts"],
-      "@helgoland/auth": ["libs/auth/src/index.ts"],
-      "@helgoland/d3": ["libs/d3/src/index.ts"],
-      "@helgoland/depiction": [
-        "dist/libs/depiction",
-        "libs/depiction/src/index.ts"
-      ],
-      "@helgoland/control": ["libs/control/src/index.ts"],
-      "@helgoland/caching": ["libs/caching/src/index.ts"],
-      "@helgoland/eventing": ["libs/eventing/src/index.ts"],
-      "@helgoland/map": ["dist/libs/map", "libs/map/src/index.ts"],
-      "@helgoland/favorite": ["libs/favorite/src/index.ts"],
-      "@helgoland/facet-search": ["libs/facet-search/src/index.ts"],
-      "@helgoland/modification": ["libs/modification/src/index.ts"],
-      "@helgoland/permalink": ["libs/permalink/src/index.ts"],
-      "@helgoland/plotly": ["libs/plotly/src/index.ts"],
-      "@helgoland/selector": ["libs/selector/src/index.ts"],
-      "@helgoland/sensorml": ["libs/sensorml/src/index.ts"],
-      "@helgoland/time": ["libs/time/src/index.ts"],
-      "@helgoland/time-range-slider": ["libs/time-range-slider/src/index.ts"],
-      "@helgoland/open-layers": ["libs/open-layers/src/index.ts"],
-      "@helgoland-toolbox/helgoland-common": ["libs/helgoland-common/src/index.ts"]
-    }
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   },
   "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
-  "exclude": ["node_modules", "tmp"]
+  }
 }

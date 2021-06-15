@@ -3,8 +3,8 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const pjson = require('../package.json');
 
-let apptype = 'helgoland';
-let appname = apptype;
+let appname = 'helgoland-timeseries';
+// let appname = apptype;
 
 const xmlAsText = `<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -45,9 +45,9 @@ fs.writeFile('./web.xml', xmlAsText, (errWrite) => {
 });
 
 function buildApplication() {
-  console.log(`Build application ${apptype}`);
+  console.log(`Build application ${appname}`);
   execSync(
-    `rm -rf dist/${apptype} && ng build ${apptype} --prod --base-href=/${appname}/`,
+    `rm -rf dist/${appname} && ng build ${appname} --base-href=/${appname}/`,
     { stdio: [0, 1, 2] }
   );
 
@@ -63,10 +63,10 @@ function buildApplication() {
   });
 
   archive.pipe(output);
-  archive.directory(`dist/apps/${apptype}`, '/');
+  archive.directory(`dist/${appname}`, '/');
   archive.file('web.xml', { name: '/WEB-INF/web.xml' });
 
-  console.log(`Finalizing build application ${apptype} ...`);
+  console.log(`Finalizing build application ${appname} ...`);
 
   archive.finalize();
 }
