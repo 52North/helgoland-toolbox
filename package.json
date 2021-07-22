@@ -103,7 +103,7 @@
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
     "typescript-logging": "^0.6.3",
-    "xlsx": "^0.16.7",
+    "xlsx": "^0.17.0",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
