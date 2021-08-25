@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { LayoutModeService } from '../../services/layout-mode.service';
 import { versions } from './../../../../../../versions';
 
 @Component({
@@ -11,18 +10,5 @@ import { versions } from './../../../../../../versions';
 export class VersionInfoComponent {
 
   public versions = versions;
-
-  private clickCounter = 0;
-
-  constructor(
-    private layout: LayoutModeService
-  ) { }
-
-  count() {
-    this.clickCounter++;
-    if (this.clickCounter >= 7) {
-      this.layout.toggleDarkMode();
-    }
-  }
 
 }

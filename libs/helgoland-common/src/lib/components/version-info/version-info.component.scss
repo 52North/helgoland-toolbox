@@ -1,5 +1,9 @@
 :host {
     text-align: center;
-    color: grey;
+    color: #696969;
     font-size: 70%;
+}
+
+.dark-theme :host {
+    color: #b9b9b9;
 }
