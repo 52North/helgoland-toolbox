@@ -35,7 +35,7 @@
     "lint": "ng lint",
     "license-report": "license-report --output=json --config license/license-report-config.json > license/license-report.json && tablemark license/license-report.json > license/license-report.md && rm license/license-report.json",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve helgoland-timeseries",
     "prestart": "npm run versions-script",
     "test": "rimraf dist && ng test --watch=false",
     "watch": "ng build --watch --configuration development",
