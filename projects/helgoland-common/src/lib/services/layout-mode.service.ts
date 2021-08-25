@@ -10,14 +10,31 @@ export class LayoutModeService {
     @Inject(DOCUMENT) private document: Document
   ) { }
 
-  toggleDarkMode() {
-    const classList = this.document.body.classList;
-    const dmClass = 'dark-theme';
-    if (classList.contains(dmClass)) {
-      classList.remove(dmClass);
+  private readonly dmClass = 'dark-theme';
+
+  /**
+   * Toggles the dark mode and returns if dark mode is currently active as boolean.
+   * 
+   * @returns {boolean} dark mode is active
+   */
+  toggleDarkMode(): boolean {
+    const classList = this.document.body.classList
+    if (classList.contains(this.dmClass)) {
+      classList.remove(this.dmClass)
+      return false
     } else {
-      classList.add(dmClass);
+      classList.add(this.dmClass)
+      return true
     }
+  }
+
+  /**
+   * Check, if dark mode is active.
+   *
+   *  @returns {boolean} dark mode
+   */
+  isDarkModeActive(): boolean {
+    return this.document.body.classList.contains(this.dmClass);
   }
 
 }

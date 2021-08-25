@@ -232,3 +232,35 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
         font-family: 'Roboto';
     }
 }
+
+.dark-theme .wrapper {
+    background-color: $dark-background;
+}
+
+// diagram adjustments
+
+.dark-theme {
+    .d3 {
+        text.yaxisTextLabel {
+            fill: white;
+        }
+
+        .axis-button-line {
+            fill: white;
+            stroke: white;
+        }
+
+        #overview-layer .brush .handle {
+            fill: #ffc5c5;
+            opacity: 0.5;
+        }
+
+    }
+}
+
+// leaflet adjustments
+.dark-theme {
+    .leaflet-pane.leaflet-marker-pane > div {
+        color: black;
+    }
+}
