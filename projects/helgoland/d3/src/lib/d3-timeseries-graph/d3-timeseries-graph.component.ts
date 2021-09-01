@@ -1235,7 +1235,7 @@ export class D3TimeseriesGraphComponent
         // TODO: move to service
         if (entry.options.pointSymbol) {
             let symbolType;
-            const symbolSize = entry.options.pointSymbol.size || 50;
+            const symbolSize = entry.options.pointSymbol.size * 20 || 60;
             switch (entry.options.pointSymbol.type) {
                 case PointSymbolType.cross:
                     symbolType = d3.symbolCross;

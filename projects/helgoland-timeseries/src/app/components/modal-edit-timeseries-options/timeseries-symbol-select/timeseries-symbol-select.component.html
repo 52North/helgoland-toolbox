@@ -1,6 +1,13 @@
 <mat-form-field appearance="fill">
-  <mat-label>Zeitreihen Punkt Symbol</mat-label>
-  <mat-select [value]="selected" (selectionChange)="selectSymbol($event.value)">
-    <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+  <mat-label>{{ 'timeseries-symbol-select.symbole-selection' | translate }}</mat-label>
+  <mat-select [(ngModel)]="selectedSymbol" (selectionChange)="adjustSymbol()">
+    <mat-option [value]="option.value" *ngFor="let option of symbols">{{ option.viewValue }}</mat-option>
   </mat-select>
 </mat-form-field>
+
+<div>
+  {{ 'timeseries-symbol-select.symbole-size' | translate }}
+</div>
+<mat-slider color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
+  [(ngModel)]="symbolSize" (valueChange)="adjustSymbol()">
+</mat-slider>

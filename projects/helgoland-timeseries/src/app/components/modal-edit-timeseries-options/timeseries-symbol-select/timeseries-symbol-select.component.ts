@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DatasetOptions, PointSymbol, PointSymbolType } from '@helgoland/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DatasetOptions, PointSymbolType } from '@helgoland/core';
 
 interface Symbol {
   value: string;
@@ -15,9 +15,7 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
 
   @Input() options: DatasetOptions;
 
-  @Output() selectedSymbol = new EventEmitter<PointSymbol>();
-
-  foods: Symbol[] = [
+  symbols: Symbol[] = [
     { value: 'point', viewValue: 'Point' },
     { value: PointSymbolType.cross, viewValue: 'Cross' },
     { value: PointSymbolType.diamond, viewValue: 'Diamond' },
@@ -27,24 +25,29 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
     { value: PointSymbolType.wye, viewValue: 'Wye' }
   ];
 
-  selected: string;
+  selectedSymbol: string;
+
+  symbolSize: number;
 
   ngOnInit() {
     if (!this.options.pointSymbol) {
-      this.selected = 'point'
+      this.selectedSymbol = 'point';
+      this.symbolSize = this.options.pointRadius;
     } else {
-      this.selected = this.options.pointSymbol.type;
+      this.selectedSymbol = this.options.pointSymbol.type;
+      this.symbolSize = this.options.pointSymbol.size;
     }
   }
 
-  selectSymbol(value: string) {
-    if (value === 'point') {
-      this.selectedSymbol.emit()
+  adjustSymbol() {
+    if (this.selectedSymbol === 'point') {
+      this.options.pointSymbol = null;
+      this.options.pointRadius = this.symbolSize;
     } else {
-      this.selectedSymbol.emit({
-        type: PointSymbolType[value],
-        size: 123
-      })
+      this.options.pointSymbol = {
+        type: PointSymbolType[this.selectedSymbol],
+        size: this.symbolSize
+      }
     }
   }
 

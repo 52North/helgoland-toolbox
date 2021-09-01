@@ -57,5 +57,7 @@
 	"time-selection.predefined.last-year": "Last year",
 	"time-selection.predefined.today": "Today",
 	"time-selection.predefined.today_yesterday": "Today and yesterday",
-	"time-selection.predefined.yesterday": "Yesterday"
+	"time-selection.predefined.yesterday": "Yesterday",
+	"timeseries-symbol-select.symbole-selection": "Select point symbol",
+	"timeseries-symbol-select.symbole-size": "Symbol size"
 }
