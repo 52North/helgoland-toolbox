@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DatasetOptions } from '@helgoland/core';
+import { DatasetOptions, PointSymbol } from '@helgoland/core';
 
 @Component({
   selector: 'helgoland-modal-edit-timeseries-options',
@@ -18,6 +18,10 @@ export class ModalEditTimeseriesOptionsComponent {
 
   confirmColor(color: string) {
     this.options.color = color;
+  }
+
+  changeSymbol(symbol: PointSymbol) {
+    this.options.pointSymbol = symbol;
   }
 
 }

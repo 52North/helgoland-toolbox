@@ -98,6 +98,8 @@ export class DatasetOptions {
      */
     public yAxisRange?: MinMaxRange;
 
+    public pointSymbol?: PointSymbol;
+
     constructor(
         internalId: string,
         color: string
@@ -133,4 +135,17 @@ export class TimedDatasetOptions extends DatasetOptions {
         super(internalId, color);
         this.timestamp = timestamp;
     }
+}
+
+export enum PointSymbolType {
+    cross = 'cross',
+    diamond = 'diamond',
+    square = 'square',
+    star = 'star',
+    triangle = 'triangle',
+    wye = 'wye'
+}
+export interface PointSymbol {
+    type: PointSymbolType;
+    size: number;
 }

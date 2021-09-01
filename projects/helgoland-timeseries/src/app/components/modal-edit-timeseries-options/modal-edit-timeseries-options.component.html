@@ -35,6 +35,10 @@
       [ngStyle]="{'background-color': options.color}">&nbsp;</button>
   </div>
 
+  <p>
+    <helgoland-timeseries-symbol-select [options]="options" (selectedSymbol)="changeSymbol($event)"></helgoland-timeseries-symbol-select>
+  </p>
+
 </div>
 <div mat-dialog-actions>
   <div style="flex: 1"></div>

@@ -1,4 +1,3 @@
-import { HelgolandCommonModule } from 'helgoland-common';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -44,6 +43,7 @@ import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HelgolandCommonModule } from 'helgoland-common';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -69,6 +69,9 @@ import { ModalDiagramSettingsComponent } from './components/modal-diagram-settin
 import {
   ModalEditTimeseriesOptionsComponent,
 } from './components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
+import {
+  TimeseriesSymbolSelectComponent,
+} from './components/modal-edit-timeseries-options/timeseries-symbol-select/timeseries-symbol-select.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
@@ -135,6 +138,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
     ModalEditTimeseriesOptionsComponent,
+    TimeseriesSymbolSelectComponent,
     ModalFavoriteListButtonComponent,
     ModalFavoriteListComponent,
     ModalMainConfigButtonComponent,

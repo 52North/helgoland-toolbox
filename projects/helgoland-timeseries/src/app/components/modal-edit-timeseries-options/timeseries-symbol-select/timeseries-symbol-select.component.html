@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+  <mat-label>Zeitreihen Punkt Symbol</mat-label>
+  <mat-select [value]="selected" (selectionChange)="selectSymbol($event.value)">
+    <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+  </mat-select>
+</mat-form-field>

@@ -41,6 +41,7 @@ import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.s
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { PointSymbolType } from './../../../../core/src/lib/model/internal/options';
 import { D3GraphId } from './../helper/d3-graph-id.service';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
@@ -1231,17 +1232,55 @@ export class D3TimeseriesGraphComponent
             .attr('d', line);
 
         // draw line dots
-        this.graphBody.selectAll('.graphDots')
-            .data(entry.data.filter((d) => !isNaN(d.value)))
-            .enter().append('circle')
-            .attr('class', 'graphDots')
-            .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
-            .attr('stroke', entry.options.pointBorderColor)
-            .attr('stroke-width', entry.options.pointBorderWidth)
-            .attr('fill', entry.options.color)
-            .attr('cx', line.x())
-            .attr('cy', line.y())
-            .attr('r', pointRadius);
+        // TODO: move to service
+        if (entry.options.pointSymbol) {
+            let symbolType;
+            const symbolSize = entry.options.pointSymbol.size || 50;
+            switch (entry.options.pointSymbol.type) {
+                case PointSymbolType.cross:
+                    symbolType = d3.symbolCross;
+                    break;
+                case PointSymbolType.diamond:
+                    symbolType = d3.symbolDiamond;
+                    break;
+                case PointSymbolType.square:
+                    symbolType = d3.symbolSquare;
+                    break;
+                case PointSymbolType.star:
+                    symbolType = d3.symbolStar;
+                    break;
+                case PointSymbolType.triangle:
+                    symbolType = d3.symbolTriangle;
+                    break;
+                case PointSymbolType.wye:
+                    symbolType = d3.symbolWye;
+                    break;
+                default:
+                    break;
+            }
+            var symbolPathData = d3.symbol().type(symbolType).size(symbolSize)();
+            this.graphBody.selectAll('.symbol')
+                .data(entry.data.filter((d) => !isNaN(d.value)))
+                .enter()
+                .append('path')
+                .attr('transform', (d) => `translate(${d.xDiagCoord},${d.yDiagCoord})`)
+                .attr('stroke', entry.options.pointBorderColor)
+                .attr('fill', entry.options.color)
+                .attr('d', symbolPathData)
+
+        } else {
+            this.graphBody.selectAll('.graphDots')
+                .data(entry.data.filter((d) => !isNaN(d.value)))
+                .enter().append('circle')
+                .attr('class', 'graphDots')
+                .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
+                .attr('stroke', entry.options.pointBorderColor)
+                .attr('stroke-width', entry.options.pointBorderWidth)
+                .attr('fill', entry.options.color)
+                .attr('cx', line.x())
+                .attr('cy', line.y())
+                .attr('r', pointRadius);
+        }
 
     }
 
