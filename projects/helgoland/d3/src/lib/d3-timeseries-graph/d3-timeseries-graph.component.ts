@@ -34,6 +34,7 @@ import moment, { unitOfTime } from 'moment';
 import { Subscription } from 'rxjs';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
 import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
@@ -41,7 +42,6 @@ import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.s
 import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
-import { PointSymbolType } from './../../../../core/src/lib/model/internal/options';
 import { D3GraphId } from './../helper/d3-graph-id.service';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
@@ -77,7 +77,7 @@ export class D3TimeseriesGraphComponent
     @Input()
     public yaxisModifier: boolean;
 
-    @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc);
+    @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
@@ -164,6 +164,7 @@ export class D3TimeseriesGraphComponent
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
         protected servicesConnector: HelgolandServicesConnector,
+        protected pointSymbolDrawer: D3PointSymbolDrawerService,
         @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
@@ -1216,7 +1217,7 @@ export class D3TimeseriesGraphComponent
     }
 
     private drawLineChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
-        const pointRadius = this.calculatePointRadius(entry);
+        const pointRadius = this.calculatePointRadius(entry); 0
 
         // create graph line
         const line = this.createLine(this.xScaleBase, yScaleBase);
@@ -1232,42 +1233,8 @@ export class D3TimeseriesGraphComponent
             .attr('d', line);
 
         // draw line dots
-        // TODO: move to service
         if (entry.options.pointSymbol) {
-            let symbolType;
-            const symbolSize = entry.options.pointSymbol.size * 20 || 60;
-            switch (entry.options.pointSymbol.type) {
-                case PointSymbolType.cross:
-                    symbolType = d3.symbolCross;
-                    break;
-                case PointSymbolType.diamond:
-                    symbolType = d3.symbolDiamond;
-                    break;
-                case PointSymbolType.square:
-                    symbolType = d3.symbolSquare;
-                    break;
-                case PointSymbolType.star:
-                    symbolType = d3.symbolStar;
-                    break;
-                case PointSymbolType.triangle:
-                    symbolType = d3.symbolTriangle;
-                    break;
-                case PointSymbolType.wye:
-                    symbolType = d3.symbolWye;
-                    break;
-                default:
-                    break;
-            }
-            var symbolPathData = d3.symbol().type(symbolType).size(symbolSize)();
-            this.graphBody.selectAll('.symbol')
-                .data(entry.data.filter((d) => !isNaN(d.value)))
-                .enter()
-                .append('path')
-                .attr('transform', (d) => `translate(${d.xDiagCoord},${d.yDiagCoord})`)
-                .attr('stroke', entry.options.pointBorderColor)
-                .attr('fill', entry.options.color)
-                .attr('d', symbolPathData)
-
+            this.pointSymbolDrawer.drawSymboleLine(entry, this.graphBody, this.addLineWidth);
         } else {
             this.graphBody.selectAll('.graphDots')
                 .data(entry.data.filter((d) => !isNaN(d.value)))

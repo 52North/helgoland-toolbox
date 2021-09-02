@@ -5,6 +5,7 @@ import { HelgolandTimeseries, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
 import { DataEntry, InternalDataEntry } from '../../model/d3-general';
+import { D3PointSymbolDrawerService } from '../d3-point-symbol-drawer.service';
 import { D3GraphHelperService } from './../d3-graph-helper.service';
 import { D3HoveringService, HoveringElement, HoverPosition } from './d3-hovering-service';
 
@@ -21,7 +22,8 @@ export class D3SimpleHoveringService extends D3HoveringService {
   protected tooltipContainer: d3.Selection<d3.BaseType, any, any, any>;
 
   constructor(
-    protected timezoneSrvc: TimezoneService
+    protected timezoneSrvc: TimezoneService,
+    protected pointSymbolDrawer: D3PointSymbolDrawerService
   ) {
     super();
   }
@@ -33,9 +35,13 @@ export class D3SimpleHoveringService extends D3HoveringService {
   public hidePointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.removeTooltip();
     // unhighlight hovered dot
-    pointElem
-      .attr('opacity', 1)
-      .attr('r', this.calculatePointRadius(entry));
+    if (!entry.options.pointSymbol) {
+      pointElem
+        .attr('opacity', 1)
+        .attr('r', this.calculatePointRadius(entry));
+    } else {
+      this.pointSymbolDrawer.hideHovering(pointElem);
+    }
   }
 
   public showPointHovering(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
@@ -44,7 +50,11 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.highlightText = this.tooltipContainer.append('g');
 
     // highlight hovered dot
-    pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
+    if (!entry.options.pointSymbol) {
+      pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
+    } else {
+      this.pointSymbolDrawer.showHovering(pointElem);
+    }
 
     this.setHoveringLabel(d, entry, timeseries);
   }

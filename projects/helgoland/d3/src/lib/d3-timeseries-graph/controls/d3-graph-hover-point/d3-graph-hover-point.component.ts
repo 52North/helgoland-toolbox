@@ -7,6 +7,7 @@ import moment from 'moment';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
+import { D3PointSymbolDrawerService } from '../../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
 import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
@@ -35,7 +36,7 @@ interface BarHoverElement extends HoveredElement {
 })
 export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
-  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc);
+  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
@@ -55,7 +56,8 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     protected graphId: D3GraphId,
     protected graphs: D3Graphs,
     protected graphHelper: D3GraphHelperService,
-    protected timezoneSrvc: TimezoneService
+    protected timezoneSrvc: TimezoneService,
+    protected pointSymbolDrawer: D3PointSymbolDrawerService
   ) {
     super(graphId, graphs, graphHelper);
   }

@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
+import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
 import { InternalDataEntry } from '../model/d3-general';
 import { D3Graphs } from './../helper/d3-graphs.service';
@@ -92,7 +93,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected graphHelper: D3GraphHelperService,
     protected graphService: D3Graphs,
     protected graphId: D3GraphId,
-    protected servicesConnector: HelgolandServicesConnector
+    protected servicesConnector: HelgolandServicesConnector,
+    protected pointSymbolDrawer: D3PointSymbolDrawerService
   ) {
     super(
       iterableDiffers,
@@ -107,7 +109,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       graphHelper,
       graphService,
       graphId,
-      servicesConnector
+      servicesConnector,
+      pointSymbolDrawer
     );
   }
 
