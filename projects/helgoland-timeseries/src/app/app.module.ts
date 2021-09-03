@@ -35,6 +35,7 @@ import {
   DatasetApiV3ConnectorProvider,
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
+  LocalStorage,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
 import { D3TimeseriesGraphErrorHandler, HelgolandD3Module } from '@helgoland/d3';
@@ -111,10 +112,14 @@ export const ROUTES = [
   }
 ];
 
-export function initApplication(configService: ConfigurationService, translate: TranslateService): () => Promise<void> {
+export function initApplication(configService: ConfigurationService, translate: TranslateService, localStorage: LocalStorage): () => Promise<void> {
   return () => configService.loadConfiguration().then((config: AppConfig) => {
+    const localStorageLanguageKey = 'client-language';
+    debugger;
     registerLocaleData(localeDe);
     let lang = translate.getBrowserLang() || 'en';
+    const storedLang = localStorage.load(localStorageLanguageKey) as string;
+    if (storedLang) { lang = storedLang }
     const url = window.location.href;
     const name = 'locale';
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -124,6 +129,9 @@ export function initApplication(configService: ConfigurationService, translate: 
       if (match) { lang = match.code; }
     }
     translate.setDefaultLang(lang);
+    translate.onLangChange.subscribe(lce => {
+      localStorage.save(localStorageLanguageKey, lce.lang);
+    });
     return translate.use(lang).toPromise();
   });
 }
@@ -212,7 +220,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     {
       provide: APP_INITIALIZER,
       useFactory: initApplication,
-      deps: [ConfigurationService, TranslateService],
+      deps: [ConfigurationService, TranslateService, LocalStorage],
       multi: true
     },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
