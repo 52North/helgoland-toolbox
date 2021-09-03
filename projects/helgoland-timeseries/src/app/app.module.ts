@@ -59,6 +59,9 @@ import {
 import { ModalFavoriteListComponent } from './components/favorites/modal-favorite-list/modal-favorite-list.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import {
+  TimeseriesEntrySymbolComponent,
+} from './components/legend-entry/test/timeseries-entry-symbol/timeseries-entry-symbol.component';
+import {
   ModalMainConfigButtonComponent,
 } from './components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { ModalMainConfigComponent } from './components/main-config/modal-main-config/modal-main-config.component';
@@ -138,14 +141,15 @@ export function initApplication(configService: ConfigurationService, translate: 
     ModalDatasetByStationSelectorComponent,
     ModalDiagramSettingsComponent,
     ModalEditTimeseriesOptionsComponent,
-    TimeseriesSymbolSelectComponent,
     ModalFavoriteListButtonComponent,
     ModalFavoriteListComponent,
+    ModalListSettingsComponent,
     ModalMainConfigButtonComponent,
     ModalMainConfigComponent,
     ModalMapSettingsComponent,
-    ModalListSettingsComponent,
+    TimeseriesEntrySymbolComponent,
     TimeseriesListSelectorComponent,
+    TimeseriesSymbolSelectComponent,
   ],
   imports: [
     BrowserModule,

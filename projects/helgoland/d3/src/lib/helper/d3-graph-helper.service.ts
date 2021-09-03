@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { DatasetOptions } from '@helgoland/core';
 
+import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class D3GraphHelperService {
 
-  constructor() { }
+  constructor(
+    protected pointSymbolDrawer: D3PointSymbolDrawerService
+  ) { }
 
   /**
    * Function that returns the boundings of a html element.
@@ -39,7 +43,7 @@ export class D3GraphHelperService {
    */
   public drawDatasetSign(svgElem: d3.Selection<SVGSVGElement, any, any, any>, options: DatasetOptions, xPos: number, yPos: number, selected: boolean) {
     if (options.lineWidth > 0) {
-      const lineLength = 4;
+      const lineLength = 5;
       svgElem.append('line')
         .attr('class', 'y-axis-line')
         .attr('id', 'axisdot-line-' + options.internalId)
@@ -51,15 +55,19 @@ export class D3GraphHelperService {
         .attr('y2', yPos)
         .attr('stroke-width', options.lineWidth + (selected ? 2 : 0));
     }
-    if (options.pointRadius > 0) {
-      svgElem.append('circle')
-        .attr('class', 'y-axis-circle')
-        .attr('id', 'axisdot-circle-' + options.internalId)
-        .attr('stroke', options.color)
-        .attr('fill', options.color)
-        .attr('cx', xPos)
-        .attr('cy', yPos)
-        .attr('r', options.pointRadius + (selected ? 2 : 0));
+    if (options.pointSymbol) {
+      this.pointSymbolDrawer.drawSymbol(options, svgElem, selected, xPos, yPos);
+    } else {
+      if (options.pointRadius > 0) {
+        svgElem.append('circle')
+          .attr('class', 'y-axis-circle')
+          .attr('id', 'axisdot-circle-' + options.internalId)
+          .attr('stroke', options.color)
+          .attr('fill', options.color)
+          .attr('cx', xPos)
+          .attr('cy', yPos)
+          .attr('r', options.pointRadius + (selected ? 2 : 0));
+      }
     }
   }
 

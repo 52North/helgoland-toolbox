@@ -37,7 +37,9 @@
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <mat-icon [ngStyle]="{'color': datasetOptions?.color}">create</mat-icon>
+        <helgoland-timeseries-entry-symbol [options]="datasetOptions" [size]="40"
+          style="height: 40px; width: 40px; display: inline-block;">
+        </helgoland-timeseries-entry-symbol>
       </button>
       <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
       </helgoland-favorite-toggle-button>

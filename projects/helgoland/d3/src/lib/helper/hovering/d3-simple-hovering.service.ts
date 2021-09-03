@@ -14,7 +14,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
 
   protected highlightRect: d3.Selection<SVGGElement, any, any, any>;
   protected highlightText: d3.Selection<SVGGElement, any, any, any>;
-  protected graphHelper: D3GraphHelperService = new D3GraphHelperService();
+  protected graphHelper: D3GraphHelperService = new D3GraphHelperService(this.pointSymbolDrawer);
 
   protected addLineWidth = 2; // value added to linewidth
 

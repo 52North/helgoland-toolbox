@@ -35,3 +35,5 @@ export * from './lib/helper/generalizing/d3-data-simple-generalizer.service';
 export * from './lib/helper/generalizing/d3-data-none-generalizer.service';
 export * from './lib/helper/hovering/d3-hovering-service';
 export * from './lib/helper/hovering/d3-simple-hovering.service';
+export * from './lib/helper/d3-point-symbol-drawer.service';
+export * from './lib/helper/d3-graph-helper.service';
