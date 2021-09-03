@@ -13,6 +13,7 @@
       </div>
       <div style="flex: 1"></div>
       <button mat-icon-button (click)="removeDataset(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.remove-entry-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.remove-entry-button.tooltip' | translate}}">
         <mat-icon>clear</mat-icon>
       </button>
@@ -27,15 +28,18 @@
     </div>
     <div class="controls">
       <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.toggle-selection-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-selection-button.tooltip' | translate}}">
         <mat-icon *ngIf="!selected">check_box_outline_blank</mat-icon>
         <mat-icon *ngIf="selected">check_box</mat-icon>
       </button>
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
         <mat-icon>{{datasetOptions?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
         <helgoland-timeseries-entry-symbol [options]="datasetOptions" [size]="40"
           style="height: 40px; width: 40px; display: inline-block;">

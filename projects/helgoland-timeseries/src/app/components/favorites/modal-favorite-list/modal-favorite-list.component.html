@@ -9,14 +9,16 @@
       </button>
     </div>
     <div *ngIf="item.editMode" class="fav-title">
-      <helgoland-edit-label [label]="item.label"
-        (labelChanged)="setFavLabel(item, $event); item.editMode = false;"></helgoland-edit-label>
+      <helgoland-edit-label [label]="item.label" (labelChanged)="setFavLabel(item, $event); item.editMode = false;">
+      </helgoland-edit-label>
     </div>
     <div class="fav-additional">
       {{item.favorite.parameters.phenomenon.label}} - {{item.favorite.parameters.feature.label}}
     </div>
     <div class="fav-actions">
-      <button mat-icon-button (click)="deleteFav(item)">
+      <button mat-icon-button (click)="deleteFav(item)"
+        matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
+        attr.aria-label="{{'favorites.single-favorite.remove-from-list' | translate}}">
         <mat-icon>delete</mat-icon>
       </button>
       <div style="flex: 1"></div>
@@ -35,14 +37,16 @@
       </button>
     </div>
     <div *ngIf="group.editMode" class="fav-title">
-      <helgoland-edit-label [label]="group.label"
-        (labelChanged)="setFavLabel(group, $event); group.editMode = false;"></helgoland-edit-label>
+      <helgoland-edit-label [label]="group.label" (labelChanged)="setFavLabel(group, $event); group.editMode = false;">
+      </helgoland-edit-label>
     </div>
     <div class="fav-additional" *ngFor="let fav of group.favorites">
       {{fav.dataset.parameters.phenomenon.label}} - {{fav.dataset.parameters.feature.label}}
     </div>
     <div class="fav-actions">
-      <button mat-icon-button (click)="deleteFav(group)">
+      <button mat-icon-button (click)="deleteFav(group)"
+        matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
+        attr.aria-label="{{'favorites.single-favorite.remove-from-list' | translate}}">
         <mat-icon>delete</mat-icon>
       </button>
       <div style="flex: 1"></div>

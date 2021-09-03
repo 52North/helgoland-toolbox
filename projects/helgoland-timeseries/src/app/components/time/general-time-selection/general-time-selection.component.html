@@ -1,6 +1,7 @@
 <div *ngIf="timespan" class="wrapper">
   <div style="flex: 1"></div>
-  <button mat-icon-button (click)="back()">
+  <button mat-icon-button (click)="back()" matTooltip="{{'time-selection.step-back' | translate}}"
+    attr.aria-label="{{'time-selection.step-back' | translate}}">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()" class="desktop-only">
@@ -12,7 +13,8 @@
     <div>{{timespan.from | tzDate : 'L LT z'}}</div>
     <div>{{timespan.to | tzDate : 'L LT z'}}</div>
   </button>
-  <button mat-icon-button (click)="forward()">
+  <button mat-icon-button (click)="forward()" matTooltip="{{'time-selection.step-forward' | translate}}"
+    attr.aria-label="{{'time-selection.step-forward' | translate}}">
     <mat-icon>arrow_forward</mat-icon>
   </button>
   <div style="flex: 1"></div>

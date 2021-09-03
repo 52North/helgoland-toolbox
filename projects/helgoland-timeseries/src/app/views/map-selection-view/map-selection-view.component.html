@@ -18,6 +18,7 @@
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
           <div style="flex:1;"></div>
           <button mat-icon-button (click)="appRouter.toDiagram()"
+            attr.aria-label="{{'map-selection-view.go-to-chart.tooltip' | translate}}"
             matTooltip="{{'map-selection-view.go-to-chart.tooltip' | translate}}">
             <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
           </button>
@@ -37,6 +38,7 @@
         [filter]="stationFilter" (onSelected)="onStationSelected($event)" [cluster]="cluster"
         class="vbox boxItem fullHeight"></n52-station-map-selector>
       <button mat-icon-button (click)="openMapSettings()" mat-mini-fab color="none" class="local-settings-button"
+        attr.aria-label="{{'map-selection-view.adjust-map-button.tooltip' | translate}}"
         matTooltip="{{'map-selection-view.adjust-map-button.tooltip' | translate}}">
         <mat-icon>edit_location_alt</mat-icon>
       </button>

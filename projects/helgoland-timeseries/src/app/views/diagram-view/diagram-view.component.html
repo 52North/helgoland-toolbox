@@ -31,11 +31,13 @@
         <mat-toolbar-row>
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
           <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()"
+            attr.aria-label="{{'diagram-view.clear-selection.tooltip' | translate}}"
             matTooltip="{{'diagram-view.clear-selection.tooltip' | translate}}">
             <mat-icon color="accent">remove_done</mat-icon>
           </button>
           <div style="flex:1;"></div>
           <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()"
+            attr.aria-label="{{'diagram-view.remove-legend-entries.tooltip' | translate}}"
             matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
             <mat-icon>clear</mat-icon>
           </button>
@@ -43,6 +45,7 @@
           <helgoland-modal-favorite-list-button style="margin-right: 10px;">
           </helgoland-modal-favorite-list-button>
           <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent"
+            attr.aria-label="{{'diagram-view.add-button.tooltip' | translate}}"
             matTooltip="{{'diagram-view.add-button.tooltip' | translate}}">
             <mat-icon>add</mat-icon>
           </button>
@@ -76,7 +79,9 @@
 
         <helgoland-loading-overlay-progress-bar *ngIf="diagramLoading"></helgoland-loading-overlay-progress-bar>
 
-        <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()">
+        <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()"
+          matTooltip="{{'diagram-view.open-diagram-settings' | translate}}"
+          attr.aria-label="{{'diagram-view.open-diagram-settings' | translate}}">
           <mat-icon>query_stats</mat-icon>
         </button>
 
