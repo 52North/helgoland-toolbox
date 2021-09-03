@@ -42,5 +42,6 @@
             "label": "English",
             "code": "en"
         }
-    ]
+    ],
+    "supportTimeseriesSymbols": true
 }

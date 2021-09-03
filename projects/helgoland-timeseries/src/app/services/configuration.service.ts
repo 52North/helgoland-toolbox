@@ -4,7 +4,7 @@ import { Settings } from '@helgoland/core';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AppConfig extends Settings {
-
+  supportTimeseriesSymbols: boolean;
 }
 
 @Injectable({

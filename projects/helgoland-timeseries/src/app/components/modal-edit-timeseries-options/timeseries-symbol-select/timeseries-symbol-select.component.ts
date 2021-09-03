@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DatasetOptions, PointSymbolType } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Symbol {
   value: string;
@@ -16,14 +17,16 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   @Input() options: DatasetOptions;
 
   symbols: Symbol[] = [
-    { value: 'point', viewValue: 'Point' },
-    { value: PointSymbolType.cross, viewValue: 'Cross' },
-    { value: PointSymbolType.diamond, viewValue: 'Diamond' },
-    { value: PointSymbolType.square, viewValue: 'Square' },
-    { value: PointSymbolType.star, viewValue: 'Star' },
-    { value: PointSymbolType.triangle, viewValue: 'Triangle' },
-    { value: PointSymbolType.wye, viewValue: 'Wye' }
+    { value: 'point', viewValue: this.translate.instant('timeseries-symbol-select.type.point') },
+    { value: PointSymbolType.cross, viewValue: this.translate.instant('timeseries-symbol-select.type.cross') },
+    { value: PointSymbolType.diamond, viewValue: this.translate.instant('timeseries-symbol-select.type.diamond') },
+    { value: PointSymbolType.square, viewValue: this.translate.instant('timeseries-symbol-select.type.square') },
+    { value: PointSymbolType.star, viewValue: this.translate.instant('timeseries-symbol-select.type.star') },
+    { value: PointSymbolType.triangle, viewValue: this.translate.instant('timeseries-symbol-select.type.triangle') },
+    { value: PointSymbolType.wye, viewValue: this.translate.instant('timeseries-symbol-select.type.wye') }
   ];
+
+  constructor(private translate: TranslateService) { }
 
   selectedSymbol: string;
 
