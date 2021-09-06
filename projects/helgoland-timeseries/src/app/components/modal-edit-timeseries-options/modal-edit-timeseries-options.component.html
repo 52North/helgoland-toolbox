@@ -21,11 +21,11 @@
       [ngStyle]="{'background-color': options.color}">&nbsp;</button>
   </div>
 
-  <ng-container *ngIf="config.configuration.supportTimeseriesSymbols">
+  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols">
     <helgoland-timeseries-symbol-select [options]="options"></helgoland-timeseries-symbol-select>
   </ng-container>
 
-  <ng-container *ngIf="!config.configuration.supportTimeseriesSymbols">
+  <ng-container *ngIf="!config.configuration?.supportTimeseriesSymbols">
     <div>
       {{ 'modal-edit-timeseries-options.point-radius' | translate }}
     </div>

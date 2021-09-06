@@ -33,12 +33,14 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   symbolSize: number;
 
   ngOnInit() {
-    if (!this.options.pointSymbol) {
-      this.selectedSymbol = 'point';
-      this.symbolSize = this.options.pointRadius;
-    } else {
-      this.selectedSymbol = this.options.pointSymbol.type;
-      this.symbolSize = this.options.pointSymbol.size;
+    if (this.options) {
+      if (this.options.pointSymbol) {
+        this.selectedSymbol = this.options.pointSymbol.type;
+        this.symbolSize = this.options.pointSymbol.size;
+      } else {
+        this.selectedSymbol = 'point';
+        this.symbolSize = this.options.pointRadius;
+      }
     }
   }
 

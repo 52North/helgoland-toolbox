@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
+import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
 import { TimeseriesService } from './timeseries-service.service';
 
 describe('TimeseriesServiceService', () => {
@@ -9,7 +10,8 @@ describe('TimeseriesServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HelgolandCoreModule
+        HelgolandCoreModule,
+        TranslateTestingModule
       ]
     });
     service = TestBed.inject(TimeseriesService);

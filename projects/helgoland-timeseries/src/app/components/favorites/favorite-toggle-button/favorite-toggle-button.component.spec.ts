@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
@@ -19,7 +20,8 @@ describe('FavoriteToggleButtonComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule,
         MatTooltipModule,
-        MatIconModule
+        MatIconModule,
+        MatSnackBarModule
       ]
     }).compileComponents();
   });

@@ -62,7 +62,7 @@ import { ModalFavoriteListComponent } from './components/favorites/modal-favorit
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import {
   TimeseriesEntrySymbolComponent,
-} from './components/legend-entry/test/timeseries-entry-symbol/timeseries-entry-symbol.component';
+} from './components/legend-entry/timeseries-entry-symbol/timeseries-entry-symbol.component';
 import {
   ModalMainConfigButtonComponent,
 } from './components/main-config/modal-main-config-button/modal-main-config-button.component';

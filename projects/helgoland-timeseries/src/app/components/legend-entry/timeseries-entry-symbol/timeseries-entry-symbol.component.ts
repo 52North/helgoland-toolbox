@@ -33,7 +33,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   ) { }
 
   ngOnInit(): void {
-    this.optionsDiffer = this.keyValueDiffers.find(this.options).create();
+    this.optionsDiffer = this.keyValueDiffers.find({}).create();
   }
 
   ngAfterViewInit(): void {
@@ -56,7 +56,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   }
 
   private drawSymbol() {
-    if (this.svg) {
+    if (this.svg && this.options) {
       this.svg.selectAll("*").remove();
       this.graphHelper.drawDatasetSign(this.svg, this.options, this.size / 2, this.size / 2, false);
     }

@@ -1,5 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select.component';
 
 /* tslint:disable:no-unused-variable */
@@ -9,7 +11,11 @@ describe('TimeseriesSymbolSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeseriesSymbolSelectComponent]
+      declarations: [TimeseriesSymbolSelectComponent],
+      imports: [
+        TranslateTestingModule,
+        HttpClientTestingModule
+      ]
     })
       .compileComponents();
   }));
