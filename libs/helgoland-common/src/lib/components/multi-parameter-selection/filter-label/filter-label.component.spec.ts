@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { TranslateTestingModule } from './../../../../../../testing/translate.testing.module';
 import { FilterLabelComponent } from './filter-label.component';
 
 describe('FilterLabelComponent', () => {
@@ -8,9 +9,11 @@ describe('FilterLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FilterLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [FilterLabelComponent],
+      imports: [
+        TranslateTestingModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

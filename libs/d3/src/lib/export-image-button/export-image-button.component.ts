@@ -7,13 +7,21 @@ import {
   Injector,
   Input,
 } from '@angular/core';
-import { DatasetOptions, DatasetType, HelgolandServicesConnector, Time, Timespan } from '@helgoland/core';
+import {
+  DatasetOptions,
+  DatasetType,
+  HelgolandServicesConnector,
+  HelgolandTimeseries,
+  Time,
+  Timespan,
+} from '@helgoland/core';
 import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3PlotOptions } from '../model/d3-plot-options';
 
 const wrapperClassName = 'export-diagram-wrapper';
 
@@ -74,6 +82,15 @@ export class ExportImageButtonComponent {
    */
   @Input() showFirstLastDate: boolean;
 
+  /**
+   * Presenter Options for the exported image
+   */
+  @Input() presenterOptions: D3PlotOptions = {
+    showTimeLabel: false,
+    showReferenceValues: true,
+    grid: true
+  }
+
   public loading: boolean;
 
   private internalHeight: number;
@@ -98,37 +115,42 @@ export class ExportImageButtonComponent {
     this.internalHeight = this.height;
     this.internalWidth = this.width;
 
+    if (this.showFirstLastDate && !this.presenterOptions.timeRangeLabel) {
+      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' }
+    }
+
     const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
     comp.instance.setTimespan(this.timespan);
-    comp.instance.presenterOptions = {
-      showTimeLabel: false,
-      grid: true
-    };
+    comp.instance.presenterOptions = this.presenterOptions;
 
+    let count = this.datasetIds.length;
     comp.instance.onContentLoading.subscribe(loadFinished => {
-      if (loadFinished) {
-        setTimeout(() => {
-          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
-          const svgElem = document.querySelector<SVGSVGElement>(temp);
-          if (svgElem) {
-            this.diagramAdjustments(svgElem).subscribe(() => {
-              switch (this.exportType) {
-                case 'svg':
-                  this.createSvgDownload(svgElem);
-                  break;
-                case 'png':
-                default:
-                  this.createPngImageDownload(svgElem);
-                  break;
-              }
-              this.removeComponentFromBody(comp);
-              this.loading = false;
-            });
-          }
-        }, 1000);
+      if (!loadFinished) {
+        count--;
+        if (count === 0) {
+          setTimeout(() => {
+            const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+            const svgElem = document.querySelector<SVGSVGElement>(temp);
+            if (svgElem) {
+              this.diagramAdjustments(svgElem).subscribe(() => {
+                switch (this.exportType) {
+                  case 'svg':
+                    this.createSvgDownload(svgElem);
+                    break;
+                  case 'png':
+                  default:
+                    this.createPngImageDownload(svgElem);
+                    break;
+                }
+                this.removeComponentFromBody(comp);
+                this.loading = false;
+              });
+            }
+          }, 1000);
+        }
       }
     });
   }
@@ -142,25 +164,7 @@ export class ExportImageButtonComponent {
 
     this.addTitle(svgElem);
 
-    this.addFirstLastDate(svgElem);
-
     return this.addLegend(svgElem);
-  }
-
-  private addFirstLastDate(element: SVGSVGElement) {
-    if (this.showFirstLastDate) {
-      this.internalHeight += 20;
-      const selection = d3.select(element);
-      const backgroundRect: d3.Selection<SVGGraphicsElement, {}, HTMLElement, any> = selection.select('.graph-background');
-
-      const firstDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.from).toLocaleDateString());
-      const firstDateWidth = firstDate.node().getBBox().width;
-      firstDate.attr('x', (this.internalWidth - backgroundRect.node().getBBox().width - (firstDateWidth / 2))).attr('y', (this.internalHeight));
-
-      const lastDate = selection.append<SVGGraphicsElement>('svg:text').text(new Date(this.timespan.to).toLocaleDateString());
-      const lastDateWidth = lastDate.node().getBBox().width;
-      lastDate.attr('x', (this.internalWidth - lastDateWidth)).attr('y', (this.internalHeight));
-    }
   }
 
   private addLegend(element: SVGSVGElement): Observable<void> {
@@ -168,25 +172,27 @@ export class ExportImageButtonComponent {
       const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
-        obs.push(
-          this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
-            if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-              const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
-              this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-              label.append<SVGGraphicsElement>('svg:text').text(ts.label);
-              this.internalHeight += 25;
-              return {
-                label,
-                xPos: this.internalHeight - 10
-              };
-            } else {
-              return {
-                label: null,
-                xPos: 0
-              };
-            }
-          }))
-        );
+        if (option.visible) {
+          obs.push(
+            this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
+              if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+                const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+                label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
+                this.internalHeight += 25;
+                return {
+                  label,
+                  xPos: this.internalHeight - 10
+                };
+              } else {
+                return {
+                  label: null,
+                  xPos: 0
+                };
+              }
+            }))
+          );
+        }
       });
       return forkJoin(obs).pipe(map(elem => {
         const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
@@ -199,6 +205,10 @@ export class ExportImageButtonComponent {
     } else {
       return of(null);
     }
+  }
+
+  private createLabelText(ts: HelgolandTimeseries) {
+    return `${ts.parameters.phenomenon.label}, ${ts.parameters.procedure.label}, ${ts.parameters.feature.label}`;
   }
 
   private addTitle(element: SVGSVGElement) {

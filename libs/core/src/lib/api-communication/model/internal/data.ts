@@ -5,7 +5,7 @@ export interface HelgolandData { }
 
 export class HelgolandTimeseriesData implements HelgolandData {
 
-    referenceValues: ReferenceValues<TimeValueTuple>;
+    referenceValues: ReferenceValues<TimeValueTuple> = {};
     valueBeforeTimespan: TimeValueTuple;
     valueAfterTimespan: TimeValueTuple;
 

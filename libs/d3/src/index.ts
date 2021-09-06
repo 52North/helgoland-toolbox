@@ -32,5 +32,6 @@ export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/model/d3-general';
 export * from './lib/helper/generalizing/d3-data-generalizer';
 export * from './lib/helper/generalizing/d3-data-simple-generalizer.service';
+export * from './lib/helper/generalizing/d3-data-none-generalizer.service';
 export * from './lib/helper/hovering/d3-hovering-service';
 export * from './lib/helper/hovering/d3-simple-hovering.service';

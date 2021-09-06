@@ -54,10 +54,10 @@ class HoveringTestService extends D3SimpleHoveringService {
 export class GraphLegendComponent {
 
     public datasetIds = [
-        'https://www.fluggs.de/sos2/api/v1/__26',
-        'https://www.fluggs.de/sos2/api/v1/__49',
-        'https://www.fluggs.de/sos2/api/v1/__51',
-        'https://www.fluggs.de/sos2/api/v1/__72',
+        'https://fluggs.wupperverband.de/sos2/api/v1/__26',
+        'https://fluggs.wupperverband.de/sos2/api/v1/__49',
+        'https://fluggs.wupperverband.de/sos2/api/v1/__51',
+        'https://fluggs.wupperverband.de/sos2/api/v1/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
@@ -124,7 +124,7 @@ export class GraphLegendComponent {
         private dialog: MatDialog,
         private time: Time,
         private definedTime: DefinedTimespanService,
-        protected internalIdHandler: InternalIdHandler,
+        public internalIdHandler: InternalIdHandler,
         private http: HttpClient,
         protected timezoneSrvc: TimezoneService
     ) {

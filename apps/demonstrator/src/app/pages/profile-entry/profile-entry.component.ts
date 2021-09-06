@@ -51,7 +51,7 @@ export class ProfileEntryComponent {
         console.log('open in combi view');
     }
 
-    public showGeometry(geometry: GeoJSON.GeometryObject) {
+    public showGeometry(geometry: GeoJSON.GeoJsonObject) {
         console.log('show geometry-type: ');
         console.dir(geometry);
     }

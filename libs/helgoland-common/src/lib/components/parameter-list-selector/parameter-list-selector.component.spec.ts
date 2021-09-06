@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -14,10 +15,11 @@ describe('ParameterListSelectorComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ParameterListSelectorComponent],
       imports: [
-        TranslateTestingModule,
         HelgolandCoreModule,
         HttpClientModule,
-        MatListModule
+        MatListModule,
+        MatProgressBarModule,
+        TranslateTestingModule,
       ]
     }).compileComponents();
   });

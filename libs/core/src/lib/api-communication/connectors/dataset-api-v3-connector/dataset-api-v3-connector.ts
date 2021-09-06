@@ -270,14 +270,16 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     if (dataset instanceof HelgolandTimeseries) {
       const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
+      const params: ApiV3DatasetDataFilter = { format: 'flot' };
+      if (filter.expanded !== undefined) { params.expanded = filter.expanded };
+      if (filter.generalize !== undefined) { params.generalize = filter.generalize };
       if ((timespan.to - timespan.from) > maxTimeExtent) {
         const requests: Array<Observable<HelgolandTimeseriesData>> = [];
         let start = moment(timespan.from).startOf('year');
         let end = moment(timespan.from).endOf('year');
         while (start.isBefore(moment(timespan.to))) {
           const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
-          const params: ApiV3DatasetDataFilter = { timespan: this.createRequestTimespan(chunkSpan), format: 'flot' };
-          if (filter.expanded !== undefined) { params.expanded = filter.expanded };
+          params.timespan = this.createRequestTimespan(chunkSpan);
           requests.push(
             this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
               .pipe(map(res => this.createTimeseriesData(res)))
@@ -288,9 +290,23 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
         return forkJoin(requests).pipe(map((e) => {
           const mergedResult = e.reduce((previous, current) => {
             const next: HelgolandTimeseriesData = new HelgolandTimeseriesData(previous.values.concat(current.values));
+            if (previous.valueBeforeTimespan) {
+              next.valueBeforeTimespan = previous.valueBeforeTimespan;
+            }
+            if (current.valueAfterTimespan) {
+              next.valueAfterTimespan = current.valueAfterTimespan;
+            }
             for (const key in previous.referenceValues) {
               if (previous.referenceValues.hasOwnProperty(key)) {
-                next.referenceValues[key] = previous.referenceValues[key].concat(current.referenceValues[key]);
+                next.referenceValues[key] = {
+                  values: previous.referenceValues[key].values.concat(current.referenceValues[key].values)
+                };
+                if (previous.referenceValues[key].valueBeforeTimespan) {
+                  next.referenceValues[key].valueBeforeTimespan = previous.referenceValues[key].valueBeforeTimespan;
+                }
+                if (current.referenceValues[key].valueAfterTimespan) {
+                  next.referenceValues[key].valueAfterTimespan = current.referenceValues[key].valueAfterTimespan;
+                }
               }
             }
             return next;
@@ -306,7 +322,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return mergedResult;
         }));
       } else {
-        const params: ApiV3DatasetDataFilter = { timespan: this.createRequestTimespan(timespan), format: 'flot' };
+        params.timespan = this.createRequestTimespan(timespan);
         if (filter.expanded !== undefined) { params.expanded = filter.expanded };
         return this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
           .pipe(map(res => this.createTimeseriesData(res)));

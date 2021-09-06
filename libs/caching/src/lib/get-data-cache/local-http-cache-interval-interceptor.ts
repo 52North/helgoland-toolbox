@@ -233,18 +233,18 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    */
   private concatReferenceValues(base: Data<TimeValueTuple>, adds: Data<TimeValueTuple>): ReferenceValues<TimeValueTuple> {
     const res: ReferenceValues<TimeValueTuple> = Object.assign({}, base.referenceValues);
-    Object.assign(res, adds.referenceValues);
-    for (const key in res) {
-      if (key) {
-        if (base.referenceValues[key]) {
-          // combine base and adds values with same key
-          res[key] = res[key].concat(base.referenceValues[key].filter(item => res[key].findIndex(el => el[0] === item[0]) < 0));
-          // sort
-          res[key] = res[key].sort((a, b) => (a[0] > b[0]) ? 1 : ((b[0] > a[0]) ? -1 : 0));
-          res[key] = res[key].filter(item => item[0]);
-        }
-      }
-    }
+    // Object.assign(res, adds.referenceValues);
+    // for (const key in res) {
+    //   if (key) {
+    //     if (base.referenceValues[key]) {
+    //       // combine base and adds values with same key
+    //       res[key] = res[key].concat(base.referenceValues[key].filter(item => res[key].findIndex(el => el[0] === item[0]) < 0));
+    //       // sort
+    //       res[key] = res[key].sort((a, b) => (a[0] > b[0]) ? 1 : ((b[0] > a[0]) ? -1 : 0));
+    //       res[key] = res[key].filter(item => item[0]);
+    //     }
+    //   }
+    // }
     return res;
   }
 

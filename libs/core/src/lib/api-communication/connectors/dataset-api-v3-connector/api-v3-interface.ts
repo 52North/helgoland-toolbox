@@ -151,11 +151,13 @@ export interface ApiV3ParameterFilter {
   procedures?: string[];
   platforms?: string[];
   services?: string[];
+  select?: string[];
   locale?: string;
 }
 
 export interface ApiV3DatasetDataFilter {
   timespan?: string;
+  generalize?: boolean;
   format?: string;
   unixTime?: boolean;
   expanded?: boolean;

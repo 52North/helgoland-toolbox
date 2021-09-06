@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { TranslateTestingModule } from './../../../../../../libs/testing/translate.testing.module';
 import { TrajectoryLabelComponent } from './trajectory-label.component';
 
 describe('TrajectoryLabelComponent', () => {
@@ -8,9 +9,11 @@ describe('TrajectoryLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrajectoryLabelComponent ]
-    })
-    .compileComponents();
+      declarations: [TrajectoryLabelComponent],
+      imports: [
+        TranslateTestingModule
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {

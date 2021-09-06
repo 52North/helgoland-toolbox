@@ -9,12 +9,16 @@ export interface Data<T extends IDataEntry> {
 }
 
 export class ReferenceValues<T extends IDataEntry> {
-    [key: string]: T[];
+    [key: string]: {
+        values: T[];
+        valueBeforeTimespan?: T;
+        valueAfterTimespan?: T;
+    };
 }
 
 export interface TimeValueEntry extends IDataEntry {
     timestamp: number;
-    value: number;
+    value: number | null;
 }
 
 export type TimeValueTuple = [number, number];

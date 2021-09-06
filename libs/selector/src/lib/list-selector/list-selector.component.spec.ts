@@ -96,7 +96,7 @@ describe('ListSelectorComponent', () => {
     component = fixture.componentInstance;
     component.selectorId = 'test-id';
     component.providerList = [
-      { id: '1', url: 'https://www.fluggs.de/sos2/api/v1/', filter: {} }
+      { id: '1', url: 'https://fluggs.wupperverband.de/sos2/api/v1/', filter: {} }
     ];
     component.filter = {
       type: DatasetType.Timeseries,

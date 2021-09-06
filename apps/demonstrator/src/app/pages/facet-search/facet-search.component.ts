@@ -1,9 +1,22 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { DatasetType, HelgolandServicesConnector, HelgolandTimeseries, Timeseries, Timespan } from '@helgoland/core';
-import { FacetSearchService, ParameterFacetType } from '@helgoland/facet-search';
+import {
+  ApiV3InterfaceService,
+  ApiV3ParameterFilter,
+  HelgolandServicesConnector,
+  Timeseries,
+  Timespan,
+} from '@helgoland/core';
+import {
+  convertFromApiV3Dataset,
+  FacetSearchElement,
+  FacetSearchService,
+  ParameterFacetSort,
+  ParameterFacetType,
+} from '@helgoland/facet-search';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+
+import { FacetSearchElementFeature } from './../../../../../../libs/facet-search/src/lib/facet-search-model';
 
 @Component({
   selector: 'n52-facet-search',
@@ -19,6 +32,8 @@ export class FacetSearchComponent {
   public offeringType: ParameterFacetType = ParameterFacetType.offering;
   public phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
   public procedureType: ParameterFacetType = ParameterFacetType.procedure;
+
+  public featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
 
   public categoryAutocomplete: string;
   public featureAutocomplete: string;
@@ -36,6 +51,7 @@ export class FacetSearchComponent {
   constructor(
     private servicesConnector: HelgolandServicesConnector,
     private translate: TranslateService,
+    private apiv3: ApiV3InterfaceService,
     public facetSearch: FacetSearchService
   ) {
     this.translate.onLangChange.subscribe(_ => {
@@ -50,30 +66,47 @@ export class FacetSearchComponent {
   }
 
   private fetchDatasets() {
-    forkJoin([
-      this.servicesConnector.getDatasets('mocked-apiv3', { expanded: true, type: DatasetType.Timeseries }),
-      // this.servicesConnector.getDatasets('http://192.168.52.242:8080/52n-sos-webapp/api/', { expanded: true, type: DatasetType.Timeseries }),
-      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
-      //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
-      // ),
-      // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-      // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-    ]).subscribe(res => {
-      const complete = [];
-      res.forEach(dsList => {
-        dsList.forEach(ds => {
-          if (ds instanceof HelgolandTimeseries) {
-            complete.push(ds);
-          }
-        });
-      });
-      this.facetSearch.setTimeseries(complete);
-    });
+    // forkJoin([
+    //   // this.servicesConnector.getDatasets('mocked-apiv3', { expanded: true, type: DatasetType.Timeseries }),
+    //   // this.servicesConnector.getDatasets('http://192.168.52.242:8080/52n-sos-webapp/api/', { expanded: true, type: DatasetType.Timeseries }),
+    //   // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+    //   // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
+    //   //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
+    //   // ),
+    //   // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+    //   // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+    //   this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true, type: DatasetType.Timeseries })
+    // ]).subscribe(res => {
+    //   const complete: FacetEntry[] = [];
+    //   res.forEach(dsList => {
+    //     dsList.forEach(ds => {
+    //       if (ds instanceof HelgolandTimeseries) {
+    //         complete.push(convertToFacetEntry(ds));
+    //       }
+    //     });
+    //   });
+    //   this.facetSearch.setEntries(complete);
+    // });
+
+
+    const url = 'http://192.168.52.242:8080/52n-sos-webapp/api/';
+    const filter: ApiV3ParameterFilter = {
+      expanded: true,
+      select: ['label', 'parameters/procedure', 'parameters/phenomenon', 'parameters/category', 'feature']
+    }
+    this.apiv3.getDatasets(url, filter).subscribe(res => {
+      const entries: FacetSearchElement[] = res.map(e => convertFromApiV3Dataset(e, url));
+      console.log(entries[0]);
+      this.facetSearch.setEntries(entries);
+    })
   }
 
-  public onSelectedTs(ts: Timeseries) {
-    console.log(`${ts.label} is clicked`);
+  public onSelectedEntry(entry: FacetSearchElement) {
+    console.log(entry);
+  }
+
+  public onSelectedFeature(elem: { feature: FacetSearchElementFeature, url: string }) {
+    console.log(elem);
   }
 
   public toggleResultView() {
@@ -90,6 +123,10 @@ export class FacetSearchComponent {
 
   public setEnd(end: MatDatepickerInputEvent<Date>) {
     this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
+  }
+
+  public setAutocomplete(acString: string, evt: any) {
+    acString = evt.target.value;
   }
 
   private fetchTime() {

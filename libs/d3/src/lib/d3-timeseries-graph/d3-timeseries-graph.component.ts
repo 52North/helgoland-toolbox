@@ -439,7 +439,7 @@ export class D3TimeseriesGraphComponent
      * @param uom {String} String with the uom of a dataset
      */
     private addReferenceValueData(dataEntry: InternalDataEntry, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
-        if (this.plotOptions.showReferenceValues) {
+        if (this.plotOptions.showReferenceValues && dataEntry.visible) {
             dataEntry.referenceValueData = styles.showReferenceValues
                 .filter(refValue => data.referenceValues && data.referenceValues[refValue.id])
                 .map((refValue) => ({
@@ -770,14 +770,6 @@ export class D3TimeseriesGraphComponent
                     });
                 }
             }
-        }
-    }
-
-    private clickDataPoint(d: DataEntry, entry: InternalDataEntry) {
-        if (d !== undefined) {
-            const timeseries = this.datasetMap.get(entry.internalId) as HelgolandTimeseries;
-            const data = new HelgolandTimeseriesData([[d.timestamp, d.value as number]]);
-            this.onClickDataPoint.emit({ timeseries, data });
         }
     }
 

@@ -36,7 +36,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
   public d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
     togglePanZoom: true,
-    generalizeAllways: false,
+    generalizeAllways: true,
     yaxis: true, // configurable
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
@@ -59,9 +59,9 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public diagramConfig: DiagramConfig = {
     overviewVisible: true,
-    yaxisVisible: true,
+    yaxisVisible: this.d3diagramOptions.yaxis,
     yaxisModifier: true,
-    hoverstyle: 'none'
+    hoverstyle: this.d3diagramOptions.hoverStyle
   };
 
   constructor(
@@ -159,6 +159,7 @@ export class DiagramViewComponent implements OnInit, OnDestroy {
 
   public editOption(options: DatasetOptions) {
     const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, { data: options });
+    dialogRef.afterClosed().subscribe(_ => this.timeseries.updateDatasetOptions(options, options.internalId))
   }
 
   public updateOptions(options: DatasetOptions, internalId: string) {

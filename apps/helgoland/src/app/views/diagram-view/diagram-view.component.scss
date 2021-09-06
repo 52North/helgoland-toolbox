@@ -70,16 +70,3 @@ helgoland-diagram-view {
         font: unset;
     }
 }
-
-.dark-theme {
-    .d3 {
-        text.yaxisTextLabel {
-            fill: white;
-        }
-
-        .axis-button-line {
-            fill: white;
-            stroke: white;
-        }
-    }
-}

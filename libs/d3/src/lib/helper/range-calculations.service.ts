@@ -48,15 +48,11 @@ export class RangeCalculationsService {
   public setDefaultExtendIfUndefined(axis: YAxis) {
     if (axis.range !== undefined && axis.range !== null) {
       if (axis.range.min === axis.range.max) {
-        if (axis.fixedMin && !axis.fixedMax) {
-          axis.range.max = axis.range.min + 1;
+        if (!axis.fixedMax) {
+          axis.range.max = axis.range.max + 1;
         }
-        if (!axis.fixedMin && axis.fixedMax) {
-          axis.range.min = axis.range.max - 1;
-        }
-        if (!axis.fixedMin && !axis.fixedMax) {
-          axis.range.min = -1;
-          axis.range.max = 1;
+        if (!axis.fixedMin) {
+          axis.range.min = axis.range.min - 1;
         }
       }
     }

@@ -1,4 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Injectable } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
     DatasetApiInterface,
@@ -21,6 +22,7 @@ const testUrl = '/';
 const stations = require('../../../test-data/stations.json');
 const timeseries = require('../../../test-data/timeseries.json');
 
+@Injectable()
 class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
     public getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         return of(stations);

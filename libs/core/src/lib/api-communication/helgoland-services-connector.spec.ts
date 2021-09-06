@@ -72,7 +72,7 @@ describe('HelgolandservicesConnectorService', () => {
     const service: HelgolandServicesConnector = TestBed.inject(HelgolandServicesConnector);
     const urls = [
       // 'https://calgary-aq-sta.sensorup.com/v1.0/',
-      // 'https://www.fluggs.de/sos2/api/v1/',
+      // 'https://fluggs.wupperverband.de/sos2/api/v1/',
       // 'http://geo.irceline.be/sos/api/v1/',
     ];
     urls.forEach(url => {

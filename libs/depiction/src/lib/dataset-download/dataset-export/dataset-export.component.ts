@@ -64,8 +64,6 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    // get timeseries metadata by internal id
-    // e.g. https://www.fluggs.de/sos2/api/v1/__26
     if (this.inputId) {
       this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
         ds => {
