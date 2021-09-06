@@ -50,6 +50,7 @@ import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppComponent } from './app.component';
+import { ROUTES } from './app.consts';
 import { EditLabelComponent } from './components/edit-label/edit-label.component';
 import {
   FavoriteToggleButtonComponent,
@@ -79,7 +80,6 @@ import {
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
-import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { AppConfig, ConfigurationService } from './services/configuration.service';
 import { CustomD3TimeseriesGraphErrorHandler } from './services/timeseries-graph-error-handler';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
@@ -96,26 +96,9 @@ export class AppTranslateLoader implements TranslateLoader {
   }
 }
 
-export const ROUTES = [
-  {
-    path: MAP_SELECTION_ROUTE,
-    component: MapSelectionViewComponent
-  },
-  {
-    path: LIST_SELECTION_ROUTE,
-    component: ListSelectionViewComponent
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    component: DiagramViewComponent
-  }
-];
-
 export function initApplication(configService: ConfigurationService, translate: TranslateService, localStorage: LocalStorage): () => Promise<void> {
   return () => configService.loadConfiguration().then((config: AppConfig) => {
     const localStorageLanguageKey = 'client-language';
-    debugger;
     registerLocaleData(localeDe);
     let lang = translate.getBrowserLang() || 'en';
     const storedLang = localStorage.load(localStorageLanguageKey) as string;

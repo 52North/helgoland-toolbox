@@ -57,7 +57,6 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
 
   private drawSymbol() {
     if (this.svg) {
-      console.log('draw symbol');
       this.svg.selectAll("*").remove();
       this.graphHelper.drawDatasetSign(this.svg, this.options, this.size / 2, this.size / 2, false);
     }

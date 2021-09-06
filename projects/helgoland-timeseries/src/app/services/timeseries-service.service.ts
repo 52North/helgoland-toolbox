@@ -1,13 +1,16 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Injectable, Optional } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
   DatasetOptions,
   HelgolandServicesConnector,
+  HelgolandTimeseries,
   LocalStorage,
   RenderingHintsDatasetService,
   Time,
   Timespan,
+  TimezoneService,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
@@ -27,6 +30,9 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     protected serviceConnector: HelgolandServicesConnector,
     protected localStorage: LocalStorage,
     protected timeSrvc: Time,
+    protected timezoneSrvc: TimezoneService,
+    protected translate: TranslateService,
+    protected la: LiveAnnouncer,
     @Optional() protected translateSrvc?: TranslateService
   ) {
     super(serviceConnector, translateSrvc);
@@ -38,9 +44,22 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     return this._timespan;
   }
 
-  public set timespan(v: Timespan) {
-    this._timespan = v;
+  public set timespan(ts: Timespan) {
+    const message = `${this.translate.instant('events.timespan-changed-from')} ${this.timezoneSrvc.formatTzDate(ts.from)} ${this.translate.instant('events.timespan-changed-to')} ${this.timezoneSrvc.formatTzDate(ts.to)}`;
+    this.la.announce(message);
+    this._timespan = ts;
     this.timeSrvc.saveTimespan(TIME_CACHE_PARAM, this._timespan);
+  }
+
+  public removeAllDatasets() {
+    super.removeAllDatasets();
+    this.la.announce(this.translate.instant('events.all-timeseries-removed'));
+  }
+
+  protected async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+    super.addLoadedDataset(timeseries, resolve);
+    const message = `${this.translate.instant('events.add-timeseries')}: ${timeseries.label}`;
+    this.la.announce(message);
   }
 
   protected createStyles(internalId: string): DatasetOptions {

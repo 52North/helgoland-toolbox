@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DatasetOptions, HelgolandTimeseries, NotifierService } from '@helgoland/core';
+import { DatasetOptions, HelgolandTimeseries } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FavoriteService } from '../service/favorite.service';
@@ -17,7 +17,6 @@ export class FavoriteTogglerComponent implements OnChanges {
 
   constructor(
     protected favSrvc: FavoriteService,
-    protected notifier: NotifierService,
     protected translate: TranslateService
   ) { }
 
@@ -29,17 +28,19 @@ export class FavoriteTogglerComponent implements OnChanges {
 
   public toggle() {
     if (this.isFavorite) {
-      this.isFavorite = false;
-      this.favSrvc.removeFavorite(this.dataset.internalId);
-      this.translate.get('favorite.notifier.remove-favorite').subscribe((translation) => {
-        this.notifier.notify(translation + ': ' + this.dataset.label);
-      });
+      this.removeFavorite();
     } else {
-      this.isFavorite = true;
-      this.favSrvc.addFavorite(this.dataset, this.options);
-      this.translate.get('favorite.notifier.add-favorite').subscribe((translation) => {
-        this.notifier.notify(translation + ': ' + this.dataset.label);
-      });
+      this.addFavorite();
     }
+  }
+
+  protected addFavorite() {
+    this.isFavorite = true;
+    this.favSrvc.addFavorite(this.dataset, this.options);
+  }
+
+  protected removeFavorite() {
+    this.isFavorite = false;
+    this.favSrvc.removeFavorite(this.dataset.internalId);
   }
 }
