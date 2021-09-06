@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/helgoland/modification",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@helgoland/core": "@helgoland/core",
+      "ngx-color-picker": "ngx-color-picker"
+    }
+  },
+  "allowedNonPeerDependencies": [""]
+}

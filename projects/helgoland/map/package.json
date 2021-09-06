@@ -1,0 +1,15 @@
+{
+  "name": "@helgoland/map",
+  "version": "12.0.0-beta.1",
+  "peerDependencies": {},
+  "dependencies": {
+    "@angular/common": "^12.0.2",
+    "@angular/core": "^12.0.2",
+    "tslib": "^2.1.0",
+    "@types/geojson": "^7946.0.7",
+    "@types/leaflet": "^1.7.1",
+    "@types/leaflet.markercluster": "^1.4.4",
+    "leaflet": "^1.7.1",
+    "leaflet.markercluster": "^1.5.0"
+  }
+}

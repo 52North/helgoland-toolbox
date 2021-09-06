@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>{{station?.label}}</h1>
+<mat-dialog-content>
+
+  <p>
+    {{ 'dataset-by-station.hint' | translate }}
+  </p>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="counter"></mat-progress-bar>
+
+  <div class="full-height">
+    <mat-selection-list (selectionChange)="adjustSelection($event)">
+      <mat-list-option *ngFor="let ds of phenomenonMatchedList" color="primary" [value]="ds" [selected]="ds.selected">
+        <div mat-line>
+          <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+        </div>
+        <div mat-line>
+          <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+          <span
+            *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+        </div>
+        <div mat-line *ngIf="ds.lastValue">
+          <span>{{ds.lastValue.value}}</span>
+          <span>{{ds.uom}}</span>
+          <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <mat-divider *ngIf="othersList.length > 0"> </mat-divider>
+
+    <mat-accordion *ngIf="othersList.length > 0">
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ 'dataset-by-station.show-additional-datasets' | translate }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list color="primary" (selectionChange)="adjustSelection($event)">
+          <mat-list-option *ngFor="let ds of othersList" [value]="ds" [selected]="ds.selected">
+            <div mat-line>
+              <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+            </div>
+            <div mat-line>
+              <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+              <span
+                *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+            </div>
+            <div mat-line *ngIf="ds.lastValue">
+              <span>{{ds.lastValue.value}}</span>
+              <span>{{ds.uom}}</span>
+              <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close [matBadge]="timeseries.datasetIds.length"
+    (click)="appRouter.toDiagram()">{{'controls.to-diagram' | translate}}</button>
+  <div style="flex: 1"></div>
+  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,48 @@
+<mat-sidenav-container class="container" *ngIf="selectedService">
+
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
+    autoFocus="false">
+    <div class="sidebar">
+      <button class="menu-close-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-button color="primary" (click)="selectAllPhenomena()" [disabled]="!selectedPhenomenonId"
+        style="width: 100%;">{{'map-selection-view.select-all-phenomena' | translate}}</button>
+      <div class="phenomenon-list">
+        <helgoland-common-parameter-list-selector [endpoint]="phenomenonEndpoint" [selected]="selectedPhenomenonId"
+          [filterList]="phenomenonFilter" (onItemSelected)="onPhenomenonSelected($event)">
+        </helgoland-common-parameter-list-selector>
+      </div>
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
+          <div style="flex:1;"></div>
+          <button mat-icon-button (click)="appRouter.toDiagram()"
+            attr.aria-label="{{'map-selection-view.go-to-chart.tooltip' | translate}}"
+            matTooltip="{{'map-selection-view.go-to-chart.tooltip' | translate}}">
+            <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <button class="menu-open-button" mat-mini-fab color="none" *ngIf="mobileQuery.matches" mat-icon-button
+      (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="map">
+      <n52-station-map-selector class="h-100" [mapId]="'timeseries'" [serviceUrl]="selectedService.apiUrl"
+        [filter]="stationFilter" (onSelected)="onStationSelected($event)" [cluster]="cluster"
+        class="vbox boxItem fullHeight"></n52-station-map-selector>
+      <button mat-icon-button (click)="openMapSettings()" mat-mini-fab color="none" class="local-settings-button"
+        attr.aria-label="{{'map-selection-view.adjust-map-button.tooltip' | translate}}"
+        matTooltip="{{'map-selection-view.adjust-map-button.tooltip' | translate}}">
+        <mat-icon>edit_location_alt</mat-icon>
+      </button>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

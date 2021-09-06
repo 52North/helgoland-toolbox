@@ -1,0 +1,13 @@
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="!loading && items?.length === 0">
+  no results found
+</div>
+
+<mat-selection-list #parameters [multiple]="false" (selectionChange)="selectionChanged($event)"
+  attr.aria-label="{{'map-selection-view.phenomenon-selection-list' | translate}}">
+  <mat-list-option *ngFor="let item of items" [value]="item.id" [selected]="item.id === selected">
+    {{item.label}}
+  </mat-list-option>
+</mat-selection-list>

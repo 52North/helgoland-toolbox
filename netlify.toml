@@ -1,3 +1,0 @@
-[context.master]
-  command = "npm run lib:build && ng build"
-  publish = "dist/helgoland-toolbox"
