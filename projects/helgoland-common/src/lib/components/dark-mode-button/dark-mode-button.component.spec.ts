@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { DarkModeButtonComponent } from './dark-mode-button.component';
