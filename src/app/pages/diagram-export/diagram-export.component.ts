@@ -14,6 +14,8 @@ export class DiagramExportComponent implements OnInit {
   public start = new Date(2019, 10, 13);
   public end = new Date(2019, 10, 14);
 
+  public format: 'png' | 'svg' = 'png';
+
   public datasetOptions: Map<string, DatasetOptions> = new Map();
 
   public datasetIds = [

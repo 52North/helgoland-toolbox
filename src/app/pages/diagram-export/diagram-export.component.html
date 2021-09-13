@@ -18,6 +18,13 @@
     </mat-form-field>
   </div>
 
+  <label id="example-radio-group-label">Select a format</label>
+  <mat-radio-group aria-labelledby="example-radio-group-label"
+    style="display: flex; flex-direction: column; margin: 15px 0;" [(ngModel)]="format">
+    <mat-radio-button value="svg">SVG</mat-radio-button>
+    <mat-radio-button value="png">PNG</mat-radio-button>
+  </mat-radio-group>
+
   <div>
     <mat-form-field>
       <input matInput type="date" placeholder="Starttime" [ngModel]="start | date:'yyyy-MM-dd'"
@@ -38,7 +45,7 @@
 
   <div>
     <n52-export-image-button [title]="title" [datasetOptions]="datasetOptions" [datasetIds]="datasetIds"
-      [height]="height" [width]="width" [timespan]="timespan" [showLegend]="true" [showFirstLastDate]="true">
+      [height]="height" [width]="width" [timespan]="timespan" [showLegend]="true" [exportType]="format" [showFirstLastDate]="true">
     </n52-export-image-button>
   </div>
 
