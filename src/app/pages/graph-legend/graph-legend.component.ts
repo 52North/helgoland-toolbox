@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import {
     ColorService,
     DatasetOptions,
-    DefinedTimespan,
     DefinedTimespanService,
     HelgolandTimeseries,
     HelgolandTimeseriesData,
@@ -18,6 +17,7 @@ import {
     D3GeneralDataPoint,
     D3GeneralInput,
     D3PlotOptions,
+    D3PointSymbolDrawerService,
     D3SimpleHoveringService,
     DataEntry,
     HighlightOutput,
@@ -74,7 +74,7 @@ export class GraphLegendComponent {
     public plotLanguage;
     public yaxisModifier = true;
 
-    public hoveringService = new HoveringTestService(this.timezoneSrvc);
+    public hoveringService = new HoveringTestService(this.timezoneSrvc, this.pointSymbolDrawer);
 
     public loadings: Set<string> = new Set();
 
@@ -126,7 +126,8 @@ export class GraphLegendComponent {
         private definedTime: DefinedTimespanService,
         public internalIdHandler: InternalIdHandler,
         private http: HttpClient,
-        protected timezoneSrvc: TimezoneService
+        protected timezoneSrvc: TimezoneService,
+        protected pointSymbolDrawer: D3PointSymbolDrawerService
     ) {
         this.datasetIds.forEach((entry) => {
             const option = new DatasetOptions(entry, this.color.getColor());
