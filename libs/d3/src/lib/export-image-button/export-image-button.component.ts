@@ -126,33 +126,29 @@ export class ExportImageButtonComponent {
     comp.instance.setTimespan(this.timespan);
     comp.instance.presenterOptions = this.presenterOptions;
 
-    let count = this.datasetIds.length;
-    comp.instance.onContentLoading.subscribe(loadFinished => {
-      if (!loadFinished) {
-        count--;
-        if (count === 0) {
-          setTimeout(() => {
-            const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
-            const svgElem = document.querySelector<SVGSVGElement>(temp);
-            if (svgElem) {
-              this.diagramAdjustments(svgElem).subscribe(() => {
-                switch (this.exportType) {
-                  case 'svg':
-                    this.createSvgDownload(svgElem);
-                    break;
-                  case 'png':
-                  default:
-                    this.createPngImageDownload(svgElem);
-                    break;
-                }
-                this.removeComponentFromBody(comp);
-                this.loading = false;
-              });
-            }
-          }, 1000);
-        }
-      }
-    });
+    comp.instance.dataLoaded.subscribe(loaded => {
+      if (loaded.size === 0) {
+        setTimeout(() => {
+          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+          const svgElem = document.querySelector<SVGSVGElement>(temp);
+          if (svgElem) {
+            this.diagramAdjustments(svgElem).subscribe(() => {
+              switch (this.exportType) {
+                case 'svg':
+                  this.createSvgDownload(svgElem);
+                  break;
+                case 'png':
+                default:
+                  this.createPngImageDownload(svgElem);
+                  break;
+              }
+              this.removeComponentFromBody(comp);
+              this.loading = false;
+            });
+          }
+        }, 1000);
+      };
+    })
   }
 
   private diagramAdjustments(svgElem: SVGSVGElement): Observable<void> {
@@ -222,7 +218,6 @@ export class ExportImageButtonComponent {
       const graph = selection.select<SVGGraphicsElement>('g');
 
       this.moveDown(graph, addedHeight);
-
       const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
       const titleWidth = titleElem.node().getBBox().width;
       titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
@@ -230,41 +225,34 @@ export class ExportImageButtonComponent {
   }
 
   private moveDown(graph: d3.Selection<SVGGraphicsElement, any, null, undefined>, sizeToMove: number) {
-    const matrix = graph.style('transform');
-    const matrixArray = matrix.substring(7, matrix.length - 1).split(',').map(e => parseInt(e, 10));
-    if (matrixArray.length === 6) {
-      matrixArray[5] += sizeToMove;
-    }
-    graph.attr('transform', `matrix(${matrixArray.join(',')})`);
+    const matrix = (document.getElementById(graph.attr('id')) as any).transform.baseVal.consolidate().matrix;
+    graph.attr('transform', `matrix(${matrix.a} ${matrix.b} ${matrix.c} ${matrix.d} ${matrix.e} ${matrix.f + sizeToMove})`);
   }
 
   private createPngImageDownload(element: SVGSVGElement) {
-    console.log(`Generate PNG file with width: ${this.internalWidth} and height: ${this.internalHeight}`);
-    const svgString = new XMLSerializer().serializeToString(element);
-    const canvas = document.createElement('canvas');
+    element.setAttribute('width', `${this.internalWidth}px`);
+    element.setAttribute('height', `${this.internalHeight}px`);
+    var canvas = document.createElement('canvas');
     canvas.width = this.internalWidth;
     canvas.height = this.internalHeight;
-    const ctx = canvas.getContext('2d');
-    const image = new Image();
-    const svg = new Blob([svgString], { type: 'image/svg+xml;base64;' });
-    const url = window.URL.createObjectURL(svg);
-    image.onload = () => {
-      ctx.drawImage(image, 0, 0);
-      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(svg, `${this.fileName}.png`);
-      } else {
-        const png = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        const downloadAttrSupport = typeof a.download !== 'undefined';
-        if (downloadAttrSupport) {
-          a.download = `${this.fileName}.png`;
-          a.href = png;
-          a.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-        }
-        window.URL.revokeObjectURL(png);
-      }
+    var data = new XMLSerializer().serializeToString(element);
+    var win = window.URL;
+    var img = new Image();
+    var blob = new Blob([data], { type: 'image/svg+xml' });
+    var url = win.createObjectURL(blob);
+    img.onload = () => {
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      win.revokeObjectURL(url);
+      var uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
+      var a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = uri
+      a.download = (element.id || element.getAttribute('name') || element.getAttribute('aria-label') || this.fileName) + '.png';
+      a.click();
+      window.URL.revokeObjectURL(uri);
+      document.body.removeChild(a);
     };
-    image.src = url;
+    img.src = url;
   }
 
   private createSvgDownload(element: SVGSVGElement) {
