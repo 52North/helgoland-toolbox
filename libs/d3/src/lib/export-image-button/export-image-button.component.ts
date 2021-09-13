@@ -111,6 +111,7 @@ export class ExportImageButtonComponent {
 
   private createDiagramElem() {
     this.loading = true;
+    let once = true;
 
     this.internalHeight = this.height;
     this.internalWidth = this.width;
@@ -127,7 +128,8 @@ export class ExportImageButtonComponent {
     comp.instance.presenterOptions = this.presenterOptions;
 
     comp.instance.dataLoaded.subscribe(loaded => {
-      if (loaded.size === 0) {
+      if (loaded.size === 0 && once) {
+        once = false;
         setTimeout(() => {
           const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
           const svgElem = document.querySelector<SVGSVGElement>(temp);
