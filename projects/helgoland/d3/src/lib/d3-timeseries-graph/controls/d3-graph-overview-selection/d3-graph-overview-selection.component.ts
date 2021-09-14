@@ -7,7 +7,7 @@ import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
+import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 @Component({
   selector: 'n52-d3-graph-overview-selection',
@@ -21,7 +21,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   @Input() public selectionTimeInterval: Timespan;
 
   private mousedownBrush: boolean;
-  private graphComp: D3TimeseriesGraphComponent;
+  private graphComp: D3TimeseriesGraphInterface;
   private overview: d3.Selection<SVGSVGElement, any, any, any>;
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private completeTimespan: Timespan;
@@ -41,7 +41,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     }
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+  public graphInitialized(graph: D3TimeseriesGraphInterface) {
     this.graphComp = graph;
   }
 

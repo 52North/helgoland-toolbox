@@ -1,7 +1,7 @@
+import { D3TimeseriesGraphInterface } from './../d3-timeseries-graph/d3-timeseries-graph.interface';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
 
 /**
  * Service which holds all generated graphs and their ids
@@ -19,9 +19,9 @@ export class D3Graphs {
    * @param graphId
    * @param graphComp
    */
-  public setGraph(graphId: string, graphComp: D3TimeseriesGraphComponent) {
+  public setGraph(graphId: string, graphComp: D3TimeseriesGraphInterface) {
     if (this.graphs[graphId] instanceof Subject) {
-      const subject = this.graphs[graphId] as Subject<D3TimeseriesGraphComponent>;
+      const subject = this.graphs[graphId] as Subject<D3TimeseriesGraphInterface>;
       subject.next(graphComp);
       subject.complete();
     }
@@ -34,7 +34,7 @@ export class D3Graphs {
    * @param graphId
    * @returns the graph as observable
    */
-  public getGraph(graphId: string): Observable<D3TimeseriesGraphComponent> {
+  public getGraph(graphId: string): Observable<D3TimeseriesGraphInterface> {
     if (this.graphs[graphId]) {
       if (this.graphs[graphId] instanceof Subject) {
         return this.graphs[graphId];
@@ -42,7 +42,7 @@ export class D3Graphs {
         return of(this.graphs[graphId]);
       }
     } else {
-      this.graphs[graphId] = new Subject<D3TimeseriesGraphComponent>();
+      this.graphs[graphId] = new Subject<D3TimeseriesGraphInterface>();
       return this.graphs[graphId];
     }
   }

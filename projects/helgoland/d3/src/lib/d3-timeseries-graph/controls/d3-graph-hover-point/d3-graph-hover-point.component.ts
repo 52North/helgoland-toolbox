@@ -1,3 +1,4 @@
+import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
@@ -13,7 +14,6 @@ import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hove
 import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
 import { HighlightOutput } from '../../../model/d3-highlight';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
 
@@ -41,7 +41,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
-  private d3Graph: D3TimeseriesGraphComponent;
+  private d3Graph: D3TimeseriesGraphInterface;
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private disableHovering: boolean;
@@ -62,7 +62,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+  public graphInitialized(graph: D3TimeseriesGraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }

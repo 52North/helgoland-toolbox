@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import { BaseType } from 'd3';
 
@@ -8,7 +8,7 @@ import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
+import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -23,7 +23,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
    */
   @Input() copyright: D3Copyright;
 
-  private d3Graph: D3TimeseriesGraphComponent;
+  private d3Graph: D3TimeseriesGraphInterface;
   private copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
 
   private labelRect: d3.Selection<BaseType, any, any, any>;
@@ -45,7 +45,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     }
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+  public graphInitialized(graph: D3TimeseriesGraphInterface) {
     this.d3Graph = graph;
   }
 

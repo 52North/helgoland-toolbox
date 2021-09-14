@@ -51,6 +51,7 @@ import {
     D3TimeseriesGraphErrorHandler,
     D3TimeseriesSimpleGraphErrorHandler,
 } from './d3-timeseries-graph-error-handler.service';
+import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
 
 interface HighlightDataset {
     id: string;
@@ -68,7 +69,7 @@ const TICKS_COUNT_YAXIS = 5;
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
-    implements AfterViewInit, OnDestroy {
+    implements AfterViewInit, OnDestroy, D3TimeseriesGraphInterface {
 
     @Input()
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
@@ -291,7 +292,7 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
-    public getDataset(internalId: string) {
+    public getDataset(internalId: string): DataConst {
         return this.datasetMap.get(internalId);
     }
 

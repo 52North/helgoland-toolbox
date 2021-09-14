@@ -7,7 +7,7 @@ import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphComponent } from '../../d3-timeseries-graph.component';
+import { D3TimeseriesGraphInterface } from '../../d3-timeseries-graph.interface';
 
 @Component({
   selector: 'n52-d3-graph-pan-zoom-interaction',
@@ -33,7 +33,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   private xAxisRangeOrigin: any = [];
   private xAxisRangePan: [number, number];
 
-  private d3Graph: D3TimeseriesGraphComponent;
+  private d3Graph: D3TimeseriesGraphInterface;
 
   private timespan: Timespan;
   private graphExtent: D3GraphExtent;
@@ -49,7 +49,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+  public graphInitialized(graph: D3TimeseriesGraphInterface) {
     this.d3Graph = graph;
   }
 

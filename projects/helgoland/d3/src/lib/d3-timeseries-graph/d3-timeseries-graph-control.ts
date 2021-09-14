@@ -5,7 +5,7 @@ import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { InternalDataEntry, YAxis } from '../model/d3-general';
 import { D3Graphs } from './../helper/d3-graphs.service';
-import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
+import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
 
 export interface D3GraphObserver {
     adjustBackground?(
@@ -77,7 +77,7 @@ export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestr
         }
     }
 
-    public abstract graphInitialized(graph: D3TimeseriesGraphComponent);
+    public abstract graphInitialized(graph: D3TimeseriesGraphInterface);
 
     public adjustYAxis?(axis: YAxis): void;
 
