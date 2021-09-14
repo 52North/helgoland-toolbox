@@ -42,6 +42,19 @@ export class D3GraphHelperService {
    * @param selected - if selected the sign will be drawn bigger
    */
   public drawDatasetSign(svgElem: d3.Selection<SVGSVGElement, any, any, any>, options: DatasetOptions, xPos: number, yPos: number, selected: boolean) {
+    if (options.type === 'bar') {
+      svgElem.append('rect')
+        .attr('class', 'y-axis-line')
+        .attr('id', 'axisdot-line-' + options.internalId)
+        .attr('stroke', options.color)
+        .attr('fill', options.color)
+        .style('fill-opacity', 0.5)
+        .attr('x', xPos - 3)
+        .attr('y', yPos - 5)
+        .attr('width', 6)
+        .attr('height', 10)
+      return;
+    } 
     if (options.lineWidth > 0) {
       const lineLength = 5;
       svgElem.append('line')

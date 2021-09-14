@@ -35,7 +35,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
   public hidePointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.removeTooltip();
     // unhighlight hovered dot
-    if (!entry.options.pointSymbol) {
+    if (!entry.options.pointSymbol || entry.options.type === 'bar') {
       pointElem
         .attr('opacity', 1)
         .attr('r', this.calculatePointRadius(entry));
@@ -50,7 +50,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.highlightText = this.tooltipContainer.append('g');
 
     // highlight hovered dot
-    if (!entry.options.pointSymbol) {
+    if (!entry.options.pointSymbol || entry.options.type === 'bar') {
       pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
     } else {
       this.pointSymbolDrawer.showHovering(pointElem);
