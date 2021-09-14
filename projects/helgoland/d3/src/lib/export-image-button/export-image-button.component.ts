@@ -234,19 +234,19 @@ export class ExportImageButtonComponent {
   private createPngImageDownload(element: SVGSVGElement) {
     element.setAttribute('width', `${this.internalWidth}px`);
     element.setAttribute('height', `${this.internalHeight}px`);
-    var canvas = document.createElement('canvas');
+    const canvas = document.createElement('canvas');
     canvas.width = this.internalWidth;
     canvas.height = this.internalHeight;
-    var data = new XMLSerializer().serializeToString(element);
-    var win = window.URL;
-    var img = new Image();
-    var blob = new Blob([data], { type: 'image/svg+xml' });
-    var url = win.createObjectURL(blob);
+    const data = new XMLSerializer().serializeToString(element);
+    const win = window.URL;
+    const img = new Image();
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    const url = win.createObjectURL(blob);
     img.onload = () => {
       canvas.getContext('2d').drawImage(img, 0, 0);
       win.revokeObjectURL(url);
-      var uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
-      var a = document.createElement('a');
+      const uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
+      const a = document.createElement('a');
       document.body.appendChild(a);
       a.href = uri
       a.download = (element.id || element.getAttribute('name') || element.getAttribute('aria-label') || this.fileName) + '.png';
