@@ -226,7 +226,7 @@ export class D3TimeseriesGraphComponent
     }
 
     protected addDataset(id: string, url: string): void {
-        this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries  }).subscribe(
+        this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries }).subscribe(
             res => this.loadAddedDataset(res),
             error => this.errorHandler.handleDatasetLoadError(error)
         );
@@ -570,14 +570,17 @@ export class D3TimeseriesGraphComponent
 
     private drawYGridLines() {
         this.graph.selectAll('.grid.y-grid').remove();
-        if (this.yAxes.length === 1 && this.plotOptions.grid) {
-            this.graph.append('svg:g')
-                .attr('class', 'grid y-grid')
-                .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-                .call(d3.axisLeft(this.yAxes[0].yScale)
-                    .ticks(TICKS_COUNT_YAXIS)
-                    .tickSize(-this.width + this.leftOffset)
-                    .tickFormat(() => ''));
+        if (this.plotOptions.grid) {
+            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions.get(id).visible))
+            if (idx >= 0) {
+                this.graph.append('svg:g')
+                    .attr('class', 'grid y-grid')
+                    .attr('transform', 'translate(' + this.leftOffset + ', 0)')
+                    .call(d3.axisLeft(this.yAxes[idx].yScale)
+                        .ticks(TICKS_COUNT_YAXIS)
+                        .tickSize(-this.width + this.leftOffset)
+                        .tickFormat(() => ''));
+            }
         }
     }
 
