@@ -571,7 +571,7 @@ export class D3TimeseriesGraphComponent
     private drawYGridLines() {
         this.graph.selectAll('.grid.y-grid').remove();
         if (this.plotOptions.grid) {
-            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions.get(id).visible))
+            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions.has(id) && this.datasetOptions.get(id).visible))
             if (idx >= 0) {
                 this.graph.append('svg:g')
                     .attr('class', 'grid y-grid')
