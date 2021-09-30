@@ -10,6 +10,8 @@ export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph
 export { D3TimeseriesGraphComponent } from './lib/d3-timeseries-graph/d3-timeseries-graph.component';
 export * from './lib/d3-timeseries-graph/d3-timeseries-graph.interface';
 
+export * from './lib/d3-series-graph/d3-series-graph.component';
+
 export * from './lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';

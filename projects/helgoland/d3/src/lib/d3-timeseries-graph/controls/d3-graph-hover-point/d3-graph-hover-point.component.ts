@@ -1,4 +1,3 @@
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
@@ -16,6 +15,7 @@ import { HighlightOutput } from '../../../model/d3-highlight';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
+import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 
@@ -129,8 +129,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
   private highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
-    const dataset = this.d3Graph.getDataset(nearestPoint.internalEntry.internalId);
-    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
+    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, nearestPoint.selection);
     this.hoveringService.positioningPointHovering(
       this.previousPoint.dataEntry.xDiagCoord,
       this.previousPoint.dataEntry.yDiagCoord,
@@ -156,11 +155,9 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     nearestBars.forEach(nearestBar => {
       this.previousBars.push(nearestBar);
       nearestBar.previousOpacity = nearestBar.selection.style('fill-opacity');
-      const dataset = this.d3Graph.getDataset(nearestBar.internalEntry.internalId);
       elements.push({
         dataEntry: nearestBar.dataEntry,
         entry: nearestBar.internalEntry,
-        timeseries: dataset,
         element: nearestBar.selection
       })
       // this.hoveringService.showPointHovering(nearestBar.dataEntry, nearestBar.internalEntry, dataset, nearestBar.selection);

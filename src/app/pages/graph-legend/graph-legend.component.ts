@@ -33,7 +33,7 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+    protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
         const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
         this.highlightText.append('text')
@@ -41,8 +41,8 @@ class HoveringTestService extends D3SimpleHoveringService {
             .attr('class', 'mouseHoverDotLabel')
             .style('pointer-events', 'none')
             .style('fill', 'black');
-        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
-        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
+        // this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
+        // this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
     }
 
 }

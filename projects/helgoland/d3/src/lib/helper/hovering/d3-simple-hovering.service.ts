@@ -44,7 +44,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showPointHovering(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
+  public showPointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.tooltipContainer = this.anchorElem.append('g');
     this.highlightRect = this.tooltipContainer.append('svg:rect');
     this.highlightText = this.tooltipContainer.append('g');
@@ -56,7 +56,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
       this.pointSymbolDrawer.showHovering(pointElem);
     }
 
-    this.setHoveringLabel(d, entry, timeseries);
+    this.setHoveringLabel(d, entry);
   }
 
   public positioningPointHovering(x: number, y: number, color: string, background: any) {
@@ -133,7 +133,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     return (background.node().getBBox().width) / 2 > x;
   }
 
-  protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+  protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry) {
     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
     this.highlightText.append('text')
       .text(`${stringedValue} ${entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)

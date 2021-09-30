@@ -1,3 +1,16 @@
 <div style="height: 500px;">
-    <n52-platform-map-viewer [platforms]="platforms" (onSelectedPlatform)="selected($event)"></n52-platform-map-viewer>
+  <n52-d3-series-graph [graphDatasets]="graphDatasets" [timespan]="timespan" [graphOptions]="plotOptions"
+    (timespanChanged)="updateTimespan($event)" (datasetsSelected)="onDatasetSelected($event)">
+    <n52-d3-graph-copyright [copyright]="copyright"></n52-d3-graph-copyright>
+  </n52-d3-series-graph>
 </div>
+
+<button mat-button (click)="addNewValue()">Add Value</button>
+
+<button mat-button (click)="zoomTimeframe()">Zoom Timeframe</button>
+
+<button mat-button (click)="loadDataset()">Load Data</button>
+
+<button mat-button (click)="changeStyle()">Change Style</button>
+
+<button mat-button (click)="changePlotOptions()">Change Plot Options</button>
