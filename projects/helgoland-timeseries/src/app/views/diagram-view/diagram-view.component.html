@@ -85,13 +85,18 @@
           <mat-icon>query_stats</mat-icon>
         </button>
 
-        <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+        <n52-d3-series-graph-wrapper class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+          [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
+          [yaxisModifier]="diagramConfig.yaxisModifier" (onTimespanChanged)="timeseries.timespan = $event"
+          (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
+        </n52-d3-series-graph-wrapper>
+        <!-- <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
           [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
           (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
           (onContentLoading)="onDiagramLoading($event)" #diagram>
           <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
           </n52-d3-y-axis-modifier>
-        </n52-d3-timeseries-graph>
+        </n52-d3-timeseries-graph> -->
       </div>
 
       <div>
