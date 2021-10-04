@@ -1,19 +1,22 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 
 import { D3SeriesGraphComponent } from './d3-series-graph.component';
 
+/* tslint:disable:no-unused-variable */
 describe('D3SeriesGraphComponent', () => {
   let component: D3SeriesGraphComponent;
   let fixture: ComponentFixture<D3SeriesGraphComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ D3SeriesGraphComponent ]
-    })
-    .compileComponents();
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule
+      ],
+      declarations: [D3SeriesGraphComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

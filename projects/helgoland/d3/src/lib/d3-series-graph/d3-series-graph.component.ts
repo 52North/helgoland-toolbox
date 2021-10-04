@@ -300,7 +300,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             this.redrawCompleteGraph();
         }
 
-        if (this.oldTimespan?.from !== this.timespan.from && this.oldTimespan?.to !== this.timespan.to) {
+        if (this.timespan && this.oldTimespan?.from !== this.timespan.from && this.oldTimespan?.to !== this.timespan.to) {
             this.oldTimespan.from = this.timespan.from;
             this.oldTimespan.to = this.timespan.to;
             this.redrawCompleteGraph();
