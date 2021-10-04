@@ -880,7 +880,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     private calcTicks() {
-        const tickCount = (this.width - this.leftOffset) / 80;
+        const tickCount = (this.width - this.leftOffset) / 120;
         return this.ticks(this.timespan, tickCount);
     }
 
@@ -899,13 +899,15 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     private getFirstTick(start: moment.Moment, t: { interval: unitOfTime.DurationConstructor; step: number; }) {
-        return this.round(start, duration(t.step, t.interval));
+        return this.round(start, t);
     }
 
-    private round(date: moment.Moment, duration: moment.Duration) {
+    private round(date: moment.Moment, t: { interval: unitOfTime.DurationConstructor; step: number; }) {
+        const duration = moment.duration(t.step, t.interval);
         const offset = date.utcOffset() * 60 * 1000;
         const part = (+date + offset) / (+duration);
-        return moment(Math.ceil(part) * (+duration) - offset);
+        const round = moment(Math.ceil(part) * (+duration) - offset).startOf(t.interval);
+        return date > round ? round.add(t.step, t.interval) : round;
     }
 
     private tickInterval(interval: number, start: number, stop: number): { interval: unitOfTime.DurationConstructor, step: number } {
@@ -934,6 +936,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             ['week', 1, durationWeek],
             ['month', 1, durationMonth],
             ['month', 3, 3 * durationMonth],
+            ['month', 6, 6 * durationMonth],
             ['year', 1, durationYear]
         ];
         let step;
