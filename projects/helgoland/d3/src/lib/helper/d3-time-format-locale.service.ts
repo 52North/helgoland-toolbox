@@ -14,9 +14,9 @@ export class D3TimeFormatLocaleService {
   protected formatSecond = ':ss';
   protected formatMinute = 'HH:mm';
   protected formatHour = 'HH:mm';
-  protected formatDay = 'MMM D';
-  protected formatWeek = 'MMM D';
-  protected formatMonth = 'MMMM';
+  protected formatDay = 'D.MMM';
+  protected formatWeek = 'D.MMM';
+  protected formatMonth = 'MMM YY';
   protected formatYear = 'YYYY';
 
   constructor(
