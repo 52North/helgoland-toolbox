@@ -17,7 +17,7 @@ import {
 import { DatasetOptions, MinMaxRange, PointSymbol, Time, Timespan, TimezoneService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { duration, unitOfTime } from 'moment';
+import moment, { Duration, duration, unitOfTime } from 'moment';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { D3GraphExtent, D3GraphObserver } from '../d3-timeseries-graph/d3-timeseries-graph-control';
@@ -87,8 +87,7 @@ export class LineStyle extends DatasetStyle {
      * @param {number} [pointRadius=0] radius of graphpoint
      * @param {number} [lineWidth=1] width of graphline
      * @param {PointSymbol} [pointSymbol] 
-     * @param {(number | number[])} [lineDashArray] dasharray to structure the line or bar chart border
-     * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+     * @param {(number | number[])} [lineDashArray] dasharray to structure the line or bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
      */
     constructor(
         public baseColor: string,
@@ -104,45 +103,18 @@ export class LineStyle extends DatasetStyle {
 export class BarStyle extends DatasetStyle {
 
     /**
-     * the start of, where to start with the bar chart
-     * See also: https://momentjs.com/docs/#/manipulating/start-of/
-     * default is 'hour'
-     */
-    // public barStartOf: string = 'hour';
-
-    /**
-     * period of the bars
-     * defined as moment.duration by a string
-     * See also: https://momentjs.com/docs/#/durations/
-     * default is 'PT1H' which means one hour duration
-     */
-    // public barPeriod: string = 'PT1H';
-
-    /**
-    * width of graphline
-    */
-    // public lineWidth: number = 1;
-
-    /**
-     * dasharray to structure the line or bar chart border
-     * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
-     */
-    // public lineDashArray: number | number[];
-
-    /**
      *Creates an instance of BarStyle.
      * @param {string} baseColor
-     * @param {string} [barStartOf='hour'] the start of, where to start with the bar chart
-     * See also: https://momentjs.com/docs/#/manipulating/start-of/
-     * @param {string} [barPeriod='PT1H']
-     * @param {number} [lineWidth=1]
-     * @param {(number | number[])} [lineDashArray]
+     * @param {string} [barStartOf='hour'] the start of, where to start with the bar chart. See also: https://momentjs.com/docs/#/manipulating/start-of/
+     * @param {string} [barPeriod='PT1H'] period of the bars defined as moment.duration. See also: https://momentjs.com/docs/#/durations/ default is 'PT1H' which means one hour duration
+     * @param {number} [lineWidth=1] width of bar border line
+     * @param {(number | number[])} [lineDashArray] dasharray to structure bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
      * @memberof BarStyle
      */
     constructor(
         public baseColor: string,
-        public barStartOf: string = 'hour',
-        public barPeriod: string = 'PT1H',
+        public startOf: unitOfTime.StartOf = 'hour',
+        public period: Duration = duration('PT1H'),
         public lineWidth: number = 1,
         public lineDashArray?: number | number[],
     ) {
@@ -162,6 +134,7 @@ export class AxisSettings {
      */
     constructor(
         public label: string,
+        public showSymbolOnAxis: boolean = true,
         public separate: boolean = false,
         public zeroBased: boolean = false,
         public autoRangeSelection: boolean = false,
@@ -543,6 +516,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                         referenceValueData: [],
                         visible: entry.visible
                     };
+                    if (entry.style instanceof BarStyle) {
+                        dataEntry.bar = {
+                            startOf: entry.style.startOf,
+                            period: entry.style.period
+                        }
+                    }
                     this.preparedData.push(dataEntry);
                     this.processData(dataEntry);
                 }
@@ -559,12 +538,14 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         options.zeroBasedYAxis = entry.yaxis.zeroBased;
         options.color = entry.style.baseColor;
         if (entry.style instanceof BarStyle) {
-            options.barPeriod = entry.style.barPeriod;
-            options.barStartOf = entry.style.barStartOf;
+            options.type = 'bar';
+            options.barPeriod = entry.style.period.toISOString();
+            options.barStartOf = entry.style.startOf;
             options.lineDashArray = entry.style.lineDashArray;
             options.lineWidth = entry.style.lineWidth;
         }
         if (entry.style instanceof LineStyle) {
+            options.type = 'line';
             options.pointRadius = entry.style.pointRadius;
             options.pointSymbol = entry.style.pointSymbol;
             options.lineDashArray = entry.style.lineDashArray;
@@ -1064,12 +1045,15 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 let pointOffset = 0;
 
                 axis.ids.forEach((entryID) => {
-                    const dataentry = this.preparedData.find(el => el.internalId === entryID);
-                    if (dataentry) {
-                        if (dataentry.options.type) {
-                            this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
+                    const ds = this.graphDatasets.find(e => e.id === entryID);
+                    if (ds && ds.yaxis.showSymbolOnAxis) {
+                        const dataentry = this.preparedData.find(el => el.internalId === entryID);
+                        if (dataentry) {
+                            if (dataentry.options.type) {
+                                this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
+                            }
+                            pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                         }
-                        pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
                 });
 

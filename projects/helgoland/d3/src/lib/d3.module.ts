@@ -4,6 +4,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { D3GeneralGraphComponent } from './d3-general-graph/d3-general-graph.component';
 import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
+import { D3SeriesGraphWrapperComponent } from './d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 import { D3SeriesGraphComponent } from './d3-series-graph/d3-series-graph.component';
 import { D3GraphCopyrightComponent } from './d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 import { D3GraphHoverLineComponent } from './d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
@@ -33,6 +34,7 @@ import { D3DataSimpleGeneralizer } from './helper/generalizing/d3-data-simple-ge
 
 const COMPONENTS = [
   D3SeriesGraphComponent,
+  D3SeriesGraphWrapperComponent,
   D3GeneralGraphComponent,
   D3GraphCopyrightComponent,
   D3GraphHoverLineComponent,

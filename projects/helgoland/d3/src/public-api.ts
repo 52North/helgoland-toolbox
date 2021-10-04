@@ -11,6 +11,7 @@ export { D3TimeseriesGraphComponent } from './lib/d3-timeseries-graph/d3-timeser
 export * from './lib/d3-timeseries-graph/d3-timeseries-graph.interface';
 
 export * from './lib/d3-series-graph/d3-series-graph.component';
+export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 
 export * from './lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
