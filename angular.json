@@ -1104,6 +1104,7 @@
   },
   "defaultProject": "helgoland-toolbox",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
