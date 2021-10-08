@@ -1,0 +1,73 @@
+<mat-expansion-panel [ngStyle]="{'border-color': graphDataset?.style.baseColor}" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
+        <n52-label-mapper label="{{description.phenomenonLabel}}"></n52-label-mapper>
+        <span *ngIf="description.uom">
+          <span> [<n52-label-mapper label="{{description.uom}}"></n52-label-mapper>] </span>
+        </span>
+        <div>{{description.platformLabel}}</div>
+      </div>
+      <div class="title error" *ngIf="error">
+        Error occured, while loading {{description.id}}
+      </div>
+      <div style="flex: 1"></div>
+      <button mat-icon-button (click)="removeDataset(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.remove-entry-button.tooltip' | translate}}"
+        matTooltip="{{'legend-entry.remove-entry-button.tooltip' | translate}}">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div *ngIf="!error">
+    <div class="small-label" *ngIf="description.procedureLabel || description.categoryLabel">
+      <n52-label-mapper label="{{description.procedureLabel}}"></n52-label-mapper>
+      <span *ngIf="description.categoryLabel !== description.phenomenonLabel">
+        - <n52-label-mapper label="{{description.categoryLabel}}"></n52-label-mapper>
+      </span>
+    </div>
+    <div class="controls">
+      <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.toggle-selection-button.tooltip' | translate}}"
+        matTooltip="{{'legend-entry.toggle-selection-button.tooltip' | translate}}">
+        <mat-icon *ngIf="!graphDataset.selected">check_box_outline_blank</mat-icon>
+        <mat-icon *ngIf="graphDataset.selected">check_box</mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
+        matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
+        <mat-icon>{{graphDataset?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </button>
+      <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
+        matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
+        <helgoland-timeseries-entry-symbol [datasetStyle]="graphDataset?.style" [size]="40"
+          style="height: 40px; width: 40px; display: inline-block;">
+        </helgoland-timeseries-entry-symbol>
+      </button>
+      <!-- <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
+      </helgoland-favorite-toggle-button> -->
+    </div>
+    <div class="entry-line clickable" *ngIf="description.firstValue"
+      (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
+      <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
+      <span> {{description.firstValue.timestamp | date: 'short': null : translateSrvc.currentLang}} </span>
+      <span>({{description.firstValue.value}} {{description.uom}})</span>
+    </div>
+    <div class="entry-line clickable" *ngIf="description.lastValue"
+      (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
+      <span>{{'diagram-view.legend.entry.last-value-at' | translate}}: </span>
+      <span> {{description.lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
+      <span>({{description.lastValue.value}} {{description.uom}})</span>
+    </div>
+    <!-- <div *ngIf="dataset?.referenceValues?.length > 0">
+      <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
+      <div *ngFor="let ref of dataset.referenceValues">
+        <mat-slide-toggle [checked]="ref.visible" color="primary" (toggleChange)="toggleReferenceValue(ref)">
+          <span [ngStyle]="{color: ref.color}">{{ref.label}}</span>
+        </mat-slide-toggle>
+      </div>
+    </div> -->
+  </div>
+  <helgoland-loading-overlay-progress-bar *ngIf="graphDataset.loading"></helgoland-loading-overlay-progress-bar>
+</mat-expansion-panel>

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DatasetOptions, PointSymbolType } from '@helgoland/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PointSymbolType } from '@helgoland/core';
+import { LineStyle } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 interface Symbol {
@@ -14,7 +15,9 @@ interface Symbol {
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
 
-  @Input() options: DatasetOptions;
+  @Input() lineStyle: LineStyle;
+
+  @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
 
   symbols: Symbol[] = [
     { value: 'point', viewValue: this.translate.instant('timeseries-symbol-select.type.point') },
@@ -33,27 +36,28 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   symbolSize: number;
 
   ngOnInit() {
-    if (this.options) {
-      if (this.options.pointSymbol) {
-        this.selectedSymbol = this.options.pointSymbol.type;
-        this.symbolSize = this.options.pointSymbol.size;
+    if (this.lineStyle) {
+      if (this.lineStyle.pointSymbol) {
+        this.selectedSymbol = this.lineStyle.pointSymbol.type;
+        this.symbolSize = this.lineStyle.pointSymbol.size;
       } else {
         this.selectedSymbol = 'point';
-        this.symbolSize = this.options.pointRadius;
+        this.symbolSize = this.lineStyle.pointRadius;
       }
     }
   }
 
   adjustSymbol() {
     if (this.selectedSymbol === 'point') {
-      this.options.pointSymbol = null;
-      this.options.pointRadius = this.symbolSize;
+      this.lineStyle.pointSymbol = null;
+      this.lineStyle.pointRadius = this.symbolSize;
     } else {
-      this.options.pointSymbol = {
+      this.lineStyle.pointSymbol = {
         type: PointSymbolType[this.selectedSymbol],
         size: this.symbolSize
       }
     }
+    this.styleChanged.emit(this.lineStyle);
   }
 
 }

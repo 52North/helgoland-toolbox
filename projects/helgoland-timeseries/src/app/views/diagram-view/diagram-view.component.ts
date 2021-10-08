@@ -1,17 +1,15 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatasetOptions, Time } from '@helgoland/core';
-import { D3PlotOptions, HoveringStyle } from '@helgoland/d3';
+import { D3PlotOptions, D3SeriesGraphComponent, HoveringStyle } from '@helgoland/d3';
 
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
-import {
-  ModalEditTimeseriesOptionsComponent,
-} from '../../components/modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 import { AppRouterService } from './../../services/app-router.service';
+import { DatasetEntry, DatasetsService } from './../../services/graph-datasets.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
@@ -26,8 +24,6 @@ export class DiagramViewComponent implements OnInit {
   public mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
-
-  public datasetIds = [];
 
   public selectedIds: string[] = [];
 
@@ -64,6 +60,13 @@ export class DiagramViewComponent implements OnInit {
     hoverstyle: this.d3diagramOptions.hoverStyle
   };
 
+  // new implementation starts
+
+  @ViewChild(D3SeriesGraphComponent)
+  private d3Graph!: D3SeriesGraphComponent;
+
+  // new implementation ends
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
@@ -71,7 +74,8 @@ export class DiagramViewComponent implements OnInit {
     public timeseries: TimeseriesService,
     public appRouter: AppRouterService,
     public permalinkSrvc: DiagramViewPermalinkService,
-    private time: Time
+    private time: Time,
+    public graphDatasetsSrvc: DatasetsService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     // this._mobileQueryListener = () => {
@@ -87,18 +91,15 @@ export class DiagramViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();
-    this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
-    this.setDatasets();
+
+    // new implementation starts
+    this.graphDatasetsSrvc.dataUpdated.subscribe(val => this.d3Graph.redrawCompleteGraph());
+    // new implementation ends
   }
 
-  private setDatasets() {
-    this.datasetIds = this.timeseries.datasetIds;
-    this.datasetOptions = this.timeseries.datasetOptions;
-  }
-
-  public setSelected(selectedIds: string[]) {
-    this.selectedIds = selectedIds;
-  }
+  // public setSelected(selectedIds: string[]) {
+  //   this.selectedIds = selectedIds;
+  // }
 
   public onDiagramLoading(loading: boolean) {
     setTimeout(() => this.diagramLoading = loading);
@@ -128,42 +129,24 @@ export class DiagramViewComponent implements OnInit {
   }
 
   public jumpToDate(date: Date) {
-    this.timeseries.timespan = this.time.centerTimespan(this.timeseries.timespan, date);
+    this.graphDatasetsSrvc.timespan = this.time.centerTimespan(this.graphDatasetsSrvc.timespan, date);
   }
-
-  public isSelected(internalId: string): boolean {
-    return !!this.selectedIds.find(e => e === internalId);
-  }
-
-  public selectTimeseries(selected: boolean, internalId: string) {
-    if (selected) {
-      this.selectedIds.push(internalId);
-    } else {
-      this.selectedIds.splice(this.selectedIds.findIndex(entry => entry === internalId), 1);
-    }
-  }
-
-  public showGeometry(geometry: GeoJSON.GeoJsonObject) { }
 
   public clearSelection() {
-    this.selectedIds = [];
+    debugger;
+    // this.selectedIds = [];
   }
 
   public removeAllTimeseries() {
-    this.timeseries.removeAllDatasets();
+    this.graphDatasetsSrvc.deleteAllDatasets();
   }
 
-  public deleteTimeseries(internalId: string) {
-    this.timeseries.removeDataset(internalId);
+  public datasetChanged(dataset: DatasetEntry) {
+    this.graphDatasetsSrvc.datasetUpdated(dataset);
   }
 
-  public editOption(options: DatasetOptions) {
-    const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, { data: options });
-    dialogRef.afterClosed().subscribe(_ => this.timeseries.updateDatasetOptions(options, options.internalId))
-  }
-
-  public updateOptions(options: DatasetOptions, internalId: string) {
-    this.timeseries.updateDatasetOptions(options, internalId);
+  public deleteDataset(dataset: DatasetEntry) {
+    this.graphDatasetsSrvc.deleteDataset(dataset);
   }
 
 }

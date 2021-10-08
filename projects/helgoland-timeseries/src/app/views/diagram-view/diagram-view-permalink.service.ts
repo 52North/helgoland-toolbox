@@ -1,3 +1,4 @@
+import { DatasetsService } from './../../services/graph-datasets.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
@@ -18,6 +19,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
 
   constructor(
     private timeseriesSrvc: TimeseriesService,
+    private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService
   ) {
@@ -38,12 +40,12 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
         if (time.length === 2) {
           const start = parseInt(time[0], 10);
           const end = parseInt(time[1], 10);
-          this.timeseriesSrvc.timespan = new Timespan(start, end);
+          this.graphDatasetsSrvc.timespan = new Timespan(start, end);
         }
       } else if (params[PARAM_DEFINED_TIME]) {
         const definedTime = params[PARAM_DEFINED_TIME] as DefinedTimespan;
         const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
-        if (timespan) { this.timeseriesSrvc.timespan = timespan; }
+        if (timespan) { this.graphDatasetsSrvc.timespan = timespan; }
       }
     });
   }
@@ -53,9 +55,9 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
     if (this.timeseriesSrvc.hasDatasets()) {
       const id = this.timeseriesSrvc.datasetIds.join(ID_SEPERATOR);
       paramUrl = this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
-      if (this.timeseriesSrvc.timespan) {
-        paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.timeseriesSrvc.timespan.from
-          + TIME_SEPERATOR + this.timeseriesSrvc.timespan.to);
+      if (this.graphDatasetsSrvc.timespan) {
+        paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.graphDatasetsSrvc.timespan.from
+          + TIME_SEPERATOR + this.graphDatasetsSrvc.timespan.to);
       }
     }
     return paramUrl;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatasetOptions, PointSymbolType } from '@helgoland/core';
+import { PointSymbol, PointSymbolType } from '@helgoland/core';
 import * as d3 from 'd3';
 
 import { DataEntry, InternalDataEntry } from '../model/d3-general';
@@ -20,12 +20,12 @@ export class D3PointSymbolDrawerService {
       .attr('transform', (d) => `translate(${d.xDiagCoord},${d.yDiagCoord})`)
       .attr('stroke', entry.options.pointBorderColor)
       .attr('fill', entry.options.color)
-      .attr('d', this.getSymbolPath(entry.options, entry.selected, additionalSize))
+      .attr('d', this.getSymbolPath(entry.options.pointSymbol, entry.selected, additionalSize))
   }
 
-  private getSymbolPath(options: DatasetOptions, selected: boolean, additionalSize: number) {
+  private getSymbolPath(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
     let symbolType;
-    switch (options.pointSymbol.type) {
+    switch (pointSymbol.type) {
       case PointSymbolType.cross:
         symbolType = d3.symbolCross;
         break;
@@ -47,18 +47,18 @@ export class D3PointSymbolDrawerService {
       default:
         break;
     }
-    var symbolPathData = d3.symbol().type(symbolType).size(this.calculateSymbolSize(options, selected, additionalSize))();
+    var symbolPathData = d3.symbol().type(symbolType).size(this.calculateSymbolSize(pointSymbol, selected, additionalSize))();
     return symbolPathData;
   }
 
-  drawSymbol(options: DatasetOptions, drawPane: d3.Selection<SVGGElement, any, any, any>, selected: boolean, xPos: number, yPos: number) {
+  drawSymbol(pointSymbol: PointSymbol, color: string, drawPane: d3.Selection<SVGGElement, any, any, any>, selected: boolean, xPos: number, yPos: number) {
     drawPane.append('path')
       .attr('class', 'y-axis-circle')
       // .attr('id', 'axisdot-circle-' + options.internalId)
       .attr('transform', (d) => `translate(${xPos},${yPos})`)
-      .attr('stroke', options.color)
-      .attr('fill', options.color)
-      .attr('d', this.getSymbolPath(options, selected, 1));
+      .attr('stroke', color)
+      .attr('fill', color)
+      .attr('d', this.getSymbolPath(pointSymbol, selected, 1));
   }
 
   showHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {
@@ -76,11 +76,11 @@ export class D3PointSymbolDrawerService {
     symbolElem.attr('transform', `${tr}`);
   }
 
-  private calculateSymbolSize(options: DatasetOptions, selected: boolean, additionalSize: number) {
+  private calculateSymbolSize(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
     if (selected) {
-      return (options.pointSymbol.size + additionalSize) * 15;
+      return (pointSymbol.size + additionalSize) * 15;
     } else {
-      return options.pointSymbol.size * 15;
+      return pointSymbol.size * 15;
     }
   }
 

@@ -41,9 +41,9 @@
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <helgoland-timeseries-entry-symbol [options]="datasetOptions" [size]="40"
+        <!-- <helgoland-timeseries-entry-symbol [datasetStyle]="" [size]="40"
           style="height: 40px; width: 40px; display: inline-block;">
-        </helgoland-timeseries-entry-symbol>
+        </helgoland-timeseries-entry-symbol> -->
       </button>
       <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
       </helgoland-favorite-toggle-button>

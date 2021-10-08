@@ -1092,7 +1092,7 @@ export class D3TimeseriesGraphComponent
                     const dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
                         if (dataentry.options.type) {
-                            this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
+                            this.graphHelper.drawDatasetSign(this.graph, this.graphHelper.convertDatasetOptions(dataentry.options), startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
                         }
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }

@@ -8,8 +8,7 @@ import {
   KeyValueDiffers,
   OnInit,
 } from '@angular/core';
-import { DatasetOptions } from '@helgoland/core';
-import { D3GraphHelperService } from '@helgoland/d3';
+import { D3GraphHelperService, DatasetStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
 
 @Component({
@@ -21,7 +20,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
 
   @Input() size: number = 20;
 
-  @Input() options: DatasetOptions;
+  @Input() datasetStyle: DatasetStyle;
   private optionsDiffer: KeyValueDiffer<any, any>;
 
   private svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>;
@@ -42,7 +41,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   }
 
   ngDoCheck(): void {
-    if (this.optionsDiffer.diff(this.options)) {
+    if (this.optionsDiffer.diff(this.datasetStyle)) {
       this.drawSymbol();
     }
   }
@@ -56,9 +55,9 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   }
 
   private drawSymbol() {
-    if (this.svg && this.options) {
+    if (this.svg && this.datasetStyle) {
       this.svg.selectAll("*").remove();
-      this.graphHelper.drawDatasetSign(this.svg, this.options, this.size / 2, this.size / 2, false);
+      this.graphHelper.drawDatasetSign(this.svg, this.datasetStyle, this.size / 2, this.size / 2, false);
     }
   }
 }

@@ -17,13 +17,17 @@
       </button>
       <div class="entries">
         <mat-accordion [multi]="true">
-          <div *ngFor="let id of datasetIds">
-            <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
-              [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
+          <div *ngFor="let dataset of graphDatasetsSrvc.datasets">
+            <helgoland-dataset-legend-entry [graphDataset]="dataset.graphDataset" [description]="dataset.description"
+              [timeInterval]="graphDatasetsSrvc.timespan" (graphDatasetChanged)="datasetChanged(dataset)"
+              (selectDate)="jumpToDate($event)" (datasetDeleted)="deleteDataset(dataset)">
+            </helgoland-dataset-legend-entry>
+            <!-- <helgoland-legend-entry [dataset]="dataset.timeseries" [selected]="isSelected(id)"
+              [datasetOptions]="datasetOptions.get(id)" [timeInterval]="graphDatasetsSrvc.timespan"
               (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
               (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
               (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
-            </helgoland-legend-entry>
+            </helgoland-legend-entry> -->
           </div>
         </mat-accordion>
       </div>
@@ -36,7 +40,7 @@
             <mat-icon color="accent">remove_done</mat-icon>
           </button>
           <div style="flex:1;"></div>
-          <button mat-icon-button *ngIf="datasetIds.length > 0" (click)="removeAllTimeseries()"
+          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasets.length" (click)="removeAllTimeseries()"
             attr.aria-label="{{'diagram-view.remove-legend-entries.tooltip' | translate}}"
             matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
             <mat-icon>clear</mat-icon>
@@ -60,7 +64,7 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div *ngIf="datasetIds.length === 0" class="no-timeseries">
+    <div *ngIf="graphDatasetsSrvc.datasets.length === 0" class="no-timeseries">
       {{'diagram-view.no-timeseries.hint' | translate}}
       <div>
         <button mat-button (click)="appRouter.toMapSelection()">
@@ -74,7 +78,7 @@
       </div>
     </div>
 
-    <div *ngIf="datasetIds.length > 0" class="diagrams">
+    <div *ngIf="graphDatasetsSrvc.datasets.length" class="diagrams">
       <div class="diagram">
 
         <helgoland-loading-overlay-progress-bar *ngIf="diagramLoading"></helgoland-loading-overlay-progress-bar>
@@ -85,32 +89,35 @@
           <mat-icon>query_stats</mat-icon>
         </button>
 
-        <n52-d3-series-graph-wrapper class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-          [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
-          [yaxisModifier]="diagramConfig.yaxisModifier" (onTimespanChanged)="timeseries.timespan = $event"
-          (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
-        </n52-d3-series-graph-wrapper>
+        <n52-d3-series-graph [graphDatasets]="graphDatasetsSrvc.graphDatasets" [timespan]="graphDatasetsSrvc.timespan"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event"></n52-d3-series-graph>
+        <!-- <n52-d3-series-graph-wrapper class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+            [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
+            [yaxisModifier]="diagramConfig.yaxisModifier" (onTimespanChanged)="timeseries.timespan = $event"
+            (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram
+            style="background-color: bisque;">
+          </n52-d3-series-graph-wrapper> -->
         <!-- <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-          [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
-          (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
-          (onContentLoading)="onDiagramLoading($event)" #diagram>
-          <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
-          </n52-d3-y-axis-modifier>
-        </n52-d3-timeseries-graph> -->
+            [datasetOptions]="datasetOptions" [timeInterval]="graphDatasetsSrvc.timespan"
+            [presenterOptions]="d3diagramOptions" (onTimespanChanged)="graphDatasetsSrvc.timespan = $event"
+            (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
+            <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
+            </n52-d3-y-axis-modifier>
+          </n52-d3-timeseries-graph> -->
       </div>
 
       <div>
-        <helgoland-general-time-selection [timespan]="timeseries.timespan"
-          (timespanChanged)="timeseries.timespan = $event">
+        <helgoland-general-time-selection [timespan]="graphDatasetsSrvc.timespan"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event">
         </helgoland-general-time-selection>
       </div>
 
       <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
         <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
-        <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-          [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
-          (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
-        </n52-d3-overview-timeseries-graph>
+        <!-- <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
+          [presenterOptions]="d3overviewOptions" [timeInterval]="graphDatasetsSrvc.timespan"
+          (onTimespanChanged)="graphDatasetsSrvc.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
+        </n52-d3-overview-timeseries-graph> -->
       </div>
     </div>
 

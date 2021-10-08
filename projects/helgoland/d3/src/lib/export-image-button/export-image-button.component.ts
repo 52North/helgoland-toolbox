@@ -175,7 +175,7 @@ export class ExportImageButtonComponent {
             this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
               if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
                 const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
-                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
+                this.graphHelper.drawDatasetSign(label, this.graphHelper.convertDatasetOptions(option), -10, -5, false);
                 label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
                 this.internalHeight += 25;
                 return {

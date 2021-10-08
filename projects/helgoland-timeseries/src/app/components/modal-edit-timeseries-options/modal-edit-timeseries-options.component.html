@@ -1,28 +1,29 @@
 <h1 mat-dialog-title>{{ 'modal-edit-timeseries-options.title' | translate }}</h1>
 <div>
 
-  <div>
+  <!-- <div>
     <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
       {{ 'modal-edit-timeseries-options.generalizeData' | translate }}
     </mat-slide-toggle>
-  </div>
+  </div> -->
 
   <div>
-    <mat-slide-toggle [(ngModel)]="options.zeroBasedYAxis" color="primary">
+    <mat-slide-toggle [(ngModel)]="data.config.yaxis.zeroBased" (change)="update()" color="primary">
       {{ 'modal-edit-timeseries-options.null-based' | translate }}
     </mat-slide-toggle>
   </div>
 
   <div style="margin: 10px 0;">
     {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
-    <button mat-raised-button [colorPicker]="options.color" (colorPickerSelect)="confirmColor($event)"
+    <button mat-raised-button [colorPicker]="data.config.style.baseColor" (colorPickerSelect)="confirmColor($event)"
       [cpOKButton]="true" [cpOKButtonText]="'modal-edit-timeseries-options.adjust-color-confirm-button' | translate"
       [cpOKButtonClass]="'mat-focus-indicator mat-raised-button mat-button-base'"
-      [ngStyle]="{'background-color': options.color}">&nbsp;</button>
+      [ngStyle]="{'background-color': data.config.style.baseColor}">&nbsp;</button>
   </div>
 
-  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && options.type !== 'bar'">
-    <helgoland-timeseries-symbol-select [options]="options"></helgoland-timeseries-symbol-select>
+  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && isLineStyle()">
+    <helgoland-timeseries-symbol-select [lineStyle]="asLineStyle()" (styleChanged)="update()">
+    </helgoland-timeseries-symbol-select>
   </ng-container>
 
   <ng-container *ngIf="!config.configuration?.supportTimeseriesSymbols">
@@ -30,15 +31,15 @@
       {{ 'modal-edit-timeseries-options.point-radius' | translate }}
     </div>
     <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-      [(ngModel)]="options.pointRadius">
-    </mat-slider>    
+      [(ngModel)]="asLineStyle().pointRadius" (change)="update()">
+    </mat-slider>
   </ng-container>
 
   <div>
     {{ 'modal-edit-timeseries-options.line-width' | translate }}
   </div>
   <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-    [(ngModel)]="options.lineWidth">
+    [(ngModel)]="asLineStyle().lineWidth" (change)="update()">
   </mat-slider>
 
 </div>

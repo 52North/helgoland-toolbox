@@ -51,6 +51,7 @@ import { map } from 'rxjs/operators';
 
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.consts';
+import { DatasetLegendEntryComponent } from './components/dataset-legend-entry/dataset-legend-entry.component';
 import { EditLabelComponent } from './components/edit-label/edit-label.component';
 import {
   FavoriteToggleButtonComponent,
@@ -126,6 +127,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     EditLabelComponent,
     FavoriteToggleButtonComponent,
     GeneralTimeSelectionComponent,
+    DatasetLegendEntryComponent,
     LegendEntryComponent,
     ListSelectionViewComponent,
     MapSelectionViewComponent,

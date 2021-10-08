@@ -142,7 +142,7 @@ export class AxisSettings {
     ) { }
 }
 
-export class GraphDataset {
+export interface GraphDataset {
 
     /**
      * Internal Id connected with the dataset options
@@ -159,6 +159,8 @@ export class GraphDataset {
     visible: boolean;
 
     selected: boolean;
+
+    loading: boolean;
 
     /**
      * The additional data arrey with tupels of timestamp and value.
@@ -498,7 +500,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         if (this.graphDatasets && this.graphDatasets.length) {
             this.preparedData = [];
             this.graphDatasets.forEach(entry => {
-                if (entry.data && entry.data.length > 0) {
+                if (entry.data.length > 0) {
                     const dataEntry: InternalDataEntry = {
                         internalId: entry.id,
                         hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
@@ -680,7 +682,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 || this.rawSvg.node().height.baseVal.value === undefined
                 || this.rawSvg.node().height.baseVal.value === 0
                 || !this.graph
-                || !this.rawSvg;
+                || !this.rawSvg
+                || this.graphDatasets === undefined
         } catch (error) {
             return true;
         }
@@ -1053,7 +1056,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                         const dataentry = this.preparedData.find(el => el.internalId === entryID);
                         if (dataentry) {
                             if (dataentry.options.type) {
-                                this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
+                                this.graphHelper.drawDatasetSign(this.graph, this.graphHelper.convertDatasetOptions(dataentry.options), startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
                             }
                             pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                         }
