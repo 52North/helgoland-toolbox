@@ -58,7 +58,7 @@
 
 </div>
 <div mat-dialog-actions>
-  <button *ngIf="timeseriesSrvc.hasDatasets()" mat-raised-button
+  <button *ngIf="graphDatasetsSrvc.hasDatasets()" mat-raised-button
     (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>

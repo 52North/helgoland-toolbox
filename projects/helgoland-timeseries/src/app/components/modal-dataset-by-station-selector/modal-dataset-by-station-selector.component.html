@@ -59,7 +59,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close [matBadge]="timeseries.datasetIds.length"
+  <button mat-raised-button mat-dialog-close [matBadge]="graphDatasetsSrvc.getDatasetCount()"
     (click)="appRouter.toDiagram()">{{'controls.to-diagram' | translate}}</button>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>

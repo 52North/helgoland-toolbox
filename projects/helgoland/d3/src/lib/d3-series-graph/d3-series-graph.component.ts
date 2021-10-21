@@ -55,7 +55,7 @@ export interface D3SeriesGraphOptions {
     /**
     * show the label of the xaxis
     */
-    showTimeLabel: boolean;
+    showTimeLabel?: boolean;
 
     /**
      * Configures an optional timerange label with start and end under the diagram

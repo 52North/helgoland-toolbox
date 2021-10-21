@@ -5,6 +5,7 @@ import { DatasetByStationSelectorComponent, SelectableDataset } from '@helgoland
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppRouterService } from '../../services/app-router.service';
+import { DatasetsService } from '../../services/graph-datasets.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     protected servicesConnector: HelgolandServicesConnector,
     public translateSrvc: TranslateService,
     public appRouter: AppRouterService,
+    public graphDatasetsSrvc: DatasetsService,
     public timeseries: TimeseriesService
   ) {
     super(servicesConnector, translateSrvc);

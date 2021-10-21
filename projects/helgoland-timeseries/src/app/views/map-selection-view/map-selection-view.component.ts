@@ -11,16 +11,15 @@ import {
 } from '@helgoland/core';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 import { icon, Marker } from 'leaflet';
-import { transformWithProjections } from 'ol/proj';
 
 import {
   ModalDatasetByStationSelectorComponent,
 } from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from '../../components/modal-map-settings/modal-map-settings.component';
+import { DatasetsService } from '../../services/graph-datasets.service';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { AppRouterService } from './../../services/app-router.service';
 import { ConfigurationService } from './../../services/configuration.service';
-import { TimeseriesService } from './../../services/timeseries-service.service';
 
 Marker.prototype.options.icon = icon({
   iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -60,7 +59,7 @@ export class MapSelectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService,
+    public graphDatasetsSrvc: DatasetsService,
     private configSrvc: ConfigurationService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');

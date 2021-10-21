@@ -4,6 +4,7 @@ import { Favorite, FavoriteService, GroupFavorite, SingleFavorite } from '@helgo
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
+import { DatasetsService } from '../../../services/graph-datasets.service';
 import { TimeseriesService } from './../../../services/timeseries-service.service';
 
 interface EditableSingleFavorite extends SingleFavorite {
@@ -27,6 +28,7 @@ export class ModalFavoriteListComponent implements OnInit {
   constructor(
     public favoriteSrvc: FavoriteService,
     public timeseriesSrvc: TimeseriesService,
+    public graphDatasetsSrvc: DatasetsService,
     private servicesConnector: HelgolandServicesConnector,
     private translateSrvc: TranslateService
   ) { }
@@ -36,11 +38,11 @@ export class ModalFavoriteListComponent implements OnInit {
   }
 
   public createGroup() {
-    forkJoin(this.timeseriesSrvc.datasetIds.map(id => this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries })))
+    forkJoin(this.graphDatasetsSrvc.datasets.map(e => this.servicesConnector.getDataset(e.id, { type: DatasetType.Timeseries })))
       .subscribe(datasets => {
         const label = this.translateSrvc.instant('favorite.group-default-label') + ' ' + (this.favoriteSrvc.getFavoriteGroups().length + 1);
-        const group = datasets.map(e => ({ dataset: e, options: this.timeseriesSrvc.datasetOptions.get(e.internalId) }));
-        this.favoriteSrvc.addFavoriteGroup(group, label);
+        const group = datasets.map(e => ({ dataset: e, options: this.graphDatasetsSrvc.hasDataset(e.id) }));
+        // this.favoriteSrvc.addFavoriteGroup(group, label);
         this.setFavorites();
       });
   }

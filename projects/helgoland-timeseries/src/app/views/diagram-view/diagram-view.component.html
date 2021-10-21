@@ -89,14 +89,10 @@
           <mat-icon>query_stats</mat-icon>
         </button>
 
-        <n52-d3-series-graph [graphDatasets]="graphDatasetsSrvc.graphDatasets" [timespan]="graphDatasetsSrvc.timespan"
-          (timespanChanged)="graphDatasetsSrvc.timespan = $event"></n52-d3-series-graph>
-        <!-- <n52-d3-series-graph-wrapper class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-            [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
-            [yaxisModifier]="diagramConfig.yaxisModifier" (onTimespanChanged)="timeseries.timespan = $event"
-            (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram
-            style="background-color: bisque;">
-          </n52-d3-series-graph-wrapper> -->
+        <n52-d3-series-graph #graph [graphDatasets]="graphDatasetsSrvc.graphDatasets"
+          [timespan]="graphDatasetsSrvc.timespan" [graphOptions]="graphOptions"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event" (datasetsSelected)="selectionChanged($event)">
+        </n52-d3-series-graph>
         <!-- <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
             [datasetOptions]="datasetOptions" [timeInterval]="graphDatasetsSrvc.timespan"
             [presenterOptions]="d3diagramOptions" (onTimespanChanged)="graphDatasetsSrvc.timespan = $event"
@@ -114,10 +110,13 @@
 
       <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
         <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
-        <!-- <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-          [presenterOptions]="d3overviewOptions" [timeInterval]="graphDatasetsSrvc.timespan"
-          (onTimespanChanged)="graphDatasetsSrvc.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
-        </n52-d3-overview-timeseries-graph> -->
+
+        <n52-d3-series-graph #overview [graphDatasets]="graphDatasetsSrvc.overviewDatasets"
+          [timespan]="graphDatasetsSrvc.overviewTimespan" [graphOptions]="overviewOptions"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event" (datasetsSelected)="selectionChanged($event)">
+          <n52-d3-graph-overview-selection [selectionTimeInterval]="graphDatasetsSrvc.timespan">
+          </n52-d3-graph-overview-selection>
+        </n52-d3-series-graph>
       </div>
     </div>
 

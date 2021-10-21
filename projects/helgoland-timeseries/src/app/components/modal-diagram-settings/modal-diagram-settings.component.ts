@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HoveringStyle } from '@helgoland/d3';
 
 export interface DiagramConfig {
   yaxisVisible: boolean;
   overviewVisible: boolean;
   yaxisModifier: boolean;
-  hoverstyle: string;
+  hoverstyle: HoveringStyle;
 }
 
 @Component({

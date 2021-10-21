@@ -1,11 +1,9 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { EventEmitter, Injectable } from '@angular/core';
 import { FirstLastValue, Time, Timespan, TimezoneService } from '@helgoland/core';
-import { AxisSettings, GraphDataEntry, GraphDataset, LineStyle } from '@helgoland/d3';
+import { GraphDataEntry, GraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
-
-import { Dataset } from './../../../../helgoland/core/src/lib/model/dataset-api/dataset';
 
 const TIME_CACHE_PARAM = 'timeseriesTime';
 
@@ -20,11 +18,17 @@ export interface DatasetDescription {
   lastValue: FirstLastValue;
 }
 
+// TODO: refactoring
 export interface DatasetEntry {
   id: string;
   graphDataset: GraphDataset;
   description: DatasetDescription;
-  // overviewGraphDataset: GraphDataset;
+  handler: DatasetHandler;
+  overviewGraphDataset: GraphDataset;
+}
+
+export interface DatasetHandler {
+  removedDataset(id: string);
 }
 
 @Injectable({
@@ -47,21 +51,22 @@ export class DatasetsService {
     protected timezoneSrvc: TimezoneService,
   ) {
     this.initTimespan();
-
-    this.datasets.push(this.createNewDataset());
-    this.addNewValue();
-
-    // setInterval(() => {
-    //   this.addNewValue();
-    // }, 60000);
   }
 
   get graphDatasets(): GraphDataset[] {
     return this.datasets.map(e => e.graphDataset);
   }
 
+  get overviewDatasets(): GraphDataset[] {
+    return this.datasets.map(e => e.overviewGraphDataset);
+  }
+
   get timespan(): Timespan {
     return this._timespan;
+  }
+
+  get overviewTimespan(): Timespan {
+    return this.timeSrvc.getBufferedTimespan(this._timespan, 2);
   }
 
   set timespan(ts: Timespan) {
@@ -70,6 +75,18 @@ export class DatasetsService {
     this._timespan = ts;
     this.timespanChanged.emit(ts);
     this.timeSrvc.saveTimespan(TIME_CACHE_PARAM, this._timespan);
+  }
+
+  getDatasetCount(): number {
+    return this.datasets.length;
+  }
+
+  hasDatasets(): boolean {
+    return this.datasets.length > 0;
+  }
+
+  hasDataset(id: string): boolean {
+    return this.getDatasetEntryIndex(id) >= 0;
   }
 
   addOrUpdateDataset(dataset: DatasetEntry) {
@@ -83,30 +100,57 @@ export class DatasetsService {
 
   updateData(id: string, data: GraphDataEntry[]) {
     const ds = this.getDatasetEntry(id);
-    ds.graphDataset.data = data;
-    ds.graphDataset.loading = false;
-    this.dataUpdated.emit();
+    if (ds) {
+      ds.graphDataset.data = data;
+      ds.graphDataset.loading = false;
+      this.dataUpdated.emit();
+    }
+  }
+
+  updateOverviewData(id: string, data: GraphDataEntry[]) {
+    const ds = this.getDatasetEntry(id);
+    if (ds) {
+      ds.overviewGraphDataset.data = data;
+      ds.overviewGraphDataset.loading = false;
+      this.dataUpdated.emit();
+    }
   }
 
   setDataLoading(id: string, loading: boolean) {
     this.getDatasetEntry(id).graphDataset.loading = loading;
   }
 
+  setOverviewDataLoading(id: string, loading: boolean) {
+    this.getDatasetEntry(id).overviewGraphDataset.loading = loading;
+  }
+
   datasetUpdated(Dataset: DatasetEntry) {
     this.dataUpdated.emit();
   }
 
-  deleteDataset(dataset: DatasetEntry) {
+  deleteDataset(id: string) {
+    console.log(`delete ${id}`);
+    const dataset = this.getDatasetEntry(id);
+    dataset.handler.removedDataset(dataset.id);
     const idx = this.getDatasetEntryIndex(dataset.id);
     this.datasets.splice(idx, 1);
   }
 
   deleteAllDatasets() {
-    this.datasets = [];
+    this.datasets.map(e => e.id).forEach(id => this.deleteDataset(id));
   }
 
   selectDataset(dataset: DatasetEntry, selected: boolean) {
     this.getDatasetEntry(dataset.id).graphDataset.selected = selected;
+    this.dataUpdated.emit();
+  }
+
+  setSelections(selection: string[]) {
+    this.datasets.forEach(e => e.graphDataset.selected = selection.indexOf(e.id) >= 0);
+  }
+
+  clearSelections() {
+    this.datasets.forEach(e => e.graphDataset.selected = false);
     this.dataUpdated.emit();
   }
 
@@ -124,55 +168,6 @@ export class DatasetsService {
 
   private getDatasetEntry(id: string): DatasetEntry {
     return this.datasets.find(e => e.id === id);
-  }
-
-  // remove later
-  addNewValue() {
-    const dataPoint = {
-      timestamp: new Date().getTime() + 1,
-      value: this.createValue()
-    };
-    const dataset = this.getDatasetEntry('123');
-    if (dataset) {
-      dataset.graphDataset.data.push(dataPoint);
-      dataset.description.lastValue = dataPoint;
-      this.dataUpdated.emit();
-    }
-  }
-
-  private createValue(): number {
-    return Math.floor(Math.random() * 10);
-  }
-
-  private createNewDataset(): DatasetEntry {
-    const dataPoint = {
-      timestamp: new Date().getTime(),
-      value: this.createValue()
-    };
-    return {
-      id: '123',
-      graphDataset: {
-        id: '123',
-        yaxis: new AxisSettings('rnd'),
-        selected: false,
-        visible: true,
-        style: new LineStyle('red', 3, 3),
-        data: [
-          dataPoint
-        ],
-        loading: false
-      },
-      description: {
-        id: '123',
-        uom: 'rnd',
-        phenomenonLabel: 'Zahlen zwischne 0 und 10',
-        platformLabel: null,
-        procedureLabel: null,
-        categoryLabel: null,
-        firstValue: dataPoint,
-        lastValue: dataPoint
-      }
-    };
   }
 
 }

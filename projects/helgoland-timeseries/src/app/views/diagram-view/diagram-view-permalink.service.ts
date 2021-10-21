@@ -1,9 +1,9 @@
-import { DatasetsService } from './../../services/graph-datasets.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
 import { PermalinkService } from '@helgoland/permalink';
 
+import { DatasetsService } from './../../services/graph-datasets.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 const PARAM_IDS = 'ids';
@@ -29,7 +29,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   public validatePeramlink(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params[PARAM_IDS]) {
-        this.timeseriesSrvc.removeAllDatasets();
+        this.graphDatasetsSrvc.deleteAllDatasets();
         const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
         ids.forEach(id => {
           this.timeseriesSrvc.addDataset(id);
@@ -52,8 +52,8 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
 
   protected generatePermalink(): string {
     let paramUrl = '';
-    if (this.timeseriesSrvc.hasDatasets()) {
-      const id = this.timeseriesSrvc.datasetIds.join(ID_SEPERATOR);
+    if (this.graphDatasetsSrvc.hasDatasets()) {
+      const id = this.timeseriesSrvc.getDatasets().join(ID_SEPERATOR);
       paramUrl = this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
       if (this.graphDatasetsSrvc.timespan) {
         paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.graphDatasetsSrvc.timespan.from

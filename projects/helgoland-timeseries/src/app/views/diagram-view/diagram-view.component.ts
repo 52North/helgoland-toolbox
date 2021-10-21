@@ -1,8 +1,8 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatasetOptions, Time } from '@helgoland/core';
-import { D3PlotOptions, D3SeriesGraphComponent, HoveringStyle } from '@helgoland/d3';
+import { Time } from '@helgoland/core';
+import { D3SeriesGraphComponent, D3SeriesGraphOptions, HoveringStyle } from '@helgoland/d3';
 
 import {
   DiagramConfig,
@@ -10,7 +10,6 @@ import {
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
 import { AppRouterService } from './../../services/app-router.service';
 import { DatasetEntry, DatasetsService } from './../../services/graph-datasets.service';
-import { TimeseriesService } from './../../services/timeseries-service.service';
 import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
 @Component({
@@ -27,51 +26,39 @@ export class DiagramViewComponent implements OnInit {
 
   public selectedIds: string[] = [];
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
+  public diagramConfig: DiagramConfig = {
+    overviewVisible: true,
+    yaxisVisible: true,
+    yaxisModifier: true,
+    hoverstyle: HoveringStyle.point
+  };
 
-  public d3diagramOptions: D3PlotOptions = {
-    showReferenceValues: true,
-    togglePanZoom: true,
-    generalizeAllways: true,
-    yaxis: true, // configurable
+  public graphOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
-    hoverStyle: HoveringStyle.point,
-    copyright: {
-      label: '',
-      link: 'https://52north.org/',
-      positionX: 'right',
-      positionY: 'bottom'
-    },
-    groupYaxis: true
-  };
+    hoverStyle: this.diagramConfig.hoverstyle,
+    togglePanZoom: true,
+    yaxisModifier: this.diagramConfig.yaxisModifier
+  }
 
-  public d3overviewOptions: D3PlotOptions = {
-    overview: true,
-    showTimeLabel: false
-  };
+  public overviewOptions: D3SeriesGraphOptions = {
+    showTimeLabel: false,
+    yaxis: false,
+    hoverStyle: HoveringStyle.none
+  }
 
   public diagramLoading: boolean;
   public overviewLoading: boolean;
 
-  public diagramConfig: DiagramConfig = {
-    overviewVisible: true,
-    yaxisVisible: this.d3diagramOptions.yaxis,
-    yaxisModifier: true,
-    hoverstyle: this.d3diagramOptions.hoverStyle
-  };
+  @ViewChild('graph')
+  private graph!: D3SeriesGraphComponent;
 
-  // new implementation starts
-
-  @ViewChild(D3SeriesGraphComponent)
-  private d3Graph!: D3SeriesGraphComponent;
-
-  // new implementation ends
+  @ViewChild('overview')
+  private overview!: D3SeriesGraphComponent;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private dialog: MatDialog,
-    public timeseries: TimeseriesService,
     public appRouter: AppRouterService,
     public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time,
@@ -91,15 +78,11 @@ export class DiagramViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();
-
-    // new implementation starts
-    this.graphDatasetsSrvc.dataUpdated.subscribe(val => this.d3Graph.redrawCompleteGraph());
-    // new implementation ends
+    this.graphDatasetsSrvc.dataUpdated.subscribe(val => {
+      this.overview.redrawCompleteGraph();
+      this.graph.redrawCompleteGraph();
+    });
   }
-
-  // public setSelected(selectedIds: string[]) {
-  //   this.selectedIds = selectedIds;
-  // }
 
   public onDiagramLoading(loading: boolean) {
     setTimeout(() => this.diagramLoading = loading);
@@ -107,6 +90,11 @@ export class DiagramViewComponent implements OnInit {
 
   public onOverviewLoading(loading: boolean) {
     setTimeout(() => this.overviewLoading = loading);
+  }
+
+  selectionChanged(selection: string[]) {
+    this.selectedIds = selection;
+    this.graphDatasetsSrvc.setSelections(selection);
   }
 
   public openDiagramSettings() {
@@ -122,8 +110,9 @@ export class DiagramViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.diagramConfig = result;
-        this.d3diagramOptions.hoverStyle = HoveringStyle[this.diagramConfig.hoverstyle];
-        this.d3diagramOptions.yaxis = this.diagramConfig.yaxisVisible;
+        this.graphOptions.hoverStyle = HoveringStyle[this.diagramConfig.hoverstyle];
+        this.graphOptions.yaxis = this.diagramConfig.yaxisVisible;
+        this.graphOptions.yaxisModifier = this.diagramConfig.yaxisModifier;
       }
     })
   }
@@ -133,8 +122,8 @@ export class DiagramViewComponent implements OnInit {
   }
 
   public clearSelection() {
-    debugger;
-    // this.selectedIds = [];
+    this.selectedIds = [];
+    this.graphDatasetsSrvc.clearSelections();
   }
 
   public removeAllTimeseries() {
@@ -146,7 +135,7 @@ export class DiagramViewComponent implements OnInit {
   }
 
   public deleteDataset(dataset: DatasetEntry) {
-    this.graphDatasetsSrvc.deleteDataset(dataset);
+    this.graphDatasetsSrvc.deleteDataset(dataset.id);
   }
 
 }

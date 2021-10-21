@@ -5,7 +5,7 @@ import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selec
 import { ParameterListEntry, ParameterType } from 'helgoland-common';
 
 import { AppRouterService } from '../../services/app-router.service';
-import { TimeseriesService } from '../../services/timeseries-service.service';
+import { DatasetsService } from '../../services/graph-datasets.service';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
 import { ConfigurationService } from './../../services/configuration.service';
 import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
@@ -29,7 +29,7 @@ export class ListSelectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService,
+    public graphDatasetsSrvc: DatasetsService,
     private configSrvc: ConfigurationService
   ) { }
 

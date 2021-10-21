@@ -20,7 +20,7 @@
           <button mat-icon-button (click)="appRouter.toDiagram()"
             attr.aria-label="{{'map-selection-view.go-to-chart.tooltip' | translate}}"
             matTooltip="{{'map-selection-view.go-to-chart.tooltip' | translate}}">
-            <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
+            <mat-icon [matBadge]="graphDatasetsSrvc.getDatasetCount()">show_chart</mat-icon>
           </button>
         </mat-toolbar-row>
       </mat-toolbar>
