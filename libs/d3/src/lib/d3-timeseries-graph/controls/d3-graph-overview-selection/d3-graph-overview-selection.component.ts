@@ -91,10 +91,10 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       .on('end', () => {
         // on mouseclick change time after brush was moved
         if (this.mousedownBrush) {
+          this.mousedownBrush = false;
           const timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], this.completeTimespan, this.graphExtent.width);
           this.graphComp.changeTime(timeByCoord[0], timeByCoord[1]);
         }
-        this.mousedownBrush = false;
       });
 
     // add brush to svg
