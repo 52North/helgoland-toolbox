@@ -1,12 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Time, TimeInterval } from '@helgoland/core';
-import { GraphDataset } from '@helgoland/d3';
+import { DatasetEntry } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
-import { DatasetDescription } from '../../services/graph-datasets.service';
 import {
-  DatasetConfig,
   ModalEditTimeseriesOptionsComponent,
 } from '../modal-edit-timeseries-options/modal-edit-timeseries-options.component';
 
@@ -22,17 +20,13 @@ export class DatasetLegendEntryComponent implements OnChanges {
   // loading = false;
   //
 
-  @Input() description: DatasetDescription;
-
-  @Input() graphDataset: GraphDataset;
+  @Input() dataset: DatasetEntry;
 
   @Input() selected: boolean;
 
   @Input() timeInterval: TimeInterval;
 
   @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
-
-  @Output() graphDatasetChanged: EventEmitter<void> = new EventEmitter();
 
   @Output() selectDate: EventEmitter<Date> = new EventEmitter();
 
@@ -55,47 +49,39 @@ export class DatasetLegendEntryComponent implements OnChanges {
   }
 
   toggleSelection() {
-    this.graphDataset.selected = !this.graphDataset.selected;
-    this.graphDatasetChanged.emit();
+    this.dataset.selected = !this.dataset.selected;
   }
 
   toggleVisibility() {
-    this.graphDataset.visible = !this.graphDataset.visible;
-    this.graphDatasetChanged.emit();
+    this.dataset.visible = !this.dataset.visible;
   }
 
   editDatasetOptions() {
-    const config: DatasetConfig = {
-      style: this.graphDataset.style,
-      yaxis: this.graphDataset.yaxis,
-    }
     const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, {
       data: {
-        config: config,
-        handler: this.graphDatasetChanged
+        dataset: this.dataset
       }
     });
-    dialogRef.afterClosed().subscribe(options => { })
   }
 
   jumpToFirstTimeStamp() {
-    if (this.description.firstValue) {
-      this.selectDate.emit(new Date(this.description.firstValue.timestamp));
+    if (this.dataset.description.firstValue) {
+      this.selectDate.emit(new Date(this.dataset.description.firstValue.timestamp));
     }
   }
 
   jumpToLastTimeStamp() {
-    if (this.description.lastValue) {
-      this.selectDate.emit(new Date(this.description.lastValue.timestamp));
+    if (this.dataset.description.lastValue) {
+      this.selectDate.emit(new Date(this.dataset.description.lastValue.timestamp));
     }
   }
 
   private checkDataInTimespan() {
-    if (this.timeInterval && this.description && this.description.firstValue && this.description.lastValue) {
+    if (this.timeInterval && this.dataset.description && this.dataset.description.firstValue && this.dataset.description.lastValue) {
       this.hasData = this.timeSrvc.overlaps(
         this.timeInterval,
-        this.description.firstValue.timestamp,
-        this.description.lastValue.timestamp
+        this.dataset.description.firstValue.timestamp,
+        this.dataset.description.lastValue.timestamp
       );
     }
   }

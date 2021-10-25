@@ -1,5 +1,5 @@
 <div style="height: 500px;">
-  <n52-d3-series-graph [graphDatasets]="graphDatasets" [timespan]="timespan" [graphOptions]="plotOptions"
+  <n52-d3-series-graph [datasets]="datasets" [timespan]="timespan" [graphOptions]="plotOptions"
     (timespanChanged)="updateTimespan($event)" (datasetsSelected)="onDatasetSelected($event)">
     <n52-d3-graph-copyright [copyright]="copyright"></n52-d3-graph-copyright>
   </n52-d3-series-graph>

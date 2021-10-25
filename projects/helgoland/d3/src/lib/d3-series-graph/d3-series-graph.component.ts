@@ -10,11 +10,12 @@ import {
     KeyValueDiffer,
     KeyValueDiffers,
     OnDestroy,
+    OnInit,
     Output,
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { DatasetOptions, MinMaxRange, PointSymbol, Time, Timespan, TimezoneService } from '@helgoland/core';
+import { DatasetOptions, FirstLastValue, MinMaxRange, PointSymbol, Time, Timespan, TimezoneService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment, { Duration, duration, unitOfTime } from 'moment';
@@ -72,11 +73,14 @@ export interface D3SeriesGraphOptions {
 
     yaxisModifier?: boolean;
 
+    overview?: boolean;
+
 }
 
 export abstract class DatasetStyle {
     constructor(
-        public baseColor: string
+        public baseColor: string,
+        public lineWidth: number
     ) { }
 }
 
@@ -96,7 +100,7 @@ export class LineStyle extends DatasetStyle {
         public pointSymbol?: PointSymbol,
         public lineDashArray?: number | number[],
     ) {
-        super(baseColor);
+        super(baseColor, lineWidth);
     }
 }
 
@@ -118,7 +122,7 @@ export class BarStyle extends DatasetStyle {
         public lineWidth: number = 1,
         public lineDashArray?: number | number[],
     ) {
-        super(baseColor);
+        super(baseColor, lineWidth);
     }
 }
 
@@ -133,39 +137,12 @@ export class AxisSettings {
      * @param {MinMaxRange} [range] min and max range of y axis
      */
     constructor(
-        public label: string,
         public showSymbolOnAxis: boolean = true,
         public separate: boolean = false,
         public zeroBased: boolean = false,
         public autoRangeSelection: boolean = false,
         public range?: MinMaxRange
     ) { }
-}
-
-export interface GraphDataset {
-
-    /**
-     * Internal Id connected with the dataset options
-     */
-    id: string;
-
-    style: DatasetStyle;
-
-    yaxis: AxisSettings;
-
-    /**
-     * show or hide in the graph
-     */
-    visible: boolean;
-
-    selected: boolean;
-
-    loading: boolean;
-
-    /**
-     * The additional data arrey with tupels of timestamp and value.
-     */
-    data: GraphDataEntry[];
 }
 
 /**
@@ -176,6 +153,149 @@ export interface GraphDataEntry {
     value: number;
 }
 
+export interface DatasetDescription {
+    uom: string,
+    phenomenonLabel: string;
+    platformLabel: string;
+    procedureLabel: string;
+    categoryLabel: string;
+    firstValue: FirstLastValue;
+    lastValue: FirstLastValue;
+}
+
+export class DatasetEntry {
+
+    private _data: GraphDataEntry[] = [];
+    private _dataLoading: boolean = false;
+
+    private _overviewData: GraphDataEntry[] = [];
+    private _overviewDataLoading: boolean = false;
+
+    public stateChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
+    public dataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
+    public overviewDataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
+    public deleteEvent: EventEmitter<DatasetEntry> = new EventEmitter();
+
+    constructor(
+        private _id: string,
+        private _style: DatasetStyle,
+        private _yaxis: AxisSettings,
+        private _visible: boolean,
+        private _selected: boolean,
+        private _description: DatasetDescription
+    ) { }
+
+    get dataLoading(): boolean {
+        return this._dataLoading;
+    }
+
+    set dataLoading(loading: boolean) {
+        this._dataLoading = loading;
+    }
+
+    get overviewDataLoading(): boolean {
+        return this._overviewDataLoading;
+    }
+
+    set overviewDataLoading(loading: boolean) {
+        this._overviewDataLoading = loading;
+    }
+
+    get selected(): boolean {
+        return this._selected;
+    }
+
+    set selected(selected: boolean) {
+        this._selected = selected;
+        this.stateChangeEvent.emit(this);
+    }
+
+    get visible(): boolean {
+        return this._visible;
+    }
+
+    set visible(visible: boolean) {
+        this._visible = visible;
+        this.stateChangeEvent.emit(this);
+    }
+
+    getStyle(): DatasetStyle {
+        return this._style;
+    }
+
+    setStyle(style: DatasetStyle) {
+        this._style = style;
+        this.stateChangeEvent.emit(this);
+    }
+
+    getYAxis(): AxisSettings {
+        return this._yaxis;
+    }
+
+    setYAxis(yaxis: AxisSettings) {
+        this._yaxis = yaxis;
+        this.stateChangeEvent.emit(this);
+    }
+
+    get id(): string {
+        return this._id;
+    }
+
+    get description(): DatasetDescription {
+        return this._description;
+    }
+
+    getData(): GraphDataEntry[] {
+        return this._data;
+    }
+
+    setData(data: GraphDataEntry[]) {
+        this._data = data;
+        this.dataChangeEvent.emit(this);
+    }
+
+    hasData(): boolean {
+        return this._data.length > 0;
+    }
+
+    getOverviewData(): GraphDataEntry[] {
+        return this._overviewData;
+    }
+
+    setOverviewData(data: GraphDataEntry[]) {
+        this._overviewData = data;
+        this.overviewDataChangeEvent.emit(this);
+    }
+
+    hasOverviewData(): boolean {
+        return this._overviewData.length > 0;
+    }
+
+    addNewData(data: GraphDataEntry | GraphDataEntry[]) {
+        if (data instanceof Array) {
+            if (data.length > 0) {
+                this._data.push(...data);
+                this._overviewData.push(...data);
+                this.description.lastValue = data[data.length - 1];
+            }
+        } else {
+            this._data.push(data);
+            this._overviewData.push(data);
+            this.description.lastValue = data;
+        }
+        this.dataChangeEvent.emit(this);
+        this.overviewDataChangeEvent.emit(this);
+    }
+
+    deleted(): void {
+        this.deleteEvent.emit(this);
+    }
+}
+
+interface DatasetEventSubscriptions {
+    state: Subscription;
+    data: Subscription;
+}
 
 @Component({
     selector: 'n52-d3-series-graph',
@@ -184,11 +304,11 @@ export interface GraphDataEntry {
     providers: [D3GraphId],
     encapsulation: ViewEncapsulation.None
 })
-export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck {
+export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck, OnInit {
 
     @Input()
-    public graphDatasets: GraphDataset[] = [];
-    private graphDatasetsDiffer: IterableDiffer<GraphDataset>;
+    public datasets: DatasetEntry[] = [];
+    private datasetsDiffer: IterableDiffer<DatasetEntry>;
 
     @Input()
     public timespan: Timespan;
@@ -240,7 +360,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     };
     private maxLabelwidth = 0;
     private addLineWidth = 2; // value added to linewidth
-    private currentTimeId: string;
+    private ID: string;
 
     private observer: Set<D3GraphObserver> = new Set();
 
@@ -264,6 +384,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private langChangeSubscription: Subscription;
     private timezoneSubscription: Subscription;
 
+    private subscriptions: Map<string, DatasetEventSubscriptions> = new Map();
+
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected keyValueDiffers: KeyValueDiffers,
@@ -277,23 +399,29 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         protected graphId: D3GraphId,
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
     ) {
-        this.graphDatasetsDiffer = this.iterableDiffers.find([]).create();
+        this.datasetsDiffer = this.iterableDiffers.find([]).create();
         this.graphOptionsDiffer = this.keyValueDiffers.find({}).create();
         this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => this.onLanguageChanged());
         this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe((tz: string) => this.onTimezoneChanged());
     }
 
-    public ngDoCheck() {
-        const graphDatasetsChanges = this.graphDatasetsDiffer.diff(this.graphDatasets);
-        if (graphDatasetsChanges && this.graphDatasets && this.graph) {
-            graphDatasetsChanges.forEachRemovedItem((removedItem) => {
-                const id = removedItem.item.id;
-                const spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
-                if (spliceIdx >= 0) {
-                    this.preparedData.splice(spliceIdx, 1);
+    ngOnInit(): void {
+        this.datasets.forEach(e => this.subscribeEvents(e));
+    }
+
+    ngDoCheck() {
+        const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets);
+        if (graphDatasetsChanges && this.datasets && this.graph) {
+            graphDatasetsChanges.forEachAddedItem((addedItem) => {
+                if (addedItem.item.hasData()) {
+                    this.redrawCompleteGraph();
                 }
+                if (addedItem.item.hasOverviewData()) {
+                    this.redrawCompleteGraph();
+                }
+                return this.subscribeEvents(addedItem.item);
             });
-            this.redrawCompleteGraph();
+            graphDatasetsChanges.forEachRemovedItem((removedItem) => this.unsubscribeEvents(removedItem.item));
         }
 
         const graphOptionsChanged = this.graphOptionsDiffer.diff(this.graphOptions);
@@ -309,11 +437,40 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    public ngAfterViewInit(): void {
-        this.currentTimeId = this.uuidv4();
+    private subscribeEvents(ds: DatasetEntry) {
+        let dataSubscription: Subscription;
+        if (this.graphOptions.overview) {
+            dataSubscription = ds.overviewDataChangeEvent.subscribe(() => {
+                this.redrawCompleteGraph();
+            })
+        } else {
+            dataSubscription = ds.dataChangeEvent.subscribe(() => {
+                this.redrawCompleteGraph();
+            });
+        }
+        const events: DatasetEventSubscriptions = {
+            state: ds.stateChangeEvent.subscribe(() => {
+                // TODO: maybe calculate new data
+                return this.redrawCompleteGraph();
+            }),
+            data: dataSubscription
+        }
+        this.subscriptions.set(ds.id, events);
+    }
 
-        this.graphId.setId(this.currentTimeId);
-        this.graphService.setGraph(this.currentTimeId, this);
+    private unsubscribeEvents(item: DatasetEntry) {
+        if (this.subscriptions.has(item.id)) {
+            this.subscriptions.get(item.id).state.unsubscribe();
+            this.subscriptions.get(item.id).data.unsubscribe();
+            this.subscriptions.delete(item.id);
+        }
+    }
+
+    public ngAfterViewInit(): void {
+        this.ID = this.uuidv4();
+
+        this.graphId.setId(this.ID);
+        this.graphService.setGraph(this.ID, this);
 
         this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
             .append<SVGSVGElement>('svg')
@@ -322,12 +479,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         this.graph = this.rawSvg
             .append<SVGSVGElement>('g')
-            .attr('id', `graph-${this.currentTimeId}`)
+            .attr('id', `graph-${this.ID}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         this.graphInteraction = this.rawSvg
             .append<SVGSVGElement>('g')
-            .attr('id', `interaction-layer-${this.currentTimeId}`)
+            .attr('id', `interaction-layer-${this.ID}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
         new ResizeObserver(() => this.redrawGraph()).observe(this.d3Elem.nativeElement);
@@ -338,7 +495,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     public ngOnDestroy() {
         this.langChangeSubscription.unsubscribe();
         this.timezoneSubscription.unsubscribe();
-        this.graphService.removeGraph(this.currentTimeId);
+        this.graphService.removeGraph(this.ID);
     }
 
     public registerObserver(obs: D3GraphObserver) {
@@ -476,7 +633,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private drawYGridLines() {
         this.graph.selectAll('.grid.y-grid').remove();
         if (this.plotOptions.grid) {
-            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.graphDatasets.find(e => e.id)))
+            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasets.find(e => e.id)))
             if (idx >= 0) {
                 this.graph.append('svg:g')
                     .attr('class', 'grid y-grid')
@@ -491,37 +648,38 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
         return this.rawSvg
-            .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : null)
+            .insert('g', !front ? `#interaction-layer-${this.ID}` : null)
             .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
 
     private prepareDatasets() {
-        if (this.graphDatasets && this.graphDatasets.length) {
+        if (this.datasets && this.datasets.length) {
             this.preparedData = [];
-            this.graphDatasets.forEach(entry => {
-                if (entry.data.length > 0) {
+            this.datasets.forEach(entry => {
+                if (this.getData(entry).length > 0) {
                     const dataEntry: InternalDataEntry = {
                         internalId: entry.id,
                         hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
                         options: this.createDatasetOptions(entry),
-                        data: entry.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
+                        data: entry.visible ? this.getData(entry).map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
                         selected: entry.selected,
                         axisOptions: {
-                            uom: entry.yaxis.label,
-                            label: entry.yaxis.label,
-                            zeroBased: entry.yaxis.zeroBased,
-                            yAxisRange: entry.yaxis.range,
-                            autoRangeSelection: entry.yaxis.autoRangeSelection,
-                            separateYAxis: entry.yaxis.separate,
+                            uom: entry.description.uom,
+                            label: entry.description.uom,
+                            zeroBased: entry.getYAxis().zeroBased,
+                            yAxisRange: entry.getYAxis().range,
+                            autoRangeSelection: entry.getYAxis().autoRangeSelection,
+                            separateYAxis: entry.getYAxis().separate,
                         },
                         referenceValueData: [],
                         visible: entry.visible
                     };
-                    if (entry.style instanceof BarStyle) {
+                    if (entry.getStyle() instanceof BarStyle) {
+                        const barStyle = entry.getStyle() as BarStyle;
                         dataEntry.bar = {
-                            startOf: entry.style.startOf,
-                            period: entry.style.period
+                            startOf: barStyle.startOf,
+                            period: barStyle.period
                         }
                     }
                     this.preparedData.push(dataEntry);
@@ -531,33 +689,43 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    // TODO: remove when InternalDataEntry is refactored
-    private createDatasetOptions(entry: GraphDataset) {
-        const options = new DatasetOptions(entry.id, entry.style.baseColor);
-        options.autoRangeSelection = entry.yaxis.autoRangeSelection;
-        options.yAxisRange = entry.yaxis.range;
-        options.separateYAxis = entry.yaxis.separate;
-        options.zeroBasedYAxis = entry.yaxis.zeroBased;
-        options.color = entry.style.baseColor;
-        if (entry.style instanceof BarStyle) {
-            options.type = 'bar';
-            options.barPeriod = entry.style.period.toISOString();
-            options.barStartOf = entry.style.startOf;
-            options.lineDashArray = entry.style.lineDashArray;
-            options.lineWidth = entry.style.lineWidth;
+    private getData(entry: DatasetEntry): GraphDataEntry[] {
+        if (this.graphOptions.overview) {
+            return entry.getOverviewData();
+        } else {
+            return entry.getData();
         }
-        if (entry.style instanceof LineStyle) {
+    }
+
+    // TODO: remove when InternalDataEntry is refactored
+    private createDatasetOptions(entry: DatasetEntry) {
+        const options = new DatasetOptions(entry.id, entry.getStyle().baseColor);
+        options.autoRangeSelection = entry.getYAxis().autoRangeSelection;
+        options.yAxisRange = entry.getYAxis().range;
+        options.separateYAxis = entry.getYAxis().separate;
+        options.zeroBasedYAxis = entry.getYAxis().zeroBased;
+        options.color = entry.getStyle().baseColor;
+        if (entry.getStyle() instanceof BarStyle) {
+            const barStyle = entry.getStyle() as BarStyle;
+            options.type = 'bar';
+            options.barPeriod = barStyle.period.toISOString();
+            options.barStartOf = barStyle.startOf;
+            options.lineDashArray = barStyle.lineDashArray;
+            options.lineWidth = barStyle.lineWidth;
+        }
+        if (entry.getStyle() instanceof LineStyle) {
+            const lineStyle = entry.getStyle() as LineStyle;
             options.type = 'line';
-            options.pointRadius = entry.style.pointRadius;
-            options.pointSymbol = entry.style.pointSymbol;
-            options.lineDashArray = entry.style.lineDashArray;
-            options.lineWidth = entry.style.lineWidth;
+            options.pointRadius = lineStyle.pointRadius;
+            options.pointSymbol = lineStyle.pointSymbol;
+            options.lineDashArray = lineStyle.lineDashArray;
+            options.lineWidth = lineStyle.lineWidth;
         }
         return options;
     }
 
     public redrawCompleteGraph() {
-        console.log(`redrawCompleteGraph ${new Date().toISOString()}`);
+        console.log(`redrawCompleteGraph ${this.ID} - ${new Date().toISOString()}`);
         this.prepareDatasets();
         this.redrawGraph();
     }
@@ -683,14 +851,14 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 || this.rawSvg.node().height.baseVal.value === 0
                 || !this.graph
                 || !this.rawSvg
-                || this.graphDatasets === undefined
+                || this.datasets === undefined
         } catch (error) {
             return true;
         }
     }
 
     protected prepareYAxes() {
-        this.graphDatasets.forEach(entry => this.createYAxisForId(entry.id));
+        this.datasets.forEach(entry => this.createYAxisForId(entry.id));
     }
 
     protected createYAxisForId(id: string) {
@@ -1051,8 +1219,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 let pointOffset = 0;
 
                 axis.ids.forEach((entryID) => {
-                    const ds = this.graphDatasets.find(e => e.id === entryID);
-                    if (ds && ds.yaxis.showSymbolOnAxis) {
+                    const ds = this.datasets.find(e => e.id === entryID);
+                    if (ds && ds.getYAxis().showSymbolOnAxis) {
                         const dataentry = this.preparedData.find(el => el.internalId === entryID);
                         if (dataentry) {
                             if (dataentry.options.type) {
@@ -1115,7 +1283,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             if (yaxis) {
                 // create body to clip graph
                 // unique ID generated through the current time (current time when initialized)
-                const querySelectorClip = 'clip' + this.currentTimeId;
+                const querySelectorClip = 'clip' + this.ID;
                 this.graph
                     .append('svg:clipPath')
                     .attr('class', 'diagram-path')

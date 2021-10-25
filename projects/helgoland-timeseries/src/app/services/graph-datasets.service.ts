@@ -1,42 +1,16 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { EventEmitter, Injectable } from '@angular/core';
-import { FirstLastValue, Time, Timespan, TimezoneService } from '@helgoland/core';
-import { GraphDataEntry, GraphDataset } from '@helgoland/d3';
+import { Time, Timespan, TimezoneService } from '@helgoland/core';
+import { DatasetEntry, GraphDataEntry } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
 const TIME_CACHE_PARAM = 'timeseriesTime';
 
-export interface DatasetDescription {
-  id: string,
-  uom: string,
-  phenomenonLabel: string;
-  platformLabel: string;
-  procedureLabel: string;
-  categoryLabel: string;
-  firstValue: FirstLastValue;
-  lastValue: FirstLastValue;
-}
-
-// TODO: refactoring
-export interface DatasetEntry {
-  id: string;
-  graphDataset: GraphDataset;
-  description: DatasetDescription;
-  handler: DatasetHandler;
-  overviewGraphDataset: GraphDataset;
-}
-
-export interface DatasetHandler {
-  removedDataset(id: string);
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class DatasetsService {
-
-  public dataUpdated: EventEmitter<void> = new EventEmitter();
 
   public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
@@ -51,14 +25,6 @@ export class DatasetsService {
     protected timezoneSrvc: TimezoneService,
   ) {
     this.initTimespan();
-  }
-
-  get graphDatasets(): GraphDataset[] {
-    return this.datasets.map(e => e.graphDataset);
-  }
-
-  get overviewDatasets(): GraphDataset[] {
-    return this.datasets.map(e => e.overviewGraphDataset);
   }
 
   get timespan(): Timespan {
@@ -98,40 +64,18 @@ export class DatasetsService {
     }
   }
 
-  updateData(id: string, data: GraphDataEntry[]) {
-    const ds = this.getDatasetEntry(id);
-    if (ds) {
-      ds.graphDataset.data = data;
-      ds.graphDataset.loading = false;
-      this.dataUpdated.emit();
-    }
-  }
-
-  updateOverviewData(id: string, data: GraphDataEntry[]) {
-    const ds = this.getDatasetEntry(id);
-    if (ds) {
-      ds.overviewGraphDataset.data = data;
-      ds.overviewGraphDataset.loading = false;
-      this.dataUpdated.emit();
-    }
-  }
-
   setDataLoading(id: string, loading: boolean) {
-    this.getDatasetEntry(id).graphDataset.loading = loading;
+    this.getDatasetEntry(id).dataLoading = loading;
   }
 
   setOverviewDataLoading(id: string, loading: boolean) {
-    this.getDatasetEntry(id).overviewGraphDataset.loading = loading;
-  }
-
-  datasetUpdated(Dataset: DatasetEntry) {
-    this.dataUpdated.emit();
+    this.getDatasetEntry(id).overviewDataLoading = loading;
   }
 
   deleteDataset(id: string) {
     console.log(`delete ${id}`);
     const dataset = this.getDatasetEntry(id);
-    dataset.handler.removedDataset(dataset.id);
+    dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
     this.datasets.splice(idx, 1);
   }
@@ -140,18 +84,12 @@ export class DatasetsService {
     this.datasets.map(e => e.id).forEach(id => this.deleteDataset(id));
   }
 
-  selectDataset(dataset: DatasetEntry, selected: boolean) {
-    this.getDatasetEntry(dataset.id).graphDataset.selected = selected;
-    this.dataUpdated.emit();
-  }
-
-  setSelections(selection: string[]) {
-    this.datasets.forEach(e => e.graphDataset.selected = selection.indexOf(e.id) >= 0);
+  datasetsSelected(): boolean {
+    return this.datasets.some(e => e.selected);
   }
 
   clearSelections() {
-    this.datasets.forEach(e => e.graphDataset.selected = false);
-    this.dataUpdated.emit();
+    this.datasets.forEach(e => e.selected = false);
   }
 
   private initTimespan() {
@@ -166,7 +104,7 @@ export class DatasetsService {
     return this.datasets.findIndex(e => e.id === id);
   }
 
-  private getDatasetEntry(id: string): DatasetEntry {
+  getDatasetEntry(id: string): DatasetEntry {
     return this.datasets.find(e => e.id === id);
   }
 

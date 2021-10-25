@@ -8,21 +8,21 @@
   </div> -->
 
   <div>
-    <mat-slide-toggle [(ngModel)]="data.config.yaxis.zeroBased" (change)="update()" color="primary">
+    <mat-slide-toggle [ngModel]="data.dataset.getYAxis().zeroBased" (change)="setZeroBased($event)" color="primary">
       {{ 'modal-edit-timeseries-options.null-based' | translate }}
     </mat-slide-toggle>
   </div>
 
   <div style="margin: 10px 0;">
     {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
-    <button mat-raised-button [colorPicker]="data.config.style.baseColor" (colorPickerSelect)="confirmColor($event)"
+    <button mat-raised-button [colorPicker]="data.dataset.getStyle().baseColor" (colorPickerSelect)="confirmColor($event)"
       [cpOKButton]="true" [cpOKButtonText]="'modal-edit-timeseries-options.adjust-color-confirm-button' | translate"
       [cpOKButtonClass]="'mat-focus-indicator mat-raised-button mat-button-base'"
-      [ngStyle]="{'background-color': data.config.style.baseColor}">&nbsp;</button>
+      [ngStyle]="{'background-color': data.dataset.getStyle().baseColor}">&nbsp;</button>
   </div>
 
   <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && isLineStyle()">
-    <helgoland-timeseries-symbol-select [lineStyle]="asLineStyle()" (styleChanged)="update()">
+    <helgoland-timeseries-symbol-select [lineStyle]="asLineStyle()" (styleChanged)="setLineStyle($event)">
     </helgoland-timeseries-symbol-select>
   </ng-container>
 
@@ -31,7 +31,7 @@
       {{ 'modal-edit-timeseries-options.point-radius' | translate }}
     </div>
     <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-      [(ngModel)]="asLineStyle().pointRadius" (change)="update()">
+      [(ngModel)]="asLineStyle().pointRadius" (change)="setPointRadius($event)">
     </mat-slider>
   </ng-container>
 
@@ -39,7 +39,7 @@
     {{ 'modal-edit-timeseries-options.line-width' | translate }}
   </div>
   <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-    [(ngModel)]="asLineStyle().lineWidth" (change)="update()">
+    [(ngModel)]="asLineStyle().lineWidth" (change)="setLineWidth($event)">
   </mat-slider>
 
 </div>

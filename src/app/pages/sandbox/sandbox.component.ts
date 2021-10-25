@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
     ColorService,
     DatasetType,
@@ -11,13 +11,12 @@ import {
 import {
     AxisSettings,
     D3Copyright,
-    D3SeriesGraphComponent,
     D3SeriesGraphOptions,
-    GraphDataset,
+    DatasetDescription,
+    DatasetEntry,
     HoveringStyle,
+    LineStyle,
 } from '@helgoland/d3';
-
-import { LineStyle } from './../../../../projects/helgoland/d3/src/lib/d3-series-graph/d3-series-graph.component';
 
 @Component({
     templateUrl: './sandbox.component.html',
@@ -25,7 +24,7 @@ import { LineStyle } from './../../../../projects/helgoland/d3/src/lib/d3-series
 })
 export class SandboxComponent implements OnInit {
 
-    public graphDatasets: GraphDataset[] = [];
+    public datasets: DatasetEntry[] = [];
     public timespan: Timespan = this.definedTsSrvc.getInterval(DefinedTimespan.TODAY);
 
     public copyright: D3Copyright = {
@@ -44,9 +43,6 @@ export class SandboxComponent implements OnInit {
         yaxisModifier: true
     }
 
-    @ViewChild(D3SeriesGraphComponent)
-    private d3Graph!: D3SeriesGraphComponent;
-
     constructor(
         private servicesConnector: HelgolandServicesConnector,
         private definedTsSrvc: DefinedTimespanService,
@@ -54,21 +50,24 @@ export class SandboxComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-
         // this.setNewTimespan();
-        this.graphDatasets = [{
-            id: 'temp',
-            yaxis: new AxisSettings('random'),
-            selected: false,
-            visible: true,
-            style: new LineStyle('red', 3, 3),
-            data: [
-                {
-                    timestamp: new Date().getTime(),
-                    value: this.createValue()
-                }
-            ]
-        }];
+        const value = {
+            timestamp: new Date().getTime(),
+            value: this.createValue()
+        }
+        const style = new LineStyle('red', 3, 3);
+        const yaxis = new AxisSettings();
+        const description: DatasetDescription = {
+            categoryLabel: 'category',
+            firstValue: value,
+            lastValue: value,
+            phenomenonLabel: 'phenomenon',
+            platformLabel: 'platform',
+            procedureLabel: 'procedure',
+            uom: 'random'
+        }
+
+        this.datasets = [new DatasetEntry('temp', style, yaxis, true, false, description)]
         this.loadDataset();
     }
 
@@ -97,34 +96,40 @@ export class SandboxComponent implements OnInit {
 
     private loadDatasetData(ds: HelgolandTimeseries, id: string) {
         this.servicesConnector.getDatasetData(ds, this.timespan).subscribe(data => {
-            const datasetData: GraphDataset = {
-                id: id,
-                yaxis: new AxisSettings(ds.uom),
-                selected: false,
-                visible: true,
-                style: new LineStyle('green', 3, 3),
-                data: data.values.map(e => {
-                    return {
-                        timestamp: e[0],
-                        value: e[1]
-                    };
-                })
-            };
-            const idx = this.graphDatasets.findIndex(e => e.id === id);
+            const style = new LineStyle('green', 3, 3);
+            const yaxis = new AxisSettings();
+            const description: DatasetDescription = {
+                categoryLabel: ds.parameters.category.label,
+                firstValue: ds.firstValue,
+                lastValue: ds.lastValue,
+                phenomenonLabel: ds.parameters.phenomenon.label,
+                platformLabel: ds.platform.label,
+                procedureLabel: ds.parameters.procedure.label,
+                uom: ds.uom
+            }
+            const datasetData = new DatasetEntry(id, style, yaxis, true, false, description);
+            datasetData.setData(data.values.map(e => {
+                return {
+                    timestamp: e[0],
+                    value: e[1]
+                };
+            }));
+            const idx = this.datasets.findIndex(e => e.id === id);
             if (idx >= 0) {
-                this.graphDatasets[idx] = datasetData;
+                this.datasets[idx] = datasetData;
             } else {
-                this.graphDatasets.push(datasetData);
+                this.datasets.push(datasetData);
             }
         });
     }
 
     public addNewValue() {
-        this.graphDatasets[0].data.push({
-            timestamp: new Date().getTime(),
-            value: this.createValue()
-        });
-        this.redrawGraph();
+        this.datasets[0].addNewData(
+            {
+                timestamp: new Date().getTime(),
+                value: this.createValue()
+            }
+        )
     }
 
     public zoomTimeframe() {
@@ -135,18 +140,15 @@ export class SandboxComponent implements OnInit {
     }
 
     public changeStyle() {
-        this.graphDatasets.forEach(e => {
-            e.style.baseColor = this.colorSrvc.getColor();
+        this.datasets.forEach(e => {
+            const style = e.getStyle();
+            style.baseColor = this.colorSrvc.getColor();
+            e.setStyle(style);
         });
-        this.redrawGraph();
     }
 
     public updateTimespan(timespan: Timespan) {
         this.timespan = timespan;
-    }
-
-    public redrawGraph() {
-        this.d3Graph.redrawCompleteGraph();
     }
 
     public onDatasetSelected(temp: any) {

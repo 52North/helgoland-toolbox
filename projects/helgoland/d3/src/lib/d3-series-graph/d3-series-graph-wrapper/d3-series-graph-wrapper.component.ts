@@ -25,12 +25,14 @@ import {
 } from '../../d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
 import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
 import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
-import { D3SeriesGraphComponent, D3SeriesGraphOptions, DatasetStyle, GraphDataset } from '../d3-series-graph.component';
-import { AxisSettings, LineStyle } from './../d3-series-graph.component';
-
-interface DatasetEntry extends HelgolandTimeseries {
-  dataLoading?: boolean;
-}
+import {
+  D3SeriesGraphComponent,
+  D3SeriesGraphOptions,
+  DatasetDescription,
+  DatasetEntry,
+  DatasetStyle,
+} from '../d3-series-graph.component';
+import { AxisSettings } from './../d3-series-graph.component';
 
 @Component({
   selector: 'n52-d3-series-graph-wrapper',
@@ -41,7 +43,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   @Input() public yaxisModifier: boolean;
 
-  public graphDatasets: GraphDataset[] = [];
+  public datasets: DatasetEntry[] = [];
   public timespan: Timespan;
 
   public graphOptions: D3SeriesGraphOptions = {
@@ -58,7 +60,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   @ViewChild(D3SeriesGraphComponent)
   private d3Graph!: D3SeriesGraphComponent;
 
-  protected datasetMap: Map<string, DatasetEntry> = new Map();
+  protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
   constructor(
     protected iterableDiffers: IterableDiffers,
@@ -118,22 +120,22 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   protected removeDataset(id: string): void {
     const dataset = this.datasetMap.get(id);
     // first remove all reference values
-    dataset.referenceValues.forEach(refVal => {
-      const refValIdx = this.graphDatasets.findIndex(e => e.id === this.createRefValueId(id, refVal.referenceValueId));
-      if (refValIdx >= 0) {
-        this.graphDatasets.splice(refValIdx, 1);
-      }
-    })
+    // dataset.referenceValues.forEach(refVal => {
+    //   const refValIdx = this.graphDatasets.findIndex(e => e.id === this.createRefValueId(id, refVal.referenceValueId));
+    //   if (refValIdx >= 0) {
+    //     this.graphDatasets.splice(refValIdx, 1);
+    //   }
+    // })
     // now delete dataset
     this.datasetMap.delete(id);
-    const spliceIdx = this.graphDatasets.findIndex((e) => e.id === id);
+    const spliceIdx = this.datasets.findIndex((e) => e.id === id);
     if (spliceIdx >= 0) {
-      this.graphDatasets.splice(spliceIdx, 1);
+      this.datasets.splice(spliceIdx, 1);
     }
   }
 
   protected setSelectedId(id: string): void {
-    const dataset = this.graphDatasets.find((e) => e.id === id);
+    const dataset = this.datasets.find((e) => e.id === id);
     if (dataset) {
       dataset.selected = true;
     }
@@ -141,7 +143,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   }
 
   protected removeSelectedId(id: string): void {
-    const dataset = this.graphDatasets.find((e) => e.id === id);
+    const dataset = this.datasets.find((e) => e.id === id);
     if (dataset) {
       dataset.selected = false;
     }
@@ -163,20 +165,20 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   protected datasetOptionsChanged(id: string, options: DatasetOptions, firstChange: boolean): void {
     if (!firstChange) {
-      const dataset = this.graphDatasets.find((e) => e.id === id);
-      dataset.yaxis = this.getAxisSettings(dataset.yaxis.label, options);
-      dataset.style = this.getGraphStyle(options);
+      const dataset = this.datasets.find((e) => e.id === id);
+      dataset.setYAxis(this.getAxisSettings(options));
+      dataset.setStyle(this.getGraphStyle(options));
       dataset.visible = options.visible;
-      this.graphDatasets.forEach(e => {
-        if (e.id.startsWith(id + 'ref')) {
-          e.visible = false;
-        }
-      })
-      options.showReferenceValues.forEach(refVal => {
-        const refValDs = this.graphDatasets.find(e => e.id === this.createRefValueId(id, refVal.id))
-        refValDs.visible = true && options.visible;
-        refValDs.style.baseColor = refVal.color;
-      })
+      // this.datasets.forEach(e => {
+      //   if (e.id.startsWith(id + 'ref')) {
+      //     e.visible = false;
+      //   }
+      // })
+      // options.showReferenceValues.forEach(refVal => {
+      //   const refValDs = this.graphDatasets.find(e => e.id === this.createRefValueId(id, refVal.id))
+      //   refValDs.visible = true && options.visible;
+      //   refValDs.style.baseColor = refVal.color;
+      // })
       this.drawGraph();
     }
   }
@@ -185,6 +187,24 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   private loadAddedDataset(dataset: HelgolandDataset): void {
     if (dataset instanceof HelgolandTimeseries) {
+      let dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
+      if (dsEntry === undefined) {
+        const options = this.datasetOptions.get(dataset.internalId);
+        const style = this.getGraphStyle(options);
+        const yaxis = this.getAxisSettings(options);
+        const selected = this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
+        const description: DatasetDescription = {
+          categoryLabel: dataset.parameters.category.label,
+          phenomenonLabel: dataset.parameters.phenomenon.label,
+          platformLabel: dataset.platform.label,
+          procedureLabel: dataset.parameters.procedure.label,
+          uom: dataset.uom,
+          firstValue: dataset.firstValue,
+          lastValue: dataset.lastValue
+        }
+        dsEntry = new DatasetEntry(dataset.internalId, style, yaxis, options.visible, selected, description);
+        this.datasets.push(dsEntry);
+      }
       this.datasetMap.set(dataset.internalId, dataset);
       this.loadDatasetData(dataset.internalId);
     } else {
@@ -195,18 +215,19 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   private loadDatasetData(id: string) {
     const datasetOptions = this.datasetOptions.get(id);
     const dataset = this.datasetMap.get(id);
+    const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
     if (this.timespan) {
+      dsEntry.dataLoading = true;
+      this.informDatasetLoading(this.getLoadedDatasets());
       if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
         && dataset.firstValue
         && dataset.lastValue
         && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
-        this.prepareData(dataset, new HelgolandTimeseriesData([]));
-        this.onCompleteLoadingData(dataset);
+        this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
+        this.onCompleteLoadingData(dsEntry);
       } else {
         const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
         this.onContentLoading.emit(true);
-        dataset.dataLoading = true;
-        this.informDatasetLoading(this.getLoadedDatasets());
         // if (this.runningDataRequests.has(dataset.internalId)) {
         //   this.runningDataRequests.get(dataset.internalId).unsubscribe();
         //   this.onCompleteLoadingData(dataset);
@@ -216,12 +237,12 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           generalize: this.presenterOptions.generalizeAllways || datasetOptions.generalize
         }).subscribe(
           (result) => {
-            this.prepareData(dataset, result);
-            this.onCompleteLoadingData(dataset);
+            this.prepareData(dsEntry, result);
+            this.onCompleteLoadingData(dsEntry);
           },
           (error) => {
             this.errorHandler.handleDataLoadError(error, dataset);
-            this.onCompleteLoadingData(dataset);
+            this.onCompleteLoadingData(dsEntry);
           }
         );
         // if (!request.closed) {
@@ -232,21 +253,15 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   }
 
   private onCompleteLoadingData(dataset: DatasetEntry): void {
-    dataset.dataLoading = false;
     // this.runningDataRequests.delete(dataset.internalId);
+    dataset.dataLoading = false;
     const loadedIds = this.getLoadedDatasets();
     this.informDatasetLoading(loadedIds);
     if (loadedIds.length === 0) { this.onContentLoading.emit(false); }
   }
 
   private getLoadedDatasets(): string[] {
-    const loadedIds = [];
-    this.datasetMap.forEach((ds, id) => {
-      if (ds.dataLoading) {
-        loadedIds.push(id);
-      }
-    });
-    return loadedIds;
+    return this.datasets.filter(e => e.dataLoading).map(e => e.id);
   }
 
   private informDatasetLoading(ids: string[]) {
@@ -261,7 +276,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     this.onDatasetSelected.emit(selectedIds);
   }
 
-  private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
+  private prepareData(dsEntry: DatasetEntry, rawdata: HelgolandTimeseriesData): void {
     if (rawdata instanceof HelgolandTimeseriesData) {
       // add surrounding entries to the set
       if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
@@ -269,38 +284,24 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
-      const datasetIdx = this.graphDatasets.findIndex((e) => e.id === dataset.internalId);
-      const options = this.datasetOptions.get(dataset.internalId);
+      const datasetIdx = this.datasets.findIndex((e) => e.id === dsEntry.id);
+      const options = this.datasetOptions.get(dsEntry.id);
 
       // sum values for bar chart visualization
       if (options.type === 'bar') {
         const startOf = options.barStartOf as unitOfTime.StartOf;
         const period = duration(options.barPeriod);
         if (period.asMilliseconds() === 0) {
-          throw new Error(`${dataset.internalId} needs a valid barPeriod`);
+          throw new Error(`${dsEntry.id} needs a valid barPeriod`);
         }
         rawdata.values = this.sumValues.sum(startOf, period, rawdata.values);
       }
 
       const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
 
-      const graphDataset: GraphDataset = {
-        id: dataset.internalId,
-        yaxis: this.getAxisSettings(dataset.uom, options),
-        selected: this.selectedDatasetIds.indexOf(dataset.internalId) >= 0,
-        visible: options.visible,
-        style: this.getGraphStyle(options),
-        loading: false,
-        data
-      }
+      dsEntry.setData(data);
 
-      if (datasetIdx >= 0) {
-        this.graphDatasets[datasetIdx] = graphDataset;
-      } else {
-        this.graphDatasets.push(graphDataset);
-      }
-
-      this.addReferenceValueDatasets(dataset, options, rawdata);
+      // this.addReferenceValueDatasets(dataset, options, rawdata);
     }
   }
 
@@ -308,21 +309,21 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     if (dataset.referenceValues && dataset.referenceValues.length) {
       dataset.referenceValues.forEach(refVal => {
         const refConf = options.showReferenceValues.find(e => e.id === refVal.referenceValueId);
-        const refValDataset: GraphDataset = {
-          id: this.createRefValueId(dataset.internalId, refVal.referenceValueId),
-          yaxis: new AxisSettings(dataset.uom, false),
-          selected: false,
-          visible: refConf && options.visible ? true : false,
-          style: new LineStyle(refConf ? refConf.color : ''),
-          data: this.createReferenceValueData(rawdata, refVal.referenceValueId),
-          loading: false
-        };
-        const refValIdx = this.graphDatasets.findIndex((e) => e.id === refValDataset.id);
-        if (refValIdx >= 0) {
-          this.graphDatasets[refValIdx] = refValDataset;
-        } else {
-          this.graphDatasets.push(refValDataset);
-        }
+        // const refValDataset: GraphDataset = {
+        //   id: this.createRefValueId(dataset.internalId, refVal.referenceValueId),
+        //   yaxis: new AxisSettings(dataset.uom, false),
+        //   selected: false,
+        //   visible: refConf && options.visible ? true : false,
+        //   style: new LineStyle(refConf ? refConf.color : ''),
+        //   data: this.createReferenceValueData(rawdata, refVal.referenceValueId),
+        //   loading: false
+        // };
+        // const refValIdx = this.graphDatasets.findIndex((e) => e.id === refValDataset.id);
+        // if (refValIdx >= 0) {
+        //   this.graphDatasets[refValIdx] = refValDataset;
+        // } else {
+        //   this.graphDatasets.push(refValDataset);
+        // }
       });
     }
   }
@@ -350,8 +351,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     return this.graphHelper.convertDatasetOptions(options);
   }
 
-  private getAxisSettings(uom: string, options: DatasetOptions): AxisSettings {
-    return new AxisSettings(uom, true, options.separateYAxis, options.zeroBasedYAxis, options.autoRangeSelection, options.yAxisRange);
+  private getAxisSettings(options: DatasetOptions): AxisSettings {
+    return new AxisSettings(true, options.separateYAxis, options.zeroBasedYAxis, options.autoRangeSelection, options.yAxisRange);
   }
 
   private drawGraph() {

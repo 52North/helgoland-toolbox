@@ -1,15 +1,15 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Time } from '@helgoland/core';
-import { D3SeriesGraphComponent, D3SeriesGraphOptions, HoveringStyle } from '@helgoland/d3';
+import { D3SeriesGraphOptions, HoveringStyle } from '@helgoland/d3';
 
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
 import { AppRouterService } from './../../services/app-router.service';
-import { DatasetEntry, DatasetsService } from './../../services/graph-datasets.service';
+import { DatasetsService } from './../../services/graph-datasets.service';
 import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
 @Component({
@@ -23,8 +23,6 @@ export class DiagramViewComponent implements OnInit {
   public mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
-
-  public selectedIds: string[] = [];
 
   public diagramConfig: DiagramConfig = {
     overviewVisible: true,
@@ -43,17 +41,12 @@ export class DiagramViewComponent implements OnInit {
   public overviewOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     yaxis: false,
-    hoverStyle: HoveringStyle.none
+    hoverStyle: HoveringStyle.none,
+    overview: true
   }
 
   public diagramLoading: boolean;
   public overviewLoading: boolean;
-
-  @ViewChild('graph')
-  private graph!: D3SeriesGraphComponent;
-
-  @ViewChild('overview')
-  private overview!: D3SeriesGraphComponent;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -78,10 +71,6 @@ export class DiagramViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();
-    this.graphDatasetsSrvc.dataUpdated.subscribe(val => {
-      this.overview.redrawCompleteGraph();
-      this.graph.redrawCompleteGraph();
-    });
   }
 
   public onDiagramLoading(loading: boolean) {
@@ -90,11 +79,6 @@ export class DiagramViewComponent implements OnInit {
 
   public onOverviewLoading(loading: boolean) {
     setTimeout(() => this.overviewLoading = loading);
-  }
-
-  selectionChanged(selection: string[]) {
-    this.selectedIds = selection;
-    this.graphDatasetsSrvc.setSelections(selection);
   }
 
   public openDiagramSettings() {
@@ -119,23 +103,6 @@ export class DiagramViewComponent implements OnInit {
 
   public jumpToDate(date: Date) {
     this.graphDatasetsSrvc.timespan = this.time.centerTimespan(this.graphDatasetsSrvc.timespan, date);
-  }
-
-  public clearSelection() {
-    this.selectedIds = [];
-    this.graphDatasetsSrvc.clearSelections();
-  }
-
-  public removeAllTimeseries() {
-    this.graphDatasetsSrvc.deleteAllDatasets();
-  }
-
-  public datasetChanged(dataset: DatasetEntry) {
-    this.graphDatasetsSrvc.datasetUpdated(dataset);
-  }
-
-  public deleteDataset(dataset: DatasetEntry) {
-    this.graphDatasetsSrvc.deleteDataset(dataset.id);
   }
 
 }

@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AxisSettings, BarStyle, DatasetStyle, LineStyle } from '@helgoland/d3';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSliderChange } from '@angular/material/slider';
+import { AxisSettings, DatasetEntry, DatasetStyle, LineStyle } from '@helgoland/d3';
 
 import { ConfigurationService } from './../../services/configuration.service';
-
-export interface DatasetConfig {
-  style: DatasetStyle;
-  yaxis: AxisSettings;
-}
 
 @Component({
   selector: 'helgoland-modal-edit-timeseries-options',
@@ -18,35 +15,51 @@ export class ModalEditTimeseriesOptionsComponent {
 
   public adjustedColor: string;
 
+  private style: DatasetStyle;
+  private yaxis: AxisSettings;
+
   constructor(
     public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      config: DatasetConfig,
+      dataset: DatasetEntry,
       handler: EventEmitter<void>
     },
     public config: ConfigurationService
   ) {
+    this.style = this.data.dataset.getStyle();
+    this.yaxis = this.data.dataset.getYAxis();
   }
 
   isLineStyle() {
-    return this.data.config.style instanceof LineStyle;
+    return this.style instanceof LineStyle;
   }
 
   asLineStyle(): LineStyle {
-    return this.data.config.style as LineStyle;
-  }
-
-  asBarStyle(): BarStyle {
-    return this.data.config.style as BarStyle;
+    return this.style as LineStyle;
   }
 
   confirmColor(color: string) {
-    this.data.config.style.baseColor = color;
-    this.update();
+    this.style.baseColor = color;
+    this.data.dataset.setStyle(this.style);
   }
 
-  update() {
-    this.data.handler.emit();
+  setZeroBased(change: MatSlideToggleChange) {
+    this.yaxis.zeroBased = change.checked;
+    this.data.dataset.setYAxis(this.yaxis);
+  }
+
+  setLineStyle(style: DatasetStyle) {
+    this.data.dataset.setStyle(style);
+  }
+
+  setPointRadius(sliderChange: MatSliderChange) {
+    this.asLineStyle().pointRadius = sliderChange.value;
+    this.data.dataset.setStyle(this.style);
+  }
+
+  setLineWidth(sliderChange: MatSliderChange) {
+    this.style.lineWidth = sliderChange.value;
+    this.data.dataset.setStyle(this.style);
   }
 
 }

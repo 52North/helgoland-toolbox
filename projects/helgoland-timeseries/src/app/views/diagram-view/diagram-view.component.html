@@ -18,9 +18,8 @@
       <div class="entries">
         <mat-accordion [multi]="true">
           <div *ngFor="let dataset of graphDatasetsSrvc.datasets">
-            <helgoland-dataset-legend-entry [graphDataset]="dataset.graphDataset" [description]="dataset.description"
-              [timeInterval]="graphDatasetsSrvc.timespan" (graphDatasetChanged)="datasetChanged(dataset)"
-              (selectDate)="jumpToDate($event)" (datasetDeleted)="deleteDataset(dataset)">
+            <helgoland-dataset-legend-entry [dataset]="dataset" [timeInterval]="graphDatasetsSrvc.timespan"
+              (selectDate)="jumpToDate($event)" (datasetDeleted)="this.graphDatasetsSrvc.deleteDataset(dataset.id)">
             </helgoland-dataset-legend-entry>
             <!-- <helgoland-legend-entry [dataset]="dataset.timeseries" [selected]="isSelected(id)"
               [datasetOptions]="datasetOptions.get(id)" [timeInterval]="graphDatasetsSrvc.timespan"
@@ -34,13 +33,15 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
-          <button mat-icon-button *ngIf="selectedIds.length > 0" (click)="clearSelection()"
+          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasetsSelected()"
+            (click)="this.graphDatasetsSrvc.clearSelections()"
             attr.aria-label="{{'diagram-view.clear-selection.tooltip' | translate}}"
             matTooltip="{{'diagram-view.clear-selection.tooltip' | translate}}">
             <mat-icon color="accent">remove_done</mat-icon>
           </button>
           <div style="flex:1;"></div>
-          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasets.length" (click)="removeAllTimeseries()"
+          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasets.length"
+            (click)="this.graphDatasetsSrvc.deleteAllDatasets()"
             attr.aria-label="{{'diagram-view.remove-legend-entries.tooltip' | translate}}"
             matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
             <mat-icon>clear</mat-icon>
@@ -89,9 +90,8 @@
           <mat-icon>query_stats</mat-icon>
         </button>
 
-        <n52-d3-series-graph #graph [graphDatasets]="graphDatasetsSrvc.graphDatasets"
-          [timespan]="graphDatasetsSrvc.timespan" [graphOptions]="graphOptions"
-          (timespanChanged)="graphDatasetsSrvc.timespan = $event" (datasetsSelected)="selectionChanged($event)">
+        <n52-d3-series-graph #graph [datasets]="graphDatasetsSrvc.datasets" [timespan]="graphDatasetsSrvc.timespan"
+          [graphOptions]="graphOptions" (timespanChanged)="graphDatasetsSrvc.timespan = $event">
         </n52-d3-series-graph>
         <!-- <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
             [datasetOptions]="datasetOptions" [timeInterval]="graphDatasetsSrvc.timespan"
@@ -110,10 +110,9 @@
 
       <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
         <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
-
-        <n52-d3-series-graph #overview [graphDatasets]="graphDatasetsSrvc.overviewDatasets"
+        <n52-d3-series-graph #overview [datasets]="graphDatasetsSrvc.datasets"
           [timespan]="graphDatasetsSrvc.overviewTimespan" [graphOptions]="overviewOptions"
-          (timespanChanged)="graphDatasetsSrvc.timespan = $event" (datasetsSelected)="selectionChanged($event)">
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event">
           <n52-d3-graph-overview-selection [selectionTimeInterval]="graphDatasetsSrvc.timespan">
           </n52-d3-graph-overview-selection>
         </n52-d3-series-graph>

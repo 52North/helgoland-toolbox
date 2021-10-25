@@ -1,15 +1,15 @@
-<mat-expansion-panel [ngStyle]="{'border-color': graphDataset?.style.baseColor}" [expanded]="true">
+<mat-expansion-panel [ngStyle]="{'border-color': dataset?.getStyle().baseColor}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
-        <n52-label-mapper label="{{description.phenomenonLabel}}"></n52-label-mapper>
-        <span *ngIf="description.uom">
-          <span> [<n52-label-mapper label="{{description.uom}}"></n52-label-mapper>] </span>
+        <n52-label-mapper label="{{dataset.description.phenomenonLabel}}"></n52-label-mapper>
+        <span *ngIf="dataset.description.uom">
+          <span> [<n52-label-mapper label="{{dataset.description.uom}}"></n52-label-mapper>] </span>
         </span>
-        <div>{{description.platformLabel}}</div>
+        <div>{{dataset.description.platformLabel}}</div>
       </div>
       <div class="title error" *ngIf="error">
-        Error occured, while loading {{description.id}}
+        Error occured, while loading {{dataset.id}}
       </div>
       <div style="flex: 1"></div>
       <button mat-icon-button (click)="removeDataset(); $event.stopPropagation()"
@@ -20,45 +20,45 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div *ngIf="!error">
-    <div class="small-label" *ngIf="description.procedureLabel || description.categoryLabel">
-      <n52-label-mapper label="{{description.procedureLabel}}"></n52-label-mapper>
-      <span *ngIf="description.categoryLabel !== description.phenomenonLabel">
-        - <n52-label-mapper label="{{description.categoryLabel}}"></n52-label-mapper>
+    <div class="small-label" *ngIf="dataset.description.procedureLabel || dataset.description.categoryLabel">
+      <n52-label-mapper label="{{dataset.description.procedureLabel}}"></n52-label-mapper>
+      <span *ngIf="dataset.description.categoryLabel !== dataset.description.phenomenonLabel">
+        - <n52-label-mapper label="{{dataset.description.categoryLabel}}"></n52-label-mapper>
       </span>
     </div>
     <div class="controls">
       <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-selection-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-selection-button.tooltip' | translate}}">
-        <mat-icon *ngIf="!graphDataset.selected">check_box_outline_blank</mat-icon>
-        <mat-icon *ngIf="graphDataset.selected">check_box</mat-icon>
+        <mat-icon *ngIf="!dataset.selected">check_box_outline_blank</mat-icon>
+        <mat-icon *ngIf="dataset.selected">check_box</mat-icon>
       </button>
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
-        <mat-icon>{{graphDataset?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-icon>{{dataset?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <helgoland-timeseries-entry-symbol [datasetStyle]="graphDataset?.style" [size]="40"
+        <helgoland-timeseries-entry-symbol [datasetStyle]="dataset?.getStyle()" [size]="40"
           style="height: 40px; width: 40px; display: inline-block;">
         </helgoland-timeseries-entry-symbol>
       </button>
       <!-- <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
       </helgoland-favorite-toggle-button> -->
     </div>
-    <div class="entry-line clickable" *ngIf="description.firstValue"
+    <div class="entry-line clickable" *ngIf="dataset.description.firstValue"
       (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
-      <span> {{description.firstValue.timestamp | date: 'short': null : translateSrvc.currentLang}} </span>
-      <span>({{description.firstValue.value}} {{description.uom}})</span>
+      <span> {{dataset.description.firstValue.timestamp | date: 'short': null : translateSrvc.currentLang}} </span>
+      <span>({{dataset.description.firstValue.value}} {{dataset.description.uom}})</span>
     </div>
-    <div class="entry-line clickable" *ngIf="description.lastValue"
+    <div class="entry-line clickable" *ngIf="dataset.description.lastValue"
       (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.last-value-at' | translate}}: </span>
-      <span> {{description.lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
-      <span>({{description.lastValue.value}} {{description.uom}})</span>
+      <span> {{dataset.description.lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
+      <span>({{dataset.description.lastValue.value}} {{dataset.description.uom}})</span>
     </div>
     <!-- <div *ngIf="dataset?.referenceValues?.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
@@ -69,5 +69,5 @@
       </div>
     </div> -->
   </div>
-  <helgoland-loading-overlay-progress-bar *ngIf="graphDataset.loading"></helgoland-loading-overlay-progress-bar>
+  <helgoland-loading-overlay-progress-bar *ngIf="dataset.dataLoading"></helgoland-loading-overlay-progress-bar>
 </mat-expansion-panel>
