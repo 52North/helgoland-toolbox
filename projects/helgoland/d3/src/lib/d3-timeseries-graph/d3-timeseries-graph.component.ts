@@ -117,8 +117,8 @@ export class D3TimeseriesGraphComponent
     private width: number;
     private margin = {
         top: 10,
-        right: 10,
-        bottom: 40,
+        right: 0,
+        bottom: 45,
         left: 40
     };
     private maxLabelwidth = 0;
@@ -183,8 +183,9 @@ export class D3TimeseriesGraphComponent
 
         this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
             .append<SVGSVGElement>('svg')
-            .attr('width', '100%')
-            .attr('height', '100%');
+            .style('width', '100%')
+            .style('height', '100%')
+            .style('position', 'absolute');
 
         this.graph = this.rawSvg
             .append<SVGSVGElement>('g')
