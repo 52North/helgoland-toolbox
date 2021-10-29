@@ -5,6 +5,7 @@ import {
     EventEmitter,
     Input,
     IterableDiffers,
+    NgZone,
     OnDestroy,
     Optional,
     Output,
@@ -148,8 +149,9 @@ export class D3TimeseriesGraphComponent
         sendDataRequestOnlyIfDatasetTimespanCovered: true
     };
 
-    private lastHoverPositioning: number;
     private graphInteraction: d3.Selection<SVGSVGElement, any, any, any>;
+    
+    private resizeObserver: ResizeObserver;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -166,6 +168,7 @@ export class D3TimeseriesGraphComponent
         protected graphId: D3GraphId,
         protected servicesConnector: HelgolandServicesConnector,
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
+        protected zone: NgZone,
         @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
@@ -193,11 +196,17 @@ export class D3TimeseriesGraphComponent
             .attr('id', `interaction-layer-${this.currentTimeId}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        new ResizeObserver(() => this.redrawCompleteGraph()).observe(this.d3Elem.nativeElement);
+        this.addResizeObserver();
+    }
+    
+    private addResizeObserver() {
+        this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
+        this.resizeObserver.observe(this.d3Elem.nativeElement);
     }
 
     public ngOnDestroy() {
         super.ngOnDestroy();
+        this.resizeObserver.unobserve(this.d3Elem.nativeElement);
         this.graphService.removeGraph(this.currentTimeId);
     }
 
