@@ -5,6 +5,7 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  NgZone,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -94,7 +95,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected graphService: D3Graphs,
     protected graphId: D3GraphId,
     protected servicesConnector: HelgolandServicesConnector,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService
+    protected pointSymbolDrawer: D3PointSymbolDrawerService,
+    protected zone: NgZone,
   ) {
     super(
       iterableDiffers,
@@ -110,7 +112,8 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       graphService,
       graphId,
       servicesConnector,
-      pointSymbolDrawer
+      pointSymbolDrawer,
+      zone
     );
   }
 

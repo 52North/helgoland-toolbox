@@ -9,6 +9,7 @@ import {
     IterableDiffers,
     KeyValueDiffer,
     KeyValueDiffers,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -354,8 +355,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private width: number;
     private margin = {
         top: 10,
-        right: 10,
-        bottom: 40,
+        right: 0,
+        bottom: 45,
         left: 40
     };
     private maxLabelwidth = 0;
@@ -386,6 +387,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private subscriptions: Map<string, DatasetEventSubscriptions> = new Map();
 
+    private resizeObserver: ResizeObserver;
+
     constructor(
         protected iterableDiffers: IterableDiffers,
         protected keyValueDiffers: KeyValueDiffers,
@@ -398,6 +401,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
+        protected zone: NgZone,
     ) {
         this.datasetsDiffer = this.iterableDiffers.find([]).create();
         this.graphOptionsDiffer = this.keyValueDiffers.find({}).create();
@@ -474,8 +478,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
             .append<SVGSVGElement>('svg')
-            .attr('width', '100%')
-            .attr('height', '100%');
+            .style('width', '100%')
+            .style('height', '100%')
+            .style('position', 'absolute');
 
         this.graph = this.rawSvg
             .append<SVGSVGElement>('g')
@@ -487,14 +492,19 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .attr('id', `interaction-layer-${this.ID}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
-        new ResizeObserver(() => this.redrawGraph()).observe(this.d3Elem.nativeElement);
-
+        this.addResizeObserver();
         this.redrawCompleteGraph();
+    }
+
+    private addResizeObserver() {
+        this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
+        this.resizeObserver.observe(this.d3Elem.nativeElement);
     }
 
     public ngOnDestroy() {
         this.langChangeSubscription.unsubscribe();
         this.timezoneSubscription.unsubscribe();
+        this.resizeObserver.unobserve(this.d3Elem.nativeElement);
         this.graphService.removeGraph(this.ID);
     }
 
