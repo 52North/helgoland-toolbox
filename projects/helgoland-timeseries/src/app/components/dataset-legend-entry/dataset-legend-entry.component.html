@@ -60,14 +60,14 @@
       <span> {{dataset.description.lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
       <span>({{dataset.description.lastValue.value}} {{dataset.description.uom}})</span>
     </div>
-    <!-- <div *ngIf="dataset?.referenceValues?.length > 0">
+    <div *ngIf="dataset?.getChildren()?.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
-      <div *ngFor="let ref of dataset.referenceValues">
-        <mat-slide-toggle [checked]="ref.visible" color="primary" (toggleChange)="toggleReferenceValue(ref)">
-          <span [ngStyle]="{color: ref.color}">{{ref.label}}</span>
+      <div *ngFor="let child of dataset.getChildren()">
+        <mat-slide-toggle [checked]="child.visible" color="primary" (change)="child.visible = $event.checked">
+          <span [ngStyle]="{color: child.color}">{{child.label}}</span>
         </mat-slide-toggle>
       </div>
-    </div> -->
+    </div>
   </div>
   <helgoland-loading-overlay-progress-bar *ngIf="dataset.dataLoading"></helgoland-loading-overlay-progress-bar>
 </mat-expansion-panel>

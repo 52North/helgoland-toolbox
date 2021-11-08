@@ -164,6 +164,49 @@ export interface DatasetDescription {
     lastValue: FirstLastValue;
 }
 
+export class DatasetChild {
+
+    public stateChangeEvent: EventEmitter<void> = new EventEmitter();
+
+    constructor(
+        private _id: string,
+        private _label: string,
+        private _visible: boolean,
+        private _data: GraphDataEntry[],
+        private _color: string
+    ) { }
+
+    public get id(): string {
+        return this._id;
+    }
+
+    public get visible(): boolean {
+        return this._visible;
+    }
+
+    public set visible(v: boolean) {
+        this._visible = v;
+        this.stateChangeEvent.emit();
+    }
+
+    public get data(): GraphDataEntry[] {
+        return this._data;
+    }
+
+    public set data(data: GraphDataEntry[]) {
+        this._data = data;
+    }
+
+    public get color(): string {
+        return this._color;
+    }
+
+    public get label(): string {
+        return this._label;
+    }
+
+}
+
 export class DatasetEntry {
 
     private _data: GraphDataEntry[] = [];
@@ -171,6 +214,8 @@ export class DatasetEntry {
 
     private _overviewData: GraphDataEntry[] = [];
     private _overviewDataLoading: boolean = false;
+
+    private children: DatasetChild[] = [];
 
     public stateChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
     public dataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
@@ -290,6 +335,30 @@ export class DatasetEntry {
 
     deleted(): void {
         this.deleteEvent.emit(this);
+    }
+
+    getChildren(): DatasetChild[] {
+        return this.children;
+    }
+
+    addChild(child: DatasetChild) {
+        if (!this.hasChild(child)) {
+            this.children.push(child);
+            child.stateChangeEvent.subscribe(() => this.stateChangeEvent.emit(this));
+        } else {
+            console.error(`A child with the id ${child.id} still exists`);
+        }
+    }
+
+    hasChild(child: DatasetChild): boolean {
+        return this.children.findIndex(e => e.id === child.id) >= 0;
+    }
+
+    removeChild(child: DatasetChild) {
+        const idx = this.children.findIndex(e => e.id === child.id);
+        if (idx >= 0) {
+            delete this.children[idx];
+        }
     }
 }
 
@@ -682,7 +751,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                             autoRangeSelection: entry.getYAxis().autoRangeSelection,
                             separateYAxis: entry.getYAxis().separate,
                         },
-                        referenceValueData: [],
+                        referenceValueData: entry.getChildren().filter(e => e.visible).map(e => ({
+                            id: e.id,
+                            color: e.color,
+                            data: e.data
+                        })),
                         visible: entry.visible
                     };
                     if (entry.getStyle() instanceof BarStyle) {

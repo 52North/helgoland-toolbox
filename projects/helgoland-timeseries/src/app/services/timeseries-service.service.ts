@@ -15,8 +15,10 @@ import {
   BarStyle,
   D3TimeseriesGraphErrorHandler,
   D3TimeseriesSimpleGraphErrorHandler,
+  DatasetChild,
   DatasetEntry,
   DatasetStyle,
+  GraphDataEntry,
   LineStyle,
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,7 +48,7 @@ export class TimeseriesService {
   private presenterOptions = {
     sendDataRequestOnlyIfDatasetTimespanCovered: true,
     requestBeforeAfterValues: false,
-    showReferenceValues: false,
+    showReferenceValues: true,
     generalizeAllways: true,
     timespanBufferFactor: 0.2
   }
@@ -82,7 +84,7 @@ export class TimeseriesService {
   }
 
   protected loadState(): void {
-    this.state = this.localStorage.load(TIMESERIES_STATE);
+    this.state = this.localStorage.load(TIMESERIES_STATE) || {};
     for (const key in this.state) {
       this.addDatasetbyId(key);
     }
@@ -99,41 +101,45 @@ export class TimeseriesService {
     );
   }
 
-  private loadAddedDataset(dataset: HelgolandDataset): void {
-    if (dataset instanceof HelgolandTimeseries) {
-      this.datasetMap.set(dataset.internalId, dataset);
-      const visible = this.state[dataset.internalId] ? this.state[dataset.internalId].visible : true;
-      const selected = this.state[dataset.internalId] ? this.state[dataset.internalId].selected : false;
-      const style = this.getStyle(dataset);
-      const yaxis = this.getYAxis(dataset);
-      const datasetEntry = new DatasetEntry(
-        dataset.internalId,
+  private loadAddedDataset(ts: HelgolandDataset): void {
+    if (ts instanceof HelgolandTimeseries) {
+      this.datasetMap.set(ts.internalId, ts);
+      const visible = this.state[ts.internalId] ? this.state[ts.internalId].visible : true;
+      const selected = this.state[ts.internalId] ? this.state[ts.internalId].selected : false;
+      const style = this.getStyle(ts);
+      const yaxis = this.getYAxis(ts);
+      const dataset = new DatasetEntry(
+        ts.internalId,
         style,
         yaxis,
         visible,
         selected,
         {
-          uom: dataset.uom,
-          phenomenonLabel: dataset.parameters.phenomenon.label,
-          platformLabel: dataset.platform.label,
-          procedureLabel: dataset.parameters.procedure.label,
-          categoryLabel: dataset.parameters.category.label,
-          firstValue: dataset.firstValue,
-          lastValue: dataset.lastValue
+          uom: ts.uom,
+          phenomenonLabel: ts.parameters.phenomenon.label,
+          platformLabel: ts.platform.label,
+          procedureLabel: ts.parameters.procedure.label,
+          categoryLabel: ts.parameters.category.label,
+          firstValue: ts.firstValue,
+          lastValue: ts.lastValue
         }
       )
-      this.setState(datasetEntry.id, style, yaxis, selected, visible);
+      this.setState(dataset.id, style, yaxis, selected, visible);
       this.saveState();
-      this.graphDatasetsSrvc.addOrUpdateDataset(datasetEntry);
-      datasetEntry.deleteEvent.subscribe(ds => {
+      this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
+      dataset.deleteEvent.subscribe(ds => {
         delete this.state[ds.id];
         this.saveState();
       });
-      datasetEntry.stateChangeEvent.subscribe(ds => {
+      dataset.stateChangeEvent.subscribe(ds => {
         this.setState(ds.id, ds.getStyle(), ds.getYAxis(), ds.selected, ds.visible);
         this.saveState();
-      })
-      this.loadDatasetData(dataset.internalId);
+      });
+      ts.referenceValues.forEach(ref => {
+        const child = new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], this.colorService.getColor());
+        dataset.addChild(child);
+      });
+      this.loadDatasetData(ts.internalId);
     } else {
       // console.error(`Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`);
     }
@@ -234,11 +240,35 @@ export class TimeseriesService {
       const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
 
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
+      this.addReferenceValueDatasets(ds, dataset, rawdata);
       ds.setData(data);
       ds.dataLoading = false;
-
-      // this.addReferenceValueDatasets(dataset, options, rawdata);
     }
+  }
+
+  private addReferenceValueDatasets(ds: DatasetEntry, dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData) {
+    if (ds.getChildren() && ds.getChildren().length) {
+      ds.getChildren().forEach(child => {
+        const refVals = rawdata.referenceValues[child.id];
+        if (refVals) {
+          child.data = this.createReferenceValueData(rawdata, child.id);
+        }
+      });
+    }
+  }
+
+  private createReferenceValueData(data: HelgolandTimeseriesData, refId: string): GraphDataEntry[] {
+    let refValues = data.referenceValues[refId] as any;
+    if (!(refValues instanceof Array)) {
+      if (refValues.valueBeforeTimespan) {
+        refValues.values.unshift(refValues.valueBeforeTimespan);
+      }
+      if (refValues.valueAfterTimespan) {
+        refValues.values.push(refValues.valueAfterTimespan);
+      }
+      refValues = refValues.values;
+    }
+    return refValues.map(d => ({ timestamp: d[0], value: d[1] }));
   }
 
   private prepareOverviewData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
