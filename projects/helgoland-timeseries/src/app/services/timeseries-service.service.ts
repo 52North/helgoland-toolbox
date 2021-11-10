@@ -1,11 +1,13 @@
 import { Injectable, Optional } from '@angular/core';
 import {
+  BarRenderingHints,
   ColorService,
   DatasetType,
   HelgolandDataset,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
+  LineRenderingHints,
   LocalStorage,
   SumValuesService,
   Time,
@@ -22,7 +24,7 @@ import {
   LineStyle,
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
-import { duration, unitOfTime } from 'moment';
+import { Duration, duration, unitOfTime } from 'moment';
 
 import { DatasetsService } from './graph-datasets.service';
 
@@ -150,17 +152,63 @@ export class TimeseriesService {
       const yaxis = this.state[ds.internalId].yaxis;
       return new AxisSettings(yaxis.showSymbolOnAxis, yaxis.separate, yaxis.zeroBased, yaxis.autoRangeSelection, yaxis.range);
     } else {
-      return new AxisSettings()
+      const axisSettings = new AxisSettings();
+      if (ds.renderingHints.chartType === 'bar') {
+        axisSettings.range = { min: 0 };
+      }
+      return axisSettings;
     }
   }
 
   private getStyle(ds: HelgolandTimeseries): DatasetStyle {
     if (this.state[ds.internalId] && this.state[ds.internalId].style) {
-      const style = this.state[ds.internalId].style as LineStyle;
-      return new LineStyle(style.baseColor, style.pointRadius, style.lineWidth, style.pointSymbol, style.lineDashArray);
+      const style = this.state[ds.internalId].style as any;
+      if (style.period) {
+        return new BarStyle(style.baseColor, style.startOf, duration(style.period), style.lineWidth, style.lineDashArray);
+      } else {
+        return new LineStyle(style.baseColor, style.pointRadius, style.lineWidth, style.pointSymbol, style.lineDashArray);
+      }
     } else {
+      if (ds.renderingHints && ds.renderingHints.chartType) {
+        switch (ds.renderingHints.chartType) {
+          case 'line':
+            return this.handleLineRenderingHints(ds.renderingHints as LineRenderingHints);
+          case 'bar':
+            return this.handleBarRenderingHints(ds.renderingHints as BarRenderingHints);
+        }
+      }
       return new LineStyle(this.colorService.getColor(), 2, 2);
     }
+  }
+
+  protected handleLineRenderingHints(lineHints: LineRenderingHints): DatasetStyle {
+    const color = lineHints.properties?.color || this.colorService.getColor();
+    let lineWidth = 2;
+    if (lineHints && lineHints.properties.width) {
+      lineWidth = Math.round(parseFloat(lineHints.properties.width));
+    }
+    return new LineStyle(color, lineWidth, lineWidth);
+  }
+
+  protected handleBarRenderingHints(barHints: BarRenderingHints): DatasetStyle {
+    let lineWidth = 2;
+    let startOf: unitOfTime.StartOf = 'day';
+    let period: Duration = duration('P1D');
+    if (barHints && barHints.properties.width) {
+      lineWidth = Math.round(parseFloat(barHints.properties.width));
+    }
+    const color = barHints.properties?.color || this.colorService.getColor();
+    if (barHints && barHints.properties.interval) {
+      if (barHints.properties.interval === 'byDay') {
+        period = duration('P1D');
+        startOf = 'day';
+      }
+      if (barHints.properties.interval === 'byHour') {
+        period = duration('PT1H');
+        startOf = 'hour';
+      }
+    }
+    return new BarStyle(color, startOf, period, lineWidth);
   }
 
   private setState(id: string, style: DatasetStyle, yaxis: AxisSettings, selected: boolean, visible: boolean) {

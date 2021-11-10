@@ -16,7 +16,7 @@ export class DummyDatasetsService {
     const child = new DatasetChild(
       '123',
       'ChildData',
-      true,
+      false,
       [{
         value: 1.2,
         timestamp: new Date().getTime() - (360 * 1000)
