@@ -247,13 +247,13 @@ export class DatasetEntry {
         this._overviewDataLoading = loading;
     }
 
-    get selected(): boolean {
+    getSelected(): boolean {
         return this._selected;
     }
 
-    set selected(selected: boolean) {
+    setSelected(selected: boolean, update = true) {
         this._selected = selected;
-        this.stateChangeEvent.emit(this);
+        update && this.stateChangeEvent.emit(this);
     }
 
     get visible(): boolean {
@@ -742,7 +742,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                         hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
                         options: this.createDatasetOptions(entry),
                         data: entry.visible ? this.getData(entry).map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-                        selected: entry.selected,
+                        selected: entry.getSelected(),
                         axisOptions: {
                             uom: entry.description.uom,
                             label: entry.description.uom,
@@ -1353,7 +1353,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         })
         this.redrawGraph();
         const list = this.preparedData.filter(e => e.selected).map(e => e.internalId);
-        this.datasetsSelected.emit(list);
+        this.datasets.forEach(ds => ds.setSelected(list.findIndex(e => e === ds.id) >= 0, false));
     }
 
     /**

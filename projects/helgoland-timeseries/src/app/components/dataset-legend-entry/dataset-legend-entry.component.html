@@ -30,8 +30,8 @@
       <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-selection-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-selection-button.tooltip' | translate}}">
-        <mat-icon *ngIf="!dataset.selected">check_box_outline_blank</mat-icon>
-        <mat-icon *ngIf="dataset.selected">check_box</mat-icon>
+        <mat-icon *ngIf="!dataset.getSelected()">check_box_outline_blank</mat-icon>
+        <mat-icon *ngIf="dataset.getSelected()">check_box</mat-icon>
       </button>
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"

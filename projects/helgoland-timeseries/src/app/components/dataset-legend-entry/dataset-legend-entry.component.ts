@@ -49,7 +49,7 @@ export class DatasetLegendEntryComponent implements OnChanges {
   }
 
   toggleSelection() {
-    this.dataset.selected = !this.dataset.selected;
+    this.dataset.setSelected(!this.dataset.getSelected());
   }
 
   toggleVisibility() {

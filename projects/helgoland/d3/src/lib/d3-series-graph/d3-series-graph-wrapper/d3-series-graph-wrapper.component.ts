@@ -137,7 +137,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   protected setSelectedId(id: string): void {
     const dataset = this.datasets.find((e) => e.id === id);
     if (dataset) {
-      dataset.selected = true;
+      dataset.setSelected(true);
     }
     this.drawGraph();
   }
@@ -145,7 +145,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   protected removeSelectedId(id: string): void {
     const dataset = this.datasets.find((e) => e.id === id);
     if (dataset) {
-      dataset.selected = false;
+      dataset.setSelected(false);
     }
     this.drawGraph();
   }

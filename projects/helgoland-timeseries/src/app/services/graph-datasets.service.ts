@@ -85,11 +85,11 @@ export class DatasetsService {
   }
 
   datasetsSelected(): boolean {
-    return this.datasets.some(e => e.selected);
+    return this.datasets.some(e => e.getSelected());
   }
 
   clearSelections() {
-    this.datasets.forEach(e => e.selected = false);
+    this.datasets.forEach(e => e.setSelected(false));
   }
 
   private initTimespan() {

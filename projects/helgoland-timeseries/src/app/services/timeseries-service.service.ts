@@ -134,7 +134,7 @@ export class TimeseriesService {
         this.saveState();
       });
       dataset.stateChangeEvent.subscribe(ds => {
-        this.setState(ds.id, ds.getStyle(), ds.getYAxis(), ds.selected, ds.visible);
+        this.setState(ds.id, ds.getStyle(), ds.getYAxis(), ds.getSelected(), ds.visible);
         this.saveState();
       });
       ts.referenceValues.forEach(ref => {
