@@ -5,7 +5,6 @@ import { PermalinkService } from '@helgoland/permalink';
 
 import { DATASET_PERMALINK_SERVICE_INJECTION, DatasetPermalinkService } from '../../services/service-interfaces';
 import { DatasetsService } from './../../services/graph-datasets.service';
-import { TimeseriesService } from './../../services/timeseries-service.service';
 
 const PARAM_IDS = 'ids';
 const ID_SEPERATOR = '!!';
@@ -19,13 +18,13 @@ const PARAM_DEFINED_TIME = 'defined_time';
 export class DiagramViewPermalinkService extends PermalinkService<void> {
 
   constructor(
-    private timeseriesSrvc: TimeseriesService,
     private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService,
-    @Optional() @Inject(DATASET_PERMALINK_SERVICE_INJECTION) private permalinkServices: DatasetPermalinkService[] | null = []
+    @Optional() @Inject(DATASET_PERMALINK_SERVICE_INJECTION) private permalinkServices: DatasetPermalinkService[] | null
   ) {
     super();
+    if (this.permalinkServices === null) { this.permalinkServices = [] };
   }
 
   public validatePeramlink(): void {
