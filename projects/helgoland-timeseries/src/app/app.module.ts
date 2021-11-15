@@ -82,7 +82,9 @@ import { ModalMapSettingsComponent } from './components/modal-map-settings/modal
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { AppConfig, ConfigurationService } from './services/configuration.service';
+import { DATASET_PERMALINK_SERVICE_INJECTION } from './services/service-interfaces';
 import { CustomD3TimeseriesGraphErrorHandler } from './services/timeseries-graph-error-handler';
+import { TimeseriesService } from './services/timeseries-service.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
@@ -206,6 +208,11 @@ export function initApplication(configService: ConfigurationService, translate: 
       provide: APP_INITIALIZER,
       useFactory: initApplication,
       deps: [ConfigurationService, TranslateService, LocalStorage],
+      multi: true
+    },
+    {
+      provide: DATASET_PERMALINK_SERVICE_INJECTION,
+      useClass: TimeseriesService,
       multi: true
     },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },

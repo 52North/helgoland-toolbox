@@ -494,7 +494,10 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 }
                 return this.subscribeEvents(addedItem.item);
             });
-            graphDatasetsChanges.forEachRemovedItem((removedItem) => this.unsubscribeEvents(removedItem.item));
+            graphDatasetsChanges.forEachRemovedItem((removedItem) => {
+                this.redrawCompleteGraph();
+                return this.unsubscribeEvents(removedItem.item);
+            });
         }
 
         const graphOptionsChanged = this.graphOptionsDiffer.diff(this.graphOptions);

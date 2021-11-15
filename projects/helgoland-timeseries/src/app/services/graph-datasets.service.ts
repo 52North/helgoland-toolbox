@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Time, Timespan, TimezoneService } from '@helgoland/core';
-import { DatasetEntry, GraphDataEntry } from '@helgoland/d3';
+import { DatasetEntry } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 

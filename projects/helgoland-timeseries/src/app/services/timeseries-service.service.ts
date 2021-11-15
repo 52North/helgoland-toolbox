@@ -27,6 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
 
 import { DatasetsService } from './graph-datasets.service';
+import { DatasetPermalinkService } from './service-interfaces';
 
 const TIMESERIES_STATE = 'timeseries-state';
 
@@ -40,7 +41,7 @@ interface SaveState {
 @Injectable({
   providedIn: 'root'
 })
-export class TimeseriesService {
+export class TimeseriesService implements DatasetPermalinkService {
 
   private state: {
     [key: string]: SaveState
@@ -65,7 +66,6 @@ export class TimeseriesService {
     protected graphDatasetsSrvc: DatasetsService,
     @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
   ) {
-    this.loadState();
     this.graphDatasetsSrvc.timespanChanged.subscribe(() => this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset.internalId)))
   }
 
@@ -83,6 +83,24 @@ export class TimeseriesService {
 
   public removeDataset(id: string) {
     this.graphDatasetsSrvc.deleteDataset(id);
+  }
+
+  noPermalink() {
+    this.loadState();
+  }
+
+  getPermaIds(): string[] {
+    const dsIds = Array.from(this.datasetMap.keys());
+    return dsIds.map(e => `ts_${e}`);
+  }
+
+  validatePermaIds(ids: string[]) {
+    ids.forEach(id => {
+      if (id.startsWith('ts_')) {
+        id = id.substring(3);
+        this.addDataset(id);
+      }
+    })
   }
 
   protected loadState(): void {
@@ -130,6 +148,7 @@ export class TimeseriesService {
       this.saveState();
       this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
       dataset.deleteEvent.subscribe(ds => {
+        this.datasetMap.delete(ds.id);
         delete this.state[ds.id];
         this.saveState();
       });
