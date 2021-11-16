@@ -13,7 +13,7 @@
       </helgoland-edit-label>
     </div>
     <div class="fav-additional">
-      {{item.favorite.parameters.phenomenon.label}} - {{item.favorite.parameters.feature.label}}
+      {{item.description.phenomenonLabel}} - {{item.description.platformLabel}}
     </div>
     <div class="fav-actions">
       <button mat-icon-button (click)="deleteFav(item)"
@@ -28,38 +28,8 @@
     </div>
   </mat-card>
 
-  <mat-card *ngFor="let group of groups" style="margin-bottom: 10px;">
-
-    <div *ngIf="!group.editMode" class="fav-title">
-      <span style="flex: 1;">{{group.label}}</span>
-      <button mat-icon-button (click)="group.editMode = true">
-        <mat-icon>create</mat-icon>
-      </button>
-    </div>
-    <div *ngIf="group.editMode" class="fav-title">
-      <helgoland-edit-label [label]="group.label" (labelChanged)="setFavLabel(group, $event); group.editMode = false;">
-      </helgoland-edit-label>
-    </div>
-    <div class="fav-additional" *ngFor="let fav of group.favorites">
-      {{fav.dataset.parameters.phenomenon.label}} - {{fav.dataset.parameters.feature.label}}
-    </div>
-    <div class="fav-actions">
-      <button mat-icon-button (click)="deleteFav(group)"
-        matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
-        attr.aria-label="{{'favorites.single-favorite.remove-from-list' | translate}}">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <div style="flex: 1"></div>
-      <button mat-button (click)="addGroupToDiagram(group)">
-        {{'favorites.single-favorite.add-to-diagram' | translate}}
-      </button>
-    </div>
-  </mat-card>
-
 </div>
 <div mat-dialog-actions>
-  <button *ngIf="graphDatasetsSrvc.hasDatasets()" mat-raised-button
-    (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
 </div>

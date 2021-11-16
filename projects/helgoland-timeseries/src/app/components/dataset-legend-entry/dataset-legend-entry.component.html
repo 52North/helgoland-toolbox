@@ -45,8 +45,7 @@
           style="height: 40px; width: 40px; display: inline-block;">
         </helgoland-timeseries-entry-symbol>
       </button>
-      <!-- <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
-      </helgoland-favorite-toggle-button> -->
+      <helgoland-favorite-toggle-button [dataset]="dataset"> </helgoland-favorite-toggle-button>
     </div>
     <div class="entry-line clickable" *ngIf="dataset.description.firstValue"
       (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">

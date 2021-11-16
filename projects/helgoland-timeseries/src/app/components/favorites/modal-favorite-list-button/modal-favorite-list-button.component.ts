@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FavoriteService } from '@helgoland/favorite';
 
+import { FavoriteService } from '../../../services/favorite.service';
 import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favorite-list.component';
 
 @Component({
@@ -9,18 +9,12 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
   templateUrl: './modal-favorite-list-button.component.html',
   styleUrls: ['./modal-favorite-list-button.component.scss']
 })
-export class ModalFavoriteListButtonComponent implements OnInit {
-
-  public favCount: number;
+export class ModalFavoriteListButtonComponent {
 
   constructor(
     private dialog: MatDialog,
     public favoriteSrvc: FavoriteService
   ) { }
-
-  ngOnInit(): void {
-    this.favoriteSrvc.getFavoriteCountChanged().subscribe(c => this.favCount = c)
-  }
 
   public openFavoriteList() {
     this.dialog.open(ModalFavoriteListComponent, { autoFocus: false, width: '500px' })

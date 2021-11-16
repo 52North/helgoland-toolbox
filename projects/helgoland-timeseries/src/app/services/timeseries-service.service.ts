@@ -26,11 +26,14 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
 
+import { Favorite } from './favorite.service';
 import { DatasetsService } from './graph-datasets.service';
-import { DatasetPermalinkService } from './service-interfaces';
+import { DatasetFavoriteService, DatasetPermalinkService } from './service-interfaces';
 
-const TIMESERIES_STATE = 'timeseries-state';
+const TIMESERIES_STATE_LOCALSTORAGE = 'timeseries-state';
+const TIMESERIES_FAVORITES_LOCALSTORAGE = 'timeseries-favorites';
 
+const FAVORITE_PREFIX = 'ts_fav_';
 interface SaveState {
   style: DatasetStyle,
   yaxis: AxisSettings,
@@ -38,13 +41,22 @@ interface SaveState {
   visible: boolean
 }
 
+interface FavoriteSaveState {
+  favorite: Favorite,
+  style: DatasetStyle,
+  yAxis: AxisSettings
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class TimeseriesService implements DatasetPermalinkService {
+export class TimeseriesService implements DatasetPermalinkService, DatasetFavoriteService {
 
   private state: {
     [key: string]: SaveState
+  } = {}
+  private favorites: {
+    [key: string]: FavoriteSaveState
   } = {}
   private datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
@@ -67,6 +79,7 @@ export class TimeseriesService implements DatasetPermalinkService {
     @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
   ) {
     this.graphDatasetsSrvc.timespanChanged.subscribe(() => this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset.internalId)))
+    this.loadFavorites();
   }
 
   public async addDataset(internalId: string) {
@@ -103,31 +116,100 @@ export class TimeseriesService implements DatasetPermalinkService {
     })
   }
 
+  canHandleDatasetAsFavorite(id: string): boolean {
+    return (id.startsWith(FAVORITE_PREFIX) || this.datasetMap.has(id))
+  }
+
+  isFavorite(id: string): boolean {
+    return this.favorites[this.createFavoriteID(id)] !== undefined;
+  }
+
+  getFavorites(): Favorite[] {
+    const favorites: Favorite[] = [];
+    for (const key in this.favorites) {
+      favorites.push(this.favorites[key].favorite);
+    }
+    return favorites;
+  }
+
+  getFavorite(id: string): Favorite {
+    return this.favorites[this.createFavoriteID(id)].favorite;
+  }
+
+  createFavorite(ds: DatasetEntry): Favorite {
+    const favState: FavoriteSaveState = {
+      favorite: {
+        id: this.createFavoriteID(ds.id),
+        label: `${ds.description.phenomenonLabel} @ ${ds.description.platformLabel} (${ds.description.procedureLabel})`,
+        description: ds.description
+      },
+      style: ds.getStyle(),
+      yAxis: ds.getYAxis()
+    }
+    this.favorites[this.createFavoriteID(ds.id)] = favState;
+    this.saveFavorites();
+    return favState.favorite;
+  }
+
+  private createFavoriteID(dsId: string): string {
+    return `${FAVORITE_PREFIX}${dsId}`;
+  }
+
+  updateFavoriteLabel(fav: Favorite, label: string) {
+    if (this.favorites[fav.id]) {
+      this.favorites[fav.id].favorite.label = label;
+    }
+    this.saveFavorites();
+  }
+
+  addFavoriteToDiagram(fav: Favorite) {
+    const dsId = fav.id.substring(FAVORITE_PREFIX.length);
+    const entry = this.favorites[fav.id];
+    const style = this.getStyleOfObject(entry.style);
+    const yaxis = this.getYAxisOfObject(entry.yAxis);
+    this.addDatasetbyId(dsId, style, yaxis);
+  }
+
+  removeFavorite(id: string) {
+    delete this.favorites[this.createFavoriteID(id)];
+    this.saveFavorites();
+  }
+
+  private loadFavorites(): void {
+    this.favorites = this.localStorage.load(TIMESERIES_FAVORITES_LOCALSTORAGE) || {};
+  }
+
+  private saveFavorites(): void {
+    this.localStorage.save(TIMESERIES_FAVORITES_LOCALSTORAGE, this.favorites);
+  }
+
   protected loadState(): void {
-    this.state = this.localStorage.load(TIMESERIES_STATE) || {};
+    this.state = this.localStorage.load(TIMESERIES_STATE_LOCALSTORAGE) || {};
     for (const key in this.state) {
-      this.addDatasetbyId(key);
+      const visible = this.state[key].visible;
+      const selected = this.state[key].selected;
+      const style = this.getStyleOfObject(this.state[key].style);
+      const axis = this.getYAxisOfObject(this.state[key].yaxis);
+      this.addDatasetbyId(key, style, axis, visible, selected);
     }
   }
 
   protected saveState(): void {
-    this.localStorage.save(TIMESERIES_STATE, this.state)
+    this.localStorage.save(TIMESERIES_STATE_LOCALSTORAGE, this.state)
   }
 
-  protected addDatasetbyId(id: string): void {
+  protected addDatasetbyId(id: string, style?: DatasetStyle, axis?: AxisSettings, visible?: boolean, selected?: boolean): void {
     this.servicesConnector.getDataset(id, { locale: this.translate.currentLang, type: DatasetType.Timeseries }).subscribe(
-      res => this.loadAddedDataset(res),
+      res => this.loadAddedDataset(res, style, axis, visible, selected),
       error => this.errorHandler.handleDatasetLoadError(error)
     );
   }
 
-  private loadAddedDataset(ts: HelgolandDataset): void {
+  private loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
     if (ts instanceof HelgolandTimeseries) {
       this.datasetMap.set(ts.internalId, ts);
-      const visible = this.state[ts.internalId] ? this.state[ts.internalId].visible : true;
-      const selected = this.state[ts.internalId] ? this.state[ts.internalId].selected : false;
-      const style = this.getStyle(ts);
-      const yaxis = this.getYAxis(ts);
+      const style = dsStyle ? dsStyle : this.createStyle(ts);
+      const yaxis = dsAxis ? dsAxis : this.createYAxis(ts);
       const dataset = new DatasetEntry(
         ts.internalId,
         style,
@@ -166,38 +248,36 @@ export class TimeseriesService implements DatasetPermalinkService {
     }
   }
 
-  private getYAxis(ds: HelgolandTimeseries): AxisSettings {
-    if (this.state[ds.internalId] && this.state[ds.internalId].yaxis) {
-      const yaxis = this.state[ds.internalId].yaxis;
-      return new AxisSettings(yaxis.showSymbolOnAxis, yaxis.separate, yaxis.zeroBased, yaxis.autoRangeSelection, yaxis.range);
-    } else {
-      const axisSettings = new AxisSettings();
-      if (ds.renderingHints.chartType === 'bar') {
-        axisSettings.range = { min: 0 };
+  private createYAxis(ds: HelgolandTimeseries): AxisSettings {
+    const axisSettings = new AxisSettings();
+    if (ds.renderingHints.chartType === 'bar') {
+      axisSettings.range = { min: 0 };
+    }
+    return axisSettings;
+  }
+
+  private createStyle(ds: HelgolandTimeseries): DatasetStyle {
+    if (ds.renderingHints && ds.renderingHints.chartType) {
+      switch (ds.renderingHints.chartType) {
+        case 'line':
+          return this.handleLineRenderingHints(ds.renderingHints as LineRenderingHints);
+        case 'bar':
+          return this.handleBarRenderingHints(ds.renderingHints as BarRenderingHints);
       }
-      return axisSettings;
+    }
+    return new LineStyle(this.colorService.getColor(), 2, 2);
+  }
+
+  private getStyleOfObject(style: any): DatasetStyle {
+    if (style.period) {
+      return new BarStyle(style.baseColor, style.startOf, duration(style.period), style.lineWidth, style.lineDashArray);
+    } else {
+      return new LineStyle(style.baseColor, style.pointRadius, style.lineWidth, style.pointSymbol, style.lineDashArray);
     }
   }
 
-  private getStyle(ds: HelgolandTimeseries): DatasetStyle {
-    if (this.state[ds.internalId] && this.state[ds.internalId].style) {
-      const style = this.state[ds.internalId].style as any;
-      if (style.period) {
-        return new BarStyle(style.baseColor, style.startOf, duration(style.period), style.lineWidth, style.lineDashArray);
-      } else {
-        return new LineStyle(style.baseColor, style.pointRadius, style.lineWidth, style.pointSymbol, style.lineDashArray);
-      }
-    } else {
-      if (ds.renderingHints && ds.renderingHints.chartType) {
-        switch (ds.renderingHints.chartType) {
-          case 'line':
-            return this.handleLineRenderingHints(ds.renderingHints as LineRenderingHints);
-          case 'bar':
-            return this.handleBarRenderingHints(ds.renderingHints as BarRenderingHints);
-        }
-      }
-      return new LineStyle(this.colorService.getColor(), 2, 2);
-    }
+  private getYAxisOfObject(yaxis: AxisSettings): AxisSettings {
+    return new AxisSettings(yaxis.showSymbolOnAxis, yaxis.separate, yaxis.zeroBased, yaxis.autoRangeSelection, yaxis.range);
   }
 
   protected handleLineRenderingHints(lineHints: LineRenderingHints): DatasetStyle {

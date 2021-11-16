@@ -1,4 +1,4 @@
-<button mat-icon-button (click)="toggle(); $event.stopPropagation()"
+<button mat-icon-button *ngIf="canBeFavorite" (click)="toggle(); $event.stopPropagation()"
   attr.aria-label="{{'favorite-toggle-button.tooltip' | translate}}"
   matTooltip="{{'favorite-toggle-button.tooltip' | translate}}">
   <mat-icon *ngIf="isFavorite" style="color: #c3c30e;">star</mat-icon>
