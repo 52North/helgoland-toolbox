@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, IterableDiffers, OnChanges, Optional, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  Optional,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   ColorService,
   Data,

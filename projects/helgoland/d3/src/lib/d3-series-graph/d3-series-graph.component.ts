@@ -1356,6 +1356,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         })
         this.redrawGraph();
         const list = this.preparedData.filter(e => e.selected).map(e => e.internalId);
+        this.datasetsSelected.emit(list);
         this.datasets.forEach(ds => ds.setSelected(list.findIndex(e => e === ds.id) >= 0, false));
     }
 
