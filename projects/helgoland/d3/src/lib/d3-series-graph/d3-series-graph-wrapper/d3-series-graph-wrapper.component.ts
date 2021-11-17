@@ -186,8 +186,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       const dataset = this.datasets.find((e) => e.id === id);
       dataset.setYAxis(this.getAxisSettings(options));
       dataset.setStyle(this.getGraphStyle(options));
-      dataset.visible = options.visible;
-      dataset.getChildren().forEach(child => {
+      dataset.setVisible(options.visible);
+      dataset.children.forEach(child => {
         const ref = options.showReferenceValues.find(e => e.id === child.id);
         if (ref) {
           child.setColor(ref.color);
@@ -237,7 +237,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     const dataset = this.datasetMap.get(id);
     const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
     if (this.timespan) {
-      dsEntry.dataLoading = true;
+      dsEntry.setDataLoading(true);
       this.informDatasetLoading(this.getLoadedDatasets());
       if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
         && dataset.firstValue
@@ -274,7 +274,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   private onCompleteLoadingData(dataset: DatasetEntry): void {
     // this.runningDataRequests.delete(dataset.internalId);
-    dataset.dataLoading = false;
+    dataset.setDataLoading(false);
     const loadedIds = this.getLoadedDatasets();
     this.informDatasetLoading(loadedIds);
     if (loadedIds.length === 0) { this.onContentLoading.emit(false); }
@@ -324,8 +324,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   }
 
   private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
-    if (ds.getChildren() && ds.getChildren().length) {
-      ds.getChildren().forEach(child => {
+    if (ds.children && ds.children.length) {
+      ds.children.forEach(child => {
         const refVals = rawdata.referenceValues[child.id];
         if (refVals) {
           child.setData(this.createReferenceValueData(rawdata, child.id));

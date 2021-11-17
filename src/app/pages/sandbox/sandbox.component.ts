@@ -141,7 +141,7 @@ export class SandboxComponent implements OnInit {
 
     public changeStyle() {
         this.datasets.forEach(e => {
-            const style = e.getStyle();
+            const style = e.style;
             style.baseColor = this.colorSrvc.getColor();
             e.setStyle(style);
         });

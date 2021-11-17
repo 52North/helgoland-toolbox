@@ -221,7 +221,7 @@ export class DatasetEntry {
     private _overviewData: GraphDataEntry[] = [];
     private _overviewDataLoading: boolean = false;
 
-    private children: DatasetChild[] = [];
+    private _children: DatasetChild[] = [];
 
     public stateChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
     public dataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
@@ -241,7 +241,7 @@ export class DatasetEntry {
         return this._dataLoading;
     }
 
-    set dataLoading(loading: boolean) {
+    setDataLoading(loading: boolean) {
         this._dataLoading = loading;
     }
 
@@ -249,11 +249,11 @@ export class DatasetEntry {
         return this._overviewDataLoading;
     }
 
-    set overviewDataLoading(loading: boolean) {
+    setOverviewDataLoading(loading: boolean) {
         this._overviewDataLoading = loading;
     }
 
-    getSelected(): boolean {
+    get selected(): boolean {
         return this._selected;
     }
 
@@ -266,12 +266,12 @@ export class DatasetEntry {
         return this._visible;
     }
 
-    set visible(visible: boolean) {
+    setVisible(visible: boolean) {
         this._visible = visible;
         this.stateChangeEvent.emit(this);
     }
 
-    getStyle(): DatasetStyle {
+    get style(): DatasetStyle {
         return this._style;
     }
 
@@ -280,7 +280,7 @@ export class DatasetEntry {
         this.stateChangeEvent.emit(this);
     }
 
-    getYAxis(): AxisSettings {
+    get yAxis(): AxisSettings {
         return this._yaxis;
     }
 
@@ -297,7 +297,7 @@ export class DatasetEntry {
         return this._description;
     }
 
-    getData(): GraphDataEntry[] {
+    get data(): GraphDataEntry[] {
         return this._data;
     }
 
@@ -310,7 +310,7 @@ export class DatasetEntry {
         return this._data.length > 0;
     }
 
-    getOverviewData(): GraphDataEntry[] {
+    get overviewData(): GraphDataEntry[] {
         return this._overviewData;
     }
 
@@ -343,13 +343,13 @@ export class DatasetEntry {
         this.deleteEvent.emit(this);
     }
 
-    getChildren(): DatasetChild[] {
-        return this.children;
+    get children(): DatasetChild[] {
+        return this._children;
     }
 
     addChild(child: DatasetChild) {
         if (!this.hasChild(child)) {
-            this.children.push(child);
+            this._children.push(child);
             child.stateChangeEvent.subscribe(() => this.stateChangeEvent.emit(this));
         } else {
             console.error(`A child with the id ${child.id} still exists`);
@@ -357,13 +357,13 @@ export class DatasetEntry {
     }
 
     hasChild(child: DatasetChild): boolean {
-        return this.children.findIndex(e => e.id === child.id) >= 0;
+        return this._children.findIndex(e => e.id === child.id) >= 0;
     }
 
     removeChild(child: DatasetChild) {
-        const idx = this.children.findIndex(e => e.id === child.id);
+        const idx = this._children.findIndex(e => e.id === child.id);
         if (idx >= 0) {
-            delete this.children[idx];
+            delete this._children[idx];
         }
     }
 }
@@ -751,24 +751,24 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                         hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
                         options: this.createDatasetOptions(entry),
                         data: entry.visible ? this.getData(entry).map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-                        selected: entry.getSelected(),
+                        selected: entry.selected,
                         axisOptions: {
                             uom: entry.description.uom,
                             label: entry.description.uom,
-                            zeroBased: entry.getYAxis().zeroBased,
-                            yAxisRange: entry.getYAxis().range,
-                            autoRangeSelection: entry.getYAxis().autoRangeSelection,
-                            separateYAxis: entry.getYAxis().separate,
+                            zeroBased: entry.yAxis.zeroBased,
+                            yAxisRange: entry.yAxis.range,
+                            autoRangeSelection: entry.yAxis.autoRangeSelection,
+                            separateYAxis: entry.yAxis.separate,
                         },
-                        referenceValueData: entry.getChildren().filter(e => e.visible).map(e => ({
+                        referenceValueData: entry.children.filter(e => e.visible).map(e => ({
                             id: e.id,
                             color: e.color,
                             data: e.data
                         })),
                         visible: entry.visible
                     };
-                    if (entry.getStyle() instanceof BarStyle) {
-                        const barStyle = entry.getStyle() as BarStyle;
+                    if (entry.style instanceof BarStyle) {
+                        const barStyle = entry.style as BarStyle;
                         dataEntry.bar = {
                             startOf: barStyle.startOf,
                             period: barStyle.period
@@ -783,30 +783,30 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private getData(entry: DatasetEntry): GraphDataEntry[] {
         if (this.graphOptions.overview) {
-            return entry.getOverviewData();
+            return entry.overviewData;
         } else {
-            return entry.getData();
+            return entry.data;
         }
     }
 
     // TODO: remove when InternalDataEntry is refactored
     private createDatasetOptions(entry: DatasetEntry) {
-        const options = new DatasetOptions(entry.id, entry.getStyle().baseColor);
-        options.autoRangeSelection = entry.getYAxis().autoRangeSelection;
-        options.yAxisRange = entry.getYAxis().range;
-        options.separateYAxis = entry.getYAxis().separate;
-        options.zeroBasedYAxis = entry.getYAxis().zeroBased;
-        options.color = entry.getStyle().baseColor;
-        if (entry.getStyle() instanceof BarStyle) {
-            const barStyle = entry.getStyle() as BarStyle;
+        const options = new DatasetOptions(entry.id, entry.style.baseColor);
+        options.autoRangeSelection = entry.yAxis.autoRangeSelection;
+        options.yAxisRange = entry.yAxis.range;
+        options.separateYAxis = entry.yAxis.separate;
+        options.zeroBasedYAxis = entry.yAxis.zeroBased;
+        options.color = entry.style.baseColor;
+        if (entry.style instanceof BarStyle) {
+            const barStyle = entry.style as BarStyle;
             options.type = 'bar';
             options.barPeriod = barStyle.period.toISOString();
             options.barStartOf = barStyle.startOf;
             options.lineDashArray = barStyle.lineDashArray;
             options.lineWidth = barStyle.lineWidth;
         }
-        if (entry.getStyle() instanceof LineStyle) {
-            const lineStyle = entry.getStyle() as LineStyle;
+        if (entry.style instanceof LineStyle) {
+            const lineStyle = entry.style as LineStyle;
             options.type = 'line';
             options.pointRadius = lineStyle.pointRadius;
             options.pointSymbol = lineStyle.pointSymbol;
@@ -1312,7 +1312,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
                 axis.ids.forEach((entryID) => {
                     const ds = this.datasets.find(e => e.id === entryID);
-                    if (ds && ds.getYAxis().showSymbolOnAxis) {
+                    if (ds && ds.yAxis.showSymbolOnAxis) {
                         const dataentry = this.preparedData.find(el => el.internalId === entryID);
                         if (dataentry) {
                             if (dataentry.options.type) {

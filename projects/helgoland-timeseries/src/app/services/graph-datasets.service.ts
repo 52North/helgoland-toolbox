@@ -65,11 +65,11 @@ export class DatasetsService {
   }
 
   setDataLoading(id: string, loading: boolean) {
-    this.getDatasetEntry(id).dataLoading = loading;
+    this.getDatasetEntry(id).setDataLoading(loading);
   }
 
   setOverviewDataLoading(id: string, loading: boolean) {
-    this.getDatasetEntry(id).overviewDataLoading = loading;
+    this.getDatasetEntry(id).setOverviewDataLoading(loading);
   }
 
   deleteDataset(id: string) {
@@ -85,7 +85,7 @@ export class DatasetsService {
   }
 
   datasetsSelected(): boolean {
-    return this.datasets.some(e => e.getSelected());
+    return this.datasets.some(e => e.selected);
   }
 
   clearSelections() {

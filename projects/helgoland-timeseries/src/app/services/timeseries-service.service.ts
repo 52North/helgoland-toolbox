@@ -143,8 +143,8 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
         label: `${ds.description.phenomenonLabel} @ ${ds.description.platformLabel} (${ds.description.procedureLabel})`,
         description: ds.description
       },
-      style: ds.getStyle(),
-      yAxis: ds.getYAxis()
+      style: ds.style,
+      yAxis: ds.yAxis
     }
     this.favorites[this.createFavoriteID(ds.id)] = favState;
     this.saveFavorites();
@@ -235,7 +235,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
         this.saveState();
       });
       dataset.stateChangeEvent.subscribe(ds => {
-        this.setState(ds.id, ds.getStyle(), ds.getYAxis(), ds.getSelected(), ds.visible);
+        this.setState(ds.id, ds.style, ds.yAxis, ds.selected, ds.visible);
         this.saveState();
       });
       ts.referenceValues.forEach(ref => {
@@ -389,13 +389,13 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
       this.addReferenceValueDatasets(ds, rawdata);
       ds.setData(data);
-      ds.dataLoading = false;
+      ds.setDataLoading(false);
     }
   }
 
   private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
-    if (ds.getChildren() && ds.getChildren().length) {
-      ds.getChildren().forEach(child => {
+    if (ds.children && ds.children.length) {
+      ds.children.forEach(child => {
         const refVals = rawdata.referenceValues[child.id];
         if (refVals) {
           child.setData(this.createReferenceValueData(rawdata, child.id));
@@ -441,7 +441,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
 
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
       ds.setOverviewData(data);
-      ds.overviewDataLoading = false;
+      ds.setOverviewDataLoading(false);
 
       // this.addReferenceValueDatasets(dataset, options, rawdata);
     }

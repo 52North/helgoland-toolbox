@@ -8,17 +8,17 @@
   </div> -->
 
   <div>
-    <mat-slide-toggle [ngModel]="data.dataset.getYAxis().zeroBased" (change)="setZeroBased($event)" color="primary">
+    <mat-slide-toggle [ngModel]="data.dataset.yAxis.zeroBased" (change)="setZeroBased($event)" color="primary">
       {{ 'modal-edit-timeseries-options.null-based' | translate }}
     </mat-slide-toggle>
   </div>
 
   <div style="margin: 10px 0;">
     {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
-    <button mat-raised-button [colorPicker]="data.dataset.getStyle().baseColor" (colorPickerSelect)="confirmColor($event)"
+    <button mat-raised-button [colorPicker]="data.dataset.style.baseColor" (colorPickerSelect)="confirmColor($event)"
       [cpOKButton]="true" [cpOKButtonText]="'modal-edit-timeseries-options.adjust-color-confirm-button' | translate"
       [cpOKButtonClass]="'mat-focus-indicator mat-raised-button mat-button-base'"
-      [ngStyle]="{'background-color': data.dataset.getStyle().baseColor}">&nbsp;</button>
+      [ngStyle]="{'background-color': data.dataset.style.baseColor}">&nbsp;</button>
   </div>
 
   <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && isLineStyle()">
