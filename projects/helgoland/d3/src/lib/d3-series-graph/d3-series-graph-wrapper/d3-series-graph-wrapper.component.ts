@@ -1,4 +1,4 @@
-import { Component, Input, IterableDiffers, OnChanges, Optional, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, IterableDiffers, OnChanges, Optional, Output, SimpleChanges, ViewChild } from '@angular/core';
 import {
   ColorService,
   Data,
@@ -24,6 +24,8 @@ import {
   D3TimeseriesSimpleGraphErrorHandler,
 } from '../../d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
 import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
+import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
+import { HighlightOutput } from '../../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
 import {
   D3SeriesGraphComponent,
@@ -42,6 +44,11 @@ import { AxisSettings } from './../d3-series-graph.component';
 export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions> implements OnChanges {
 
   @Input() public yaxisModifier: boolean;
+
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+
+  @Input() public hoveringService: D3HoveringService;
 
   public datasets: DatasetEntry[] = [];
   public timespan: Timespan;

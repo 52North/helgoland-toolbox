@@ -1,4 +1,5 @@
 <n52-d3-series-graph [datasets]="datasets" [timespan]="timespan" [graphOptions]="graphOptions"
-  (timespanChanged)="updateTimespan($event)" (datasetsSelected)="datasetSelected($event)">
+  [hoveringService]="hoveringService" (timespanChanged)="updateTimespan($event)"
+  (datasetsSelected)="datasetSelected($event)" (onHighlightChanged)="onHighlightChanged.emit($event)">
   <n52-d3-graph-copyright [copyright]="presenterOptions?.copyright"></n52-d3-graph-copyright>
 </n52-d3-series-graph>
