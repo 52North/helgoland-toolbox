@@ -19,7 +19,7 @@ import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3SeriesGraphWrapperComponent } from '../d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3PlotOptions } from '../model/d3-plot-options';
 
@@ -120,18 +120,20 @@ export class ExportImageButtonComponent {
       this.presenterOptions.timeRangeLabel = { show: true, format: 'L' }
     }
 
-    const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
+    const comp = this.appendComponentToBody(D3SeriesGraphWrapperComponent) as ComponentRef<D3SeriesGraphWrapperComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
-    comp.instance.setTimespan(this.timespan);
+    comp.instance.yaxisModifier = false;
+    comp.instance.timespan = this.timespan;
     comp.instance.presenterOptions = this.presenterOptions;
 
     comp.instance.dataLoaded.subscribe(loaded => {
+      debugger;
       if (loaded.size === 0 && once) {
         once = false;
         setTimeout(() => {
-          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-series-graph-wrapper`);
           const svgElem = document.querySelector<SVGSVGElement>(temp);
           if (svgElem) {
             this.diagramAdjustments(svgElem).subscribe(() => {

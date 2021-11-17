@@ -76,7 +76,9 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   ) {
     if (!this.drawLayer) {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-point-layer');
-      this.hoveringService.initPointHovering(this.drawLayer);
+      if (this.hoveringService) {
+        this.hoveringService.initPointHovering(this.drawLayer);
+      }
     }
     this.background = background;
     this.graphExtent = graphExtent;
