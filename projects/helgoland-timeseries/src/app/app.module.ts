@@ -60,10 +60,6 @@ import {
   ModalFavoriteListButtonComponent,
 } from './components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import { ModalFavoriteListComponent } from './components/favorites/modal-favorite-list/modal-favorite-list.component';
-import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
-import {
-  TimeseriesEntrySymbolComponent,
-} from './components/legend-entry/timeseries-entry-symbol/timeseries-entry-symbol.component';
 import {
   ModalMainConfigButtonComponent,
 } from './components/main-config/modal-main-config-button/modal-main-config-button.component';
@@ -80,6 +76,7 @@ import {
 } from './components/modal-edit-timeseries-options/timeseries-symbol-select/timeseries-symbol-select.component';
 import { ModalMapSettingsComponent } from './components/modal-map-settings/modal-map-settings.component';
 import { GeneralTimeSelectionComponent } from './components/time/general-time-selection/general-time-selection.component';
+import { TimeseriesEntrySymbolComponent } from './components/timeseries-entry-symbol/timeseries-entry-symbol.component';
 import { TimeseriesListSelectorComponent } from './components/timeseries-list-selector/timeseries-list-selector.component';
 import { AppConfig, ConfigurationService } from './services/configuration.service';
 import { DATASET_FAVORITE_SERVICE_INJECTION, DATASET_PERMALINK_SERVICE_INJECTION } from './services/service-interfaces';
@@ -130,7 +127,6 @@ export function initApplication(configService: ConfigurationService, translate: 
     FavoriteToggleButtonComponent,
     GeneralTimeSelectionComponent,
     DatasetLegendEntryComponent,
-    LegendEntryComponent,
     ListSelectionViewComponent,
     MapSelectionViewComponent,
     ModalDatasetByStationSelectorComponent,
