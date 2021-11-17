@@ -62,7 +62,7 @@
     <div *ngIf="dataset?.getChildren()?.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
       <div *ngFor="let child of dataset.getChildren()">
-        <mat-slide-toggle [checked]="child.visible" color="primary" (change)="child.visible = $event.checked">
+        <mat-slide-toggle [checked]="child.visible" color="primary" (change)="child.setVisible($event.checked)">
           <span [ngStyle]="{color: child.color}">{{child.label}}</span>
         </mat-slide-toggle>
       </div>

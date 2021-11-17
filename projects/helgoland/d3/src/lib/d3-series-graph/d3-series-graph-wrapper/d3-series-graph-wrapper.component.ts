@@ -40,6 +40,7 @@ import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
 import {
   D3SeriesGraphComponent,
   D3SeriesGraphOptions,
+  DatasetChild,
   DatasetDescription,
   DatasetEntry,
   DatasetStyle,
@@ -186,16 +187,15 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       dataset.setYAxis(this.getAxisSettings(options));
       dataset.setStyle(this.getGraphStyle(options));
       dataset.visible = options.visible;
-      // this.datasets.forEach(e => {
-      //   if (e.id.startsWith(id + 'ref')) {
-      //     e.visible = false;
-      //   }
-      // })
-      // options.showReferenceValues.forEach(refVal => {
-      //   const refValDs = this.graphDatasets.find(e => e.id === this.createRefValueId(id, refVal.id))
-      //   refValDs.visible = true && options.visible;
-      //   refValDs.style.baseColor = refVal.color;
-      // })
+      dataset.getChildren().forEach(child => {
+        const ref = options.showReferenceValues.find(e => e.id === child.id);
+        if (ref) {
+          child.setColor(ref.color);
+          child.setVisible(true, false);
+        } else {
+          child.setVisible(false, false);
+        }
+      })
       this.drawGraph();
     }
   }
@@ -220,6 +220,9 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           lastValue: dataset.lastValue
         }
         dsEntry = new DatasetEntry(dataset.internalId, style, yaxis, options.visible, selected, description);
+        dataset.referenceValues.forEach(ref => {
+          dsEntry.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ''));
+        });
         this.datasets.push(dsEntry);
       }
       this.datasetMap.set(dataset.internalId, dataset);
@@ -315,38 +318,20 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       }
 
       const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
-
+      this.addReferenceValueDatasets(dsEntry, rawdata);
       dsEntry.setData(data);
-
-      // this.addReferenceValueDatasets(dataset, options, rawdata);
     }
   }
 
-  private addReferenceValueDatasets(dataset: HelgolandTimeseries, options: DatasetOptions, rawdata: HelgolandTimeseriesData) {
-    if (dataset.referenceValues && dataset.referenceValues.length) {
-      dataset.referenceValues.forEach(refVal => {
-        const refConf = options.showReferenceValues.find(e => e.id === refVal.referenceValueId);
-        // const refValDataset: GraphDataset = {
-        //   id: this.createRefValueId(dataset.internalId, refVal.referenceValueId),
-        //   yaxis: new AxisSettings(dataset.uom, false),
-        //   selected: false,
-        //   visible: refConf && options.visible ? true : false,
-        //   style: new LineStyle(refConf ? refConf.color : ''),
-        //   data: this.createReferenceValueData(rawdata, refVal.referenceValueId),
-        //   loading: false
-        // };
-        // const refValIdx = this.graphDatasets.findIndex((e) => e.id === refValDataset.id);
-        // if (refValIdx >= 0) {
-        //   this.graphDatasets[refValIdx] = refValDataset;
-        // } else {
-        //   this.graphDatasets.push(refValDataset);
-        // }
+  private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
+    if (ds.getChildren() && ds.getChildren().length) {
+      ds.getChildren().forEach(child => {
+        const refVals = rawdata.referenceValues[child.id];
+        if (refVals) {
+          child.setData(this.createReferenceValueData(rawdata, child.id));
+        }
       });
     }
-  }
-
-  private createRefValueId(dsId: string, refValId: string): string {
-    return dsId + 'ref' + refValId;
   }
 
   private createReferenceValueData(data: Data<TimeValueTuple>, refId: string): { timestamp: number; value: number; }[] {

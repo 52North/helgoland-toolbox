@@ -184,21 +184,27 @@ export class DatasetChild {
         return this._visible;
     }
 
-    public set visible(v: boolean) {
+    public setVisible(v: boolean, update = true) {
         this._visible = v;
-        this.stateChangeEvent.emit();
+        if (update) {
+            this.stateChangeEvent.emit();
+        }
     }
 
     public get data(): GraphDataEntry[] {
         return this._data;
     }
 
-    public set data(data: GraphDataEntry[]) {
+    public setData(data: GraphDataEntry[]) {
         this._data = data;
     }
 
     public get color(): string {
         return this._color;
+    }
+
+    public setColor(color: string) {
+        this._color = color;
     }
 
     public get label(): string {

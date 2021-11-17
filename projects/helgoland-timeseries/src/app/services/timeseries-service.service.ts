@@ -387,18 +387,18 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
       const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
 
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
-      this.addReferenceValueDatasets(ds, dataset, rawdata);
+      this.addReferenceValueDatasets(ds, rawdata);
       ds.setData(data);
       ds.dataLoading = false;
     }
   }
 
-  private addReferenceValueDatasets(ds: DatasetEntry, dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData) {
+  private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
     if (ds.getChildren() && ds.getChildren().length) {
       ds.getChildren().forEach(child => {
         const refVals = rawdata.referenceValues[child.id];
         if (refVals) {
-          child.data = this.createReferenceValueData(rawdata, child.id);
+          child.setData(this.createReferenceValueData(rawdata, child.id));
         }
       });
     }
