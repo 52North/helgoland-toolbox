@@ -61,6 +61,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   @Input() public hoveringService: D3HoveringService;
 
+  @Input() public mainTimeInterval: Timespan;
+
   public datasets: DatasetEntry[] = [];
   public timespan: Timespan;
 

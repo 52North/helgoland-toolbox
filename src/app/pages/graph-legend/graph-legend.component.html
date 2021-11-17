@@ -1,13 +1,11 @@
 <div style="height: 500px;">
-  <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
+  <n52-d3-series-graph-wrapper class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
     [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
     [hoveringService]="hoveringService" [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
     (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
     (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
-    (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
-    <n52-d3-y-axis-modifier *ngIf="yaxisModifier" [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
-    <!-- <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line> -->
-  </n52-d3-timeseries-graph>
+    (dataLoaded)="loadings = $event" #diagram>
+  </n52-d3-series-graph-wrapper>
 </div>
 <div>
   <span>Loading Graph: {{graphLoading}} - {{listLoadings()}}</span>
@@ -16,10 +14,10 @@
   </n52-export-image-button>
 </div>
 <div style="height: 200px;">
-  <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-    [presenterOptions]="d3overviewOptions" [reloadForDatasets]="reloadForDatasets" [timeInterval]="timespan"
-    (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)">
-  </n52-d3-overview-timeseries-graph>
+  <n52-d3-series-graph-overview-wrapper [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
+    [presenterOptions]="d3overviewOptions" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"
+    (onContentLoading)="onOverviewLoading($event)">
+  </n52-d3-series-graph-overview-wrapper>
 </div>
 <div>
   Loading Overview: {{overviewLoading}}

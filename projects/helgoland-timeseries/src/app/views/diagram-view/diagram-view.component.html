@@ -93,13 +93,6 @@
         <n52-d3-series-graph #graph [datasets]="graphDatasetsSrvc.datasets" [timespan]="graphDatasetsSrvc.timespan"
           [graphOptions]="graphOptions" (timespanChanged)="graphDatasetsSrvc.timespan = $event">
         </n52-d3-series-graph>
-        <!-- <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-            [datasetOptions]="datasetOptions" [timeInterval]="graphDatasetsSrvc.timespan"
-            [presenterOptions]="d3diagramOptions" (onTimespanChanged)="graphDatasetsSrvc.timespan = $event"
-            (onDatasetSelected)="setSelected($event)" (onContentLoading)="onDiagramLoading($event)" #diagram>
-            <n52-d3-y-axis-modifier *ngIf="diagramConfig.yaxisModifier" [zoom]="true" [shift]="true">
-            </n52-d3-y-axis-modifier>
-          </n52-d3-timeseries-graph> -->
       </div>
 
       <div>

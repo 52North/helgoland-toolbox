@@ -99,6 +99,8 @@ export class GraphLegendComponent {
 
     public d3overviewOptions: D3PlotOptions = {
         overview: true,
+        hoverStyle: HoveringStyle.none,
+        yaxis: false
     };
 
     public datasetOptions: Map<string, DatasetOptions> = new Map();
