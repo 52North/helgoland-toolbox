@@ -1,10 +1,9 @@
+import { DatasetOptions } from '@helgoland/core';
 import { Injectable } from '@angular/core';
-import { DatasetStyle } from '@helgoland/d3';
 import { duration, unitOfTime } from 'moment';
 
-import { DatasetOptions } from '../../../../core/src/public-api';
-import { BarStyle, LineStyle } from '../d3-series-graph/d3-series-graph.component';
 import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
+import { BarStyle, DatasetStyle, LineStyle } from '../model/dataset';
 
 @Injectable({
   providedIn: 'root'

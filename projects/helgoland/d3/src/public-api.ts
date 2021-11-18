@@ -12,6 +12,7 @@ export * from './lib/d3-timeseries-graph/d3-timeseries-graph.interface';
 
 export * from './lib/d3-series-graph/d3-series-graph.component';
 export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
+export * from './lib/d3-series-graph/d3-series-graph-overview-wrapper/d3-series-graph-overview-wrapper.component';
 
 export * from './lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
@@ -32,6 +33,7 @@ export * from './lib/model/d3-axis-type';
 export * from './lib/model/d3-highlight';
 export * from './lib/model/d3-selection-range';
 export * from './lib/model/d3-plot-options';
+export * from './lib/model/dataset';
 export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/model/d3-general';
 export * from './lib/helper/generalizing/d3-data-generalizer';
