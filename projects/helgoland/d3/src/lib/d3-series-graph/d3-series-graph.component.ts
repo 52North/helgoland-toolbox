@@ -22,7 +22,6 @@ import * as d3 from 'd3';
 import moment, { duration, unitOfTime } from 'moment';
 import { Subscription } from 'rxjs/internal/Subscription';
 
-import { D3GraphExtent, D3GraphObserver } from '../d3-timeseries-graph/d3-timeseries-graph-control';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { D3Graphs } from '../helper/d3-graphs.service';
@@ -35,6 +34,8 @@ import { DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-
 import { HighlightOutput } from '../model/d3-highlight';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { BarStyle, DatasetEntry, GraphDataEntry, LineStyle } from '../model/dataset';
+import { D3GraphInterface } from './d3-graph.interface';
+import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -91,7 +92,7 @@ interface DatasetEventSubscriptions {
     providers: [D3GraphId],
     encapsulation: ViewEncapsulation.None
 })
-export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck, OnInit {
+export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck, OnInit, D3GraphInterface {
 
     @Input()
     public datasets: DatasetEntry[] = [];
@@ -305,7 +306,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.observer.delete(obs);
     }
 
-    public getGraphElem() {
+    public getGraphElem(): d3.Selection<SVGSVGElement, any, any, any> {
         return this.graph;
     }
 

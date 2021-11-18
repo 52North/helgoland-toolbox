@@ -7,8 +7,8 @@ import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphInterface } from '../../d3-graph.interface';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -16,14 +16,14 @@ import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interfac
   styleUrls: ['./d3-graph-copyright.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implements OnChanges, OnDestroy {
+export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements OnChanges, OnDestroy {
 
   /**
    * Copyright, which should be shown on the graph
    */
   @Input() copyright: D3Copyright;
 
-  private d3Graph: D3TimeseriesGraphInterface;
+  private d3Graph: D3GraphInterface;
   private copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
 
   private labelRect: d3.Selection<BaseType, any, any, any>;
@@ -45,7 +45,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     }
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphInterface) {
+  public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
   }
 

@@ -6,8 +6,8 @@ import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphInterface } from '../../d3-graph.interface';
 
 interface Label {
   text: d3.Selection<d3.BaseType, any, any, any>;
@@ -23,13 +23,13 @@ const TIME_LABEL_CLASS = 'time-label';
   styleUrls: ['./d3-graph-hover-line.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
+export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
   @Input() showLabels = true;
 
   @Input() showTimelLabel = true;
 
-  private d3Graph: D3TimeseriesGraphInterface;
+  private d3Graph: D3GraphInterface;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private graphExtent: D3GraphExtent;
   private disableHovering: boolean;
@@ -49,7 +49,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphInterface) {
+  public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }

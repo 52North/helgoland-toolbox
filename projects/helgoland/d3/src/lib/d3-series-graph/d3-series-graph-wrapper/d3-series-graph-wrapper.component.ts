@@ -30,11 +30,13 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { duration, unitOfTime } from 'moment';
 
 import {
-  D3TimeseriesGraphErrorHandler,
-  D3TimeseriesSimpleGraphErrorHandler,
-} from '../../d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
+  D3SeriesGraphErrorHandler,
+  D3SeriesSimpleGraphErrorHandler,
+} from '../../d3-timeseries-graph/d3-series-graph-error-handler.service';
 import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
+import { D3PointSymbolDrawerService } from '../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
+import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
 import { HighlightOutput } from '../../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
 import { AxisSettings, DatasetChild, DatasetDescription, DatasetEntry, DatasetStyle } from '../../model/dataset';
@@ -52,7 +54,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
-  @Input() public hoveringService: D3HoveringService;
+  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   @Input() public mainTimeInterval: Timespan;
 
@@ -85,7 +87,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     protected sumValues: SumValuesService,
     protected colorService: ColorService,
     protected graphHelper: D3GraphHelperService,
-    @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
+    protected pointSymbolDrawer: D3PointSymbolDrawerService,
+    @Optional() protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
   ) {
     super(
       iterableDiffers,
@@ -95,6 +98,11 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       translateService,
       timezoneSrvc
     );
+    if (!this.presenterOptions) {
+      this.presenterOptions = {
+        hoverStyle: HoveringStyle.none
+      };
+    }
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

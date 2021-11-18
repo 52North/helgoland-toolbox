@@ -15,8 +15,8 @@ import {
 import {
   AxisSettings,
   BarStyle,
-  D3TimeseriesGraphErrorHandler,
-  D3TimeseriesSimpleGraphErrorHandler,
+  D3SeriesGraphErrorHandler,
+  D3SeriesSimpleGraphErrorHandler,
   DatasetChild,
   DatasetEntry,
   DatasetStyle,
@@ -76,7 +76,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
     protected colorService: ColorService,
     protected translate: TranslateService,
     protected graphDatasetsSrvc: DatasetsService,
-    @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
+    @Optional() protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
   ) {
     this.graphDatasetsSrvc.timespanChanged.subscribe(() => this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset.internalId)))
     this.loadFavorites();
