@@ -4,8 +4,8 @@ import { Timespan } from '@helgoland/core';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { InternalDataEntry, YAxis } from '../model/d3-general';
-import { D3Graphs } from './../helper/d3-graphs.service';
-import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
+import { D3Graphs } from '../helper/d3-graphs.service';
+import { D3GraphInterface } from './d3-graph.interface';
 
 export interface D3GraphObserver {
     adjustBackground?(
@@ -54,7 +54,7 @@ export interface D3GraphExtent {
  * </n52-d3-timeseries-graph>
  */
 @Directive()
-export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
+export abstract class D3SeriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
 
     constructor(
         protected graphId: D3GraphId,
@@ -77,7 +77,7 @@ export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestr
         }
     }
 
-    public abstract graphInitialized(graph: D3TimeseriesGraphInterface);
+    public abstract graphInitialized(graph: D3GraphInterface);
 
     public adjustYAxis?(axis: YAxis): void;
 

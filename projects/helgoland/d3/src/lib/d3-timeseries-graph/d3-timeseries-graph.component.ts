@@ -34,6 +34,8 @@ import * as d3 from 'd3';
 import moment, { unitOfTime } from 'moment';
 import { Subscription } from 'rxjs';
 
+import { D3GraphInterface } from '../d3-series-graph/d3-graph.interface';
+import { D3GraphExtent, D3GraphObserver } from '../d3-series-graph/d3-series-graph-control';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
@@ -47,12 +49,7 @@ import { D3GraphId } from './../helper/d3-graph-id.service';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
-import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
-import {
-    D3TimeseriesGraphErrorHandler,
-    D3TimeseriesSimpleGraphErrorHandler,
-} from './d3-timeseries-graph-error-handler.service';
-import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
+import { D3SeriesGraphErrorHandler, D3SeriesSimpleGraphErrorHandler } from './d3-series-graph-error-handler.service';
 
 interface HighlightDataset {
     id: string;
@@ -70,7 +67,7 @@ const TICKS_COUNT_YAXIS = 5;
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
-    implements AfterViewInit, OnDestroy, D3TimeseriesGraphInterface {
+    implements AfterViewInit, OnDestroy, D3GraphInterface {
 
     @Input()
     // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
@@ -150,7 +147,7 @@ export class D3TimeseriesGraphComponent
     };
 
     private graphInteraction: d3.Selection<SVGSVGElement, any, any, any>;
-    
+
     private resizeObserver: ResizeObserver;
 
     constructor(
@@ -169,7 +166,7 @@ export class D3TimeseriesGraphComponent
         protected servicesConnector: HelgolandServicesConnector,
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
         protected zone: NgZone,
-        @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
+        @Optional() protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
         @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
@@ -199,7 +196,7 @@ export class D3TimeseriesGraphComponent
 
         this.addResizeObserver();
     }
-    
+
     private addResizeObserver() {
         this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
         this.resizeObserver.observe(this.d3Elem.nativeElement);

@@ -12,10 +12,10 @@ import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service'
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
 import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
 import { HighlightOutput } from '../../../model/d3-highlight';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
+import { D3GraphInterface } from '../../d3-graph.interface';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 
@@ -34,14 +34,14 @@ interface BarHoverElement extends HoveredElement {
   template: '',
   styleUrls: ['./d3-graph-hover-point.component.scss']
 })
-export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
+export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
-  private d3Graph: D3TimeseriesGraphInterface;
+  private d3Graph: D3GraphInterface;
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private disableHovering: boolean;
@@ -62,7 +62,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphInterface) {
+  public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }

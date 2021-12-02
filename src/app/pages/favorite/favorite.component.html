@@ -8,8 +8,8 @@
     <span>{{favorite.label}}</span>
   </div>
   <div style="height: 300px;" *ngIf="favorite.show">
-    <n52-d3-timeseries-graph [datasetIds]="createDatasetIdsArray(favorite)"
-      [datasetOptions]="createDatasetOptions(favorite)" [timeInterval]="favorite.timespan"></n52-d3-timeseries-graph>
+    <n52-d3-series-graph-wrapper [datasetIds]="createDatasetIdsArray(favorite)"
+      [datasetOptions]="createDatasetOptions(favorite)" [timeInterval]="favorite.timespan"></n52-d3-series-graph-wrapper>
   </div>
   <hr>
 </div>

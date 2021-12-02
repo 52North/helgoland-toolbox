@@ -4,9 +4,9 @@ import { MinMaxRange } from '@helgoland/core';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { YAxis } from '../../../model/d3-general';
-import { D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
+import { D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service';
-import { D3TimeseriesGraphComponent } from './../../d3-timeseries-graph.component';
 
 @Component({
   selector: 'n52-d3-y-axis-modifier',
@@ -14,7 +14,7 @@ import { D3TimeseriesGraphComponent } from './../../d3-timeseries-graph.componen
   styleUrls: ['./d3-y-axis-modifier.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnDestroy {
+export class D3YAxisModifierComponent extends D3SeriesGraphControl implements OnDestroy {
 
   /**
    * Enables shift buttons for every y axis in the corresponding timeseries graph component.
@@ -37,7 +37,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   @Input() shiftFactor = 0.2;
 
   private adjustedRanges: Map<string, MinMaxRange> = new Map();
-  private d3Graph: D3TimeseriesGraphComponent;
+  private d3Graph: D3GraphInterface;
 
   constructor(
     protected graphId: D3GraphId,
@@ -47,7 +47,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
     super(graphId, graphs, graphHelper);
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphComponent) {
+  public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }

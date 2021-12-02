@@ -38,7 +38,7 @@ import {
   LocalStorage,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
-import { D3TimeseriesGraphErrorHandler, HelgolandD3Module } from '@helgoland/d3';
+import { D3SeriesGraphErrorHandler, HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandDatasetlistModule, HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
@@ -197,7 +197,7 @@ export function initApplication(configService: ConfigurationService, translate: 
       useClass: SplittedDataDatasetApiInterface
     },
     {
-      provide: D3TimeseriesGraphErrorHandler,
+      provide: D3SeriesGraphErrorHandler,
       useClass: CustomD3TimeseriesGraphErrorHandler
     },
     {

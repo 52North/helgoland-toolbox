@@ -6,8 +6,8 @@ import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphInterface } from '../../d3-graph.interface';
 
 @Component({
   selector: 'n52-d3-graph-overview-selection',
@@ -15,13 +15,13 @@ import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interfac
   styleUrls: ['./d3-graph-overview-selection.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
+export class D3GraphOverviewSelectionComponent extends D3SeriesGraphControl implements OnChanges {
 
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
   @Input() public selectionTimeInterval: Timespan;
 
   private mousedownBrush: boolean;
-  private graphComp: D3TimeseriesGraphInterface;
+  private graphComp: D3GraphInterface;
   private overview: d3.Selection<SVGSVGElement, any, any, any>;
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private completeTimespan: Timespan;
@@ -41,7 +41,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     }
   }
 
-  public graphInitialized(graph: D3TimeseriesGraphInterface) {
+  public graphInitialized(graph: D3GraphInterface) {
     this.graphComp = graph;
   }
 

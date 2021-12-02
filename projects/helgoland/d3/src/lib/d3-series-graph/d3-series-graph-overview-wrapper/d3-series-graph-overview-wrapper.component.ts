@@ -62,7 +62,10 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
     if (this.presenterOptions) {
       this.presenterOptions.overview = true;
     } else {
-      this.presenterOptions = { overview: true };
+      this.presenterOptions = {
+        overview: true,
+        yaxis: false
+      };
     }
   }
 

@@ -8,20 +8,19 @@ export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-traject
 export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph.component';
 
 export { D3TimeseriesGraphComponent } from './lib/d3-timeseries-graph/d3-timeseries-graph.component';
-export * from './lib/d3-timeseries-graph/d3-timeseries-graph.interface';
 
 export * from './lib/d3-series-graph/d3-series-graph.component';
 export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 export * from './lib/d3-series-graph/d3-series-graph-overview-wrapper/d3-series-graph-overview-wrapper.component';
+export * from './lib/d3-series-graph/d3-graph.interface';
+export * from './lib/d3-series-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
+export * from './lib/d3-series-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
+export * from './lib/d3-series-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
+export * from './lib/d3-series-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
+export * from './lib/d3-series-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+export * from './lib/d3-series-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 
-export * from './lib/d3-timeseries-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
-export * from './lib/d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
-export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
-export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
-export * from './lib/d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
-export * from './lib/d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
-export * from './lib/d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
-
+export * from './lib/d3-timeseries-graph/d3-series-graph-error-handler.service';
 export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
 
 export { AdditionalData, ExtendedDataD3TimeseriesGraphComponent } from './lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';

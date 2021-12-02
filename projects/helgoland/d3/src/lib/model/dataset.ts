@@ -190,27 +190,27 @@ export class DatasetEntry {
         return this._visible;
     }
 
-    setVisible(visible: boolean) {
+    setVisible(visible: boolean, update = true) {
         this._visible = visible;
-        this.stateChangeEvent.emit(this);
+        update && this.stateChangeEvent.emit(this);
     }
 
     get style(): DatasetStyle {
         return this._style;
     }
 
-    setStyle(style: DatasetStyle) {
+    setStyle(style: DatasetStyle, update = true) {
         this._style = style;
-        this.stateChangeEvent.emit(this);
+        update && this.stateChangeEvent.emit(this);
     }
 
     get yAxis(): AxisSettings {
         return this._yaxis;
     }
 
-    setYAxis(yaxis: AxisSettings) {
+    setYAxis(yaxis: AxisSettings, update = true) {
         this._yaxis = yaxis;
-        this.stateChangeEvent.emit(this);
+        update && this.stateChangeEvent.emit(this);
     }
 
     get id(): string {

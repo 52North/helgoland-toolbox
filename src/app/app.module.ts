@@ -19,7 +19,6 @@ import { BasicAuthInformer, BasicAuthService, HelgolandBasicAuthModule } from '@
 import { HelgolandCachingModule } from '@helgoland/caching';
 import { HelgolandControlModule } from '@helgoland/control';
 import {
-  ApiV3InterfaceService,
   DatasetApiInterface,
   DatasetApiV1ConnectorProvider,
   DatasetApiV2ConnectorProvider,
@@ -67,7 +66,7 @@ import { GeometryViewComponent } from './components/geometry-view/geometry-view.
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { TimezoneSelectorComponent } from './components/timezone-selector/timezone-selector.component';
-import { MockedApiV3InterfaceService, MockedDatasetApiV3Connector } from './mocked/mocked';
+import { MockedDatasetApiV3Connector } from './mocked/mocked';
 import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
