@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { DummyDatasetsService } from './services/dummy-datasets.service';
+import { StockDatasetService } from './services/stock-dataset.service';
 
 @Component({
   selector: 'helgoland-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   fullscreen = true;
 
   constructor(
-    private temp: DummyDatasetsService
+    private temp: DummyDatasetsService,
+    // private stock: StockDatasetService
   ) { }
 }
