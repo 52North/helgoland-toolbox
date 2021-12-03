@@ -67,7 +67,6 @@ import { LocalSelectorImplComponent } from './components/local-selector/local-se
 import { StyleModificationComponent } from './components/style-modification/style-modification.component';
 import { TimezoneSelectorComponent } from './components/timezone-selector/timezone-selector.component';
 import { MockedDatasetApiV3Connector } from './mocked/mocked';
-import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { BasicAuthInformerImplService } from './pages/basic-auth-informer-impl.service';
 import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
 import { NoDataEntryComponent } from './pages/diagram-export/no-data-entry/no-data-entry.component';
@@ -125,7 +124,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   declarations: [
-    AdditionalDataGraphComponent,
     AppComponent,
     D3GeneralPopupComponent,
     EventingComponent,

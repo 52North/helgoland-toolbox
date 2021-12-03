@@ -10,19 +10,20 @@ import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3PointSymbolDrawerService } from '../../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
-import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
+import { DataEntry } from '../../../model/d3-general';
 import { HighlightOutput } from '../../../model/d3-highlight';
+import { BarStyle, DatasetEntry, LineStyle } from '../../../model/dataset';
+import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
-import { D3GraphInterface } from '../../d3-graph.interface';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 
 interface HoveredElement {
   selection: d3.Selection<d3.BaseType, any, any, any>;
   dataEntry: DataEntry;
-  internalEntry: InternalDataEntry;
+  dataset: DatasetEntry;
 }
 
 interface BarHoverElement extends HoveredElement {
@@ -45,7 +46,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private disableHovering: boolean;
-  private preparedData: InternalDataEntry[];
+  private datasets: DatasetEntry[];
   private graphExtent: D3GraphExtent;
   private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
   private previousPoint: HoveredElement;
@@ -70,7 +71,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    preparedData: InternalDataEntry[],
+    datasets: DatasetEntry[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
@@ -82,7 +83,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     }
     this.background = background;
     this.graphExtent = graphExtent;
-    this.preparedData = preparedData;
+    this.datasets = datasets;
     this.graphLayer = graph;
   }
 
@@ -131,16 +132,16 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   private highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
-    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, nearestPoint.selection);
+    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, nearestPoint.selection);
     this.hoveringService.positioningPointHovering(
       this.previousPoint.dataEntry.xDiagCoord,
       this.previousPoint.dataEntry.yDiagCoord,
-      this.previousPoint.internalEntry.options.color,
+      this.previousPoint.dataset.style.baseColor,
       this.background
     );
 
     const ids: Map<string, HighlightValue> = new Map();
-    ids.set(this.previousPoint.internalEntry.internalId, {
+    ids.set(this.previousPoint.dataset.id, {
       timestamp: this.previousPoint.dataEntry.timestamp,
       value: this.previousPoint.dataEntry.value
     });
@@ -159,7 +160,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
       nearestBar.previousOpacity = nearestBar.selection.style('fill-opacity');
       elements.push({
         dataEntry: nearestBar.dataEntry,
-        entry: nearestBar.internalEntry,
+        entry: nearestBar.dataset,
         element: nearestBar.selection
       })
       // this.hoveringService.showPointHovering(nearestBar.dataEntry, nearestBar.internalEntry, dataset, nearestBar.selection);
@@ -180,13 +181,13 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   private unhighlight() {
     if (this.previousPoint) {
-      this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, this.previousPoint.selection);
+      this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, this.previousPoint.selection);
       this.previousPoint = null;
     }
     if (this.previousBars.length) {
       for (let i = this.previousBars.length - 1; i >= 0; i--) {
         const bar = this.previousBars[i];
-        this.hoveringService.hidePointHovering(bar.dataEntry, bar.internalEntry, bar.selection);
+        this.hoveringService.hidePointHovering(bar.dataEntry, bar.dataset, bar.selection);
         bar.selection.style('fill-opacity', bar.previousOpacity);
         this.previousBars.splice(i, 1);
       }
@@ -198,19 +199,19 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     let nearest: HoveredElement = null;
     let nearestDist = Infinity;
 
-    this.preparedData.forEach(e => {
-      if (e.options.type === 'line') {
-        const delaunay = Delaunay.from(e.data, d => d.xDiagCoord, d => d.yDiagCoord);
+    this.datasets.forEach((ds, i) => {
+      if (ds.style instanceof LineStyle) {
+        const delaunay = Delaunay.from(ds.data, d => d.xDiagCoord, d => d.yDiagCoord);
         const idx = delaunay.find(x, y);
 
         if (idx != null && !isNaN(idx)) {
-          const datum = e.data[idx];
+          const datum = ds.data[idx] as DataEntry;
           const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
           if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
-            const id = `dot-${datum.timestamp}-${e.hoverId}`;
+            const id = `dot-${datum.timestamp}-${i}`;
             nearest = {
               selection: this.graphLayer.select(`#${id}`),
-              internalEntry: e,
+              dataset: ds,
               dataEntry: datum
             };
             nearestDist = distance;
@@ -223,19 +224,19 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   private findNearestBar(time: number, height: number): BarHoverElement[] {
     const nearest: BarHoverElement[] = [];
-    this.preparedData.every(e => {
-      if (e.options.type === 'bar') {
-        const shiftedTime = moment(time).subtract(e.options.barPeriod).valueOf();
-        const idx = e.data.findIndex(d => d.timestamp > shiftedTime);
-        if (idx > -1 && e.data[idx]) {
-          const id = `bar-${e.data[idx].timestamp}-${e.hoverId}`;
+    this.datasets.every((ds, i) => {
+      if (ds.style instanceof BarStyle) {
+        const shiftedTime = moment(time).subtract(ds.style.period).valueOf();
+        const idx = ds.data.findIndex(d => d.timestamp > shiftedTime);
+        if (idx > -1 && ds.data[idx]) {
+          const id = `bar-${ds.data[idx].timestamp}-${i}`;
           const match = this.graphLayer.select(`#${id}`);
           const barHeight = match.attr('height') && Number.parseFloat(match.attr('height'));
           if (barHeight > height) {
             nearest.push({
               selection: match,
-              internalEntry: e,
-              dataEntry: e.data[idx]
+              dataset: ds,
+              dataEntry: ds.data[idx]
             });
             return true;
           }

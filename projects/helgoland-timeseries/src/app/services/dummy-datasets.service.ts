@@ -57,7 +57,8 @@ export class DummyDatasetsService {
         procedureLabel: null,
         categoryLabel: null,
         firstValue: null,
-        lastValue: null
+        lastValue: null,
+        featureLabel: null
       }
     )
   }

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { PointSymbol, PointSymbolType } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { DataEntry, InternalDataEntry } from '../model/d3-general';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -11,19 +9,7 @@ export class D3PointSymbolDrawerService {
 
   private symbolScaleFactor = 1.75;
 
-  drawSymboleLine(entry: InternalDataEntry, drawPane: d3.Selection<SVGGElement, any, any, any>, additionalSize: number) {
-    drawPane.selectAll('.symbol')
-      .data(entry.data.filter((d) => !isNaN(d.value)))
-      .enter()
-      .append('path')
-      .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
-      .attr('transform', (d) => `translate(${d.xDiagCoord},${d.yDiagCoord})`)
-      .attr('stroke', entry.options.pointBorderColor)
-      .attr('fill', entry.options.color)
-      .attr('d', this.getSymbolPath(entry.options.pointSymbol, entry.selected, additionalSize))
-  }
-
-  private getSymbolPath(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
+  getSymbolPath(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
     let symbolType;
     switch (pointSymbol.type) {
       case PointSymbolType.cross:

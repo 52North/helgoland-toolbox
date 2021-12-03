@@ -7,8 +7,6 @@ export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-traject
 
 export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph.component';
 
-export { D3TimeseriesGraphComponent } from './lib/d3-timeseries-graph/d3-timeseries-graph.component';
-
 export * from './lib/d3-series-graph/d3-series-graph.component';
 export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 export * from './lib/d3-series-graph/d3-series-graph-overview-wrapper/d3-series-graph-overview-wrapper.component';
@@ -21,9 +19,6 @@ export * from './lib/d3-series-graph/controls/d3-graph-overview-selection/d3-gra
 export * from './lib/d3-series-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 
 export * from './lib/d3-timeseries-graph/d3-series-graph-error-handler.service';
-export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
-
-export { AdditionalData, ExtendedDataD3TimeseriesGraphComponent } from './lib/extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
 
 export { ExportImageButtonComponent } from './lib/export-image-button/export-image-button.component';
 

@@ -5,10 +5,10 @@ import { BaseType } from 'd3';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { InternalDataEntry } from '../../../model/d3-general';
 import { D3Copyright } from '../../../model/d3-plot-options';
-import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { DatasetEntry } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -52,7 +52,7 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    preparedData: InternalDataEntry[],
+    preparedData: DatasetEntry[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ): void {

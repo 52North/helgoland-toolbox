@@ -5,9 +5,10 @@ import * as d3 from 'd3';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { DataEntry } from '../../../model/d3-general';
+import { DatasetEntry } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
 interface Label {
   text: d3.Selection<d3.BaseType, any, any, any>;
@@ -35,7 +36,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   private disableHovering: boolean;
   private lastDraw = new Date().getTime();
   private drawLatency = 20;
-  private preparedData: InternalDataEntry[];
+  private datasets: DatasetEntry[];
 
   private labels: Map<string, Label> = new Map();
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
@@ -57,7 +58,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    preparedData: InternalDataEntry[],
+    datasets: DatasetEntry[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
@@ -67,7 +68,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     this.createHoverLine();
     this.background = background;
     this.graphExtent = graphExtent;
-    this.preparedData = preparedData;
+    this.datasets = datasets;
   }
 
   public cleanUp() {
@@ -149,7 +150,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
       const mouse = d3.mouse(this.background.node());
       this.drawLineIndicator(mouse);
       if (this.showLabels) {
-        this.preparedData.forEach((entry, entryIdx) => {
+        this.datasets.forEach((entry, entryIdx) => {
           const idx = this.getItemForX(mouse[0] + this.graphExtent.leftOffset, entry.data);
           this.showLabel(entry, idx, mouse[0], entryIdx);
         });
@@ -204,13 +205,13 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     return entry ? Math.abs(this.graphExtent.xScale(entry.timestamp) - x) : Infinity;
   }
 
-  private showLabel(entry: InternalDataEntry, idx: number, xCoordMouse: number, entryIdx: number) {
+  private showLabel(entry: DatasetEntry, idx: number, xCoordMouse: number, entryIdx: number) {
     const item: DataEntry = entry.data[idx];
 
-    if (!this.labels.has(entry.internalId)) {
+    if (!this.labels.has(entry.id)) {
       this.createLabel(entry);
     }
-    const label = this.labels.get(entry.internalId);
+    const label = this.labels.get(entry.id);
 
     if (item !== undefined && item.yDiagCoord && item.value !== undefined) {
       this.positionLabel(entry, label, item);
@@ -235,7 +236,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     }
   }
 
-  private createLabel(entry: InternalDataEntry) {
+  private createLabel(entry: DatasetEntry) {
     const rect = this.drawLayer.append('svg:rect')
       .attr('class', 'hoverline-label-rect')
       .style('fill', 'white')
@@ -244,9 +245,9 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     const text = this.drawLayer.append('svg:text')
       .attr('class', 'hoverline-label-text')
       .style('pointer-events', 'none')
-      .style('fill', entry.options.color)
+      .style('fill', entry.style.baseColor)
       .style('font-weight', 'lighter');
-    this.labels.set(entry.internalId, { text, rect });
+    this.labels.set(entry.id, { text, rect });
   }
 
   /**
@@ -254,8 +255,8 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
    * @param entry {DataEntry} Object containg the dataset.
    * @param item {DataEntry} Object of the entry in the dataset.
    */
-  private positionLabel(entry: InternalDataEntry, label: Label, item: DataEntry): void {
-    label.text.text(`${item.value} ${(entry.axisOptions.uom ? entry.axisOptions.uom : '')}`);
+  private positionLabel(entry: DatasetEntry, label: Label, item: DataEntry): void {
+    label.text.text(`${item.value} ${(entry.description.uom ? entry.description.uom : '')}`);
 
     const entryX: number = this.checkLeftSide(item.xDiagCoord) ?
       item.xDiagCoord + 4 : item.xDiagCoord - this.graphHelper.getDimensions(label.text.node()).w - 4;

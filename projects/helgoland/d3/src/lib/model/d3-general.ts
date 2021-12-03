@@ -1,6 +1,7 @@
 import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from '@helgoland/core';
 import { ScaleLinear } from 'd3';
 import { Duration, unitOfTime } from 'moment';
+import { DatasetEntry } from './dataset';
 
 // input tyoe for d3-general-graph component
 export interface D3GeneralInput {
@@ -61,37 +62,6 @@ export interface DataEntry {
     yDiagCoord?: number;
 }
 
-export interface InternalDataEntry {
-    internalId: string;
-    hoverId: string;
-    data: DataEntry[];
-    selected?: boolean;
-    options: DatasetOptions;
-    bar?: {
-        startOf: unitOfTime.StartOf;
-        period: Duration;
-    };
-    axisOptions: {
-        uom: string;
-        label?: string;
-        zeroBased?: boolean;
-        yAxisRange?: MinMaxRange;
-        autoRangeSelection?: boolean;
-        separateYAxis?: boolean;
-        parameters?: {
-            feature?: { id: string, label: string };
-            phenomenon?: { id: string, label: string };
-            offering?: { id: string, label: string };
-        };
-    };
-    referenceValueData: {
-        id: string;
-        color: string;
-        data: DataEntry[];
-    }[];
-    visible: boolean;
-}
-
 export interface DataConst extends HelgolandTimeseries {
     data?: Data<TimeValueTuple>;
 }
@@ -131,5 +101,5 @@ export interface YAxisSettings {
     visualMax: number;
     fixedMin: boolean;
     fixedMax: boolean;
-    entry: InternalDataEntry;
+    entry: DatasetEntry;
 }

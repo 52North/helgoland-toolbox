@@ -218,6 +218,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           phenomenonLabel: dataset.parameters.phenomenon.label,
           platformLabel: dataset.platform.label,
           procedureLabel: dataset.parameters.procedure.label,
+          featureLabel: dataset.parameters.feature.label,
           uom: dataset.uom,
           firstValue: dataset.firstValue,
           lastValue: dataset.lastValue

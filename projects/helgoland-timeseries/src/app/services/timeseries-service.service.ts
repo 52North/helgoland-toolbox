@@ -222,6 +222,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
           platformLabel: ts.platform.label,
           procedureLabel: ts.parameters.procedure.label,
           categoryLabel: ts.parameters.category.label,
+          featureLabel: ts.parameters.feature.label,
           firstValue: ts.firstValue,
           lastValue: ts.lastValue
         }

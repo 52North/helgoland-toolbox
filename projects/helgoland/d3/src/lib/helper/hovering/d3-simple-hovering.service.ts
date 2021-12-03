@@ -1,10 +1,12 @@
 import 'moment-timezone';
 
 import { Injectable } from '@angular/core';
-import { HelgolandTimeseries, TimezoneService } from '@helgoland/core';
+import { TimezoneService } from '@helgoland/core';
+import { LineStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
 
-import { DataEntry, InternalDataEntry } from '../../model/d3-general';
+import { DataEntry } from '../../model/d3-general';
+import { DatasetEntry } from '../../model/dataset';
 import { D3PointSymbolDrawerService } from '../d3-point-symbol-drawer.service';
 import { D3GraphHelperService } from './../d3-graph-helper.service';
 import { D3HoveringService, HoveringElement, HoverPosition } from './d3-hovering-service';
@@ -32,28 +34,26 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.anchorElem = elem;
   }
 
-  public hidePointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
+  public hidePointHovering(d: DataEntry, entry: DatasetEntry<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.removeTooltip();
     // unhighlight hovered dot
-    if (!entry.options.pointSymbol || entry.options.type === 'bar') {
-      pointElem
-        .attr('opacity', 1)
-        .attr('r', this.calculatePointRadius(entry));
-    } else {
+    if (entry.style instanceof LineStyle && entry.style.pointSymbol) {
       this.pointSymbolDrawer.hideHovering(pointElem);
+    } else {
+      pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry));
     }
   }
 
-  public showPointHovering(d: DataEntry, entry: InternalDataEntry, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
+  public showPointHovering(d: DataEntry, entry: DatasetEntry<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.tooltipContainer = this.anchorElem.append('g');
     this.highlightRect = this.tooltipContainer.append('svg:rect');
     this.highlightText = this.tooltipContainer.append('g');
 
     // highlight hovered dot
-    if (!entry.options.pointSymbol || entry.options.type === 'bar') {
-      pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
-    } else {
+    if(entry.style instanceof LineStyle && entry.style.pointSymbol) {
       this.pointSymbolDrawer.showHovering(pointElem);
+    } else {
+      pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
     }
 
     this.setHoveringLabel(d, entry);
@@ -83,12 +83,12 @@ export class D3SimpleHoveringService extends D3HoveringService {
       rect.attr('class', 'mouseHoverDotRect')
         .style('fill', 'white')
         .style('fill-opacity', 1)
-        .style('stroke', elem.entry.options.color)
+        .style('stroke', elem.entry.style.baseColor)
         .style('stroke-width', '1px')
         .style('pointer-events', 'none')
       const stringedValue = (typeof elem.dataEntry.value === 'number') ? parseFloat(elem.dataEntry.value.toPrecision(15)).toString() : elem.dataEntry.value;
       const text = this.tooltipContainer.append('text')
-        .text(`${stringedValue} ${elem.entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(elem.dataEntry.timestamp)}`)
+        .text(`${stringedValue} ${elem.entry.description.uom} ${this.timezoneSrvc.formatTzDate(elem.dataEntry.timestamp)}`)
         .attr('class', 'mouseHoverDotLabel')
         .style('pointer-events', 'none')
         .style('fill', 'black')
@@ -133,20 +133,20 @@ export class D3SimpleHoveringService extends D3HoveringService {
     return (background.node().getBBox().width) / 2 > x;
   }
 
-  protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry) {
+  protected setHoveringLabel(d: DataEntry, entry: DatasetEntry) {
     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
     this.highlightText.append('text')
-      .text(`${stringedValue} ${entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
+      .text(`${stringedValue} ${entry.description.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
       .attr('class', 'mouseHoverDotLabel')
       .style('pointer-events', 'none')
       .style('fill', 'black');
   }
 
-  protected calculatePointRadius(entry: InternalDataEntry) {
+  protected calculatePointRadius(entry: DatasetEntry<LineStyle>) {
     if (entry.selected) {
-      return entry.options.pointRadius > 0 ? entry.options.pointRadius + this.addLineWidth : entry.options.pointRadius;
+      return entry.style.pointRadius > 0 ? entry.style.pointRadius + this.addLineWidth : entry.style.pointRadius;
     } else {
-      return entry.options.pointRadius;
+      return entry.style.pointRadius;
     }
   }
 

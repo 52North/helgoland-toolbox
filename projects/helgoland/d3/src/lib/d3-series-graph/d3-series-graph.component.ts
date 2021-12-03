@@ -16,7 +16,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { DatasetOptions, Time, Timespan, TimezoneService } from '@helgoland/core';
+import { Time, Timespan, TimezoneService } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment, { duration, unitOfTime } from 'moment';
@@ -30,7 +30,7 @@ import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.servi
 import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { RangeCalculationsService } from '../helper/range-calculations.service';
-import { DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
+import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { HoveringStyle } from '../model/d3-plot-options';
 import { BarStyle, DatasetEntry, GraphDataEntry, LineStyle } from '../model/dataset';
@@ -128,7 +128,6 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private background: d3.Selection<SVGSVGElement, any, any, any>;
 
     // data types
-    protected preparedData: InternalDataEntry[] = [];
     protected preparedAxes: Map<string, YAxisSettings> = new Map();
     protected listOfUoms: string[] = [];
     /** calculated y axes for the diagram */
@@ -331,22 +330,22 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function that processes the data to calculate y axis range of each dataset.
      * @param entry {DataEntry} Object containing dataset related data.
      */
-    protected processData(entry: InternalDataEntry): void {
+    protected processData(entry: DatasetEntry): void {
         let visualMin: number;
         let visualMax: number;
         let fixedMin = false;
         let fixedMax = false;
 
         // set out of yAxisRange
-        if (entry.axisOptions.yAxisRange) {
+        if (entry.yAxis.range) {
 
-            if (!isNaN(entry.axisOptions.yAxisRange.min)) {
-                visualMin = entry.axisOptions.yAxisRange.min;
+            if (!isNaN(entry.yAxis.range.min)) {
+                visualMin = entry.yAxis.range.min;
                 fixedMin = true;
             }
 
-            if (!isNaN(entry.axisOptions.yAxisRange.max)) {
-                visualMax = entry.axisOptions.yAxisRange.max;
+            if (!isNaN(entry.yAxis.range.max)) {
+                visualMax = entry.yAxis.range.max;
                 fixedMax = true;
             }
 
@@ -359,7 +358,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         // set variable extend bounds
         if (isNaN(visualMin) || isNaN(visualMax)) {
-            const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
+            const baseDataExtent = d3.extent<DataEntry, number>(this.getData(entry), (d) => {
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
@@ -370,7 +369,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 }
             });
 
-            const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
+            const dataExtentRafValues = entry.children.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
             if (isNaN(visualMin)) {
                 visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
@@ -382,7 +381,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
 
         // set out of zeroBasedAxis
-        if (entry.axisOptions.zeroBased) {
+        if (entry.yAxis.zeroBased) {
             if (visualMin > 0) {
                 visualMin = 0;
             }
@@ -391,7 +390,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             }
         }
 
-        this.preparedAxes.set(entry.internalId, {
+        this.preparedAxes.set(entry.id, {
             visualMin,
             visualMax,
             fixedMin,
@@ -455,77 +454,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private prepareDatasets() {
         if (this.datasets && this.datasets.length) {
-            this.preparedData = [];
             this.datasets.forEach(entry => {
                 if (this.getData(entry).length > 0) {
-                    const dataEntry: InternalDataEntry = {
-                        internalId: entry.id,
-                        hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
-                        options: this.createDatasetOptions(entry),
-                        data: entry.visible ? this.getData(entry).map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-                        selected: entry.selected,
-                        axisOptions: {
-                            uom: entry.description.uom,
-                            label: entry.description.uom,
-                            zeroBased: entry.yAxis.zeroBased,
-                            yAxisRange: entry.yAxis.range,
-                            autoRangeSelection: entry.yAxis.autoRangeSelection,
-                            separateYAxis: entry.yAxis.separate,
-                        },
-                        referenceValueData: entry.children.filter(e => e.visible).map(e => ({
-                            id: e.id,
-                            color: e.color,
-                            data: e.data
-                        })),
-                        visible: entry.visible
-                    };
-                    if (entry.style instanceof BarStyle) {
-                        const barStyle = entry.style as BarStyle;
-                        dataEntry.bar = {
-                            startOf: barStyle.startOf,
-                            period: barStyle.period
-                        }
-                    }
-                    this.preparedData.push(dataEntry);
-                    this.processData(dataEntry);
+                    this.processData(entry);
                 }
             });
         }
-    }
-
-    private getData(entry: DatasetEntry): GraphDataEntry[] {
-        if (this.graphOptions.overview) {
-            return entry.overviewData;
-        } else {
-            return entry.data;
-        }
-    }
-
-    // TODO: remove when InternalDataEntry is refactored
-    private createDatasetOptions(entry: DatasetEntry) {
-        const options = new DatasetOptions(entry.id, entry.style.baseColor);
-        options.autoRangeSelection = entry.yAxis.autoRangeSelection;
-        options.yAxisRange = entry.yAxis.range;
-        options.separateYAxis = entry.yAxis.separate;
-        options.zeroBasedYAxis = entry.yAxis.zeroBased;
-        options.color = entry.style.baseColor;
-        if (entry.style instanceof BarStyle) {
-            const barStyle = entry.style as BarStyle;
-            options.type = 'bar';
-            options.barPeriod = barStyle.period.toISOString();
-            options.barStartOf = barStyle.startOf;
-            options.lineDashArray = barStyle.lineDashArray;
-            options.lineWidth = barStyle.lineWidth;
-        }
-        if (entry.style instanceof LineStyle) {
-            const lineStyle = entry.style as LineStyle;
-            options.type = 'line';
-            options.pointRadius = lineStyle.pointRadius;
-            options.pointSymbol = lineStyle.pointSymbol;
-            options.lineDashArray = lineStyle.lineDashArray;
-            options.lineWidth = lineStyle.lineWidth;
-        }
-        return options;
     }
 
     public redrawCompleteGraph() {
@@ -540,9 +474,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     protected redrawGraph(): void {
         if (this.isNotDrawable()) { return; }
 
-        this.preparedData.forEach((entry) => {
-            const idx: number = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
-            if (idx < 0) { this.listOfUoms.push(entry.axisOptions.uom); }
+        this.datasets.forEach((entry) => {
+            const idx: number = this.listOfUoms.findIndex((uom) => uom === entry.description.uom);
+            if (idx < 0) { this.listOfUoms.push(entry.description.uom); }
         });
 
         this.height = this.calculateHeight();
@@ -623,7 +557,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     margin: this.margin,
                     xScale: this.xScaleBase
                 };
-                e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan);
+                e.adjustBackground(this.background, graphExtent, this.datasets, this.graph, this.timespan);
             }
         });
         this.drawBackground();
@@ -661,27 +595,27 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     protected prepareYAxes() {
-        this.datasets.forEach(entry => this.createYAxisForId(entry.id));
+        this.datasets.forEach(entry => entry.visible && this.createYAxisForId(entry.id));
     }
 
     protected createYAxisForId(id: string) {
         if (this.preparedAxes.has(id)) {
             const axisSettings = this.preparedAxes.get(id);
-            if (axisSettings.entry.options.separateYAxis) {
+            if (axisSettings.entry.yAxis.separate) {
                 // create sepearte axis
                 this.yAxes.push({
-                    uom: axisSettings.entry.axisOptions.uom,
+                    uom: axisSettings.entry.description.uom,
                     range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
                     fixedMin: axisSettings.fixedMin,
                     fixedMax: axisSettings.fixedMax,
                     selected: axisSettings.entry.selected,
                     seperate: true,
                     ids: [id],
-                    label: axisSettings.entry.axisOptions.parameters.feature.label
+                    label: axisSettings.entry.description.featureLabel
                 });
             } else {
                 // find matching axis or add new
-                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.description.uom) && !e.seperate);
                 if (axis) {
                     // add id to axis
                     axis.ids.push(id);
@@ -700,7 +634,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     }
                 } else {
                     this.yAxes.push({
-                        uom: axisSettings.entry.axisOptions.uom,
+                        uom: axisSettings.entry.description.uom,
                         range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
                         fixedMin: axisSettings.fixedMin,
                         fixedMax: axisSettings.fixedMax,
@@ -713,81 +647,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    // private addTimespanJumpButtons(): void {
-    //     let dataVisible = false;
-    //     let formerTimestamp = null;
-    //     let laterTimestamp = null;
-    //     if (this.plotOptions.requestBeforeAfterValues) {
-    //         this.preparedData.forEach((entry: InternalDataEntry) => {
-    //             const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e.timestamp && this.timespan.to > e.timestamp) && typeof e.value === 'number');
-    //             if (firstIdxInTimespan < 0) {
-    //                 const lastIdxInTimespan = entry.data.findIndex(e => (e.timestamp > this.timespan.from && e.timestamp > this.timespan.to) && typeof e.value === 'number');
-    //                 if (lastIdxInTimespan >= 0) {
-    //                     laterTimestamp = entry.data[entry.data.length - 1].timestamp;
-    //                 }
-    //                 const temp = entry.data.findIndex(e => (e.timestamp < this.timespan.from && e.timestamp < this.timespan.to) && typeof e.value === 'number');
-    //                 if (temp >= 0) {
-    //                     formerTimestamp = entry.data[entry.data.length - 1].timestamp;
-    //                 }
-    //             } else {
-    //                 dataVisible = true;
-    //             }
-    //         });
-    //     }
-    //     if (!dataVisible) {
-    //         const buttonWidth = 50;
-    //         const leftRight = 15;
-    //         if (formerTimestamp) {
-    //             const g = this.background.append('g');
-    //             g.append('svg:rect')
-    //                 .attr('class', 'formerButton')
-    //                 .attr('width', buttonWidth + 'px')
-    //                 .attr('height', this.height + 'px')
-    //                 .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-    //                 .on('click', () => this.centerTime(formerTimestamp));
-    //             g.append('line')
-    //                 .attr('class', 'arrow')
-    //                 .attr('x1', 0 + this.leftOffset + leftRight + 'px')
-    //                 .attr('y1', this.height / 2 + 'px')
-    //                 .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
-    //                 .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
-    //             g.append('line')
-    //                 .attr('class', 'arrow')
-    //                 .attr('x1', 0 + this.leftOffset + leftRight + 'px')
-    //                 .attr('y1', this.height / 2 + 'px')
-    //                 .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
-    //                 .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
-    //         }
-    //         if (laterTimestamp) {
-    //             const g = this.background.append('g');
-    //             g.append('svg:rect')
-    //                 .attr('class', 'laterButton')
-    //                 .attr('width', '50px')
-    //                 .attr('height', this.height)
-    //                 .attr('transform', 'translate(' + (this.width - 50) + ', 0)')
-    //                 .on('click', () => this.centerTime(laterTimestamp));
-    //             g.append('line')
-    //                 .attr('class', 'arrow')
-    //                 .attr('x1', this.width - leftRight + 'px')
-    //                 .attr('y1', this.height / 2 + 'px')
-    //                 .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
-    //                 .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
-    //             g.append('line')
-    //                 .attr('class', 'arrow')
-    //                 .attr('x1', this.width - leftRight + 'px')
-    //                 .attr('y1', this.height / 2 + 'px')
-    //                 .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
-    //                 .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
-    //         }
-    //     }
-    // }
-
     /**
      * Draws for every preprared data entry the chart.
      */
     protected drawAllCharts(): void {
         this.graph.selectAll('.diagram-path').remove();
-        this.preparedData.forEach((entry) => this.drawChart(entry));
+        this.datasets.forEach((entry, idx) => this.drawChart(entry, idx));
     }
 
     /**
@@ -1024,11 +889,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 axis.ids.forEach((entryID) => {
                     const ds = this.datasets.find(e => e.id === entryID);
                     if (ds && ds.yAxis.showSymbolOnAxis) {
-                        const dataentry = this.preparedData.find(el => el.internalId === entryID);
-                        if (dataentry) {
-                            if (dataentry.options.type) {
-                                this.graphHelper.drawDatasetSign(this.graph, this.graphHelper.convertDatasetOptions(dataentry.options), startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
-                            }
+                        const dataentry = this.datasets.find(el => el.id === entryID);
+                        if (dataentry && dataentry.style) {
+                            this.graphHelper.drawDatasetSign(this.graph, dataentry.style, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
                             pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                         }
                     }
@@ -1068,11 +931,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private highlightAxis(axis: YAxis): void {
         const selection = !axis.selected;
         axis.ids.forEach(id => {
-            const entry = this.preparedData.find(e => e.internalId === id);
-            entry.selected = selection;
+            const entry = this.datasets.find(e => e.id === id);
+            // TODO: maybe with update false
+            entry.setSelected(selection);
         })
         this.redrawGraph();
-        const list = this.preparedData.filter(e => e.selected).map(e => e.internalId);
+        const list = this.datasets.filter(e => e.selected).map(e => e.id);
         this.datasetsSelected.emit(list);
         this.datasets.forEach(ds => ds.setSelected(list.findIndex(e => e === ds.id) >= 0, false));
     }
@@ -1081,9 +945,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function to draw the graph line for each dataset.
      * @param entry {DataEntry} Object containing a dataset.
      */
-    protected drawChart(entry: InternalDataEntry): void {
-        if (entry.data.length > 0) {
-            const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.internalId) >= 0);
+    protected drawChart(entry: DatasetEntry, idx: number): void {
+        if (this.getData(entry).length > 0 && entry.visible) {
+            const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.id) >= 0);
             if (yaxis) {
                 // create body to clip graph
                 // unique ID generated through the current time (current time when initialized)
@@ -1103,12 +967,14 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     .attr('class', 'diagram-path')
                     .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
-                if (entry.options.type === 'bar') {
-                    this.drawBarChart(entry, yaxis.yScale);
-                } else {
-                    // draw ref value line
-                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale));
-                    this.drawLineChart(entry, yaxis.yScale);
+                switch (entry.style.constructor) {
+                    case BarStyle:
+                        this.drawBarChart(entry as DatasetEntry<BarStyle>, idx, yaxis.yScale);    
+                        break;
+                    case LineStyle:
+                        entry.children.forEach(e => e.visible && this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
+                        this.drawLineChart(entry as DatasetEntry<LineStyle>, idx, yaxis.yScale);    
+                        break;
                 }
             }
         }
@@ -1127,34 +993,52 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .attr('d', line);
     }
 
-    private drawLineChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
-        const pointRadius = this.calculatePointRadius(entry); 0
+    private getData(entry: DatasetEntry): GraphDataEntry[] {
+        if (this.graphOptions.overview) {
+            return entry.overviewData;
+        } else {
+            return entry.data;
+        }
+    }
+
+    private drawLineChart(ds: DatasetEntry<LineStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
+        const pointRadius = this.calculatePointRadius(ds); 0
+
+        const data = this.getData(ds);
 
         // create graph line
         const line = this.createLine(this.xScaleBase, yScaleBase);
         // draw line
         this.graphBody
             .append('svg:path')
-            .datum(entry.data)
+            .datum(data)
             .attr('class', 'line')
             .attr('fill', 'none')
-            .attr('stroke-dasharray', entry.options.lineDashArray)
-            .attr('stroke', entry.options.color)
-            .attr('stroke-width', this.calculateLineWidth(entry))
+            .attr('stroke-dasharray', ds.style.lineDashArray)
+            .attr('stroke', ds.style.baseColor)
+            .attr('stroke-width', this.calculateLineWidth(ds))
             .attr('d', line);
 
         // draw line dots
-        if (entry.options.pointSymbol) {
-            this.pointSymbolDrawer.drawSymboleLine(entry, this.graphBody, this.addLineWidth);
+        if (ds.style.pointSymbol) {
+            this.graphBody.selectAll('.symbol')
+                .data(data.filter((d) => !isNaN(d.value)))
+                .enter()
+                .append('path')
+                .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + idx)
+                .attr('transform', (de: DataEntry, idx, data) => `translate(${line.x()(de, idx, data)},${line.y()(de, idx, data)})`)
+                .attr('stroke', ds.style.pointBorderColor)
+                .attr('fill', ds.style.baseColor)
+                .attr('d', this.pointSymbolDrawer.getSymbolPath(ds.style.pointSymbol, ds.selected, this.addLineWidth))
         } else {
             this.graphBody.selectAll('.graphDots')
-                .data(entry.data.filter((d) => !isNaN(d.value)))
+                .data(data.filter((d) => !isNaN(d.value)))
                 .enter().append('circle')
                 .attr('class', 'graphDots')
-                .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId)
-                .attr('stroke', entry.options.pointBorderColor)
-                .attr('stroke-width', entry.options.pointBorderWidth)
-                .attr('fill', entry.options.color)
+                .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + idx)
+                .attr('stroke', ds.style.pointBorderColor)
+                .attr('stroke-width', ds.style.pointBorderWidth)
+                .attr('fill', ds.style.baseColor)
                 .attr('cx', line.x())
                 .attr('cy', line.y())
                 .attr('r', pointRadius);
@@ -1162,20 +1046,20 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     }
 
-    private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
+    private drawBarChart(ds: DatasetEntry<BarStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
         const paddingAfter = 1;
-        const periodInMs = entry.bar.period.asMilliseconds();
+        const periodInMs = ds.style.period.asMilliseconds();
 
-        const bars = this.graphBody.selectAll('.bar')
-            .data(entry.data)
+        this.graphBody.selectAll('.bar')
+            .data(this.getData(ds))
             .enter().append('rect')
             .attr('class', 'bar')
-            .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + entry.hoverId)
-            .style('fill', entry.options.color)
-            .style('stroke-dasharray', entry.options.lineDashArray)
-            .style('stroke', entry.options.color)
-            .style('stroke-width', this.calculateLineWidth(entry))
+            .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + idx)
+            .style('fill', ds.style.baseColor)
+            .style('stroke-dasharray', ds.style.lineDashArray)
+            .style('stroke', ds.style.baseColor)
+            .style('stroke-width', this.calculateLineWidth(ds))
             .style('fill-opacity', 0.5)
             .attr('x', (d: DataEntry) => this.xScaleBase(d.timestamp) + paddingBefore)
             .attr('width', (d: DataEntry) => {
@@ -1258,19 +1142,19 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .substring(1);
     }
 
-    private calculateLineWidth(entry: InternalDataEntry): number {
-        if (entry.selected) {
-            return entry.options.lineWidth + this.addLineWidth;
+    private calculateLineWidth(ds: DatasetEntry): number {
+        if (ds.selected) {
+            return ds.style.lineWidth + this.addLineWidth;
         } else {
-            return entry.options.lineWidth;
+            return ds.style.lineWidth;
         }
     }
 
-    private calculatePointRadius(entry: InternalDataEntry) {
-        if (entry.selected) {
-            return entry.options.pointRadius > 0 ? entry.options.pointRadius + this.addLineWidth : entry.options.pointRadius;
+    private calculatePointRadius(ds: DatasetEntry<LineStyle>) {
+        if (ds.selected) {
+            return ds.style.pointRadius > 0 ? ds.style.pointRadius + this.addLineWidth : ds.style.pointRadius;
         } else {
-            return entry.options.pointRadius;
+            return ds.style.pointRadius;
         }
     }
 

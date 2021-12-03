@@ -3,15 +3,16 @@ import { Timespan } from '@helgoland/core';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
-import { InternalDataEntry, YAxis } from '../model/d3-general';
 import { D3Graphs } from '../helper/d3-graphs.service';
+import { YAxis } from '../model/d3-general';
+import { DatasetEntry } from '../model/dataset';
 import { D3GraphInterface } from './d3-graph.interface';
 
 export interface D3GraphObserver {
     adjustBackground?(
         background: d3.Selection<SVGSVGElement, any, any, any>,
         graphExtent: D3GraphExtent,
-        preparedData: InternalDataEntry[],
+        preparedData: DatasetEntry[],
         graph: d3.Selection<SVGSVGElement, any, any, any>,
         timespan: Timespan
     ): void;

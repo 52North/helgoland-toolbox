@@ -64,6 +64,7 @@ export class SandboxComponent implements OnInit {
             phenomenonLabel: 'phenomenon',
             platformLabel: 'platform',
             procedureLabel: 'procedure',
+            featureLabel: 'feature',
             uom: 'random'
         }
 
@@ -105,6 +106,7 @@ export class SandboxComponent implements OnInit {
                 phenomenonLabel: ds.parameters.phenomenon.label,
                 platformLabel: ds.platform.label,
                 procedureLabel: ds.parameters.procedure.label,
+                featureLabel: ds.parameters.feature.label,
                 uom: ds.uom
             }
             const datasetData = new DatasetEntry(id, style, yaxis, true, false, description);

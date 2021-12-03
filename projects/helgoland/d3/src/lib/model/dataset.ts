@@ -24,6 +24,8 @@ export class LineStyle extends DatasetStyle {
         public lineWidth: number = 1,
         public pointSymbol?: PointSymbol,
         public lineDashArray?: number | number[],
+        public pointBorderColor: string = baseColor,
+        public pointBorderWidth: number = 1
     ) {
         super(baseColor, lineWidth);
     }
@@ -84,6 +86,7 @@ export interface DatasetDescription {
     platformLabel: string;
     procedureLabel: string;
     categoryLabel: string;
+    featureLabel: string;
     firstValue: FirstLastValue;
     lastValue: FirstLastValue;
 }
@@ -137,7 +140,7 @@ export class DatasetChild {
 
 }
 
-export class DatasetEntry {
+export class DatasetEntry<T extends DatasetStyle = DatasetStyle> {
 
     private _data: GraphDataEntry[] = [];
     private _dataLoading: boolean = false;
@@ -147,14 +150,14 @@ export class DatasetEntry {
 
     private _children: DatasetChild[] = [];
 
-    public stateChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
-    public dataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
-    public overviewDataChangeEvent: EventEmitter<DatasetEntry> = new EventEmitter();
-    public deleteEvent: EventEmitter<DatasetEntry> = new EventEmitter();
+    public stateChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
+    public dataChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
+    public overviewDataChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
+    public deleteEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
 
     constructor(
         private _id: string,
-        private _style: DatasetStyle,
+        private _style: T,
         private _yaxis: AxisSettings,
         private _visible: boolean,
         private _selected: boolean,
@@ -195,11 +198,11 @@ export class DatasetEntry {
         update && this.stateChangeEvent.emit(this);
     }
 
-    get style(): DatasetStyle {
+    get style(): T {
         return this._style;
     }
 
-    setStyle(style: DatasetStyle, update = true) {
+    setStyle(style: T, update = true) {
         this._style = style;
         update && this.stateChangeEvent.emit(this);
     }

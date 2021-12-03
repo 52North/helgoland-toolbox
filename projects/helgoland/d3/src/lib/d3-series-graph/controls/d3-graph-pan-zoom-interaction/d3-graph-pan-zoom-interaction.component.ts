@@ -5,9 +5,9 @@ import * as d3 from 'd3';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { DatasetEntry } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
+import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
 @Component({
   selector: 'n52-d3-graph-pan-zoom-interaction',
@@ -39,7 +39,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
   private graphExtent: D3GraphExtent;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private graph: d3.Selection<SVGSVGElement, any, any, any>;
-  private preparedData: InternalDataEntry[];
+  private datasets: DatasetEntry[];
 
   constructor(
     protected graphId: D3GraphId,
@@ -56,7 +56,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    preparedData: InternalDataEntry[],
+    datasets: DatasetEntry[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
@@ -64,7 +64,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
     this.graphExtent = graphExtent;
     this.background = background;
     this.graph = graph;
-    this.preparedData = preparedData;
+    this.datasets = datasets;
   }
 
   public zoomStartBackground() {
@@ -76,7 +76,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
   }
 
   public zoomEndBackground() {
-    this.zoomEndHandler(this.timespan, this.graphExtent, this.preparedData);
+    this.zoomEndHandler(this.timespan, this.graphExtent, this.datasets);
   }
 
   public dragStartBackground() {
