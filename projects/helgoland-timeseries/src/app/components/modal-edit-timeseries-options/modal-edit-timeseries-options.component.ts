@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
-import { AxisSettings, DatasetEntry, DatasetStyle, LineStyle } from '@helgoland/d3';
+import { AxisSettings, SeriesGraphDataset, DatasetStyle, LineStyle } from '@helgoland/d3';
 
 import { ConfigurationService } from './../../services/configuration.service';
 
@@ -21,7 +21,7 @@ export class ModalEditTimeseriesOptionsComponent {
   constructor(
     public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      dataset: DatasetEntry,
+      dataset: SeriesGraphDataset,
       handler: EventEmitter<void>
     },
     public config: ConfigurationService

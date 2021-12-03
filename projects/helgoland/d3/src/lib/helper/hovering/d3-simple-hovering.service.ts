@@ -6,7 +6,7 @@ import { LineStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
 
 import { DataEntry } from '../../model/d3-general';
-import { DatasetEntry } from '../../model/dataset';
+import { SeriesGraphDataset } from '../../model/dataset';
 import { D3PointSymbolDrawerService } from '../d3-point-symbol-drawer.service';
 import { D3GraphHelperService } from './../d3-graph-helper.service';
 import { D3HoveringService, HoveringElement, HoverPosition } from './d3-hovering-service';
@@ -34,7 +34,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.anchorElem = elem;
   }
 
-  public hidePointHovering(d: DataEntry, entry: DatasetEntry<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
+  public hidePointHovering(d: DataEntry, entry: SeriesGraphDataset<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.removeTooltip();
     // unhighlight hovered dot
     if (entry.style instanceof LineStyle && entry.style.pointSymbol) {
@@ -44,7 +44,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showPointHovering(d: DataEntry, entry: DatasetEntry<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
+  public showPointHovering(d: DataEntry, entry: SeriesGraphDataset<LineStyle>, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
     this.tooltipContainer = this.anchorElem.append('g');
     this.highlightRect = this.tooltipContainer.append('svg:rect');
     this.highlightText = this.tooltipContainer.append('g');
@@ -133,7 +133,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     return (background.node().getBBox().width) / 2 > x;
   }
 
-  protected setHoveringLabel(d: DataEntry, entry: DatasetEntry) {
+  protected setHoveringLabel(d: DataEntry, entry: SeriesGraphDataset) {
     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
     this.highlightText.append('text')
       .text(`${stringedValue} ${entry.description.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
@@ -142,7 +142,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
       .style('fill', 'black');
   }
 
-  protected calculatePointRadius(entry: DatasetEntry<LineStyle>) {
+  protected calculatePointRadius(entry: SeriesGraphDataset<LineStyle>) {
     if (entry.selected) {
       return entry.style.pointRadius > 0 ? entry.style.pointRadius + this.addLineWidth : entry.style.pointRadius;
     } else {

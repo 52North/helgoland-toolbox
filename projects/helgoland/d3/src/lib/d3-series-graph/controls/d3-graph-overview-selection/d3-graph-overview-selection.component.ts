@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { DatasetEntry } from '../../../model/dataset';
+import { SeriesGraphDataset } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
@@ -48,7 +48,7 @@ export class D3GraphOverviewSelectionComponent extends D3SeriesGraphControl impl
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    preparedData: DatasetEntry[],
+    preparedData: SeriesGraphDataset[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {

@@ -12,7 +12,7 @@ import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service'
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
 import { DataEntry } from '../../../model/d3-general';
 import { HighlightOutput } from '../../../model/d3-highlight';
-import { BarStyle, DatasetEntry, LineStyle } from '../../../model/dataset';
+import { BarStyle, SeriesGraphDataset, LineStyle } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
@@ -23,7 +23,7 @@ const MAXIMUM_POINT_DISTANCE = 10;
 interface HoveredElement {
   selection: d3.Selection<d3.BaseType, any, any, any>;
   dataEntry: DataEntry;
-  dataset: DatasetEntry;
+  dataset: SeriesGraphDataset;
 }
 
 interface BarHoverElement extends HoveredElement {
@@ -46,7 +46,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
   private background: d3.Selection<SVGSVGElement, any, any, any>;
   private disableHovering: boolean;
-  private datasets: DatasetEntry[];
+  private datasets: SeriesGraphDataset[];
   private graphExtent: D3GraphExtent;
   private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
   private previousPoint: HoveredElement;
@@ -71,7 +71,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    datasets: DatasetEntry[],
+    datasets: SeriesGraphDataset[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {

@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Time, Timespan, TimezoneService } from '@helgoland/core';
-import { DatasetEntry } from '@helgoland/d3';
+import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
@@ -14,7 +14,7 @@ export class DatasetsService {
 
   public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
-  public datasets: DatasetEntry[] = [];
+  public datasets: SeriesGraphDataset[] = [];
 
   private _timespan: Timespan;
 
@@ -55,7 +55,7 @@ export class DatasetsService {
     return this.getDatasetEntryIndex(id) >= 0;
   }
 
-  addOrUpdateDataset(dataset: DatasetEntry) {
+  addOrUpdateDataset(dataset: SeriesGraphDataset) {
     const datasetIdx = this.getDatasetEntryIndex(dataset.id);
     if (datasetIdx >= 0) {
       this.datasets[datasetIdx] = dataset;
@@ -104,7 +104,7 @@ export class DatasetsService {
     return this.datasets.findIndex(e => e.id === id);
   }
 
-  getDatasetEntry(id: string): DatasetEntry {
+  getDatasetEntry(id: string): SeriesGraphDataset {
     return this.datasets.find(e => e.id === id);
   }
 

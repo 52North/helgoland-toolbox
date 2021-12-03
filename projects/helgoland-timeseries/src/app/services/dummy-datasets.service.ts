@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AxisSettings, DatasetChild, DatasetEntry, LineStyle } from '@helgoland/d3';
+import { AxisSettings, DatasetChild, SeriesGraphDataset, LineStyle } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
 
@@ -7,7 +7,7 @@ import { DatasetsService } from './graph-datasets.service';
   providedIn: 'root'
 })
 export class DummyDatasetsService {
-  dummyDataset: DatasetEntry;
+  dummyDataset: SeriesGraphDataset;
 
   constructor(
     protected graphDatasetsSrvc: DatasetsService,
@@ -47,8 +47,8 @@ export class DummyDatasetsService {
     return Math.floor(Math.random() * 10);
   }
 
-  private createNewDataset(id: string, color: string): DatasetEntry {
-    return new DatasetEntry(
+  private createNewDataset(id: string, color: string): SeriesGraphDataset {
+    return new SeriesGraphDataset(
       id, new LineStyle(color, 3, 3), new AxisSettings(), true, false,
       {
         uom: 'rnd',

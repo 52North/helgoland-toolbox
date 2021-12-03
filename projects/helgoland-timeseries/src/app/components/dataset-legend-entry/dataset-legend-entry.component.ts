@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Time, TimeInterval } from '@helgoland/core';
-import { DatasetEntry } from '@helgoland/d3';
+import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
@@ -20,7 +20,7 @@ export class DatasetLegendEntryComponent implements OnChanges {
   // loading = false;
   //
 
-  @Input() dataset: DatasetEntry;
+  @Input() dataset: SeriesGraphDataset;
 
   @Input() selected: boolean;
 

@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { DatasetEntry } from '@helgoland/d3';
+import { SeriesGraphDataset } from '@helgoland/d3';
 
 import { Favorite } from './favorite.service';
 
@@ -18,7 +18,7 @@ export interface DatasetFavoriteService {
     getFavorites(): Favorite[];
     isFavorite(id: string): boolean;
     getFavorite(id: string): Favorite;
-    createFavorite(ds: DatasetEntry): Favorite;
+    createFavorite(ds: SeriesGraphDataset): Favorite;
     removeFavorite(id: string);
 }
 

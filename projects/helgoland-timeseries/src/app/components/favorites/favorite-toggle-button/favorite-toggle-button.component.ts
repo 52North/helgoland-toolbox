@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DatasetEntry } from '@helgoland/d3';
+import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SNACK_BAR_CONFIG } from '../../../app.consts';
@@ -14,7 +14,7 @@ import { FavoriteService } from '../../../services/favorite.service';
 })
 export class FavoriteToggleButtonComponent implements OnInit {
 
-  @Input() dataset: DatasetEntry;
+  @Input() dataset: SeriesGraphDataset;
 
   isFavorite = false;
   canBeFavorite = false;

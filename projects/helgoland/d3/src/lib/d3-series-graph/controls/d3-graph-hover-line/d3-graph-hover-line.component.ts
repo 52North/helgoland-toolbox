@@ -6,7 +6,7 @@ import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry } from '../../../model/d3-general';
-import { DatasetEntry } from '../../../model/dataset';
+import { SeriesGraphDataset } from '../../../model/dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
@@ -36,7 +36,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   private disableHovering: boolean;
   private lastDraw = new Date().getTime();
   private drawLatency = 20;
-  private datasets: DatasetEntry[];
+  private datasets: SeriesGraphDataset[];
 
   private labels: Map<string, Label> = new Map();
   private drawLayer: d3.Selection<SVGGElement, any, any, any>;
@@ -58,7 +58,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   public adjustBackground(
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent,
-    datasets: DatasetEntry[],
+    datasets: SeriesGraphDataset[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
@@ -205,7 +205,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     return entry ? Math.abs(this.graphExtent.xScale(entry.timestamp) - x) : Infinity;
   }
 
-  private showLabel(entry: DatasetEntry, idx: number, xCoordMouse: number, entryIdx: number) {
+  private showLabel(entry: SeriesGraphDataset, idx: number, xCoordMouse: number, entryIdx: number) {
     const item: DataEntry = entry.data[idx];
 
     if (!this.labels.has(entry.id)) {
@@ -236,7 +236,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     }
   }
 
-  private createLabel(entry: DatasetEntry) {
+  private createLabel(entry: SeriesGraphDataset) {
     const rect = this.drawLayer.append('svg:rect')
       .attr('class', 'hoverline-label-rect')
       .style('fill', 'white')
@@ -255,7 +255,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
    * @param entry {DataEntry} Object containg the dataset.
    * @param item {DataEntry} Object of the entry in the dataset.
    */
-  private positionLabel(entry: DatasetEntry, label: Label, item: DataEntry): void {
+  private positionLabel(entry: SeriesGraphDataset, label: Label, item: DataEntry): void {
     label.text.text(`${item.value} ${(entry.description.uom ? entry.description.uom : '')}`);
 
     const entryX: number = this.checkLeftSide(item.xDiagCoord) ?

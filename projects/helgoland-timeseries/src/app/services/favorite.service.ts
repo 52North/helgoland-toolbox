@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { DatasetDescription, DatasetEntry } from '@helgoland/d3';
+import { DatasetDescription, SeriesGraphDataset } from '@helgoland/d3';
 import { BehaviorSubject } from 'rxjs';
 
 import { DATASET_FAVORITE_SERVICE_INJECTION, DatasetFavoriteService } from './service-interfaces';
@@ -37,7 +37,7 @@ export class FavoriteService {
     this.updateFavCount();
   }
 
-  createFavorite(dataset: DatasetEntry) {
+  createFavorite(dataset: SeriesGraphDataset) {
     const favorite = this.findService(dataset.id).createFavorite(dataset);
     this.updateFavCount();
   }

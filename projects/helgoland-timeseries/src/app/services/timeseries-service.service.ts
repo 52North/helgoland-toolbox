@@ -18,7 +18,7 @@ import {
   D3SeriesGraphErrorHandler,
   D3SeriesSimpleGraphErrorHandler,
   DatasetChild,
-  DatasetEntry,
+  SeriesGraphDataset,
   DatasetStyle,
   GraphDataEntry,
   LineStyle,
@@ -136,7 +136,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
     return this.favorites[this.createFavoriteID(id)].favorite;
   }
 
-  createFavorite(ds: DatasetEntry): Favorite {
+  createFavorite(ds: SeriesGraphDataset): Favorite {
     const favState: FavoriteSaveState = {
       favorite: {
         id: this.createFavoriteID(ds.id),
@@ -210,7 +210,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
       this.datasetMap.set(ts.internalId, ts);
       const style = dsStyle ? dsStyle : this.createStyle(ts);
       const yaxis = dsAxis ? dsAxis : this.createYAxis(ts);
-      const dataset = new DatasetEntry(
+      const dataset = new SeriesGraphDataset(
         ts.internalId,
         style,
         yaxis,
@@ -394,7 +394,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
     }
   }
 
-  private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
+  private addReferenceValueDatasets(ds: SeriesGraphDataset, rawdata: HelgolandTimeseriesData) {
     if (ds.children && ds.children.length) {
       ds.children.forEach(child => {
         const refVals = rawdata.referenceValues[child.id];

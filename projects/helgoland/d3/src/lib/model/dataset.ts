@@ -140,7 +140,7 @@ export class DatasetChild {
 
 }
 
-export class DatasetEntry<T extends DatasetStyle = DatasetStyle> {
+export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
     private _data: GraphDataEntry[] = [];
     private _dataLoading: boolean = false;
@@ -150,10 +150,10 @@ export class DatasetEntry<T extends DatasetStyle = DatasetStyle> {
 
     private _children: DatasetChild[] = [];
 
-    public stateChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
-    public dataChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
-    public overviewDataChangeEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
-    public deleteEvent: EventEmitter<DatasetEntry<T>> = new EventEmitter();
+    public stateChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
+    public dataChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
+    public overviewDataChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
+    public deleteEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
 
     constructor(
         private _id: string,

@@ -1,7 +1,7 @@
-import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from '@helgoland/core';
+import { Data, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from '@helgoland/core';
 import { ScaleLinear } from 'd3';
-import { Duration, unitOfTime } from 'moment';
-import { DatasetEntry } from './dataset';
+
+import { SeriesGraphDataset } from './dataset';
 
 // input tyoe for d3-general-graph component
 export interface D3GeneralInput {
@@ -101,5 +101,5 @@ export interface YAxisSettings {
     visualMax: number;
     fixedMin: boolean;
     fixedMax: boolean;
-    entry: DatasetEntry;
+    entry: SeriesGraphDataset;
 }

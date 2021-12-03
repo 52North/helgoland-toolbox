@@ -20,7 +20,7 @@ import {
     D3PointSymbolDrawerService,
     D3SimpleHoveringService,
     DataEntry,
-    DatasetEntry,
+    SeriesGraphDataset,
     HighlightOutput,
     HoveringStyle,
 } from '@helgoland/d3';
@@ -33,7 +33,7 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(d: DataEntry, entry: DatasetEntry) {
+    protected setHoveringLabel(d: DataEntry, entry: SeriesGraphDataset) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
         const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
         this.highlightText.append('text')

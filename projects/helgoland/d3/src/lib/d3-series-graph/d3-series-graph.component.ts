@@ -33,7 +33,7 @@ import { RangeCalculationsService } from '../helper/range-calculations.service';
 import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { HighlightOutput } from '../model/d3-highlight';
 import { HoveringStyle } from '../model/d3-plot-options';
-import { BarStyle, DatasetEntry, GraphDataEntry, LineStyle } from '../model/dataset';
+import { BarStyle, SeriesGraphDataset, GraphDataEntry, LineStyle } from '../model/dataset';
 import { D3GraphInterface } from './d3-graph.interface';
 import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 
@@ -95,8 +95,8 @@ interface DatasetEventSubscriptions {
 export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck, OnInit, D3GraphInterface {
 
     @Input()
-    public datasets: DatasetEntry[] = [];
-    private datasetsDiffer: IterableDiffer<DatasetEntry>;
+    public datasets: SeriesGraphDataset[] = [];
+    private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
 
     @Input()
     public timespan: Timespan;
@@ -230,7 +230,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    private subscribeEvents(ds: DatasetEntry) {
+    private subscribeEvents(ds: SeriesGraphDataset) {
         let dataSubscription: Subscription;
         if (this.graphOptions.overview) {
             dataSubscription = ds.overviewDataChangeEvent.subscribe(() => {
@@ -251,7 +251,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.subscriptions.set(ds.id, events);
     }
 
-    private unsubscribeEvents(item: DatasetEntry) {
+    private unsubscribeEvents(item: SeriesGraphDataset) {
         if (this.subscriptions.has(item.id)) {
             this.subscriptions.get(item.id).state.unsubscribe();
             this.subscriptions.get(item.id).data.unsubscribe();
@@ -330,7 +330,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function that processes the data to calculate y axis range of each dataset.
      * @param entry {DataEntry} Object containing dataset related data.
      */
-    protected processData(entry: DatasetEntry): void {
+    protected processData(entry: SeriesGraphDataset): void {
         let visualMin: number;
         let visualMax: number;
         let fixedMin = false;
@@ -945,7 +945,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function to draw the graph line for each dataset.
      * @param entry {DataEntry} Object containing a dataset.
      */
-    protected drawChart(entry: DatasetEntry, idx: number): void {
+    protected drawChart(entry: SeriesGraphDataset, idx: number): void {
         if (this.getData(entry).length > 0 && entry.visible) {
             const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.id) >= 0);
             if (yaxis) {
@@ -969,11 +969,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
                 switch (entry.style.constructor) {
                     case BarStyle:
-                        this.drawBarChart(entry as DatasetEntry<BarStyle>, idx, yaxis.yScale);    
+                        this.drawBarChart(entry as SeriesGraphDataset<BarStyle>, idx, yaxis.yScale);    
                         break;
                     case LineStyle:
                         entry.children.forEach(e => e.visible && this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
-                        this.drawLineChart(entry as DatasetEntry<LineStyle>, idx, yaxis.yScale);    
+                        this.drawLineChart(entry as SeriesGraphDataset<LineStyle>, idx, yaxis.yScale);    
                         break;
                 }
             }
@@ -993,7 +993,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .attr('d', line);
     }
 
-    private getData(entry: DatasetEntry): GraphDataEntry[] {
+    private getData(entry: SeriesGraphDataset): GraphDataEntry[] {
         if (this.graphOptions.overview) {
             return entry.overviewData;
         } else {
@@ -1001,7 +1001,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    private drawLineChart(ds: DatasetEntry<LineStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
+    private drawLineChart(ds: SeriesGraphDataset<LineStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
         const pointRadius = this.calculatePointRadius(ds); 0
 
         const data = this.getData(ds);
@@ -1046,7 +1046,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     }
 
-    private drawBarChart(ds: DatasetEntry<BarStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
+    private drawBarChart(ds: SeriesGraphDataset<BarStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
         const paddingAfter = 1;
         const periodInMs = ds.style.period.asMilliseconds();
@@ -1142,7 +1142,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .substring(1);
     }
 
-    private calculateLineWidth(ds: DatasetEntry): number {
+    private calculateLineWidth(ds: SeriesGraphDataset): number {
         if (ds.selected) {
             return ds.style.lineWidth + this.addLineWidth;
         } else {
@@ -1150,7 +1150,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
     }
 
-    private calculatePointRadius(ds: DatasetEntry<LineStyle>) {
+    private calculatePointRadius(ds: SeriesGraphDataset<LineStyle>) {
         if (ds.selected) {
             return ds.style.pointRadius > 0 ? ds.style.pointRadius + this.addLineWidth : ds.style.pointRadius;
         } else {

@@ -13,7 +13,7 @@ import {
     D3Copyright,
     D3SeriesGraphOptions,
     DatasetDescription,
-    DatasetEntry,
+    SeriesGraphDataset,
     HoveringStyle,
     LineStyle,
 } from '@helgoland/d3';
@@ -24,7 +24,7 @@ import {
 })
 export class SandboxComponent implements OnInit {
 
-    public datasets: DatasetEntry[] = [];
+    public datasets: SeriesGraphDataset[] = [];
     public timespan: Timespan = this.definedTsSrvc.getInterval(DefinedTimespan.TODAY);
 
     public copyright: D3Copyright = {
@@ -68,7 +68,7 @@ export class SandboxComponent implements OnInit {
             uom: 'random'
         }
 
-        this.datasets = [new DatasetEntry('temp', style, yaxis, true, false, description)]
+        this.datasets = [new SeriesGraphDataset('temp', style, yaxis, true, false, description)]
         this.loadDataset();
     }
 
@@ -109,7 +109,7 @@ export class SandboxComponent implements OnInit {
                 featureLabel: ds.parameters.feature.label,
                 uom: ds.uom
             }
-            const datasetData = new DatasetEntry(id, style, yaxis, true, false, description);
+            const datasetData = new SeriesGraphDataset(id, style, yaxis, true, false, description);
             datasetData.setData(data.values.map(e => {
                 return {
                     timestamp: e[0],

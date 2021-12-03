@@ -39,7 +39,7 @@ import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
 import { HighlightOutput } from '../../model/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
-import { AxisSettings, DatasetChild, DatasetDescription, DatasetEntry, DatasetStyle } from '../../model/dataset';
+import { AxisSettings, DatasetChild, DatasetDescription, SeriesGraphDataset, DatasetStyle } from '../../model/dataset';
 import { D3SeriesGraphComponent, D3SeriesGraphOptions } from '../d3-series-graph.component';
 
 @Component({
@@ -58,7 +58,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   @Input() public mainTimeInterval: Timespan;
 
-  public datasets: DatasetEntry[] = [];
+  public datasets: SeriesGraphDataset[] = [];
   public timespan: Timespan;
 
   public graphOptions: D3SeriesGraphOptions = {
@@ -223,7 +223,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           firstValue: dataset.firstValue,
           lastValue: dataset.lastValue
         }
-        dsEntry = new DatasetEntry(dataset.internalId, style, yaxis, options.visible, selected, description);
+        dsEntry = new SeriesGraphDataset(dataset.internalId, style, yaxis, options.visible, selected, description);
         dataset.referenceValues.forEach(ref => {
           dsEntry.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ''));
         });
@@ -276,7 +276,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     }
   }
 
-  private onCompleteLoadingData(dataset: DatasetEntry): void {
+  private onCompleteLoadingData(dataset: SeriesGraphDataset): void {
     // this.runningDataRequests.delete(dataset.internalId);
     dataset.setDataLoading(false);
     const loadedIds = this.getLoadedDatasets();
@@ -300,7 +300,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     this.onDatasetSelected.emit(selectedIds);
   }
 
-  private prepareData(dsEntry: DatasetEntry, rawdata: HelgolandTimeseriesData): void {
+  private prepareData(dsEntry: SeriesGraphDataset, rawdata: HelgolandTimeseriesData): void {
     if (rawdata instanceof HelgolandTimeseriesData) {
       // add surrounding entries to the set
       if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
@@ -327,7 +327,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     }
   }
 
-  private addReferenceValueDatasets(ds: DatasetEntry, rawdata: HelgolandTimeseriesData) {
+  private addReferenceValueDatasets(ds: SeriesGraphDataset, rawdata: HelgolandTimeseriesData) {
     if (ds.children && ds.children.length) {
       ds.children.forEach(child => {
         const refVals = rawdata.referenceValues[child.id];
