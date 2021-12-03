@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { duration, unitOfTime } from 'moment';
 
 import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
-import { BarStyle, DatasetStyle, LineStyle } from '../model/dataset';
+import { BarStyle, DatasetStyle, LineStyle } from '../d3-series-graph/models/series-graph-dataset';
 
 @Injectable({
   providedIn: 'root'

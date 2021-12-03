@@ -6,7 +6,7 @@ import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry } from '../../../model/d3-general';
-import { SeriesGraphDataset } from '../../../model/dataset';
+import { SeriesGraphDataset } from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 

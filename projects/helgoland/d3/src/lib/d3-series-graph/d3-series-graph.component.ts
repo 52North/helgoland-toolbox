@@ -31,9 +31,9 @@ import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { RangeCalculationsService } from '../helper/range-calculations.service';
 import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
-import { HighlightOutput } from '../model/d3-highlight';
-import { HoveringStyle } from '../model/d3-plot-options';
-import { BarStyle, SeriesGraphDataset, GraphDataEntry, LineStyle } from '../model/dataset';
+import { HighlightOutput } from './models/d3-highlight';
+import { HoveringStyle } from './models/d3-plot-options';
+import { BarStyle, SeriesGraphDataset, GraphDataEntry, LineStyle } from './models/series-graph-dataset';
 import { D3GraphInterface } from './d3-graph.interface';
 import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 

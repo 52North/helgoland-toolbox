@@ -2,11 +2,10 @@ import 'moment-timezone';
 
 import { Injectable } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
-import { LineStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
 
+import { LineStyle, SeriesGraphDataset } from '../../d3-series-graph/models/series-graph-dataset';
 import { DataEntry } from '../../model/d3-general';
-import { SeriesGraphDataset } from '../../model/dataset';
 import { D3PointSymbolDrawerService } from '../d3-point-symbol-drawer.service';
 import { D3GraphHelperService } from './../d3-graph-helper.service';
 import { D3HoveringService, HoveringElement, HoverPosition } from './d3-hovering-service';
@@ -50,7 +49,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     this.highlightText = this.tooltipContainer.append('g');
 
     // highlight hovered dot
-    if(entry.style instanceof LineStyle && entry.style.pointSymbol) {
+    if (entry.style instanceof LineStyle && entry.style.pointSymbol) {
       this.pointSymbolDrawer.showHovering(pointElem);
     } else {
       pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);

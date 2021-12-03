@@ -60,7 +60,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
-import { D3GeneralPopupComponent } from './components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from './components/export-popup/export-popup.component';
 import { GeometryViewComponent } from './components/geometry-view/geometry-view.component';
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
@@ -125,7 +124,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   declarations: [
     AppComponent,
-    D3GeneralPopupComponent,
     EventingComponent,
     FavoriteComponent,
     GeometryViewComponent,
@@ -205,7 +203,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     StyleModificationComponent,
     GeometryViewComponent,
-    D3GeneralPopupComponent,
     ExportPopupComponent
   ],
   providers: [

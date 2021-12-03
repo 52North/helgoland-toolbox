@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
-import { D3PlotOptions } from '../../model/d3-plot-options';
+import { D3PlotOptions } from '../models/d3-plot-options';
 
 @Component({
   selector: 'n52-d3-series-graph-overview-wrapper',
@@ -97,6 +97,8 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   private calculateOverviewRange() {
     const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
     this.timespan = timespan;
-    this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
+    if (this.timespan) {
+      this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
+    }
   }
 }

@@ -11,12 +11,12 @@ import { D3PointSymbolDrawerService } from '../../../helper/d3-point-symbol-draw
 import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
 import { DataEntry } from '../../../model/d3-general';
-import { HighlightOutput } from '../../../model/d3-highlight';
-import { BarStyle, SeriesGraphDataset, LineStyle } from '../../../model/dataset';
+import { HighlightOutput } from '../../models/d3-highlight';
+import { BarStyle, SeriesGraphDataset, LineStyle } from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
-import { HighlightValue } from './../../../model/d3-highlight';
+import { HighlightValue } from '../../models/d3-highlight';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 

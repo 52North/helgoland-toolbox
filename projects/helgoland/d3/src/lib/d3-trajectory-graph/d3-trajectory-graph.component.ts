@@ -41,9 +41,7 @@ import {
 } from 'd3';
 import moment from 'moment';
 
-import { D3AxisType } from '../model/d3-axis-type';
-import { D3GraphOptions } from '../model/d3-graph-options';
-import { D3SelectionRange } from '../model/d3-selection-range';
+import { D3AxisType, D3GraphOptions, D3SelectionRange } from './d3-trajectory-models';
 
 interface DataEntry extends LocatedTimeValueEntry {
     dist: number;

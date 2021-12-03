@@ -1,19 +1,21 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
 import { D3SeriesGraphOverviewWrapperComponent } from './d3-series-graph-overview-wrapper.component';
 
+/* tslint:disable:no-unused-variable */
 describe('DsSeriesGraphOverviewWrapperComponent', () => {
   let component: D3SeriesGraphOverviewWrapperComponent;
   let fixture: ComponentFixture<D3SeriesGraphOverviewWrapperComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ D3SeriesGraphOverviewWrapperComponent ]
+      imports: [
+        HelgolandCoreModule
+      ],
+      declarations: [D3SeriesGraphOverviewWrapperComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

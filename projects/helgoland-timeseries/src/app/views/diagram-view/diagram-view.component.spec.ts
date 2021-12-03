@@ -24,7 +24,6 @@ import { TranslateTestingModule } from '../../../../../testing/translate.testing
 import {
   FavoriteToggleButtonComponent,
 } from '../../components/favorites/favorite-toggle-button/favorite-toggle-button.component';
-import { LegendEntryComponent } from '../../components/legend-entry/legend-entry.component';
 import {
   GeneralTimeSelectionComponent,
 } from '../../components/time/general-time-selection/general-time-selection.component';
@@ -46,7 +45,6 @@ describe('DiagramViewComponent', () => {
         DiagramViewComponent,
         ModalMainConfigButtonComponent,
         ModalFavoriteListButtonComponent,
-        LegendEntryComponent,
         GeneralTimeSelectionComponent,
         FavoriteToggleButtonComponent,
       ],

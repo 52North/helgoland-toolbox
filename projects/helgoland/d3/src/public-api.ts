@@ -3,9 +3,9 @@
  */
 
 export * from './lib/d3.module';
-export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
 
-export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph.component';
+export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
+export * from './lib/d3-trajectory-graph/d3-trajectory-models';
 
 export * from './lib/d3-series-graph/d3-series-graph.component';
 export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
@@ -22,12 +22,9 @@ export * from './lib/d3-timeseries-graph/d3-series-graph-error-handler.service';
 
 export { ExportImageButtonComponent } from './lib/export-image-button/export-image-button.component';
 
-export * from './lib/model/d3-graph-options';
-export * from './lib/model/d3-axis-type';
-export * from './lib/model/d3-highlight';
-export * from './lib/model/d3-selection-range';
-export * from './lib/model/d3-plot-options';
-export * from './lib/model/dataset';
+export * from './lib/d3-series-graph/models/d3-highlight';
+export * from './lib/d3-series-graph/models/d3-plot-options';
+export * from './lib/d3-series-graph/models/series-graph-dataset';
 export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/model/d3-general';
 export * from './lib/helper/generalizing/d3-data-generalizer';

@@ -37,9 +37,9 @@ import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
 import { D3PointSymbolDrawerService } from '../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
-import { HighlightOutput } from '../../model/d3-highlight';
-import { D3PlotOptions, HoveringStyle } from '../../model/d3-plot-options';
-import { AxisSettings, DatasetChild, DatasetDescription, SeriesGraphDataset, DatasetStyle } from '../../model/dataset';
+import { HighlightOutput } from '../models/d3-highlight';
+import { D3PlotOptions, HoveringStyle } from '../models/d3-plot-options';
+import { AxisSettings, DatasetChild, DatasetDescription, SeriesGraphDataset, DatasetStyle } from '../models/series-graph-dataset';
 import { D3SeriesGraphComponent, D3SeriesGraphOptions } from '../d3-series-graph.component';
 
 @Component({

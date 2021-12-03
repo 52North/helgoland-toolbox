@@ -1,5 +1,5 @@
 import { DataEntry } from '../../model/d3-general';
-import { SeriesGraphDataset } from '../../model/dataset';
+import { SeriesGraphDataset } from '../../d3-series-graph/models/series-graph-dataset';
 
 export interface HoveringElement {
     dataEntry: DataEntry;

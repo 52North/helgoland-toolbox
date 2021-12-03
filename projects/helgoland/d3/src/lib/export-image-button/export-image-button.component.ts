@@ -21,7 +21,7 @@ import { map } from 'rxjs/operators';
 
 import { D3SeriesGraphWrapperComponent } from '../d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3PlotOptions } from '../model/d3-plot-options';
+import { D3PlotOptions } from '../d3-series-graph/models/d3-plot-options';
 
 const wrapperClassName = 'export-diagram-wrapper';
 

@@ -1,6 +1,6 @@
 import { Timespan } from '@helgoland/core';
 
-import { D3PlotOptions } from '../model/d3-plot-options';
+import { D3PlotOptions } from './models/d3-plot-options';
 import { D3GraphObserver } from './d3-series-graph-control';
 
 export interface D3GraphInterface {
