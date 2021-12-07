@@ -200,7 +200,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     let nearestDist = Infinity;
 
     this.datasets.forEach((ds, i) => {
-      if (ds.style instanceof LineStyle) {
+      if (ds.style instanceof LineStyle && ds.visible) {
         const delaunay = Delaunay.from(ds.data, d => d.xDiagCoord, d => d.yDiagCoord);
         const idx = delaunay.find(x, y);
 
