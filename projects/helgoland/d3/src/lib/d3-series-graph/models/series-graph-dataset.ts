@@ -254,12 +254,12 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         if (data instanceof Array) {
             if (data.length > 0) {
                 this._data.push(...data);
-                this._overviewData.push(...data);
+                this._overviewData.push(...data.map(e => ({ timestamp: e.timestamp, value: e.value })));
                 this.description.lastValue = data[data.length - 1];
             }
         } else {
             this._data.push(data);
-            this._overviewData.push(data);
+            this._overviewData.push({ timestamp: data.timestamp, value: data.value });
             this.description.lastValue = data;
         }
         this.dataChangeEvent.emit(this);

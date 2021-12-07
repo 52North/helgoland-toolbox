@@ -31,11 +31,11 @@ import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { RangeCalculationsService } from '../helper/range-calculations.service';
 import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
-import { HighlightOutput } from './models/d3-highlight';
-import { HoveringStyle } from './models/d3-plot-options';
-import { BarStyle, SeriesGraphDataset, GraphDataEntry, LineStyle } from './models/series-graph-dataset';
 import { D3GraphInterface } from './d3-graph.interface';
 import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
+import { HighlightOutput } from './models/d3-highlight';
+import { HoveringStyle } from './models/d3-plot-options';
+import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -969,11 +969,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
                 switch (entry.style.constructor) {
                     case BarStyle:
-                        this.drawBarChart(entry as SeriesGraphDataset<BarStyle>, idx, yaxis.yScale);    
+                        this.drawBarChart(entry as SeriesGraphDataset<BarStyle>, idx, yaxis.yScale);
                         break;
                     case LineStyle:
                         entry.children.forEach(e => e.visible && this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
-                        this.drawLineChart(entry as SeriesGraphDataset<LineStyle>, idx, yaxis.yScale);    
+                        this.drawLineChart(entry as SeriesGraphDataset<LineStyle>, idx, yaxis.yScale);
                         break;
                 }
             }
