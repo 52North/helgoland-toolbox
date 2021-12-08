@@ -7,9 +7,12 @@ export abstract class DatasetStyle {
         public baseColor: string,
         public lineWidth: number
     ) { }
+
+    abstract clone(): DatasetStyle;
 }
 
 export class LineStyle extends DatasetStyle {
+
     /**
      *Creates an instance of LineStyle.
      * @param {string} baseColor 
@@ -28,6 +31,18 @@ export class LineStyle extends DatasetStyle {
         public pointBorderWidth: number = 1
     ) {
         super(baseColor, lineWidth);
+    }
+
+    clone(): LineStyle {
+        return new LineStyle(
+            this.baseColor,
+            this.pointRadius,
+            this.lineWidth,
+            this.pointSymbol,
+            this.lineDashArray,
+            this.pointBorderColor,
+            this.pointBorderWidth
+        )
     }
 }
 
@@ -51,6 +66,16 @@ export class BarStyle extends DatasetStyle {
     ) {
         super(baseColor, lineWidth);
     }
+
+    clone(): BarStyle {
+        return new BarStyle(
+            this.baseColor,
+            this.startOf,
+            this.period,
+            this.lineWidth,
+            this.lineDashArray
+        )
+    }
 }
 
 export class AxisSettings {
@@ -70,6 +95,16 @@ export class AxisSettings {
         public autoRangeSelection: boolean = false,
         public range?: MinMaxRange
     ) { }
+
+    clone(): AxisSettings {
+        return new AxisSettings(
+            this.showSymbolOnAxis,
+            this.separate,
+            this.zeroBased,
+            this.autoRangeSelection,
+            this.range
+        );
+    }
 }
 
 /**
@@ -145,14 +180,10 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
     private _data: GraphDataEntry[] = [];
     private _dataLoading: boolean = false;
 
-    private _overviewData: GraphDataEntry[] = [];
-    private _overviewDataLoading: boolean = false;
-
     private _children: DatasetChild[] = [];
 
     public stateChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
     public dataChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
-    public overviewDataChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
     public deleteEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
 
     constructor(
@@ -164,20 +195,32 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         private _description: DatasetDescription
     ) { }
 
+    clone(): SeriesGraphDataset<DatasetStyle> {
+        return new SeriesGraphDataset(
+            this.id,
+            this.style.clone(),
+            this.yAxis.clone(),
+            this.visible,
+            this.selected,
+            {
+                categoryLabel: this.description.categoryLabel,
+                featureLabel: this.description.featureLabel,
+                firstValue: this.description.firstValue,
+                lastValue: this.description.lastValue,
+                phenomenonLabel: this.description.phenomenonLabel,
+                platformLabel: this.description.platformLabel,
+                procedureLabel: this.description.procedureLabel,
+                uom: this.description.uom
+            }
+        );
+    }
+
     get dataLoading(): boolean {
         return this._dataLoading;
     }
 
     setDataLoading(loading: boolean) {
         this._dataLoading = loading;
-    }
-
-    get overviewDataLoading(): boolean {
-        return this._overviewDataLoading;
-    }
-
-    setOverviewDataLoading(loading: boolean) {
-        this._overviewDataLoading = loading;
     }
 
     get selected(): boolean {
@@ -237,33 +280,10 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         return this._data.length > 0;
     }
 
-    get overviewData(): GraphDataEntry[] {
-        return this._overviewData;
-    }
-
-    setOverviewData(data: GraphDataEntry[]) {
-        this._overviewData = data;
-        this.overviewDataChangeEvent.emit(this);
-    }
-
-    hasOverviewData(): boolean {
-        return this._overviewData.length > 0;
-    }
-
-    addNewData(data: GraphDataEntry | GraphDataEntry[]) {
-        if (data instanceof Array) {
-            if (data.length > 0) {
-                this._data.push(...data);
-                this._overviewData.push(...data.map(e => ({ timestamp: e.timestamp, value: e.value })));
-                this.description.lastValue = data[data.length - 1];
-            }
-        } else {
-            this._data.push(data);
-            this._overviewData.push({ timestamp: data.timestamp, value: data.value });
-            this.description.lastValue = data;
-        }
+    addNewData(timestamp: number, value: number) {
+        this._data.push({ timestamp, value });
+        this.description.lastValue = { timestamp, value };
         this.dataChangeEvent.emit(this);
-        this.overviewDataChangeEvent.emit(this);
     }
 
     deleted(): void {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AxisSettings, SeriesGraphDataset, GraphDataEntry, LineStyle } from '@helgoland/d3';
+import { AxisSettings, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
 
@@ -46,11 +46,7 @@ export class StockDatasetService {
       const data = JSON.parse(event.data);
       if (data.type === 'trade' && data.data.length) {
         data.data.forEach(element => {
-          const entry: GraphDataEntry = {
-            value: element.p,
-            timestamp: element.t
-          }
-          dataset.addNewData(entry);
+          dataset.addNewData(element.t, element.p);
         });
       }
     });

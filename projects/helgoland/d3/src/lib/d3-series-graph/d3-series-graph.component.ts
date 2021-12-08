@@ -35,7 +35,7 @@ import { D3GraphInterface } from './d3-graph.interface';
 import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 import { HighlightOutput } from './models/d3-highlight';
 import { HoveringStyle } from './models/d3-plot-options';
-import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
+import { BarStyle, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -206,9 +206,6 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 if (addedItem.item.hasData()) {
                     this.redrawCompleteGraph();
                 }
-                if (addedItem.item.hasOverviewData()) {
-                    this.redrawCompleteGraph();
-                }
                 return this.subscribeEvents(addedItem.item);
             });
             graphDatasetsChanges.forEachRemovedItem((removedItem) => {
@@ -232,15 +229,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private subscribeEvents(ds: SeriesGraphDataset) {
         let dataSubscription: Subscription;
-        if (this.graphOptions.overview) {
-            dataSubscription = ds.overviewDataChangeEvent.subscribe(() => {
-                this.redrawCompleteGraph();
-            })
-        } else {
-            dataSubscription = ds.dataChangeEvent.subscribe(() => {
-                this.redrawCompleteGraph();
-            });
-        }
+        dataSubscription = ds.dataChangeEvent.subscribe(() => {
+            this.redrawCompleteGraph();
+        });
         const events: DatasetEventSubscriptions = {
             state: ds.stateChangeEvent.subscribe(() => {
                 // TODO: maybe calculate new data
@@ -358,7 +349,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         // set variable extend bounds
         if (isNaN(visualMin) || isNaN(visualMax)) {
-            const baseDataExtent = d3.extent<DataEntry, number>(this.getData(entry), (d) => {
+            const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
@@ -455,7 +446,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private prepareDatasets() {
         if (this.datasets && this.datasets.length) {
             this.datasets.forEach(entry => {
-                if (this.getData(entry).length > 0) {
+                if (entry.data.length > 0) {
                     this.processData(entry);
                 }
             });
@@ -946,7 +937,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * @param entry {DataEntry} Object containing a dataset.
      */
     protected drawChart(entry: SeriesGraphDataset, idx: number): void {
-        if (this.getData(entry).length > 0 && entry.visible) {
+        if (entry.data.length > 0 && entry.visible) {
             const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.id) >= 0);
             if (yaxis) {
                 // create body to clip graph
@@ -993,25 +984,15 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .attr('d', line);
     }
 
-    private getData(entry: SeriesGraphDataset): GraphDataEntry[] {
-        if (this.graphOptions.overview) {
-            return entry.overviewData;
-        } else {
-            return entry.data;
-        }
-    }
-
     private drawLineChart(ds: SeriesGraphDataset<LineStyle>, idx: number, yScaleBase: d3.ScaleLinear<number, number>) {
         const pointRadius = this.calculatePointRadius(ds); 0
-
-        const data = this.getData(ds);
 
         // create graph line
         const line = this.createLine(this.xScaleBase, yScaleBase);
         // draw line
         this.graphBody
             .append('svg:path')
-            .datum(data)
+            .datum(ds.data)
             .attr('class', 'line')
             .attr('fill', 'none')
             .attr('stroke-dasharray', ds.style.lineDashArray)
@@ -1022,7 +1003,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         // draw line dots
         if (ds.style.pointSymbol) {
             this.graphBody.selectAll('.symbol')
-                .data(data.filter((d) => !isNaN(d.value)))
+                .data(ds.data.filter((d) => !isNaN(d.value)))
                 .enter()
                 .append('path')
                 .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + idx)
@@ -1032,7 +1013,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .attr('d', this.pointSymbolDrawer.getSymbolPath(ds.style.pointSymbol, ds.selected, this.addLineWidth))
         } else {
             this.graphBody.selectAll('.graphDots')
-                .data(data.filter((d) => !isNaN(d.value)))
+                .data(ds.data.filter((d) => !isNaN(d.value)))
                 .enter().append('circle')
                 .attr('class', 'graphDots')
                 .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + idx)
@@ -1052,7 +1033,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         const periodInMs = ds.style.period.asMilliseconds();
 
         this.graphBody.selectAll('.bar')
-            .data(this.getData(ds))
+            .data(ds.data)
             .enter().append('rect')
             .attr('class', 'bar')
             .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + idx)

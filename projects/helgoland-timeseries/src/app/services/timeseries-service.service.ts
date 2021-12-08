@@ -18,10 +18,10 @@ import {
   D3SeriesGraphErrorHandler,
   D3SeriesSimpleGraphErrorHandler,
   DatasetChild,
-  SeriesGraphDataset,
   DatasetStyle,
   GraphDataEntry,
   LineStyle,
+  SeriesGraphDataset,
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
@@ -440,11 +440,9 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
 
       const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
 
-      const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
-      ds.setOverviewData(data);
-      ds.setOverviewDataLoading(false);
-
-      // this.addReferenceValueDatasets(dataset, options, rawdata);
+      const ds = this.graphDatasetsSrvc.getOverviewDatasetEntry(dataset.internalId);
+      ds.setData(data);
+      ds.setDataLoading(false);
     }
   }
 

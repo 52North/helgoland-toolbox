@@ -16,6 +16,8 @@ export class DatasetsService {
 
   public datasets: SeriesGraphDataset[] = [];
 
+  public overviewDatasets: SeriesGraphDataset[] = [];
+
   private _timespan: Timespan;
 
   constructor(
@@ -57,10 +59,18 @@ export class DatasetsService {
 
   addOrUpdateDataset(dataset: SeriesGraphDataset) {
     const datasetIdx = this.getDatasetEntryIndex(dataset.id);
+    const overviewDs = dataset.clone();
+    dataset.stateChangeEvent.subscribe(state => {
+      overviewDs.setSelected(dataset.selected, false);
+      overviewDs.setVisible(dataset.visible, false);
+      overviewDs.setStyle(dataset.style.clone());
+    });
     if (datasetIdx >= 0) {
       this.datasets[datasetIdx] = dataset;
+      this.overviewDatasets[datasetIdx] = overviewDs;
     } else {
       this.datasets.push(dataset);
+      this.overviewDatasets.push(overviewDs);
     }
   }
 
@@ -69,7 +79,7 @@ export class DatasetsService {
   }
 
   setOverviewDataLoading(id: string, loading: boolean) {
-    this.getDatasetEntry(id).setOverviewDataLoading(loading);
+    this.getOverviewDatasetEntry(id).setDataLoading(loading);
   }
 
   deleteDataset(id: string) {
@@ -78,6 +88,9 @@ export class DatasetsService {
     dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
     this.datasets.splice(idx, 1);
+    const ovDataset = this.getOverviewDatasetEntry(id);
+    ovDataset.deleted();
+    this.overviewDatasets.splice(idx, 1);
   }
 
   deleteAllDatasets() {
@@ -106,6 +119,10 @@ export class DatasetsService {
 
   getDatasetEntry(id: string): SeriesGraphDataset {
     return this.datasets.find(e => e.id === id);
+  }
+
+  getOverviewDatasetEntry(id: string): SeriesGraphDataset {
+    return this.overviewDatasets.find(e => e.id === id);
   }
 
 }

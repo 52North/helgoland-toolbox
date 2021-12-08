@@ -103,7 +103,7 @@
 
       <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
         <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
-        <n52-d3-series-graph #overview [datasets]="graphDatasetsSrvc.datasets"
+        <n52-d3-series-graph #overview [datasets]="graphDatasetsSrvc.overviewDatasets"
           [timespan]="graphDatasetsSrvc.overviewTimespan" [graphOptions]="overviewOptions"
           (timespanChanged)="graphDatasetsSrvc.timespan = $event">
           <n52-d3-graph-overview-selection [selectionTimeInterval]="graphDatasetsSrvc.timespan">

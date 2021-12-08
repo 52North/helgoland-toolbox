@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AxisSettings, DatasetChild, SeriesGraphDataset, LineStyle } from '@helgoland/d3';
+import { AxisSettings, DatasetChild, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
 
@@ -7,14 +7,14 @@ import { DatasetsService } from './graph-datasets.service';
   providedIn: 'root'
 })
 export class DummyDatasetsService {
-  dummyDataset: SeriesGraphDataset;
+  datasetId: string = '123';
 
   constructor(
     protected graphDatasetsSrvc: DatasetsService,
   ) {
-    this.dummyDataset = this.createNewDataset('123', 'red');
+    const dummyDataset = this.createNewDataset('red');
     const child = new DatasetChild(
-      '123',
+      this.datasetId,
       'ChildData',
       false,
       [{
@@ -27,9 +27,9 @@ export class DummyDatasetsService {
       }],
       'green'
     );
-    this.dummyDataset.addChild(child);
-    this.graphDatasetsSrvc.addOrUpdateDataset(this.dummyDataset);
-    this.addNewValue();
+    // dummyDataset.addChild(child);
+    // this.graphDatasetsSrvc.addOrUpdateDataset(dummyDataset);
+    // this.addNewValue();
     // setInterval(() => {
     //   this.addNewValue();
     // }, 10000);
@@ -40,16 +40,23 @@ export class DummyDatasetsService {
       timestamp: new Date().getTime() + 1,
       value: this.createValue()
     };
-    this.dummyDataset.addNewData(dataPoint);
+    const timestamp = new Date().getTime() + 1;
+    const value = this.createValue();
+    this.graphDatasetsSrvc.getDatasetEntry(this.datasetId).addNewData(timestamp, value);
+    this.graphDatasetsSrvc.getOverviewDatasetEntry(this.datasetId).addNewData(timestamp, value);
   }
 
   private createValue(): number {
     return Math.floor(Math.random() * 10);
   }
 
-  private createNewDataset(id: string, color: string): SeriesGraphDataset {
+  private createNewDataset(color: string): SeriesGraphDataset {
     return new SeriesGraphDataset(
-      id, new LineStyle(color, 3, 3), new AxisSettings(), true, false,
+      this.datasetId,
+      new LineStyle(color, 3, 3),
+      new AxisSettings(),
+      true,
+      false,
       {
         uom: 'rnd',
         phenomenonLabel: 'Zahlen zwischne 0 und 10',
