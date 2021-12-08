@@ -25,11 +25,11 @@ export class FavoriteService {
   }
 
   canBeFavorite(id: string): boolean {
-    return this.findService(id) !== null;
+    return this.findService(id) !== undefined;
   }
 
   isFavorite(id: string): boolean {
-    return this.findService(id).isFavorite(id);
+    return this.findService(id)?.isFavorite(id);
   }
 
   removeFavorite(id: string) {
