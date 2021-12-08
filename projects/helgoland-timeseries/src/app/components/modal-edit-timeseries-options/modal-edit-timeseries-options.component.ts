@@ -40,6 +40,9 @@ export class ModalEditTimeseriesOptionsComponent {
 
   confirmColor(color: string) {
     this.style.baseColor = color;
+    if (this.style instanceof LineStyle) {
+      this.style.pointBorderColor = color;
+    }
     this.data.dataset.setStyle(this.style);
   }
 
