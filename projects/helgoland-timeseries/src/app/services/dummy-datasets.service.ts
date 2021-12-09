@@ -12,7 +12,7 @@ export class DummyDatasetsService {
   constructor(
     protected graphDatasetsSrvc: DatasetsService,
   ) {
-    const dummyDataset = this.createNewDataset('red');
+    const dummyDataset = this.createNewDataset('blue');
     const child = new DatasetChild(
       this.datasetId,
       'ChildData',
@@ -27,23 +27,17 @@ export class DummyDatasetsService {
       }],
       'green'
     );
-    // dummyDataset.addChild(child);
-    // this.graphDatasetsSrvc.addOrUpdateDataset(dummyDataset);
-    // this.addNewValue();
-    // setInterval(() => {
-    //   this.addNewValue();
-    // }, 10000);
+    dummyDataset.addChild(child);
+    this.graphDatasetsSrvc.addOrUpdateDataset(dummyDataset);
+    this.addNewValue();
+    setInterval(() => this.addNewValue(), 5000);
   }
 
   private addNewValue() {
-    const dataPoint = {
-      timestamp: new Date().getTime() + 1,
-      value: this.createValue()
-    };
     const timestamp = new Date().getTime() + 1;
     const value = this.createValue();
-    this.graphDatasetsSrvc.getDatasetEntry(this.datasetId).addNewData(timestamp, value);
-    this.graphDatasetsSrvc.getOverviewDatasetEntry(this.datasetId).addNewData(timestamp, value);
+    this.graphDatasetsSrvc.getDatasetEntry(this.datasetId).addNewData(timestamp, value, true);
+    this.graphDatasetsSrvc.getOverviewDatasetEntry(this.datasetId).addNewData(timestamp, value, false);
   }
 
   private createValue(): number {
@@ -53,7 +47,7 @@ export class DummyDatasetsService {
   private createNewDataset(color: string): SeriesGraphDataset {
     return new SeriesGraphDataset(
       this.datasetId,
-      new LineStyle(color, 3, 3),
+      new LineStyle(color, 3, 2),
       new AxisSettings(),
       true,
       false,

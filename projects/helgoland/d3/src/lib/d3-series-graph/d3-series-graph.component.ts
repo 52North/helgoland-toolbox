@@ -1023,6 +1023,22 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .attr('cx', line.x())
                 .attr('cy', line.y())
                 .attr('r', pointRadius);
+            this.graphBody.selectAll('.highlightDots')
+                .data(ds.data.filter((d) => !isNaN(d.value) && d.highlight).map(d => {
+                    d.highlight = false;
+                    return d;
+                }))
+                .enter()
+                .append('circle')
+                .attr('fill', ds.style.baseColor)
+                .attr('cx', line.x())
+                .attr('cy', line.y())
+                .attr('r', pointRadius)
+                .attr('opacity', 0.8)
+                .transition()
+                .duration(1500)
+                .attr('r', pointRadius * 5)
+                .attr('opacity', 0)
         }
 
     }

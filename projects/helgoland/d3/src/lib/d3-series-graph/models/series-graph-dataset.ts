@@ -113,6 +113,7 @@ export class AxisSettings {
 export interface GraphDataEntry {
     timestamp: number;
     value: number;
+    highlight?: boolean;
 }
 
 export interface DatasetDescription {
@@ -280,8 +281,8 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         return this._data.length > 0;
     }
 
-    addNewData(timestamp: number, value: number) {
-        this._data.push({ timestamp, value });
+    addNewData(timestamp: number, value: number, highlight?: boolean) {
+        this._data.push({ timestamp, value, highlight });
         this.description.lastValue = { timestamp, value };
         this.dataChangeEvent.emit(this);
     }
