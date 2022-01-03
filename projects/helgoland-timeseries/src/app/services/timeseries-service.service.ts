@@ -47,10 +47,16 @@ interface FavoriteSaveState {
   yAxis: AxisSettings
 }
 
+export abstract class TimeseriesService {
+  abstract addDataset(internalId: string);
+  abstract hasDataset(id: string): boolean;
+  abstract removeDataset(id: string);
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class TimeseriesService implements DatasetPermalinkService, DatasetFavoriteService {
+export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalinkService, DatasetFavoriteService {
 
   private state: {
     [key: string]: SaveState
@@ -205,7 +211,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
     );
   }
 
-  private loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
+  protected loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
     if (ts instanceof HelgolandTimeseries) {
       this.datasetMap.set(ts.internalId, ts);
       const style = dsStyle ? dsStyle : this.createStyle(ts);

@@ -81,7 +81,7 @@ import { TimeseriesListSelectorComponent } from './components/timeseries-list-se
 import { AppConfig, ConfigurationService } from './services/configuration.service';
 import { DATASET_FAVORITE_SERVICE_INJECTION, DATASET_PERMALINK_SERVICE_INJECTION } from './services/service-interfaces';
 import { CustomD3TimeseriesGraphErrorHandler } from './services/timeseries-graph-error-handler';
-import { TimeseriesService } from './services/timeseries-service.service';
+import { TimeseriesService, TimeseriesServiceImpl } from './services/timeseries-service.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { ModalListSettingsComponent } from './views/list-selection-view/modal-list-settings/modal-list-settings.component';
@@ -195,6 +195,10 @@ export function initApplication(configService: ConfigurationService, translate: 
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: TimeseriesService,
+      useClass: TimeseriesServiceImpl
     },
     {
       provide: D3SeriesGraphErrorHandler,
