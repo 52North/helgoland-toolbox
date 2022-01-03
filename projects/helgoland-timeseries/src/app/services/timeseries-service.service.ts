@@ -239,7 +239,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
         this.setState(ds.id, ds.style, ds.yAxis, ds.selected, ds.visible);
         this.saveState();
       });
-      ts.referenceValues.forEach(ref => {
+      ts.referenceValues?.forEach(ref => {
         const child = new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], this.colorService.getColor());
         dataset.addChild(child);
       });
@@ -251,7 +251,7 @@ export class TimeseriesService implements DatasetPermalinkService, DatasetFavori
 
   private createYAxis(ds: HelgolandTimeseries): AxisSettings {
     const axisSettings = new AxisSettings();
-    if (ds.renderingHints.chartType === 'bar') {
+    if (ds.renderingHints?.chartType === 'bar') {
       axisSettings.range = { min: 0 };
     }
     return axisSettings;
