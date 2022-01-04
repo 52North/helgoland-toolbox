@@ -23,16 +23,16 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     @Input()
     public selectionId: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onItemSelected: EventEmitter<Parameter> = new EventEmitter<Parameter>();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<Parameter[]>();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public loading: boolean;

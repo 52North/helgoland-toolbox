@@ -23,8 +23,8 @@ export class TimeRangeSliderComponent implements OnChanges {
   @Input()
   public timeList: number[];
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 
   public start: number;

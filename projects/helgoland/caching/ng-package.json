@@ -2,12 +2,7 @@
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/helgoland/caching",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "@helgoland/core": "@helgoland/core",
-      "lodash": "lodash",
-      "moment": "moment"
-    }
+    "entryFile": "src/public-api.ts"
   },
   "allowedNonPeerDependencies": [""]
 }

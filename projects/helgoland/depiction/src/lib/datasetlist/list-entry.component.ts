@@ -18,12 +18,12 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     @Input()
     public selected: boolean;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onDeleteDataset: EventEmitter<boolean> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
 
     public loading: boolean;

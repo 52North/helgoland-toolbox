@@ -2,14 +2,7 @@
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/helgoland/d3",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "@helgoland/core": "@helgoland/core",
-      "d3": "d3",
-      "moment": "moment",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "d3-delaunay": "d3-delaunay"
-    }
+    "entryFile": "src/public-api.ts"
   },
   "allowedNonPeerDependencies": [""]
 }

@@ -15,8 +15,8 @@ export class BoolTogglerComponent {
     @Input()
     public tooltip: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onToggled: EventEmitter<boolean> = new EventEmitter();
 
     public toggle() {

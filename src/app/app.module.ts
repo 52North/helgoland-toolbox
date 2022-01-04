@@ -122,116 +122,110 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  bootstrap: [
-    AppComponent
-  ],
-  declarations: [
-    AdditionalDataGraphComponent,
-    AppComponent,
-    D3GeneralPopupComponent,
-    EventingComponent,
-    FavoriteComponent,
-    GeometryViewComponent,
-    GraphLegendComponent,
-    ListSelectionComponent,
-    LocalSelectorImplComponent,
-    MapSelectorComponent,
-    MapViewComponent,
-    OlComponent,
-    PermalinkComponent,
-    PlotlyGraphComponent,
-    ProfileEntryComponent,
-    ServiceFilterSelectorDemoPageComponent,
-    ServiceSelectorComponent,
-    StyleModificationComponent,
-    TableComponent,
-    TimeComponent,
-    TimeseriesGraphComponent,
-    TrajectoryComponent,
-    ExportPopupComponent,
-    DiagramExportComponent,
-    NoDataEntryComponent,
-    FacetSearchComponent,
-    SandboxComponent,
-    SensormlComponent,
-    TimezoneSelectorComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' }),
-    MatSidenavModule,
-    MatListModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    BrowserAnimationsModule,
-    HelgolandSelectorModule,
-    HelgolandCachingModule.forRoot({
-      cachingDurationInMilliseconds: 300000,
-      getDataCacheActive: false
-    }),
-    HelgolandCoreModule,
-    HelgolandTimeModule,
-    HelgolandFavoriteModule,
-    HelgolandPermalinkModule,
-    HelgolandControlModule,
-    HelgolandMapSelectorModule,
-    HelgolandFacetSearchModule,
-    HelgolandMapControlModule,
-    HelgolandLayerControlModule,
-    HelgolandMapViewModule,
-    HelgolandModificationModule,
-    HelgolandDatasetlistModule,
-    HelgolandTimeRangeSliderModule,
-    HelgolandD3Module,
-    HelgolandDatasetTableModule,
-    HelgolandPlotlyModule,
-    HelgolandBasicAuthModule,
-    HelgolandDatasetDownloadModule,
-    HelgolandOpenLayersModule
-  ],
-  entryComponents: [
-    StyleModificationComponent,
-    GeometryViewComponent,
-    D3GeneralPopupComponent,
-    ExportPopupComponent
-  ],
-  providers: [
-    APP_PROVIDERS,
-    {
-      provide: BasicAuthInformer,
-      useClass: BasicAuthInformerImplService
-    },
-    {
-      provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
-      useClass: MockedDatasetApiV3Connector,
-      multi: true
-    },
-    DatasetApiV1ConnectorProvider,
-    DatasetApiV2ConnectorProvider,
-    DatasetApiV3ConnectorProvider,
-    DatasetStaConnectorProvider,
-    {
-      provide: FacetSearchConfig,
-      useValue: {
-        showZeroValues: true
-      } as FacetSearchConfig
-    }
-  ]
+    bootstrap: [
+        AppComponent
+    ],
+    declarations: [
+        AdditionalDataGraphComponent,
+        AppComponent,
+        D3GeneralPopupComponent,
+        EventingComponent,
+        FavoriteComponent,
+        GeometryViewComponent,
+        GraphLegendComponent,
+        ListSelectionComponent,
+        LocalSelectorImplComponent,
+        MapSelectorComponent,
+        MapViewComponent,
+        OlComponent,
+        PermalinkComponent,
+        PlotlyGraphComponent,
+        ProfileEntryComponent,
+        ServiceFilterSelectorDemoPageComponent,
+        ServiceSelectorComponent,
+        StyleModificationComponent,
+        TableComponent,
+        TimeComponent,
+        TimeseriesGraphComponent,
+        TrajectoryComponent,
+        ExportPopupComponent,
+        DiagramExportComponent,
+        NoDataEntryComponent,
+        FacetSearchComponent,
+        SandboxComponent,
+        SensormlComponent,
+        TimezoneSelectorComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' }),
+        MatSidenavModule,
+        MatListModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        BrowserAnimationsModule,
+        HelgolandSelectorModule,
+        HelgolandCachingModule.forRoot({
+            cachingDurationInMilliseconds: 300000,
+            getDataCacheActive: false
+        }),
+        HelgolandCoreModule,
+        HelgolandTimeModule,
+        HelgolandFavoriteModule,
+        HelgolandPermalinkModule,
+        HelgolandControlModule,
+        HelgolandMapSelectorModule,
+        HelgolandFacetSearchModule,
+        HelgolandMapControlModule,
+        HelgolandLayerControlModule,
+        HelgolandMapViewModule,
+        HelgolandModificationModule,
+        HelgolandDatasetlistModule,
+        HelgolandTimeRangeSliderModule,
+        HelgolandD3Module,
+        HelgolandDatasetTableModule,
+        HelgolandPlotlyModule,
+        HelgolandBasicAuthModule,
+        HelgolandDatasetDownloadModule,
+        HelgolandOpenLayersModule
+    ],
+    providers: [
+        APP_PROVIDERS,
+        {
+            provide: BasicAuthInformer,
+            useClass: BasicAuthInformerImplService
+        },
+        {
+            provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
+            useClass: MockedDatasetApiV3Connector,
+            multi: true
+        },
+        DatasetApiV1ConnectorProvider,
+        DatasetApiV2ConnectorProvider,
+        DatasetApiV3ConnectorProvider,
+        DatasetStaConnectorProvider,
+        {
+            provide: FacetSearchConfig,
+            useValue: {
+                showZeroValues: true
+            } as FacetSearchConfig
+        }
+    ]
 })
 export class AppModule { }

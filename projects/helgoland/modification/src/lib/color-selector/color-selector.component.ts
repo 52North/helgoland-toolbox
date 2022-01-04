@@ -12,8 +12,8 @@ export class ColorSelectorComponent {
     @Input()
     public colorList: string[];
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onColorChange: EventEmitter<string> = new EventEmitter<string>();
 
 }

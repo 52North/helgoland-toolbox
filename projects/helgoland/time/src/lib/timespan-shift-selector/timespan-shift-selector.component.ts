@@ -10,12 +10,12 @@ export class TimespanShiftSelectorComponent {
   @Input()
   public timespan: Timespan;
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onOpenTimeSettings: EventEmitter<void> = new EventEmitter();
 
   constructor(

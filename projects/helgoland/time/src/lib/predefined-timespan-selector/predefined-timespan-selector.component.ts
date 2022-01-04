@@ -12,8 +12,8 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   @Input()
   public timespan: Timespan;
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
   public parsedTimespanPresets: ParsedTimespanPreset[];

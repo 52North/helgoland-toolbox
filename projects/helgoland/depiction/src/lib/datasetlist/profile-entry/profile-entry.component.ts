@@ -23,24 +23,24 @@ export class ProfileEntryComponent extends ListEntryComponent {
     @Input()
     public datasetOptions: TimedDatasetOptions[];
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onUpdateOptions: EventEmitter<TimedDatasetOptions[]> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onDeleteDatasetOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onOpenInCombiView: EventEmitter<TimedDatasetOptions> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
     public dataset: HelgolandProfile;

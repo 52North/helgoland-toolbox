@@ -9,8 +9,8 @@ export class TimeListSelectorComponent {
   @Input()
   public timeList: number[];
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimeSelected: EventEmitter<number> = new EventEmitter();
 
   public selectTime(timestamp: number) {

@@ -31,8 +31,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
     @Input()
     public phenomenonId: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onSelectionChanged: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
 
     public phenomenonMatchedList: SelectableDataset[] = [];
