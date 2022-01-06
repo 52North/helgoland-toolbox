@@ -38,16 +38,16 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   @Input()
   public reloadForDatasets: string[];
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onLoading: EventEmitter<boolean> = new EventEmitter();
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
   public overviewTimespan: Timespan;

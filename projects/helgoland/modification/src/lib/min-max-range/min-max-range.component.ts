@@ -14,8 +14,8 @@ export class MinMaxRangeComponent implements OnChanges {
   @Input()
   public range: MinMaxRange;
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onRangeChange: EventEmitter<MinMaxRange> = new EventEmitter();
 
   public ngOnChanges(changes: SimpleChanges) {

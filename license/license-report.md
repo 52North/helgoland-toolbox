@@ -1,16 +1,16 @@
 | License type | Link                                                                       | Installed version | Name                                   |
 | ------------ | -------------------------------------------------------------------------- | ----------------- | -------------------------------------- |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/animations                    |
-| MIT          | git+https://github.com/angular/components.git                              | 12.2.4            | @angular/cdk                           |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/common                        |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/compiler                      |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/core                          |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/forms                         |
-| MIT          | git+https://github.com/angular/components.git                              | 12.2.4            | @angular/material                      |
-| MIT          | git+https://github.com/angular/components.git                              | 12.2.4            | @angular/material-moment-adapter       |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/platform-browser              |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/platform-browser-dynamic      |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/router                        |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/animations                    |
+| MIT          | git+https://github.com/angular/components.git                              | 13.1.1            | @angular/cdk                           |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/common                        |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/compiler                      |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/core                          |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/forms                         |
+| MIT          | git+https://github.com/angular/components.git                              | 13.1.1            | @angular/material                      |
+| MIT          | git+https://github.com/angular/components.git                              | 13.1.1            | @angular/material-moment-adapter       |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/platform-browser              |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/platform-browser-dynamic      |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/router                        |
 | MIT          | git+https://github.com/ngx-translate/core.git                              | 13.0.0            | @ngx-translate/core                    |
 | MIT          | git+https://github.com/ngx-translate/http-loader.git                       | 6.0.0             | @ngx-translate/http-loader             |
 |              | https://registry.npmjs.org/angular-plotly.js/-/angular-plotly.js-3.1.0.tgz | 3.0.0             | angular-plotly.js                      |
@@ -32,14 +32,14 @@
 | Apache-2.0   | git+https://github.com/mreuvers/typescript-logging.git                     | 0.6.3             | typescript-logging                     |
 | Apache-2.0   | git://github.com/SheetJS/sheetjs.git                                       | 0.17.1            | xlsx                                   |
 | MIT          | git://github.com/angular/angular.git                                       | 0.11.4            | zone.js                                |
-| MIT          | git+https://github.com/angular/angular-cli.git                             | 12.2.4            | @angular-devkit/build-angular          |
-| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 12.1.0            | @angular-eslint/builder                |
-| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 12.1.0            | @angular-eslint/eslint-plugin          |
-| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 12.1.0            | @angular-eslint/eslint-plugin-template |
-| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 12.3.1            | @angular-eslint/schematics             |
-| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 12.1.0            | @angular-eslint/template-parser        |
-| MIT          | git+https://github.com/angular/angular-cli.git                             | 12.2.4            | @angular/cli                           |
-| MIT          | git+https://github.com/angular/angular.git                                 | 12.2.4            | @angular/compiler-cli                  |
+| MIT          | git+https://github.com/angular/angular-cli.git                             | 13.1.2            | @angular-devkit/build-angular          |
+| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 13.0.1            | @angular-eslint/builder                |
+| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 13.0.1            | @angular-eslint/eslint-plugin          |
+| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 13.0.1            | @angular-eslint/eslint-plugin-template |
+| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 13.0.1            | @angular-eslint/schematics             |
+| MIT          | git+https://github.com/angular-eslint/angular-eslint.git                   | 13.0.1            | @angular-eslint/template-parser        |
+| MIT          | git+https://github.com/angular/angular-cli.git                             | 13.1.2            | @angular/cli                           |
+| MIT          | git+https://github.com/angular/angular.git                                 | 13.1.1            | @angular/compiler-cli                  |
 | MIT          | git+https://github.com/biesbjerg/ngx-translate-extract.git                 | 7.0.4             | @biesbjerg/ngx-translate-extract       |
 | MIT          | git+https://github.com/compodoc/compodoc.git                               | 1.1.14            | @compodoc/compodoc                     |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git                     | 5.7.2             | @types/d3                              |
@@ -51,10 +51,10 @@
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git                     | 12.20.15          | @types/node                            |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git                     | 5.3.5             | @types/ol                              |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git                     | 1.50.19           | @types/plotly.js                       |
-| MIT          | git+https://github.com/typescript-eslint/typescript-eslint.git             | 4.23.0            | @typescript-eslint/eslint-plugin       |
-| BSD-2-Clause | git+https://github.com/typescript-eslint/typescript-eslint.git             | 4.23.0            | @typescript-eslint/parser              |
+| MIT          | git+https://github.com/typescript-eslint/typescript-eslint.git             | 5.3.0             | @typescript-eslint/eslint-plugin       |
+| BSD-2-Clause | git+https://github.com/typescript-eslint/typescript-eslint.git             | 5.3.0             | @typescript-eslint/parser              |
 | MIT          | git+https://github.com/archiverjs/node-archiver.git                        | 5.2.0             | archiver                               |
-| MIT          | git+https://github.com/eslint/eslint.git                                   | 7.26.0            | eslint                                 |
+| MIT          | git+https://github.com/eslint/eslint.git                                   | 8.2.0             | eslint                                 |
 | MIT          | git+https://github.com/jasmine/jasmine.git                                 | 3.7.0             | jasmine-core                           |
 | MIT          | git://github.com/karma-runner/karma.git                                    | 6.3.0             | karma                                  |
 | MIT          | git://github.com/karma-runner/karma-chrome-launcher.git                    | 3.1.0             | karma-chrome-launcher                  |
@@ -62,8 +62,8 @@
 | MIT          | git://github.com/karma-runner/karma-jasmine.git                            | 4.0.0             | karma-jasmine                          |
 | MIT          | git+https://github.com/dfederm/karma-jasmine-html-reporter.git             | 1.5.0             | karma-jasmine-html-reporter            |
 | MIT          | git+https://github.com/ironSource/license-report.git                       | 4.5.0             | license-report                         |
-| MIT          | git+https://github.com/ng-packagr/ng-packagr.git                           | 12.0.0            | ng-packagr                             |
+| MIT          | git+https://github.com/ng-packagr/ng-packagr.git                           | 13.1.2            | ng-packagr                             |
 | MIT          | git+https://github.com/citycide/tablemark-cli.git                          | 2.0.0             | tablemark-cli                          |
 | MIT          | git://github.com/TypeStrong/ts-node.git                                    | 10.0.0            | ts-node                                |
-| Apache-2.0   | git+https://github.com/Microsoft/TypeScript.git                            | 4.2.3             | typescript                             |
+| Apache-2.0   | https://github.com/Microsoft/TypeScript.git                                | 4.5.4             | typescript                             |
 

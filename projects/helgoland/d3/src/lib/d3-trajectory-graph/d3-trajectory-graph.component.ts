@@ -82,16 +82,16 @@ export class D3TrajectoryGraphComponent
     @Input()
     public selection: D3SelectionRange;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onSelectionChangedFinished: EventEmitter<D3SelectionRange> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onSelectionChanged: EventEmitter<D3SelectionRange> = new EventEmitter();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onHoverHighlight: EventEmitter<number> = new EventEmitter();
 
     @ViewChild('dthree', { static: true })

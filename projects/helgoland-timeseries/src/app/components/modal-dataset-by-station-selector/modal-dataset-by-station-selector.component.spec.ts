@@ -9,6 +9,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { TimeseriesService, TimeseriesServiceImpl } from '../../services/timeseries-service.service';
 import { ModalDatasetByStationSelectorComponent } from './modal-dataset-by-station-selector.component';
 
 describe('ModalDatasetByStationSelectorComponent', () => {
@@ -28,6 +29,12 @@ describe('ModalDatasetByStationSelectorComponent', () => {
         MatProgressBarModule,
         RouterTestingModule,
         TranslateTestingModule,
+      ],
+      providers: [
+        {
+          provide: TimeseriesService,
+          useClass: TimeseriesServiceImpl
+        }
       ]
     }).compileComponents();
   });

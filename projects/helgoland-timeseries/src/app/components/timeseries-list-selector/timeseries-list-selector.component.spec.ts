@@ -3,6 +3,7 @@ import { MatListModule } from '@angular/material/list';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { TimeseriesService, TimeseriesServiceImpl } from '../../services/timeseries-service.service';
 import { TimeseriesListSelectorComponent } from './timeseries-list-selector.component';
 
 describe('TimeseriesListSelectorComponent', () => {
@@ -16,6 +17,12 @@ describe('TimeseriesListSelectorComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule,
         MatListModule
+      ],
+      providers: [
+        {
+          provide: TimeseriesService,
+          useClass: TimeseriesServiceImpl
+        }
       ]
     }).compileComponents();
   });

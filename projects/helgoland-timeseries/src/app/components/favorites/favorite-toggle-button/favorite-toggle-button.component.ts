@@ -27,7 +27,7 @@ export class FavoriteToggleButtonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset.id);
+    this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset?.id);
     if (this.canBeFavorite) {
       this.checkFavState();
       this.favSrvc.countChange.subscribe(_ => this.checkFavState());
@@ -35,7 +35,7 @@ export class FavoriteToggleButtonComponent implements OnInit {
   }
 
   private checkFavState() {
-    this.isFavorite = this.favSrvc.isFavorite(this.dataset.id);
+    this.isFavorite = this.favSrvc.isFavorite(this.dataset?.id);
   }
 
   toggle() {

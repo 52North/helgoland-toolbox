@@ -26,8 +26,8 @@ export class ModalEditTimeseriesOptionsComponent {
     },
     public config: ConfigurationService
   ) {
-    this.style = this.data.dataset.style;
-    this.yaxis = this.data.dataset.yAxis;
+    this.style = this.data.dataset?.style;
+    this.yaxis = this.data.dataset?.yAxis;
   }
 
   isLineStyle() {

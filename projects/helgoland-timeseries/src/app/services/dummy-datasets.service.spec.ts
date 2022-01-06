@@ -1,12 +1,17 @@
-/* tslint:disable:no-unused-variable */
+import { inject, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
 import { DummyDatasetsService } from './dummy-datasets.service';
 
 describe('Service: DummyDatasets', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DummyDatasetsService]
+      providers: [DummyDatasetsService],
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule
+      ]
     });
   });
 

@@ -18,8 +18,8 @@ export class StringTogglerComponent implements OnChanges {
     @Input()
     public tooltip: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onToggled: EventEmitter<string> = new EventEmitter();
 
     public isToggled: boolean;

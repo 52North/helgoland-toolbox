@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AxesOptionsComponent {
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onChangeYAxesVisibility: EventEmitter<void> = new EventEmitter();
 
     public changeYAxesVisibility() {

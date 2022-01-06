@@ -26,8 +26,8 @@ export class AutoUpdateTimespanComponent {
   @Required @Input()
   public refreshInterval: number;
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output()
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onChangeTimespan: EventEmitter<Timespan> = new EventEmitter();
 
   public toggleAutoUpdate = false;

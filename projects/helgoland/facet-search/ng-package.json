@@ -2,12 +2,7 @@
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/helgoland/facet-search",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "@helgoland/core": "@helgoland/core",
-      "@helgoland/map": "@helgoland/map",
-      "leaflet": "leaflet"
-    }
+    "entryFile": "src/public-api.ts"
   },
   "allowedNonPeerDependencies": [""]
 }

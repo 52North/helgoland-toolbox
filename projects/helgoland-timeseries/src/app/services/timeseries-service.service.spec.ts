@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
-import { TimeseriesService } from './timeseries-service.service';
+import { TimeseriesService, TimeseriesServiceImpl } from './timeseries-service.service';
 
 describe('TimeseriesServiceService', () => {
   let service: TimeseriesService;
@@ -12,6 +12,12 @@ describe('TimeseriesServiceService', () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule
+      ],
+      providers: [
+        {
+          provide: TimeseriesService,
+          useClass: TimeseriesServiceImpl
+        }
       ]
     });
     service = TestBed.inject(TimeseriesService);

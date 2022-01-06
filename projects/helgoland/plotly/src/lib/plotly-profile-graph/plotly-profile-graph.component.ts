@@ -36,8 +36,8 @@ export class PlotlyProfileGraphComponent
     extends DatasetPresenterComponent<TimedDatasetOptions[], any>
     implements AfterViewInit {
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onHighlight: EventEmitter<PresenterHighlight> = new EventEmitter();
 
     public preparedData = [];

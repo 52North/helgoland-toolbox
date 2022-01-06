@@ -42,8 +42,8 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     @Input()
     public selected: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onItemSelected: EventEmitter<FilteredParameter> = new EventEmitter<FilteredParameter>();
 
     public loading = 0;

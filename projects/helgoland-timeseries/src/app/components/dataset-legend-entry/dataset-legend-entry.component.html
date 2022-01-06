@@ -2,11 +2,11 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
-        <n52-label-mapper label="{{dataset.description.phenomenonLabel}}"></n52-label-mapper>
-        <span *ngIf="dataset.description.uom">
-          <span> [<n52-label-mapper label="{{dataset.description.uom}}"></n52-label-mapper>] </span>
+        <n52-label-mapper label="{{dataset?.description.phenomenonLabel}}"></n52-label-mapper>
+        <span *ngIf="dataset?.description.uom">
+          <span> [<n52-label-mapper label="{{dataset?.description.uom}}"></n52-label-mapper>] </span>
         </span>
-        <div>{{dataset.description.platformLabel}}</div>
+        <div>{{dataset?.description.platformLabel}}</div>
       </div>
       <div class="title error" *ngIf="error">
         Error occured, while loading {{dataset.id}}
@@ -19,7 +19,7 @@
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div *ngIf="!error">
+  <div *ngIf="!error && dataset">
     <div class="small-label" *ngIf="dataset.description.procedureLabel || dataset.description.categoryLabel">
       <n52-label-mapper label="{{dataset.description.procedureLabel}}"></n52-label-mapper>
       <span *ngIf="dataset.description.categoryLabel !== dataset.description.phenomenonLabel">
@@ -68,5 +68,5 @@
       </div>
     </div>
   </div>
-  <helgoland-loading-overlay-progress-bar *ngIf="dataset.dataLoading"></helgoland-loading-overlay-progress-bar>
+  <helgoland-loading-overlay-progress-bar *ngIf="dataset?.dataLoading"></helgoland-loading-overlay-progress-bar>
 </mat-expansion-panel>

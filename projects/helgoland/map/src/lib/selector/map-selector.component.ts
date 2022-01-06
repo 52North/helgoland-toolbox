@@ -39,12 +39,12 @@ export abstract class MapSelectorComponent<T>
     @Input()
     public markerSelectorGenerator: MarkerSelectorGenerator;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onSelected: EventEmitter<T> = new EventEmitter<T>();
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
     /**
@@ -53,8 +53,8 @@ export abstract class MapSelectorComponent<T>
     @Input()
     public fitBoundsMarkerOptions: L.FitBoundsOptions;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
     constructor(

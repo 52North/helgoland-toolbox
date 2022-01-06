@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ 'modal-edit-timeseries-options.title' | translate }}</h1>
-<div>
+<div *ngIf="data.dataset">
 
   <!-- <div>
     <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
@@ -8,7 +8,7 @@
   </div> -->
 
   <div>
-    <mat-slide-toggle [ngModel]="data.dataset.yAxis.zeroBased" (change)="setZeroBased($event)" color="primary">
+    <mat-slide-toggle [ngModel]="data.dataset?.yAxis.zeroBased" (change)="setZeroBased($event)" color="primary">
       {{ 'modal-edit-timeseries-options.null-based' | translate }}
     </mat-slide-toggle>
   </div>

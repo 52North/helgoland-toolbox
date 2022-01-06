@@ -13,9 +13,9 @@ import {
     D3Copyright,
     D3SeriesGraphOptions,
     DatasetDescription,
-    SeriesGraphDataset,
     HoveringStyle,
     LineStyle,
+    SeriesGraphDataset,
 } from '@helgoland/d3';
 
 @Component({
@@ -126,12 +126,7 @@ export class SandboxComponent implements OnInit {
     }
 
     public addNewValue() {
-        this.datasets[0].addNewData(
-            {
-                timestamp: new Date().getTime(),
-                value: this.createValue()
-            }
-        )
+        this.datasets[0].addNewData(new Date().getTime(), this.createValue())
     }
 
     public zoomTimeframe() {

@@ -28,8 +28,8 @@ export class ListSelectorComponent implements OnChanges {
     @Input()
     public selectorId: string;
 
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output()
+    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onDatasetSelection: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
 
     public activePanel: string;
