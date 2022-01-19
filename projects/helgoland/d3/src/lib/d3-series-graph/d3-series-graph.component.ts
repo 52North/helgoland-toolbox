@@ -353,21 +353,22 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
-                    // if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-                    return d.value;
+                    if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
                 } else {
                     return null;
                 }
             });
 
-            const dataExtentRafValues = entry.children.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
+            const dataExtentChildValues = entry.children
+                .filter(c => c.visible)
+                .map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
             if (isNaN(visualMin)) {
-                visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+                visualMin = d3.min([baseDataExtent[0], ...dataExtentChildValues.map(e => e[0])]);
             }
 
             if (isNaN(visualMax)) {
-                visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+                visualMax = d3.max([baseDataExtent[1], ...dataExtentChildValues.map(e => e[1])]);
             }
         }
 
