@@ -29,7 +29,8 @@ export class TrajectoryViewComponent implements OnInit {
 
   public graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Time,
-    dotted: false
+    dotted: false,
+    groupYAxis: true
   };
   public trajectoryGraphLoading: boolean;
 

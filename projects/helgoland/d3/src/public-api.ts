@@ -3,7 +3,7 @@
  */
 
 export * from './lib/d3.module';
-export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
+export { D3TrajectoryGraphComponent, D3GraphOptions, D3AxisType, D3SelectionRange } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
 
 export { D3GeneralGraphComponent } from './lib/d3-general-graph/d3-general-graph.component';
 
@@ -24,10 +24,8 @@ export { AdditionalData, ExtendedDataD3TimeseriesGraphComponent } from './lib/ex
 
 export { ExportImageButtonComponent } from './lib/export-image-button/export-image-button.component';
 
-export * from './lib/model/d3-graph-options';
-export * from './lib/model/d3-axis-type';
 export * from './lib/model/d3-highlight';
-export * from './lib/model/d3-selection-range';
+// export * from './lib/model/d3-selection-range';
 export * from './lib/model/d3-plot-options';
 export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/model/d3-general';
