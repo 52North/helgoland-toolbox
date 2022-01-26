@@ -33,6 +33,8 @@ import {
     curveLinear,
     extent,
     line,
+    max,
+    min,
     mouse,
     ScaleLinear,
     scaleLinear,
@@ -41,7 +43,22 @@ import {
 } from 'd3';
 import moment from 'moment';
 
-import { D3AxisType, D3GraphOptions, D3SelectionRange } from './d3-trajectory-models';
+export interface D3GraphOptions {
+    axisType: D3AxisType;
+    dotted: boolean;
+    groupYAxis?: boolean;
+}
+
+export enum D3AxisType {
+    Distance,
+    Time,
+    Ticks
+}
+
+export class D3SelectionRange {
+    public from: number;
+    public to: number;
+}
 
 interface DataEntry extends LocatedTimeValueEntry {
     dist: number;
@@ -67,6 +84,11 @@ interface DrawOptions {
     color: string;
     first: boolean;
     offset: number;
+}
+
+interface YAxisConfig {
+    uom: string;
+    entries: DatasetConstellation[];
 }
 
 @Component({
@@ -130,7 +152,8 @@ export class D3TrajectoryGraphComponent
 
     protected defaultGraphOptions: D3GraphOptions = {
         axisType: D3AxisType.Distance,
-        dotted: false
+        dotted: false,
+        groupYAxis: true
     };
 
     constructor(
@@ -415,24 +438,7 @@ export class D3TrajectoryGraphComponent
 
         this.yScaleBase = null;
 
-        this.datasetMap.forEach((datasetEntry, id) => {
-            if (this.datasetOptions.has(id) && datasetEntry.data && datasetEntry.data.length > 0 && this.datasetOptions.get(id).visible) {
-                datasetEntry.drawOptions = {
-                    uom: datasetEntry.dataset.uom,
-                    id: datasetEntry.dataset.internalId,
-                    color: this.datasetOptions.get(id).color,
-                    first: this.yScaleBase === null,
-                    offset: this.bufferSum
-                };
-                const axisResult = this.drawYAxis(datasetEntry.drawOptions);
-                if (this.yScaleBase === null) {
-                    this.yScaleBase = axisResult.yScale;
-                } else {
-                    this.bufferSum = axisResult.buffer;
-                }
-                datasetEntry.yScale = axisResult.yScale;
-            }
-        });
+        this.createYAxis();
 
         if (!this.yScaleBase) {
             return;
@@ -666,6 +672,118 @@ export class D3TrajectoryGraphComponent
             }
         }).left;
         return bisectDate(this.baseValues, index);
+    }
+
+    protected createYAxis() {
+        const yaxisConfig: YAxisConfig[] = [];
+        this.datasetMap.forEach((datasetEntry, id) => {
+            if (this.datasetOptions.has(id) && datasetEntry.data && datasetEntry.data.length > 0 && this.datasetOptions.get(id).visible) {
+                datasetEntry.drawOptions = {
+                    uom: datasetEntry.dataset.uom,
+                    id: datasetEntry.dataset.internalId,
+                    color: this.datasetOptions.get(id).color,
+                    first: this.yScaleBase === null,
+                    offset: this.bufferSum
+                };
+                if (this.presenterOptions.groupYAxis) {
+                    const match = yaxisConfig.find(e => e.uom === datasetEntry.dataset.uom);
+                    if (match) {
+                        match.entries.push(datasetEntry);
+                    } else {
+                        yaxisConfig.push({
+                            uom: datasetEntry.dataset.uom,
+                            entries: [datasetEntry]
+                        })
+                    }
+                } else {
+                    yaxisConfig.push({
+                        uom: datasetEntry.dataset.uom,
+                        entries: [datasetEntry]
+                    })
+                }
+            }
+        });
+        this.drawYAxisNew(yaxisConfig);
+    }
+
+    drawYAxisNew(yaxisConfig: YAxisConfig[]) {
+        let offset = 0;
+        yaxisConfig.forEach((conf, idx) => {
+            const rangeList = conf.entries.map(e => extent<LocatedTimeValueEntry, number>(e.data, datum => datum.value))
+            const rangeMax = max(rangeList, d => d[1]);
+            const rangeMin = min(rangeList, d => d[0])
+            const rangeOffset = (rangeMax - rangeMin) * 0.10;
+            const yScale = scaleLinear()
+                .domain([rangeMin - rangeOffset, rangeMax + rangeOffset])
+                .range([this.height, 0]);
+
+            if (this.yScaleBase === null) {
+                this.yScaleBase = yScale;
+            }
+
+            const yAxisGen = axisLeft(yScale).ticks(5);
+
+            const axis = this.graph.append('svg:g')
+                .attr('class', 'y axis')
+                .call(yAxisGen);
+
+            // draw y axis label
+            const backRect = this.graph.append('rect').attr('fill', 'white');
+            const text = this.graph.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('dy', '1em')
+                .style('text-anchor', 'middle')
+                .style('fill', 'black')
+                .text(conf.uom);
+
+            const axisWidth = axis.node().getBBox().width + 5 + this.getDimensions(text.node()).h;
+            let buffer = 0;
+            if (idx !== 0) {
+                buffer = offset + (axisWidth < 30 ? 30 : axisWidth);
+                axis.attr('transform', 'translate(' + buffer + ', 0)');
+            }
+            const textWidth = text.node().getBBox().width;
+            const textHeight = text.node().getBBox().height;
+            const axisradius = 4;
+            const textOffset = idx !== 0 ? buffer : offset;
+            text.attr('y', 0 - this.margin.left - this.maxLabelwidth + textOffset)
+                .attr('x', 0 - (this.height / 2));
+            const startOfPoints = {
+                x: text.node().getBBox().y + textHeight / 2 + axisradius / 2,
+                y: Math.abs(text.node().getBBox().x + textWidth) - axisradius * 2
+            };
+            backRect
+                .attr('width', text.node().getBBox().height)
+                .attr('height', text.node().getBBox().width)
+                .attr('x', text.node().getBBox().y)
+                .attr('y', Math.abs(text.node().getBBox().x + textWidth))
+            let pointOffset = 0;
+            conf.entries.forEach((entry) => {
+                this.graph.append('circle')
+                    .attr('class', 'y-axis-circle')
+                    .attr('stroke', entry.drawOptions.color)
+                    .attr('fill', entry.drawOptions.color)
+                    .attr('cx', startOfPoints.x)
+                    .attr('cy', startOfPoints.y - pointOffset)
+                    .attr('r', 3);
+                pointOffset += axisradius * 3
+            });
+
+            // draw the y grid lines when there is only one dataset
+            if (this.datasetIds.length === 1) {
+                this.graph.append('svg:g')
+                    .attr('class', 'grid')
+                    .call(axisLeft(yScale)
+                        .ticks(5)
+                        .tickSize(-this.width)
+                        .tickFormat(() => '')
+                    );
+            }
+
+            conf.entries.forEach(e => e.yScale = yScale);
+            offset = buffer;
+            this.bufferSum = offset;
+        });
     }
 
     protected drawYAxis(options: DrawOptions): any {

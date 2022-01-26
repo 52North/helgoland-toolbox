@@ -3,9 +3,7 @@
  */
 
 export * from './lib/d3.module';
-
-export { D3TrajectoryGraphComponent } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
-export * from './lib/d3-trajectory-graph/d3-trajectory-models';
+export { D3TrajectoryGraphComponent, D3GraphOptions, D3AxisType, D3SelectionRange } from './lib/d3-trajectory-graph/d3-trajectory-graph.component';
 
 export * from './lib/d3-series-graph/d3-series-graph.component';
 export * from './lib/d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
