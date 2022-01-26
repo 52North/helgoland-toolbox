@@ -142,6 +142,7 @@ export interface ApiV3ParameterFilter {
   datasetTypes?: ApiV3DatasetTypes[];
   observationTypes?: ApiV3ObservationTypes[];
   valueTypes?: ApiV3ValueTypes[];
+  mobile?: boolean;
   expanded?: boolean;
   datasets?: string[];
   features?: string[];
