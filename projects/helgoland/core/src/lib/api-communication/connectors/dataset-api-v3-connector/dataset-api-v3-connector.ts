@@ -393,6 +393,13 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     if (filter.feature) { apiFilter.features = [filter.feature]; }
     if (filter.expanded) { apiFilter.expanded = filter.expanded; }
     if (filter.lang) { apiFilter.locale = filter.lang; }
+    switch (filter.platformType) {
+      case PlatformTypes.mobile:
+        apiFilter.mobile = true;
+        break;
+      default:
+        break;
+    }
     switch (filter.type) {
       case DatasetType.Timeseries:
         apiFilter.datasetTypes = [ApiV3DatasetTypes.Timeseries];
