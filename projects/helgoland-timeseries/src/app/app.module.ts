@@ -36,6 +36,7 @@ import {
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
   LocalStorage,
+  SettingsService,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
 import { D3TimeseriesGraphErrorHandler, HelgolandD3Module } from '@helgoland/d3';
@@ -199,6 +200,10 @@ export function initApplication(configService: ConfigurationService, translate: 
     {
       provide: D3TimeseriesGraphErrorHandler,
       useClass: CustomD3TimeseriesGraphErrorHandler
+    },
+    {
+      provide: SettingsService,
+      useExisting: ConfigurationService
     },
     {
       provide: APP_INITIALIZER,

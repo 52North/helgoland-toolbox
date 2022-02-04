@@ -1,0 +1,16 @@
+:host {
+    .login {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            margin: 0px 10px;
+        }
+    }
+}
