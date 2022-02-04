@@ -150,7 +150,7 @@ export class D3TimeseriesGraphComponent
     };
 
     private graphInteraction: d3.Selection<SVGSVGElement, any, any, any>;
-    
+
     private resizeObserver: ResizeObserver;
 
     constructor(
@@ -199,7 +199,7 @@ export class D3TimeseriesGraphComponent
 
         this.addResizeObserver();
     }
-    
+
     private addResizeObserver() {
         this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
         this.resizeObserver.observe(this.d3Elem.nativeElement);
@@ -1288,7 +1288,8 @@ export class D3TimeseriesGraphComponent
                 if (typeof d.value === 'number') {
                     width = this.xScaleBase(d.timestamp + periodInMs) - this.xScaleBase(d.timestamp);
                 }
-                return width - paddingBefore - paddingAfter;
+                const barWidth = width - paddingBefore - paddingAfter;
+                return barWidth < 1 ? 1 : barWidth;
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
             .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
