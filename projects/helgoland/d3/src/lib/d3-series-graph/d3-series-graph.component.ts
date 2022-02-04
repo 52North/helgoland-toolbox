@@ -1065,7 +1065,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 if (typeof d.value === 'number') {
                     width = this.xScaleBase(d.timestamp + periodInMs) - this.xScaleBase(d.timestamp);
                 }
-                return width - paddingBefore - paddingAfter;
+                const barWidth = width - paddingBefore - paddingAfter;
+                return barWidth < 1 ? 1 : barWidth;
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
             .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
