@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { ParameterListEntry, ParameterType } from 'helgoland-common';
+import { ErrorHandlerService, ParameterListEntry, ParameterType } from 'helgoland-common';
 
 import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from '../../services/timeseries-service.service';
@@ -30,14 +30,18 @@ export class ListSelectionViewComponent implements OnInit {
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
     public timeseries: TimeseriesService,
-    private configSrvc: ConfigurationService
+    private configSrvc: ConfigurationService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
     if (this.configSrvc.configuration) {
-      this.serviceConnector.getServices(this.configSrvc.configuration.defaultService.apiUrl).subscribe(services => {
-        this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
-        this.resetView();
+      this.serviceConnector.getServices(this.configSrvc.configuration.defaultService.apiUrl).subscribe({
+        next: services => {
+          this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
+          this.resetView();
+        },
+        error: error => this.errorHandler.error(error)
       });
     }
   }

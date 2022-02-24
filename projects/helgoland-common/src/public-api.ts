@@ -11,3 +11,4 @@ export * from './lib/components/share-button/share-button.component';
 export * from './lib/components/version-info/version-info.component';
 
 export * from './lib/services/layout-mode.service';
+export * from './lib/services/error-handler.service';
