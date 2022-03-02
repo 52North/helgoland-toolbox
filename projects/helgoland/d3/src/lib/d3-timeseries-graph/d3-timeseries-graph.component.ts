@@ -926,7 +926,7 @@ export class D3TimeseriesGraphComponent
                 .attr('x', (this.width + bufferXrange) / 2)
                 .attr('y', this.height + this.margin.bottom - 5)
                 .style('text-anchor', 'middle')
-                .text('time');
+                .text(this.plotOptions.showTimeLabel === true ? 'time' : this.plotOptions.showTimeLabel);
         }
     }
 
