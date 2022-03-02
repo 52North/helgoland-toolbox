@@ -67,7 +67,7 @@ export interface D3PlotOptions {
     /**
     * show the label of the xaxis
     */
-    showTimeLabel?: boolean;
+    showTimeLabel?: boolean | string;
 
     /**
     * Request the data with expanded=true, to get valueBeforeTimespan/valueAfterTimespan
