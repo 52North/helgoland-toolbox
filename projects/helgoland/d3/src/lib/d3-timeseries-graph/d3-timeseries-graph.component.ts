@@ -34,6 +34,7 @@ import * as d3 from 'd3';
 import moment, { unitOfTime } from 'moment';
 import { Subscription } from 'rxjs';
 
+import { D3AssistantService, EmptyAssistantService } from '../helper/d3-assistant.service';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
@@ -81,13 +82,11 @@ export class D3TimeseriesGraphComponent
 
     @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
-    @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+    @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
-    @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    public onClickDataPoint: EventEmitter<{ timeseries: HelgolandTimeseries, data: HelgolandTimeseriesData }> = new EventEmitter();
+    @Output() public onClickDataPoint: EventEmitter<{ timeseries: HelgolandTimeseries, data: HelgolandTimeseriesData }> = new EventEmitter();
 
     @ViewChild('d3timeseries', { static: true })
     public d3Elem: ElementRef;
@@ -170,7 +169,8 @@ export class D3TimeseriesGraphComponent
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
         protected zone: NgZone,
         @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
-        @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer()
+        @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer(),
+        @Optional() protected yAxisLabelSrvc: D3AssistantService = new EmptyAssistantService(),
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
     }
@@ -1061,7 +1061,7 @@ export class D3TimeseriesGraphComponent
                 .attr('transform', 'rotate(-90)')
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
-                .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
+                .text(this.getYAxisLabel(axis))
                 .call(this.wrapText, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label);
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
@@ -1128,6 +1128,14 @@ export class D3TimeseriesGraphComponent
             buffer,
             yScale
         };
+    }
+
+    private getYAxisLabel(axis: YAxis): string {
+        if (this.yAxisLabelSrvc.getLabel) {
+            const datasets = axis.ids.map(id => this.datasetMap.get(id));
+            return this.yAxisLabelSrvc.getLabel(axis, datasets);
+        }
+        return axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom;
     }
 
     private drawBackground() {
