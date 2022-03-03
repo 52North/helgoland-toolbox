@@ -65,5 +65,5 @@
 | MIT          | git+https://github.com/ng-packagr/ng-packagr.git                           | 12.0.0            | ng-packagr                             |
 | MIT          | git+https://github.com/citycide/tablemark-cli.git                          | 2.0.0             | tablemark-cli                          |
 | MIT          | git://github.com/TypeStrong/ts-node.git                                    | 10.0.0            | ts-node                                |
-| Apache-2.0   | git+https://github.com/Microsoft/TypeScript.git                            | 4.2.3             | typescript                             |
+| Apache-2.0   | https://github.com/Microsoft/TypeScript.git                                | 4.2.3             | typescript                             |
 
