@@ -33,16 +33,17 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+    protected setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
         const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
-        this.highlightText.append('text')
+        textContainer.append('text')
             .text(`${stringedValue} ${entry.axisOptions.uom} ${timelabel}`)
             .attr('class', 'mouseHoverDotLabel')
+            .attr('alignment-baseline', 'text-before-edge')
             .style('pointer-events', 'none')
             .style('fill', 'black');
-        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
-        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
+        textContainer.append('text').attr('dy', '1em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.phenomenon.label);
+        textContainer.append('text').attr('dy', '2em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.category.label);
     }
 
 }
@@ -54,10 +55,10 @@ class HoveringTestService extends D3SimpleHoveringService {
 export class GraphLegendComponent {
 
     public datasetIds = [
-        'https://fluggs.wupperverband.de/sos2/api/v1/__26',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__49',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__51',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__72',
+        'https://fluggs.wupperverband.de/sws5/api/__26',
+        'https://fluggs.wupperverband.de/sws5/api/__49',
+        'https://fluggs.wupperverband.de/sws5/api/__51',
+        'https://fluggs.wupperverband.de/sws5/api/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',

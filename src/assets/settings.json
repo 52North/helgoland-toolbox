@@ -25,7 +25,7 @@
         },
         {
             "name": "fluggs.wupperverband.de",
-            "url": "https://fluggs.wupperverband.de/sos2/api/v1/"
+            "url": "https://fluggs.wupperverband.de/sws5/api/"
         },
         {
             "name": "52north - Sensorwebtestbed",
