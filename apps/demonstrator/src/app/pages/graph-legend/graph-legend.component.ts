@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import {
     ColorService,
     DatasetOptions,
-    DefinedTimespan,
     DefinedTimespanService,
     HelgolandTimeseries,
     HelgolandTimeseriesData,
@@ -33,16 +32,17 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+    protected setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
         const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
-        this.highlightText.append('text')
+        textContainer.append('text')
             .text(`${stringedValue} ${entry.axisOptions.uom} ${timelabel}`)
             .attr('class', 'mouseHoverDotLabel')
+            .attr('alignment-baseline', 'text-before-edge')
             .style('pointer-events', 'none')
             .style('fill', 'black');
-        this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
-        this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
+        textContainer.append('text').attr('dy', '1em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.phenomenon.label);
+        textContainer.append('text').attr('dy', '2em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.category.label);
     }
 
 }
