@@ -39,16 +39,16 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
-  private d3Graph: D3TimeseriesGraphComponent;
-  private drawLayer: d3.Selection<SVGGElement, any, any, any>;
-  private background: d3.Selection<SVGSVGElement, any, any, any>;
-  private disableHovering: boolean;
-  private preparedData: InternalDataEntry[];
-  private graphExtent: D3GraphExtent;
-  private graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
-  private previousPoint: HoveredElement;
+  protected d3Graph: D3TimeseriesGraphComponent;
+  protected drawLayer: d3.Selection<SVGGElement, any, any, any>;
+  protected background: d3.Selection<SVGSVGElement, any, any, any>;
+  protected disableHovering: boolean;
+  protected preparedData: InternalDataEntry[];
+  protected graphExtent: D3GraphExtent;
+  protected graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
+  protected previousPoint: HoveredElement;
 
-  private previousBars: BarHoverElement[] = [];
+  protected previousBars: BarHoverElement[] = [];
 
   constructor(
     protected graphId: D3GraphId,
@@ -109,7 +109,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     this.disableHovering = false;
   }
 
-  private mouseMoved() {
+  protected mouseMoved() {
     this.unhighlight();
     const pos = this.getCurrentMousePosition();
     const nearestPoint = this.findNearestPoint(pos.x, pos.y);
@@ -118,13 +118,13 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     } else {
       const time = this.graphExtent.xScale.invert(pos.x).getTime();
       const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
-      if (nearestBar) {
+      if (nearestBar.length) {
         this.highlightBars(nearestBar);
       }
     }
   }
 
-  private highlightPoint(nearestPoint: HoveredElement) {
+  protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
     const dataset = this.d3Graph.getDataset(nearestPoint.internalEntry.internalId);
     this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
@@ -147,7 +147,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     });
   }
 
-  private highlightBars(nearestBars: BarHoverElement[]) {
+  protected highlightBars(nearestBars: BarHoverElement[]) {
     const elements: HoveringElement[] = [];
     // add hovering tooltip to array
     nearestBars.forEach(nearestBar => {
@@ -176,7 +176,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
   }
 
-  private unhighlight() {
+  protected unhighlight() {
     if (this.previousPoint) {
       this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, this.previousPoint.selection);
       this.previousPoint = null;
@@ -192,7 +192,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     this.hoveringService.removeTooltip();
   }
 
-  private findNearestPoint(x: number, y: number): HoveredElement {
+  protected findNearestPoint(x: number, y: number): HoveredElement {
     let nearest: HoveredElement = null;
     let nearestDist = Infinity;
 
@@ -219,7 +219,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     return nearest;
   }
 
-  private findNearestBar(time: number, height: number): BarHoverElement[] {
+  protected findNearestBar(time: number, height: number): BarHoverElement[] {
     const nearest: BarHoverElement[] = [];
     this.preparedData.every(e => {
       if (e.options.type === 'bar') {
@@ -244,12 +244,12 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     return nearest;
   }
 
-  private getCurrentMousePosition(): { x: number, y: number } {
+  protected getCurrentMousePosition(): { x: number, y: number } {
     const [x, y] = d3.mouse(this.background.node());
     return { x: x + this.graphExtent.leftOffset, y };
   }
 
-  private distance(px: number, py: number, mx: number, my: number): number {
+  protected distance(px: number, py: number, mx: number, my: number): number {
     const a = px - mx;
     const b = py - my;
     return Math.sqrt(a * a + b * b);

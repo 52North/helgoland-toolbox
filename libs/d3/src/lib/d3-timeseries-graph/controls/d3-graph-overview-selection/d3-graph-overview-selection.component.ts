@@ -20,12 +20,12 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
   @Input() public selectionTimeInterval: Timespan;
 
-  private mousedownBrush: boolean;
-  private graphComp: D3TimeseriesGraphComponent;
-  private overview: d3.Selection<SVGSVGElement, any, any, any>;
-  private drawLayer: d3.Selection<SVGGElement, any, any, any>;
-  private completeTimespan: Timespan;
-  private graphExtent: D3GraphExtent;
+  protected mousedownBrush: boolean;
+  protected graphComp: D3TimeseriesGraphComponent;
+  protected overview: d3.Selection<SVGSVGElement, any, any, any>;
+  protected drawLayer: d3.Selection<SVGGElement, any, any, any>;
+  protected completeTimespan: Timespan;
+  protected graphExtent: D3GraphExtent;
 
   constructor(
     protected graphId: D3GraphId,
@@ -69,7 +69,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     }
   }
 
-  private drawOverviewSelection() {
+  protected drawOverviewSelection() {
     if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent) { return; }
 
     this.drawLayer.selectAll('*').remove();
@@ -133,7 +133,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
    * for the overview diagram by the selected time interval of the main diagram.
    * Calculate to get brush extent when main diagram time interval changes.
    */
-  private getXDomainByTimestamp(timespan: Timespan, width: number): [number, number] {
+  protected getXDomainByTimestamp(timespan: Timespan, width: number): [number, number] {
     /**
      * calculate range of brush with timestamp and not diagram coordinates
      * formula:
@@ -162,7 +162,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
    * @param minCalcBrush {Number} Number with the minimum coordinate of the selected brush range.
    * @param maxCalcBrush {Number} Number with the maximum coordinate of the selected brush range.
    */
-  private getTimestampByCoord(minCalcBrush: number, maxCalcBrush: number, timespan: Timespan, width: number): [number, number] {
+  protected getTimestampByCoord(minCalcBrush: number, maxCalcBrush: number, timespan: Timespan, width: number): [number, number] {
     /**
      * calculate range of brush with timestamp and not diagram coordinates
      * formula:

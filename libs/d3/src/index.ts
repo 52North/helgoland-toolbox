@@ -16,6 +16,8 @@ export * from './lib/d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-
 export * from './lib/d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
 export * from './lib/d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 export * from './lib/d3-timeseries-graph/d3-timeseries-graph-error-handler.service';
+export * from './lib/d3-timeseries-graph/d3-timeseries-graph.component';
+export * from './lib/d3-timeseries-graph/d3-timeseries-graph-control';
 
 export { D3OverviewTimeseriesGraphComponent } from './lib/d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
 
@@ -28,10 +30,14 @@ export * from './lib/model/d3-axis-type';
 export * from './lib/model/d3-highlight';
 export * from './lib/model/d3-selection-range';
 export * from './lib/model/d3-plot-options';
-export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/model/d3-general';
+
+export * from './lib/helper/d3-time-format-locale.service';
 export * from './lib/helper/generalizing/d3-data-generalizer';
 export * from './lib/helper/generalizing/d3-data-simple-generalizer.service';
 export * from './lib/helper/generalizing/d3-data-none-generalizer.service';
 export * from './lib/helper/hovering/d3-hovering-service';
 export * from './lib/helper/hovering/d3-simple-hovering.service';
+export * from './lib/helper/d3-graphs.service';
+export * from './lib/helper/d3-graph-id.service';
+export * from './lib/helper/d3-graph-helper.service';
