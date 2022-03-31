@@ -11,7 +11,7 @@ Add Component somewhere to HTML
 
 Sample configuration for the component:
 ```javascript
-public lastValueSeriesIDs = [ 'https://fluggs.wupperverband.de/sos2/api/v1/__51', 'https://fluggs.wupperverband.de/sos2/api/v1/__78', 'https://fluggs.wupperverband.de/sos2/api/v1/__95', 'https://fluggs.wupperverband.de/sos2/api/v1/__54' ];
+public lastValueSeriesIDs = [ 'https://fluggs.wupperverband.de/sws5/api/__51', 'https://fluggs.wupperverband.de/sws5/api/__78', 'https://fluggs.wupperverband.de/sws5/api/__95', 'https://fluggs.wupperverband.de/sws5/api/__54' ];
 public lastValuePresentation = LastValuePresentation.Textual;
 public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };
 ```

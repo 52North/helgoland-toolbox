@@ -56,7 +56,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
       this.pointSymbolDrawer.showHovering(pointElem);
     }
 
-    this.setHoveringLabel(d, entry, timeseries);
+    this.setHoveringLabel(this.highlightText, d, entry, timeseries);
   }
 
   public positioningPointHovering(x: number, y: number, color: string, background: any) {
@@ -86,13 +86,9 @@ export class D3SimpleHoveringService extends D3HoveringService {
         .style('stroke', elem.entry.options.color)
         .style('stroke-width', '1px')
         .style('pointer-events', 'none')
-      const stringedValue = (typeof elem.dataEntry.value === 'number') ? parseFloat(elem.dataEntry.value.toPrecision(15)).toString() : elem.dataEntry.value;
-      const text = this.tooltipContainer.append('text')
-        .text(`${stringedValue} ${elem.entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(elem.dataEntry.timestamp)}`)
-        .attr('class', 'mouseHoverDotLabel')
-        .style('pointer-events', 'none')
-        .style('fill', 'black')
-      this.positionTooltip(text, rect, onLeftSide, itemCounter);
+      const textContainer = this.tooltipContainer.append('g')
+      this.setHoveringLabel(textContainer, elem.dataEntry, elem.entry, elem.timeseries);
+      this.positionTooltip(textContainer, rect, onLeftSide, itemCounter);
       itemCounter++;
     })
   }
@@ -105,11 +101,11 @@ export class D3SimpleHoveringService extends D3HoveringService {
     const rectH: number = this.graphHelper.getDimensions(text.node()).h;
     // positioning text
     const textX = onLeftSide ? 0 + textPadding : -rectW - textPadding;
-    const textY = rectH + (itemCounter * (rectH + 4)) + (itemCounter * rectPadding * 2);
-    text.attr('transform', `translate(${textX}, ${textY + rectPadding})`);
+    const textY = rectPadding;
+    text.attr('transform', `translate(${textX}, ${textY})`);
     // positioning rect
     const rectX = textX - rectPadding;
-    const rectY = textY - rectH + 4;
+    const rectY = 0;
     rect.attr('width', rectW + 2 * rectPadding)
       .attr('height', rectH + 2 * rectPadding)
       .attr('transform', `translate(${rectX}, ${rectY})`);
@@ -133,11 +129,12 @@ export class D3SimpleHoveringService extends D3HoveringService {
     return (background.node().getBBox().width) / 2 > x;
   }
 
-  protected setHoveringLabel(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+  protected setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
-    this.highlightText.append('text')
+    textContainer.append('text')
       .text(`${stringedValue} ${entry.axisOptions.uom} ${this.timezoneSrvc.formatTzDate(d.timestamp)}`)
       .attr('class', 'mouseHoverDotLabel')
+      .attr('alignment-baseline', 'text-before-edge')
       .style('pointer-events', 'none')
       .style('fill', 'black');
   }

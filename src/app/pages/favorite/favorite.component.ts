@@ -15,7 +15,7 @@ export class FavoriteComponent {
     private jsonExport: JsonFavoriteExporterService,
     private servicesConnector: HelgolandServicesConnector
   ) {
-    this.servicesConnector.getDataset({ id: '26', url: 'https://fluggs.wupperverband.de/sos2/api/v1/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
+    this.servicesConnector.getDataset({ id: '26', url: 'https://fluggs.wupperverband.de/sws5/api/' }, { type: DatasetType.Timeseries }).subscribe(dataset => {
       this.favoriteSrvc.addFavorite(dataset, new DatasetOptions(dataset.internalId, 'red'));
       this.loadFavorites();
     });

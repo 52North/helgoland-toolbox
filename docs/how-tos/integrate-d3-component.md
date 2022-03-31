@@ -108,7 +108,7 @@ Implement the functionality of the `n52-d3-timeseries-graph`-directive by adding
 
 ```javascript
 // These variables define the links for accessing the datasets and in which colors they are styled.
-public datasetIdsMultiple = ['https://fluggs.wupperverband.de/sos2/api/v1/__63', 'https://fluggs.wupperverband.de/sos2/api/v1/__72'];
+public datasetIdsMultiple = ['https://fluggs.wupperverband.de/sws5/api/__63', 'https://fluggs.wupperverband.de/sws5/api/__72'];
 public colors = ['#123456', '#FF0000'];
 
 // The timespan will be set to the last 28 hours which is calculated in milliseconds (milliseconds*1000 = 100000000).
