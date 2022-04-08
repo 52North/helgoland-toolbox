@@ -65,6 +65,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-line-layer');
     }
     this.createHoverLine();
+    this.labels.clear();
     this.background = background;
     this.graphExtent = graphExtent;
     this.preparedData = preparedData;
@@ -104,12 +105,10 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   }
 
   public dragEndBackground() {
-    this.labels.clear();
     this.disableHovering = false;
   }
 
   public zoomEndBackground() {
-    this.labels.clear();
     this.disableHovering = false;
   }
 
@@ -180,7 +179,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
       const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
       this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
         .attr('x', onLeftSide ? right : left)
-        .attr('y', 13);
+        .attr('y', 15);
     }
   }
 

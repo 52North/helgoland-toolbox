@@ -142,16 +142,17 @@ export class PlotlyProfileGraphComponent
     protected datasetOptionsChanged(internalId: string, options: TimedDatasetOptions[], firstChange: boolean): void {
         if (!firstChange) {
             // remove unused options
-            const removedIdx = this.rawData.get(internalId).options.findIndex((option) => {
-                const idx = options.findIndex((e) => e.timestamp === option.timestamp);
-                if (idx === -1) {
-                    return true;
-                }
-            });
-            if (removedIdx > -1) {
-                this.rawData.get(internalId).options.splice(removedIdx, 1);
-                this.rawData.get(internalId).datas.splice(removedIdx, 1);
-            }
+            // const removedIdx = this.rawData.get(internalId).options.findIndex((option) => {
+            //     const idx = options.findIndex((e) => e.timestamp === option.timestamp);
+            //     if (idx === -1) {
+            //         return true;
+            //     }
+            // });
+            // if (removedIdx > -1) {
+            //     this.rawData.get(internalId).options.splice(removedIdx, 1);
+            //     this.rawData.get(internalId).datas.splice(removedIdx, 1);
+            // }
+            this.rawData.get(internalId).options = options; 
             this.processData();
         }
     }
