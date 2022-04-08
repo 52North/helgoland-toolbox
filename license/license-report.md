@@ -21,12 +21,14 @@
 | MIT          | git+https://github.com/jquery/jquery.git                                   | 3.5.1             | jquery                                 |
 | BSD-2-Clause | git://github.com/Leaflet/Leaflet.git                                       | 1.7.1             | leaflet                                |
 | MIT          | git+https://github.com/Leaflet/Leaflet.markercluster.git                   | 1.5.0             | leaflet.markercluster                  |
+| Apache-2.0   | git+https://github.com/marella/material-icons.git                          | 1.10.8            | material-icons                         |
 | MIT          | git+https://github.com/moment/moment.git                                   | 2.29.1            | moment                                 |
 | MIT          | git+https://github.com/moment/moment-timezone.git                          | 0.5.33            | moment-timezone                        |
 | MIT          | https://github.com/maxisam/ngx-clipboard                                   | 14.0.1            | ngx-clipboard                          |
 | MIT          | https://github.com/zefoy/ngx-color-picker/issues                           | 11.0.0            | ngx-color-picker                       |
 | BSD-2-Clause | git://github.com/openlayers/openlayers.git                                 | 6.4.3             | ol                                     |
 | MIT          | git+https://github.com/plotly/plotly.js.git                                | 1.54.5            | plotly.js                              |
+| Apache-2.0   | git+https://github.com/choffmeister/roboto-fontface-bower.git              | 0.10.0            | roboto-fontface                        |
 | Apache-2.0   | git+https://github.com/reactivex/rxjs.git                                  | 6.6.0             | rxjs                                   |
 | 0BSD         | git+https://github.com/Microsoft/tslib.git                                 | 2.1.0             | tslib                                  |
 | Apache-2.0   | git+https://github.com/mreuvers/typescript-logging.git                     | 0.6.3             | typescript-logging                     |
