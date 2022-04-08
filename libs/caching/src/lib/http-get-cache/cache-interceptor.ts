@@ -31,7 +31,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         }
 
         if (metadata.forceUpdate) {
-            this.logging && console.log(`forced request: ${req.urlWithParams}`);
+            this.doLogging(`forced request: ${req.urlWithParams}`);
             return next.handle(req, metadata);
         }
 
@@ -40,18 +40,18 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         if (cachedResponse) {
             // A cached response exists. Serve it instead of forwarding
             // the request to the next handler.
-            this.logging && console.log(`use cache: ${req.urlWithParams}`);
+            this.doLogging(`use cache: ${req.urlWithParams}`);
             return of(cachedResponse.clone({ body: JSON.parse(JSON.stringify(cachedResponse.body)) }));
         }
 
         // check if the same request is still in the pipe
         if (this.ongoingCache.has(req)) {
-            this.logging && console.log(`use cache: ${req.urlWithParams}`);
+            this.doLogging(`use cache: ${req.urlWithParams}`);
             return this.ongoingCache.observe(req);
         } else {
             // No cached response exists. Go to the network, and cache
             // the response when it arrives.
-            this.logging && console.log(`do request: ${req.urlWithParams}`);
+            this.doLogging(`do request: ${req.urlWithParams}`);
             return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
                 const shared = next.handle(req, metadata).pipe(share());
                 shared.subscribe((res) => {
@@ -67,6 +67,12 @@ export class CachingInterceptor implements HttpServiceInterceptor {
                 });
                 this.ongoingCache.set(req, shared);
             });
+        }
+    }
+
+    private doLogging(message: string) {
+        if (this.logging) {
+            console.log(message);
         }
     }
 }
