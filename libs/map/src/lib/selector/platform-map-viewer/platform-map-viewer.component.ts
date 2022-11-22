@@ -69,12 +69,14 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
           }
         },
         onEachFeature: (feature, layer) => {
+          layer.bindTooltip(feature.properties?.platform?.label);
           layer.on('click', (evt) => {
             console.log(evt.target.feature.id);
             this.onSelectedPlatform.emit(evt.target.feature.properties.platform);
           })
         }
       });
+
       this.platforms.forEach(e => {
         if (e.geometry) {
           const feature: Feature = {
