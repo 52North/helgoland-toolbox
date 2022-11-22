@@ -73,7 +73,7 @@
     "@angular/cdk": "^10.2.2",
     "@angular/common": "^10.0.0",
     "@angular/compiler": "^10.0.0",
-    "@angular/core": "^10.0.0",
+    "@angular/core": "^11.0.5",
     "@angular/forms": "^10.0.0",
     "@angular/material": "^10.2.2",
     "@angular/material-moment-adapter": "^10.2.5",
