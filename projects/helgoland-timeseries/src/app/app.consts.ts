@@ -4,8 +4,9 @@ import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
+import { Routes } from "@angular/router";
 
-export const ROUTES = [
+export const ROUTES: Routes = [
   {
     path: MAP_SELECTION_ROUTE,
     component: MapSelectionViewComponent

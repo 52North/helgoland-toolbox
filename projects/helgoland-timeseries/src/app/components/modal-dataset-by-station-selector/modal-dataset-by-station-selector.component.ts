@@ -31,8 +31,8 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
   }
 
   public adjustSelection(change: MatSelectionListChange) {
-    const id = (change.option.value as SelectableDataset).internalId;
-    if (change.option.selected) {
+    const id = (change.options[0].value as SelectableDataset).internalId;
+    if (change.options[0].selected) {
       this.timeseries.addDataset(id);
     } else {
       this.timeseries.removeDataset(id);

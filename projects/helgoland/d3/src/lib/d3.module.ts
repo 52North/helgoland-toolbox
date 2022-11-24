@@ -26,8 +26,8 @@ import { ExportImageButtonComponent } from './export-image-button/export-image-b
 import {
   ExtendedDataD3TimeseriesGraphComponent,
 } from './extended-data-d3-timeseries-graph/extended-data-d3-timeseries-graph.component';
-import { D3TimeFormatLocaleService } from './helper/d3-time-format-locale.service';
 import { D3AssistantService, EmptyAssistantService } from './helper/d3-assistant.service';
+import { D3TimeFormatLocaleService } from './helper/d3-time-format-locale.service';
 import { D3DataGeneralizer } from './helper/generalizing/d3-data-generalizer';
 import { D3DataSimpleGeneralizer } from './helper/generalizing/d3-data-simple-generalizer.service';
 
@@ -77,9 +77,6 @@ const COMPONENTS = [
       provide: D3TimeseriesGraphErrorHandler,
       useClass: D3TimeseriesSimpleGraphErrorHandler
     }
-  ],
-  entryComponents: [
-    D3TimeseriesGraphComponent,
   ]
 })
 export class HelgolandD3Module { }
