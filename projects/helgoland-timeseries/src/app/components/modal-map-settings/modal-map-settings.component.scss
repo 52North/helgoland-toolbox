@@ -3,7 +3,7 @@ mat-dialog-content {
     flex-direction: column;
     overflow: hidden;
 
-    * + * {
+    *+* {
         margin-top: 10px;
     }
 

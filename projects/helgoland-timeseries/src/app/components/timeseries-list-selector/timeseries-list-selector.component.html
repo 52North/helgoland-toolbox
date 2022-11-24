@@ -4,7 +4,6 @@
 <div *ngIf="!loading && items?.length === 0">
   no results found
 </div>
-
 <mat-selection-list #parameters [multiple]="true" (selectionChange)="selectionChanged($event)">
   <mat-list-option *ngFor="let item of items" [value]="item" color="primary"
     [selected]="timeseriesSrvc.hasDataset(item.internalId)">

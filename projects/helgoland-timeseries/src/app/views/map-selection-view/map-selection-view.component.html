@@ -37,7 +37,7 @@
       <n52-station-map-selector class="h-100" [mapId]="'timeseries'" [serviceUrl]="selectedService?.apiUrl"
         [filter]="stationFilter" (onSelected)="onStationSelected($event)" [cluster]="cluster"
         class="vbox boxItem fullHeight"></n52-station-map-selector>
-      <button mat-icon-button (click)="openMapSettings()" mat-mini-fab color="none" class="local-settings-button"
+      <button mat-mini-fab (click)="openMapSettings()" color="none" class="local-settings-button"
         attr.aria-label="{{'map-selection-view.adjust-map-button.tooltip' | translate}}"
         matTooltip="{{'map-selection-view.adjust-map-button.tooltip' | translate}}">
         <mat-icon>edit_location_alt</mat-icon>

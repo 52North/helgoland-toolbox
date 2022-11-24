@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{'favorites.title' | translate}}</h1>
 <div style="max-height: 50vh; overflow: auto;">
 
-  <mat-card *ngFor="let item of singles" style="margin-bottom: 10px;">
+  <mat-card appearance="outlined" *ngFor="let item of singles" style="margin-bottom: 10px;">
     <div *ngIf="!item.editMode" class="fav-title">
       <span style="flex: 1;">{{item.label}}</span>
       <button mat-icon-button (click)="item.editMode = true">
@@ -28,7 +28,7 @@
     </div>
   </mat-card>
 
-  <mat-card *ngFor="let group of groups" style="margin-bottom: 10px;">
+  <mat-card appearance="outlined" *ngFor="let group of groups" style="margin-bottom: 10px;">
 
     <div *ngIf="!group.editMode" class="fav-title">
       <span style="flex: 1;">{{group.label}}</span>

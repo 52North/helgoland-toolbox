@@ -9,11 +9,13 @@
 
 // for npm roboto-fontface package (to load local files)
 $roboto-font-path: "~roboto-fontface/fonts" !default;
-@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
+@import 'node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
+// @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 // // for npm material-icons package (to load local files)
 $material-icons-font-path: '~material-icons/iconfont/';
-@import '~material-icons/iconfont/material-icons.scss';
+// @import '~material-icons/iconfont/material-icons.scss';
+@import 'material-icons/iconfont/material-icons.css';
 
 $fontConfig: (display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
     display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
@@ -140,7 +142,7 @@ $mat-dark-theme-background: (background: $dark-background,
 );
 
 // Compute font config
-@include mat-core($fontConfig);
+// @include mat-core($fontConfig);
 
 // Theme Config
 
@@ -214,18 +216,26 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 // Specific component overrides, pieces that are not in line with the general theming
 
 // Handle buttons appropriately, with respect to line-height
-.mat-raised-button,
-.mat-stroked-button,
-.mat-flat-button {
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-flat-button {
     padding: 0 1.15em;
     margin: 0 .65em;
     min-width: 3em;
     line-height: 36.4px
 }
 
-.mat-standard-chip {
+.mat-mdc-standard-chip {
     padding: .5em .85em;
     min-height: 2.5em;
+}
+
+button.local-settings-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 1000;
+    background-color: $light-background;
 }
 
 .material-icons {
@@ -259,6 +269,9 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
             opacity: 0.5;
         }
 
+    }
+    button.local-settings-button {
+        background-color: $dark-bg-lighter-20;
     }
 }
 

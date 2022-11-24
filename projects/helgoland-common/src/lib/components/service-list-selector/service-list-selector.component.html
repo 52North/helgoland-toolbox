@@ -2,29 +2,24 @@
 
 <mat-selection-list [multiple]="false" (selectionChange)="selectService($event.options[0].value)">
   <mat-list-option *ngFor="let service of services" [value]="service" [selected]="isSelected(service)">
-    <div mat-line>
-      <span>
-        {{service.label}}
-      </span>
+    <span matListItemTitle>
+      <span>{{service.label}}</span>
       <span *ngIf="service.type || service.version">
         ({{service.type}}, {{service.version}})
       </span>
-    </div>
-    <div mat-line>{{service.apiUrl}}</div>
-    <div mat-line>
-      <span *ngIf="service.quantities.platforms !== undefined">
-        {{service.quantities.platforms}} {{'service-selector.platforms' | translate}} -
-      </span>
-      <span *ngIf="service.quantities.datasets !== undefined">
-        {{service.quantities.datasets}} {{'service-selector.datasets' | translate}} -
-      </span>
-      <span *ngIf="service.quantities.phenomena !== undefined">
-        {{service.quantities.phenomena}} {{'service-selector.phenomena' | translate}}
-      </span>
-    </div>
+    </span>
+    <span matListItemLine>
+      <span *ngIf="service.quantities.platforms !== undefined">{{service.quantities.platforms}}
+        {{'service-selector.platforms' | translate}} -</span>
+      <span *ngIf="service.quantities.datasets !== undefined">{{service.quantities.datasets}}
+        {{'service-selector.datasets' | translate}} -</span>
+      <span *ngIf="service.quantities.phenomena !== undefined">{{service.quantities.phenomena}}
+        {{'service-selector.phenomena' | translate}}</span>
+    </span>
+    <span matListItemLine style="font-size: 70%;">{{service.apiUrl}}</span>
   </mat-list-option>
 </mat-selection-list>
 
 <div class="unresolvable-services">
-  <div *ngFor="let item of unResolvableServices">{{item.url}} is currently not reachable</div>
+  <div *ngFor="let item of unResolvableServices" style="font-size: 70%;">{{item.url}} is currently not reachable</div>
 </div>
