@@ -10,12 +10,10 @@
 // for npm roboto-fontface package (to load local files)
 $roboto-font-path: "~roboto-fontface/fonts" !default;
 @import 'node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
-// @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 // // for npm material-icons package (to load local files)
 $material-icons-font-path: '~material-icons/iconfont/';
-// @import '~material-icons/iconfont/material-icons.scss';
-@import 'material-icons/iconfont/material-icons.css';
+@import 'material-icons/iconfont/material-icons.scss';
 
 $fontConfig: (display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
     display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
