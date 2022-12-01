@@ -1,13 +1,29 @@
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
-import { AdditionalData, D3PlotOptions } from '@helgoland/d3';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ColorService, DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
+import { AdditionalData, D3PlotOptions, HelgolandD3Module } from '@helgoland/d3';
+import { HelgolandDatasetlistModule } from '@helgoland/depiction';
+import { HelgolandModificationModule } from '@helgoland/modification';
+import { HelgolandTimeModule } from '@helgoland/time';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
     templateUrl: './additional-data-graph.component.html',
-    styleUrls: ['./additional-data-graph.component.css']
+    styleUrls: ['./additional-data-graph.component.css'],
+    imports: [
+        CommonModule,
+        HelgolandCoreModule,
+        HelgolandD3Module,
+        HelgolandTimeModule,
+        HelgolandDatasetlistModule,
+        HelgolandModificationModule,
+        MatDialogModule,
+        MatButtonModule
+    ],
+    standalone: true
 })
 export class AdditionalDataGraphComponent {
 

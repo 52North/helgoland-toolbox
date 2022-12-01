@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
 import { DatasetOptions, Timespan } from '@helgoland/core';
+import { HelgolandDatasetTableModule } from '@helgoland/depiction';
+import { HelgolandTimeModule } from '@helgoland/time';
 
 @Component({
     templateUrl: './table.component.html',
-    styleUrls: ['./table.component.css']
+    styleUrls: ['./table.component.css'],
+    imports: [
+        HelgolandDatasetTableModule,
+        HelgolandTimeModule
+    ],
+    standalone: true
 })
 export class TableComponent {
 

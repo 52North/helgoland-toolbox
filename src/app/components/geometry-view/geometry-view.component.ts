@@ -1,9 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HelgolandMapViewModule } from '@helgoland/map';
 
 @Component({
     templateUrl: './geometry-view.component.html',
-    styleUrls: ['./geometry-view.component.scss']
+    styleUrls: ['./geometry-view.component.scss'],
+    imports: [
+        HelgolandMapViewModule
+    ],
+    standalone: true
 })
 export class GeometryViewComponent {
 

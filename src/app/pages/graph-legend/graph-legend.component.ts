@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
     ColorService,
     DatasetOptions,
@@ -20,10 +21,14 @@ import {
     D3PointSymbolDrawerService,
     D3SimpleHoveringService,
     DataEntry,
+    HelgolandD3Module,
     HighlightOutput,
     HoveringStyle,
     InternalDataEntry,
 } from '@helgoland/d3';
+import { HelgolandDatasetDownloadModule, HelgolandDatasetlistModule } from '@helgoland/depiction';
+import { HelgolandModificationModule } from '@helgoland/modification';
+import { HelgolandTimeModule } from '@helgoland/time';
 import moment from 'moment';
 
 import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
@@ -50,7 +55,17 @@ class HoveringTestService extends D3SimpleHoveringService {
 
 @Component({
     templateUrl: './graph-legend.component.html',
-    styleUrls: ['./graph-legend.component.scss']
+    styleUrls: ['./graph-legend.component.scss'],
+    imports: [
+        HelgolandD3Module,
+        HelgolandModificationModule,
+        HelgolandTimeModule,
+        HelgolandDatasetlistModule,
+        HelgolandDatasetDownloadModule,
+        MatDialogModule,
+        CommonModule
+    ],
+    standalone: true
 })
 export class GraphLegendComponent {
 

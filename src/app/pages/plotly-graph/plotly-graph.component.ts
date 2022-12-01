@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import { TimedDatasetOptions } from '@helgoland/core';
+import { HelgolandPlotlyModule } from '@helgoland/plotly';
 
 @Component({
     templateUrl: './plotly-graph.component.html',
-    styleUrls: ['./plotly-graph.component.css']
+    styleUrls: ['./plotly-graph.component.css'],
+    imports: [
+        HelgolandPlotlyModule
+    ],
+    standalone: true
 })
 export class PlotlyGraphComponent {
 

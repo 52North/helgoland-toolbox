@@ -1,10 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
+import { HelgolandD3Module } from '@helgoland/d3';
+
+import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
 
 @Component({
   selector: 'n52-diagram-export',
   templateUrl: './diagram-export.component.html',
-  styleUrls: ['./diagram-export.component.css']
+  styleUrls: ['./diagram-export.component.css'],
+  imports: [
+    MatFormFieldModule,
+    MatRadioModule,
+    MatInputModule,
+    FormsModule,
+    CommonModule,
+    HelgolandD3Module,
+    NoDataEntryComponent
+  ],
+  standalone: true
 })
 export class DiagramExportComponent implements OnInit {
 
@@ -19,10 +37,10 @@ export class DiagramExportComponent implements OnInit {
   public datasetOptions: Map<string, DatasetOptions> = new Map();
 
   public datasetIds = [
-    'http://fluggs.wupperverband.de/sos2/api/v1/__26',
-    'http://fluggs.wupperverband.de/sos2/api/v1/__49',
-    'http://fluggs.wupperverband.de/sos2/api/v1/__51',
-    'http://fluggs.wupperverband.de/sos2/api/v1/__72',
+    'https://fluggs.wupperverband.de/sws5/api/__26',
+    // 'https://fluggs.wupperverband.de/sws5/api/__49',
+    // 'https://fluggs.wupperverband.de/sws5/api/__51',
+    // 'https://fluggs.wupperverband.de/sws5/api/__72',
   ];
 
   public timespan: Timespan;

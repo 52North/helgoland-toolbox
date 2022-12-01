@@ -1,14 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GeoSearchOptions, LayerMap, MapCache, GeoCureGeoJSONOptions, GeoCureGeoJSON } from '@helgoland/map';
-import { LatLngBounds, LeafletEvent, tileLayer, WMSOptions, circleMarker, LayerEvent } from 'leaflet';
-
-// import { GeoCureGeoJSON, GeoCureGeoJSONOptions, GeoSearchOptions, LayerMap, MapCache, WMSOptions } from '@helgoland/map';
-// import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer } from 'leaflet';
+import {
+    GeoCureGeoJSON,
+    GeoCureGeoJSONOptions,
+    GeoSearchOptions,
+    HelgolandLayerControlModule,
+    HelgolandMapControlModule,
+    HelgolandMapViewModule,
+    LayerMap,
+    MapCache,
+} from '@helgoland/map';
+import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOptions } from 'leaflet';
 
 @Component({
     templateUrl: './map-view.component.html',
-    styleUrls: ['./map-view.component.css']
+    styleUrls: ['./map-view.component.css'],
+    imports: [
+        HelgolandMapControlModule,
+        CommonModule,
+        HelgolandLayerControlModule,
+        HelgolandMapViewModule
+    ],
+    standalone: true
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
 

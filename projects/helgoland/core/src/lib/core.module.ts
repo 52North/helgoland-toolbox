@@ -55,11 +55,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     StatusIntervalResolverService,
     SumValuesService,
     HttpService,
-    Time,
-    {
-      provide: SettingsService,
-      useClass: ExtendedSettingsService
-    }
+    Time
   ]
 })
 export class HelgolandCoreModule { }

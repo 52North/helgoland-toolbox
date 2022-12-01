@@ -1,10 +1,21 @@
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { DatasetOptions, MinMaxRange } from '@helgoland/core';
+import { HelgolandModificationModule } from '@helgoland/modification';
 
 @Component({
     templateUrl: './style-modification.component.html',
-    styleUrls: ['./style-modification.component.scss']
+    styleUrls: ['./style-modification.component.scss'],
+    imports: [
+        HelgolandModificationModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        FormsModule
+    ],
+    standalone: true
 })
 export class StyleModificationComponent {
 

@@ -1,21 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
     ColorService,
     DatasetOptions,
     DatasetType,
+    HelgolandServicesConnector,
     InternalIdHandler,
     Timespan,
-    HelgolandServicesConnector,
 } from '@helgoland/core';
-import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
+import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from '@helgoland/d3';
+import { HelgolandDatasetlistModule } from '@helgoland/depiction';
+import { HelgolandMapViewModule } from '@helgoland/map';
 import { GeoJsonObject, LineString, Point } from 'geojson';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
     templateUrl: './trajectory.component.html',
-    styleUrls: ['./trajectory.component.scss']
+    styleUrls: ['./trajectory.component.scss'],
+    imports: [
+        HelgolandDatasetlistModule,
+        HelgolandD3Module,
+        HelgolandMapViewModule,
+        CommonModule,
+        MatDialogModule
+    ],
+    standalone: true
 })
 export class TrajectoryComponent implements OnInit {
 

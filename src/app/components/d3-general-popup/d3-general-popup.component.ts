@@ -1,10 +1,14 @@
 import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { D3GeneralDatasetInput, D3GeneralInput } from '@helgoland/d3';
+import { D3GeneralDatasetInput, D3GeneralInput, HelgolandD3Module } from '@helgoland/d3';
 
 @Component({
     templateUrl: './d3-general-popup.component.html',
-    styleUrls: ['./d3-general-popup.component.scss']
+    styleUrls: ['./d3-general-popup.component.scss'],
+    imports: [
+        HelgolandD3Module
+    ],
+    standalone: true
 })
 export class D3GeneralPopupComponent {
 

@@ -1,14 +1,28 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
 import { Language, StatusCheckService } from '@helgoland/core';
 import { D3TimeFormatLocaleService } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
+import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
+import { TimezoneSelectorComponent } from './components/timezone-selector/timezone-selector.component';
+
 @Component({
   selector: 'n52-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  imports: [
+    LocalSelectorImplComponent,
+    TimezoneSelectorComponent,
+    RouterModule,
+    MatSidenavModule,
+    MatListModule,
+  ],
+  standalone: true
 })
 export class AppComponent {
 
