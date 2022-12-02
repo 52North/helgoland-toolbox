@@ -15,6 +15,8 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
+import { NotifierService } from './notifier.service';
+
 const TIMESERIES_OPTIONS_CACHE_PARAM = 'timeseriesOptions';
 const TIMESERIES_IDS_CACHE_PARAM = 'timeseriesIds';
 const TIME_CACHE_PARAM = 'timeseriesTime';
@@ -32,6 +34,7 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     protected timeSrvc: Time,
     protected timezoneSrvc: TimezoneService,
     protected translate: TranslateService,
+    protected notifier: NotifierService,
     protected la: LiveAnnouncer,
     @Optional() protected override translateSrvc?: TranslateService
   ) {
@@ -54,12 +57,20 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
   public override removeAllDatasets() {
     super.removeAllDatasets();
     this.la.announce(this.translate.instant('events.all-timeseries-removed'));
+    this.notifier.notify(this.translate.instant('events.all-timeseries-removed'));
+  }
+
+  override removeDataset(internalId: string): void {
+    this.la.announce(this.translate.instant('events.remove-timeseries'));
+    this.notifier.notify(this.translate.instant('events.remove-timeseries'));
+    super.removeDataset(internalId);
   }
 
   protected override async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
     super.addLoadedDataset(timeseries, resolve);
     const message = `${this.translate.instant('events.add-timeseries')}: ${timeseries.label}`;
     this.la.announce(message);
+    this.notifier.notify(message);
   }
 
   protected createStyles(internalId: string): DatasetOptions {

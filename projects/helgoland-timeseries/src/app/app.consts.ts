@@ -1,10 +1,9 @@
-import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Routes } from '@angular/router';
 
 import { LIST_SELECTION_ROUTE, MAP_SELECTION_ROUTE } from './services/app-router.service';
 import { DiagramViewComponent } from './views/diagram-view/diagram-view.component';
 import { ListSelectionViewComponent } from './views/list-selection-view/list-selection-view.component';
 import { MapSelectionViewComponent } from './views/map-selection-view/map-selection-view.component';
-import { Routes } from "@angular/router";
 
 export const ROUTES: Routes = [
   {
@@ -21,9 +20,3 @@ export const ROUTES: Routes = [
     component: DiagramViewComponent
   }
 ];
-
-export const SNACK_BAR_CONFIG: MatSnackBarConfig = {
-  duration: 2000,
-  verticalPosition: 'bottom',
-  horizontalPosition: 'center'
-};
