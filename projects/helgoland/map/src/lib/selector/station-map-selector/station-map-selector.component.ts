@@ -63,12 +63,14 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     }
 
     protected drawGeometries() {
-        this.onContentLoading.emit(true);
-        if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
-        if (this.statusIntervals && this.filter && this.filter.phenomenon) {
-            this.createValuedMarkers();
-        } else {
-            this.createStationGeometries();
+        if (this.serviceUrl) {
+            this.onContentLoading.emit(true);
+            if (this.map && this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+            if (this.statusIntervals && this.filter && this.filter.phenomenon) {
+                this.createValuedMarkers();
+            } else {
+                this.createStationGeometries();
+            }
         }
     }
 

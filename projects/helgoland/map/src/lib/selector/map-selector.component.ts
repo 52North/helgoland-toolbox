@@ -25,7 +25,7 @@ export abstract class MapSelectorComponent<T>
      * @input The serviceUrl, where the selection should be loaded.
      */
     @Input()
-    public serviceUrl: string;
+    public serviceUrl: string | undefined;
 
     /**
      * @input The filter which should be used, while fetching the selection.

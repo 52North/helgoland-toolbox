@@ -61,7 +61,10 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
           return false;
         }
       }),
-      catchError(() => of(false))
+      catchError((err) => {
+        console.error(err);
+        return of(false);
+      })
     );
   }
 
