@@ -6,11 +6,12 @@ mat-expansion-panel {
         display: flex;
         flex: 1;
         align-items: center;
-    
+
         .title {
             &.noData {
                 color: lightgray;
             }
+
             &.error {
                 color: lightcoral;
             }
@@ -20,7 +21,7 @@ mat-expansion-panel {
     .small-label {
         font-size: 90%;
     }
-    
+
     .entry-line {
         &.clickable {
             :hover {
@@ -28,5 +29,8 @@ mat-expansion-panel {
             }
         }
     }
-}
 
+    mat-slide-toggle {
+        margin: 5px 0;
+    }
+}
