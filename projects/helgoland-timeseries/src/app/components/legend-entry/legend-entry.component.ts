@@ -12,18 +12,18 @@ import { TranslateService } from '@ngx-translate/core';
 export class LegendEntryComponent extends TimeseriesEntryComponent {
 
   constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected timeSrvc: Time,
-    protected internalIdHandler: InternalIdHandler,
-    protected color: ColorService,
-    protected refValCache: ReferenceValueColorCache,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override timeSrvc: Time,
+    protected override internalIdHandler: InternalIdHandler,
+    protected override color: ColorService,
+    protected override refValCache: ReferenceValueColorCache,
     protected liveAnnouncer: LiveAnnouncer,
-    public translateSrvc: TranslateService,
+    public override translateSrvc: TranslateService,
   ) {
     super(servicesConnector, timeSrvc, internalIdHandler, color, refValCache, translateSrvc);
   }
 
-  removeDataset() {
+  override removeDataset() {
     super.removeDataset();
     const message = `${this.translateSrvc.instant('events.remove-timeseries')} ${this.dataset.label}`;
     this.liveAnnouncer.announce(message);

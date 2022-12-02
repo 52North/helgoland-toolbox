@@ -6,7 +6,7 @@ export class ProcessMethod extends AbstractSWEIdentifiable {
     @DisplayName('Algorithm')
     algorithm: AbstractAlgorithm[] = [];
 
-    toString() {
+    override toString() {
         return super.toString('Process method');
     }
 }

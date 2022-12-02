@@ -15,6 +15,7 @@ export class DecoderUtils {
                 return new ReturnObject(elem[0].getAttributeNS(attributeNamespace, attributeName), elem[0]);
             }
         }
+        return undefined;
     }
 
     public getElement(root: Element, elemName: string, elemNamespace: string): Element {

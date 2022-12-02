@@ -288,6 +288,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                     d.xCoord = xCoord;
                     return xCoord;
                 }
+                return undefined;
             })
             .y((d) => {
                 const yCoord = this.axisOptions.yScale(d.y);
@@ -295,6 +296,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                     d.yCoord = yCoord;
                     return yCoord;
                 }
+                return undefined;
             })
             .curve(d3.curveLinear);
 
@@ -393,11 +395,13 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
                     const datasetxCoordSplit = d.data[4].xCoord.toString().split('.')[0] + '-' + d.data[4].xCoord.toString().split('.')[1];
                     return 'url(#clip-' + d.data[5].id + '-' + datasetxCoordSplit + ')';
                 }
+                return undefined;
             })
             .attr('d', function (d) {
                 if (d !== undefined) {
                     return 'M' + d.join(' ') + 'Z';
                 }
+                return undefined;
             })
             .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .on('mousemove', (d) => {

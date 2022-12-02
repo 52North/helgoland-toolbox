@@ -58,8 +58,8 @@ export abstract class MapSelectorComponent<T>
     public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
-        protected mapCache: MapCache,
-        protected kvDiffers: KeyValueDiffers,
+        protected override mapCache: MapCache,
+        protected override kvDiffers: KeyValueDiffers,
         protected cd: ChangeDetectorRef
     ) {
         super(mapCache, kvDiffers);
@@ -73,10 +73,10 @@ export abstract class MapSelectorComponent<T>
         }, 10);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (this.map) {
-            if (changes.serviceUrl || changes.filter || changes.cluster) {
+            if (changes['serviceUrl'] || changes['filter'] || changes['cluster']) {
                 this.drawGeometries();
             }
         }

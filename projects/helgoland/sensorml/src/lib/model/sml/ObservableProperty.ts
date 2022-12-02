@@ -10,7 +10,7 @@ export class ObservableProperty extends AbstractSWEIdentifiable {
     @DisplayName('Definition')
     definition: string;
 
-    toString() {
+    override toString() {
         return super.toString('Observable property');
     }
 }

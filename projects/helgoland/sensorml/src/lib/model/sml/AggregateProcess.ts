@@ -25,7 +25,7 @@ export class AggregateProcess extends AbstractProcess implements AggregatingProc
         return 'AggregateProcess';
     }
 
-    toString() {
+    override toString() {
         return 'Aggregate process';
     }
 }

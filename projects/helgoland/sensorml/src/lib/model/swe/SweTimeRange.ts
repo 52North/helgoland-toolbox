@@ -14,7 +14,7 @@ export class SweTimeRange extends AbstractSweRange {
      * schema for values provided using other encodings
      */
     @DisplayName('Value')
-    value: [TimePosition, TimePosition] = ['now', 'now'];
+    override value: [TimePosition, TimePosition] = ['now', 'now'];
     /**
      * Specifies the origin of the temporal reference frame as an ISO8601 date
      * (used to specify time after an epoch that is to say in a custom frame)
@@ -34,9 +34,9 @@ export class SweTimeRange extends AbstractSweRange {
     uom: UnitOfMeasure = new UnitOfMeasure();
 
     @DisplayName('Constraint')
-    constraint: AllowedTimes = new AllowedTimes();
+    override constraint: AllowedTimes = new AllowedTimes();
 
-    toString() {
+    override toString() {
         return 'Time Range Component';
     }
 }

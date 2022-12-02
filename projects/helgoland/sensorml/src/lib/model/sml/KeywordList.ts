@@ -14,7 +14,7 @@ export class KeywordList extends AbstractMetadataList {
     @DisplayName('Keywords')
     keywords: string[] = [];
 
-    toString() {
+    override toString() {
         return 'Keyword list';
     }
 

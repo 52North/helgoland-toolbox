@@ -7,14 +7,16 @@ export class StatusIntervalResolverService {
 
   constructor() { }
 
-  public getMatchingInterval(value: number, statusIntervals: StatusInterval[]): StatusInterval {
+  public getMatchingInterval(value: number, statusIntervals: StatusInterval[]): StatusInterval | undefined {
     if (value && statusIntervals) {
       return statusIntervals.find((interval) => {
         const upper = interval.upper ? parseFloat(interval.upper) : Number.MAX_VALUE;
         const lower = interval.lower ? parseFloat(interval.lower) : Number.MIN_VALUE;
         if (lower <= value && value < upper) { return true; }
+        return undefined;
       });
     }
+    return undefined;
   }
 
 }

@@ -13,7 +13,7 @@ export class SweQuantity extends AbstractSimpleComponent {
      * provided using other encodings
      */
     @DisplayName('Value')
-    value: number;
+    override value: number;
     /**
      * Unit of measure used to express the value of this data component
      */
@@ -21,9 +21,9 @@ export class SweQuantity extends AbstractSimpleComponent {
     uom: UnitOfMeasure = new UnitOfMeasure();
 
     @DisplayName('Constraint')
-    constraint: AllowedValues = new AllowedValues();
+    override constraint: AllowedValues = new AllowedValues();
 
-    toString() {
+    override toString() {
         return 'Quantity Component';
     }
 

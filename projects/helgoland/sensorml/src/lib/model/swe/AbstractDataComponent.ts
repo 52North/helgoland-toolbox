@@ -23,7 +23,7 @@ export abstract class AbstractDataComponent extends AbstractSWEIdentifiable {
     @DisplayName('Updatable')
     updatable: boolean;
 
-    toString(fallbackLabel = 'Abstract data component') {
+    override toString(fallbackLabel = 'Abstract data component') {
         return super.toString(fallbackLabel);
     }
 

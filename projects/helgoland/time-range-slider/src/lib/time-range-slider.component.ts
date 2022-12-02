@@ -37,7 +37,7 @@ export class TimeRangeSliderComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.timeList && this.timeList) {
+    if (changes['timeList'] && this.timeList) {
       let min; let max;
       this.start = min = this.timeList[0];
       this.end = max = this.timeList[this.timeList.length - 1];

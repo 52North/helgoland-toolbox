@@ -30,9 +30,9 @@ export class HelgolandDataset {
 export class HelgolandTimeseries extends HelgolandDataset {
 
     constructor(
-        public id: string,
-        public url: string,
-        public label: string,
+        public override id: string,
+        public override url: string,
+        public override label: string,
         public uom: string,
         public platform: HelgolandPlatform,
         public firstValue: FirstLastValue,
@@ -48,9 +48,9 @@ export class HelgolandTimeseries extends HelgolandDataset {
 export class HelgolandTrajectory extends HelgolandDataset {
 
     constructor(
-        public id: string,
-        public url: string,
-        public label: string,
+        public override id: string,
+        public override url: string,
+        public override label: string,
         public uom: string,
         public firstValue: FirstLastValue,
         public lastValue: FirstLastValue,
@@ -63,9 +63,9 @@ export class HelgolandTrajectory extends HelgolandDataset {
 export class HelgolandProfile extends HelgolandDataset {
 
     constructor(
-        public id: string,
-        public url: string,
-        public label: string,
+        public override id: string,
+        public override url: string,
+        public override label: string,
         public uom: string,
         public isMobile: boolean,
         public firstValue: FirstLastValue,

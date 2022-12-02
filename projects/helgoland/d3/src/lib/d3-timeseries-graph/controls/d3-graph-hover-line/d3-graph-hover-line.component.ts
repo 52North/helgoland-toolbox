@@ -41,9 +41,9 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
   protected drawLayer: d3.Selection<SVGGElement, any, any, any>;
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService,
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService,
     protected timezoneSrvc: TimezoneService
   ) {
     super(graphId, graphs, graphHelper);
@@ -71,7 +71,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     this.preparedData = preparedData;
   }
 
-  public cleanUp() {
+  public override cleanUp() {
     if (this.drawLayer) {
       this.drawLayer.remove();
       this.drawLayer = null;
@@ -199,6 +199,7 @@ export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
     if (distIdx <= PixelBuffer) {
       return idx;
     }
+    return undefined;
   }
 
   protected calcDist(entry: DataEntry, x: number) {

@@ -12,7 +12,7 @@ import { HelgolandMapSelectorModule } from '@helgoland/map';
 })
 export class SandboxComponent implements OnInit {
 
-    platforms: HelgolandPlatform[];
+    platforms: HelgolandPlatform[] = [];
 
     constructor(
         private servicesConnector: HelgolandServicesConnector

@@ -82,21 +82,21 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   private additionalDataDiffer: IterableDiffer<AdditionalData>;
 
   constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time,
-    protected timeFormatLocaleService: D3TimeFormatLocaleService,
-    protected colorService: ColorService,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
-    protected sumValues: SumValuesService,
-    protected rangeCalc: RangeCalculationsService,
-    protected graphHelper: D3GraphHelperService,
-    protected graphService: D3Graphs,
-    protected graphId: D3GraphId,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-    protected zone: NgZone,
+    protected override iterableDiffers: IterableDiffers,
+    protected override datasetIdResolver: InternalIdHandler,
+    protected override timeSrvc: Time,
+    protected override timeFormatLocaleService: D3TimeFormatLocaleService,
+    protected override colorService: ColorService,
+    protected override translateService: TranslateService,
+    protected override timezoneSrvc: TimezoneService,
+    protected override sumValues: SumValuesService,
+    protected override rangeCalc: RangeCalculationsService,
+    protected override graphHelper: D3GraphHelperService,
+    protected override graphService: D3Graphs,
+    protected override graphId: D3GraphId,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override pointSymbolDrawer: D3PointSymbolDrawerService,
+    protected override zone: NgZone,
   ) {
     super(
       iterableDiffers,
@@ -121,7 +121,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     this.additionalDataDiffer = this.iterableDiffers.find(this.additionalData).create();
   }
 
-  public ngDoCheck() {
+  public override ngDoCheck() {
     super.ngDoCheck();
     const additionalDataChanges = this.additionalDataDiffer.diff(this.additionalData);
     if (additionalDataChanges && this.additionalData && this.graph) {
@@ -136,16 +136,16 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  public redrawCompleteGraph() {
+  public override redrawCompleteGraph() {
     this.prepareAdditionalData();
     super.redrawCompleteGraph();
   }
 
-  public ngAfterViewInit(): void {
+  public override ngAfterViewInit(): void {
     super.ngAfterViewInit();
   }
 
-  protected timeIntervalChanges(): void {
+  protected override timeIntervalChanges(): void {
     if (this.datasetMap.size > 0) {
       super.timeIntervalChanges();
     } else {
@@ -153,7 +153,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
-  protected prepareYAxes() {
+  protected override prepareYAxes() {
     super.prepareYAxes();
     this.additionalData.forEach(entry => {
       const id = this.generateAdditionalInternalId(entry);

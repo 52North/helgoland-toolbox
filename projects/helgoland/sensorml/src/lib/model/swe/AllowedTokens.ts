@@ -7,12 +7,12 @@ import { AbstractAllowedValues } from './AbstractAllowedValues';
  */
 export class AllowedTokens extends AbstractAllowedValues {
     @DisplayName('Values')
-    values: string[] = [];
+    override values: string[] = [];
 
     @DisplayName('Pattern')
     pattern = '';
 
-    toString() {
+    override toString() {
         return 'Allowed tokens';
     }
 }

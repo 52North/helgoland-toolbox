@@ -19,7 +19,7 @@ export class SweDataChoice extends AbstractDataComponent {
     @DisplayName('Items')
     items: SweDataChoiceItem[] = [];
 
-    toString() {
+    override toString() {
         return super.toString('SWE data choice');
     }
 

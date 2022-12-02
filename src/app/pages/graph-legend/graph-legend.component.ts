@@ -38,7 +38,7 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
+    protected override setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
         const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
         const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
         textContainer.append('text')
@@ -85,7 +85,7 @@ export class GraphLegendComponent {
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
         // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
     ];
-    public reloadForDatasets = [];
+    public reloadForDatasets: string[] = [];
     public timespan;
     public plotLanguage;
     public yaxisModifier = true;
@@ -120,15 +120,16 @@ export class GraphLegendComponent {
     public datasetOptions: Map<string, DatasetOptions> = new Map();
     public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
 
-    public highlightId: string;
+    public highlightId: string | undefined;
 
     public selectedIds: string[] = [];
 
-    public overviewLoading: boolean;
-    public graphLoading: boolean;
+    public overviewLoading = false
+    public graphLoading = false;
 
-    public hoverstyle: HoveringStyle;
-    public highlightedTime: Date;
+    public hoverstyle: HoveringStyle = HoveringStyle.point;
+    public HoveringStyleEnum = HoveringStyle;
+    public highlightedTime: Date | undefined;
 
     // parameters to auto update timespan on click
     public timeIntervalUpdateTimespan = 100000; // milliseconds of time
@@ -231,16 +232,16 @@ export class GraphLegendComponent {
         }
     }
 
-    public refresh(triggered) {
-        console.log('refresh at ' + new Date());
-    }
+    // public refresh(triggered) {
+    //     console.log('refresh at ' + new Date());
+    // }
 
     public groupYaxisChanged() {
         this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
     }
 
-    public changeHovering(id: string) {
-        this.hoverstyle = HoveringStyle[id];
+    public changeHovering(id: HoveringStyle) {
+        this.hoverstyle = id;
         this.d3diagramOptions.hoverStyle = this.hoverstyle;
     }
 

@@ -12,7 +12,7 @@ export class SweCategory extends AbstractSimpleComponent {
      * provided using other encodings
      */
     @DisplayName('Value')
-    value: string;
+    override value: string;
     /**
      * Name of the dictionary where the possible values for this component are
      * listed and defined
@@ -21,9 +21,9 @@ export class SweCategory extends AbstractSimpleComponent {
     codeSpace: string;
 
     @DisplayName('Constraint')
-    constraint: AllowedTokens = new AllowedTokens();
+    override constraint: AllowedTokens = new AllowedTokens();
 
-    toString() {
+    override toString() {
         return 'Category Component';
     }
 

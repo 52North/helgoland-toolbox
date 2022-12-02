@@ -8,9 +8,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  */
 export class AllowedTimes extends AbstractNumericAllowedValues {
     @DisplayName('Values')
-    values: Array<TimePosition | [TimePosition, TimePosition]> = [];
+    override values: Array<TimePosition | [TimePosition, TimePosition]> = [];
 
-    toString() {
+    override toString() {
         return 'Allowed times';
     }
 }

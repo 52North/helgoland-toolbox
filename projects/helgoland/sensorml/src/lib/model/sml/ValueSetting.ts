@@ -3,9 +3,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class ValueSetting extends AbstractSetting {
     @DisplayName('Value')
-    value: boolean | number | string | Date;
+    override value: boolean | number | string | Date;
 
-    toString() {
+    override toString() {
         return this.value !== null && this.value !== undefined ? this.value.toString() : 'Value setting';
     }
 }

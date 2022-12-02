@@ -32,7 +32,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.toggled) {
+    if (changes['toggled']) {
       this.evaluteRefreshing();
     }
   }

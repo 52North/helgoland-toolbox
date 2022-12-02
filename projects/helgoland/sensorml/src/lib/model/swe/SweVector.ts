@@ -27,7 +27,7 @@ export class SweVector extends AbstractDataComponent {
     @DisplayName('Local frame')
     localFrame: string;
 
-    toString() {
+    override toString() {
         return super.toString('SWE vector');
     }
 

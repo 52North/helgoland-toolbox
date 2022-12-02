@@ -39,7 +39,7 @@ export class SweBinaryComponent extends AbstractSWE {
     @DisplayName('Ref')
     ref: string;
 
-    toString() {
+    override toString() {
         return 'SWE binary component';
     }
 }

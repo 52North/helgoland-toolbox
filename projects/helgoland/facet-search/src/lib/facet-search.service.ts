@@ -79,6 +79,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     if (this.facets.has(type)) {
       return this.facets.get(type);
     }
+    return undefined;
   }
 
   public selectParameter(type: ParameterFacetType, parameter: FacetParameter) {
@@ -135,6 +136,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     if (timespan.from !== Infinity && timespan.to !== 0) {
       return timespan;
     }
+    return undefined;
   }
 
   private setFilteredEntries() {

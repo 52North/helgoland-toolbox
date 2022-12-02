@@ -28,15 +28,15 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   protected graphExtent: D3GraphExtent;
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService
   ) {
     super(graphId, graphs, graphHelper);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectionTimeInterval) {
+    if (changes['selectionTimeInterval']) {
       this.drawOverviewSelection();
     }
   }
@@ -62,7 +62,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     this.drawOverviewSelection();
   }
 
-  public cleanUp() {
+  public override cleanUp() {
     if (this.drawLayer) {
       this.drawLayer.remove();
       this.drawLayer = null;

@@ -56,7 +56,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       map((res: any) => {
         if (res && res.value && res.value instanceof Array) {
           // check if endpoint 'Things' exists
-          return res.value.findIndex(e => e.name === 'Things') >= 0;
+          return res.value.findIndex((e: any) => e.name === 'Things') >= 0;
         } else {
           return false;
         }
@@ -95,6 +95,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       const filterList = [];
       return this.createFilter(filterList);
     }
+    throw new Error("Could not create OfferingsFilter.");
   }
 
   getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering> {
@@ -119,6 +120,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       }
       return this.createFilter(filterList);
     }
+    throw new Error("Could not create PhenomenaFilter.");
   }
 
   getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon> {
@@ -174,6 +176,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       }
       return this.createFilter(filterList);
     }
+    throw new Error("Could not create FeaturesFilter.");
   }
 
   getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature> {
@@ -207,14 +210,14 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       }
       return this.createFilter(filterList);
     }
+    throw new Error("Could not create CategoriesFilter.");
   }
 
   protected createStationFilter(filter: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
-    if (filter) {
-      if (filter.phenomenon) {
-        return { $filter: `Things/Datastreams/ObservedProperty/id eq '${filter.phenomenon}'` };
-      }
+    if (filter && filter.phenomenon) {
+      return { $filter: `Things/Datastreams/ObservedProperty/id eq '${filter.phenomenon}'` };
     }
+    throw new Error("Could not create StationFilter.");
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
@@ -357,23 +360,28 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   protected createFeature(loc: Location): Feature {
-    return { id: loc['@iot.id'], label: loc.name };
+    if (loc['@iot.id'] && loc.name) return { id: loc['@iot.id'], label: loc.name }
+    throw new Error("Could not create feature.");
   }
 
   protected createOffering(thing: Thing): Offering {
-    return { id: thing['@iot.id'], label: thing.name };
+    if (thing['@iot.id'] && thing.name) return { id: thing['@iot.id'], label: thing.name };
+    throw new Error("Could not create offering.");
   }
 
   protected createPhenomenon(obsProp: ObservedProperty): Phenomenon {
-    return { id: obsProp['@iot.id'], label: obsProp.name };
+    if (obsProp['@iot.id'] && obsProp.name) return { id: obsProp['@iot.id'], label: obsProp.name };
+    throw new Error("Could not create phenomenon.");
   }
 
   protected createCategory(obsProp: ObservedProperty): Category {
-    return { id: obsProp['@iot.id'], label: obsProp.name };
+    if (obsProp['@iot.id'] && obsProp.name) return { id: obsProp['@iot.id'], label: obsProp.name };
+    throw new Error("Could not create category.");
   }
 
   protected createProcedure(sensor: Sensor): Procedure {
-    return { id: sensor['@iot.id'], label: sensor.name };
+    if (sensor['@iot.id'] && sensor.name) return { id: sensor['@iot.id'], label: sensor.name };
+    throw new Error("Could not create procedure.");
   }
 
   protected createServices(url: string, paramfilter: HelgolandParameterFilter): Observable<HelgolandService[]> {

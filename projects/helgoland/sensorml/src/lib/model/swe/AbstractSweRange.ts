@@ -3,9 +3,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class AbstractSweRange extends AbstractSimpleComponent {
     @DisplayName('Value')
-    value: [any, any];
+    override value: [any, any];
 
-    toString(fallbackLabel = 'Abstract SWE range') {
+    override toString(fallbackLabel = 'Abstract SWE range') {
         return super.toString(fallbackLabel);
     }
 

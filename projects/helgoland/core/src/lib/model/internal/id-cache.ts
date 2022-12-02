@@ -6,7 +6,7 @@ export class IdCache<T> {
         return this.cache.has(id);
     }
 
-    public get(id: string): T {
+    public get(id: string): T | undefined {
         return this.cache.get(id);
     }
 

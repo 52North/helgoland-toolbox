@@ -6,9 +6,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class ConstraintSetting extends AbstractSetting {
     @DisplayName('Value')
-    value: AllowedTokens | AllowedTimes | AllowedValues;
+    override value: AllowedTokens | AllowedTimes | AllowedValues;
 
-    toString() {
+    override toString() {
         return 'Constraint setting';
     }
 }

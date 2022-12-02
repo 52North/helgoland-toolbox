@@ -6,7 +6,7 @@ export class Mode extends DescribedObject {
     @DisplayName('Configuration')
     configuration: Settings = null;
 
-    toString() {
+    override toString() {
         return 'Mode';
     }
 }

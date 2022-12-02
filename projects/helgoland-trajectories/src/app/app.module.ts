@@ -24,6 +24,7 @@ import {
   DatasetApiV2ConnectorProvider,
   DatasetApiV3ConnectorProvider,
   HelgolandCoreModule,
+  SettingsService,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
@@ -131,6 +132,10 @@ export function initApplication(configService: ConfigurationService, translate: 
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface
+    },
+    {
+      provide: SettingsService,
+      useExisting: ConfigurationService
     },
     {
       provide: APP_INITIALIZER,

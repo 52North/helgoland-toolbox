@@ -48,7 +48,7 @@ export class Envelope extends AbstractReferenced {
         }
     }
 
-    toString() {
+    override toString() {
         return 'Envelope';
     }
 }

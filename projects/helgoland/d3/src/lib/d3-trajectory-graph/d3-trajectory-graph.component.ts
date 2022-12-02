@@ -157,20 +157,20 @@ export class D3TrajectoryGraphComponent
     };
 
     constructor(
-        protected iterableDiffers: IterableDiffers,
-        protected servicesConnector: HelgolandServicesConnector,
-        protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time,
-        protected translateService: TranslateService,
-        protected timezoneSrvc: TimezoneService
+        protected override iterableDiffers: IterableDiffers,
+        protected override servicesConnector: HelgolandServicesConnector,
+        protected override datasetIdResolver: InternalIdHandler,
+        protected override timeSrvc: Time,
+        protected override translateService: TranslateService,
+        protected override timezoneSrvc: TimezoneService
     ) {
         super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
         this.presenterOptions = this.defaultGraphOptions;
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (changes.selection && this.selection) {
+        if (changes['selection'] && this.selection) {
             this.processAllData();
             this.drawLineGraph();
         }

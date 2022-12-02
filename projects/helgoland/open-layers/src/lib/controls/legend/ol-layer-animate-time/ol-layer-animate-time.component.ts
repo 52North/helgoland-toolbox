@@ -20,7 +20,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
   private interval: number;
 
   constructor(
-    protected wmsCaps: WmsCapabilitiesService
+    protected override wmsCaps: WmsCapabilitiesService
   ) {
     super(wmsCaps);
   }

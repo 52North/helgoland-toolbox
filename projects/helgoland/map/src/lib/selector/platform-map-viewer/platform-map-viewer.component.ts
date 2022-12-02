@@ -34,8 +34,8 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
   private layer: L.MarkerClusterGroup;
 
   constructor(
-    protected mapCache: MapCache,
-    protected kvDiffers: KeyValueDiffers
+    protected override mapCache: MapCache,
+    protected override kvDiffers: KeyValueDiffers
   ) {
     super(mapCache, kvDiffers);
   }
@@ -45,10 +45,10 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
     this.drawPlatforms();
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
+  public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (this.map) {
-      if (changes.platforms) {
+      if (changes['platforms']) {
         this.drawPlatforms();
       }
     }

@@ -12,12 +12,12 @@ export class SweCountRange extends AbstractSweRange {
      * encodings
      */
     @DisplayName('Value')
-    value: [number, number];
+    override value: [number, number];
 
     @DisplayName('Constraint')
-    constraint: AllowedValues;
+    override constraint: AllowedValues;
 
-    toString() {
+    override toString() {
         return super.toString('SWE count range');
     }
 }

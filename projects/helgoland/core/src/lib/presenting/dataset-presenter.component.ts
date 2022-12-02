@@ -48,27 +48,27 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
      * The time interval in which the data should presented.
      */
     @Input()
-    public timeInterval: TimeInterval;
+    public timeInterval: TimeInterval | undefined;
 
     /**
      * The corresponding dataset options.
      */
     @Input()
-    public datasetOptions: Map<string, T>;
-    protected oldDatasetOptions: Map<string, T>;
+    public datasetOptions: Map<string, T> | undefined;
+    protected oldDatasetOptions: Map<string, T> = new Map();
 
     /**
      * Options for general presentation of the data.
      */
     @Input()
-    public presenterOptions: U;
-    protected oldPresenterOptions: U;
+    public presenterOptions: U | undefined;
+    protected oldPresenterOptions: U | undefined;
 
     /**
      * List of datasets for which a reload should be triggered, when the Array is set to new value.
      */
     @Input()
-    public reloadForDatasets: string[];
+    public reloadForDatasets: string[] = [];
 
     /**
      * Event with a list of selected datasets.
@@ -99,7 +99,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
      */
     @Output() public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
 
-    protected timespan: Timespan;
+    protected timespan: Timespan | undefined;
 
     private datasetIdsDiffer: IterableDiffer<string>;
     private selectedDatasetIdsDiffer: IterableDiffer<string>;
@@ -123,11 +123,11 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
 
     // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.timeInterval && this.timeInterval) {
+        if (changes['timeInterval'] && this.timeInterval) {
             this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
             this.timeIntervalChanges();
         }
-        if (changes.reloadForDatasets && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
+        if (changes['reloadForDatasets'] && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
             this.reloadDataForDatasets(this.reloadForDatasets);
         }
     }
@@ -166,7 +166,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
             if (firstChange) { this.oldDatasetOptions = new Map(); }
             this.datasetOptions.forEach((value, key) => {
                 if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
-                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions.get(key)));
+                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions!.get(key)));
                     this.datasetOptionsChanged(key, value, firstChange);
                 }
             });
@@ -179,7 +179,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         this.timezoneSubscription.unsubscribe();
     }
 
-    protected deepEqual(obj1, obj2) {
+    protected deepEqual(obj1: any, obj2: any) {
 
         if (obj1 === obj2) // it's just the same object. No need to compare.
             return true;
@@ -202,7 +202,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         return true;
     }
 
-    protected isPrimitive(obj) {
+    protected isPrimitive(obj: any) {
         return (obj !== Object(obj));
     }
 

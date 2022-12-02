@@ -38,5 +38,6 @@ export class ResponsibleParty {
         if (this.organisationName) {
             return this.organisationName;
         }
+        return undefined;
     }
 }

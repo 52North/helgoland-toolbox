@@ -149,6 +149,7 @@ export class WmsCapabilitiesService {
           return this.fixExtent(layer.BoundingBox[0].crs, layer.BoundingBox[0].extent);
         }
       }
+      return undefined;
     }));
   }
 
@@ -196,6 +197,7 @@ export class WmsCapabilitiesService {
         }
       }
     }
+    return undefined;
   }
 
   private getLayerInfo(layerName, url): Observable<InternalWMSLayer> {

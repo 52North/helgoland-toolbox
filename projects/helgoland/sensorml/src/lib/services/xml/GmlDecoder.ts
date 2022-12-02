@@ -35,6 +35,7 @@ export class GmlDecoder {
 
         const timePeriod = this.decodeTimePeriod(elem);
         if (timePeriod != null) { return timePeriod; }
+        return undefined;
     }
 
     public decodeTimeInstant(elem: Element): ReturnObject<AbstractTime> {
@@ -51,6 +52,7 @@ export class GmlDecoder {
             }
             return new ReturnObject(instant, timeElem);
         }
+        return undefined;
     }
 
     public decodeTimePeriod(elem: Element): ReturnObject<AbstractTime> {
@@ -76,6 +78,7 @@ export class GmlDecoder {
             }
             return new ReturnObject(period, timeElem);
         }
+        return undefined;
     }
 
     public decodeAssociationAttributeGroup(elem: Element, object: AssociationAttributeGroup): void {
@@ -155,6 +158,7 @@ export class GmlDecoder {
             this.decodePos(pointElem, point);
             return new ReturnObject(point, pointElem);
         }
+        return undefined;
     }
 
     public decodePos(elem: Element, point: Point) {
@@ -214,6 +218,7 @@ export class GmlDecoder {
 
             return envelope;
         }
+        return undefined;
     }
 
     public decodeReferenced(elem: Element, referenced: Referenced): void {

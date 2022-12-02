@@ -20,7 +20,7 @@ export class PhysicalSystem extends AbstractPhysicalProcess implements Aggregati
         return 'PhysicalSystem';
     }
 
-    toString() {
+    override toString() {
         return 'Physical system';
     }
 }

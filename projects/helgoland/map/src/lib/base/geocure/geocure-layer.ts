@@ -10,7 +10,7 @@ export interface GeoCureGeoJSONOptions extends GeoJSONOptions {
 
 export class GeoCureGeoJSON extends GeoJSON {
 
-    public options: GeoCureGeoJSONOptions;
+    public override options: GeoCureGeoJSONOptions;
 
     constructor(
         options?: GeoCureGeoJSONOptions
@@ -21,14 +21,14 @@ export class GeoCureGeoJSON extends GeoJSON {
         }
     }
 
-    public getEvents() {
+    public override getEvents() {
         const events = {
             moveend: (event: LeafletEvent) => this.fetchData(event.target)
         };
         return events;
     }
 
-    public onAdd(map: Map): this {
+    public override onAdd(map: Map): this {
         super.onAdd(map);
         this.fetchData(map);
         return this;

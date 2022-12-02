@@ -153,19 +153,19 @@ export class D3TimeseriesGraphComponent
     private resizeObserver: ResizeObserver;
 
     constructor(
-        protected iterableDiffers: IterableDiffers,
-        protected datasetIdResolver: InternalIdHandler,
-        protected timeSrvc: Time,
+        protected override iterableDiffers: IterableDiffers,
+        protected override datasetIdResolver: InternalIdHandler,
+        protected override timeSrvc: Time,
         protected timeFormatLocaleService: D3TimeFormatLocaleService,
         protected colorService: ColorService,
-        protected translateService: TranslateService,
-        protected timezoneSrvc: TimezoneService,
+        protected override translateService: TranslateService,
+        protected override timezoneSrvc: TimezoneService,
         protected sumValues: SumValuesService,
         protected rangeCalc: RangeCalculationsService,
         protected graphHelper: D3GraphHelperService,
         protected graphService: D3Graphs,
         protected graphId: D3GraphId,
-        protected servicesConnector: HelgolandServicesConnector,
+        protected override servicesConnector: HelgolandServicesConnector,
         protected pointSymbolDrawer: D3PointSymbolDrawerService,
         protected zone: NgZone,
         @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
@@ -205,7 +205,7 @@ export class D3TimeseriesGraphComponent
         this.resizeObserver.observe(this.d3Elem.nativeElement);
     }
 
-    public ngOnDestroy() {
+    public override ngOnDestroy() {
         super.ngOnDestroy();
         this.resizeObserver.unobserve(this.d3Elem.nativeElement);
         this.graphService.removeGraph(this.currentTimeId);

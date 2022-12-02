@@ -24,7 +24,7 @@ export class PhysicalComponent extends AbstractPhysicalProcess implements Proces
         return 'PhysicalComponent';
     }
 
-    toString() {
+    override toString() {
         return 'Physical component';
     }
 }

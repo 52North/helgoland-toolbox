@@ -30,9 +30,9 @@ import { StyleModificationComponent } from '../../components/style-modification/
 })
 export class TrajectoryComponent implements OnInit {
 
-    public geometry: LineString;
+    public geometry!: LineString;
 
-    public highlightGeometry: GeoJsonObject;
+    public highlightGeometry!: GeoJsonObject;
 
     public datasetIds: string[] = [
         'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity_1',
@@ -45,11 +45,11 @@ export class TrajectoryComponent implements OnInit {
 
     public options: Map<string, DatasetOptions> = new Map();
 
-    public timespan: Timespan;
+    public timespan!: Timespan;
 
-    public selection: D3SelectionRange;
+    public selection!: D3SelectionRange;
 
-    public zoomToGeometry: GeoJsonObject;
+    public zoomToGeometry!: GeoJsonObject;
 
     public graphOptions: D3GraphOptions = {
         axisType: D3AxisType.Distance,

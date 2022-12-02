@@ -103,10 +103,10 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
-            if (changes.fitBounds) {
+            if (changes['fitBounds']) {
                 this.map.fitBounds(this.fitBounds);
             }
-            if (changes.zoomControlOptions) {
+            if (changes['zoomControlOptions']) {
                 this.updateZoomControl();
             }
         }

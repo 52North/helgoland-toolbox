@@ -40,9 +40,9 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   protected d3Graph: D3TimeseriesGraphComponent;
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService
   ) {
     super(graphId, graphs, graphHelper);
   }
@@ -52,12 +52,12 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
     this.d3Graph.redrawCompleteGraph();
   }
 
-  public ngOnDestroy(): void {
+  public override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.d3Graph.redrawCompleteGraph();
   }
 
-  public adjustYAxis(axis: YAxis) {
+  public override adjustYAxis(axis: YAxis) {
     if ((this.shift || this.zoom) && this.adjustedRanges.has(axis.uom)) {
       axis.range = this.adjustedRanges.get(axis.uom);
     }

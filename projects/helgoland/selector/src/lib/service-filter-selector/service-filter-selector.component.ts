@@ -39,14 +39,14 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     public items: Parameter[];
 
     constructor(
-        protected translate: TranslateService,
+        protected override translate: TranslateService,
         protected servicesConnector: HelgolandServicesConnector
     ) {
         super(translate);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.endpoint || changes.filter || changes.serviceUrl) {
+        if (changes['endpoint'] || changes['filter'] || changes['serviceUrl']) {
             this.loadItems();
         }
     }

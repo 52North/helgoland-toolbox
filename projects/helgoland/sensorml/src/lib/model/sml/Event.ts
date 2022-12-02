@@ -58,7 +58,7 @@ export class Event extends AbstractSWEIdentifiable {
     @DisplayName('Configuration')
     configuration: Settings;
 
-    toString() {
+    override toString() {
         return super.toString('Event');
     }
 }

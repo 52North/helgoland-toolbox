@@ -12,7 +12,7 @@ export class TemporalFrame extends AbstractSWEIdentifiable {
     @DisplayName('Origin')
     origin: string;
 
-    toString() {
+    override toString() {
         return super.toString('Temporal frame');
     }
 }

@@ -6,11 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": ["geojson"],
-    "lib": [
-      "dom",
-      "es2018"
-    ]
+    "types": ["geojson"]
   },
   "exclude": [
     "src/test.ts",

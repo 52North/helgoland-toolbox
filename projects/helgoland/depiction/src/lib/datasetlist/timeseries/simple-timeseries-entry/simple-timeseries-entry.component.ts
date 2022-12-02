@@ -34,8 +34,8 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
-    protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService
+    protected override internalIdHandler: InternalIdHandler,
+    protected override translateSrvc: TranslateService
   ) {
     super(internalIdHandler, translateSrvc);
   }

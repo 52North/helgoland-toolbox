@@ -255,6 +255,7 @@ export class SensorMLDecoder {
         const dataArray = this.sweDecoder.decodeDataArray(elem);
         if (dataArray != null) { return dataArray; }
         // TODO decode if process
+        return undefined;
     }
 
     public decodeAggregatingProcess(elem: Element, object: AggregatingProcess): void {
@@ -385,11 +386,13 @@ export class SensorMLDecoder {
 
             return new ReturnObject(featureList, featureListElem);
         }
+        return undefined;
     }
 
     public decodeModes(elem: Element): ReturnObject<AbstractModes> {
         const modeChoice = this.decodeModeChoice(elem);
         if (modeChoice != null) { return new ReturnObject(modeChoice, elem); }
+        return undefined;
     }
 
     public decodeModeChoice(elem: Element): ModeChoice {
@@ -407,6 +410,7 @@ export class SensorMLDecoder {
                 (mode) => this.decodeMode(mode));
             return modeChoice;
         }
+        return undefined;
     }
 
     public decodeMode(elem: Element): ReturnObject<Mode> {
@@ -430,6 +434,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(mode, modeElem);
         }
+        return undefined;
     }
 
     public decodeDescribedObject(elem: Element, describedObject: DescribedObject): void {
@@ -517,6 +522,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(compList, componentListElem);
         }
+        return undefined;
     }
 
     public decodeComponent(elem: Element): ReturnObject<Component> {
@@ -548,6 +554,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(connList, connectionListElem);
         }
+        return undefined;
     }
 
     public decodeConnection(elem: Element): ReturnObject<Connection> {
@@ -575,6 +582,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(conn, connectionElem);
         }
+        return undefined;
     }
 
     public decodeContactList(elem: Element): ReturnObject<ContactList> {
@@ -592,6 +600,7 @@ export class SensorMLDecoder {
                 (contact) => this.isoDecoder.decodeResponsibleParty(contact));
             return new ReturnObject(contactList, contactListElem);
         }
+        return undefined;
     }
 
     public decodeInputList(elem: Element): ReturnObject<InputList> {
@@ -610,6 +619,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(inputList, inputListElem);
         }
+        return undefined;
     }
 
     public decodeOutputList(elem: Element): ReturnObject<OutputList> {
@@ -627,6 +637,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(outputList, outputListElem);
         }
+        return undefined;
     }
 
     public decodeParameterList(elem: Element): ReturnObject<ParameterList> {
@@ -645,6 +656,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(parameterList, parameterListElem);
         }
+        return undefined;
     }
 
     public decodeInputOrOutputOrParameter(elem: Element): ReturnObject<InputOrOutputOrParameter> {
@@ -705,6 +717,7 @@ export class SensorMLDecoder {
             }
             return new ReturnObject(obsProp, obsPropElem);
         }
+        return undefined;
     }
 
     public decodeDataInterface(elem: Element): ReturnObject<DataInterface> {
@@ -740,6 +753,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(dataInterface, dataInterfaceElem);
         }
+        return undefined;
     }
 
     public decodeCharacteristicList(elem: Element): ReturnObject<CharacteristicList> {
@@ -760,6 +774,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(characteristicList, characteristicListElem);
         }
+        return undefined;
     }
 
     public decodeCapabilitiesList(elem: Element): ReturnObject<CapabilityList> {
@@ -780,6 +795,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(capabilitiesList, capabilitiesListElem);
         }
+        return undefined;
     }
 
     public decodeNamedSweDataComponent(elem: Element): ReturnObject<NamedSweDataComponent> {
@@ -805,6 +821,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(comp, elem);
         }
+        return undefined;
     }
 
     public decodeKeywordList(elem: Element): ReturnObject<KeywordList> {
@@ -833,6 +850,7 @@ export class SensorMLDecoder {
                 (keywords) => new ReturnObject(keywordList.keywords.push(keywords.textContent), null));
             return new ReturnObject(keywordList, keywordListElem);
         }
+        return undefined;
     }
 
     public decodeIdentifierList(elem: Element): ReturnObject<IdentifierList> {
@@ -851,6 +869,7 @@ export class SensorMLDecoder {
                 (identifier) => this.decodeTerm(identifier));
             return new ReturnObject(identifierList, identifierListElem);
         }
+        return undefined;
     }
 
     public decodeClassifierList(elem: Element): ReturnObject<ClassifierList> {
@@ -866,6 +885,7 @@ export class SensorMLDecoder {
                 (classifier) => this.decodeTerm(classifier));
             return new ReturnObject(classifierList, classifierListElem);
         }
+        return undefined;
     }
 
     public decodeEventList(elem: Element): ReturnObject<EventList> {
@@ -881,6 +901,7 @@ export class SensorMLDecoder {
                 (event) => this.decodeEvent(event));
             return new ReturnObject(eventList, eventListElem);
         }
+        return undefined;
     }
 
     public decodeDocumentList(elem: Element): ReturnObject<DocumentList> {
@@ -897,6 +918,7 @@ export class SensorMLDecoder {
                 (doc) => this.isoDecoder.decodeOnlineResource(doc));
             return new ReturnObject(documentList, documentListElem);
         }
+        return undefined;
     }
 
     public decodeProcessMethodProcess(elem: Element, object: ProcessMethodProcess): void {
@@ -926,6 +948,7 @@ export class SensorMLDecoder {
                 (algorithm) => this.decodeAlgorithm(algorithm));
             return new ReturnObject(processMethod, processMethodElem);
         }
+        return undefined;
     }
 
     public decodeAlgorithm(elem: Element): ReturnObject<AbstractAlgorithm> {
@@ -1017,6 +1040,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(event, eventElem);
         }
+        return undefined;
     }
 
     public decodeSettings(elem: Element): ReturnObject<Settings> {
@@ -1058,6 +1082,7 @@ export class SensorMLDecoder {
 
             return new ReturnObject(settings, settingsElem);
         }
+        return undefined;
     }
 
     public decodeSetStatus(elem: Element): ReturnObject<StatusSetting> {
@@ -1205,5 +1230,6 @@ export class SensorMLDecoder {
 
             return new ReturnObject(term, termElem);
         }
+        return undefined;
     }
 }

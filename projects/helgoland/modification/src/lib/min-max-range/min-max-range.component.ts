@@ -19,7 +19,7 @@ export class MinMaxRangeComponent implements OnChanges {
   public onRangeChange: EventEmitter<MinMaxRange> = new EventEmitter();
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.range && this.range) {
+    if (changes['range'] && this.range) {
       this.rangeMin = this.range.min;
       this.rangeMax = this.range.max;
     }

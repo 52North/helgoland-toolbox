@@ -68,7 +68,7 @@ export abstract class AbstractProcess extends DescribedObject {
     @DisplayName('Modes')
     modes: AbstractModes[] = [];
 
-    toString() {
+    override toString() {
         return 'Abstract process';
     }
 }

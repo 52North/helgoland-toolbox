@@ -51,7 +51,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,
-        protected translate: TranslateService
+        protected override translate: TranslateService
     ) {
         super(translate);
     }

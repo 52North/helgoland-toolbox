@@ -6,7 +6,7 @@ export class ComponentList extends AbstractSWE {
     @DisplayName('Components')
     components: Component[] = [];
 
-    toString() {
+    override toString() {
         return 'Component list';
     }
 }

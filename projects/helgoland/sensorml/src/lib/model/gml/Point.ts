@@ -8,7 +8,7 @@ export class Point extends AbstractGeometricPrimitive {
     @DisplayName('Y')
     y: number;
 
-    toString() {
+    override toString() {
         if ((this.x || this.x === 0) && (this.y || this.y === 0)) {
             return '(' + this.x + ';' + this.y + ')';
         }

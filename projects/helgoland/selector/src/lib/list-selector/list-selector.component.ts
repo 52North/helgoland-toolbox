@@ -40,7 +40,7 @@ export class ListSelectorComponent implements OnChanges {
     ) { }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.providerList && changes.providerList.currentValue) {
+        if (changes['providerList'] && changes['providerList'].currentValue) {
             if (this.selectorId && this.listSelectorService.cache.has(this.selectorId)
                 && this.isEqual(this.providerList, this.listSelectorService.providerList)) {
                 this.parameters = this.listSelectorService.cache.get(this.selectorId);

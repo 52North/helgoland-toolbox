@@ -30,16 +30,16 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   public hasData = true;
 
   constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override internalIdHandler: InternalIdHandler,
+    protected override translateSrvc: TranslateService,
     protected timeSrvc: Time
   ) {
     super(servicesConnector, internalIdHandler, translateSrvc);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.timeInterval) {
+    if (changes['timeInterval']) {
       this.checkDataInTimespan();
     }
   }
@@ -52,7 +52,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
     this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
   }
 
-  protected setParameters() {
+  protected override setParameters() {
     super.setParameters();
     this.firstValue = this.dataset.firstValue;
     this.lastValue = this.dataset.lastValue;

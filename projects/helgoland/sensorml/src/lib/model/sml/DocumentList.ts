@@ -6,7 +6,7 @@ export class DocumentList extends AbstractMetadataList {
     @DisplayName('Documents')
     documents: OnlineResource[] = [];
 
-    toString() {
+    override toString() {
         return 'Document list';
     }
 
@@ -18,5 +18,6 @@ export class DocumentList extends AbstractMetadataList {
         if (this.documents.length > 0) {
             return this.documents.join(', ');
         }
+        return undefined;
     }
 }

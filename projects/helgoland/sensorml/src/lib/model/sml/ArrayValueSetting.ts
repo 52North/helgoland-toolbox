@@ -8,9 +8,9 @@ export class ArrayValueSetting extends AbstractSetting {
     encoding: SweEncoding;
 
     @DisplayName('Encoded values')
-    value: EncodedValues;
+    override value: EncodedValues;
 
-    toString() {
+    override toString() {
         return 'Array value setting';
     }
 }

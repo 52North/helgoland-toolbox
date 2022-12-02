@@ -1,6 +1,6 @@
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ColorService, DatasetOptions, HelgolandCoreModule, Timespan } from '@helgoland/core';
 import { AdditionalData, D3PlotOptions, HelgolandD3Module } from '@helgoland/d3';
@@ -32,7 +32,7 @@ export class AdditionalDataGraphComponent {
     ];
 
     public additionalData: AdditionalData[] = [];
-    public timespan: Timespan;
+    public timespan!: Timespan;
 
     public graphOptions: D3PlotOptions = {
         yaxis: true
@@ -42,7 +42,7 @@ export class AdditionalDataGraphComponent {
 
     public selectedIds: string[] = [];
 
-    public graphLoading: boolean;
+    public graphLoading!: boolean;
 
     public interval: any;
 

@@ -34,7 +34,7 @@ export class SweDataArray extends AbstractDataComponent {
     @DisplayName('Values')
     values: EncodedValues;
 
-    toString(fallbackLabel = 'Data Array Component') {
+    override toString(fallbackLabel = 'Data Array Component') {
         return fallbackLabel;
     }
 

@@ -6,7 +6,7 @@ export class ContactList extends AbstractMetadataList {
     @DisplayName('Contacts')
     contacts: ResponsibleParty[] = [];
 
-    toString() {
+    override toString() {
         return 'Contact list';
     }
 
@@ -18,5 +18,6 @@ export class ContactList extends AbstractMetadataList {
         if (this.contacts.length > 0) {
             return this.contacts.join(', ');
         }
+        return undefined;
     }
 }

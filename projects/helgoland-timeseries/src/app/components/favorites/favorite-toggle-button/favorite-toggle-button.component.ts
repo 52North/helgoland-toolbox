@@ -14,20 +14,20 @@ import { SNACK_BAR_CONFIG } from '../../../app.consts';
 export class FavoriteToggleButtonComponent extends FavoriteTogglerComponent {
 
   constructor(
-    protected favSrvc: FavoriteService,
-    protected translate: TranslateService,
+    protected override favSrvc: FavoriteService,
+    protected override translate: TranslateService,
     protected snackBar: MatSnackBar,
     protected liveAnnouncer: LiveAnnouncer
   ) {
     super(favSrvc, translate);
   }
 
-  protected addFavorite() {
+  protected override addFavorite() {
     super.addFavorite();
     this.inform(`${this.translate.instant('events.add-favorite')}: ${this.dataset.label}`);
   }
 
-  protected removeFavorite() {
+  protected override removeFavorite() {
     super.removeFavorite();
     this.inform(`${this.translate.instant('events.remove-favorite')}: ${this.dataset.label}`);
   }

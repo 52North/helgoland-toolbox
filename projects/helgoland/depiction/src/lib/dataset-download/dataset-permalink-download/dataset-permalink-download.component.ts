@@ -39,7 +39,7 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.timeInterval) {
+    if (changes['timeInterval']) {
       if (this.internalId && this.timeInterval) {
         this.createLink();
       }

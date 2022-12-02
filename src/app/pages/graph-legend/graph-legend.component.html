@@ -30,8 +30,8 @@
     <button (click)="groupYaxisChanged()">group axis</button>
     {{d3diagramOptions.groupYaxis}}
 
-    <button (click)="changeHovering('point')">point</button>
-    <button (click)="changeHovering('line')">line</button>
+    <button (click)="changeHovering(HoveringStyleEnum.point)">point</button>
+    <button (click)="changeHovering(HoveringStyleEnum.line)">line</button>
     {{highlightedTime}}
 
     <button (click)="yaxisModifier = !yaxisModifier">Y Axis Modifier</button>

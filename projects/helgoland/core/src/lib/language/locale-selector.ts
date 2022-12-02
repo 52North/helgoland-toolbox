@@ -7,16 +7,16 @@ import { Language } from './model/language';
 export abstract class LocalSelectorComponent implements OnChanges {
 
     @Input()
-    public languageList: Language[];
+    public languageList: Language[] | undefined;
 
-    public currentLang: Language;
+    public currentLang: Language | undefined;
 
     constructor(
         protected translate: TranslateService
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.languageList) {
+        if (changes['languageList']) {
             this.updateCurrentLang();
         }
     }

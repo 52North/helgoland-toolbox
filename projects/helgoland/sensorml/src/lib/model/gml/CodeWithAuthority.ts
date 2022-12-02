@@ -9,7 +9,7 @@ export class CodeWithAuthority extends CodeType {
         super(value, codeSpace);
     }
 
-    toString() {
+    override toString() {
         return 'Code with authority';
     }
 }

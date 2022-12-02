@@ -79,7 +79,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.exportOptions && this.exportOptions) {
+    if (changes['exportOptions'] && this.exportOptions) {
       this.timespan = this.exportOptions.timeperiod;
       // check if timespan is inside range
       if (this.timespan.from > this.timespan.to) {

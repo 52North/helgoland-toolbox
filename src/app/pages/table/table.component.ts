@@ -14,14 +14,14 @@ import { HelgolandTimeModule } from '@helgoland/time';
 })
 export class TableComponent {
 
-    public datasetIds = [
+    public datasetIds: string[] = [
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
         'https://geo.irceline.be/sos/api/v1/__6941',
         'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97'
     ];
 
-    public selectedDatasetIds = [];
+    public selectedDatasetIds: string[] = [];
 
     public timespan = new Timespan(
         new Date('2017-10-24T01:49:59.000Z').getTime(),

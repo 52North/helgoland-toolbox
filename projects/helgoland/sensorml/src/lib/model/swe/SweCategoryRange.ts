@@ -13,7 +13,7 @@ export class SweCategoryRange extends AbstractSweRange {
      * structure to act as a schema for values provided using other encodings
      */
     @DisplayName('Value')
-    value: [string, string];
+    override value: [string, string];
     /**
      * Name of the dictionary defining an ordered set of values with respect to
      * which the range is expressed (ordinal reference system)
@@ -22,9 +22,9 @@ export class SweCategoryRange extends AbstractSweRange {
     codeSpace: string;
 
     @DisplayName('Constraint')
-    constraint: AllowedTokens;
+    override constraint: AllowedTokens;
 
-    toString() {
+    override toString() {
         return super.toString('SWE category range');
     }
 }

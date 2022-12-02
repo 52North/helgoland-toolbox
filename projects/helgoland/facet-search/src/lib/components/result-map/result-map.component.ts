@@ -41,18 +41,18 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   private resultsSubs: Subscription;
 
   constructor(
-    protected mapCache: MapCache,
+    protected override mapCache: MapCache,
     protected differs: KeyValueDiffers
   ) {
     super(mapCache, differs);
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
     this.resultsSubs = this.facetSearchService.getResults().subscribe(ts => this.fetchResults(ts));
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     super.ngOnDestroy();
     this.resultsSubs.unsubscribe();
   }
@@ -114,6 +114,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       geometry.on('mouseup', () => this.selectedFeature.emit(elem));
       return geometry;
     }
+    return undefined;
   }
 
   private createEntryGeometry(entry: FacetSearchElement) {
@@ -122,6 +123,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
       geometry.on('mouseup', () => this.selectedEntry.emit(entry));
       return geometry;
     }
+    return undefined;
   }
 
 }

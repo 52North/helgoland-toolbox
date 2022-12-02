@@ -13,7 +13,7 @@ export class SweQuantityRange extends AbstractSweRange {
      * encodings
      */
     @DisplayName('Value')
-    value: [number, number] = [0, 0];
+    override value: [number, number] = [0, 0];
     /**
      * Unit of measure used to express the value of this data component
      */
@@ -21,9 +21,9 @@ export class SweQuantityRange extends AbstractSweRange {
     uom: UnitOfMeasure = new UnitOfMeasure();
 
     @DisplayName('Constraint')
-    constraint: AllowedValues = new AllowedValues();
+    override constraint: AllowedValues = new AllowedValues();
 
-    toString() {
+    override toString() {
         return 'Quantity Range Component';
     }
 }

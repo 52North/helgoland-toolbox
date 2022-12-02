@@ -7,7 +7,7 @@ export class CharacteristicList extends AbstractNamedMetadataList {
     @DisplayName('Characteristics')
     characteristics: Characteristic[] = [];
 
-    toString() {
+    override toString() {
         return super.toString('Characteristic list');
     }
 
@@ -19,5 +19,6 @@ export class CharacteristicList extends AbstractNamedMetadataList {
         if (this.characteristics.length > 0) {
             return this.characteristics.join(', ');
         }
+        return undefined;
     }
 }

@@ -50,16 +50,16 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     constructor(
         protected statusIntervalResolver: StatusIntervalResolverService,
         protected servicesConnector: HelgolandServicesConnector,
-        protected mapCache: MapCache,
-        protected kvDiffers: KeyValueDiffers,
-        protected cd: ChangeDetectorRef
+        protected override mapCache: MapCache,
+        protected override kvDiffers: KeyValueDiffers,
+        protected override cd: ChangeDetectorRef
     ) {
         super(mapCache, kvDiffers, cd);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (this.map && changes.statusIntervals) { this.drawGeometries(); }
+        if (this.map && changes['statusIntervals']) { this.drawGeometries(); }
     }
 
     protected drawGeometries() {
@@ -139,22 +139,19 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
             });
         } else {
             geometry = L.geoJSON(station.geometry, {
-                style: (feature) => {
-                    return {
-                        color: '#000',
-                        fillColor: color,
-                        fillOpacity: 0.8,
-                        weight: 2
-                    };
-                }
+                style: (feature) => ({
+                    color: '#000',
+                    fillColor: color,
+                    fillOpacity: 0.8,
+                    weight: 2
+                })
             });
         }
         if (geometry) {
-            geometry.on('click', () => {
-                this.onSelected.emit(station);
-            });
+            geometry.on('click', () => this.onSelected.emit(station));
             return geometry;
         }
+        throw new Error('Could not create geometry');
     }
 
     protected createStationGeometries() {

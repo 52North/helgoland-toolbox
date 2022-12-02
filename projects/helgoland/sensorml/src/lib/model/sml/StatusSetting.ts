@@ -3,9 +3,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class StatusSetting extends AbstractSetting {
     @DisplayName('Value')
-    value: Status;
+    override value: Status;
 
-    toString() {
+    override toString() {
         return this.value && this.value.length ? this.value : 'Status setting';
     }
 }

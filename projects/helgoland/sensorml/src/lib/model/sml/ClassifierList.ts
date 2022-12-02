@@ -7,7 +7,7 @@ export class ClassifierList extends AbstractMetadataList {
     @DisplayName('Classifiers')
     classifiers: Term[] = [];
 
-    toString() {
+    override toString() {
         return 'Classifier list';
     }
 
@@ -19,5 +19,6 @@ export class ClassifierList extends AbstractMetadataList {
         if (this.classifiers.length > 0) {
             return this.classifiers.join(', ');
         }
+        return undefined;
     }
 }

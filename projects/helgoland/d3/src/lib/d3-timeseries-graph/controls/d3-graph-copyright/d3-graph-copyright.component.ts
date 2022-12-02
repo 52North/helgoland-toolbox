@@ -32,15 +32,15 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
   protected graphExtent: D3GraphExtent;
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService
   ) {
     super(graphId, graphs, graphHelper);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.copyright && this.copyright) {
+    if (changes['copyright'] && this.copyright) {
       this.setText();
     }
   }
@@ -67,7 +67,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
     }
   }
 
-  public cleanUp() {
+  public override cleanUp() {
     this.clearLayer();
   }
 

@@ -53,9 +53,9 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   protected previousBars: BarHoverElement[] = [];
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService,
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService,
     protected timezoneSrvc: TimezoneService,
     protected pointSymbolDrawer: D3PointSymbolDrawerService
   ) {

@@ -7,9 +7,9 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  */
 export class AllowedValues extends AbstractNumericAllowedValues {
     @DisplayName('Values')
-    values: Array<number | [number, number]> = [];
+    override values: Array<number | [number, number]> = [];
 
-    toString() {
+    override toString() {
         return 'Allowed values';
     }
 }

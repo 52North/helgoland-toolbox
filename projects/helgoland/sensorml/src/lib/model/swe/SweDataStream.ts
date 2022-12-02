@@ -30,7 +30,7 @@ export class SweDataStream extends AbstractSWEIdentifiable {
     @DisplayName('Values')
     values: EncodedValues;
 
-    toString() {
+    override toString() {
         return super.toString('SWE data stream');
     }
 }

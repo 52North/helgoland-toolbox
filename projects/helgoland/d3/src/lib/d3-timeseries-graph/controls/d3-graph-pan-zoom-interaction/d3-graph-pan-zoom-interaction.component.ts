@@ -42,9 +42,9 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   protected preparedData: InternalDataEntry[];
 
   constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService
+    protected override graphId: D3GraphId,
+    protected override graphs: D3Graphs,
+    protected override graphHelper: D3GraphHelperService
   ) {
     super(graphId, graphs, graphHelper);
   }
@@ -203,16 +203,16 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
 
     preparedData.forEach((entry) => {
       domMinArr.push(entry.data.find((elem, index, array) => {
-        if (elem.xDiagCoord) {
-          if (elem.xDiagCoord >= start) {
-            return array[index] !== undefined;
-          }
+        if (elem.xDiagCoord && elem.xDiagCoord >= start) {
+          return array[index] !== undefined;
         }
+        return undefined;
       }));
       domMaxArr.push(entry.data.find((elem, index, array) => {
         if (elem.xDiagCoord >= end) {
           return array[index] !== undefined;
         }
+        return undefined;
       }));
     });
 

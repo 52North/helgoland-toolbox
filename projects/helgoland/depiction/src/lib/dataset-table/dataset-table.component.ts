@@ -33,12 +33,12 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   private additionalStylesheet: HTMLElement;
 
   constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time,
+    protected override iterableDiffers: IterableDiffers,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override datasetIdResolver: InternalIdHandler,
+    protected override timeSrvc: Time,
     protected translateSrvc: TranslateService,
-    protected timezoneSrvc: TimezoneService
+    protected override timezoneSrvc: TimezoneService
   ) {
     super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateSrvc, timezoneSrvc);
   }

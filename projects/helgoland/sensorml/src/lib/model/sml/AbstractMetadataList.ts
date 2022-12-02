@@ -5,7 +5,7 @@ export abstract class AbstractMetadataList extends AbstractSWEIdentifiable {
     @DisplayName('Definition')
     definition: string;
 
-    toString() {
+    override toString() {
         return super.toString('Abstract metadata list');
     }
 }

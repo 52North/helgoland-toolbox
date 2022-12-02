@@ -37,7 +37,7 @@ export class GeosearchControlComponent extends MapControlComponent {
     public loading: boolean;
 
     constructor(
-        protected mapCache: MapCache,
+        protected override mapCache: MapCache,
         protected geosearch: GeoSearch
     ) {
         super(mapCache);

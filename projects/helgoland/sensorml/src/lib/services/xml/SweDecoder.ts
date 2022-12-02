@@ -98,6 +98,7 @@ export class SweDecoder {
 
         const text = this.decodeText(elem);
         if (text != null) { return text; }
+        return undefined;
     }
 
     public decodeCoordinate(node: Element): ReturnObject<SweCoordinate> {
@@ -160,6 +161,7 @@ export class SweDecoder {
 
             return new ReturnObject(vector, vectorNode);
         }
+        return undefined;
     }
 
     public decodeField(fieldNode: Element): ReturnObject<SweField> {
@@ -196,6 +198,7 @@ export class SweDecoder {
 
             return new ReturnObject(dataRecord, dataRecordElem);
         }
+        return undefined;
     }
 
     public decodeDataStream(elem: Element): ReturnObject<SweDataStream> {
@@ -238,6 +241,7 @@ export class SweDecoder {
 
             return new ReturnObject(dataStream, dataStreamElem);
         }
+        return undefined;
     }
 
     public decodeMatrix(elem: Element): ReturnObject<SweMatrix> {
@@ -261,6 +265,7 @@ export class SweDecoder {
 
             return new ReturnObject(matrix, matrixElem);
         }
+        return undefined;
     }
 
     public decodeDataArray(elem: Element): ReturnObject<SweDataArray> {
@@ -271,6 +276,7 @@ export class SweDecoder {
             this.decodeAbstractDataArray(dataArrayElem, dataArray);
             return new ReturnObject(dataArray, dataArrayElem);
         }
+        return undefined;
     }
 
     public decodeAbstractEncoding(elem: Element): ReturnObject<SweEncoding> {
@@ -324,6 +330,7 @@ export class SweDecoder {
 
             return new ReturnObject(textEncoding, textEncodingElem);
         }
+        return undefined;
     }
 
     public decodeBinaryEncoding(elem: Element): ReturnObject<SweBinaryEncoding> {
@@ -386,6 +393,7 @@ export class SweDecoder {
 
             return new ReturnObject(binaryEncoding, binaryEncodingElem);
         }
+        return undefined;
     }
 
     public decodeBinaryComponent(elem: Element): ReturnObject<SweBinaryComponent> {
@@ -440,6 +448,7 @@ export class SweDecoder {
 
             return new ReturnObject(component, componentElem);
         }
+        return undefined;
     }
 
     public decodeBinaryBlock(elem: Element): ReturnObject<SweBinaryBlock> {
@@ -486,6 +495,7 @@ export class SweDecoder {
 
             return new ReturnObject(block, blockElem);
         }
+        return undefined;
     }
 
 
@@ -498,6 +508,7 @@ export class SweDecoder {
 
             return new ReturnObject(xmlEncoding, elem);
         }
+        return undefined;
     }
 
     public decodeElementType(elem: Element): ReturnObject<SweElementType> {
@@ -521,6 +532,7 @@ export class SweDecoder {
             }
             return new ReturnObject(elementType, elementTypeElem);
         }
+        return undefined;
     }
 
     public decodeDataChoice(elem: Element): ReturnObject<SweDataChoice> {
@@ -544,6 +556,7 @@ export class SweDecoder {
 
             return new ReturnObject(dataChoice, dataChoiceElem);
         }
+        return undefined;
     }
 
     public decodeDataChoiceItem(elem: Element): ReturnObject<SweDataChoiceItem> {
@@ -587,6 +600,7 @@ export class SweDecoder {
             }
             return new ReturnObject(uom, uomElem);
         }
+        return undefined;
     }
 
     public decodeQuantityRange(elem: Element): ReturnObject<SweQuantityRange> {
@@ -628,6 +642,7 @@ export class SweDecoder {
 
             return new ReturnObject(quantityRange, quantityRangeElem);
         }
+        return undefined;
     }
 
     public decodeTimeRange(elem: Element): ReturnObject<SweTimeRange> {
@@ -697,6 +712,7 @@ export class SweDecoder {
 
             return new ReturnObject(timeRange, timeRangeElem);
         }
+        return undefined;
     }
 
     public decodeCountRange(elem: Element): ReturnObject<SweCountRange> {
@@ -730,6 +746,7 @@ export class SweDecoder {
 
             return new ReturnObject(countRange, countRangeElem);
         }
+        return undefined;
     }
 
     public decodeConstraint(elem: Element): ReturnObject<AllowedTimes | AllowedTokens | AllowedValues> {
@@ -788,6 +805,7 @@ export class SweDecoder {
 
             return new ReturnObject(categoryRange, categoryRangeElem);
         }
+        return undefined;
     }
 
     public decodeBoolean(elem: Element): ReturnObject<SweBoolean> {
@@ -805,6 +823,7 @@ export class SweDecoder {
 
             return new ReturnObject(bool, boolElem);
         }
+        return undefined;
     }
 
     public decodeCount(elem: Element): ReturnObject<SweCount> {
@@ -834,6 +853,7 @@ export class SweDecoder {
 
             return new ReturnObject(count, countElem);
         }
+        return undefined;
     }
 
     public decodeQuantity(elem: Element): ReturnObject<SweQuantity> {
@@ -869,6 +889,7 @@ export class SweDecoder {
             }
             return new ReturnObject(quantity, quantityElem);
         }
+        return undefined;
     }
 
     public decodeTime(elem: Element): ReturnObject<SweTime> {
@@ -917,6 +938,7 @@ export class SweDecoder {
 
             return new ReturnObject(time, timeElem);
         }
+        return undefined;
     }
 
     public decodeCategory(elem: Element): ReturnObject<SweCategory> {
@@ -956,6 +978,7 @@ export class SweDecoder {
 
             return new ReturnObject(category, catElem);
         }
+        return undefined;
     }
 
     public decodeText(elem: Element): ReturnObject<SweText> {
@@ -984,6 +1007,7 @@ export class SweDecoder {
 
             return new ReturnObject(text, textElem);
         }
+        return undefined;
     }
 
     public decodeAllowedTokens(elem: Element): ReturnObject<AllowedTokens> {
@@ -1007,6 +1031,7 @@ export class SweDecoder {
 
             return new ReturnObject(allowedTokens, allowedTokensElem);
         }
+        return undefined;
     }
 
     public decodeAllowedValues(elem: Element): ReturnObject<AllowedValues> {
@@ -1044,6 +1069,7 @@ export class SweDecoder {
                 });
             return new ReturnObject(allowedValues, allowedValuesElem);
         }
+        return undefined;
     }
 
     public decodeAllowedTimes(elem: Element): ReturnObject<AllowedTimes> {
@@ -1083,6 +1109,7 @@ export class SweDecoder {
 
             return new ReturnObject(allowedTimes, allowedTimesElem);
         }
+        return undefined;
     }
 
     public decodeNilValue(elem: Element): ReturnObject<SweNilValue> {
@@ -1113,6 +1140,7 @@ export class SweDecoder {
 
         const text = this.decodeText(elem);
         if (text != null) { return text; }
+        return undefined;
     }
 
     public decodeAbstractSwe(elem: Element, component: AbstractSWE): void {

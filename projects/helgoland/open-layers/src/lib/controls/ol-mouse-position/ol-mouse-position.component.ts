@@ -19,8 +19,8 @@ export class OlMousePositionComponent extends OlBaseComponent {
   @Input() projection = 'EPSG:3857';
 
   constructor(
-    protected mapService: OlMapService,
-    @Host() protected mapidService: OlMapId,
+    protected override mapService: OlMapService,
+    @Host() protected override mapidService: OlMapId,
     private elementRef: ElementRef
   ) {
     super(mapService, mapidService);

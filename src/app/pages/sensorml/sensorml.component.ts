@@ -13,18 +13,13 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
 })
 export class SensormlComponent {
 
-  public readerResult: string;
-  public error: string;
-  public description: AbstractProcess;
+  public readerResult!: string;
+  public error!: string;
+  public description!: AbstractProcess;
 
-  public changeListener($event): void {
+  public changeListener($event: any): void {
     const file: File = $event.target.files[0];
     const myReader: FileReader = new FileReader();
-
-    this.error = null;
-    this.readerResult = null;
-    this.description = null;
-
 
     myReader.onloadend = (e) => {
       try {
@@ -32,7 +27,7 @@ export class SensormlComponent {
         console.log(myReader.result);
         this.readerResult = myReader.result as string;
         this.description = new SensorMLXmlService().deserialize(this.readerResult);
-      } catch (error) {
+      } catch (error: any) {
         this.error = error.message;
       }
     };

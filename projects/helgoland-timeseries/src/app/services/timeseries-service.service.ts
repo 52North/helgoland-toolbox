@@ -33,7 +33,7 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     protected timezoneSrvc: TimezoneService,
     protected translate: TranslateService,
     protected la: LiveAnnouncer,
-    @Optional() protected translateSrvc?: TranslateService
+    @Optional() protected override translateSrvc?: TranslateService
   ) {
     super(serviceConnector, translateSrvc);
     this.initTimespan();
@@ -51,12 +51,12 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     this.timeSrvc.saveTimespan(TIME_CACHE_PARAM, this._timespan);
   }
 
-  public removeAllDatasets() {
+  public override removeAllDatasets() {
     super.removeAllDatasets();
     this.la.announce(this.translate.instant('events.all-timeseries-removed'));
   }
 
-  protected async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+  protected override async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
     super.addLoadedDataset(timeseries, resolve);
     const message = `${this.translate.instant('events.add-timeseries')}: ${timeseries.label}`;
     this.la.announce(message);
@@ -70,7 +70,7 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     return options;
   }
 
-  protected handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
+  protected override handleBarRenderingHints(barHints: BarRenderingHints, options: DatasetOptions) {
     super.handleBarRenderingHints(barHints, options);
     options.yAxisRange = { min: 0 };
   }

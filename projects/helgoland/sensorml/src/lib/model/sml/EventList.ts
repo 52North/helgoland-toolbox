@@ -6,7 +6,7 @@ export class EventList extends AbstractMetadataList {
     @DisplayName('Events')
     events: Event[] = [];
 
-    toString() {
+    override toString() {
         return 'Event list';
     }
 
@@ -18,5 +18,6 @@ export class EventList extends AbstractMetadataList {
         if (this.events.length > 0) {
             return this.events.join(', ');
         }
+        return undefined;
     }
 }

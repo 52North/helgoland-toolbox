@@ -44,12 +44,11 @@ export class InternalIdHandler {
         const url = internalId.substring(0, internalId.indexOf(INTERNAL_ID_SEPERATOR));
         const id = internalId.substring(internalId.indexOf(INTERNAL_ID_SEPERATOR) + INTERNAL_ID_SEPERATOR.length);
         return { url, id };
-      } else {
-        console.error('InternalID ' + internalId + ' is not resolvable');
       }
     } else if (this.instanceOfInternalDatasetId(internalId)) {
       return internalId;
     }
+    throw new Error(`InternalID '${internalId}' is not resolvable`);
   }
 
   private instanceOfInternalDatasetId(object: any): object is InternalDatasetId {

@@ -8,11 +8,11 @@ export class SweMatrix extends SweDataArray {
     @DisplayName('Local frame')
     localFrame: string;
 
-    toString() {
+    override toString() {
         return super.toString('SWE matrix');
     }
 
-    getValue() {
+    override getValue() {
         return this.toString();
     }
 }

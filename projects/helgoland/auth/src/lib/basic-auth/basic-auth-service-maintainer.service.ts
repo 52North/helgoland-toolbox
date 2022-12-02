@@ -38,6 +38,7 @@ export class BasicAuthServiceMaintainer {
         return api.url;
       }
     }
+    throw new Error("Did not found corresponding service.");
   }
 
 }

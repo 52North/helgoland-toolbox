@@ -167,6 +167,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
           .pipe(map(res => new HelgolandProfileData(res.values)));
       }
     }
+    throw new Error("No return option found.");
   }
 
   createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
@@ -269,7 +270,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
         paramFilter.valueTypes = 'quantity-profile';
     }
     if (filter.platformType !== undefined) { paramFilter.platformTypes = filter.platformType; }
-    if (filter.platform !== undefined) { paramFilter.platforms = filter.platform; }
+    if (filter.platform !== undefined) { paramFilter['platforms'] = filter.platform; }
     if (filter.category !== undefined) { paramFilter.category = filter.category; }
     if (filter.offering !== undefined) { paramFilter.offering = filter.offering; }
     if (filter.phenomenon !== undefined) { paramFilter.phenomenon = filter.phenomenon; }

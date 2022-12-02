@@ -7,7 +7,7 @@ export class CapabilityList extends AbstractNamedMetadataList {
     @DisplayName('Capabilities')
     capabilities: Capability[] = [];
 
-    toString() {
+    override toString() {
         return super.toString('Capability list');
     }
 
@@ -19,5 +19,6 @@ export class CapabilityList extends AbstractNamedMetadataList {
         if (this.capabilities.length > 0) {
             return this.capabilities.join(', ');
         }
+        return undefined;
     }
 }
