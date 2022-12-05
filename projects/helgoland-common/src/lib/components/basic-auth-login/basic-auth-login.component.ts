@@ -1,10 +1,17 @@
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'helgoland-basic-auth-login',
   templateUrl: './basic-auth-login.component.html',
-  styleUrls: ['./basic-auth-login.component.scss']
+  styleUrls: ['./basic-auth-login.component.scss'],
+  imports: [
+    MatFormFieldModule,
+    FormsModule
+  ],
+  standalone: true
 })
 export class BasicAuthLoginComponent {
 

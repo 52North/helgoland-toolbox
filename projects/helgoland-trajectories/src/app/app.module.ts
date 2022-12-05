@@ -19,6 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
   DatasetApiV2ConnectorProvider,
@@ -32,12 +33,21 @@ import { HelgolandDatasetlistModule } from '@helgoland/depiction';
 import { HelgolandMapViewModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  ClearStorageButtonComponent,
+  DarkModeButtonComponent,
+  LanguageSelectorComponent,
+  LoadingOverlayProgressBarComponent,
+  LoadingOverlaySpinnerComponent,
+  ParameterListSelectorComponent,
+  ServiceListSelectorComponent,
+  ShareButtonComponent,
+  VersionInfoComponent,
+} from 'helgoland-common';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { HelgolandCachingModule } from '@helgoland/caching';
-import { HelgolandCommonModule } from 'helgoland-common';
 import { AppComponent } from './app.component';
 import { LegendEntryComponent } from './components/legend-entry/legend-entry.component';
 import { ModalMainConfigComponent } from './components/modal-main-config/modal-main-config.component';
@@ -107,7 +117,6 @@ export function initApplication(configService: ConfigurationService, translate: 
       getDataCacheActive: false
     }),
     ColorPickerModule,
-    HelgolandCommonModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
@@ -127,6 +136,15 @@ export function initApplication(configService: ConfigurationService, translate: 
     MatSlideToggleModule,
     MatToolbarModule,
     MatTooltipModule,
+    ClearStorageButtonComponent,
+    DarkModeButtonComponent,
+    LanguageSelectorComponent,
+    LoadingOverlayProgressBarComponent,
+    LoadingOverlaySpinnerComponent,
+    ParameterListSelectorComponent,
+    ServiceListSelectorComponent,
+    ShareButtonComponent,
+    VersionInfoComponent,
   ],
   providers: [
     {

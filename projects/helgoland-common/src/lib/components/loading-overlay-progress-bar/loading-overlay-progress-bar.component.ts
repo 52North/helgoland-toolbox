@@ -1,9 +1,14 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'helgoland-loading-overlay-progress-bar',
   templateUrl: './loading-overlay-progress-bar.component.html',
-  styleUrls: ['./loading-overlay-progress-bar.component.scss']
+  styleUrls: ['./loading-overlay-progress-bar.component.scss'],
+  imports: [
+    MatProgressBarModule
+  ],
+  standalone: true
 })
 export class LoadingOverlayProgressBarComponent {
 
