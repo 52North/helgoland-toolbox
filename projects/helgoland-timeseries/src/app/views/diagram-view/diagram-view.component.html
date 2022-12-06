@@ -11,21 +11,23 @@
 
   <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
     autoFocus="false">
-    <div class="legend">
-      <button class="legend-menu-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="entries">
-        <mat-accordion [multi]="true">
-          <div *ngFor="let id of datasetIds">
-            <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
-              [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
-              (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
-              (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
-              (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
-            </helgoland-legend-entry>
-          </div>
-        </mat-accordion>
+    <div class="menu-wrapper">
+      <div class="legend">
+        <button class="legend-menu-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <div class="entries">
+          <mat-accordion [multi]="true">
+            <div *ngFor="let id of datasetIds">
+              <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
+                [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
+                (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
+                (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
+                (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
+              </helgoland-legend-entry>
+            </div>
+          </mat-accordion>
+        </div>
       </div>
       <mat-toolbar>
         <mat-toolbar-row>

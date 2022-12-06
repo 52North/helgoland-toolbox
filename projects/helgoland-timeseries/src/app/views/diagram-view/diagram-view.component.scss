@@ -4,25 +4,33 @@ helgoland-diagram-view {
     .container {
         height: 100%;
 
-        .legend {
-            // background-color: #f5f5f5;
+        .menu-wrapper {
+            overflow: hidden;
             height: 100%;
             display: flex;
             flex-direction: column;
 
-            .legend-menu-button {
-                align-self: flex-end;
-            }
-
-            @media only screen and (min-width: 1200px) {
-                width: 400px;
-            }
-
-            .entries {
+            .legend {
+                // background-color: #f5f5f5;
                 flex: 1;
-                padding: 5px;
+                overflow: auto;
+
+                .legend-menu-button {
+                    align-self: flex-end;
+                }
+
+                @media only screen and (min-width: 1200px) {
+                    width: 400px;
+                }
+
+                .entries {
+                    padding: 5px;
+                }
             }
 
+            .mat-toolbar {
+                flex: 0 1;
+            }
         }
 
         .content {
