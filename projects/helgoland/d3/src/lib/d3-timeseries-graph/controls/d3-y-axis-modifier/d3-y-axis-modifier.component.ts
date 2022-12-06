@@ -29,12 +29,12 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   /**
    * The factor, which is used to zoom in or out on the y axis range.
    */
-  @Input() zoomFactor = 0.1;
+  @Input() zoomFactor = 0.05;
 
   /**
    * The factor, which is used to shift up or down on the y axis range.
    */
-  @Input() shiftFactor = 0.2;
+  @Input() shiftFactor = 0.1;
 
   protected adjustedRanges: Map<string, MinMaxRange> = new Map();
   protected d3Graph: D3TimeseriesGraphComponent;

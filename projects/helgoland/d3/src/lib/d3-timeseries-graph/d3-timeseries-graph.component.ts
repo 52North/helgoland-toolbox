@@ -1023,12 +1023,12 @@ export class D3TimeseriesGraphComponent
     private drawYaxis(axis: YAxis) {
         const showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
 
-        this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
-
         // adjust to default extend
         this.rangeCalc.setDefaultExtendIfUndefined(axis);
 
         this.rangeCalc.bufferUnfixedRange(axis);
+
+        this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // range for y axis scale
         const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
