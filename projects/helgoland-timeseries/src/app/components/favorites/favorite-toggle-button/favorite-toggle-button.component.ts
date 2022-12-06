@@ -1,14 +1,26 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FavoriteService, FavoriteTogglerComponent } from '@helgoland/favorite';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { NotifierService } from '../../../services/notifier.service';
 
 @Component({
   selector: 'helgoland-favorite-toggle-button',
   templateUrl: './favorite-toggle-button.component.html',
-  styleUrls: ['./favorite-toggle-button.component.scss']
+  styleUrls: ['./favorite-toggle-button.component.scss'],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class FavoriteToggleButtonComponent extends FavoriteTogglerComponent {
 

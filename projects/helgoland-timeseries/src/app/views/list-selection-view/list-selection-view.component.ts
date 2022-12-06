@@ -1,9 +1,29 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
-import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { ErrorHandlerService, ParameterListEntry, ParameterType } from 'helgoland-common';
+import { MultiServiceFilterEndpoint } from '@helgoland/selector';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  ErrorHandlerService,
+  FilterLabelComponent,
+  ParameterListEntry,
+  ParameterListSelectorComponent,
+  ParameterType,
+} from 'helgoland-common';
 
+import {
+  ModalMainConfigButtonComponent,
+} from '../../components/main-config/modal-main-config-button/modal-main-config-button.component';
+import {
+  TimeseriesListSelectorComponent,
+} from '../../components/timeseries-list-selector/timeseries-list-selector.component';
 import { AppRouterService } from '../../services/app-router.service';
 import { TimeseriesService } from '../../services/timeseries-service.service';
 import { DIALOG_MAX_WIDTH } from './../../constants/layout';
@@ -13,7 +33,23 @@ import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/mo
 @Component({
   selector: 'helgoland-list-selection-view',
   templateUrl: './list-selection-view.component.html',
-  styleUrls: ['./list-selection-view.component.scss']
+  styleUrls: ['./list-selection-view.component.scss'],
+  imports: [
+    CommonModule,
+    FilterLabelComponent,
+    MatBadgeModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatToolbarModule,
+    ModalMainConfigButtonComponent,
+    ParameterListSelectorComponent,
+    TimeseriesListSelectorComponent,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class ListSelectionViewComponent implements OnInit {
 

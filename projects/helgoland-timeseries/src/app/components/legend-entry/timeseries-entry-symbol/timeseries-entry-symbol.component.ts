@@ -15,7 +15,8 @@ import * as d3 from 'd3';
 @Component({
   selector: 'helgoland-timeseries-entry-symbol',
   templateUrl: './timeseries-entry-symbol.component.html',
-  styleUrls: ['./timeseries-entry-symbol.component.scss']
+  styleUrls: ['./timeseries-entry-symbol.component.scss'],
+  standalone: true
 })
 export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, OnInit {
 

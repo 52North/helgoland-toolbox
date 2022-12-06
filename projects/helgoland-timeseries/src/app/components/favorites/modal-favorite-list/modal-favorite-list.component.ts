@@ -1,9 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatasetType, HelgolandServicesConnector } from '@helgoland/core';
 import { Favorite, FavoriteService, GroupFavorite, SingleFavorite } from '@helgoland/favorite';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
+import { EditLabelComponent } from '../../edit-label/edit-label.component';
 import { TimeseriesService } from './../../../services/timeseries-service.service';
 
 interface EditableSingleFavorite extends SingleFavorite {
@@ -17,7 +24,18 @@ interface EditableGroupFavorite extends GroupFavorite {
 @Component({
   selector: 'helgoland-modal-favorite-list',
   templateUrl: './modal-favorite-list.component.html',
-  styleUrls: ['./modal-favorite-list.component.scss']
+  styleUrls: ['./modal-favorite-list.component.scss'],
+  imports: [
+    TranslateModule,
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
+    EditLabelComponent,
+  ],
+  standalone: true
 })
 export class ModalFavoriteListComponent implements OnInit {
 

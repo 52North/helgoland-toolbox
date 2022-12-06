@@ -1,6 +1,13 @@
 import { MediaMatcher } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   DatasetType,
   HelgolandParameterFilter,
@@ -9,10 +16,15 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
+import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { ErrorHandlerService } from 'helgoland-common';
+import { TranslateModule } from '@ngx-translate/core';
+import { ErrorHandlerService, ParameterListSelectorComponent } from 'helgoland-common';
 import { icon, Marker } from 'leaflet';
 
+import {
+  ModalMainConfigButtonComponent,
+} from '../../components/main-config/modal-main-config-button/modal-main-config-button.component';
 import {
   ModalDatasetByStationSelectorComponent,
 } from '../../components/modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
@@ -36,7 +48,22 @@ Marker.prototype.options.icon = icon({
 @Component({
   selector: 'helgoland-map-selection-view',
   templateUrl: './map-selection-view.component.html',
-  styleUrls: ['./map-selection-view.component.scss']
+  styleUrls: ['./map-selection-view.component.scss'],
+  imports: [
+    CommonModule,
+    HelgolandMapSelectorModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    ModalMainConfigButtonComponent,
+    ParameterListSelectorComponent,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class MapSelectionViewComponent implements OnInit {
 
