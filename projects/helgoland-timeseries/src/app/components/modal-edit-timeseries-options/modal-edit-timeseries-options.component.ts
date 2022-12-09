@@ -7,7 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { DatasetOptions, PointSymbol } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 
 import { ConfigurationService } from './../../services/configuration.service';
 import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select/timeseries-symbol-select.component';
@@ -27,6 +27,7 @@ import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select/time
     TimeseriesSymbolSelectComponent,
     TranslateModule,
   ],
+  providers: [ColorPickerService],
   standalone: true
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
