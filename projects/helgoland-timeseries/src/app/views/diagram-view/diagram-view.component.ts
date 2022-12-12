@@ -28,6 +28,7 @@ import {
 import {
   GeneralTimeSelectionComponent,
 } from '../../components/time/general-time-selection/general-time-selection.component';
+import { ListSelectionComponent } from './../../components/list-selection/list-selection.component';
 import {
   ModalMainConfigButtonComponent,
 } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
@@ -109,7 +110,7 @@ export class DiagramViewComponent implements OnInit {
     private media: MediaMatcher,
     private dialog: MatDialog,
     public timeseries: TimeseriesService,
-    public appRouter: AppRouterService,
+    private appRouter: AppRouterService,
     public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time
   ) {
@@ -204,6 +205,16 @@ export class DiagramViewComponent implements OnInit {
 
   public updateOptions(options: DatasetOptions, internalId: string) {
     this.timeseries.updateDatasetOptions(options, internalId);
+  }
+
+  openMapSelection() {
+    this.appRouter.toMapSelection();
+  }
+
+  openListSelection() {
+    this.dialog.open(ListSelectionComponent, {
+      minWidth: '600px'
+    });
   }
 
 }

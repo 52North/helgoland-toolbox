@@ -1,12 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
 import { MultiServiceFilterEndpoint } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,40 +15,28 @@ import {
   ParameterType,
 } from 'helgoland-common';
 
-import {
-  ModalMainConfigButtonComponent,
-} from '../../components/main-config/modal-main-config-button/modal-main-config-button.component';
-import {
-  TimeseriesListSelectorComponent,
-} from '../../components/timeseries-list-selector/timeseries-list-selector.component';
-import { AppRouterService } from '../../services/app-router.service';
-import { TimeseriesService } from '../../services/timeseries-service.service';
-import { DIALOG_MAX_WIDTH } from './../../constants/layout';
-import { ConfigurationService } from './../../services/configuration.service';
+import { ConfigurationService } from '../../services/configuration.service';
+import { TimeseriesListSelectorComponent } from '../timeseries-list-selector/timeseries-list-selector.component';
 import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
 
 @Component({
-  selector: 'helgoland-list-selection-view',
-  templateUrl: './list-selection-view.component.html',
-  styleUrls: ['./list-selection-view.component.scss'],
+  selector: 'helgoland-list-selection',
+  templateUrl: './list-selection.component.html',
+  styleUrls: ['./list-selection.component.scss'],
   imports: [
     CommonModule,
     FilterLabelComponent,
-    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatDialogModule,
     MatExpansionModule,
-    MatIconModule,
-    MatToolbarModule,
-    ModalMainConfigButtonComponent,
     ParameterListSelectorComponent,
     TimeseriesListSelectorComponent,
     TranslateModule,
   ],
   standalone: true
 })
-export class ListSelectionViewComponent implements OnInit {
+export class ListSelectionComponent implements OnInit {
 
   public selectedService: HelgolandService;
 
@@ -64,8 +49,6 @@ export class ListSelectionViewComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
-    public appRouter: AppRouterService,
-    public timeseries: TimeseriesService,
     private configSrvc: ConfigurationService,
     private errorHandler: ErrorHandlerService
   ) { }
@@ -87,8 +70,7 @@ export class ListSelectionViewComponent implements OnInit {
       selectedService: this.selectedService
     }
     const dialogRef = this.dialog.open(ModalListSettingsComponent, {
-      data: conf,
-      maxWidth: DIALOG_MAX_WIDTH
+      data: conf
     });
 
     dialogRef.afterClosed().subscribe((newConf: ListConfig) => {
@@ -101,7 +83,7 @@ export class ListSelectionViewComponent implements OnInit {
     })
   }
 
-  public selectFilter(entry: ParameterListEntry, filter: ParameterType) {
+  selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.CATEGORY) {
       delete entry.apiFilter[0].filter.category;
     }
@@ -117,7 +99,7 @@ export class ListSelectionViewComponent implements OnInit {
     entry.selectedFilter = filter;
   }
 
-  public itemSelected(filter: ParameterListEntry, item: Parameter) {
+  itemSelected(filter: ParameterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;
 

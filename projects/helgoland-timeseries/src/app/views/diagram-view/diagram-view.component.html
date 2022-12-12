@@ -1,8 +1,8 @@
 <mat-menu #addtsMenu="matMenu">
-  <button mat-menu-item (click)="appRouter.toMapSelection()">
+  <button mat-menu-item (click)="openMapSelection()">
     {{'diagram-view.add-timeseries.map' | translate}}
   </button>
-  <button mat-menu-item (click)="appRouter.toListSelection()">
+  <button mat-menu-item (click)="openListSelection()">
     {{'diagram-view.add-timeseries.list' | translate}}
   </button>
 </mat-menu>
@@ -65,12 +65,12 @@
     <div *ngIf="datasetIds.length === 0" class="no-timeseries">
       {{'diagram-view.no-timeseries.hint' | translate}}
       <div>
-        <button mat-button (click)="appRouter.toMapSelection()">
+        <button mat-button (click)="openMapSelection()">
           {{'diagram-view.add-timeseries.map' | translate}}
         </button>
       </div>
       <div>
-        <button mat-button (click)="appRouter.toListSelection()">
+        <button mat-button (click)="openListSelection()">
           {{'diagram-view.add-timeseries.list' | translate}}
         </button>
       </div>

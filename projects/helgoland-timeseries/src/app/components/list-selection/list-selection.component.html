@@ -1,7 +1,5 @@
-<div class="list-selection-wrapper">
-  <button class="local-settings-button" mat-mini-fab color="none" (click)="openListSettings()">
-    <mat-icon>settings</mat-icon>
-  </button>
+<h1 mat-dialog-title>{{'diagram-view.add-timeseries.map' | translate}}</h1>
+<div mat-dialog-content>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">
       <mat-expansion-panel-header>
@@ -48,11 +46,8 @@
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-
-<mat-toolbar>
-  <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
-  <div style="flex: 1;"></div>
-  <button mat-icon-button (click)="appRouter.toDiagram()">
-    <mat-icon [matBadge]="timeseries.datasetIds.length">show_chart</mat-icon>
-  </button>
-</mat-toolbar>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="openListSettings()">{{'provider' | translate}}</button>
+  <div style="flex: 1"></div>
+  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+</div>
