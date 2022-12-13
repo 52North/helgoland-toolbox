@@ -18,6 +18,7 @@ import {
   ModalFavoriteListButtonComponent,
 } from '../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import { LegendEntryComponent } from '../../components/legend-entry/legend-entry.component';
+import { MapSelectionComponent } from '../../components/map-selection/map-selection.component';
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
@@ -32,7 +33,6 @@ import { ListSelectionComponent } from './../../components/list-selection/list-s
 import {
   ModalMainConfigButtonComponent,
 } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
-import { AppRouterService } from './../../services/app-router.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
@@ -110,7 +110,6 @@ export class DiagramViewComponent implements OnInit {
     private media: MediaMatcher,
     private dialog: MatDialog,
     public timeseries: TimeseriesService,
-    private appRouter: AppRouterService,
     public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time
   ) {
@@ -130,6 +129,10 @@ export class DiagramViewComponent implements OnInit {
     this.permalinkSrvc.validatePeramlink();
     this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     this.setDatasets();
+
+    if (!this.timeseries.hasDatasets()) {
+      this.openMapSelection();
+    }
   }
 
   private setDatasets() {
@@ -208,11 +211,15 @@ export class DiagramViewComponent implements OnInit {
   }
 
   openMapSelection() {
-    this.appRouter.toMapSelection();
+    this.dialog.open(MapSelectionComponent, {
+      autoFocus: false,
+      panelClass: 'modal-map-selection'
+    });
   }
 
   openListSelection() {
     this.dialog.open(ListSelectionComponent, {
+      autoFocus: false,
       minWidth: '600px'
     });
   }

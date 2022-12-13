@@ -1,7 +1,6 @@
 {
 	"controls.close": "Schließen",
 	"controls.ok": "Ok",
-	"controls.to-diagram": "Diagram",
 	"dataset-by-station.hint": "Bitte wählen Sie Zeitreihen zur Darstellung aus:",
 	"dataset-by-station.show-additional-datasets": "Zeige weitere gemessene Phänomene an dieser Station",
 	"diagram-config.hoverstyle": "Tooltip im Diagram",
@@ -47,7 +46,7 @@
 	"map-config.cluster-marker": "Marker gruppieren",
 	"map-config.title": "Kartenkonfiguration",
 	"map-selection-view.adjust-map-button.tooltip": "Karte anpassen",
-	"map-selection-view.go-to-chart.tooltip": "Zeitreihenansicht",
+	"map-selection-view.phenomena-list": "Phänomenliste",
 	"map-selection-view.select-all-phenomena": "Zeige alle Phänomene",
 	"modal-edit-timeseries-options.adjust-color": "Farbe ändern",
 	"modal-edit-timeseries-options.adjust-color-confirm-button": "Ok",
