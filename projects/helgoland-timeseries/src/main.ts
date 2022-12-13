@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import { APP_INITIALIZER, enableProdMode, importProvidersFrom } from '@angular/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -91,6 +92,7 @@ bootstrapApplication(AppComponent, {
     },
     importProvidersFrom(HelgolandCoreModule),
     importProvidersFrom(MatSnackBarModule),
+    importProvidersFrom(MatDialogModule),
     importProvidersFrom(
       HelgolandCachingModule.forRoot({
         cachingDurationInMilliseconds: 300000,

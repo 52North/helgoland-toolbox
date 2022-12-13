@@ -18,7 +18,6 @@ import {
   ModalFavoriteListButtonComponent,
 } from '../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import { LegendEntryComponent } from '../../components/legend-entry/legend-entry.component';
-import { MapSelectionComponent } from '../../components/map-selection/map-selection.component';
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
@@ -29,7 +28,7 @@ import {
 import {
   GeneralTimeSelectionComponent,
 } from '../../components/time/general-time-selection/general-time-selection.component';
-import { ListSelectionComponent } from './../../components/list-selection/list-selection.component';
+import { AppRouterService } from '../../services/app-router.service';
 import {
   ModalMainConfigButtonComponent,
 } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
@@ -64,17 +63,17 @@ import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 })
 export class DiagramViewComponent implements OnInit {
 
-  public mobileQuery: MediaQueryList;
+  mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
 
-  public datasetIds = [];
+  datasetIds = [];
 
-  public selectedIds: string[] = [];
+  selectedIds: string[] = [];
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
+  datasetOptions: Map<string, DatasetOptions> = new Map();
 
-  public d3diagramOptions: D3PlotOptions = {
+  d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
     togglePanZoom: true,
     generalizeAllways: true,
@@ -90,15 +89,15 @@ export class DiagramViewComponent implements OnInit {
     groupYaxis: true
   };
 
-  public d3overviewOptions: D3PlotOptions = {
+  d3overviewOptions: D3PlotOptions = {
     overview: true,
     showTimeLabel: false
   };
 
-  public diagramLoading: boolean;
-  public overviewLoading: boolean;
+  diagramLoading: boolean;
+  overviewLoading: boolean;
 
-  public diagramConfig: DiagramConfig = {
+  diagramConfig: DiagramConfig = {
     overviewVisible: true,
     yaxisVisible: this.d3diagramOptions.yaxis,
     yaxisModifier: true,
@@ -109,6 +108,7 @@ export class DiagramViewComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private dialog: MatDialog,
+    private appRouter: AppRouterService,
     public timeseries: TimeseriesService,
     public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time
@@ -135,24 +135,19 @@ export class DiagramViewComponent implements OnInit {
     }
   }
 
-  private setDatasets() {
-    this.datasetIds = this.timeseries.datasetIds;
-    this.datasetOptions = this.timeseries.datasetOptions;
-  }
-
-  public setSelected(selectedIds: string[]) {
+  setSelected(selectedIds: string[]) {
     this.selectedIds = selectedIds;
   }
 
-  public onDiagramLoading(loading: boolean) {
+  onDiagramLoading(loading: boolean) {
     setTimeout(() => this.diagramLoading = loading);
   }
 
-  public onOverviewLoading(loading: boolean) {
+  onOverviewLoading(loading: boolean) {
     setTimeout(() => this.overviewLoading = loading);
   }
 
-  public openDiagramSettings() {
+  openDiagramSettings() {
     const dialogRef = this.dialog.open(ModalDiagramSettingsComponent, {
       data: {
         overviewVisible: this.diagramConfig.overviewVisible,
@@ -171,15 +166,15 @@ export class DiagramViewComponent implements OnInit {
     })
   }
 
-  public jumpToDate(date: Date) {
+  jumpToDate(date: Date) {
     this.timeseries.timespan = this.time.centerTimespan(this.timeseries.timespan, date);
   }
 
-  public isSelected(internalId: string): boolean {
+  isSelected(internalId: string): boolean {
     return !!this.selectedIds.find(e => e === internalId);
   }
 
-  public selectTimeseries(selected: boolean, internalId: string) {
+  selectTimeseries(selected: boolean, internalId: string) {
     if (selected) {
       this.selectedIds.push(internalId);
     } else {
@@ -187,41 +182,40 @@ export class DiagramViewComponent implements OnInit {
     }
   }
 
-  public showGeometry(geometry: GeoJSON.GeoJsonObject) { }
+  showGeometry(geometry: GeoJSON.GeoJsonObject) { }
 
-  public clearSelection() {
+  clearSelection() {
     this.selectedIds = [];
   }
 
-  public removeAllTimeseries() {
+  removeAllTimeseries() {
     this.timeseries.removeAllDatasets();
   }
 
-  public deleteTimeseries(internalId: string) {
+  deleteTimeseries(internalId: string) {
     this.timeseries.removeDataset(internalId);
   }
 
-  public editOption(options: DatasetOptions) {
+  editOption(options: DatasetOptions) {
     const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, { data: options });
     dialogRef.afterClosed().subscribe(_ => this.timeseries.updateDatasetOptions(options, options.internalId))
   }
 
-  public updateOptions(options: DatasetOptions, internalId: string) {
+  updateOptions(options: DatasetOptions, internalId: string) {
     this.timeseries.updateDatasetOptions(options, internalId);
   }
 
   openMapSelection() {
-    this.dialog.open(MapSelectionComponent, {
-      autoFocus: false,
-      panelClass: 'modal-map-selection'
-    });
+    this.appRouter.toMapSelection();
   }
 
   openListSelection() {
-    this.dialog.open(ListSelectionComponent, {
-      autoFocus: false,
-      minWidth: '600px'
-    });
+    this.appRouter.toListSelection();
+  }
+
+  private setDatasets() {
+    this.datasetIds = this.timeseries.datasetIds;
+    this.datasetOptions = this.timeseries.datasetOptions;
   }
 
 }

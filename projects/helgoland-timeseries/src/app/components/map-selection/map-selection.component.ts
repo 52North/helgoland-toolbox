@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   DatasetType,
@@ -13,7 +13,7 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
-import { HelgolandMapSelectorModule } from '@helgoland/map';
+import { HelgolandMapSelectorModule, MapCache } from '@helgoland/map';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import { ErrorHandlerService, ParameterListSelectorComponent } from 'helgoland-common';
@@ -42,7 +42,11 @@ import { MapConfig, ModalMapSettingsComponent } from '../modal-map-settings/moda
   ],
   standalone: true
 })
-export class MapSelectionComponent implements OnInit {
+export class MapSelectionComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('drawer') drawer: MatDrawer;
+
+  mapId = 'timeseries';
 
   selectedService: HelgolandService | undefined;
 
@@ -61,7 +65,15 @@ export class MapSelectionComponent implements OnInit {
     private serviceConnector: HelgolandServicesConnector,
     private errorHandler: ErrorHandlerService,
     private dialog: MatDialog,
+    private mapCache: MapCache
   ) { }
+
+  ngAfterViewInit(): void {
+    this.drawer.openedChange.subscribe(_ => {
+      const map = this.mapCache.getMap(this.mapId);
+      if (map) { map.invalidateSize(); }
+    })
+  }
 
   ngOnInit() {
     if (this.configSrvc.configuration) {
@@ -73,6 +85,10 @@ export class MapSelectionComponent implements OnInit {
         error: error => this.errorHandler.error(error)
       })
     }
+  }
+
+  phenomenonToggled() {
+    this.drawer.toggle();
   }
 
   onStationSelected(station: HelgolandPlatform) {
