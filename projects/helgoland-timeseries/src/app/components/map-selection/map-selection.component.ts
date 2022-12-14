@@ -23,6 +23,7 @@ import {
   ModalDatasetByStationSelectorComponent,
 } from '../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
 import { MapConfig, ModalMapSettingsComponent } from '../modal-map-settings/modal-map-settings.component';
+import { MapSelectionStateService } from './map-selection-state.service';
 
 @Component({
   selector: 'helgoland-map-selection',
@@ -48,13 +49,9 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
 
   mapId = 'timeseries';
 
-  selectedService: HelgolandService | undefined;
-
   stationFilter: HelgolandParameterFilter;
 
   phenomenonFilter: MultiServiceFilter[];
-
-  selectedPhenomenonId: string;
 
   phenomenonEndpoint = MultiServiceFilterEndpoint.phenomenon;
 
@@ -65,7 +62,8 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
     private serviceConnector: HelgolandServicesConnector,
     private errorHandler: ErrorHandlerService,
     private dialog: MatDialog,
-    private mapCache: MapCache
+    private mapCache: MapCache,
+    public state: MapSelectionStateService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -76,14 +74,16 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.configSrvc.configuration) {
+    if (!this.state.selectedService && this.configSrvc.configuration) {
       this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe({
         next: services => {
-          this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
+          this.state.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
           this.updateFilter();
         },
         error: error => this.errorHandler.error(error)
       })
+    } else {
+      this.updateFilter();
     }
   }
 
@@ -94,13 +94,13 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   onStationSelected(station: HelgolandPlatform) {
     const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent);
     dialogRef.componentInstance.station = station;
-    dialogRef.componentInstance.url = this.selectedService.apiUrl;
-    dialogRef.componentInstance.phenomenonId = this.selectedPhenomenonId;
+    dialogRef.componentInstance.url = this.state.selectedService.apiUrl;
+    dialogRef.componentInstance.phenomenonId = this.state.selectedPhenomenonId;
 
     dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
       if (newConf) {
         this.cluster = newConf.cluster;
-        this.selectedService = newConf.selectedService;
+        this.state.selectedService = newConf.selectedService;
         this.updateFilter();
       }
     })
@@ -109,39 +109,40 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   openMapSettings() {
     const conf: MapConfig = {
       cluster: this.cluster,
-      selectedService: this.selectedService
+      selectedService: this.state.selectedService
     }
     const dialogRef = this.dialog.open(ModalMapSettingsComponent, { data: conf });
     dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
       if (newConf) {
         this.cluster = newConf.cluster;
-        this.selectedService = newConf.selectedService;
+        this.state.selectedService = newConf.selectedService;
+        this.state.selectedPhenomenonId = undefined;
         this.updateFilter();
       }
     })
   }
 
   selectAllPhenomena() {
-    this.selectedPhenomenonId = null;
+    this.state.selectedPhenomenonId = undefined;
     this.updateFilter();
   }
 
   onPhenomenonSelected(phenomenon: Phenomenon) {
-    this.selectedPhenomenonId = phenomenon.id;
+    this.state.selectedPhenomenonId = phenomenon.id;
     this.updateFilter();
   }
 
   private updateFilter() {
     this.stationFilter = {
       type: DatasetType.Timeseries,
-      service: this.selectedService.id
+      service: this.state.selectedService.id
     }
-    if (this.selectedPhenomenonId) { this.stationFilter.phenomenon = this.selectedPhenomenonId; }
+    if (this.state.selectedPhenomenonId) { this.stationFilter.phenomenon = this.state.selectedPhenomenonId; }
 
     this.phenomenonFilter = [{
-      url: this.selectedService.apiUrl,
+      url: this.state.selectedService.apiUrl,
       filter: {
-        service: this.selectedService.id
+        service: this.state.selectedService.id
       }
     }]
   }
