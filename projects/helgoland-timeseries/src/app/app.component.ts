@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.scss'],
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule
   ],
   standalone: true
 })

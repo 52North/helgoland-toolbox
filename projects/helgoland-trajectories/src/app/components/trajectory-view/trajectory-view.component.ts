@@ -1,18 +1,54 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatasetOptions, HelgolandTrajectory, Timespan } from '@helgoland/core';
-import { D3AxisType, D3GraphOptions, D3SelectionRange } from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
+import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from '@helgoland/d3';
+import { HelgolandMapViewModule } from '@helgoland/map';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoadingOverlayProgressBarComponent, LoadingOverlaySpinnerComponent, ShareButtonComponent } from 'helgoland-common';
 
 import { TrajectoriesService } from '../../services/trajectories.service';
+import { LegendEntryComponent } from '../legend-entry/legend-entry.component';
 import { TrajectoryViewPermalinkService } from './../../services/trajectory-view-permalink.service';
 import { ModalMainConfigComponent } from './../modal-main-config/modal-main-config.component';
 import { ModalTrajectorySelectionComponent } from './../modal-trajectory-selection/modal-trajectory-selection.component';
+import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label.component';
 
 @Component({
   selector: 'helgoland-trajectories-view',
   templateUrl: './trajectory-view.component.html',
-  styleUrls: ['./trajectory-view.component.scss']
+  styleUrls: ['./trajectory-view.component.scss'],
+  imports: [
+    CommonModule,
+    HelgolandD3Module,
+    HelgolandMapViewModule,
+    LegendEntryComponent,
+    LoadingOverlayProgressBarComponent,
+    LoadingOverlaySpinnerComponent,
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    ShareButtonComponent,
+    TrajectoryLabelComponent,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class TrajectoryViewComponent implements OnInit {
 
@@ -104,7 +140,7 @@ export class TrajectoryViewComponent implements OnInit {
   }
 
   public openSelection(disableClose = false) {
-    this.dialog.open(ModalTrajectorySelectionComponent, { disableClose });
+    this.dialog.open(ModalTrajectorySelectionComponent, { disableClose, autoFocus: false });
   }
 
   public openMainConfig() {

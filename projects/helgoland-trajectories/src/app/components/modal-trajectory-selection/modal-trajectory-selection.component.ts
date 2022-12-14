@@ -1,5 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import {
   DatasetApi,
   DatasetType,
@@ -9,18 +13,36 @@ import {
   Parameter,
 } from '@helgoland/core';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-
+import { TranslateModule } from '@ngx-translate/core';
 import {
+  LoadingOverlayProgressBarComponent,
   ParameterListEntry,
+  ParameterListSelectorComponent,
   ParameterType,
+  ServiceListSelectorComponent,
 } from 'helgoland-common';
+
 import { ConfigurationService } from './../../services/configuration.service';
 import { TrajectoriesService } from './../../services/trajectories.service';
+import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-type-label.component';
 
 @Component({
   selector: 'helgoland-trajectories-modal-trajectory-selection',
   templateUrl: './modal-trajectory-selection.component.html',
-  styleUrls: ['./modal-trajectory-selection.component.scss']
+  styleUrls: ['./modal-trajectory-selection.component.scss'],
+  imports: [
+    CommonModule,
+    LoadingOverlayProgressBarComponent,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatExpansionModule,
+    ParameterListSelectorComponent,
+    ParameterTypeLabelComponent,
+    ServiceListSelectorComponent,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
 
@@ -32,7 +54,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   public providerFilter: HelgolandParameterFilter = {
     type: DatasetType.Trajectory,
-    expanded: false
+    expanded: true
   }
 
   public filterEnpoints = MultiServiceFilterEndpoint;

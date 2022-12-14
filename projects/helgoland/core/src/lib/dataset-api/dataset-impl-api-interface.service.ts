@@ -247,7 +247,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     public getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]> {
         const url = this.createRequestUrl(apiUrl, 'datasets');
         return this.requestApi<Dataset[]>(url, params, options).pipe(
-            map((list) => list.map((entry) => this.prepareDataset(entry, apiUrl)))
+            map((list) => list instanceof Array ? list.map((entry) => this.prepareDataset(entry, apiUrl)) : [])
         );
     }
 
