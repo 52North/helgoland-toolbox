@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@helgoland/core';
 import { Point } from 'geojson';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { GeoReverseOptions, GeoReverseResult, GeoSearch, GeoSearchOptions, GeoSearchResult } from './geosearch';
-import { map } from 'rxjs/operators';
 
 interface NominatimSearchResult {
     display_name: string;
@@ -75,40 +75,39 @@ export class NominatimGeoSearchService implements GeoSearch {
         if (options.addressdetails !== null) { params = params.set('addressdetails', options.addressdetails ? '1' : '0'); }
         if (options.asPointGeometry !== null) { params = params.set('polygon_geojson', options.asPointGeometry ? '0' : '1'); }
         if (options.acceptLanguage) { params = params.set('accept-language', options.acceptLanguage); }
-        return this.http.client().get(
-            this.serviceUrl + 'search',
-            { params }
-        ).pipe(map((resArray: NominatimSearchResult[]) => {
-            if (resArray.length === 1) {
-                const result = resArray[0];
-                const name = result.display_name;
-                let geometry;
-                if (result.geojson) {
-                    geometry = result.geojson;
-                } else {
-                    geometry = {
-                        type: 'Point',
-                        coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
-                    };
+        return this.http.client().get<NominatimSearchResult[]>(this.serviceUrl + 'search', { params }).pipe(
+            map((resArray: NominatimSearchResult[]) => {
+                if (resArray.length === 1) {
+                    const result = resArray[0];
+                    const name = result.display_name;
+                    let geometry;
+                    if (result.geojson) {
+                        geometry = result.geojson;
+                    } else {
+                        geometry = {
+                            type: 'Point',
+                            coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
+                        };
+                    }
+                    const returnResult: GeoSearchResult = { name, geometry };
+                    if (result.boundingbox) {
+                        returnResult.bounds = [
+                            [
+                                result.boundingbox[0],
+                                result.boundingbox[2]
+                            ],
+                            [
+                                result.boundingbox[1],
+                                result.boundingbox[3]
+                            ]
+                        ];
+                    }
+                    if (result.address) { returnResult.address = result.address; }
+                    return returnResult;
                 }
-                const returnResult: GeoSearchResult = { name, geometry };
-                if (result.boundingbox) {
-                    returnResult.bounds = [
-                        [
-                            result.boundingbox[0],
-                            result.boundingbox[2]
-                        ],
-                        [
-                            result.boundingbox[1],
-                            result.boundingbox[3]
-                        ]
-                    ];
-                }
-                if (result.address) { returnResult.address = result.address; }
-                return returnResult;
-            }
-            throw new Error("Got no result for corresponding search.");
-        }));
+                throw new Error("Got no result for corresponding search.");
+            })
+        );
     }
 
     public reverse(point: Point, options: GeoReverseOptions = {}): Observable<GeoReverseResult> {
@@ -119,34 +118,33 @@ export class NominatimGeoSearchService implements GeoSearch {
         if (options && options.addressdetails !== undefined) { params = params.set('addressdetails', options.addressdetails ? '1' : '0'); }
         if (options.acceptLanguage !== null) { params = params.set('accept-language', options.acceptLanguage); }
         if (options && options.zoom !== undefined) { params = params.set('zoom', `${options.zoom}`); }
-        return this.http.client().get(
-            this.serviceUrl + 'reverse',
-            { params }
-        ).pipe(map((res: NominatimReverseResult) => {
-            const result = {
-                lat: res.lat,
-                lon: res.lon,
-                displayName: res.display_name,
-                boundingbox: res.boundingbox
-            } as GeoReverseResult;
-            if (res.address) {
-                result.address = {
-                    city: res.address.city,
-                    cityDistrict: res.address.city_district,
-                    country: res.address.country,
-                    countryCode: res.address.country_code,
-                    county: res.address.county,
-                    houseNumber: res.address.house_number,
-                    neighbourhood: res.address.neighbourhood,
-                    postcode: res.address.postcode,
-                    road: res.address.road,
-                    state: res.address.state,
-                    stateDistrict: res.address.state_district,
-                    suburb: res.address.suburb
-                };
-            }
-            return result;
-        }));
+        return this.http.client().get<NominatimReverseResult>(this.serviceUrl + 'reverse', { params }).pipe(
+            map((res: NominatimReverseResult) => {
+                const result = {
+                    lat: res.lat,
+                    lon: res.lon,
+                    displayName: res.display_name,
+                    boundingbox: res.boundingbox
+                } as GeoReverseResult;
+                if (res.address) {
+                    result.address = {
+                        city: res.address.city,
+                        cityDistrict: res.address.city_district,
+                        country: res.address.country,
+                        countryCode: res.address.country_code,
+                        county: res.address.county,
+                        houseNumber: res.address.house_number,
+                        neighbourhood: res.address.neighbourhood,
+                        postcode: res.address.postcode,
+                        road: res.address.road,
+                        state: res.address.state,
+                        stateDistrict: res.address.state_district,
+                        suburb: res.address.suburb
+                    };
+                }
+                return result;
+            })
+        );
     }
 
 }

@@ -103,8 +103,8 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       .attr('height', this.graphExtent.height)
       .attr('pointer-events', 'all')
       .attr('class', 'brush')
-      .call(brush)
-      .call(brush.move, overviewTimespanInterval);
+      .call(brush as any)
+      .call(brush.move as any, overviewTimespanInterval);
 
     /**
      * add event to selection to prevent unnecessary re-rendering of brush

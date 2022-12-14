@@ -41,7 +41,7 @@ export class D3GraphHelperService {
    * @param yPos - relative y position
    * @param selected - if selected the sign will be drawn bigger
    */
-  public drawDatasetSign(svgElem: d3.Selection<SVGSVGElement, any, any, any>, options: DatasetOptions, xPos: number, yPos: number, selected: boolean) {
+  public drawDatasetSign(svgElem: d3.Selection<SVGGElement, any, any, any>, options: DatasetOptions, xPos: number, yPos: number, selected: boolean) {
     if (options.type === 'bar') {
       svgElem.append('rect')
         .attr('class', 'y-axis-line')

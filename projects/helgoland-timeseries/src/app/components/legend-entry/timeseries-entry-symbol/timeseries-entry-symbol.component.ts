@@ -25,7 +25,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   @Input() options: DatasetOptions;
   private optionsDiffer: KeyValueDiffer<any, any>;
 
-  private svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>;
+  private svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
 
   constructor(
     private el: ElementRef,
@@ -50,7 +50,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
 
   private initSVG() {
     this.svg = d3.select<SVGSVGElement, any>(this.el.nativeElement)
-      .append<SVGSVGElement>('svg')
+      .append<SVGGElement>('svg')
       .attr('transform', 'scale(1.5)')
       .attr('width', this.size)
       .attr('height', this.size);

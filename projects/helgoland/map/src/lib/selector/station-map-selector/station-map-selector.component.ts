@@ -16,7 +16,8 @@ import {
     HelgolandServicesConnector,
     HelgolandTimeseries,
     HelgolandPlatform,
-    HelgolandParameterFilter
+    HelgolandParameterFilter,
+    DatasetType
 } from '@helgoland/core';
 import GeoJSON from 'geojson';
 import { Observable } from 'rxjs';
@@ -75,12 +76,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     }
 
     protected createValuedMarkers() {
-        const tempFilter: HelgolandParameterFilter = {
+        this.servicesConnector.getDatasets(this.serviceUrl, {
             phenomenon: this.filter.phenomenon,
-            expanded: true
-        };
-        this.servicesConnector.getDatasets(this.serviceUrl, tempFilter).subscribe(
-            datasets => {
+            expanded: true,
+            type: DatasetType.Timeseries
+        }).subscribe(
+            (datasets: HelgolandTimeseries[]) => {
                 this.markerFeatureGroup = L.featureGroup();
                 const obsList: Array<Observable<TimeseriesExtras>> = [];
                 datasets.forEach((ts: HelgolandTimeseries) => {

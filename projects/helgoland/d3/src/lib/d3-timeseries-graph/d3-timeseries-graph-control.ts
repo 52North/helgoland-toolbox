@@ -12,7 +12,7 @@ export interface D3GraphObserver {
         background: d3.Selection<SVGSVGElement, any, any, any>,
         graphExtent: D3GraphExtent,
         preparedData: InternalDataEntry[],
-        graph: d3.Selection<SVGSVGElement, any, any, any>,
+        graph: d3.Selection<SVGGElement, any, any, any>,
         timespan: Timespan
     ): void;
     cleanUp?();

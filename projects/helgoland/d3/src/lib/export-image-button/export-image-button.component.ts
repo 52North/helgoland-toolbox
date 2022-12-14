@@ -167,14 +167,14 @@ export class ExportImageButtonComponent {
 
   private addLegend(element: SVGSVGElement): Observable<void> {
     if (this.showLegend) {
-      const obs: Observable<{ label: d3.Selection<SVGGraphicsElement, unknown, null, undefined>, xPos: number }>[] = [];
+      const obs: Observable<{ label: d3.Selection<SVGGElement, unknown, null, undefined>, xPos: number }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
         if (option.visible) {
           obs.push(
             this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
               if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-                const label = selection.append<SVGSVGElement>('g').attr('class', 'legend-entry');
+                const label = selection.append<SVGGElement>('g').attr('class', 'legend-entry');
                 this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
                 label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
                 this.internalHeight += 25;

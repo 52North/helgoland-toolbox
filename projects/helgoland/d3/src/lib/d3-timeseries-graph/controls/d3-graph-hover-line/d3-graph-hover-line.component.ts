@@ -10,7 +10,7 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-gra
 import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 export interface HoverlineLabel {
-  text: d3.Selection<d3.BaseType, any, any, any>;
+  text: d3.Selection<SVGGElement, any, any, any>;
   rect: d3.Selection<d3.BaseType, any, any, any>;
 }
 

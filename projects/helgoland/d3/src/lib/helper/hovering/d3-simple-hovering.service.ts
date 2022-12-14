@@ -19,7 +19,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
   protected addLineWidth = 2; // value added to linewidth
 
   protected anchorElem: d3.Selection<SVGGElement, any, any, any>;
-  protected tooltipContainer: d3.Selection<d3.BaseType, any, any, any>;
+  protected tooltipContainer: d3.Selection<SVGGElement, any, any, any>;
 
   constructor(
     protected timezoneSrvc: TimezoneService,
@@ -79,7 +79,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
 
     let itemCounter = 0;
     elements.forEach(elem => {
-      const rect = this.tooltipContainer.append('svg:rect')
+      const rect: d3.Selection<SVGGElement, any, any, any> = this.tooltipContainer.append('svg:rect')
       rect.attr('class', 'mouseHoverDotRect')
         .style('fill', 'white')
         .style('fill-opacity', 1)
@@ -93,7 +93,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     })
   }
 
-  protected positionTooltip(text: d3.Selection<SVGGElement, any, any, any>, rect: d3.Selection<d3.BaseType, any, any, any>, onLeftSide: boolean, itemCounter: number) {
+  protected positionTooltip(text: d3.Selection<SVGGElement, any, any, any>, rect: d3.Selection<SVGGElement, any, any, any>, onLeftSide: boolean, itemCounter: number) {
     // padding to mouseposition
     const textPadding = 15;
     const rectPadding = 2;

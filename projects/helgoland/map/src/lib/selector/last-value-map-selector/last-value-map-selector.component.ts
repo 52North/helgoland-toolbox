@@ -54,7 +54,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private _lastValueSeriesIDsDiff: IterableDiffer<string>;
 
-  private markerFeatureGroup: L.FeatureGroup = featureGroup();
+  private markerFeatureGroup: L.FeatureGroup<Marker> = featureGroup();
 
   constructor(
     protected override mapCache: MapCache,
@@ -106,7 +106,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     this.finalizeMarkerObservables(obsList);
   }
 
-  private createMarker(ts: HelgolandTimeseries) {
+  private createMarker(ts: HelgolandTimeseries) : Observable<Marker>{
     switch (this.lastValuePresentation) {
       case LastValuePresentation.Colorized:
         return this.createColorizedMarker(ts);
@@ -130,8 +130,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     }
   }
 
-  private createColorizedMarker(ts: HelgolandTimeseries): Observable<Layer> {
-    return new Observable<Layer>((observer: Observer<Layer>) => {
+  private createColorizedMarker(ts: HelgolandTimeseries): Observable<Marker> {
+    return new Observable<Marker>((observer: Observer<Marker>) => {
       this.servicesConnector.getDatasetExtras(ts).subscribe(extras => {
         let coloredMarker;
         if (extras.statusIntervals) {
@@ -188,8 +188,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     throw new Error('Could not create geometry');
   }
 
-  private createLabeledMarker(ts: HelgolandTimeseries): Observable<Layer> {
-    return new Observable<Layer>(observer => {
+  private createLabeledMarker(ts: HelgolandTimeseries): Observable<Marker> {
+    return new Observable<Marker>(observer => {
       const icon = this.lastValueLabelGenerator.createIconLabel(ts);
       if (ts.platform.geometry.type === 'Point') {
         const point = ts.platform.geometry as GeoJSON.Point;
@@ -212,8 +212,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private removeMarker(markerId: string) {
     let searchedLayer;
-    this.markerFeatureGroup.eachLayer((layer: Marker) => {
-      if (layer.feature.id === markerId) {
+    this.markerFeatureGroup.eachLayer((layer) => {
+      if ((layer as Marker).feature.id === markerId) {
         searchedLayer = layer;
       }
     });
