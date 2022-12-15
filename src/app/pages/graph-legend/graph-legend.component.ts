@@ -87,7 +87,6 @@ export class GraphLegendComponent {
     ];
     public reloadForDatasets: string[] = [];
     public timespan;
-    public plotLanguage;
     public yaxisModifier = true;
 
     public hoveringService = new HoveringTestService(this.timezoneSrvc, this.pointSymbolDrawer);

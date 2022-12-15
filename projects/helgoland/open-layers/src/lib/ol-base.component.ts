@@ -31,6 +31,6 @@ export abstract class OlBaseComponent implements AfterViewInit {
    * @abstract
    * @param {Map} map - the created map
    */
-  abstract mapInitialized(map: Map);
+  abstract mapInitialized(map: Map): void;
 
 }

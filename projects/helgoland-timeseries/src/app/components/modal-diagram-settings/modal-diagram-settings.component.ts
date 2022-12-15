@@ -3,13 +3,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HoveringStyle } from '@helgoland/d3';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface DiagramConfig {
   yaxisVisible: boolean;
   overviewVisible: boolean;
   yaxisModifier: boolean;
-  hoverstyle: string;
+  hoverstyle: HoveringStyle;
 }
 
 @Component({

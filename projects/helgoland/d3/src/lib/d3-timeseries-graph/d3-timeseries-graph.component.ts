@@ -476,7 +476,7 @@ export class D3TimeseriesGraphComponent
             }
             refValues = refValues.values;
         }
-        return refValues.map(d => ({ timestamp: d[0], value: d[1] }));
+        return refValues.map((d: number[]) => ({ timestamp: d[0], value: d[1] }));
     }
 
     /**
@@ -792,8 +792,8 @@ export class D3TimeseriesGraphComponent
 
     private addTimespanJumpButtons(): void {
         let dataVisible = false;
-        let formerTimestamp = null;
-        let laterTimestamp = null;
+        let formerTimestamp: number;
+        let laterTimestamp: number;
         if (this.plotOptions.requestBeforeAfterValues) {
             this.preparedData.forEach((entry: InternalDataEntry) => {
                 const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e.timestamp && this.timespan.to > e.timestamp) && typeof e.value === 'number');
@@ -993,7 +993,7 @@ export class D3TimeseriesGraphComponent
         // Otherwise, assume interval is already a time interval and use it.
         let detectedInterval: unitOfTime.DurationConstructor;
         const target = Math.abs(stop - start) / interval;
-        const i: number = d3.bisector(function (j) { return j[2]; }).right(tickIntervals, target);
+        const i: number = d3.bisector((j: any) => j[2]).right(tickIntervals, target);
         if (i === tickIntervals.length) {
             step = d3.tickStep(start / durationYear, stop / durationYear, interval);
             detectedInterval = 'year';
@@ -1059,7 +1059,7 @@ export class D3TimeseriesGraphComponent
                 .attr('dy', '1em')
                 .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
                 .text(this.getYAxisLabel(axis))
-                .call(this.wrapText, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label);
+                .call((res) => this.wrapText(res, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label))
 
             const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
@@ -1323,12 +1323,13 @@ export class D3TimeseriesGraphComponent
      * @param xposition {Number} position to center the label in the middle
      */
     private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
-        textObj.each(function (u: any, i: number, d: NodeList) {
+        textObj.each((u: any, i: number, d: any) => {
+            const bla = d[i];
             const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
             let word;
-            const text = d3.select(this);
+            const text = d3.select(d[i]);
             const words = text.text().split(/\s+/).reverse();
-            let line = [];
+            let line: string[] = [];
             const lineHeight = (i === d.length - 1 ? 0.3 : 1.1); // ems
             const y = text.attr('y');
             const dy = parseFloat(text.attr('dy'));

@@ -61,7 +61,7 @@ export class StyleModificationComponent {
         this.dialogRef.close(this.option);
     }
 
-    public setColor(temp) {
-        this.color = temp;
+    public setColor(color: string) {
+        this.color = color;
     }
 }

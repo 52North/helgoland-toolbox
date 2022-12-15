@@ -75,7 +75,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
     if (changes && this.map) {
 
-      const ids = [];
+      const ids: string[] = [];
       changes.forEachAddedItem(record => {
         ids.push(record.item);
       });
@@ -106,7 +106,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     this.finalizeMarkerObservables(obsList);
   }
 
-  private createMarker(ts: HelgolandTimeseries) : Observable<Marker>{
+  private createMarker(ts: HelgolandTimeseries) : Observable<Layer>{
     switch (this.lastValuePresentation) {
       case LastValuePresentation.Colorized:
         return this.createColorizedMarker(ts);
@@ -130,10 +130,10 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     }
   }
 
-  private createColorizedMarker(ts: HelgolandTimeseries): Observable<Marker> {
-    return new Observable<Marker>((observer: Observer<Marker>) => {
+  private createColorizedMarker(ts: HelgolandTimeseries): Observable<Layer> {
+    return new Observable<Layer>((observer: Observer<Layer>) => {
       this.servicesConnector.getDatasetExtras(ts).subscribe(extras => {
-        let coloredMarker;
+        let coloredMarker: Layer;
         if (extras.statusIntervals) {
           if ((ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
             const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
@@ -201,13 +201,15 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     });
   }
 
-  private setId(m: Marker, id: string) {
-    m.feature = {
-      id,
-      type: 'Feature',
-      properties: null,
-      geometry: null
-    };
+  private setId(m: Layer, id: string) {
+    if (m instanceof Marker) {
+      m.feature = {
+        id,
+        type: 'Feature',
+        properties: null,
+        geometry: null
+      };
+    }
   }
 
   private removeMarker(markerId: string) {

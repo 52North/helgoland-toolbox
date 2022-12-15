@@ -200,7 +200,7 @@ export class WmsCapabilitiesService {
     return undefined;
   }
 
-  private getLayerInfo(layerName, url): Observable<InternalWMSLayer> {
+  private getLayerInfo(layerName: string, url: string): Observable<InternalWMSLayer> {
     return this.getCapabilities(url).pipe(
       map(caps => this.findLayerByName(layerName, caps.Capability.Layer.Layer))
     );

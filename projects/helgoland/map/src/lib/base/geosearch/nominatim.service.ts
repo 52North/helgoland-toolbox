@@ -80,14 +80,14 @@ export class NominatimGeoSearchService implements GeoSearch {
                 if (resArray.length === 1) {
                     const result = resArray[0];
                     const name = result.display_name;
-                    let geometry;
+                    let geometry: GeoJSON.GeoJsonObject;
                     if (result.geojson) {
                         geometry = result.geojson;
                     } else {
                         geometry = {
                             type: 'Point',
                             coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
-                        };
+                        } as GeoJSON.Point;
                     }
                     const returnResult: GeoSearchResult = { name, geometry };
                     if (result.boundingbox) {

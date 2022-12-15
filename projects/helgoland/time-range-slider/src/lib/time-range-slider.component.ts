@@ -2,6 +2,7 @@ import 'bootstrap-slider';
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Timespan } from '@helgoland/core';
+// @ts-ignore
 import jquery from 'jquery';
 
 import { TimeRangeSliderCache } from './time-range-slider.service';

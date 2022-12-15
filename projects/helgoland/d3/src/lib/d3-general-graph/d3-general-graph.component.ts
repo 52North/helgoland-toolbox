@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+// @ts-nocheck
+// seems to be unused
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import moment from 'moment';
 
@@ -88,9 +90,8 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
         this.prepareData();
     }
 
-    ngOnChanges(changes) {
-        if (changes.generalD3Input && this.rawSvg) {
-            this.generalD3Input = changes.generalD3Input.currentValue;
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["generalD3Input"] && this.rawSvg) {
             this.prepareData();
         }
     }
@@ -98,7 +99,7 @@ export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
     private prepareData() {
         if (this.generalD3Input) {
             // add all input dataset into one array (public generalData)
-            let data = [];
+            let data: D3GeneralDataPoint[] = [];
 
             this.generalD3Input.datasets.forEach((ds, index) => {
                 const dataset: D3GeneralDataset = {

@@ -1,6 +1,7 @@
-import { D3TimeseriesGraphInterface } from './../d3-timeseries-graph/d3-timeseries-graph.interface';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
+
+import { D3TimeseriesGraphInterface } from './../d3-timeseries-graph/d3-timeseries-graph.interface';
 
 
 /**
@@ -11,7 +12,7 @@ import { Observable, of, Subject } from 'rxjs';
 })
 export class D3Graphs {
 
-  private graphs = {};
+  private graphs: { [key: string]: any } = {};
 
   /**
    * Saves id and corresponding graph
@@ -36,7 +37,7 @@ export class D3Graphs {
    */
   public getGraph(graphId: string): Observable<D3TimeseriesGraphInterface> {
     if (this.graphs[graphId]) {
-      if (this.graphs[graphId] instanceof Subject) {
+      if (this.graphs[graphId] instanceof Subject<D3TimeseriesGraphInterface>) {
         return this.graphs[graphId];
       } else {
         return of(this.graphs[graphId]);

@@ -16,6 +16,6 @@ export interface D3TimeseriesGraphInterface {
     redrawCompleteGraph(): void;
     getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any>;
     getDataset(internalId: string): DataConst;
-    registerObserver(obs: D3GraphObserver);
-    unregisterObserver(obs: D3GraphObserver);
+    registerObserver(obs: D3GraphObserver): void;
+    unregisterObserver(obs: D3GraphObserver): void;
 }

@@ -166,7 +166,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     private addOverlayMap(layerOptions: LayerOptions) {
         if (this.map) {
-            if (!this.oldOverlayLayer.hasOwnProperty[layerOptions.label]) {
+            if (!this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
                 this.oldOverlayLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
             }
@@ -191,7 +191,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
                     })
                 };
             }
-            if (!this.oldBaseLayer.hasOwnProperty[layerOptions.label]) {
+            if (!this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
                 this.oldBaseLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
             }

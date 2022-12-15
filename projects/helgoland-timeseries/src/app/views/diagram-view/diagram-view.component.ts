@@ -67,7 +67,7 @@ export class DiagramViewComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  datasetIds = [];
+  datasetIds: string[] = [];
 
   selectedIds: string[] = [];
 
@@ -160,7 +160,7 @@ export class DiagramViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.diagramConfig = result;
-        this.d3diagramOptions.hoverStyle = HoveringStyle[this.diagramConfig.hoverstyle];
+        this.d3diagramOptions.hoverStyle = this.diagramConfig.hoverstyle;
         this.d3diagramOptions.yaxis = this.diagramConfig.yaxisVisible;
       }
     })
