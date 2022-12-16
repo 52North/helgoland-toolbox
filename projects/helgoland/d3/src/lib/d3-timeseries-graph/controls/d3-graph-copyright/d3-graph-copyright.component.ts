@@ -21,7 +21,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
   /**
    * Copyright, which should be shown on the graph
    */
-  @Input() copyright: D3Copyright;
+  @Input() copyright: D3Copyright | undefined;
 
   protected d3Graph: D3TimeseriesGraphInterface;
   protected copyrightLayer: d3.Selection<SVGGElement, any, any, any>;

@@ -13,11 +13,14 @@ export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
   }
 
   public createIconLabel(ts: HelgolandTimeseries) {
-    const date = moment(ts.lastValue.timestamp).fromNow();
-    return L.divIcon({
-      className: 'last-value-container',
-      html: `<span class="last-value-label">${ts.lastValue.value}&nbsp;${ts.uom}</span><br><span class="last-value-date">${date}</span>`
-    });
+    if (ts.lastValue) {
+      const date = moment(ts.lastValue.timestamp).fromNow();
+      return L.divIcon({
+        className: 'last-value-container',
+        html: `<span class="last-value-label">${ts.lastValue.value}&nbsp;${ts.uom}</span><br><span class="last-value-date">${date}</span>`
+      });
+    }
+    return undefined;
   }
 
 }

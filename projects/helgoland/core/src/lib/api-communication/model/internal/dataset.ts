@@ -35,10 +35,10 @@ export class HelgolandTimeseries extends HelgolandDataset {
         public override label: string,
         public uom: string,
         public platform: HelgolandPlatform,
-        public firstValue: FirstLastValue,
-        public lastValue: FirstLastValue,
+        public firstValue: FirstLastValue | undefined,
+        public lastValue: FirstLastValue | undefined,
         public referenceValues: ReferenceValue[],
-        public renderingHints: RenderingHints,
+        public renderingHints: RenderingHints | undefined,
         public parameters: ParameterConstellation,
     ) {
         super(id, url, label);
@@ -52,8 +52,8 @@ export class HelgolandTrajectory extends HelgolandDataset {
         public override url: string,
         public override label: string,
         public uom: string,
-        public firstValue: FirstLastValue,
-        public lastValue: FirstLastValue,
+        public firstValue: FirstLastValue | undefined,
+        public lastValue: FirstLastValue | undefined,
         public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);
@@ -68,8 +68,8 @@ export class HelgolandProfile extends HelgolandDataset {
         public override label: string,
         public uom: string,
         public isMobile: boolean,
-        public firstValue: FirstLastValue,
-        public lastValue: FirstLastValue,
+        public firstValue: FirstLastValue | undefined,
+        public lastValue: FirstLastValue | undefined,
         public parameters: DatasetParameterConstellation,
     ) {
         super(id, url, label);

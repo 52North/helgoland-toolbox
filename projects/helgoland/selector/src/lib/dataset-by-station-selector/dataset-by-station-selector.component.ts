@@ -29,7 +29,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public defaultSelected = false;
 
     @Input()
-    public phenomenonId: string;
+    public phenomenonId: string | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -73,7 +73,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
     protected prepareResult(result: SelectableDataset, selection: boolean) {
         result.selected = selection;
         if (this.phenomenonId) {
-            if (result.parameters.phenomenon.id === this.phenomenonId) {
+            if (result.parameters.phenomenon?.id === this.phenomenonId) {
                 this.phenomenonMatchedList.push(result);
             } else {
                 this.othersList.push(result);

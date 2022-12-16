@@ -1,4 +1,4 @@
-<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions?.color}" [expanded]="true">
+<mat-expansion-panel *ngIf="dataset" [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
@@ -6,7 +6,7 @@
         <span *ngIf="uom">
           <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
         </span>
-        <div>{{dataset?.platform.label}}</div>
+        <div>{{dataset.platform.label}}</div>
       </div>
       <div class="title error" *ngIf="error">
         Error occured, while loading {{datasetId}}
@@ -36,7 +36,7 @@
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
-        <mat-icon>{{datasetOptions?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-icon>{{datasetOptions.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
@@ -49,15 +49,15 @@
     </div>
     <div class="entry-line clickable" *ngIf="firstValue" (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
-      <span> {{firstValue.timestamp | date: 'short': null : translateSrvc.currentLang}} </span>
+      <span> {{firstValue.timestamp | date: 'short': undefined : translateSrvc.currentLang}} </span>
       <span>({{firstValue.value}} {{uom}})</span>
     </div>
     <div class="entry-line clickable" *ngIf="lastValue" (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.last-value-at' | translate}}: </span>
-      <span> {{lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
+      <span> {{lastValue.timestamp | date: 'short' : undefined : translateSrvc.currentLang}} </span>
       <span>({{lastValue.value}} {{uom}})</span>
     </div>
-    <div *ngIf="dataset?.referenceValues?.length > 0">
+    <div *ngIf="dataset.referenceValues.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
       <div *ngFor="let ref of dataset.referenceValues">
         <mat-slide-toggle [checked]="ref.visible" color="primary" (toggleChange)="toggleReferenceValue(ref)">

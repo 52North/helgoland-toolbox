@@ -55,7 +55,7 @@ export class LegendEntryComponent extends TimeseriesEntryComponent {
 
   override removeDataset() {
     super.removeDataset();
-    const message = `${this.translateSrvc.instant('events.remove-timeseries')} ${this.dataset.label}`;
+    const message = `${this.translateSrvc.instant('events.remove-timeseries')} ${this.dataset!.label}`;
     this.liveAnnouncer.announce(message);
   }
 }

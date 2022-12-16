@@ -17,7 +17,7 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
 
   @Input()
-  public datasetOptions: DatasetOptions | undefined;
+  public datasetOptions: DatasetOptions;
 
   @Input()
   public highlight: boolean | undefined;
@@ -52,7 +52,9 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   }
 
   public showGeometry() {
-    this.onShowGeometry.emit(this.dataset.platform.geometry);
+    if (this.dataset) {
+      this.onShowGeometry.emit(this.dataset.platform.geometry);
+    }
   }
 
 }

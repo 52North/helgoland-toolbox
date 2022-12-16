@@ -7,16 +7,16 @@ import { ApiInterface } from '../../../abstract-services/api-interface';
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
-import { Data } from '../../../model/dataset-api/data';
+import { Data, IDataEntry } from '../../../model/dataset-api/data';
 import { HttpRequestOptions } from '../../../model/internal/http-requests';
 import { DatasetExtras } from '../../model/internal/dataset';
 import { ReferenceValue, RenderingHints } from './../../../model/dataset-api/dataset';
 
 export interface ApiV3Parameter {
-  id?: string;
+  id: string;
+  label: string;
   href?: string;
   domainId?: string;
-  label?: string;
 }
 
 export interface ApiV3Feature extends ApiV3Parameter {
@@ -301,11 +301,11 @@ export class ApiV3InterfaceService extends ApiInterface {
     return this.requestApi<ApiV3Dataset>(url, this.prepareParams(params)).pipe(map(res => this.prepareDataset(res, apiUrl)));
   }
 
-  public getDatasetData<T>(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<T>> {
+  public getDatasetData<T extends IDataEntry>(id: string, apiUrl: string, params?: ApiV3DatasetDataFilter): Observable<Data<T>> {
     const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
     return this.requestApi<Data<T>>(url, this.prepareParams(params)).pipe(
       map(res => {
-        if (params.expanded) { res = (res as any)[id]; }
+        if (params?.expanded) { res = (res as any)[id]; }
         return res;
       })
     );

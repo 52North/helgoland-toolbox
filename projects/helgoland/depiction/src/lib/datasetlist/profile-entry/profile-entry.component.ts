@@ -84,7 +84,7 @@ export class ProfileEntryComponent extends ListEntryComponent {
                     }
                 }
             );
-        } else {
+        } else if (this.dataset.parameters.platform) {
             this.servicesConnector.getPlatform(this.dataset.parameters.platform.id, internalId.url)
                 .subscribe((station) => this.onShowGeometry.emit(station.geometry));
         }

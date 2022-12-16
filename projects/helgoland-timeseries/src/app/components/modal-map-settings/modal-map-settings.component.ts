@@ -38,8 +38,8 @@ export class ModalMapSettingsComponent {
     private configSrvc: ConfigurationService,
     @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig
   ) {
-    this.datasetApis = this.configSrvc.configuration?.datasetApis;
-    this.blacklist = this.configSrvc.configuration?.providerBlackList;
+    this.datasetApis = this.configSrvc.configuration?.datasetApis || [];
+    this.blacklist = this.configSrvc.configuration?.providerBlackList || [];
   }
 
   public serviceSelected(service: HelgolandService) {

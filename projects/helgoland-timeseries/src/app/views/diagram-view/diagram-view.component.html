@@ -20,7 +20,7 @@
           <mat-accordion [multi]="true">
             <div *ngFor="let id of datasetIds">
               <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
-                [datasetOptions]="datasetOptions.get(id)" [timeInterval]="timeseries.timespan"
+                [datasetOptions]="datasetOptions.get(id)!" [timeInterval]="timeseries.timespan"
                 (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
                 (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
                 (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">

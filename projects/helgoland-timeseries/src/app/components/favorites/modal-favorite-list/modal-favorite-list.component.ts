@@ -57,7 +57,7 @@ export class ModalFavoriteListComponent implements OnInit {
     forkJoin(this.timeseriesSrvc.datasetIds.map(id => this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries })))
       .subscribe(datasets => {
         const label = this.translateSrvc.instant('favorite.group-default-label') + ' ' + (this.favoriteSrvc.getFavoriteGroups().length + 1);
-        const group = datasets.map(e => ({ dataset: e, options: this.timeseriesSrvc.datasetOptions.get(e.internalId) }));
+        const group = datasets.map(e => ({ dataset: e, options: this.timeseriesSrvc.datasetOptions.get(e.internalId)! }));
         this.favoriteSrvc.addFavoriteGroup(group, label);
         this.setFavorites();
       });

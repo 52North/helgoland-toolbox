@@ -54,10 +54,10 @@ export class ListSelectionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.configSrvc.configuration) {
+    if (this.configSrvc.configuration.defaultService?.apiUrl) {
       this.serviceConnector.getServices(this.configSrvc.configuration.defaultService.apiUrl).subscribe({
         next: services => {
-          this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
+          this.selectedService = services.find(e => e.id === this.configSrvc.configuration.defaultService!.serviceId)!;
           this.resetView();
         },
         error: error => this.errorHandler.error(error)
@@ -85,16 +85,16 @@ export class ListSelectionComponent implements OnInit {
 
   selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.CATEGORY) {
-      delete entry.apiFilter[0].filter.category;
+      delete entry.apiFilter[0].filter?.category;
     }
     if (entry.selectedFilter === ParameterType.FEATURE) {
-      delete entry.apiFilter[0].filter.feature;
+      delete entry.apiFilter[0].filter?.feature;
     }
     if (entry.selectedFilter === ParameterType.PHENOMENON) {
-      delete entry.apiFilter[0].filter.phenomenon;
+      delete entry.apiFilter[0].filter?.phenomenon;
     }
     if (entry.selectedFilter === ParameterType.PROCEDURE) {
-      delete entry.apiFilter[0].filter.procedure;
+      delete entry.apiFilter[0].filter?.procedure;
     }
     entry.selectedFilter = filter;
   }

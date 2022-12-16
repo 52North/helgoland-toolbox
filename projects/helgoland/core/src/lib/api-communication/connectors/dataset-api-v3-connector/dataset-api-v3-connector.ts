@@ -150,9 +150,9 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
     if (!ds.parameters) {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
-    let firstValue: FirstLastValue, lastValue: FirstLastValue;
-    let category: Parameter, feature: Parameter, offering: Parameter, phenomenon: Parameter, procedure: Parameter, service: Parameter;
-    let platformParam: PlatformParameter;
+    let firstValue: FirstLastValue | undefined, lastValue: FirstLastValue | undefined;
+    let category: Parameter | undefined, feature: Parameter | undefined, offering: Parameter | undefined, phenomenon: Parameter | undefined, procedure: Parameter | undefined, service: Parameter | undefined;
+    let platformParam: PlatformParameter | undefined;
     if (ds.firstValue) {
       firstValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
     }
@@ -177,7 +177,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           } else {
             platform = new HelgolandPlatform(ds.parameters.platform.id, ds.parameters.platform.label, []);
           }
-          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, platform, firstValue, lastValue, ds.referenceValues, null,
+          return new HelgolandTimeseries(ds.id, url, ds.label, ds.uom, platform, firstValue, lastValue, ds.referenceValues || [], undefined,
             { category, feature, offering, phenomenon, procedure, service }
           );
         } else if (ds.observationType === ApiV3ObservationTypes.Profil) {
@@ -246,8 +246,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       this.api.getDataset(internalId.id, internalId.url, filter).subscribe(
         res => {
           const dataset = this.createDataset(res, internalId.url);
-          const idx = res.extras.findIndex(e => e === 'renderingHints');
-          if (dataset instanceof HelgolandTimeseries && idx >= 0) {
+          const idx = res.extras?.findIndex(e => e === 'renderingHints');
+          if (dataset instanceof HelgolandTimeseries && idx && idx >= 0) {
             this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ['renderingHints'] }).subscribe(
               extras => {
                 dataset.renderingHints = extras.renderingHints;

@@ -9,7 +9,6 @@ import {
   DatasetType,
   HelgolandParameterFilter,
   HelgolandPlatform,
-  HelgolandService,
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
@@ -74,10 +73,10 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (!this.state.selectedService && this.configSrvc.configuration) {
+    if (!this.state.selectedService && this.configSrvc.configuration.defaultService) {
       this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe({
         next: services => {
-          this.state.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
+          this.state.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService!.serviceId);
           this.updateFilter();
         },
         error: error => this.errorHandler.error(error)
@@ -92,34 +91,38 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   onStationSelected(station: HelgolandPlatform) {
-    const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent);
-    dialogRef.componentInstance.station = station;
-    dialogRef.componentInstance.url = this.state.selectedService.apiUrl;
-    dialogRef.componentInstance.phenomenonId = this.state.selectedPhenomenonId;
+    if (this.state.selectedService) {
+      const dialogRef = this.dialog.open(ModalDatasetByStationSelectorComponent);
+      dialogRef.componentInstance.station = station;
+      dialogRef.componentInstance.url = this.state.selectedService.apiUrl;
+      dialogRef.componentInstance.phenomenonId = this.state.selectedPhenomenonId;
 
-    dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
-      if (newConf) {
-        this.cluster = newConf.cluster;
-        this.state.selectedService = newConf.selectedService;
-        this.updateFilter();
-      }
-    })
+      dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
+        if (newConf) {
+          this.cluster = newConf.cluster;
+          this.state.selectedService = newConf.selectedService;
+          this.updateFilter();
+        }
+      })
+    }
   }
 
   openMapSettings() {
-    const conf: MapConfig = {
-      cluster: this.cluster,
-      selectedService: this.state.selectedService
-    }
-    const dialogRef = this.dialog.open(ModalMapSettingsComponent, { data: conf });
-    dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
-      if (newConf) {
-        this.cluster = newConf.cluster;
-        this.state.selectedService = newConf.selectedService;
-        this.state.selectedPhenomenonId = undefined;
-        this.updateFilter();
+    if (this.state.selectedService) {
+      const conf: MapConfig = {
+        cluster: this.cluster,
+        selectedService: this.state.selectedService
       }
-    })
+      const dialogRef = this.dialog.open(ModalMapSettingsComponent, { data: conf });
+      dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
+        if (newConf) {
+          this.cluster = newConf.cluster;
+          this.state.selectedService = newConf.selectedService;
+          this.state.selectedPhenomenonId = undefined;
+          this.updateFilter();
+        }
+      })
+    }
   }
 
   selectAllPhenomena() {
@@ -133,18 +136,20 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   private updateFilter() {
-    this.stationFilter = {
-      type: DatasetType.Timeseries,
-      service: this.state.selectedService.id
-    }
-    if (this.state.selectedPhenomenonId) { this.stationFilter.phenomenon = this.state.selectedPhenomenonId; }
-
-    this.phenomenonFilter = [{
-      url: this.state.selectedService.apiUrl,
-      filter: {
+    if (this.state.selectedService) {
+      this.stationFilter = {
+        type: DatasetType.Timeseries,
         service: this.state.selectedService.id
       }
-    }]
+      if (this.state.selectedPhenomenonId) { this.stationFilter.phenomenon = this.state.selectedPhenomenonId; }
+
+      this.phenomenonFilter = [{
+        url: this.state.selectedService.apiUrl,
+        filter: {
+          service: this.state.selectedService.id
+        }
+      }]
+    }
   }
 
 }

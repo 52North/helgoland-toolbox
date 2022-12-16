@@ -9,7 +9,7 @@ import { LabelMapperService } from './label-mapper.service';
 export class LabelMapperComponent implements OnChanges {
 
     @Input()
-    public label: string;
+    public label: string | undefined;
 
     public determinedLabel: string;
 
@@ -20,7 +20,7 @@ export class LabelMapperComponent implements OnChanges {
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['label']) {
+        if (changes['label'] && this.label) {
             this.labelMapperSrvc.getMappedLabel(this.label)
                 .subscribe((label) => {
                     this.determinedLabel = label;

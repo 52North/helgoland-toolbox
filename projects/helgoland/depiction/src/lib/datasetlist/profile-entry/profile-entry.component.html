@@ -1,18 +1,18 @@
 <div class="legendItem" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
   <div class="legendItemheader">
     <div class="legendItemLabel">
-      <n52-label-mapper label="{{dataset?.parameters.platform.label}}"></n52-label-mapper>
+      <n52-label-mapper label="{{dataset.parameters.platform?.label}}"></n52-label-mapper>
     </div>
     <div class="small">
-      <n52-label-mapper label="{{dataset?.parameters.phenomenon.label}}"></n52-label-mapper>
+      <n52-label-mapper label="{{dataset.parameters.phenomenon?.label}}"></n52-label-mapper>
       <span *ngIf="dataset?.uom">[
         <n52-label-mapper label="{{dataset.uom}}"></n52-label-mapper>]</span>
     </div>
     <div class="small">
-      <n52-label-mapper label="{{dataset?.parameters.procedure.label}}"></n52-label-mapper>
+      <n52-label-mapper label="{{dataset.parameters.procedure?.label}}"></n52-label-mapper>
     </div>
-    <div class="small" *ngIf="dataset?.parameters.category.label !== dataset?.parameters.phenomenon.label">
-      <n52-label-mapper label="{{dataset?.parameters.category.label}}"></n52-label-mapper>
+    <div class="small" *ngIf="dataset.parameters.category?.label !== dataset.parameters.phenomenon?.label">
+      <n52-label-mapper label="{{dataset.parameters.category?.label}}"></n52-label-mapper>
     </div>
   </div>
   <div *ngFor="let item of datasetOptions">

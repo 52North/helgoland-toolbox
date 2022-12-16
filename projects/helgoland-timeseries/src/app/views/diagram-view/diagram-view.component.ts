@@ -99,9 +99,9 @@ export class DiagramViewComponent implements OnInit {
 
   diagramConfig: DiagramConfig = {
     overviewVisible: true,
-    yaxisVisible: this.d3diagramOptions.yaxis,
+    yaxisVisible: this.d3diagramOptions.yaxis!,
     yaxisModifier: true,
-    hoverstyle: this.d3diagramOptions.hoverStyle
+    hoverstyle: this.d3diagramOptions.hoverStyle!
   };
 
   constructor(

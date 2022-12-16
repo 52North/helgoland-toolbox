@@ -86,7 +86,7 @@ export class ProfileTrajectoryMapSelectorComponent
         if (!this.serviceUrl) { return; }
         this.servicesConnector.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
             datasets.forEach((dataset) => {
-                if (dataset instanceof HelgolandProfile) {
+                if (dataset instanceof HelgolandProfile && dataset.firstValue && dataset.lastValue) {
                     this.dataset = dataset;
                     const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
                     this.servicesConnector.getDatasetData(dataset, timespan)

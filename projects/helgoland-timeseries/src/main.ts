@@ -46,7 +46,7 @@ export function initApplication(configService: ConfigurationService, translate: 
   return () => configService.loadConfiguration().then((config: AppConfig) => {
     const localStorageLanguageKey = 'client-language';
     registerLocaleData(localeDe);
-    let lang = translate.getBrowserLang();
+    let lang = translate.getBrowserLang() || 'en';
     const storedLang = localStorage.load(localStorageLanguageKey) as string;
     if (storedLang) { lang = storedLang }
     const url = window.location.href;
@@ -54,10 +54,9 @@ export function initApplication(configService: ConfigurationService, translate: 
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
     const results = regex.exec(url);
     if (results && results[2]) {
-      const match = config.languages.find(e => e.code === results[2]);
+      const match = config.languages?.find(e => e.code === results[2]);
       if (match) { lang = match.code; }
     }
-    if (config.languages.find(e => e.code === lang) === undefined) { lang = 'en'; };
     translate.setDefaultLang(lang);
     translate.onLangChange.subscribe(lce => {
       localStorage.save(localStorageLanguageKey, lce.lang);
