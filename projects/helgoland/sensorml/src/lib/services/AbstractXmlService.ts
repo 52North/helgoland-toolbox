@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { XmlService } from './XmlService';
 
 export abstract class AbstractXmlService<T> extends XmlService<T> {

@@ -25,10 +25,10 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 
   public dataset: HelgolandTimeseries | undefined;
 
-  public platformLabel: string;
-  public phenomenonLabel: string;
-  public procedureLabel: string;
-  public categoryLabel: string;
+  public platformLabel: string | undefined;
+  public phenomenonLabel: string | undefined;
+  public procedureLabel: string | undefined;
+  public categoryLabel: string | undefined;
   public uom: string;
   public error: any;
 
@@ -63,10 +63,12 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   }
 
   protected setParameters() {
-    this.platformLabel = this.dataset.platform.label;
-    this.phenomenonLabel = this.dataset.parameters.phenomenon.label;
-    this.procedureLabel = this.dataset.parameters.procedure.label;
-    this.categoryLabel = this.dataset.parameters.category.label;
-    this.uom = this.dataset.uom;
+    if (this.dataset) {
+      this.platformLabel = this.dataset.platform.label;
+      this.phenomenonLabel = this.dataset.parameters.phenomenon?.label;
+      this.procedureLabel = this.dataset.parameters.procedure?.label;
+      this.categoryLabel = this.dataset.parameters.category?.label;
+      this.uom = this.dataset.uom;
+    }
   }
 }

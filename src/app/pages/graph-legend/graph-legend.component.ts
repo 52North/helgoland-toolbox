@@ -47,8 +47,10 @@ class HoveringTestService extends D3SimpleHoveringService {
             .attr('alignment-baseline', 'text-before-edge')
             .style('pointer-events', 'none')
             .style('fill', 'black');
-        textContainer.append('text').attr('dy', '1em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.phenomenon.label);
-        textContainer.append('text').attr('dy', '2em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.category.label);
+        if (timeseries.parameters.phenomenon)
+            textContainer.append('text').attr('dy', '1em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.phenomenon.label);
+        if (timeseries.parameters.category)
+            textContainer.append('text').attr('dy', '2em').attr('alignment-baseline', 'text-before-edge').text(timeseries.parameters.category.label);
     }
 
 }

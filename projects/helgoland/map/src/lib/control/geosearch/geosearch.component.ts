@@ -54,7 +54,7 @@ export class GeosearchControlComponent extends MapControlComponent {
                 (result) => {
                     if (!result) {
                         this.searchTerm = '';
-                        this.onResultChanged.emit(null);
+                        this.onResultChanged.emit(undefined);
                         return;
                     }
                     this.result = result;
@@ -70,7 +70,7 @@ export class GeosearchControlComponent extends MapControlComponent {
                 },
                 (error) => {
                     this.searchTerm = 'error occurred';
-                    this.onResultChanged.emit(null);
+                    this.onResultChanged.emit(undefined);
                 },
                 () => this.loading = false
             );
@@ -79,7 +79,7 @@ export class GeosearchControlComponent extends MapControlComponent {
 
     public clearSearch() {
         this.searchTerm = '';
-        this.onResultChanged.emit(null);
+        this.onResultChanged.emit(undefined);
         this.removeOldGeometry();
     }
 

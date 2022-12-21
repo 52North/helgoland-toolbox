@@ -75,8 +75,9 @@ export class DefinedTimespanService {
     }
 
     public getInterval(intervalDescriber: DefinedTimespan): Timespan {
-        if (this.intervals.has(intervalDescriber)) {
-            return this.intervals.get(intervalDescriber)();
+        const intervalFunc = this.intervals.get(intervalDescriber);
+        if (intervalFunc) {
+            return intervalFunc();
         }
         throw new Error("Could not create time interval.");
     }

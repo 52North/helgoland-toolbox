@@ -68,17 +68,15 @@ export abstract class MapSelectorComponent<T>
     public ngAfterViewInit() {
         this.createMap();
         setTimeout(() => {
-            this.drawGeometries();
+            if (this.map && this.serviceUrl) this.drawGeometries(this.map, this.serviceUrl);
             this.cd.detectChanges();
         }, 10);
     }
 
     public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (this.map) {
-            if (changes['serviceUrl'] || changes['filter'] || changes['cluster']) {
-                this.drawGeometries();
-            }
+        if (changes['serviceUrl'] || changes['filter'] || changes['cluster']) {
+            if (this.map && this.serviceUrl) this.drawGeometries(this.map, this.serviceUrl);
         }
     }
 
@@ -88,7 +86,7 @@ export abstract class MapSelectorComponent<T>
      * @protected
      * @abstract
      */
-    protected abstract drawGeometries(): void;
+    protected abstract drawGeometries(map: L.Map, serviceUrl: string): void;
 
     /**
      * Zooms to the given bounds
@@ -96,9 +94,9 @@ export abstract class MapSelectorComponent<T>
      * @protected
      * @param bounds where to zoom
      */
-    protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression) {
-        if (!this.avoidZoomToSelection) {
-            this.map.fitBounds(bounds, this.fitBoundsMarkerOptions || {});
+    protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression, map: L.Map) {
+        if (!this.avoidZoomToSelection && map) {
+            map.fitBounds(bounds, this.fitBoundsMarkerOptions || {});
         }
     }
 

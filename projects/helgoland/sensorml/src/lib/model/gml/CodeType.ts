@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DisplayName } from '../../common/decorators/DisplayName';
 /**
  * gml:CodeType is a generalized type to be used for a term, keyword or name.

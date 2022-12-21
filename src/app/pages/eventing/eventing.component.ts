@@ -30,9 +30,9 @@ export class EventingComponent {
 
   public requestError: string;
 
-  public eventResults: EventResults;
+  public eventResults: EventResults | null;
 
-  public subscriptionResults: SubscriptionResults;
+  public subscriptionResults: SubscriptionResults | null;
 
   public publicationResults: PublicationResults;
 

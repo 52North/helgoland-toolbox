@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>Download Dataset</h1>
 
 <div mat-dialog-content ng-if="disabled" *ngIf="dataset">
-  Measure Parameter - {{dataset.parameters.phenomenon.label}}
+  Measure Parameter - {{dataset.parameters.phenomenon?.label}}
   <br>
   Unit - {{dataset.uom}}
   <br>
-  First Value - {{dataset.firstValue.timestamp | tzDate: 'L'}} - {{dataset.firstValue.value}}
+  First Value - {{dataset.firstValue!.timestamp | tzDate: 'L'}} - {{dataset.firstValue!.value}}
   <br>
-  Last Value - {{dataset.lastValue.timestamp | tzDate: 'L'}} - {{dataset.lastValue.value}}
+  Last Value - {{dataset.lastValue!.timestamp | tzDate: 'L'}} - {{dataset.lastValue!.value}}
   <br>
   <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" ng-model-options="{timezone: 'utc'}"
     [(ngModel)]="selectedStart">

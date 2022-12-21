@@ -51,24 +51,28 @@ export class TrajectoriesService {
     this.loading.next(true);
     this.servicesConnector.getDataset(this.internalId, { type: DatasetType.Trajectory }).subscribe(
       trajectory => {
-        const from = new Date(trajectory.firstValue.timestamp);
-        const to = new Date(trajectory.lastValue.timestamp);
-        const timespan = new Timespan(from, to);
-        forkJoin([this.getDatasetIds(trajectory), this.getGeometry(trajectory, timespan)]).subscribe(res => {
-          const options: Map<string, DatasetOptions> = new Map();
-          res[0].forEach(e => {
-            options.set(e, this.createStyles(e, this.internalId === e));
-          })
-          this.result.next({
-            trajectory: trajectory,
-            timespan,
-            geometry: res[1],
-            datasetIds: res[0],
-            options
-          })
-          this.saveState();
-          this.loading.next(false);
-        });
+        if (trajectory.firstValue && trajectory.lastValue) {
+          const from = new Date(trajectory.firstValue.timestamp);
+          const to = new Date(trajectory.lastValue.timestamp);
+          const timespan = new Timespan(from, to);
+          forkJoin([this.getDatasetIds(trajectory), this.getGeometry(trajectory, timespan)]).subscribe(res => {
+            const options: Map<string, DatasetOptions> = new Map();
+            res[0].forEach(e => {
+              options.set(e, this.createStyles(e, this.internalId === e));
+            })
+            this.result.next({
+              trajectory: trajectory,
+              timespan,
+              geometry: res[1],
+              datasetIds: res[0],
+              options
+            })
+            this.saveState();
+            this.loading.next(false);
+          });
+        } else {
+          console.error('Trajectory doesn\'t have first and last value.')
+        }
       }
     );
   }
@@ -85,7 +89,7 @@ export class TrajectoriesService {
   }
 
   private getDatasetIds(trajectory: HelgolandTrajectory): Observable<string[]> {
-    return this.servicesConnector.getDatasets(trajectory.url, { type: DatasetType.Trajectory, feature: trajectory.parameters.feature.id })
+    return this.servicesConnector.getDatasets(trajectory.url, { type: DatasetType.Trajectory, feature: trajectory.parameters.feature?.id })
       .pipe(map(res => res.map(e => e.internalId)))
   }
 

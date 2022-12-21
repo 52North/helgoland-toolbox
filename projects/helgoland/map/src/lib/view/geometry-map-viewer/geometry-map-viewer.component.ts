@@ -50,38 +50,40 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
 
     public ngAfterViewInit() {
         this.createMap();
-        this.drawGeometry();
-        this.showHighlight();
+        if (this.map) {
+            this.drawGeometry(this.map);
+            this.showHighlight(this.map);
+        }
     }
 
     public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (this.map) {
             if (changes['highlight'] && changes['highlight'].currentValue) {
-                this.showHighlight();
+                this.showHighlight(this.map);
             }
             if (changes['geometry']) {
-                this.drawGeometry();
+                this.drawGeometry(this.map);
             }
             if (changes['zoomTo']) {
-                this.zoomToGeometry();
+                this.zoomToGeometry(this.map);
             }
         }
     }
 
-    private zoomToGeometry() {
+    private zoomToGeometry(map: L.Map) {
         try {
             const geometry = L.geoJSON(this.zoomTo);
-            this.map.fitBounds(geometry.getBounds());
+            map.fitBounds(geometry.getBounds());
         } catch (err) {
             console.error(err);
             return;
         }
     }
 
-    private showHighlight() {
+    private showHighlight(map: L.Map) {
         if (this.highlightGeometryOnMap) {
-            this.map.removeLayer(this.highlightGeometryOnMap);
+            map.removeLayer(this.highlightGeometryOnMap);
         }
         this.highlightGeometryOnMap = L.geoJSON(this.highlight, {
             pointToLayer: (feature, latlng) => {
@@ -89,18 +91,18 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
             }
         });
         this.highlightGeometryOnMap.setStyle(this.highlightStyle);
-        this.highlightGeometryOnMap.addTo(this.map);
+        this.highlightGeometryOnMap.addTo(map);
     }
 
-    private drawGeometry() {
+    private drawGeometry(map: L.Map) {
         if (this.geometry) {
             if (this.geometryOnMap) {
-                this.map.removeLayer(this.geometryOnMap);
+                map.removeLayer(this.geometryOnMap);
             }
             this.geometryOnMap = L.geoJSON(this.geometry, {
                 pointToLayer: (feature, latlng) => {
                     if (this.customMarkerIcon) {
-                        return L.marker(latlng, {icon: this.customMarkerIcon});
+                        return L.marker(latlng, { icon: this.customMarkerIcon });
                     } else {
                         return L.circleMarker(latlng, this.defaultStyle);
                     }
@@ -108,10 +110,10 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
             });
 
             this.geometryOnMap.setStyle(this.defaultStyle);
-            this.geometryOnMap.addTo(this.map);
+            this.geometryOnMap.addTo(map);
 
             if (!this.avoidZoomToGeometry) {
-                this.map.fitBounds(this.geometryOnMap.getBounds());
+                map.fitBounds(this.geometryOnMap.getBounds());
             }
         }
     }

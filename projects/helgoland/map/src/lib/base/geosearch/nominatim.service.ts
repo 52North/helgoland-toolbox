@@ -116,7 +116,7 @@ export class NominatimGeoSearchService implements GeoSearch {
         params = params.set('lon', point.coordinates[1].toString());
         params = params.set('format', 'json');
         if (options && options.addressdetails !== undefined) { params = params.set('addressdetails', options.addressdetails ? '1' : '0'); }
-        if (options.acceptLanguage !== null) { params = params.set('accept-language', options.acceptLanguage); }
+        if (options.acceptLanguage !== undefined) { params = params.set('accept-language', options.acceptLanguage); }
         if (options && options.zoom !== undefined) { params = params.set('zoom', `${options.zoom}`); }
         return this.http.client().get<NominatimReverseResult>(this.serviceUrl + 'reverse', { params }).pipe(
             map((res: NominatimReverseResult) => {

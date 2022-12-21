@@ -75,7 +75,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     /**
      * The map object.
      */
-    protected map: L.Map;
+    protected map: L.Map | undefined;
 
     protected oldOverlayLayer: L.Control.LayersObject = {};
     protected oldBaseLayer: L.Control.LayersObject = {};
@@ -132,9 +132,11 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     }
 
     public ngOnDestroy(): void {
-        this.map.remove();
-        this.map = null;
-        this.mapCache.deleteMap(this.mapId);
+        if (this.map) {
+            this.map.remove();
+            this.map = undefined;
+            this.mapCache.deleteMap(this.mapId);
+        }
     }
 
     protected createMap(): void {
@@ -164,8 +166,8 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
-    private addOverlayMap(layerOptions: LayerOptions) {
-        if (this.map) {
+    private addOverlayMap(layerOptions: LayerOptions | null) {
+        if (this.map && layerOptions) {
             if (!this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
                 this.oldOverlayLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
@@ -173,14 +175,14 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         }
     }
 
-    private removeOverlayMap(layerOptions: LayerOptions) {
-        if (this.map && this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
+    private removeOverlayMap(layerOptions: LayerOptions | null) {
+        if (this.map && layerOptions && this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
             this.map.removeLayer(this.oldOverlayLayer[layerOptions.label]);
             delete this.oldOverlayLayer[layerOptions.label];
         }
     }
 
-    private addBaseMap(layerOptions?: LayerOptions) {
+    private addBaseMap(layerOptions?: LayerOptions | null) {
         if (this.map) {
             if (!this.baseMaps || this.baseMaps.size === 0) {
                 layerOptions = {
@@ -191,15 +193,15 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
                     })
                 };
             }
-            if (!this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+            if (layerOptions && !this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
                 this.oldBaseLayer[layerOptions.label] = layerOptions.layer;
                 if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
             }
         }
     }
 
-    private removeBaseMap(layerOptions: LayerOptions) {
-        if (this.map && this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+    private removeBaseMap(layerOptions: LayerOptions | null) {
+        if (this.map && layerOptions && this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
             this.map.removeLayer(this.oldBaseLayer[layerOptions.label]);
             delete this.oldBaseLayer[layerOptions.label];
         }
@@ -219,9 +221,11 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     }
 
     private updateZoomControl() {
-        if (this.zoomControl) { this.map.removeControl(this.zoomControl); }
-        if (this.zoomControlOptions) {
-            this.zoomControl = L.control.zoom(this.zoomControlOptions).addTo(this.map);
+        if (this.map) {
+            if (this.zoomControl) { this.map.removeControl(this.zoomControl); }
+            if (this.zoomControlOptions) {
+                this.zoomControl = L.control.zoom(this.zoomControlOptions).addTo(this.map);
+            }
         }
     }
 }

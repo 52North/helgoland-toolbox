@@ -6,7 +6,7 @@
     </a>
   </span>
   <span style="padding-left: 10px;"
-    [ngStyle]="{'color': datasetOptions.color}">{{dataset.parameters.phenomenon.label}}</span>
+    [ngStyle]="{'color': datasetOptions.color}">{{dataset.parameters.phenomenon?.label}}</span>
   <span class="fa fa-pencil" (click)="editDatasetOptions(datasetOptions); $event.stopPropagation();"
     [ngStyle]="{color: datasetOptions.color}"></span>
 </div>

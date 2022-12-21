@@ -1,7 +1,6 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { IdCache } from '@helgoland/core';
-import { of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export const LABEL_MAPPER_HANDLER = new InjectionToken<LabelMapperHandler>('LABEL_MAPPER_HANDLER');
@@ -23,9 +22,8 @@ export class LabelMapperService {
   ) { }
 
   public getMappedLabel(label: string): Observable<string> {
-    if (this.cache.has(label)) {
-      return of(this.cache.get(label));
-    }
+    const chachedLabel = this.cache.get(label);
+    if (chachedLabel) { return of(chachedLabel) }
     if (this.handler) {
       for (let i = 0; i < this.handler.length; i++) {
         const h = this.handler[i];

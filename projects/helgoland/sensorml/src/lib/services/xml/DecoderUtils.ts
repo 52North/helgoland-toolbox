@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { BidiMap } from '../dynamicGUI/BidiMap';
 import { ReturnObject } from './ReturnObject';
 

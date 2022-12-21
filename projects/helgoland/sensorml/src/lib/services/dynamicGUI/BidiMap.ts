@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { LFService, Logger, LoggerFactory, LoggerFactoryOptions, LogGroupRule, LogLevel } from 'typescript-logging';
 
 class ObjectAndProperty {

@@ -15,7 +15,7 @@
 <ul *ngFor="let id of datasetIds">
   <li>
     <n52-configurable-timeseries-entry [datasetId]="id" [selected]="selectedIds.indexOf(id) > -1"
-      [datasetOptions]="datasetOptions.get(id)" (onDeleteDataset)="deleteTimeseries(id)"
+      [datasetOptions]="datasetOptions.get(id)!" (onDeleteDataset)="deleteTimeseries(id)"
       (onSelectDataset)="selectTimeseries($event, id)" (onEditOptions)="editOption($event)">
     </n52-configurable-timeseries-entry>
   </li>

@@ -74,7 +74,7 @@ export class TrajectoryComponent implements OnInit {
         if (this.datasetIds.length > 0) {
             const internalId = this.internalIdHandler.resolveInternalId(this.datasetIds[0]);
             this.servicesConnector.getDataset({ id: internalId.id, url: internalId.url }, { type: DatasetType.Trajectory }).subscribe((dataset) => {
-                this.timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
+                this.timespan = new Timespan(dataset.firstValue!.timestamp, dataset.lastValue!.timestamp);
                 this.servicesConnector.getDatasetData(dataset, this.timespan)
                     .subscribe((data) => {
                         this.geometry = {

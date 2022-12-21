@@ -48,7 +48,7 @@ export class FavoriteComponent {
     this.favoriteSrvc.getFavorites().forEach((entry) => {
       const option = new DatasetOptions(entry.favorite.internalId, '#FF0000');
       option.generalize = true;
-      const timespan = new Timespan(entry.favorite.lastValue.timestamp - 10000000, entry.favorite.lastValue.timestamp);
+      const timespan = new Timespan(entry.favorite.lastValue!.timestamp - 10000000, entry.favorite.lastValue!.timestamp);
       this.favorites.push({
         id: entry.id,
         label: entry.label,

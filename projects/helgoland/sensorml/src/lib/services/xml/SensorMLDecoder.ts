@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     AbstractTime
 } from '../../model/gml';

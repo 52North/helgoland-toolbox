@@ -21,8 +21,7 @@ export class D3GeneralPopupComponent {
         public dataset: D3GeneralDatasetInput[]
     ) {
         this.generalInput = {
-            datasets: this.dataset,
-            plotOptions: null
+            datasets: this.dataset
         }
         console.log(this.generalInput);
     }

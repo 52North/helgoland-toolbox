@@ -12,7 +12,7 @@ export interface ListSelectorParameter {
     selected?: string;
     isDisabled?: boolean;
     headerAddition?: string;
-    filterList?: MultiServiceFilter[];
+    filterList: MultiServiceFilter[];
 }
 
 @Injectable()

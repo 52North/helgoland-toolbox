@@ -5,7 +5,7 @@ import { Duration, unitOfTime } from 'moment';
 // input tyoe for d3-general-graph component
 export interface D3GeneralInput {
     datasets: D3GeneralDatasetInput[];
-    plotOptions: D3GeneralPlotOptions;
+    plotOptions?: D3GeneralPlotOptions;
 }
 
 export interface D3GeneralDatasetInput {

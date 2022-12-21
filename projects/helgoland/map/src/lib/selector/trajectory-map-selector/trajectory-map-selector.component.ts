@@ -1,4 +1,3 @@
-import * as L from 'leaflet';
 import 'leaflet.markercluster';
 
 import {
@@ -14,13 +13,13 @@ import {
 } from '@angular/core';
 import {
     HelgolandDataset,
-    HelgolandLocatedProfileData,
     HelgolandProfile,
     HelgolandProfileData,
     HelgolandServicesConnector,
     LocatedProfileDataEntry,
     Timespan,
 } from '@helgoland/core';
+import * as L from 'leaflet';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
@@ -70,7 +69,7 @@ export class ProfileTrajectoryMapSelectorComponent
     public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (changes['selectedTimespan'] && this.selectedTimespan && this.map) {
-            this.clearMap();
+            this.clearMap(this.map);
             this.initLayer();
             this.data.forEach((entry) => {
                 if (this.selectedTimespan.from <= entry.timestamp && entry.timestamp <= this.selectedTimespan.to) {
@@ -81,17 +80,17 @@ export class ProfileTrajectoryMapSelectorComponent
         }
     }
 
-    protected drawGeometries() {
+    protected drawGeometries(map: L.Map, serviceUrl: string): void {
         this.onContentLoading.emit(true);
-        if (!this.serviceUrl) { return; }
-        this.servicesConnector.getDatasets(this.serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
+        if (!serviceUrl || !map) { return; }
+        this.servicesConnector.getDatasets(serviceUrl, { ...this.filter, expanded: true }).subscribe((datasets) => {
             datasets.forEach((dataset) => {
                 if (dataset instanceof HelgolandProfile && dataset.firstValue && dataset.lastValue) {
                     this.dataset = dataset;
                     const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
                     this.servicesConnector.getDatasetData(dataset, timespan)
                         .subscribe((data: HelgolandProfileData) => {
-                            if (this.map && data.values instanceof Array) {
+                            if (data.values instanceof Array) {
                                 this.initLayer();
                                 this.data = [];
                                 const timelist: number[] = [];
@@ -102,8 +101,8 @@ export class ProfileTrajectoryMapSelectorComponent
                                     this.layer.addLayer(geojson);
                                 });
                                 this.onTimeListDetermined.emit(timelist);
-                                this.layer.addTo(this.map);
-                                this.zoomToMarkerBounds(this.layer.getBounds());
+                                this.layer.addTo(map);
+                                this.zoomToMarkerBounds(this.layer.getBounds(), map);
                             }
                             this.onContentLoading.emit(false);
                         });
@@ -116,9 +115,9 @@ export class ProfileTrajectoryMapSelectorComponent
         this.layer = L.markerClusterGroup({ animate: false });
     }
 
-    private clearMap() {
-        if (this.map && this.layer) {
-            this.map.removeLayer(this.layer);
+    private clearMap(map: L.Map) {
+        if (map && this.layer) {
+            map.removeLayer(this.layer);
         }
     }
 
