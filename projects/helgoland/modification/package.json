@@ -3,10 +3,10 @@
   "version": "13.0.1",
   "peerDependencies": {},
   "dependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "@types/geojson": "^7946.0.8",
-    "ngx-color-picker": "^11.0.0",
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@types/geojson": "^7946.0.10",
+    "ngx-color-picker": "^13.0.0",
     "tslib": "^2.1.0"
   }
 }

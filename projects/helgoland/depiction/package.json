@@ -3,9 +3,9 @@
   "version": "13.0.1",
   "peerDependencies": {},
   "dependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "@types/geojson": "^7946.0.8",
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@types/geojson": "^7946.0.10",
     "xlsx": "^0.17.1",
     "tslib": "^2.1.0"
   }
