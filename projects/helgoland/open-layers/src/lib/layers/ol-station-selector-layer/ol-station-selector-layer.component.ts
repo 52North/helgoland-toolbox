@@ -134,7 +134,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     const features: Feature[] = [];
     stations.forEach(st => {
       // TODO: add to service
-      if (st.geometry.type === 'Point') {
+      if (st.geometry?.type === 'Point') {
         const point = new Point(st.geometry.coordinates);
         point.transform('EPSG:4326', this.map.getView().getProjection());
         const feature = new Feature(point);
@@ -230,9 +230,9 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private zoomToFeatures(features: Feature[]) {
-    if (features.length > 0) {
-      const extent = features[0].getGeometry().getExtent().slice(0);
-      features.forEach(f => extend(extent, f.getGeometry().getExtent()));
+    if (features.length > 0 && features[0].getGeometry()) {
+      const extent = features[0].getGeometry()!.getExtent().slice(0);
+      features.forEach(f => extend(extent, f.getGeometry()!.getExtent()));
       this.map.getView().fit(extent, { duration: 300 });
     }
   }

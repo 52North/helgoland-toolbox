@@ -25,8 +25,8 @@ export class OlLayerAbstractComponent implements OnInit {
   ngOnInit() {
     const source = this.layer.getSource();
     this.layer.getExtent();
-    if (source instanceof TileWMS) {
-      const url = source.getUrls()[0];
+    if (source instanceof TileWMS && source.getUrls()?.length) {
+      const url = source.getUrls()![0];
       const layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
       this.wmsCaps.getAbstract(layerid, url).subscribe(res => this.abstract = res);
     }

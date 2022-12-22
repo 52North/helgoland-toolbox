@@ -1,4 +1,3 @@
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timespan, TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
@@ -16,6 +15,7 @@ import { HighlightOutput } from '../../../model/d3-highlight';
 import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
 import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
 import { HighlightValue } from './../../../model/d3-highlight';
+import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 
@@ -48,7 +48,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   protected preparedData: InternalDataEntry[];
   protected graphExtent: D3GraphExtent;
   protected graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
-  protected previousPoint: HoveredElement;
+  protected previousPoint: HoveredElement | undefined;
 
   protected previousBars: BarHoverElement[] = [];
 
@@ -115,14 +115,16 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   protected mouseMoved() {
     this.unhighlight();
     const pos = this.getCurrentMousePosition();
-    const nearestPoint = this.findNearestPoint(pos.x, pos.y);
-    if (nearestPoint) {
-      this.highlightPoint(nearestPoint);
-    } else {
-      const time = this.graphExtent.xScale.invert(pos.x).getTime();
-      const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
-      if (nearestBar.length) {
-        this.highlightBars(nearestBar);
+    if (pos) {
+      const nearestPoint = this.findNearestPoint(pos.x, pos.y);
+      if (nearestPoint) {
+        this.highlightPoint(nearestPoint);
+      } else {
+        const time = this.graphExtent.xScale.invert(pos.x).getTime();
+        const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
+        if (nearestBar.length) {
+          this.highlightBars(nearestBar);
+        }
       }
     }
   }
@@ -131,12 +133,14 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     this.previousPoint = nearestPoint;
     const dataset = this.d3Graph.getDataset(nearestPoint.internalEntry.internalId);
     this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
-    this.hoveringService.positioningPointHovering(
-      this.previousPoint.dataEntry.xDiagCoord,
-      this.previousPoint.dataEntry.yDiagCoord,
-      this.previousPoint.internalEntry.options.color,
-      this.background
-    );
+    if (this.previousPoint.dataEntry.xDiagCoord && this.previousPoint.dataEntry.yDiagCoord) {
+      this.hoveringService.positioningPointHovering(
+        this.previousPoint.dataEntry.xDiagCoord,
+        this.previousPoint.dataEntry.yDiagCoord,
+        this.previousPoint.internalEntry.options.color,
+        this.background
+      );
+    }
 
     const ids: Map<string, HighlightValue> = new Map();
     ids.set(this.previousPoint.internalEntry.internalId, {
@@ -176,37 +180,39 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
       nearestBar.selection.style('fill-opacity', '0.6');
     });
     const pos = this.getCurrentMousePosition();
-    this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
+    if (pos) {
+      this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
+    }
   }
 
   protected unhighlight() {
     if (this.previousPoint) {
       this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, this.previousPoint.selection);
-      this.previousPoint = null;
+      this.previousPoint = undefined;
     }
     if (this.previousBars.length) {
       for (let i = this.previousBars.length - 1; i >= 0; i--) {
         const bar = this.previousBars[i];
         this.hoveringService.hidePointHovering(bar.dataEntry, bar.internalEntry, bar.selection);
-        bar.selection.style('fill-opacity', bar.previousOpacity);
+        if (bar.previousOpacity) bar.selection.style('fill-opacity', bar.previousOpacity);
         this.previousBars.splice(i, 1);
       }
     }
     this.hoveringService.removeTooltip();
   }
 
-  protected findNearestPoint(x: number, y: number): HoveredElement {
-    let nearest: HoveredElement = null;
+  protected findNearestPoint(x: number, y: number): HoveredElement | undefined {
+    let nearest: HoveredElement | undefined = undefined;
     let nearestDist = Infinity;
 
     this.preparedData.forEach(e => {
       if (e.options.type === 'line') {
-        const delaunay = Delaunay.from(e.data, d => d.xDiagCoord, d => d.yDiagCoord);
+        const delaunay = Delaunay.from(e.data, d => d.xDiagCoord!, d => d.yDiagCoord!);
         const idx = delaunay.find(x, y);
 
         if (idx != null && !isNaN(idx)) {
           const datum = e.data[idx];
-          const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
+          const distance = this.distance(datum.xDiagCoord!, datum.yDiagCoord!, x, y);
           if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
             const id = `dot-${datum.timestamp}-${e.hoverId}`;
             nearest = {
@@ -247,9 +253,13 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
     return nearest;
   }
 
-  protected getCurrentMousePosition(): { x: number, y: number } {
-    const [x, y] = d3.mouse(this.background.node());
-    return { x: x + this.graphExtent.leftOffset, y };
+  protected getCurrentMousePosition(): { x: number, y: number } | undefined {
+    const background = this.background.node();
+    if (background) {
+      const [x, y] = d3.mouse(background);
+      return { x: x + this.graphExtent.leftOffset, y };
+    }
+    return undefined;
   }
 
   protected distance(px: number, py: number, mx: number, my: number): number {

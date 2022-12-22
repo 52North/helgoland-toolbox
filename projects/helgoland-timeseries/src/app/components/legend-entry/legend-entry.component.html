@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="dataset" [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
+<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
@@ -6,7 +6,7 @@
         <span *ngIf="uom">
           <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
         </span>
-        <div>{{dataset.platform.label}}</div>
+        <div>{{dataset?.platform?.label}}</div>
       </div>
       <div class="title error" *ngIf="error">
         Error occured, while loading {{datasetId}}
@@ -19,7 +19,7 @@
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div *ngIf="!loading && !error">
+  <div *ngIf="!loading && !error && dataset">
     <div class="small-label">
       <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
       <span *ngIf="categoryLabel !== phenomenonLabel">

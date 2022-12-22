@@ -9,9 +9,11 @@ import { YAxis } from '../model/d3-general';
 export class RangeCalculationsService {
 
   public bufferUnfixedRange(axis: YAxis, factor: number = 0.1) {
-    const offset = (axis.range.max - axis.range.min) * factor;
-    if (!axis.fixedMin) { axis.range.min = axis.range.min - offset; }
-    if (!axis.fixedMax) { axis.range.max = axis.range.max + offset; }
+    if (axis.range.max && axis.range.min) {
+      const offset = (axis.range.max - axis.range.min) * factor;
+      if (!axis.fixedMin) { axis.range.min = axis.range.min - offset; }
+      if (!axis.fixedMax) { axis.range.max = axis.range.max + offset; }
+    }
   }
 
   /**
@@ -19,11 +21,12 @@ export class RangeCalculationsService {
    * @param range {MinMaxRange} range to be buffered
    * @param factor {number}
    */
-  public bufferRange(range: MinMaxRange, factor: number = 0.1): MinMaxRange {
-    const offset = (range.max - range.min) * factor;
-    range.max = range.max + offset;
-    range.min = range.min - offset;
-    return range;
+  public bufferRange(range: MinMaxRange, factor: number = 0.1) {
+    if (range.max && range.min) {
+      const offset = (range.max - range.min) * factor;
+      range.max = range.max + offset;
+      range.min = range.min - offset;
+    }
   }
 
   /**
@@ -46,7 +49,7 @@ export class RangeCalculationsService {
    * @param range {MinMaxRange} range to be set
    */
   public setDefaultExtendIfUndefined(axis: YAxis) {
-    if (axis.range !== undefined && axis.range !== null) {
+    if (axis.range && axis.range.min && axis.range.max) {
       if (axis.range.min === axis.range.max) {
         if (!axis.fixedMax) {
           axis.range.max = axis.range.max + 1;

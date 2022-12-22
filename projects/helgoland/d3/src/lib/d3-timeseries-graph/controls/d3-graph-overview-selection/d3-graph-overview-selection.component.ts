@@ -23,7 +23,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   protected mousedownBrush: boolean;
   protected graphComp: D3TimeseriesGraphInterface;
   protected overview: d3.Selection<SVGSVGElement, any, any, any>;
-  protected drawLayer: d3.Selection<SVGGElement, any, any, any>;
+  protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected completeTimespan: Timespan;
   protected graphExtent: D3GraphExtent;
 
@@ -65,12 +65,12 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   public override cleanUp() {
     if (this.drawLayer) {
       this.drawLayer.remove();
-      this.drawLayer = null;
+      this.drawLayer = undefined;
     }
   }
 
   protected drawOverviewSelection() {
-    if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent) { return; }
+    if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent || !this.drawLayer) { return; }
 
     this.drawLayer.selectAll('*').remove();
     this.drawLayer.append<SVGSVGElement>('svg:rect')

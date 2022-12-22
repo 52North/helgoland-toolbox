@@ -27,7 +27,7 @@ export class OlLayerZoomExtentComponent implements OnInit {
 
   private url: string;
   private layerid: string;
-  private extent: number[];
+  private extent: number[] | undefined;
   private crs: string;
   private view: View;
 
@@ -42,15 +42,17 @@ export class OlLayerZoomExtentComponent implements OnInit {
     } else if (this.layer instanceof Layer) {
       const source = this.layer.getSource();
       this.layer.getExtent();
-      if (source instanceof TileWMS) {
-        this.url = source.getUrls()[0];
+      if (source instanceof TileWMS && source.getUrls()?.length) {
+        this.url = source.getUrls()![0];
         this.mapServices.getMap(this.mapId).subscribe(map => {
           this.view = map.getView();
           const epsgCode = this.view.getProjection().getCode();
           this.layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
           this.wmsCaps.getExtent(this.layerid, this.url, epsgCode).subscribe(res => {
-            this.extent = res.extent;
-            this.crs = res.crs;
+            if (res) {
+              this.extent = res.extent;
+              this.crs = res.crs;
+            }
           });
         });
       }

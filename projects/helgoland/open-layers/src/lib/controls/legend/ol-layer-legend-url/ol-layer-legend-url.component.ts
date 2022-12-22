@@ -27,8 +27,8 @@ export class OlLayerLegendUrlComponent {
   public deliverLegendUrl() {
     const source = this.layer.getSource();
     this.layer.getExtent();
-    if (source instanceof TileWMS) {
-      const url = source.getUrls()[0];
+    if (source instanceof TileWMS && source.getUrls()?.length) {
+      const url = source.getUrls()![0];
       const layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
       this.wmsCaps.getLegendUrl(layerid, url).subscribe(res => this.legendUrl.emit(res));
     }

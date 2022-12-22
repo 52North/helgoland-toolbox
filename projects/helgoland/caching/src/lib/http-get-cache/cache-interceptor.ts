@@ -17,7 +17,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
         protected ongoingCache: OnGoingHttpCache,
         @Optional() @Inject(CacheConfigService) config: CacheConfig
     ) {
-        this.logging = config?.logging;
+        this.logging = config?.logging || false;
     }
 
     public intercept(

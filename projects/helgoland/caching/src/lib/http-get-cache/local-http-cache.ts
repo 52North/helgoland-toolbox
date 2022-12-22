@@ -30,16 +30,16 @@ export class LocalHttpCache extends HttpCache {
         if (config && config.cachingDurationInMilliseconds) { this.cachingDuration = config.cachingDurationInMilliseconds; }
     }
 
-    public get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> {
+    public get(req: HttpRequest<any>, expirationAtMs?: number): HttpResponse<any> | null {
         const key = req.urlWithParams;
         if (this.cache[key]) {
             const currentTime = new Date().getTime();
             if (isNaN(this.cache[key].expirationAtMs)) {
-                this.cache[key].expirationAtMs = expirationAtMs;
+                this.cache[key].expirationAtMs = expirationAtMs || new Date().getTime() + this.cachingDuration;
                 return this.cache[key].response;
             } else {
                 if (this.cache[key].expirationAtMs >= currentTime) {
-                    if (this.cache[key].expirationAtMs > expirationAtMs) { this.cache[key].expirationAtMs = expirationAtMs; }
+                    if (expirationAtMs && this.cache[key].expirationAtMs > expirationAtMs) { this.cache[key].expirationAtMs = expirationAtMs; }
                     return this.cache[key].response;
                 } else {
                     delete this.cache[key];

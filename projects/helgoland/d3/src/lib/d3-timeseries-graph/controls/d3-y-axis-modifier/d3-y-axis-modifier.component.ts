@@ -58,8 +58,9 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   public override adjustYAxis(axis: YAxis) {
-    if ((this.shift || this.zoom) && this.adjustedRanges.has(axis.uom)) {
-      axis.range = this.adjustedRanges.get(axis.uom);
+    const range = this.adjustedRanges.get(axis.uom);
+    if ((this.shift || this.zoom) && range) {
+      axis.range = range;
     }
   }
 
@@ -74,7 +75,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.zoom) {
+    if (this.zoom && yaxis.range.max && yaxis.range.min) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
       const buffer = this.shift ? 7.5 : 0;
@@ -154,7 +155,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.shift) {
+    if (this.shift && yaxis.range.max && yaxis.range.min) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
       const shiftToCenter = 0.5 * buttonSize;
@@ -211,10 +212,11 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
 
   protected adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
     const key = axis.uom;
-    if (this.adjustedRanges.has(key)) {
-      this.adjustedRanges.get(key).min += adjustMin;
-      this.adjustedRanges.get(key).max += adjustMax;
-    } else {
+    const adjustedRange = this.adjustedRanges.get(key);
+    if (adjustedRange?.min && adjustedRange.max) {
+      adjustedRange.min += adjustMin;
+      adjustedRange.max += adjustMax;
+    } else if (axis.range.min && axis.range.max) {
       this.adjustedRanges.set(key, {
         min: axis.range.min + adjustMin,
         max: axis.range.max + adjustMax

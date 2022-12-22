@@ -66,7 +66,7 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     super.removeDataset(internalId);
   }
 
-  protected override async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+  protected override async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value: boolean | PromiseLike<boolean>) => void) {
     super.addLoadedDataset(timeseries, resolve);
     const message = `${this.translate.instant('events.add-timeseries')}: ${timeseries.label}`;
     this.la.announce(message);

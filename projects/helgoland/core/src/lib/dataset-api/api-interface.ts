@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ApiInterface } from '../abstract-services/api-interface';
 import { Category } from '../model/dataset-api/category';
-import { Data } from '../model/dataset-api/data';
+import { Data, IDataEntry } from '../model/dataset-api/data';
 import { Dataset, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
@@ -49,7 +49,7 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
     public abstract getDatasets(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset[]>;
     public abstract getDataset(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
     public abstract getDatasetByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Dataset>;
-    public abstract getData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
+    public abstract getData<T extends IDataEntry>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
     public abstract getServices(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service[]>;
     public abstract getService(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Service>;
     public abstract getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]>;
@@ -59,7 +59,7 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
     public abstract getSingleTimeseries(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     public abstract getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     public abstract getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
-    public abstract getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
+    public abstract getTsData<T extends IDataEntry>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
     public abstract getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]>;
     public abstract getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category>;
     public abstract getPhenomena(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Phenomenon[]>;

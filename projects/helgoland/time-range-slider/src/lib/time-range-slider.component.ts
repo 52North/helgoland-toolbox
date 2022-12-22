@@ -42,9 +42,10 @@ export class TimeRangeSliderComponent implements OnChanges {
       let min; let max;
       this.start = min = this.timeList[0];
       this.end = max = this.timeList[this.timeList.length - 1];
-      if (this.id && this.cache.has(this.id)) {
-        this.selectionStart = this.cache.get(this.id).from;
-        this.selectionEnd = this.cache.get(this.id).to;
+      const cache = this.cache.get(this.id);
+      if (this.id && cache) {
+        this.selectionStart = cache.from;
+        this.selectionEnd = cache.to;
       } else {
         this.selectionStart = this.start;
         this.selectionEnd = this.end;

@@ -16,7 +16,7 @@ export class OlLayerTimeSelectorComponent implements OnInit {
 
   @Input() layer: BaseLayer;
 
-  public currentTime: Date;
+  public currentTime: Date | undefined;
 
   public timeDimensions: Date[];
 
@@ -33,10 +33,10 @@ export class OlLayerTimeSelectorComponent implements OnInit {
   ngOnInit() {
     if (this.layer instanceof Layer) {
       const source = this.layer.getSource();
-      if (source instanceof TileWMS) {
+      if (source instanceof TileWMS && source.getUrls()?.length) {
         this.loading = true;
         this.layerSource = source;
-        this.url = source.getUrls()[0];
+        this.url = source.getUrls()![0];
         this.layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
         this.wmsCaps.getTimeDimensionArray(this.layerid, this.url)
           .subscribe(
@@ -62,7 +62,10 @@ export class OlLayerTimeSelectorComponent implements OnInit {
     if (currentTimeParam) {
       this.currentTime = new Date(currentTimeParam);
     } else {
-      this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => this.currentTime = time);
+      this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe({
+        next: time => this.currentTime = time,
+        error: err => console.error(err)
+      });
     }
   }
 

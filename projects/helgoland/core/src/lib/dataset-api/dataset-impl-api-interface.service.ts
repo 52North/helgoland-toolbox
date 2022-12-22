@@ -5,7 +5,7 @@ import { Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Category } from '../model/dataset-api/category';
-import { Data } from '../model/dataset-api/data';
+import { Data, IDataEntry } from '../model/dataset-api/data';
 import { Dataset, Timeseries, TimeseriesData, TimeseriesExtras } from '../model/dataset-api/dataset';
 import { Feature } from '../model/dataset-api/feature';
 import { Offering } from '../model/dataset-api/offering';
@@ -143,7 +143,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         return this.requestApi<TimeseriesExtras>(url + '/extras');
     }
 
-    public getTsData<T>(
+    public getTsData<T extends IDataEntry>(
         id: string,
         apiUrl: string,
         timespan: Timespan,
@@ -263,7 +263,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
         return this.getDataset(resolvedId.id, resolvedId.url, params, options);
     }
 
-    public getData<T>(
+    public getData<T extends IDataEntry>(
         id: string,
         apiUrl: string,
         timespan: Timespan,

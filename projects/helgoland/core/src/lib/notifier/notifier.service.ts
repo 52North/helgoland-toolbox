@@ -23,10 +23,12 @@ export class NotifierService {
   public notify(text: string) {
     clearTimeout(this.notifierTimeout);
     const notifierElement = document.getElementById(ID);
-    notifierElement.innerHTML = text;
-    notifierElement.className = notifierElement.className.replace('hide', 'show');
-    this.notifierTimeout = setTimeout(() => {
-      notifierElement.className = notifierElement.className.replace('show', 'hide');
-    }, TIME_IN_MS);
+    if (notifierElement) {
+      notifierElement.innerHTML = text;
+      notifierElement.className = notifierElement.className.replace('hide', 'show');
+      this.notifierTimeout = setTimeout(() => {
+        notifierElement.className = notifierElement.className.replace('show', 'hide');
+      }, TIME_IN_MS);
+    }
   }
 }

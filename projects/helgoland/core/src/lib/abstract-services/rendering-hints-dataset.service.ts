@@ -35,7 +35,7 @@ export abstract class RenderingHintsDatasetService<T extends DatasetOptions | Da
         });
     }
 
-    protected async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value?: boolean | PromiseLike<boolean>) => void) {
+    protected async addLoadedDataset(timeseries: HelgolandTimeseries, resolve: (value: boolean | PromiseLike<boolean>) => void) {
         this.datasetIds.push(timeseries.internalId);
         this.datasetOptions.set(timeseries.internalId, this.createOptionsOfRenderingHints(timeseries));
         this.datasetIdsChanged.emit(this.datasetIds);

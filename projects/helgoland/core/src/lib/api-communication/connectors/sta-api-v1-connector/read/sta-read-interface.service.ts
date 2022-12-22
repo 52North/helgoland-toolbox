@@ -29,6 +29,7 @@ import {
   StaValueListResponse,
 } from '../model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from '../model/things';
+import { StaObject } from './../model/sta-interface';
 
 @Injectable({ providedIn: 'root' })
 export class StaReadInterfaceService implements StaReadInterface {
@@ -117,7 +118,7 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, 'Observations'), {}, params, options);
   }
 
-  public aggregatePaging<T>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {
+  public aggregatePaging<T extends StaObject>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {
     return new Observable((observer: Observer<StaValueListResponse<T>>) => {
       request.subscribe(
         res => {
