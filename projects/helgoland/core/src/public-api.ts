@@ -54,6 +54,8 @@ export { LocalSelectorComponent } from './lib/language/locale-selector';
 
 export * from './lib/local-storage/local-storage.service';
 
+export * from './lib/helper';
+
 export * from './lib/model/dataset-api/data';
 export * from './lib/model/dataset-api/dataset';
 export * from './lib/model/dataset-api/parameter';

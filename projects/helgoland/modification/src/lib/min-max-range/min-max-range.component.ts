@@ -8,8 +8,8 @@ import { MinMaxRange } from '@helgoland/core';
 })
 export class MinMaxRangeComponent implements OnChanges {
 
-  public rangeMin: number;
-  public rangeMax: number;
+  public rangeMin: number | undefined;
+  public rangeMax: number | undefined;
 
   @Input()
   public range: MinMaxRange;
@@ -32,8 +32,8 @@ export class MinMaxRangeComponent implements OnChanges {
   }
 
   public resetYaxisRange() {
-    this.rangeMin = null;
-    this.rangeMax = null;
+    this.rangeMin = undefined;
+    this.rangeMax = undefined;
     this.onRangeChange.emit();
   }
 

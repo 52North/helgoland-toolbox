@@ -25,7 +25,7 @@ import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
 import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
-import { InternalDataEntry } from '../model/d3-general';
+import { DataConst, InternalDataEntry } from '../model/d3-general';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
 
@@ -165,44 +165,44 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     if (this.additionalData) {
       this.additionalData.forEach(entry => {
         if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data && entry.data.length > 0) {
-
-          const options = entry.datasetOptions || this.datasetOptions.get(entry.linkedDatasetId);
-          const dataset = this.datasetMap.get(entry.linkedDatasetId);
-          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId) > -1 || e.internalId.indexOf(entry.internalId) > -1);
-          let dataEntry: InternalDataEntry;
-          if (prepDataIdx === -1) {
-            dataEntry = {
-              internalId: this.generateAdditionalInternalId(entry),
-              hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
-              options,
-              data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
-              axisOptions: {
-                uom: dataset ? dataset.uom : entry.yaxisLabel,
-                label: dataset ? dataset.label : entry.yaxisLabel,
-                zeroBased: options.zeroBasedYAxis,
-                yAxisRange: options.yAxisRange,
-                autoRangeSelection: options.autoRangeSelection,
-                separateYAxis: options.separateYAxis
-              },
-              referenceValueData: [],
-              visible: options.visible
-            };
-            if (dataset) {
-              dataEntry.axisOptions.parameters = {
-                feature: dataset.parameters.feature,
-                phenomenon: dataset.parameters.phenomenon,
-                offering: dataset.parameters.offering
+          const options = this.getOptions(entry);
+          const dataset = entry.linkedDatasetId ? this.datasetMap.get(entry.linkedDatasetId) : undefined;
+          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId!) > -1 || e.internalId.indexOf(entry.internalId) > -1);
+          let dataEntry: InternalDataEntry | undefined = undefined;
+          if (options) {
+            if (prepDataIdx === -1) {
+              dataEntry = {
+                internalId: this.generateAdditionalInternalId(entry),
+                hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
+                options,
+                data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
+                axisOptions: {
+                  uom: this.getUom(dataset, entry),
+                  label: dataset ? dataset.label : entry.yaxisLabel,
+                  zeroBased: options.zeroBasedYAxis,
+                  yAxisRange: options.yAxisRange,
+                  autoRangeSelection: options.autoRangeSelection,
+                  separateYAxis: options.separateYAxis
+                },
+                referenceValueData: [],
+                visible: options.visible
               };
+              if (dataset) {
+                dataEntry!.axisOptions.parameters = {
+                  feature: dataset.parameters.feature,
+                  phenomenon: dataset.parameters.phenomenon,
+                  offering: dataset.parameters.offering
+                };
+              }
+              this.preparedData.push(dataEntry!);
+            } else {
+              dataEntry = this.preparedData[prepDataIdx];
+              dataEntry.axisOptions.uom = this.getUom(dataset, entry);
+              dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
+              dataEntry.data = options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [];
             }
-            this.preparedData.push(dataEntry);
-          } else {
-            dataEntry = this.preparedData[prepDataIdx];
-            dataEntry.axisOptions.uom = dataset ? dataset.uom : entry.yaxisLabel;
-            dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
-            dataEntry.data = options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [];
+            this.processData(dataEntry!);
           }
-
-          this.processData(dataEntry);
 
         } else {
           console.warn('Please check the additional entry, it needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property and a \'data\' property: ', entry);
@@ -211,6 +211,20 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     }
   }
 
+  private getUom(dataset: DataConst | undefined, entry: AdditionalData): string {
+    if (dataset) return dataset.uom;
+    if (entry.yaxisLabel) return entry.yaxisLabel;
+    return '';
+  }
+
+  private getOptions(entry: AdditionalData) {
+    if (entry.datasetOptions) {
+      return entry.datasetOptions;
+    } else if (entry.linkedDatasetId && this.datasetOptions?.get(entry.linkedDatasetId)) {
+      return this.datasetOptions?.get(entry.linkedDatasetId);
+    }
+    return undefined;
+  }
 
   private generateAdditionalInternalId(entry: AdditionalData): string {
     return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.internalId + 'add';

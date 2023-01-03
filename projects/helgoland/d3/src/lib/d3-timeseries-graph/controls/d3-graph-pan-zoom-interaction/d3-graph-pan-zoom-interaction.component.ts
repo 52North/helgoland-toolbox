@@ -17,12 +17,12 @@ import { D3TimeseriesGraphInterface } from '../../d3-timeseries-graph.interface'
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
 
   protected dragging: boolean;
-  protected dragStart: [number, number];
+  protected dragStart: [number, number] | undefined;
   protected dragCurrent: [number, number];
   protected draggingMove: boolean;
-  protected dragMoveStart: number;
+  protected dragMoveStart: number | undefined;
   protected dragMoveRange: [number, number];
-  protected dragTimeStart: number;
+  protected dragTimeStart: number | undefined;
   protected plotWhileDrag: boolean;
 
   protected isHoverable: boolean;
@@ -31,7 +31,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   protected dragRectG: any;
 
   protected xAxisRangeOrigin: any = [];
-  protected xAxisRangePan: [number, number];
+  protected xAxisRangePan: [number, number] | undefined;
 
   protected d3Graph: D3TimeseriesGraphInterface;
 
@@ -99,7 +99,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     this.draggingMove = false;
     this.dragMoveStart = d3.event.x;
     this.dragMoveRange = [this.timespan.from, this.timespan.to];
-    this.isHoverable = this.d3Graph.plotOptions.hoverable;
+    this.isHoverable = this.d3Graph.plotOptions.hoverable || false;
     this.d3Graph.plotOptions.hoverable = false;
   }
 
@@ -108,9 +108,9 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
    */
   protected panMoveHandler() {
     this.draggingMove = true;
-    const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 50;
-    if (this.dragMoveStart && this.draggingMove && timeDiff) {
-      if (!this.plotWhileDrag) {
+    if (this.dragMoveStart && this.draggingMove && this.dragTimeStart) {
+      const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 50;
+      if (!this.plotWhileDrag && timeDiff) {
         this.plotWhileDrag = true;
         this.dragTimeStart = new Date().valueOf();
         const diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
@@ -134,21 +134,24 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     this.d3Graph.plotOptions.hoverable = this.isHoverable;
     if (this.xAxisRangePan) {
       this.d3Graph.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
-      this.dragMoveStart = null;
+      this.dragMoveStart = undefined;
       this.draggingMove = false;
-      this.xAxisRangePan = null;
-      this.dragTimeStart = null;
+      this.xAxisRangePan = undefined;
+      this.dragTimeStart = undefined;
     }
   }
 
   /**
- * Function that starts the zoom handling.
- */
+  * Function that starts the zoom handling.
+  */
   protected zoomStartHandler(timespan: Timespan, backgroundElem: d3.Selection<SVGSVGElement, any, any, any>) {
-    this.dragging = false;
-    // dependent on point or line hovering
-    this.dragStart = d3.mouse(backgroundElem.node());
-    this.xAxisRangeOrigin.push([timespan.from, timespan.to]);
+    const background = backgroundElem.node();
+    if (background) {
+      this.dragging = false;
+      // dependent on point or line hovering
+      this.dragStart = d3.mouse(background);
+      this.xAxisRangeOrigin.push([timespan.from, timespan.to]);
+    }
   }
 
   /**
@@ -179,7 +182,7 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
       }
       this.d3Graph.changeTime(newTimespan[0], newTimespan[1]);
     }
-    this.dragStart = null;
+    this.dragStart = undefined;
     this.dragging = false;
     this.resetDrag();
   }
@@ -192,9 +195,8 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   protected getxDomain(start: number, end: number, graphExtent: D3GraphExtent, preparedData: InternalDataEntry[]): [number, number] {
     const domMinArr: DataEntry[] = [];
     const domMaxArr: DataEntry[] = [];
-    let domMin: number;
-    let domMax: number;
-    let tmp;
+    let domMin: number = Number.NEGATIVE_INFINITY;
+    let domMax: number = Number.POSITIVE_INFINITY;
     let lowestMin = Number.POSITIVE_INFINITY;
     let lowestMax = Number.POSITIVE_INFINITY;
 
@@ -202,34 +204,36 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     end += graphExtent.leftOffset;
 
     preparedData.forEach((entry) => {
-      domMinArr.push(entry.data.find((elem, index, array) => {
+      const matchStart = entry.data.find((elem, index, array) => {
         if (elem.xDiagCoord && elem.xDiagCoord >= start) {
           return array[index] !== undefined;
         }
         return undefined;
-      }));
-      domMaxArr.push(entry.data.find((elem, index, array) => {
-        if (elem.xDiagCoord >= end) {
+      });
+      if (matchStart) domMinArr.push(matchStart);
+      const matchEnd = entry.data.find((elem, index, array) => {
+        if (elem.xDiagCoord && elem.xDiagCoord >= end) {
           return array[index] !== undefined;
         }
         return undefined;
-      }));
+      });
+      if (matchEnd) domMaxArr.push(matchEnd);
     });
 
     for (let i = 0; i <= domMinArr.length - 1; i++) {
       if (domMinArr[i] != null) {
-        tmp = domMinArr[i].xDiagCoord;
-        if (tmp < lowestMin) {
-          lowestMin = tmp;
+        const minCoord = domMinArr[i].xDiagCoord;
+        if (minCoord && minCoord < lowestMin) {
+          lowestMin = minCoord;
           domMin = domMinArr[i].timestamp;
         }
       }
     }
     for (let j = 0; j <= domMaxArr.length - 1; j++) {
       if (domMaxArr[j] != null) {
-        tmp = domMaxArr[j].xDiagCoord;
-        if (tmp < lowestMax) {
-          lowestMax = tmp;
+        const maxCoord = domMaxArr[j].xDiagCoord;
+        if (maxCoord && maxCoord < lowestMax) {
+          lowestMax = maxCoord;
           domMax = domMaxArr[j].timestamp;
         }
       }
@@ -245,8 +249,9 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
     background: d3.Selection<SVGSVGElement, any, any, any>,
     graphExtent: D3GraphExtent
   ): void {
-    if (!this.dragStart) { return; }
-    this.dragCurrent = d3.mouse(background.node());
+    const backgroundNode = background.node();
+    if (!this.dragStart || !backgroundNode) { return; }
+    this.dragCurrent = d3.mouse(backgroundNode);
 
     const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
     const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);

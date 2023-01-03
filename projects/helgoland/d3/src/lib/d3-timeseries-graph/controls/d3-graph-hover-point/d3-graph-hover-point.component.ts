@@ -132,7 +132,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
   protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
     const dataset = this.d3Graph.getDataset(nearestPoint.internalEntry.internalId);
-    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
+    dataset && this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.internalEntry, dataset, nearestPoint.selection);
     if (this.previousPoint.dataEntry.xDiagCoord && this.previousPoint.dataEntry.yDiagCoord) {
       this.hoveringService.positioningPointHovering(
         this.previousPoint.dataEntry.xDiagCoord,
@@ -161,7 +161,7 @@ export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
       this.previousBars.push(nearestBar);
       nearestBar.previousOpacity = nearestBar.selection.style('fill-opacity');
       const dataset = this.d3Graph.getDataset(nearestBar.internalEntry.internalId);
-      elements.push({
+      dataset && elements.push({
         dataEntry: nearestBar.dataEntry,
         entry: nearestBar.internalEntry,
         timeseries: dataset,

@@ -51,7 +51,6 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     if (!req.url.includes('/getData')) {
       return next.handle(req, metadata);
     }
-    debugger;
     if (req.urlWithParams.includes('expanded=true')) {
       expanded = true;
     }

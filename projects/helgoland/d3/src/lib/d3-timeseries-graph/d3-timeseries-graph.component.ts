@@ -18,6 +18,7 @@ import {
     DatasetOptions,
     DatasetPresenterComponent,
     DatasetType,
+    filterUndefined,
     HelgolandDataset,
     HelgolandServicesConnector,
     HelgolandTimeseries,
@@ -109,7 +110,7 @@ export class D3TimeseriesGraphComponent
     private listOfSeparation = Array();
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
-    private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
+    private yScaleBase: d3.ScaleLinear<number, number> | undefined; // calculate diagram coord of y value
     private leftOffset: number;
 
     private height: number;
@@ -233,9 +234,8 @@ export class D3TimeseriesGraphComponent
 
     public reloadDataForDatasets(datasetIds: string[]): void {
         datasetIds.forEach(id => {
-            if (this.datasetMap.has(id)) {
-                this.loadDatasetData(this.datasetMap.get(id), true);
-            }
+            const dataset = this.datasetMap.get(id);
+            dataset && this.loadDatasetData(dataset, true);
         });
     }
 
@@ -281,8 +281,9 @@ export class D3TimeseriesGraphComponent
     }
 
     protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean): void {
-        if (!firstChange && this.datasetMap.has(internalId)) {
-            this.loadDatasetData(this.datasetMap.get(internalId), false);
+        const dataset = this.datasetMap.get(internalId);
+        if (!firstChange && dataset) {
+            this.loadDatasetData(dataset, false);
         }
     }
 
@@ -302,7 +303,7 @@ export class D3TimeseriesGraphComponent
         this.onTimespanChanged.emit(new Timespan(from, to));
     }
 
-    public getDataset(internalId: string): DataConst {
+    public getDataset(internalId: string): DataConst | undefined {
         return this.datasetMap.get(internalId);
     }
 
@@ -317,9 +318,9 @@ export class D3TimeseriesGraphComponent
 
     // load data of dataset
     private loadDatasetData(dataset: HelgolandTimeseries, force: boolean): void {
-        const datasetOptions = this.datasetOptions.get(dataset.internalId);
+        const datasetOptions = this.datasetOptions?.get(dataset.internalId);
 
-        if (this.timespan) {
+        if (this.timespan && datasetOptions) {
             if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
                 && dataset.firstValue
                 && dataset.lastValue
@@ -328,11 +329,12 @@ export class D3TimeseriesGraphComponent
                 this.onCompleteLoadingData(dataset);
             } else {
                 if (this.loadingData.size === 0) { this.onContentLoading.emit(true); }
-                const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor, moment.duration(1, 'day').asMilliseconds());
+                const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor!, moment.duration(1, 'day').asMilliseconds());
                 this.loadingData.add(dataset.internalId);
                 this.dataLoaded.emit(this.loadingData);
-                if (this.runningDataRequests.has(dataset.internalId)) {
-                    this.runningDataRequests.get(dataset.internalId).unsubscribe();
+                const runningRequest = this.runningDataRequests.get(dataset.internalId);
+                if (runningRequest) {
+                    runningRequest.unsubscribe();
                     this.onCompleteLoadingData(dataset);
                 }
                 const request = this.servicesConnector.getDatasetData(dataset, buffer, {
@@ -369,19 +371,20 @@ export class D3TimeseriesGraphComponent
      * @param dataset {IDataset} Object of the whole dataset
      */
     private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
-        if (rawdata instanceof HelgolandTimeseriesData) {
+        const options = this.datasetOptions?.get(dataset.internalId);
+        const constellation = this.datasetMap.get(dataset.internalId);
+
+        if (rawdata instanceof HelgolandTimeseriesData && options && constellation) {
             // add surrounding entries to the set
             if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
             if (rawdata.valueAfterTimespan) { rawdata.values.push(rawdata.valueAfterTimespan); }
 
             const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan);
 
-            this.datasetMap.get(dataset.internalId).data = data;
+            constellation.data = data;
             const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
-            const options = this.datasetOptions.get(dataset.internalId);
 
-            let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; };
-
+            let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; } | undefined = undefined;
             // sum values for bar chart visualization
             if (options.type === 'bar') {
                 barConfig = {
@@ -484,13 +487,13 @@ export class D3TimeseriesGraphComponent
      * @param entry {DataEntry} Object containing dataset related data.
      */
     protected processData(entry: InternalDataEntry): void {
-        let visualMin: number;
-        let visualMax: number;
+        let visualMin: number | undefined = undefined;
+        let visualMax: number | undefined = undefined;
         let fixedMin = false;
         let fixedMax = false;
 
         // set out of yAxisRange
-        if (entry.axisOptions.yAxisRange) {
+        if (entry.axisOptions.yAxisRange?.min && entry.axisOptions.yAxisRange.max) {
 
             if (!isNaN(entry.axisOptions.yAxisRange.min)) {
                 visualMin = entry.axisOptions.yAxisRange.min;
@@ -502,7 +505,7 @@ export class D3TimeseriesGraphComponent
                 fixedMax = true;
             }
 
-            if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
+            if (visualMin && visualMax && visualMin > visualMax) {
                 const temp = visualMin;
                 visualMin = visualMax;
                 visualMax = temp;
@@ -510,7 +513,7 @@ export class D3TimeseriesGraphComponent
         }
 
         // set variable extend bounds
-        if (isNaN(visualMin) || isNaN(visualMax)) {
+        if (visualMin === undefined || visualMax === undefined) {
             const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
@@ -524,28 +527,26 @@ export class D3TimeseriesGraphComponent
 
             const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
-            if (isNaN(visualMin)) {
-                visualMin = d3.min([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]);
+            if (visualMin === undefined) {
+                visualMin = d3.min(filterUndefined([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]));
             }
 
-            if (isNaN(visualMax)) {
-                visualMax = d3.max([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]);
+            if (visualMax === undefined) {
+                visualMax = d3.max(filterUndefined([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]));
             }
         }
 
         // set out of zeroBasedAxis
-        if (entry.axisOptions.zeroBased) {
-            if (visualMin > 0) {
-                visualMin = 0;
-            }
-            if (visualMax < 0) {
-                visualMax = 0;
-            }
+        if (entry.axisOptions.zeroBased && visualMin && visualMin > 0) {
+            visualMin = 0;
+        }
+        if (entry.axisOptions.zeroBased && visualMax && visualMax < 0) {
+            visualMax = 0;
         }
 
         this.preparedAxes.set(entry.internalId, {
-            visualMin,
-            visualMax,
+            visualMin: visualMin!,
+            visualMax: visualMax!,
             fixedMin,
             fixedMax,
             entry
@@ -566,7 +567,7 @@ export class D3TimeseriesGraphComponent
      * Function that returns the width of the graph diagram.
      */
     private calculateWidth(): number {
-        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return (this.rawSvg.node()?.width.baseVal.value || 100) - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     /**
@@ -585,12 +586,12 @@ export class D3TimeseriesGraphComponent
     private drawYGridLines() {
         this.graph.selectAll('.grid.y-grid').remove();
         if (this.plotOptions.grid) {
-            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions.has(id) && this.datasetOptions.get(id).visible))
-            if (idx >= 0) {
+            const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions?.get(id)?.visible));
+            if (idx >= 0 && this.yAxes[idx] && this.yAxes[idx].yScale) {
                 this.graph.append('svg:g')
                     .attr('class', 'grid y-grid')
                     .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-                    .call(d3.axisLeft(this.yAxes[idx].yScale)
+                    .call(d3.axisLeft(this.yAxes[idx].yScale!)
                         .ticks(TICKS_COUNT_YAXIS)
                         .tickSize(-this.width + this.leftOffset)
                         .tickFormat(() => '') as any);
@@ -600,7 +601,7 @@ export class D3TimeseriesGraphComponent
 
     public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
         return this.rawSvg
-            .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : null)
+            .insert('g', !front ? `#interaction-layer-${this.currentTimeId}` : undefined)
             .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
@@ -629,18 +630,18 @@ export class D3TimeseriesGraphComponent
         this.observer.forEach(e => e.cleanUp && e.cleanUp());
 
         this.leftOffset = 0;
-        this.yScaleBase = null;
+        this.yScaleBase = undefined;
 
         // reset y axes
         this.yAxes = [];
         this.prepareYAxes();
 
         this.yAxes.forEach(axis => {
-            axis.first = (this.yScaleBase === null);
+            axis.first = (this.yScaleBase === undefined);
             axis.offset = this.leftOffset;
 
             const yAxisResult = this.drawYaxis(axis);
-            if (this.yScaleBase === null) {
+            if (this.yScaleBase === undefined) {
                 this.yScaleBase = yAxisResult.yScale;
                 this.leftOffset = yAxisResult.buffer;
             } else {
@@ -725,10 +726,10 @@ export class D3TimeseriesGraphComponent
 
     private isNotDrawable() {
         try {
-            return this.rawSvg.node().width.baseVal.value === undefined
-                || this.rawSvg.node().width.baseVal.value === 0
-                || this.rawSvg.node().height.baseVal.value === undefined
-                || this.rawSvg.node().height.baseVal.value === 0
+            return this.rawSvg.node()?.width.baseVal.value === undefined
+                || this.rawSvg.node()?.width.baseVal.value === 0
+                || this.rawSvg.node()?.height.baseVal.value === undefined
+                || this.rawSvg.node()?.height.baseVal.value === 0
                 || !this.graph
                 || !this.rawSvg
                 || !this.datasetIds;
@@ -742,8 +743,8 @@ export class D3TimeseriesGraphComponent
     }
 
     protected createYAxisForId(id: string) {
-        if (this.preparedAxes.has(id)) {
-            const axisSettings = this.preparedAxes.get(id);
+        const axisSettings = this.preparedAxes.get(id);
+        if (axisSettings) {
             if (axisSettings.entry.options.separateYAxis) {
                 // create sepearte axis
                 this.yAxes.push({
@@ -751,10 +752,10 @@ export class D3TimeseriesGraphComponent
                     range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
                     fixedMin: axisSettings.fixedMin,
                     fixedMax: axisSettings.fixedMax,
-                    selected: axisSettings.entry.selected,
+                    selected: !!axisSettings.entry.selected,
                     seperate: true,
                     ids: [id],
-                    label: axisSettings.entry.axisOptions.parameters.feature.label
+                    label: axisSettings.entry.axisOptions.parameters?.feature?.label
                 });
             } else {
                 // find matching axis or add new
@@ -763,17 +764,17 @@ export class D3TimeseriesGraphComponent
                     // add id to axis
                     axis.ids.push(id);
                     // update range for axis
-                    if (!axis.fixedMin) {
+                    if (!axis.fixedMin && axis.range.min) {
                         axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
                     }
-                    if (!axis.fixedMax) {
+                    if (!axis.fixedMax && axis.range.max) {
                         axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
                     }
                     axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
                     axis.fixedMax = axis.fixedMax || axisSettings.fixedMax;
                     // update selection
                     if (axis.selected) {
-                        axis.selected = axisSettings.entry.selected;
+                        axis.selected = !!axisSettings.entry.selected;
                     }
                 } else {
                     this.yAxes.push({
@@ -782,7 +783,7 @@ export class D3TimeseriesGraphComponent
                         fixedMin: axisSettings.fixedMin,
                         fixedMax: axisSettings.fixedMax,
                         seperate: false,
-                        selected: axisSettings.entry.selected,
+                        selected: !!axisSettings.entry.selected,
                         ids: [id]
                     });
                 }
@@ -792,8 +793,8 @@ export class D3TimeseriesGraphComponent
 
     private addTimespanJumpButtons(): void {
         let dataVisible = false;
-        let formerTimestamp: number;
-        let laterTimestamp: number;
+        let formerTimestamp: number | undefined = undefined;
+        let laterTimestamp: number | undefined = undefined;
         if (this.plotOptions.requestBeforeAfterValues) {
             this.preparedData.forEach((entry: InternalDataEntry) => {
                 const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan.from < e.timestamp && this.timespan.to > e.timestamp) && typeof e.value === 'number');
@@ -814,14 +815,14 @@ export class D3TimeseriesGraphComponent
         if (!dataVisible) {
             const buttonWidth = 50;
             const leftRight = 15;
-            if (formerTimestamp) {
+            if (formerTimestamp !== undefined) {
                 const g = this.background.append('g');
                 g.append('svg:rect')
                     .attr('class', 'formerButton')
                     .attr('width', buttonWidth + 'px')
                     .attr('height', this.height + 'px')
                     .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-                    .on('click', () => this.centerTime(formerTimestamp));
+                    .on('click', () => this.centerTime(formerTimestamp!));
                 g.append('line')
                     .attr('class', 'arrow')
                     .attr('x1', 0 + this.leftOffset + leftRight + 'px')
@@ -835,14 +836,14 @@ export class D3TimeseriesGraphComponent
                     .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
                     .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
             }
-            if (laterTimestamp) {
+            if (laterTimestamp !== undefined) {
                 const g = this.background.append('g');
                 g.append('svg:rect')
                     .attr('class', 'laterButton')
                     .attr('width', '50px')
                     .attr('height', this.height)
                     .attr('transform', 'translate(' + (this.width - 50) + ', 0)')
-                    .on('click', () => this.centerTime(laterTimestamp));
+                    .on('click', () => this.centerTime(laterTimestamp!));
                 g.append('line')
                     .attr('class', 'arrow')
                     .attr('x1', this.width - leftRight + 'px')
@@ -910,10 +911,12 @@ export class D3TimeseriesGraphComponent
 
         // draw right axis as border
         this.graph.selectAll('.y.axis.right').remove();
-        this.graph.append('svg:g')
-            .attr('class', 'y axis right')
-            .attr('transform', 'translate(' + this.width + ',0)')
-            .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0) as any);
+        if (this.yScaleBase) {
+            this.graph.append('svg:g')
+                .attr('class', 'y axis right')
+                .attr('transform', 'translate(' + this.width + ',0)')
+                .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0) as any);
+        }
 
         // text label for the x axis
         this.graph.selectAll('.x.axis.label').remove();
@@ -1028,7 +1031,7 @@ export class D3TimeseriesGraphComponent
         this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // range for y axis scale
-        const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
+        const yScale = d3.scaleLinear().domain([axis.range.min!, axis.range.max!]).range([this.height, 0]);
 
         const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
         let buffer = 0;
@@ -1043,12 +1046,13 @@ export class D3TimeseriesGraphComponent
         // draw y axis
         const axisElem = this.graph.append<SVGSVGElement>('svg:g')
             .attr('class', 'y axis')
-            .call(yAxisGen);
+            .call(yAxisGen)
+        const axisElemNode = axisElem.node()
 
         // only if yAxis should be visible
-        if (showAxis) {
+        if (showAxis && axisElemNode) {
             const diagramHeight = this.height;
-            let axisHeight = axisElem.node().getBBox().height;
+            let axisHeight = axisElemNode.getBBox().height;
             if (this.yaxisModifier) {
                 axisHeight -= 180;
             }
@@ -1061,10 +1065,11 @@ export class D3TimeseriesGraphComponent
                 .text(this.getYAxisLabel(axis))
                 .call((res) => this.wrapText(res, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label))
 
-            const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
+            const axisWidth = axisElemNode.getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
             // if yAxis should not be visible, buffer will be set to 0
-            buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+            const offset = axis.offset ? axis.offset : 0;
+            buffer = (showAxis ? offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
 
             const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
@@ -1080,13 +1085,14 @@ export class D3TimeseriesGraphComponent
                 textOff = this.margin.left;
             }
             text.attr('y', 0 - textOff);
+            const textNode = text.node();
 
-            if (text) {
-                const textWidth = text.node().getBBox().width;
-                const textHeight = text.node().getBBox().height;
+            if (text && textNode) {
+                const textWidth = textNode.getBBox().width;
+                const textHeight = textNode.getBBox().height;
                 const textPosition = {
-                    x: text.node().getBBox().x,
-                    y: text.node().getBBox().y
+                    x: textNode.getBBox().x,
+                    y: textNode.getBBox().y
                 };
                 const axisradius = 4;
                 const startOfPoints = {
@@ -1099,7 +1105,7 @@ export class D3TimeseriesGraphComponent
                     const dataentry = this.preparedData.find(el => el.internalId === entryID);
                     if (dataentry) {
                         if (dataentry.options.type) {
-                            this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, dataentry.selected);
+                            this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, !!dataentry.selected);
                         }
                         pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
                     }
@@ -1112,7 +1118,7 @@ export class D3TimeseriesGraphComponent
                     .on('mouseup', () => this.highlightLine(axis.ids));
 
                 if (!axis.first) {
-                    axisDiv.attr('x', axis.offset).attr('y', 0);
+                    axisDiv.attr('x', offset).attr('y', 0);
                 } else {
                     axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
                 }
@@ -1129,7 +1135,7 @@ export class D3TimeseriesGraphComponent
 
     private getYAxisLabel(axis: YAxis): string {
         if (this.yAxisLabelSrvc.getLabel) {
-            const datasets = axis.ids.map(id => this.datasetMap.get(id));
+            const datasets = filterUndefined(axis.ids.map(id => this.datasetMap.get(id)));
             return this.yAxisLabelSrvc.getLabel(axis, datasets);
         }
         return axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom;
@@ -1214,11 +1220,11 @@ export class D3TimeseriesGraphComponent
                     .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
                 if (entry.options.type === 'bar') {
-                    this.drawBarChart(entry, yaxis.yScale);
+                    this.drawBarChart(entry, yaxis.yScale!);
                 } else {
                     // draw ref value line
-                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale));
-                    this.drawLineChart(entry, yaxis.yScale);
+                    entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale!));
+                    this.drawLineChart(entry, yaxis.yScale!);
                 }
             }
         }
@@ -1275,9 +1281,9 @@ export class D3TimeseriesGraphComponent
     private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
         const paddingBefore = 0;
         const paddingAfter = 1;
-        const periodInMs = entry.bar.period.asMilliseconds();
+        const periodInMs = entry.bar?.period.asMilliseconds() || 0;
 
-        const bars = this.graphBody.selectAll('.bar')
+        this.graphBody.selectAll('.bar')
             .data(entry.data)
             .enter().append('rect')
             .attr('class', 'bar')
@@ -1287,17 +1293,17 @@ export class D3TimeseriesGraphComponent
             .style('stroke', entry.options.color)
             .style('stroke-width', this.calculateLineWidth(entry))
             .style('fill-opacity', 0.5)
-            .attr('x', (d: DataEntry) => this.xScaleBase(d.timestamp) + paddingBefore)
+            .attr('x', (d: DataEntry) => (this.xScaleBase(d.timestamp) || 0) + paddingBefore)
             .attr('width', (d: DataEntry) => {
                 let width = 10;
                 if (typeof d.value === 'number') {
-                    width = this.xScaleBase(d.timestamp + periodInMs) - this.xScaleBase(d.timestamp);
+                    width = (this.xScaleBase(d.timestamp + periodInMs) || 0) - (this.xScaleBase(d.timestamp) || 0);
                 }
                 const barWidth = width - paddingBefore - paddingAfter;
                 return barWidth < 1 ? 1 : barWidth;
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
-            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
+            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - (yScaleBase(d.value) || 0) : 0);
     }
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
@@ -1306,11 +1312,11 @@ export class D3TimeseriesGraphComponent
                 return (!isNaN(d.timestamp)) && (!isNaN(d.value));
             })
             .x((d) => {
-                d.xDiagCoord = xScaleBase(d.timestamp);
+                d.xDiagCoord = xScaleBase(d.timestamp) as number;
                 return d.xDiagCoord;
             })
             .y((d) => {
-                d.yDiagCoord = yScaleBase(d.value);
+                d.yDiagCoord = yScaleBase(d.value) as number;
                 return d.yDiagCoord;
             })
             .curve(d3.curveLinear);
@@ -1322,7 +1328,7 @@ export class D3TimeseriesGraphComponent
      * @param width {Number} width of the axis which must not be crossed
      * @param xposition {Number} position to center the label in the middle
      */
-    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
+    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string | undefined): void {
         textObj.each((u: any, i: number, d: any) => {
             const bla = d[i];
             const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols

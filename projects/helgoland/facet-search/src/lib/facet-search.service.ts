@@ -3,9 +3,9 @@ import { Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import {
+  FacetParameter,
   FacetSearchElement,
   FacetSearchElementParameter,
-  FacetParameter,
   FacetSearchService,
   ParameterFacetSort,
   ParameterFacetType,
@@ -25,7 +25,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   private entries: FacetSearchElement[];
 
-  private selectedTimespan: Timespan;
+  private selectedTimespan: Timespan | undefined;
 
   private filteredEntries: FacetSearchElement[];
 
@@ -75,7 +75,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return this.sortParameters(params, sort);
   }
 
-  public getSelectedParameter(type: ParameterFacetType): FacetParameter {
+  public getSelectedParameter(type: ParameterFacetType): FacetParameter | undefined {
     if (this.facets.has(type)) {
       return this.facets.get(type);
     }
@@ -99,7 +99,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return this.filteredEntries;
   }
 
-  public getCompleteTimespan(): Timespan {
+  public getCompleteTimespan(): Timespan | undefined {
     return this.createTimespan(this.entries);
   }
 
@@ -108,35 +108,32 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     this.setFilteredEntries();
   }
 
-  public getSelectedTimespan(): Timespan {
+  public getSelectedTimespan(): Timespan | undefined {
     return this.selectedTimespan;
   }
 
-  public getFilteredTimespan(): Timespan {
+  public getFilteredTimespan(): Timespan | undefined {
     return this.createTimespan(this.filteredEntries);
   }
 
   public resetAllFacets() {
     this.facets.clear();
-    this.selectedTimespan = null;
+    this.selectedTimespan = undefined;
     this.setFilteredEntries();
   }
 
-  private createTimespan(entries: FacetSearchElement[]): Timespan {
-    let timespan: Timespan = null;
+  private createTimespan(entries: FacetSearchElement[]): Timespan | undefined {
+    let timespan: Timespan | undefined = undefined;
     if (entries.length > 0) {
       timespan = { from: Infinity, to: 0 };
       entries.forEach(e => {
         if (e.firstValue && e.lastValue) {
-          if (e.firstValue.timestamp < timespan.from) { timespan.from = e.firstValue.timestamp; }
-          if (e.lastValue.timestamp > timespan.to) { timespan.to = e.lastValue.timestamp; }
+          if (e.firstValue.timestamp < timespan!.from) { timespan!.from = e.firstValue.timestamp; }
+          if (e.lastValue.timestamp > timespan!.to) { timespan!.to = e.lastValue.timestamp; }
         }
       });
     }
-    if (timespan.from !== Infinity && timespan.to !== 0) {
-      return timespan;
-    }
-    return undefined;
+    return timespan;
   }
 
   private setFilteredEntries() {
@@ -169,7 +166,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   private checkFacet(type: ParameterFacetType, parameterId: string): boolean {
     if (this.facets.has(type)) {
-      return parameterId === this.facets.get(type).id;
+      return parameterId === this.facets.get(type)!.id;
     }
     return true;
   }
@@ -191,7 +188,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return list;
   }
 
-  private addParameter(list: FacetParameter[], type: ParameterFacetType, entry: FacetSearchElementParameter) {
+  private addParameter(list: FacetParameter[], type: ParameterFacetType, entry?: FacetSearchElementParameter) {
     if (entry) {
       const existing = list.find(e => e.label === entry.label);
       if (existing) {
@@ -210,12 +207,13 @@ export class FacetSearchServiceImpl implements FacetSearchService {
   private createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
     const params: FacetParameter[] = [];
     this.entries.forEach(ts => {
-      if (ts[type] && !params.find(e => e.label === ts[type].label)) {
+      const elem = ts[type];
+      if (elem && !params.find(e => e.label === elem.label)) {
         params.push({
-          id: ts[type].id,
-          label: ts[type].label,
+          id: elem.id,
+          label: elem.label,
           count: 0,
-          selected: this.checkSelection(type, ts[type].id)
+          selected: this.checkSelection(type, elem.id)
         });
       }
     });
@@ -223,7 +221,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
   }
 
   private checkSelection(type: ParameterFacetType, id: string): boolean {
-    return this.facets.has(type) && this.facets.get(type).id === id;
+    return this.facets.has(type) && this.facets.get(type)!.id === id;
   }
 
 }

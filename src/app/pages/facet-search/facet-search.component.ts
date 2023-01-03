@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import {
   ApiV3InterfaceService,
-  ApiV3ParameterFilter,
+  DatasetType,
   HelgolandServicesConnector,
+  HelgolandTimeseries,
   Timeseries,
   Timespan,
 } from '@helgoland/core';
 import {
-  convertFromApiV3Dataset,
+  convertToFacetEntry,
   FacetSearchElement,
   FacetSearchElementFeature,
   FacetSearchService,
@@ -19,6 +20,7 @@ import {
 } from '@helgoland/facet-search';
 import { MapCache } from '@helgoland/map';
 import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'n52-facet-search',
@@ -77,39 +79,39 @@ export class FacetSearchComponent {
   }
 
   private fetchDatasets() {
-    // forkJoin([
-    //   // this.servicesConnector.getDatasets('mocked-apiv3', { expanded: true, type: DatasetType.Timeseries }),
-    //   // this.servicesConnector.getDatasets('http://192.168.52.242:8080/52n-sos-webapp/api/', { expanded: true, type: DatasetType.Timeseries }),
-    //   // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-    //   // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
-    //   //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
-    //   // ),
-    //   // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-    //   // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-    //   this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sws5/api/', { expanded: true, type: DatasetType.Timeseries })
-    // ]).subscribe(res => {
-    //   const complete: FacetEntry[] = [];
-    //   res.forEach(dsList => {
-    //     dsList.forEach(ds => {
-    //       if (ds instanceof HelgolandTimeseries) {
-    //         complete.push(convertToFacetEntry(ds));
-    //       }
-    //     });
-    //   });
-    //   this.facetSearch.setEntries(complete);
-    // });
+    forkJoin([
+      // this.servicesConnector.getDatasets('mocked-apiv3', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesConnector.getDatasets('http://192.168.52.242:8080/52n-sos-webapp/api/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/',
+      //   { expanded: true, service: 'srv_3dec8ce040d9506c5aba685c9d134156', type: DatasetType.Timeseries }
+      // ),
+      // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
+      this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sws5/api/', { expanded: true, type: DatasetType.Timeseries })
+    ]).subscribe(res => {
+      const complete: FacetSearchElement[] = [];
+      res.forEach(dsList => {
+        dsList.forEach(ds => {
+          if (ds instanceof HelgolandTimeseries) {
+            complete.push(convertToFacetEntry(ds));
+          }
+        });
+      });
+      this.facetSearch.setEntries(complete);
+    });
 
 
-    const url = 'http://192.168.52.242:8080/52n-sos-webapp/api/';
-    const filter: ApiV3ParameterFilter = {
-      expanded: true,
-      select: ['label', 'parameters/procedure', 'parameters/phenomenon', 'parameters/category', 'feature']
-    }
-    this.apiv3.getDatasets(url, filter).subscribe(res => {
-      const entries: FacetSearchElement[] = res.map(e => convertFromApiV3Dataset(e, url));
-      console.log(entries[0]);
-      this.facetSearch.setEntries(entries);
-    })
+    // const url = 'http://192.168.52.242:8080/52n-sos-webapp/api/';
+    // const filter: ApiV3ParameterFilter = {
+    //   expanded: true,
+    //   select: ['label', 'parameters/procedure', 'parameters/phenomenon', 'parameters/category', 'feature']
+    // }
+    // this.apiv3.getDatasets(url, filter).subscribe(res => {
+    //   const entries: FacetSearchElement[] = res.map(e => convertFromApiV3Dataset(e, url));
+    //   console.log(entries[0]);
+    //   this.facetSearch.setEntries(entries);
+    // })
   }
 
   public onSelectedEntry(entry: FacetSearchElement) {

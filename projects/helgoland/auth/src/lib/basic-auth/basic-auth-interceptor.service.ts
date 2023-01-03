@@ -29,20 +29,21 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
   intercept(req: HttpRequest<any>, options: Partial<HttpRequestOptions>, next: HttpServiceHandler): Observable<HttpEvent<any>> {
     const url = this.basicAuthServices.getCorrespondingService(req.url);
     if (url) {
-      if (this.basicAuthSrvc.hasToken(url)) {
+      const token = this.basicAuthSrvc.getToken(url);
+      if (token) {
         req = req.clone({
           setHeaders: {
-            Authorization: this.basicAuthSrvc.getToken(url)
+            Authorization: token
           }
         });
         return next.handle(req, options);
       } else {
         return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
           this.receptor.doBasicAuth(url).subscribe(successfully => {
-            if (successfully) {
+            if (successfully && token) {
               req = req.clone({
                 setHeaders: {
-                  Authorization: this.basicAuthSrvc.getToken(url)
+                  Authorization: token
                 }
               });
             }

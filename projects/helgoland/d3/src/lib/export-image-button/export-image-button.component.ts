@@ -167,13 +167,13 @@ export class ExportImageButtonComponent {
 
   private addLegend(element: SVGSVGElement): Observable<void> {
     if (this.showLegend) {
-      const obs: Observable<{ label: d3.Selection<SVGGElement, unknown, null, undefined>, xPos: number }>[] = [];
+      const obs: Observable<{ label: d3.Selection<SVGGElement, unknown, null, undefined> | undefined, xPos: number }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
         if (option.visible) {
           obs.push(
             this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
-              if (this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
+              if (ts.firstValue && ts.lastValue && this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
                 const label = selection.append<SVGGElement>('g').attr('class', 'legend-entry');
                 this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
                 label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
@@ -184,7 +184,7 @@ export class ExportImageButtonComponent {
                 };
               } else {
                 return {
-                  label: null,
+                  label: undefined,
                   xPos: 0
                 };
               }
@@ -193,7 +193,7 @@ export class ExportImageButtonComponent {
         }
       });
       return forkJoin(obs).pipe(map(elem => {
-        const maxWidth = Math.max(...elem.map(e => e.label ? e.label.node().getBBox().width : 0));
+        const maxWidth = Math.max(...elem.map(e => e.label?.node() ? e.label.node()!.getBBox().width : 0));
         elem.forEach(e => {
           if (e.label) {
             e.label.attr('transform', `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`);
@@ -201,12 +201,16 @@ export class ExportImageButtonComponent {
         });
       }));
     } else {
-      return of(null);
+      return of();
     }
   }
 
   private createLabelText(ts: HelgolandTimeseries) {
-    return `${ts.parameters.phenomenon.label}, ${ts.parameters.procedure.label}, ${ts.parameters.feature.label}`;
+    const labels = [];
+    ts.parameters.phenomenon && labels.push(ts.parameters.phenomenon.label);
+    ts.parameters.procedure && labels.push(ts.parameters.procedure.label);
+    ts.parameters.feature && labels.push(ts.parameters.feature.label);
+    return labels.join(', ');
   }
 
   private addTitle(element: SVGSVGElement) {
@@ -221,8 +225,11 @@ export class ExportImageButtonComponent {
 
       this.moveDown(graph, addedHeight);
       const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
-      const titleWidth = titleElem.node().getBBox().width;
-      titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
+      const titleElemNode = titleElem.node();
+      if (titleElem && titleElemNode) {
+        const titleWidth = titleElemNode.getBBox().width;
+        titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
+      }
     }
   }
 
@@ -243,7 +250,7 @@ export class ExportImageButtonComponent {
     const blob = new Blob([data], { type: 'image/svg+xml' });
     const url = win.createObjectURL(blob);
     img.onload = () => {
-      canvas.getContext('2d').drawImage(img, 0, 0);
+      canvas.getContext('2d')?.drawImage(img, 0, 0);
       win.revokeObjectURL(url);
       const uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
       const a = document.createElement('a');
@@ -313,7 +320,7 @@ export class ExportImageButtonComponent {
 
   private removeComponentFromBody(componentRef: ComponentRef<any>) {
     this.applicationRef.detachView(componentRef.hostView);
-    document.querySelector(`.${wrapperClassName}`).remove();
+    document.querySelector(`.${wrapperClassName}`)?.remove();
     componentRef.destroy();
   }
 
