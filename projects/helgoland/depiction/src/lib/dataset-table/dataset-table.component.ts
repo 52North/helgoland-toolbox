@@ -30,7 +30,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   public ready = false;
 
   public timeseriesArray: HelgolandTimeseries[] = new Array();
-  private additionalStylesheet: HTMLElement;
+  private additionalStylesheet!: HTMLElement;
 
   constructor(
     protected override iterableDiffers: IterableDiffers,

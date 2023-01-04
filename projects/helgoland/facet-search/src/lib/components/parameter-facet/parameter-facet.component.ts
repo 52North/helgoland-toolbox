@@ -11,17 +11,17 @@ import { FacetParameter, FacetSearchService, ParameterFacetSort, ParameterFacetT
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearchService;
+  @Input() @Required public facetSearchService!: FacetSearchService;
 
-  @Input() @Required public type: ParameterFacetType;
+  @Input() @Required public type!: ParameterFacetType;
 
   @Input() public sort: ParameterFacetSort = ParameterFacetSort.descCount;
 
-  @Input() public textualFilter: string;
+  @Input() public textualFilter: string | undefined;
 
-  public parameterList: FacetParameter[];
+  public parameterList: FacetParameter[] = [];
 
-  private resultSubs: Subscription;
+  private resultSubs: Subscription | undefined;
 
   constructor() { }
 
@@ -30,7 +30,7 @@ export class ParameterFacetComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resultSubs.unsubscribe();
+    this.resultSubs?.unsubscribe();
   }
 
   public toggleFacet(parameter: FacetParameter) {

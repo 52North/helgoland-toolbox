@@ -19,14 +19,14 @@ import {
 export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesEntryComponent implements OnChanges {
 
   @Input()
-  public timeInterval: TimeInterval;
+  public timeInterval: TimeInterval | undefined;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onSelectDate: EventEmitter<Date> = new EventEmitter();
 
-  public firstValue: FirstLastValue;
-  public lastValue: FirstLastValue;
+  public firstValue: FirstLastValue | undefined;
+  public lastValue: FirstLastValue | undefined;
   public hasData = true;
 
   constructor(

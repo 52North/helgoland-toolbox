@@ -37,7 +37,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   @Input() shiftFactor = 0.1;
 
   protected adjustedRanges: Map<string, MinMaxRange> = new Map();
-  protected d3Graph: D3TimeseriesGraphComponent;
+  protected d3Graph: D3TimeseriesGraphComponent | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -54,7 +54,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
 
   public override ngOnDestroy(): void {
     super.ngOnDestroy();
-    this.d3Graph.redrawCompleteGraph();
+    this.d3Graph?.redrawCompleteGraph();
   }
 
   public override adjustYAxis(axis: YAxis) {
@@ -75,7 +75,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.zoom && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.zoom && yaxis.range.max && yaxis.range.min) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
       const buffer = this.shift ? 7.5 : 0;
@@ -123,7 +123,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.adjustedRanges.has(yaxis.uom)) {
+    if (this.d3Graph && this.adjustedRanges.has(yaxis.uom)) {
       // add a buffer of +/- 2 to fit element into transparent/hover circle
       // reset button line left top to right bottom
       this.d3Graph.getGraphElem().append('line')
@@ -147,7 +147,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
         .attr('r', buttonSize * 1.5)
         .on('mouseup', () => {
           this.adjustedRanges.delete(yaxis.uom);
-          this.d3Graph.redrawCompleteGraph();
+          this.d3Graph!.redrawCompleteGraph();
         })
         .on('mouseover', () => resetHover.classed('hover', true))
         .on('mouseout', () => resetHover.classed('hover', false));
@@ -155,7 +155,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.shift && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.shift && yaxis.range.max && yaxis.range.min) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
       const shiftToCenter = 0.5 * buttonSize;
@@ -222,7 +222,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
         max: axis.range.max + adjustMax
       });
     }
-    this.d3Graph.redrawCompleteGraph();
+    this.d3Graph?.redrawCompleteGraph();
   }
 
 }

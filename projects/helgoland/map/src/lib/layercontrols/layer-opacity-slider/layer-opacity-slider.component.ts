@@ -10,7 +10,7 @@ import { LayerControlComponent } from '../layer-control-component';
 })
 export class LayerOpacitySliderComponent extends LayerControlComponent implements OnChanges {
 
-  public opacity: number;
+  public opacity: number | undefined;
 
   constructor() {
     super();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractProcess } from './AbstractProcess';
 import { SpatialFrame } from './SpatialFrame';
 import { TemporalFrame } from './TemporalFrame';

@@ -5,6 +5,7 @@ import {
     HelgolandLocatedProfileData,
     HelgolandProfile,
     HelgolandServicesConnector,
+    InternalDatasetId,
     InternalIdHandler,
     TimedDatasetOptions,
     Timespan,
@@ -21,7 +22,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class ProfileEntryComponent extends ListEntryComponent {
 
     @Input()
-    public datasetOptions: TimedDatasetOptions[];
+    public datasetOptions: TimedDatasetOptions[] | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -43,10 +44,10 @@ export class ProfileEntryComponent extends ListEntryComponent {
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
-    public dataset: HelgolandProfile;
+    public dataset: HelgolandProfile | undefined;
 
-    public editableOptions: TimedDatasetOptions;
-    public tempColor: string;
+    public editableOptions: TimedDatasetOptions | undefined;
+    public tempColor: string | undefined;
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,
@@ -73,28 +74,28 @@ export class ProfileEntryComponent extends ListEntryComponent {
         this.onOpenInCombiView.emit(option);
     }
 
-    public showGeometry(option: TimedDatasetOptions) {
+    public showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
         const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
-        if (this.dataset.isMobile) {
+        if (dataset.isMobile) {
             const timespan = new Timespan(option.timestamp);
-            this.servicesConnector.getDatasetData(this.dataset, timespan).subscribe(
+            this.servicesConnector.getDatasetData(dataset, timespan).subscribe(
                 result => {
                     if (result.values.length === 1 && result instanceof HelgolandLocatedProfileData) {
                         this.onShowGeometry.emit(result.values[0].geometry);
                     }
                 }
             );
-        } else if (this.dataset.parameters.platform) {
-            this.servicesConnector.getPlatform(this.dataset.parameters.platform.id, internalId.url)
+        } else if (dataset.parameters.platform) {
+            this.servicesConnector.getPlatform(dataset.parameters.platform.id, internalId.url)
                 .subscribe((station) => this.onShowGeometry.emit(station.geometry));
         }
     }
 
-    protected loadDataset(locale?: string) {
+    protected loadDataset(internalId: InternalDatasetId, locale?: string) {
         const params: DatasetFilter = {};
         if (locale) { params.locale = locale; }
         this.loading = true;
-        this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Profile }).subscribe(
+        this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Profile }).subscribe(
             dataset => this.dataset = dataset,
             error => console.error(error),
             () => this.loading = false

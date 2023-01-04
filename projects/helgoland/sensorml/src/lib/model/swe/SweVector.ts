@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractDataComponent } from './AbstractDataComponent';
 import { SweCoordinate } from './SweCoordinate';
 import { DisplayName } from '../../common/decorators/DisplayName';

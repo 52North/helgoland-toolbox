@@ -50,7 +50,7 @@ export class BasicAuthService {
    * Gets the token for the given service url.
    */
   public getToken(url: string): string | undefined {
-    return this.basicAuthTokens.has(url) ? this.basicAuthTokens.get(url) : undefined;
+    return this.basicAuthTokens.get(url);
   }
 
 }

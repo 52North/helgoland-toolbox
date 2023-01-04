@@ -18,5 +18,5 @@ export interface ListSelectorParameter {
 @Injectable()
 export class ListSelectorService {
     public cache: Map<string, ListSelectorParameter[]> = new Map<string, ListSelectorParameter[]>();
-    public providerList: FilteredProvider[];
+    public providerList: FilteredProvider[] = [];
 }

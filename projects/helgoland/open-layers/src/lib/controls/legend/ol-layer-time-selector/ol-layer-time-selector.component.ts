@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Required } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
 import Layer from 'ol/layer/Layer';
 import { TileWMS } from 'ol/source';
@@ -14,17 +15,19 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 
-  @Input() layer: BaseLayer;
+  @Input()
+  @Required
+  layer!: BaseLayer;
 
   public currentTime: Date | undefined;
 
-  public timeDimensions: Date[];
+  public timeDimensions: Date[] | undefined;
 
-  public loading: boolean;
+  public loading: boolean | undefined;
 
-  protected layerSource: TileWMS;
-  protected layerid: string;
-  protected url: string;
+  protected layerSource: TileWMS | undefined;
+  protected layerid: string | undefined;
+  protected url: string | undefined;
 
   constructor(
     protected wmsCaps: WmsCapabilitiesService
@@ -38,12 +41,14 @@ export class OlLayerTimeSelectorComponent implements OnInit {
         this.layerSource = source;
         this.url = source.getUrls()![0];
         this.layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
-        this.wmsCaps.getTimeDimensionArray(this.layerid, this.url)
-          .subscribe(
-            res => this.timeDimensions = res,
-            error => { },
-            () => this.loading = false
-          );
+        if (this.layerid) {
+          this.wmsCaps.getTimeDimensionArray(this.layerid, this.url)
+            .subscribe(
+              res => this.timeDimensions = res,
+              error => { },
+              () => this.loading = false
+            );
+        }
         this.determineCurrentTimeParameter();
       }
     }
@@ -58,20 +63,24 @@ export class OlLayerTimeSelectorComponent implements OnInit {
   }
 
   protected determineCurrentTimeParameter() {
-    const currentTimeParam = this.layerSource.getParams()['time'] || this.layerSource.getParams()['Time'];
-    if (currentTimeParam) {
-      this.currentTime = new Date(currentTimeParam);
-    } else {
-      this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe({
-        next: time => this.currentTime = time,
-        error: err => console.error(err)
-      });
+    if (this.layerSource && this.layerid && this.url) {
+      const currentTimeParam = this.layerSource.getParams()['time'] || this.layerSource.getParams()['Time'];
+      if (currentTimeParam) {
+        this.currentTime = new Date(currentTimeParam);
+      } else {
+        this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe({
+          next: time => this.currentTime = time,
+          error: err => console.error(err)
+        });
+      }
     }
   }
 
   protected setTime(time: Date) {
-    this.currentTime = time;
-    this.layerSource.updateParams({ time: time.toISOString() });
+    if (this.layerSource) {
+      this.currentTime = time;
+      this.layerSource.updateParams({ time: time.toISOString() });
+    }
   }
 
 }

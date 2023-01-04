@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Restriction } from './Restriction';
 import { DisplayName } from '../../../common/decorators/DisplayName';
 

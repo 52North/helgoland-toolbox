@@ -15,7 +15,7 @@ import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@h
 })
 export class FavoriteComponent {
 
-  public favorites: ExtendedSingleFavorite[];
+  public favorites: ExtendedSingleFavorite[] = [];
 
   constructor(
     private favoriteSrvc: FavoriteService,

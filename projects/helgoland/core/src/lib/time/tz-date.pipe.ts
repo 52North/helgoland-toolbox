@@ -10,11 +10,11 @@ import { TimezoneService } from './timezone.service';
 })
 export class TzDatePipe implements PipeTransform, OnDestroy {
 
-  date: Date | number | string;
-  format: string;
+  date!: Date | number | string;
+  format: string | undefined;
   formattedDate: string = '';
-  onTimezoneChanged: Subscription;
-  onTranslationChanged: Subscription;
+  onTimezoneChanged: Subscription = this.timezoneSrvc.timezoneChange.subscribe(() => this.updateDate());
+  onTranslationChanged: Subscription = this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
 
   constructor(
     private timezoneSrvc: TimezoneService,
@@ -33,14 +33,6 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
     }
 
     this.updateDate();
-
-    if (!this.onTimezoneChanged) {
-      this.onTimezoneChanged = this.timezoneSrvc.timezoneChange.subscribe(() => this.updateDate());
-    }
-
-    if (!this.onTranslationChanged) {
-      this.onTranslationChanged = this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
-    }
 
     return this.timezoneSrvc.formatTzDate(this.date, this.format);
   }

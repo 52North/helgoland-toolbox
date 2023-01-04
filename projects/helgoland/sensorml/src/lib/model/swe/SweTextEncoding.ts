@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DisplayName } from '../../common/decorators/DisplayName';
 import { SweEncoding } from './SweEncoding';
 

@@ -1,3 +1,4 @@
-<n52-d3-timeseries-graph [datasetIds]="datasetIds" [datasetOptions]="datasetOptions" [reloadForDatasets]="reloadForDatasets"
-    [timeInterval]="overviewTimespan" [mainTimeInterval]="timespan" [presenterOptions]="presenterOptions" (onTimespanChanged)="timeSpanChanged($event)"
-    (onContentLoading)="onGraphLoading($event)"></n52-d3-timeseries-graph>
+<n52-d3-timeseries-graph *ngIf="timespan" [datasetIds]="datasetIds" [datasetOptions]="datasetOptions"
+  [reloadForDatasets]="reloadForDatasets" [timeInterval]="overviewTimespan" [mainTimeInterval]="timespan"
+  [presenterOptions]="presenterOptions" (onTimespanChanged)="timeSpanChanged($event)"
+  (onContentLoading)="onGraphLoading($event)"></n52-d3-timeseries-graph>

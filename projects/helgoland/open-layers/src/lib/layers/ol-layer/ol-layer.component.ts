@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Required } from '@helgoland/core';
 import { Map } from 'ol';
 import BaseLayer from 'ol/layer/Base';
 
@@ -21,9 +22,11 @@ export class OlLayerComponent extends OlBaseComponent implements AfterViewInit, 
   /**
    * Configured layer
    */
-  @Input() layer: BaseLayer;
+  @Input()
+  @Required
+  layer!: BaseLayer;
 
-  private map: Map;
+  private map!: Map;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes && this.layer) {

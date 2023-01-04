@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ParsedTimespanPreset, Settings, SettingsService, Timespan, TimespanPreset } from '@helgoland/core';
+import { ParsedTimespanPreset, Required, Settings, SettingsService, Timespan, TimespanPreset } from '@helgoland/core';
 
 @Component({
   selector: 'n52-predefined-timespan-selector',
@@ -10,13 +10,14 @@ import { ParsedTimespanPreset, Settings, SettingsService, Timespan, TimespanPres
 export class PredefinedTimespanSelectorComponent implements OnInit {
 
   @Input()
-  public timespan: Timespan;
+  @Required
+  public timespan!: Timespan;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanChange: EventEmitter<Timespan> = new EventEmitter<Timespan>();
 
-  public parsedTimespanPresets: ParsedTimespanPreset[];
+  public parsedTimespanPresets: ParsedTimespanPreset[] = [];
 
   constructor(
     protected settingSrvc: SettingsService<Settings>

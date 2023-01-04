@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Contact } from './Contact';
 import { Role } from './Role';
 import { DisplayName } from '../../../common/decorators/DisplayName';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractModes } from './AbstractModes';
 import { Mode } from './Mode';
 import { DisplayName } from '../../common/decorators/DisplayName';

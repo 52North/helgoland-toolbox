@@ -4,12 +4,12 @@
     attr.aria-label="{{'time-selection.step-back' | translate}}">
     <mat-icon>arrow_back</mat-icon>
   </button>
-  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()" class="desktop-only">
+  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen(picker)" class="desktop-only">
     {{timespan.from | tzDate : 'L LT z'}}
     &nbsp;&ndash;&nbsp;
     {{timespan.to | tzDate : 'L LT z'}}
   </button>
-  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen()" class="mobile-only">
+  <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="onMenuOpen(picker)" class="mobile-only">
     <div>{{timespan.from | tzDate : 'L LT z'}}</div>
     <div>{{timespan.to | tzDate : 'L LT z'}}</div>
   </button>
@@ -19,9 +19,6 @@
   </button>
   <div style="flex: 1"></div>
 </div>
-
-
-
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="predefinedRange(LASTHOUR)">

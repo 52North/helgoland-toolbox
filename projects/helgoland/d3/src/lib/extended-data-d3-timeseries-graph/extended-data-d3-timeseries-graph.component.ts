@@ -6,7 +6,6 @@ import {
   IterableDiffer,
   IterableDiffers,
   NgZone,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -75,11 +74,11 @@ export interface AdditionalDataEntry {
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None
 })
-export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit, OnInit {
+export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit {
 
   @Input()
   public additionalData: AdditionalData[] = [];
-  private additionalDataDiffer: IterableDiffer<AdditionalData>;
+  private additionalDataDiffer: IterableDiffer<AdditionalData> = this.iterableDiffers.find(this.additionalData).create();
 
   constructor(
     protected override iterableDiffers: IterableDiffers,
@@ -93,7 +92,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
     protected override rangeCalc: RangeCalculationsService,
     protected override graphHelper: D3GraphHelperService,
     protected override graphService: D3Graphs,
-    protected override graphId: D3GraphId,
+    protected override graphIdService: D3GraphId,
     protected override servicesConnector: HelgolandServicesConnector,
     protected override pointSymbolDrawer: D3PointSymbolDrawerService,
     protected override zone: NgZone,
@@ -110,15 +109,11 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       rangeCalc,
       graphHelper,
       graphService,
-      graphId,
+      graphIdService,
       servicesConnector,
       pointSymbolDrawer,
       zone
     );
-  }
-
-  public ngOnInit(): void {
-    this.additionalDataDiffer = this.iterableDiffers.find(this.additionalData).create();
   }
 
   public override ngDoCheck() {

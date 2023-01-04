@@ -30,7 +30,7 @@ export class ReferenceValueColorCache extends IdCache<{ color: string, visible: 
 export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponent implements OnChanges {
 
     public informationVisible = false;
-    public referenceValues: ReferenceValue[];
+    public referenceValues: ReferenceValue[] = [];
 
     constructor(
         protected override servicesConnector: HelgolandServicesConnector,

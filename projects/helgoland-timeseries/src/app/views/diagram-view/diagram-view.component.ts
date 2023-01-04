@@ -65,7 +65,7 @@ export class DiagramViewComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
 
-  private _mobileQueryListener: () => void;
+  // private _mobileQueryListener: () => void;
 
   datasetIds: string[] = [];
 
@@ -94,8 +94,8 @@ export class DiagramViewComponent implements OnInit {
     showTimeLabel: false
   };
 
-  diagramLoading: boolean;
-  overviewLoading: boolean;
+  diagramLoading: boolean = false;
+  overviewLoading: boolean = false;
 
   diagramConfig: DiagramConfig = {
     overviewVisible: true,

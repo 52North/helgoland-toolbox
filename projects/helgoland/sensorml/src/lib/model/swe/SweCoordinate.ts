@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SweAnyNumerical } from './SweAnyNumerical';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class Axis {

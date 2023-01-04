@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractGML } from './AbstractGML';
 import { Referenced } from './Referenced';
 import { DisplayName } from '../../common/decorators/DisplayName';

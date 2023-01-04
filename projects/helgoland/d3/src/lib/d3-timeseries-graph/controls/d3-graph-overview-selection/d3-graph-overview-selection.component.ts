@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Timespan } from '@helgoland/core';
+import { Required, Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
@@ -18,14 +18,16 @@ import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interfac
 export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
 
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  @Input() public selectionTimeInterval: Timespan;
+  @Input()
+  @Required
+  public selectionTimeInterval!: Timespan;
 
-  protected mousedownBrush: boolean;
-  protected graphComp: D3TimeseriesGraphInterface;
-  protected overview: d3.Selection<SVGSVGElement, any, any, any>;
+  protected mousedownBrush: boolean = false;
+  protected graphComp: D3TimeseriesGraphInterface | undefined;
+  protected overview: d3.Selection<SVGSVGElement, any, any, any> | undefined;
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
-  protected completeTimespan: Timespan;
-  protected graphExtent: D3GraphExtent;
+  protected completeTimespan: Timespan | undefined;
+  protected graphExtent: D3GraphExtent | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -52,7 +54,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
-    if (!this.drawLayer) {
+    if (!this.drawLayer && this.graphComp) {
       this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
     }
 
@@ -90,9 +92,14 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       .extent([[0, 0], [this.graphExtent.width, this.graphExtent.height]])
       .on('end', () => {
         // on mouseclick change time after brush was moved
-        if (this.mousedownBrush) {
+        if (this.mousedownBrush && this.completeTimespan && this.graphComp && this.graphExtent) {
           this.mousedownBrush = false;
-          const timeByCoord: [number, number] = this.getTimestampByCoord(d3.event.selection[0], d3.event.selection[1], this.completeTimespan, this.graphExtent.width);
+          const timeByCoord: [number, number] = this.getTimestampByCoord(
+            d3.event.selection[0],
+            d3.event.selection[1],
+            this.completeTimespan,
+            this.graphExtent.width
+          );
           this.graphComp.changeTime(timeByCoord[0], timeByCoord[1]);
         }
       });

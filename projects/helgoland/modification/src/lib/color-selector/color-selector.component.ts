@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Required } from '@helgoland/core';
 
 @Component({
     selector: 'n52-color-selector',
@@ -7,10 +8,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ColorSelectorComponent {
 
     @Input()
-    public color: string;
+    @Required
+    public color!: string;
 
     @Input()
-    public colorList: string[];
+    @Required
+    public colorList!: string[];
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix

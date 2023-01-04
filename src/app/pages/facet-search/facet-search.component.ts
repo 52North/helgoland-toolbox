@@ -38,7 +38,7 @@ import { forkJoin } from 'rxjs';
 })
 export class FacetSearchComponent {
 
-  public timeseries: Timeseries[];
+  public timeseries: Timeseries[] = [];
 
   public categoryType: ParameterFacetType = ParameterFacetType.category;
   public featureType: ParameterFacetType = ParameterFacetType.feature;
@@ -48,18 +48,18 @@ export class FacetSearchComponent {
 
   public featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
 
-  public categoryAutocomplete: string;
-  public featureAutocomplete: string;
-  public offeringAutocomplete: string;
-  public phenomenonAutocomplete: string;
-  public procedureAutocomplete: string;
+  public categoryAutocomplete: string | undefined;
+  public featureAutocomplete: string | undefined;
+  public offeringAutocomplete: string | undefined;
+  public phenomenonAutocomplete: string | undefined;
+  public procedureAutocomplete: string | undefined;
 
-  public resultCount: number;
+  public resultCount: number = 0;
   public showMap = true;
-  public resetAllDisabled: boolean;
+  public resetAllDisabled: boolean = false;
 
-  public selectedStart: Date;
-  public selectedEnd: Date;
+  public selectedStart: Date | undefined;
+  public selectedEnd: Date | undefined;
 
   constructor(
     private servicesConnector: HelgolandServicesConnector,
@@ -136,11 +136,11 @@ export class FacetSearchComponent {
   }
 
   public setEnd(end: MatDatepickerInputEvent<Date>) {
-    if (end.value)
+    if (end.value && this.selectedStart)
       this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
   }
 
-  public setAutocomplete(acString: string, evt: any) {
+  public setAutocomplete(acString: string | undefined, evt: any) {
     acString = evt.target.value;
   }
 

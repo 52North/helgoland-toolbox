@@ -43,7 +43,7 @@ export class DiagramExportComponent implements OnInit {
     // 'https://fluggs.wupperverband.de/sws5/api/__72',
   ];
 
-  public timespan: Timespan;
+  public timespan: Timespan | undefined;
 
   constructor(
     private color: ColorService

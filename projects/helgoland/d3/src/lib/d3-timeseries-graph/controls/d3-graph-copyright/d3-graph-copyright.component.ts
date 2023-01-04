@@ -23,13 +23,13 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
    */
   @Input() copyright: D3Copyright | undefined;
 
-  protected d3Graph: D3TimeseriesGraphInterface;
+  protected d3Graph: D3TimeseriesGraphInterface | undefined;
   protected copyrightLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
 
-  protected labelRect: d3.Selection<BaseType, any, any, any>;
-  protected labelText: d3.Selection<BaseType, any, any, any>;
-  protected background: d3.Selection<SVGSVGElement, any, any, any>;
-  protected graphExtent: D3GraphExtent;
+  protected labelRect: d3.Selection<BaseType, any, any, any> | undefined;
+  protected labelText: d3.Selection<BaseType, any, any, any> | undefined;
+  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected graphExtent: D3GraphExtent | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -58,7 +58,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
   ): void {
     this.background = background;
     this.graphExtent = graphExtent;
-    if (this.copyright) {
+    if (this.copyright && this.d3Graph) {
       this.clearLayer();
       this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
       this.createLabelRect();
@@ -107,7 +107,7 @@ export class D3GraphCopyrightComponent extends D3TimeseriesGraphControl implemen
   }
 
   protected setText() {
-    if (this.copyrightLayer && this.copyright) {
+    if (this.background && this.labelText && this.copyright && this.graphExtent && this.labelRect) {
       const backgroundDim = this.graphHelper.getDimensions(this.background.node());
       let x = 3;
       let y = 3;

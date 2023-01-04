@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +15,7 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
   templateUrl: './modal-favorite-list-button.component.html',
   styleUrls: ['./modal-favorite-list-button.component.scss'],
   imports: [
+    CommonModule,
     HelgolandFavoriteModule,
     MatBadgeModule,
     MatButtonModule,
@@ -25,7 +27,7 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
 })
 export class ModalFavoriteListButtonComponent implements OnInit {
 
-  public favCount: number;
+  public favCount = 0;
 
   constructor(
     private dialog: MatDialog,

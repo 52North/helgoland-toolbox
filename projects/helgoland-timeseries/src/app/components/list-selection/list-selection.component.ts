@@ -38,11 +38,9 @@ import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/mo
 })
 export class ListSelectionComponent implements OnInit {
 
-  public selectedService: HelgolandService;
+  public selectedService: HelgolandService | undefined;
 
-  public activeFilterCount: number;
-
-  public filterList: ParameterListEntry[];
+  public filterList: ParameterListEntry[] = [];
 
   public filterEndpoints = MultiServiceFilterEndpoint;
 
@@ -58,7 +56,7 @@ export class ListSelectionComponent implements OnInit {
       this.serviceConnector.getServices(this.configSrvc.configuration.defaultService.apiUrl).subscribe({
         next: services => {
           this.selectedService = services.find(e => e.id === this.configSrvc.configuration.defaultService!.serviceId)!;
-          this.resetView();
+          this.resetView(this.selectedService);
         },
         error: error => this.errorHandler.error(error)
       });
@@ -66,21 +64,23 @@ export class ListSelectionComponent implements OnInit {
   }
 
   openListSettings() {
-    const conf: ListConfig = {
-      selectedService: this.selectedService
-    }
-    const dialogRef = this.dialog.open(ModalListSettingsComponent, {
-      data: conf
-    });
-
-    dialogRef.afterClosed().subscribe((newConf: ListConfig) => {
-      if (newConf) {
-        if (this.selectedService.id !== newConf.selectedService.id || this.selectedService.apiUrl !== newConf.selectedService.apiUrl) {
-          this.selectedService = newConf.selectedService;
-          this.resetView();
-        }
+    if (this.selectedService) {
+      const conf: ListConfig = {
+        selectedService: this.selectedService
       }
-    })
+      const dialogRef = this.dialog.open(ModalListSettingsComponent, {
+        data: conf
+      });
+  
+      dialogRef.afterClosed().subscribe((newConf: ListConfig) => {
+        if (newConf) {
+          if (this.selectedService!.id !== newConf.selectedService.id || this.selectedService!.apiUrl !== newConf.selectedService.apiUrl) {
+            this.selectedService = newConf.selectedService;
+            this.resetView(this.selectedService);
+          }
+        }
+      })
+    }
   }
 
   selectFilter(entry: ParameterListEntry, filter: ParameterType) {
@@ -137,15 +137,15 @@ export class ListSelectionComponent implements OnInit {
     });
   }
 
-  private resetView() {
+  private resetView(selectedService: HelgolandService) {
     this.filterList = [];
     this.filterList.push({
       expanded: true,
       possibleFilters: [ParameterType.CATEGORY, ParameterType.FEATURE, ParameterType.PHENOMENON, ParameterType.PROCEDURE],
       apiFilter: [{
-        url: this.selectedService.apiUrl,
+        url: selectedService.apiUrl,
         filter: {
-          service: this.selectedService.id,
+          service: selectedService.id,
           type: DatasetType.Timeseries
         }
       }]

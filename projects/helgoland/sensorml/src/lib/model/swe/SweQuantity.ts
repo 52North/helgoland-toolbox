@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSimpleComponent } from './AbstractSimpleComponent';
 import { AllowedValues } from './AllowedValues';
 import { UnitOfMeasure } from './UnitOfMeasure';

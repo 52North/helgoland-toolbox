@@ -22,16 +22,16 @@ import { MapCache } from '../../base/map-cache.service';
 })
 export class PlatformMapViewerComponent extends CachedMapComponent implements AfterViewInit, OnChanges {
 
-  @Input() public platforms: HelgolandPlatform[];
+  @Input() public platforms: HelgolandPlatform[] | undefined;
 
-  @Input() public customMarkerIcon: L.Icon;
+  @Input() public customMarkerIcon: L.Icon | undefined;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onSelectedPlatform: EventEmitter<HelgolandPlatform> = new EventEmitter();
 
-  private geometryOnMap: L.GeoJSON;
+  private geometryOnMap: L.GeoJSON | undefined;
 
-  private layer: L.MarkerClusterGroup;
+  private layer: L.MarkerClusterGroup | undefined;
 
   constructor(
     protected override mapCache: MapCache,
@@ -88,7 +88,7 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
             },
             type: 'Feature'
           }
-          this.geometryOnMap.addData(feature);
+          this.geometryOnMap!.addData(feature);
         }
       })
       this.layer.addLayer(this.geometryOnMap);

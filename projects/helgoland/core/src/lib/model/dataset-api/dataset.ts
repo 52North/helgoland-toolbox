@@ -24,14 +24,14 @@ export class ParameterConstellation {
 }
 
 export class FirstLastValue {
-    public timestamp: number;
-    public value: number;
+    public timestamp!: number;
+    public value!: number;
 }
 
 export class ReferenceValue {
-    public referenceValueId: string;
-    public label: string;
-    public lastValue: FirstLastValue;
+    public referenceValueId!: string;
+    public label!: string;
+    public lastValue!: FirstLastValue;
     public color?: string;
     public visible?: boolean;
 }
@@ -66,35 +66,35 @@ export class DatasetParameterConstellation extends ParameterConstellation {
 }
 
 export class Dataset implements IDataset {
-    public id: string;
-    public label: string;
-    public url: string;
-    public uom: string;
-    public internalId: string;
-    public firstValue: FirstLastValue;
-    public lastValue: FirstLastValue;
-    public referenceValues: ReferenceValue[];
-    public datasetType: DatasetTypes;
-    public platformType: PlatformTypes;
-    public parameters: DatasetParameterConstellation;
+    public id!: string;
+    public label!: string;
+    public url!: string;
+    public uom!: string;
+    public internalId!: string;
+    public firstValue!: FirstLastValue;
+    public lastValue!: FirstLastValue;
+    public referenceValues!: ReferenceValue[];
+    public datasetType!: DatasetTypes;
+    public platformType!: PlatformTypes;
+    public parameters!: DatasetParameterConstellation;
+    public renderingHints!: RenderingHints;
     public seriesParameters?: DatasetParameterConstellation;
-    public renderingHints: RenderingHints;
 }
 
 export class Timeseries implements IDataset {
-    public id: string;
-    public label: string;
-    public url: string;
-    public uom: string;
-    public internalId: string;
-    public firstValue: FirstLastValue;
-    public lastValue: FirstLastValue;
-    public referenceValues: ReferenceValue[];
-    public station: Station;
-    public parameters: ParameterConstellation;
-    public statusIntervals?: StatusInterval[];
+    public id!: string;
+    public label!: string;
+    public url!: string;
+    public uom!: string;
+    public internalId!: string;
+    public firstValue!: FirstLastValue;
+    public lastValue!: FirstLastValue;
+    public referenceValues!: ReferenceValue[];
+    public station!: Station;
+    public parameters!: ParameterConstellation;
+    public renderingHints!: RenderingHints;
     public hasData = false;
-    public renderingHints: RenderingHints;
+    public statusIntervals?: StatusInterval[];
 }
 
 export interface TimeseriesExtras {
@@ -114,7 +114,7 @@ export interface PlatformParameter extends Parameter {
 }
 
 export class TimeseriesData {
-    public id: string;
-    public url: string;
-    public data: FirstLastValue[];
+    public id!: string;
+    public url!: string;
+    public data!: FirstLastValue[];
 }

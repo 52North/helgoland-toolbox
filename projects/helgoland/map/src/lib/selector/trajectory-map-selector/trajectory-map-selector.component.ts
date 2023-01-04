@@ -17,6 +17,7 @@ import {
     HelgolandProfileData,
     HelgolandServicesConnector,
     LocatedProfileDataEntry,
+    Required,
     Timespan,
 } from '@helgoland/core';
 import * as L from 'leaflet';
@@ -34,16 +35,16 @@ export class ProfileTrajectoryMapSelectorComponent
     extends MapSelectorComponent<TrajectoryResult>
     implements OnChanges, AfterViewInit {
 
-    @Input()
-    public selectedTimespan: Timespan;
+    @Input() @Required
+    public selectedTimespan!: Timespan;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onTimeListDetermined: EventEmitter<number[]> = new EventEmitter();
 
-    private layer: L.FeatureGroup;
-    private data: LocatedProfileDataEntry[];
-    private dataset: HelgolandDataset;
+    private layer: L.FeatureGroup = this.initLayer();
+    private data: LocatedProfileDataEntry[] = [];
+    private dataset: HelgolandDataset | undefined;
 
     private defaultStyle: L.PathOptions = {
         color: 'red',
@@ -70,9 +71,8 @@ export class ProfileTrajectoryMapSelectorComponent
         super.ngOnChanges(changes);
         if (changes['selectedTimespan'] && this.selectedTimespan && this.map) {
             this.clearMap(this.map);
-            this.initLayer();
             this.data.forEach((entry) => {
-                if (this.selectedTimespan.from <= entry.timestamp && entry.timestamp <= this.selectedTimespan.to) {
+                if (this.dataset && this.selectedTimespan.from <= entry.timestamp && entry.timestamp <= this.selectedTimespan.to) {
                     this.layer.addLayer(this.createGeoJson(entry, this.dataset));
                 }
             });
@@ -112,7 +112,7 @@ export class ProfileTrajectoryMapSelectorComponent
     }
 
     private initLayer() {
-        this.layer = L.markerClusterGroup({ animate: false });
+        return L.markerClusterGroup({ animate: false });
     }
 
     private clearMap(map: L.Map) {

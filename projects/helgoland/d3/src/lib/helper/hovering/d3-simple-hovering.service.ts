@@ -12,14 +12,14 @@ import { D3HoveringService, HoveringElement, HoverPosition } from './d3-hovering
 @Injectable()
 export class D3SimpleHoveringService extends D3HoveringService {
 
-  protected highlightRect: d3.Selection<SVGGElement, any, any, any>;
-  protected highlightText: d3.Selection<SVGGElement, any, any, any>;
+  protected highlightRect: d3.Selection<SVGGElement, any, any, any> | undefined;
+  protected highlightText: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphHelper: D3GraphHelperService = new D3GraphHelperService(this.pointSymbolDrawer);
 
   protected addLineWidth = 2; // value added to linewidth
 
-  protected anchorElem: d3.Selection<SVGGElement, any, any, any>;
-  protected tooltipContainer: d3.Selection<SVGGElement, any, any, any>;
+  protected anchorElem: d3.Selection<SVGGElement, any, any, any> | undefined;
+  protected tooltipContainer: d3.Selection<SVGGElement, any, any, any> | undefined;
 
   constructor(
     protected timezoneSrvc: TimezoneService,
@@ -45,52 +45,58 @@ export class D3SimpleHoveringService extends D3HoveringService {
   }
 
   public showPointHovering(d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries, pointElem: d3.Selection<d3.BaseType, any, any, any>) {
-    this.tooltipContainer = this.anchorElem.append('g');
-    this.highlightRect = this.tooltipContainer.append('svg:rect');
-    this.highlightText = this.tooltipContainer.append('g');
+    if (this.anchorElem) {
+      this.tooltipContainer = this.anchorElem.append('g');
+      this.highlightRect = this.tooltipContainer.append('svg:rect');
+      this.highlightText = this.tooltipContainer.append('g');
 
-    // highlight hovered dot
-    if (!entry.options.pointSymbol || entry.options.type === 'bar') {
-      pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
-    } else {
-      this.pointSymbolDrawer.showHovering(pointElem);
+      // highlight hovered dot
+      if (!entry.options.pointSymbol || entry.options.type === 'bar') {
+        pointElem.attr('opacity', 1).attr('r', this.calculatePointRadius(entry) + 3);
+      } else {
+        this.pointSymbolDrawer.showHovering(pointElem);
+      }
+
+      this.setHoveringLabel(this.highlightText, d, entry, timeseries);
     }
-
-    this.setHoveringLabel(this.highlightText, d, entry, timeseries);
   }
 
   public positioningPointHovering(x: number, y: number, color: string, background: any) {
-    this.highlightRect
-      .attr('class', 'mouseHoverDotRect')
-      .style('fill', 'white')
-      .style('fill-opacity', 1)
-      .style('stroke', color)
-      .style('stroke-width', '1px')
-      .style('pointer-events', 'none')
-    this.positionTooltipContainer(x, y);
-    this.positionTooltip(this.highlightText, this.highlightRect, this.leftSidedTooltip(background, x), 0);
+    if (this.highlightText && this.highlightRect) {
+      this.highlightRect
+        .attr('class', 'mouseHoverDotRect')
+        .style('fill', 'white')
+        .style('fill-opacity', 1)
+        .style('stroke', color)
+        .style('stroke-width', '1px')
+        .style('pointer-events', 'none')
+      this.positionTooltipContainer(x, y);
+      this.positionTooltip(this.highlightText, this.highlightRect, this.leftSidedTooltip(background, x), 0);
+    }
   }
 
   public showTooltip(elements: HoveringElement[], position: HoverPosition) {
-    this.createTooltipContainer();
-    this.positionTooltipContainer(position.x, position.y);
-
-    const onLeftSide = this.leftSidedTooltip(position.background, position.x);
-
-    let itemCounter = 0;
-    elements.forEach(elem => {
-      const rect: d3.Selection<SVGGElement, any, any, any> = this.tooltipContainer.append('svg:rect')
-      rect.attr('class', 'mouseHoverDotRect')
-        .style('fill', 'white')
-        .style('fill-opacity', 1)
-        .style('stroke', elem.entry.options.color)
-        .style('stroke-width', '1px')
-        .style('pointer-events', 'none')
-      const textContainer = this.tooltipContainer.append('g')
-      this.setHoveringLabel(textContainer, elem.dataEntry, elem.entry, elem.timeseries);
-      this.positionTooltip(textContainer, rect, onLeftSide, itemCounter);
-      itemCounter++;
-    })
+    if (this.anchorElem) {
+      this.tooltipContainer = this.anchorElem.append('g');
+      this.positionTooltipContainer(position.x, position.y);
+  
+      const onLeftSide = this.leftSidedTooltip(position.background, position.x);
+  
+      let itemCounter = 0;
+      elements.forEach(elem => {
+        const rect: d3.Selection<SVGGElement, any, any, any> = this.tooltipContainer!.append('svg:rect')
+        rect.attr('class', 'mouseHoverDotRect')
+          .style('fill', 'white')
+          .style('fill-opacity', 1)
+          .style('stroke', elem.entry.options.color)
+          .style('stroke-width', '1px')
+          .style('pointer-events', 'none')
+        const textContainer = this.tooltipContainer!.append('g');
+        this.setHoveringLabel(textContainer, elem.dataEntry, elem.entry, elem.timeseries);
+        this.positionTooltip(textContainer, rect, onLeftSide, itemCounter);
+        itemCounter++;
+      })
+    }
   }
 
   protected positionTooltip(text: d3.Selection<SVGGElement, any, any, any>, rect: d3.Selection<SVGGElement, any, any, any>, onLeftSide: boolean, itemCounter: number) {
@@ -117,12 +123,8 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  protected createTooltipContainer() {
-    this.tooltipContainer = this.anchorElem.append('g');
-  }
-
   protected positionTooltipContainer(x: number, y: number) {
-    this.tooltipContainer.attr('transform', 'translate(' + x + ', ' + y + ')');
+    this.tooltipContainer?.attr('transform', 'translate(' + x + ', ' + y + ')');
   }
 
   protected leftSidedTooltip(background: any, x: number) {

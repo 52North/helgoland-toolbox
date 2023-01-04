@@ -12,6 +12,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
+import { Required } from '@helgoland/core';
 import * as L from 'leaflet';
 
 import { MapCache } from './map-cache.service';
@@ -28,43 +29,43 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
      * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
      */
     @Input()
-    public mapId: string;
+    public mapId!: string;
 
     /**
      * The corresponding leaflet map options (see: https://leafletjs.com/reference-1.3.4.html#map-option)
      */
     @Input()
-    public mapOptions: L.MapOptions;
+    public mapOptions: L.MapOptions | undefined;
 
     /**
      * Bounds for the map
      */
     @Input()
-    public fitBounds: L.LatLngBoundsExpression;
+    public fitBounds: L.LatLngBoundsExpression | undefined;
 
     /**
      * Map, which holds all overlay map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
      */
     @Input()
-    public overlayMaps: LayerMap;
+    public overlayMaps: LayerMap | undefined;
 
     /**
      * Map, which holds all base map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
      */
     @Input()
-    public baseMaps: LayerMap;
+    public baseMaps: LayerMap | undefined;
 
     /**
      * Describes the the zoom options (see: https://leafletjs.com/reference-1.3.4.html#control-layers)
      */
     @Input()
-    public layerControlOptions: L.Control.LayersOptions;
+    public layerControlOptions: L.Control.LayersOptions | undefined;
 
     /**
      * Describes the the zoom control options (see: https://leafletjs.com/reference-1.3.4.html#control-zoom)
      */
     @Input()
-    public zoomControlOptions: L.Control.ZoomOptions;
+    public zoomControlOptions: L.Control.ZoomOptions | undefined;
 
     /**
      * Informs when initialization is done with map id.
@@ -79,12 +80,10 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     protected oldOverlayLayer: L.Control.LayersObject = {};
     protected oldBaseLayer: L.Control.LayersObject = {};
-    protected layerControl: L.Control.Layers;
-    protected zoomControl: L.Control.Zoom;
+    protected layerControl: L.Control.Layers | undefined;
+    protected zoomControl: L.Control.Zoom | undefined;
 
-    private _overlayMaps: LayerMap;
     private _differOverlayMaps: KeyValueDiffer<string, LayerOptions>;
-    private _baseMaps: LayerMap;
     private _differBaseMaps: KeyValueDiffer<string, LayerOptions>;
 
     constructor(
@@ -103,7 +102,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (this.map) {
-            if (changes['fitBounds']) {
+            if (changes['fitBounds'] && this.fitBounds) {
                 this.map.fitBounds(this.fitBounds);
             }
             if (changes['zoomControlOptions']) {
@@ -113,7 +112,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     }
 
     public ngDoCheck(): void {
-        if (this._differOverlayMaps) {
+        if (this._differOverlayMaps && this.overlayMaps) {
             const changes = this._differOverlayMaps.diff(this.overlayMaps);
             if (changes) {
                 changes.forEachRemovedItem((e) => this.removeOverlayMap(e.previousValue));
@@ -121,7 +120,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
                 this.updateLayerControl();
             }
         }
-        if (this._differBaseMaps) {
+        if (this._differBaseMaps && this.baseMaps) {
             const changes = this._differBaseMaps.diff(this.baseMaps);
             if (changes) {
                 changes.forEachRemovedItem((e) => this.removeBaseMap(e.previousValue));

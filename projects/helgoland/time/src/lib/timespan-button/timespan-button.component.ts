@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
+import { DefinedTimespan, DefinedTimespanService, Required, Timespan } from '@helgoland/core';
 
 @Component({
   selector: 'n52-timespan-button',
@@ -8,13 +8,16 @@ import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/co
 export class TimespanButtonComponent {
 
   @Input()
-  public predefined: string | DefinedTimespan;
+  @Required
+  public predefined!: string | DefinedTimespan;
 
   @Input()
-  public label: string;
+  @Required
+  public label!: string;
 
   @Input()
-  public timespanFunc: () => Timespan;
+  @Required
+  public timespanFunc!: () => Timespan;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

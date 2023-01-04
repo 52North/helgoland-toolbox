@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSimpleComponent } from './AbstractSimpleComponent';
 import { TimePosition } from './TimePosition';
 import { UnitOfMeasure } from './UnitOfMeasure';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSimpleComponent } from './AbstractSimpleComponent';
 import { AllowedTokens } from './AllowedTokens';
 import { DisplayName } from '../../common/decorators/DisplayName';

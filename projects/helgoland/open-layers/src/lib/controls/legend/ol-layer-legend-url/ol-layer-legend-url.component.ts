@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Required } from '@helgoland/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -13,7 +14,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 })
 export class OlLayerLegendUrlComponent {
 
-  @Input() layer: Layer;
+  @Input()
+  @Required
+  layer!: Layer;
 
   /**
    * Returns the legend url

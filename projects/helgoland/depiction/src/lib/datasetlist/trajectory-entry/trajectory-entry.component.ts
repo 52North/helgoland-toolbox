@@ -5,6 +5,7 @@ import {
     DatasetType,
     HelgolandServicesConnector,
     HelgolandTrajectory,
+    InternalDatasetId,
     InternalIdHandler,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,11 +52,11 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
         this.onEditOptions.emit(options);
     }
 
-    protected loadDataset(locale?: string): void {
+    protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
         const params: DatasetFilter = {};
         if (locale) { params.locale = locale; }
         this.loading = true;
-        this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Trajectory })
+        this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Trajectory })
             .subscribe(
                 trajectory => this.setTrajectory(trajectory),
                 error => this.handleTrajectoryLoadError(error),

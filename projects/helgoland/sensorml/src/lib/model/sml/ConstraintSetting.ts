@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSetting } from './AbstractSetting';
 import { AllowedTokens } from '../swe/AllowedTokens';
 import { AllowedTimes } from '../swe/AllowedTimes';

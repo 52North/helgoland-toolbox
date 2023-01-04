@@ -11,13 +11,13 @@ import { FacetSearchElement, FacetSearchService } from '../../facet-search-model
 })
 export class ResultListComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearchService;
+  @Input() @Required public facetSearchService!: FacetSearchService;
 
   @Output() public selected: EventEmitter<FacetSearchElement> = new EventEmitter();
 
-  public entries: FacetSearchElement[];
+  public entries: FacetSearchElement[] = [];
 
-  private resultSubs: Subscription;
+  private resultSubs: Subscription | undefined;
 
   constructor() { }
 
@@ -27,7 +27,7 @@ export class ResultListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resultSubs.unsubscribe();
+    this.resultSubs?.unsubscribe();
   }
 
   public timeseriesSelected(ts: FacetSearchElement) {

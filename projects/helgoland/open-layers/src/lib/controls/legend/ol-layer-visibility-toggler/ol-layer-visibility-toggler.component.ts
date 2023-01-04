@@ -11,7 +11,9 @@ import BaseLayer from 'ol/layer/Base';
 })
 export class OlLayerVisibilityTogglerComponent {
 
-  @Required @Input() layer: BaseLayer;
+  @Input()
+  @Required
+  layer!: BaseLayer;
 
   public toggleVisibility() {
     this.layer.setVisible(!this.layer.getVisible());

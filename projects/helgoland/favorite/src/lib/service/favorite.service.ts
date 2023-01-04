@@ -33,8 +33,8 @@ const CACHE_PARAM_FAVORITES_GROUP = 'GroupFavorites';
 @Injectable()
 export class FavoriteService {
 
-  private singleFavs: Map<string, SingleFavorite>;
-  private groupFavs: Map<string, GroupFavorite>;
+  private singleFavs: Map<string, SingleFavorite> = new Map();
+  private groupFavs: Map<string, GroupFavorite> = new Map();
   private groupCounter = 0;
 
   private favoriteCountChanged: ReplaySubject<number> = new ReplaySubject();

@@ -13,7 +13,7 @@ import { TimezoneService } from '@helgoland/core';
 })
 export class TimezoneSelectorComponent implements OnInit {
 
-  public timezone: string;
+  public timezone: string | undefined;
 
   constructor(
     private timezoneSrvc: TimezoneService

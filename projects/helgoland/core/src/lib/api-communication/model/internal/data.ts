@@ -6,8 +6,8 @@ export interface HelgolandData { }
 export class HelgolandTimeseriesData implements HelgolandData {
 
     referenceValues: ReferenceValues<TimeValueTuple> = {};
-    valueBeforeTimespan: TimeValueTuple;
-    valueAfterTimespan: TimeValueTuple;
+    valueBeforeTimespan: TimeValueTuple | undefined;
+    valueAfterTimespan: TimeValueTuple | undefined;
 
     constructor(
         public values: TimeValueTuple[],

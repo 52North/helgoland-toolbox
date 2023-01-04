@@ -44,13 +44,13 @@ import { MapSelectionStateService } from './map-selection-state.service';
 })
 export class MapSelectionComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('drawer') drawer: MatDrawer;
+  @ViewChild('drawer') drawer: MatDrawer | undefined;
 
   mapId = 'timeseries';
 
-  stationFilter: HelgolandParameterFilter;
+  stationFilter: HelgolandParameterFilter | undefined;
 
-  phenomenonFilter: MultiServiceFilter[];
+  phenomenonFilter: MultiServiceFilter[] = [];
 
   phenomenonEndpoint = MultiServiceFilterEndpoint.phenomenon;
 
@@ -66,7 +66,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    this.drawer.openedChange.subscribe(_ => {
+    this.drawer?.openedChange.subscribe(_ => {
       const map = this.mapCache.getMap(this.mapId);
       if (map) { map.invalidateSize(); }
     })
@@ -87,7 +87,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   phenomenonToggled() {
-    this.drawer.toggle();
+    this.drawer?.toggle();
   }
 
   onStationSelected(station: HelgolandPlatform) {

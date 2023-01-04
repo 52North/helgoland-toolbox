@@ -16,15 +16,15 @@ import {
 export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
 
   @Input()
-  public internalId: InternalDatasetId | string;
+  public internalId: InternalDatasetId | string | undefined;
 
   @Input()
-  public timeInterval: Timespan;
+  public timeInterval: Timespan | undefined;
 
   @Input()
-  public language: string;
+  public language: string | undefined;
 
-  public downloadLink: string;
+  public downloadLink: string | undefined;
 
   constructor(
     protected apiMapping: DatasetApiMapping,
@@ -34,26 +34,26 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     if (this.internalId && this.timeInterval) {
-      this.createLink();
+      this.createLink(this.internalId, this.timeInterval);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {
       if (this.internalId && this.timeInterval) {
-        this.createLink();
+        this.createLink(this.internalId, this.timeInterval);
       }
     }
   }
 
-  private createLink() {
+  private createLink(internalId: string | InternalDatasetId, timespan: Timespan) {
     const params: HelgolandCsvExportLinkParams = {
       zip: true,
-      generalize: true
+      generalize: true,
+      timespan
     };
-    if (this.timeInterval) { params.timespan = this.timeInterval; }
     params.lang = this.language && this.language !== '' ? this.language : 'en';
-    this.servicesConnector.createCsvDataExportLink(this.internalId, params).subscribe(link => this.downloadLink = link);
+    this.servicesConnector.createCsvDataExportLink(internalId, params).subscribe(link => this.downloadLink = link);
   }
 
 }

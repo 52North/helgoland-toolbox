@@ -23,9 +23,9 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   @Input() size: number = 20;
 
   @Input() options: DatasetOptions | undefined;
-  private optionsDiffer: KeyValueDiffer<any, any>;
+  private optionsDiffer: KeyValueDiffer<any, any> | undefined;
 
-  private svg: d3.Selection<SVGGElement, any, HTMLElement, any>;
+  private svg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
 
   constructor(
     private el: ElementRef,
@@ -43,7 +43,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   }
 
   ngDoCheck(): void {
-    if (this.options && this.optionsDiffer.diff(this.options)) {
+    if (this.options && this.optionsDiffer?.diff(this.options)) {
       this.drawSymbol();
     }
   }

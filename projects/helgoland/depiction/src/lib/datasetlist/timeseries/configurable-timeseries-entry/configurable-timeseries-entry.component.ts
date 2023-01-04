@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatasetOptions, HelgolandServicesConnector, InternalIdHandler } from '@helgoland/core';
+import { DatasetOptions, HelgolandServicesConnector, InternalIdHandler, Required } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
@@ -17,7 +17,8 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
 
   @Input()
-  public datasetOptions: DatasetOptions;
+  @Required
+  public datasetOptions!: DatasetOptions;
 
   @Input()
   public highlight: boolean | undefined;

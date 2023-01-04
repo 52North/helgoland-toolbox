@@ -11,7 +11,7 @@ export class TimezoneService {
 
   private currentTimezone: moment.MomentZone | null;
 
-  private offsetToLocale: number; // TODO: check if still needed
+  // private offsetToLocale: number; // TODO: check if still needed
 
   public timezoneChange: EventEmitter<string> = new EventEmitter();
 
@@ -40,8 +40,8 @@ export class TimezoneService {
   private calcOffset() {
     const date = new Date().getTime();
     const guess = moment.tz.zone(moment.tz.guess());
-    if (guess && this.currentTimezone)
-      this.offsetToLocale = -1 * guess.utcOffset(date) + this.currentTimezone.utcOffset(date);
+    // if (guess && this.currentTimezone)
+    //   this.offsetToLocale = -1 * guess.utcOffset(date) + this.currentTimezone.utcOffset(date);
   }
 
   public getTimezoneName(): string {
@@ -61,12 +61,12 @@ export class TimezoneService {
     return moment(m).tz(this.getTimezoneName());
   }
 
-  public getOffsetToLocaleInMs() {
-    return this.offsetToLocale * 1000 * 60;
-  }
+  // public getOffsetToLocaleInMs() {
+  //   return this.offsetToLocale * 1000 * 60;
+  // }
 
-  public getOffsetToLocaleInHours() {
-    return this.offsetToLocale / 60;
-  }
+  // public getOffsetToLocaleInHours() {
+  //   return this.offsetToLocale / 60;
+  // }
 
 }

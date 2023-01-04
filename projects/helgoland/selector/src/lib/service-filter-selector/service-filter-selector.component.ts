@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { HelgolandParameterFilter, HelgolandServicesConnector, LanguageChangNotifier, Parameter } from '@helgoland/core';
+import {
+    HelgolandParameterFilter,
+    HelgolandServicesConnector,
+    LanguageChangNotifier,
+    Parameter,
+    Required,
+} from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -11,17 +17,17 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
-    @Input()
-    public endpoint: string;
+    @Input() @Required
+    public endpoint!: string;
+
+    @Input() @Required
+    public serviceUrl!: string;
 
     @Input()
-    public serviceUrl: string;
+    public filter: HelgolandParameterFilter | undefined;
 
     @Input()
-    public filter: HelgolandParameterFilter;
-
-    @Input()
-    public selectionId: string;
+    public selectionId: string | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -35,8 +41,8 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    public loading: boolean;
-    public items: Parameter[];
+    public loading = false;
+    public items: Parameter[] = [];
 
     constructor(
         protected override translate: TranslateService,

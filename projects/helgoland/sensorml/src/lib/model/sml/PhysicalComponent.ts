@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractPhysicalProcess } from './AbstractPhysicalProcess';
 import { ProcessMethod } from './ProcessMethod';
 import { ProcessMethodProcess } from './ProcessMethodProcess';

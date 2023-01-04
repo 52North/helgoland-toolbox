@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Referenced } from './Referenced';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

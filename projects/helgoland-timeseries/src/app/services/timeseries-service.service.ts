@@ -26,7 +26,7 @@ const TIME_CACHE_PARAM = 'timeseriesTime';
 })
 export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptions>{
 
-  private _timespan: Timespan;
+  private _timespan: Timespan = this.createTimespan();
 
   constructor(
     protected serviceConnector: HelgolandServicesConnector,
@@ -39,7 +39,6 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     @Optional() protected override translateSrvc?: TranslateService
   ) {
     super(serviceConnector, translateSrvc);
-    this.initTimespan();
     this.loadState();
   }
 
@@ -97,12 +96,8 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     this.datasetIds = this.localStorage.loadArray<string>(TIMESERIES_IDS_CACHE_PARAM) || [];
   }
 
-  private initTimespan() {
-    if (!this._timespan) {
-      this._timespan =
-        this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) ||
-        this.timeSrvc.createByDurationWithEnd(moment.duration(1, 'days'), new Date(), 'day');
-    }
+  private createTimespan(): Timespan {
+    return this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) || this.timeSrvc.createByDurationWithEnd(moment.duration(1, 'days'), new Date(), 'day');
   }
 
 }

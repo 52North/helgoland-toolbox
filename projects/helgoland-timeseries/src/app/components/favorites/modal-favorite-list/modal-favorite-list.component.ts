@@ -39,8 +39,8 @@ interface EditableGroupFavorite extends GroupFavorite {
 })
 export class ModalFavoriteListComponent implements OnInit {
 
-  public singles: EditableSingleFavorite[];
-  public groups: EditableGroupFavorite[];
+  public singles: EditableSingleFavorite[] = [];
+  public groups: EditableGroupFavorite[] = [];
 
   constructor(
     public favoriteSrvc: FavoriteService,

@@ -47,7 +47,7 @@
   </mat-accordion>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="openListSettings()">{{'provider' | translate}}</button>
+  <button mat-raised-button (click)="openListSettings()">{{'provider' | translate}}: {{selectedService?.label}}</button>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
 </div>

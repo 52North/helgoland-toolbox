@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Required } from '@helgoland/core';
 
 @Component({
   selector: 'n52-time-list-selector',
@@ -7,7 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class TimeListSelectorComponent {
 
   @Input()
-  public timeList: number[];
+  @Required
+  public timeList!: number[];
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

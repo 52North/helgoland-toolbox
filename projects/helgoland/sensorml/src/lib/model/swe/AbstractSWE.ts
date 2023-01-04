@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DisplayName } from '../../common/decorators/DisplayName';
 /**
  * Base substitution groups for all SWE Common objects other than value objects

@@ -26,17 +26,17 @@ export class EventingComponent {
 
   private readonly url = '';
 
-  public loading: boolean;
+  public loading: boolean = false;
 
-  public requestError: string;
+  public requestError: string | undefined;
 
-  public eventResults: EventResults | null;
+  public eventResults: EventResults | undefined;
 
-  public subscriptionResults: SubscriptionResults | null;
+  public subscriptionResults: SubscriptionResults | undefined;
 
-  public publicationResults: PublicationResults;
+  public publicationResults: PublicationResults | undefined;
 
-  public notificationResults: NotificationResults;
+  public notificationResults: NotificationResults | undefined;
 
   constructor(
     private basicAuthServices: BasicAuthServiceMaintainer,
@@ -96,8 +96,8 @@ export class EventingComponent {
 
   private startloading() {
     this.loading = true;
-    this.eventResults = null;
-    this.subscriptionResults = null;
+    this.eventResults = undefined;
+    this.subscriptionResults = undefined;
   }
 
 }

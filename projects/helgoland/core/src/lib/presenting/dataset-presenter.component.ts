@@ -99,7 +99,7 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
      */
     @Output() public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
 
-    protected timespan: Timespan;
+    protected timespan: Timespan | undefined;
 
     private datasetIdsDiffer: IterableDiffer<string>;
     private selectedDatasetIdsDiffer: IterableDiffer<string>;

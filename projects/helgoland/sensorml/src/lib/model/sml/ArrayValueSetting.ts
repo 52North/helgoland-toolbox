@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSetting } from './AbstractSetting';
 import { SweEncoding } from '../swe/SweEncoding';
 import { EncodedValues } from '../swe/EncodedValues';

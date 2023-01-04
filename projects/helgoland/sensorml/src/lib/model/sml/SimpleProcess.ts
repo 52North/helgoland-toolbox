@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ProcessMethodProcess } from './ProcessMethodProcess';
 import { ProcessMethod } from './ProcessMethod';
 import { AbstractProcess } from './AbstractProcess';

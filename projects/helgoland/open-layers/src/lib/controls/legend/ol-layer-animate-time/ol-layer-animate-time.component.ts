@@ -17,7 +17,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
    */
   @Input() timeInterval = 2000;
 
-  private interval: number;
+  private interval: number | undefined;
 
   constructor(
     protected override wmsCaps: WmsCapabilitiesService
@@ -26,16 +26,18 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
   }
 
   public startAnimation() {
-    // get current time parameter
-    this.determineCurrentTimeParameter();
-    // find index in list
-    let idx = this.timeDimensions.findIndex(e => this.currentTime && e.getTime() === this.currentTime.getTime());
-    // start animation
-    this.interval = window.setInterval(() => {
-      idx++;
-      if (idx >= this.timeDimensions.length) { idx = 0; }
-      this.setTime(this.timeDimensions[idx]);
-    }, this.timeInterval);
+    if (this.timeDimensions?.length) {
+      // get current time parameter
+      this.determineCurrentTimeParameter();
+      // find index in list
+      let idx = this.timeDimensions.findIndex(e => this.currentTime && e.getTime() === this.currentTime.getTime());
+      // start animation
+      this.interval = window.setInterval(() => {
+        idx++;
+        if (idx >= this.timeDimensions!.length) { idx = 0; }
+        this.setTime(this.timeDimensions![idx]);
+      }, this.timeInterval);
+    }
   }
 
   public stopAnimation() {
@@ -43,9 +45,11 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
   }
 
   public resetAnimation() {
-    this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => {
-      if (time) this.setTime(time);
-    });
+    if (this.layerid && this.url) {
+      this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => {
+        if (time) this.setTime(time);
+      });
+    }
   }
 
 }

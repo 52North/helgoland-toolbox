@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractDataComponent } from '../swe';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

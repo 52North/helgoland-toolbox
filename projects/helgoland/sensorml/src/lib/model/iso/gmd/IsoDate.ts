@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DateType } from './DateType';
 import { DisplayName } from '../../../common/decorators/DisplayName';
 

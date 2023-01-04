@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Required } from '@helgoland/core';
 
 @Component({
   selector: 'n52-permalink-new-window',
@@ -6,8 +7,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PermalinkNewWindowComponent {
 
-  @Input()
-  public url: string;
+  @Input() @Required
+  public url!: string;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
