@@ -6,7 +6,7 @@ export class HelgolandService {
         public label: string,
         public type: string,
         public version: string,
-        public quantities: HelgolandServiceQuantities
+        public quantities?: HelgolandServiceQuantities
     ) { }
 }
 

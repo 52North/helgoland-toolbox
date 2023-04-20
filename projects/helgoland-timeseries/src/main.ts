@@ -8,6 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
+import { BasicAuthInformer, HelgolandBasicAuthModule } from '@helgoland/auth';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
@@ -17,12 +18,14 @@ import {
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
   LocalStorage,
+  PegelonlineApiConnectorProvider,
   SettingsService,
   SplittedDataDatasetApiInterface,
 } from '@helgoland/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BasicAuthInformerImplService } from '../../helgoland-common/src/lib/services/basic-auth-informer-impl.service';
 
 import { AppComponent } from './app/app.component';
 import { ROUTES } from './app/app.consts';
@@ -92,6 +95,11 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(HelgolandCoreModule),
     importProvidersFrom(MatSnackBarModule),
     importProvidersFrom(MatDialogModule),
+    importProvidersFrom(HelgolandBasicAuthModule),
+    {
+      provide: BasicAuthInformer,
+      useClass: BasicAuthInformerImplService
+    },
     importProvidersFrom(
       HelgolandCachingModule.forRoot({
         cachingDurationInMilliseconds: 300000,
@@ -106,6 +114,7 @@ bootstrapApplication(AppComponent, {
     DatasetApiV1ConnectorProvider,
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,
-    DatasetStaConnectorProvider
+    DatasetStaConnectorProvider,
+    PegelonlineApiConnectorProvider
   ]
 })

@@ -3,6 +3,10 @@ import { BlacklistedService, DatasetApi, HelgolandParameterFilter, HelgolandServ
 
 import { ServiceSelectorService } from './service-selector.service';
 
+interface ExtendedHelgolandService extends HelgolandService {
+    protected?: boolean;
+}
+
 /**
  * Component to select an item out of a list of provider with a given filter combination.
  */
@@ -35,7 +39,7 @@ export class ServiceSelectorComponent implements OnInit {
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onServiceSelected: EventEmitter<HelgolandService> = new EventEmitter<HelgolandService>();
 
-    public services: HelgolandService[] = [];
+    public services: ExtendedHelgolandService[] = [];
     public unResolvableServices: DatasetApi[] = [];
     public loadingCount = 0;
 
@@ -51,27 +55,39 @@ export class ServiceSelectorComponent implements OnInit {
             this.services = [];
             this.unResolvableServices = [];
             this.datasetApiList.forEach((api) => {
-                this.serviceSelectorService.fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
-                    .subscribe(
-                        (res) => {
-                            this.loadingCount--;
-                            if (res && res instanceof Array) {
-                                res.forEach((entry) => {
-                                    if (entry.quantities.datasets) {
-                                        this.services.push(entry);
-                                    }
+                if (!api.basicAuth) {
+                    this.serviceSelectorService.fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
+                        .subscribe(
+                            (res) => {
+                                this.loadingCount--;
+                                if (res && res instanceof Array) {
+                                    res.forEach((entry) => {
+                                        if (entry.quantities?.datasets) {
+                                            this.services.push(entry);
+                                        }
+                                    });
+                                }
+                                this.services.sort((a, b) => {
+                                    if (a.label < b.label) { return -1; }
+                                    if (a.label > b.label) { return 1; }
+                                    return 0;
                                 });
-                            }
-                            this.services.sort((a, b) => {
-                                if (a.label < b.label) { return -1; }
-                                if (a.label > b.label) { return 1; }
-                                return 0;
+                            },
+                            (error) => {
+                                this.unResolvableServices.push(api);
+                                this.loadingCount--;
                             });
-                        },
-                        (error) => {
-                            this.unResolvableServices.push(api);
-                            this.loadingCount--;
-                        });
+                } else {
+                    this.loadingCount--;
+                    this.services.push({
+                        apiUrl: api.url,
+                        label: api.name,
+                        protected: true,
+                        id: api.url,
+                        type: '',
+                        version: ''
+                    })
+                }
             });
         }
     }

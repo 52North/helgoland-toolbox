@@ -1,4 +1,5 @@
 {
+	"authentication.failed": "Authentifizierung ist fehlgeschlagen",
 	"controls.ok": "Ok",
 	"list-selection.filter.category": "Kategorie",
 	"list-selection.filter.feature": "Station",

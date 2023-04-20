@@ -12,6 +12,7 @@ import {
   DatasetApiV2ConnectorProvider,
   DatasetApiV3ConnectorProvider,
   DatasetStaConnectorProvider,
+  PegelonlineApiConnectorProvider,
   HttpService,
   InternalIdHandler,
   LocalStorage,
@@ -113,6 +114,7 @@ Promise.all([settingsPromise]).then((config: any) => {
       DatasetApiV2ConnectorProvider,
       DatasetApiV3ConnectorProvider,
       DatasetStaConnectorProvider,
+      PegelonlineApiConnectorProvider,
       // {
       //   provide: FacetSearchConfig,
       //   useValue: {

@@ -17,7 +17,8 @@
       <mat-icon>edit_location_alt</mat-icon>
     </button>
     <n52-station-map-selector [mapId]="mapId" [serviceUrl]="state.selectedService?.apiUrl" [filter]="stationFilter"
-      (onSelected)="onStationSelected($event)" [cluster]="cluster" class="vbox boxItem fullHeight">
+      [clusterConfig]="clusterConfig" (onSelected)="onStationSelected($event)" [cluster]="cluster"
+      class="vbox boxItem fullHeight">
     </n52-station-map-selector>
   </div>
 </mat-drawer-container>

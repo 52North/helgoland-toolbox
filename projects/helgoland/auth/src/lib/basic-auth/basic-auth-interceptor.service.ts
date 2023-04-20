@@ -1,10 +1,11 @@
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor, Settings, SettingsService } from '@helgoland/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, throwError } from 'rxjs';
 
 import { BasicAuthServiceMaintainer } from './basic-auth-service-maintainer.service';
 import { BasicAuthService } from './basic-auth.service';
+import { share } from 'rxjs/operators';
 
 /**
  * Needs to be implemented to do the authentication for the given url.
@@ -39,15 +40,26 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
         return next.handle(req, options);
       } else {
         return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-          this.receptor.doBasicAuth(url).subscribe(successfully => {
+          let basicAuthRequest = this.basicAuthSrvc.ongoingRequests.get(url);
+          if (!basicAuthRequest) {
+            basicAuthRequest = this.receptor.doBasicAuth(url).pipe(share());
+            this.basicAuthSrvc.ongoingRequests.set(url, basicAuthRequest);
+          }
+          basicAuthRequest.subscribe(successfully => {
+            this.basicAuthSrvc.ongoingRequests.delete(url);
+            const token = this.basicAuthSrvc.getToken(url);
             if (successfully && token) {
               req = req.clone({
                 setHeaders: {
                   Authorization: token
                 }
               });
+            } else {
+              observer.error("Not authenticated.")
+              observer.complete();
+              return;
             }
-            next.handle(req, options).subscribe(
+            return next.handle(req, options).subscribe(
               res => {
                 observer.next(res);
                 if (res instanceof HttpResponse) {

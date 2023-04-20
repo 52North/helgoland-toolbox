@@ -1,4 +1,9 @@
 :host {
+    .service-url {
+        overflow: hidden;
+        overflow-wrap: anywhere;
+    }
+
     .login {
         display: flex;
         flex-direction: column;

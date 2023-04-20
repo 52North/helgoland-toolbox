@@ -8,7 +8,7 @@
     <div class="small">{{service.type}}, {{service.version}}
     </div>
     <div class="small" *ngIf="service.apiUrl">{{'service-selector.service-url' | translate}}: {{service.apiUrl}}</div>
-    <div class="small">
+    <div class="small" *ngIf="service.quantities">
       <span *ngIf="service.quantities.platforms">{{'service-selector.stations' | translate}}:
         {{service.quantities.platforms}}</span>
       <span *ngIf="service.quantities.platforms !== undefined">{{'service-selector.platforms' | translate}}:

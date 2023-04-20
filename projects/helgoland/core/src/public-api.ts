@@ -41,6 +41,7 @@ export * from './lib/api-communication/connectors/sta-api-v1-connector/model/obs
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/sensors';
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/sta-interface';
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/things';
+export * from './lib/api-communication/connectors/pegelonline-connector/pegelonline-api-v1-connector';
 export * from './lib/api-communication/helgoland-services-connector';
 export * from './lib/api-communication/model/internal/data';
 export * from './lib/api-communication/model/internal/dataset';
