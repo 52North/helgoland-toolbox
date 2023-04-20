@@ -73,8 +73,6 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
 
   name = 'PegelonlineApiConnector';
 
-  private localStorageIdentAll = 'pegelonlinePhenomenaListAll';
-
   constructor(
     protected http: HttpService,
     private localStorage: LocalStorage
@@ -176,27 +174,22 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     // });
     // TODO: filter stations without coordinates
     return this.httpCall<PegelonlineStation>(url, 'stations', this.createPhenomenaFilter(filter)).pipe(
-      map(res => this.getPhenomanaFromStations(res))
+      map(res => this.getPhenomenaFromStations(res))
     )
   }
 
-  getPhenomanaFromStations(items: PegelonlineStation): FilteredParameter[] {
+  getPhenomenaFromStations(items: PegelonlineStation): FilteredParameter[] {
     let list: Parameter[] = [];
     let keyList: string[] = [];
     for (const [key, value] of Object.entries(items)) {
-
       let item: any = value;
-
       if (item && item.timeseries) {
         item.timeseries.forEach((element: any) => {
-
           if (!keyList.includes(element.shortname)) {
             list.push({
               id: element.shortname,
               label: element.longname
-            }
-            );
-
+            });
             keyList.push(element.shortname);
           }
         });
@@ -595,7 +588,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     quantities.categories = 1;
     quantities.features = 1299;
     quantities.offerings = 1299;
-    quantities.phenomena = this.getPhenomenaList().length;
+    // quantities.phenomena = this.getPhenomenaList().length;
     quantities.procedures = 1299;
     quantities.datasets = 1458;
     quantities.platforms = 1299;
@@ -619,25 +612,12 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     return parts1.join('-').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
   }
 
-  public getPhenomenaList(): Parameter[] {
-    return this.localStorage.load(this.localStorageIdentAll);
-  }
-
-  public getFilteredList(items: Parameter[] | undefined): FilteredParameter[] {
-
-    let list = this.getPhenomenaList();
-    if (items)
-      list = items;
-
+  public getFilteredList(items: Parameter[]): FilteredParameter[] {
     // sort alphabetically
-    list.sort((a, b) => a.label.localeCompare(b.label));
-
+    items.sort((a, b) => a.label.localeCompare(b.label));
     const filteredList: FilteredParameter[] = [];
-
-    for (let key in list) {
-
-      let elem = list[key];
-
+    for (let key in items) {
+      let elem = items[key];
       filteredList.push({
         filterList: [{
           filter: [{
@@ -650,9 +630,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
         id: elem.id,
         label: `${this.ucwords(elem.label)} (${elem.id})`
       })
-
     }
-
     return filteredList;
   }
 }
