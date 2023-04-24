@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FilteredParameter } from '@helgoland/selector';
 import moment from 'moment';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -178,7 +177,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     )
   }
 
-  getPhenomenaFromStations(items: PegelonlineStation): FilteredParameter[] {
+  getPhenomenaFromStations(items: PegelonlineStation): Phenomenon[] {
     let list: Parameter[] = [];
     let keyList: string[] = [];
     for (const [key, value] of Object.entries(items)) {
@@ -612,21 +611,21 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     return parts1.join('-').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
   }
 
-  public getFilteredList(items: Parameter[]): FilteredParameter[] {
+  public getFilteredList(items: Parameter[]): Phenomenon[] {
     // sort alphabetically
     items.sort((a, b) => a.label.localeCompare(b.label));
-    const filteredList: FilteredParameter[] = [];
+    const filteredList: Phenomenon[] = [];
     for (let key in items) {
       let elem = items[key];
       filteredList.push({
-        filterList: [{
-          filter: [{
-            service: '2'
-          }],
-          itemId: '2',
-          service: '2',
-          url: 'pegelonline.wsv'
-        }],
+        // filterList: [{
+        //   filter: [{
+        //     service: '2'
+        //   }],
+        //   itemId: '2',
+        //   service: '2',
+        //   url: 'pegelonline.wsv'
+        // }],
         id: elem.id,
         label: `${this.ucwords(elem.label)} (${elem.id})`
       })
