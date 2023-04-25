@@ -3,7 +3,7 @@ import { InsertId, StaExpandParams, StaObject, StaSelectParams } from './sta-int
 
 export interface Observation extends StaObject {
     phenomenonTime?: string;
-    result?: string;
+    result?: any;
     resultTime?: Date;
     parameters?: {
         name: string;
@@ -15,7 +15,6 @@ export interface Observation extends StaObject {
 
 export interface InsertObservation extends Observation {
     phenomenonTime: string;
-    result: string;
     Datastream: (InsertDatastream | InsertId);
 }
 
