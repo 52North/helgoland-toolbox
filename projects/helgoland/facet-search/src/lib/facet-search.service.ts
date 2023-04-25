@@ -19,17 +19,17 @@ export class FacetSearchConfig {
 @Injectable()
 export class FacetSearchServiceImpl implements FacetSearchService {
 
-  private onResultsChanged: ReplaySubject<FacetSearchElement[]> = new ReplaySubject(1);
+  protected onResultsChanged: ReplaySubject<FacetSearchElement[]> = new ReplaySubject(1);
 
-  private facets: Map<ParameterFacetType, FacetParameter> = new Map();
+  protected facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
-  private entries: FacetSearchElement[] = [];
+  protected entries: FacetSearchElement[] = [];
 
-  private selectedTimespan: Timespan | undefined;
+  protected selectedTimespan: Timespan | undefined;
 
-  private filteredEntries: FacetSearchElement[] = [];
+  protected filteredEntries: FacetSearchElement[] = [];
 
-  private nullable = false;
+  protected nullable = false;
 
   constructor(
     @Optional() config?: FacetSearchConfig
@@ -122,7 +122,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     this.setFilteredEntries();
   }
 
-  private createTimespan(entries: FacetSearchElement[]): Timespan | undefined {
+  protected createTimespan(entries: FacetSearchElement[]): Timespan | undefined {
     let timespan: Timespan | undefined = undefined;
     if (entries.length > 0) {
       timespan = { from: Infinity, to: 0 };
@@ -136,7 +136,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return timespan;
   }
 
-  private setFilteredEntries() {
+  protected setFilteredEntries() {
     if (this.facets.size > 0 || this.selectedTimespan) {
       this.filteredEntries = this.entries.filter(e => {
         const matchCategory = e.category ? this.checkFacet(ParameterFacetType.category, e.category.id) : true;
@@ -155,7 +155,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     }
   }
 
-  private checkTimespan(ts: FacetSearchElement): boolean {
+  protected checkTimespan(ts: FacetSearchElement): boolean {
     if (this.selectedTimespan) {
       const checkfrom = ts.lastValue && ts.lastValue.timestamp ? this.selectedTimespan.from <= ts.lastValue.timestamp : true;
       const checkTo = ts.firstValue && ts.firstValue.timestamp ? this.selectedTimespan.to >= ts.firstValue.timestamp : true;
@@ -164,14 +164,14 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return true;
   }
 
-  private checkFacet(type: ParameterFacetType, parameterId: string): boolean {
+  protected checkFacet(type: ParameterFacetType, parameterId: string): boolean {
     if (this.facets.has(type)) {
       return parameterId === this.facets.get(type)!.id;
     }
     return true;
   }
 
-  private sortParameters(list: FacetParameter[], sort: ParameterFacetSort): FacetParameter[] {
+  protected sortParameters(list: FacetParameter[], sort: ParameterFacetSort): FacetParameter[] {
     if (sort === null || sort === ParameterFacetSort.none) { return list; }
     list.sort((a, b) => {
       switch (sort) {
@@ -188,7 +188,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return list;
   }
 
-  private addParameter(list: FacetParameter[], type: ParameterFacetType, entry?: FacetSearchElementParameter) {
+  protected addParameter(list: FacetParameter[], type: ParameterFacetType, entry?: FacetSearchElementParameter) {
     if (entry) {
       const existing = list.find(e => e.label === entry.label);
       if (existing) {
@@ -204,7 +204,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     }
   }
 
-  private createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
+  protected createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
     const params: FacetParameter[] = [];
     this.entries.forEach(ts => {
       const elem = ts[type];
@@ -220,7 +220,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return params;
   }
 
-  private checkSelection(type: ParameterFacetType, id: string): boolean {
+  protected checkSelection(type: ParameterFacetType, id: string): boolean {
     return this.facets.has(type) && this.facets.get(type)!.id === id;
   }
 
