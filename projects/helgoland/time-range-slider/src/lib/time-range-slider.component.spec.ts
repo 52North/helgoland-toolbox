@@ -11,15 +11,15 @@ describe('TimeRangeSliderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    providers: [
         TimeRangeSliderCache
-      ],
-      imports: [
+    ],
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [TimeRangeSliderComponent]
-    }).compileComponents();
+        TranslateTestingModule,
+        TimeRangeSliderComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

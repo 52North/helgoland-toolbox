@@ -3,18 +3,18 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FilteredProvider, HelgolandDataset, HelgolandParameterFilter, HelgolandServicesConnector } from '@helgoland/core';
 
-import {
-    FilteredParameter,
-    MultiServiceFilter,
-} from '../multi-service-filter-selector/multi-service-filter-selector.component';
+import { FilteredParameter, MultiServiceFilter, MultiServiceFilterSelectorComponent } from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorParameter, ListSelectorService } from './list-selector.service';
+import { NgFor, NgIf } from '@angular/common';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
  */
 @Component({
     selector: 'n52-list-selector',
-    templateUrl: './list-selector.component.html'
+    templateUrl: './list-selector.component.html',
+    standalone: true,
+    imports: [NgFor, NgIf, MultiServiceFilterSelectorComponent]
 })
 export class ListSelectorComponent implements OnChanges {
 

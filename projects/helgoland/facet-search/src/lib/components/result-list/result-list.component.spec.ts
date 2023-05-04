@@ -10,9 +10,8 @@ describe('ResultListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandFacetSearchModule],
-      declarations: []
-    }).compileComponents();
+    imports: [HelgolandFacetSearchModule]
+}).compileComponents();
   }));
 
   beforeEach(inject([FacetSearchService], (service: FacetSearchService) => {

@@ -13,15 +13,15 @@ describe('EditLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditLabelComponent],
-      imports: [
+    imports: [
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        NoopAnimationsModule
-      ]
-    }).compileComponents();
+        NoopAnimationsModule,
+        EditLabelComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

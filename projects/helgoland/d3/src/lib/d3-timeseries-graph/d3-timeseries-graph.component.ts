@@ -56,6 +56,12 @@ import {
     D3TimeseriesSimpleGraphErrorHandler,
 } from './d3-timeseries-graph-error-handler.service';
 import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
+import { D3GraphOverviewSelectionComponent } from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
+import { NgIf } from '@angular/common';
+import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphPanZoomInteractionComponent } from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 
 interface HighlightDataset {
     id: string;
@@ -69,7 +75,9 @@ const TICKS_COUNT_YAXIS = 5;
     templateUrl: './d3-timeseries-graph.component.html',
     styleUrls: ['./d3-timeseries-graph.component.scss'],
     providers: [D3GraphId],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, NgIf, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>

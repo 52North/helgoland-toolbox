@@ -11,12 +11,12 @@ describe('TimeseriesSymbolSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeseriesSymbolSelectComponent],
-      imports: [
+    imports: [
         TranslateTestingModule,
-        HttpClientTestingModule
-      ]
-    })
+        HttpClientTestingModule,
+        TimeseriesSymbolSelectComponent
+    ]
+})
       .compileComponents();
   }));
 

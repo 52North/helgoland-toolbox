@@ -1,11 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { LabelMapperService } from './label-mapper.service';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'n52-label-mapper',
     templateUrl: './label-mapper.component.html',
-    styleUrls: ['./label-mapper.component.scss']
+    styleUrls: ['./label-mapper.component.scss'],
+    standalone: true,
+    imports: [NgIf]
 })
 export class LabelMapperComponent implements OnChanges {
 

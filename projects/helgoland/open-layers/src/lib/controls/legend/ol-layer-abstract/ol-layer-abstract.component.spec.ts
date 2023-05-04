@@ -9,9 +9,8 @@ describe('OlLayerAbstractComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [OlLayerAbstractComponent],
-      imports: [HelgolandCoreModule]
-    }).compileComponents();
+    imports: [HelgolandCoreModule, OlLayerAbstractComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

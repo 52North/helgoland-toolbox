@@ -14,7 +14,7 @@ import {
     TimezoneService,
 } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { PlotlyService } from 'angular-plotly.js';
+import { PlotlyService, PlotlyViaCDNModule } from 'angular-plotly.js';
 import * as d3 from 'd3';
 
 interface RawData {
@@ -31,7 +31,9 @@ const MARKER_SIZE = 6;
 @Component({
     selector: 'n52-plotly-profile-graph',
     templateUrl: './plotly-profile-graph.component.html',
-    styleUrls: ['./plotly-profile-graph.component.scss']
+    styleUrls: ['./plotly-profile-graph.component.scss'],
+    standalone: true,
+    imports: [PlotlyViaCDNModule]
 })
 export class PlotlyProfileGraphComponent
     extends DatasetPresenterComponent<TimedDatasetOptions[], any>

@@ -17,18 +17,16 @@ const COMPONENTS = [
  * - controls to handle layer
  */
 @NgModule({
-  declarations: [
-    COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HelgolandCoreModule,
-    HelgolandMapModule
-  ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: []
+    imports: [
+        CommonModule,
+        FormsModule,
+        HelgolandCoreModule,
+        HelgolandMapModule,
+        COMPONENTS
+    ],
+    exports: [
+        COMPONENTS
+    ],
+    providers: []
 })
 export class HelgolandLayerControlModule { }

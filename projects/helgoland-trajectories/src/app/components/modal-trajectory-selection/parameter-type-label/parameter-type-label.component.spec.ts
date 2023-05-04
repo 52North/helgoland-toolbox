@@ -9,11 +9,11 @@ describe('ParameterTypeLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ParameterTypeLabelComponent],
-      imports: [
-        TranslateTestingModule
-      ]
-    }).compileComponents();
+    imports: [
+        TranslateTestingModule,
+        ParameterTypeLabelComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

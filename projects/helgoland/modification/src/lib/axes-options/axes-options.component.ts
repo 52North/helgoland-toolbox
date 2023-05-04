@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'n52-axes-options',
-    templateUrl: './axes-options.component.html'
+    templateUrl: './axes-options.component.html',
+    standalone: true
 })
 export class AxesOptionsComponent {
 

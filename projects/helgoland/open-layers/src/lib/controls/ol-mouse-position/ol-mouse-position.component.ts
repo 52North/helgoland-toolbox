@@ -11,8 +11,9 @@ import { OlMapId } from '../../services/mapid.service';
  * Control component to show the coordinates at the mouse position
  */
 @Component({
-  selector: 'n52-ol-mouse-position',
-  template: '',
+    selector: 'n52-ol-mouse-position',
+    template: '',
+    standalone: true
 })
 export class OlMousePositionComponent extends OlBaseComponent {
 

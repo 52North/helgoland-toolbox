@@ -16,18 +16,16 @@ const COMPONENTS = [
  * - import/export serivce
  */
 @NgModule({
-  declarations: [
-    COMPONENTS
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: [
-    FavoriteService,
-    JsonFavoriteExporterService
-  ]
+    imports: [
+        CommonModule,
+        COMPONENTS
+    ],
+    exports: [
+        COMPONENTS
+    ],
+    providers: [
+        FavoriteService,
+        JsonFavoriteExporterService
+    ]
 })
 export class HelgolandFavoriteModule { }

@@ -10,9 +10,10 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-gra
 import { D3TimeseriesGraphInterface } from '../../d3-timeseries-graph.interface';
 
 @Component({
-  selector: 'n52-d3-graph-pan-zoom-interaction',
-  template: '',
-  styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss']
+    selector: 'n52-d3-graph-pan-zoom-interaction',
+    template: '',
+    styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
+    standalone: true
 })
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
 

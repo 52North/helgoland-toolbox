@@ -11,13 +11,13 @@ describe('TimeseriesListSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TimeseriesListSelectorComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        MatListModule
-      ]
-    }).compileComponents();
+        MatListModule,
+        TimeseriesListSelectorComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

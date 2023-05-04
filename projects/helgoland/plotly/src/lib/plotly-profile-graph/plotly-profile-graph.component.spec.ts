@@ -13,17 +13,16 @@ describe('PlotlyProfileGraphComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         TranslateTestingModule,
         HelgolandPlotlyModule
-      ],
-      providers: [
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider
-      ],
-      declarations: []
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

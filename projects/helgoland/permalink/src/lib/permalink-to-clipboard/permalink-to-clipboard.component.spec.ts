@@ -9,13 +9,11 @@ describe('PermalinkToClipboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ClipboardModule
-      ],
-      declarations: [
+    imports: [
+        ClipboardModule,
         PermalinkToClipboardComponent
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

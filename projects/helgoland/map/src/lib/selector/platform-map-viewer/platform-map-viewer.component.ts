@@ -16,9 +16,10 @@ import { CachedMapComponent } from '../../base/cached-map-component';
 import { MapCache } from '../../base/map-cache.service';
 
 @Component({
-  selector: 'n52-platform-map-viewer',
-  templateUrl: './platform-map-viewer.component.html',
-  styleUrls: ['./platform-map-viewer.component.scss']
+    selector: 'n52-platform-map-viewer',
+    templateUrl: './platform-map-viewer.component.html',
+    styleUrls: ['./platform-map-viewer.component.scss'],
+    standalone: true
 })
 export class PlatformMapViewerComponent extends CachedMapComponent implements AfterViewInit, OnChanges {
 

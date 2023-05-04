@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Required } from '@helgoland/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
     selector: 'n52-color-selector',
-    templateUrl: './color-selector.component.html'
+    templateUrl: './color-selector.component.html',
+    standalone: true,
+    imports: [ColorPickerModule]
 })
 export class ColorSelectorComponent {
 

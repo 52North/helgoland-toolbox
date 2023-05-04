@@ -15,9 +15,10 @@ L.Icon.Default.mergeOptions({
 });
 
 @Component({
-  selector: 'n52-result-map',
-  templateUrl: './result-map.component.html',
-  styleUrls: ['./result-map.component.scss'],
+    selector: 'n52-result-map',
+    templateUrl: './result-map.component.html',
+    styleUrls: ['./result-map.component.scss'],
+    standalone: true
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 

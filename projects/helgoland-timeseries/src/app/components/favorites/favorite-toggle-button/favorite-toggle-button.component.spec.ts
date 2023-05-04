@@ -14,16 +14,16 @@ describe('FavoriteToggleButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FavoriteToggleButtonComponent],
-      imports: [
+    imports: [
         HelgolandFavoriteModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         MatTooltipModule,
         MatIconModule,
-        MatSnackBarModule
-      ]
-    }).compileComponents();
+        MatSnackBarModule,
+        FavoriteToggleButtonComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

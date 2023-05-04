@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DefinedTimespan, DefinedTimespanService, Required, Timespan } from '@helgoland/core';
 
 @Component({
-  selector: 'n52-timespan-button',
-  templateUrl: './timespan-button.component.html'
+    selector: 'n52-timespan-button',
+    templateUrl: './timespan-button.component.html',
+    standalone: true
 })
 export class TimespanButtonComponent {
 

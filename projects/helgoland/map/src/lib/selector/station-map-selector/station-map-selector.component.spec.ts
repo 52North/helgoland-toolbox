@@ -45,21 +45,21 @@ describe('StationMapSelectorComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                HelgolandCoreModule,
-                TranslateTestingModule
-            ],
-            providers: [
-                {
-                    provide: DatasetApiInterface,
-                    useClass: FakeDatasetApiInterface
-                },
-                MapCache,
-                SettingsServiceTestingProvider
-            ],
-            declarations: [StationMapSelectorComponent]
-        }).compileComponents();
+    imports: [
+        HttpClientTestingModule,
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        StationMapSelectorComponent
+    ],
+    providers: [
+        {
+            provide: DatasetApiInterface,
+            useClass: FakeDatasetApiInterface
+        },
+        MapCache,
+        SettingsServiceTestingProvider
+    ]
+}).compileComponents();
     }));
 
     beforeEach(() => {

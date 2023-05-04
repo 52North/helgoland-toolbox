@@ -25,8 +25,9 @@ import { OlMapId } from '../../services/mapid.service';
  * </n52-ol-map>
  */
 @Component({
-  selector: 'n52-ol-station-selector-layer',
-  template: '',
+    selector: 'n52-ol-station-selector-layer',
+    template: '',
+    standalone: true
 })
 export class OlStationSelectorLayerComponent extends OlBaseComponent {
 

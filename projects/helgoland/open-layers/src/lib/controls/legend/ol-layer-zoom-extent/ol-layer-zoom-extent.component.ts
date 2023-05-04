@@ -13,8 +13,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
  * Legend component to gather the layer extent by the WMS capabilities and provide the ability to zoom to the extent
  */
 @Component({
-  selector: 'n52-ol-layer-zoom-extent',
-  templateUrl: './ol-layer-zoom-extent.component.html'
+    selector: 'n52-ol-layer-zoom-extent',
+    templateUrl: './ol-layer-zoom-extent.component.html',
+    standalone: true
 })
 export class OlLayerZoomExtentComponent implements OnInit {
 

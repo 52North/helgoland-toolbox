@@ -11,10 +11,13 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
+import { NgIf, NgClass, NgStyle } from '@angular/common';
 
 @Component({
     selector: 'n52-trajectory-entry',
-    templateUrl: './trajectory-entry.component.html'
+    templateUrl: './trajectory-entry.component.html',
+    standalone: true,
+    imports: [NgIf, NgClass, NgStyle]
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {
 

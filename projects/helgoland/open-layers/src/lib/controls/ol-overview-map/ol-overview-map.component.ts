@@ -9,10 +9,11 @@ import { OlBaseComponent } from '../../ol-base.component';
  * Control component for an overview map
  */
 @Component({
-  selector: 'n52-ol-overview-map',
-  template: '',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['ol-overview-map.component.scss']
+    selector: 'n52-ol-overview-map',
+    template: '',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['ol-overview-map.component.scss'],
+    standalone: true
 })
 export class OlOverviewMapComponent extends OlBaseComponent {
 

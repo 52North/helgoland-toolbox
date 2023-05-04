@@ -10,10 +10,11 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-gra
 import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
 
 @Component({
-  selector: 'n52-d3-graph-overview-selection',
-  template: '',
-  styleUrls: ['./d3-graph-overview-selection.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-d3-graph-overview-selection',
+    template: '',
+    styleUrls: ['./d3-graph-overview-selection.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
 

@@ -12,16 +12,16 @@ describe('DatasetTableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        DatasetTableComponent
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider
-      ],
-      declarations: [DatasetTableComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

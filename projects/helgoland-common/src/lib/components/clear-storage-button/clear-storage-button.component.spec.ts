@@ -10,12 +10,12 @@ describe('ClearStorageButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ClearStorageButtonComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ]
-    }).compileComponents();
+        TranslateTestingModule,
+        ClearStorageButtonComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

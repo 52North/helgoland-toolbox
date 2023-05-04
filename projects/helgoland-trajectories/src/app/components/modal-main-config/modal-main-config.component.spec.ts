@@ -12,14 +12,14 @@ describe('ModalMainConfigComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalMainConfigComponent],
-      imports: [
+    imports: [
         TranslateTestingModule,
         BrowserAnimationsModule,
         HelgolandCommonModule,
-        HttpClientModule
-      ]
-    }).compileComponents();
+        HttpClientModule,
+        ModalMainConfigComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

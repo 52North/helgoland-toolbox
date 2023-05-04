@@ -22,21 +22,20 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                HelgolandCoreModule,
-                TranslateTestingModule,
-                HelgolandD3Module
-            ],
-            providers: [
-                DatasetApiInterfaceTesting,
-                DatasetApiV1ConnectorProvider,
-                DatasetApiV3ConnectorProvider,
-                DatasetStaConnectorProvider,
-                SettingsServiceTestingProvider
-            ],
-            declarations: []
-        }).compileComponents();
+    imports: [
+        HttpClientModule,
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        HelgolandD3Module
+    ],
+    providers: [
+        DatasetApiInterfaceTesting,
+        DatasetApiV1ConnectorProvider,
+        DatasetApiV3ConnectorProvider,
+        DatasetStaConnectorProvider,
+        SettingsServiceTestingProvider
+    ]
+}).compileComponents();
     }));
 
     beforeEach(() => {

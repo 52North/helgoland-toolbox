@@ -42,12 +42,12 @@ const COMPONENTS = [
  * - open-layers map component and different control components
  */
 @NgModule({
-  declarations: COMPONENTS,
-  exports: COMPONENTS,
-  imports: [
-    CommonModule,
-    FormsModule,
-    HelgolandCoreModule,
-  ]
+    exports: COMPONENTS,
+    imports: [
+        CommonModule,
+        FormsModule,
+        HelgolandCoreModule,
+        ...COMPONENTS
+    ]
 })
 export class HelgolandOpenLayersModule { }

@@ -11,17 +11,15 @@ describe('ConfigurableTimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [
+        TranslateTestingModule,
         ConfigurableTimeseriesEntryComponent
-      ],
-      providers: [
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ]
-    })
+    ]
+})
       .compileComponents();
   }));
 

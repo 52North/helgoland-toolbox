@@ -11,15 +11,15 @@ describe('DatasetPermalinkDownloadComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [DatasetPermalinkDownloadComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        DatasetPermalinkDownloadComponent
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

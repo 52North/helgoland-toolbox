@@ -9,10 +9,11 @@ import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service'
 import { D3TimeseriesGraphComponent } from './../../d3-timeseries-graph.component';
 
 @Component({
-  selector: 'n52-d3-y-axis-modifier',
-  template: '',
-  styleUrls: ['./d3-y-axis-modifier.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-d3-y-axis-modifier',
+    template: '',
+    styleUrls: ['./d3-y-axis-modifier.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnDestroy {
 

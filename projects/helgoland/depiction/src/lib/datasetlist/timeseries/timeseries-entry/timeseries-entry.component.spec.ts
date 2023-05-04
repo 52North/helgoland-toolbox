@@ -12,20 +12,18 @@ describe('TimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [
+        TranslateTestingModule,
         TimeseriesEntryComponent,
         LabelMapperComponent
-      ],
-      providers: [
+    ],
+    providers: [
         ReferenceValueColorCache,
         LabelMapperService,
         SettingsService
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,10 +18,11 @@ const HOVERLINE_CLASS = 'hover-line';
 const TIME_LABEL_CLASS = 'time-label';
 
 @Component({
-  selector: 'n52-d3-graph-hover-line',
-  template: '',
-  styleUrls: ['./d3-graph-hover-line.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-d3-graph-hover-line',
+    template: '',
+    styleUrls: ['./d3-graph-hover-line.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3GraphHoverLineComponent extends D3TimeseriesGraphControl {
 

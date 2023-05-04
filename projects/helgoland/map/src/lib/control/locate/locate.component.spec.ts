@@ -10,12 +10,12 @@ describe('LocateControlComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [LocateControlComponent],
+    providers: [
         LocateService,
         MapCache
-      ],
-      declarations: [LocateControlComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

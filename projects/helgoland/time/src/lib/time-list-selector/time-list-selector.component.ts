@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Required } from '@helgoland/core';
+import { Required, TzDatePipe } from '@helgoland/core';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'n52-time-list-selector',
-  templateUrl: './time-list-selector.component.html'
+    selector: 'n52-time-list-selector',
+    templateUrl: './time-list-selector.component.html',
+    standalone: true,
+    imports: [NgFor, TzDatePipe]
 })
 export class TimeListSelectorComponent {
 

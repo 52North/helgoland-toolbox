@@ -11,15 +11,15 @@ describe('SimpleTimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        SimpleTimeseriesEntryComponent
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ],
-      declarations: [SimpleTimeseriesEntryComponent]
-    })
+    ]
+})
       .compileComponents();
   }));
 

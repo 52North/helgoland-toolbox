@@ -9,11 +9,11 @@ describe('TrajectoryLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TrajectoryLabelComponent],
-      imports: [
-        TranslateTestingModule
-      ]
-    }).compileComponents();
+    imports: [
+        TranslateTestingModule,
+        TrajectoryLabelComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

@@ -11,17 +11,17 @@ describe('D3GeneralGraphComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [D3GeneralGraphComponent],
-      imports: [
+    imports: [
         HttpClientModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        D3GeneralGraphComponent
+    ],
+    providers: [
         DatasetApiV1ConnectorProvider,
         DatasetApiV3ConnectorProvider,
         DatasetStaConnectorProvider
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -9,8 +9,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
  * Legend component to ascertain the legend url, gathered by the WMS capabilities
  */
 @Component({
-  selector: 'n52-ol-layer-legend-url',
-  templateUrl: './ol-layer-legend-url.component.html'
+    selector: 'n52-ol-layer-legend-url',
+    templateUrl: './ol-layer-legend-url.component.html',
+    standalone: true
 })
 export class OlLayerLegendUrlComponent {
 

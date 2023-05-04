@@ -10,9 +10,9 @@ describe('LayerVisibleTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [LayerVisibleTogglerComponent],
-      providers: [MapCache]
-    }).compileComponents();
+    imports: [LayerVisibleTogglerComponent],
+    providers: [MapCache]
+}).compileComponents();
   }));
 
   beforeEach(() => {

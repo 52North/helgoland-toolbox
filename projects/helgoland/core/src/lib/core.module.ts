@@ -34,28 +34,26 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
  * - time service for calculations
  */
 @NgModule({
-  declarations: [
-    MatchLabelPipe,
-    TzDatePipe,
-  ],
-  imports: [
-    HttpClientModule
-  ],
-  exports: [
-    MatchLabelPipe,
-    TzDatePipe,
-  ],
-  providers: [
-    ColorService,
-    DatasetApiMapping,
-    DefinedTimespanService,
-    InternalIdHandler,
-    LocalStorage,
-    NotifierService,
-    StatusIntervalResolverService,
-    SumValuesService,
-    HttpService,
-    Time
-  ]
+    imports: [
+        HttpClientModule,
+        MatchLabelPipe,
+        TzDatePipe
+    ],
+    exports: [
+        MatchLabelPipe,
+        TzDatePipe,
+    ],
+    providers: [
+        ColorService,
+        DatasetApiMapping,
+        DefinedTimespanService,
+        InternalIdHandler,
+        LocalStorage,
+        NotifierService,
+        StatusIntervalResolverService,
+        SumValuesService,
+        HttpService,
+        Time
+    ]
 })
 export class HelgolandCoreModule { }

@@ -11,9 +11,8 @@ describe('OlLayerTimeSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [OlLayerTimeSelectorComponent],
-      imports: [FormsModule, HelgolandCoreModule]
-    }).compileComponents();
+    imports: [FormsModule, HelgolandCoreModule, OlLayerTimeSelectorComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

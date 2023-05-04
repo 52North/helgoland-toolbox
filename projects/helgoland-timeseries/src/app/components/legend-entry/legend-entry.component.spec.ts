@@ -19,11 +19,7 @@ describe('LegendEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        LegendEntryComponent,
-        FavoriteToggleButtonComponent
-      ],
-      imports: [
+    imports: [
         HelgolandCommonModule,
         HelgolandCoreModule,
         HelgolandDatasetlistModule,
@@ -35,8 +31,10 @@ describe('LegendEntryComponent', () => {
         MatTooltipModule,
         NoopAnimationsModule,
         TranslateTestingModule,
-      ]
-    }).compileComponents();
+        LegendEntryComponent,
+        FavoriteToggleButtonComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

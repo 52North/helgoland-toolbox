@@ -9,11 +9,11 @@ describe('AutoUpdateTimespanComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule
-      ],
-      declarations: [AutoUpdateTimespanComponent]
-    })
+    imports: [
+        HelgolandCoreModule,
+        AutoUpdateTimespanComponent
+    ]
+})
       .compileComponents();
   }));
 

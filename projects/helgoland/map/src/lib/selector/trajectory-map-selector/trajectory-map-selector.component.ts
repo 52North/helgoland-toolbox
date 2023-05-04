@@ -29,7 +29,8 @@ import { TrajectoryResult } from '../model/trajectory-result';
 @Component({
     selector: 'n52-profile-trajectory-map-selector',
     templateUrl: '../map-selector.component.html',
-    styleUrls: ['../map-selector.component.scss']
+    styleUrls: ['../map-selector.component.scss'],
+    standalone: true
 })
 export class ProfileTrajectoryMapSelectorComponent
     extends MapSelectorComponent<TrajectoryResult>

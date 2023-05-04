@@ -13,15 +13,15 @@ describe('LegendEntryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LegendEntryComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         MatCheckboxModule,
         MatIconModule,
-        ColorPickerModule
-      ]
-    }).compileComponents();
+        ColorPickerModule,
+        LegendEntryComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

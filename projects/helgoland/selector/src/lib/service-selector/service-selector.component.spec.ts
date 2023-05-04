@@ -13,19 +13,17 @@ describe('ServiceSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        ServiceSelectorComponent
+    ],
+    providers: [
         ServiceSelectorService,
         SettingsServiceTestingProvider,
-      ],
-      declarations: [
-        ServiceSelectorComponent
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

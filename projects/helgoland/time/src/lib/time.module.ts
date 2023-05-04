@@ -22,16 +22,14 @@ const COMPONENTS = [
  * - different time controls to manipulate a timestamp or timeinterval
  */
 @NgModule({
-  declarations: [
-    COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HelgolandCoreModule
-  ],
-  exports: [
-    COMPONENTS
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        HelgolandCoreModule,
+        COMPONENTS
+    ],
+    exports: [
+        COMPONENTS
+    ]
 })
 export class HelgolandTimeModule { }

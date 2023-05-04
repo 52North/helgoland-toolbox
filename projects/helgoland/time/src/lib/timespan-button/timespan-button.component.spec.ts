@@ -9,11 +9,11 @@ describe('TimespanButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [TimespanButtonComponent],
+    providers: [
         DefinedTimespanService
-      ],
-      declarations: [TimespanButtonComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

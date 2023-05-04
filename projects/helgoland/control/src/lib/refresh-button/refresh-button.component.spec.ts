@@ -9,9 +9,9 @@ describe('RefreshButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RefreshButtonComponent],
-      providers: [SettingsService]
-    }).compileComponents();
+    imports: [RefreshButtonComponent],
+    providers: [SettingsService]
+}).compileComponents();
   }));
 
   beforeEach(() => {

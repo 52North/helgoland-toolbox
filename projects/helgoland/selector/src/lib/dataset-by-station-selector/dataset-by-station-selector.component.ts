@@ -1,13 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-    DatasetType,
-    HelgolandDataset,
-    HelgolandPlatform,
-    HelgolandServicesConnector,
-    HelgolandTimeseries,
-    Required,
-} from '@helgoland/core';
+import { DatasetType, HelgolandDataset, HelgolandPlatform, HelgolandServicesConnector, HelgolandTimeseries, Required, TzDatePipe } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 
 export class SelectableDataset extends HelgolandTimeseries {
     public selected = false;
@@ -16,7 +11,9 @@ export class SelectableDataset extends HelgolandTimeseries {
 @Component({
     selector: 'n52-dataset-by-station-selector',
     templateUrl: './dataset-by-station-selector.component.html',
-    styleUrls: ['./dataset-by-station-selector.component.scss']
+    styleUrls: ['./dataset-by-station-selector.component.scss'],
+    standalone: true,
+    imports: [NgFor, NgIf, NgClass, HelgolandLabelMapperModule, TzDatePipe]
 })
 export class DatasetByStationSelectorComponent implements OnInit {
 

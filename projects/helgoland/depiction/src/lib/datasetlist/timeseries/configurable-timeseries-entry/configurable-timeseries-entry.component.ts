@@ -10,9 +10,10 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
  *  - triggers the show geometry event
  */
 @Component({
-  selector: 'n52-configurable-timeseries-entry',
-  templateUrl: './configurable-timeseries-entry.component.html',
-  styleUrls: ['./configurable-timeseries-entry.component.css']
+    selector: 'n52-configurable-timeseries-entry',
+    templateUrl: './configurable-timeseries-entry.component.html',
+    styleUrls: ['./configurable-timeseries-entry.component.css'],
+    standalone: true
 })
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
 

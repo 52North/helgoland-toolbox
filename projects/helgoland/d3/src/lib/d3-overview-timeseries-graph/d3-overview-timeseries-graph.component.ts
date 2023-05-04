@@ -13,11 +13,15 @@ import {
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
 import { D3PlotOptions } from '../model/d3-plot-options';
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'n52-d3-overview-timeseries-graph',
     templateUrl: './d3-overview-timeseries-graph.component.html',
-    styleUrls: ['./d3-overview-timeseries-graph.component.scss']
+    styleUrls: ['./d3-overview-timeseries-graph.component.scss'],
+    standalone: true,
+    imports: [NgIf, D3TimeseriesGraphComponent]
 })
 export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, OnDestroy, OnInit {
 

@@ -1,17 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Required } from '@helgoland/core';
+import { Required, TzDatePipe } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
 import Layer from 'ol/layer/Layer';
 import { TileWMS } from 'ol/source';
 
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
 
 /**
  * Legend component to select time stamps of a layer, the time information is gathered by the WMS capabilities
  */
 @Component({
-  selector: 'n52-ol-layer-time-selector',
-  templateUrl: './ol-layer-time-selector.component.html'
+    selector: 'n52-ol-layer-time-selector',
+    templateUrl: './ol-layer-time-selector.component.html',
+    standalone: true,
+    imports: [NgIf, FormsModule, NgFor, TzDatePipe]
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 

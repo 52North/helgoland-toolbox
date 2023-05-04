@@ -13,21 +13,19 @@ describe('ModalListSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ModalListSettingsComponent
-      ],
-      imports: [
+    imports: [
         TranslateTestingModule,
         HttpClientModule,
         HelgolandCommonModule,
         MatDialogModule,
-        HelgolandSelectorModule
-      ],
-      providers: [
+        HelgolandSelectorModule,
+        ModalListSettingsComponent
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

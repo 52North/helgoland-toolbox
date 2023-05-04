@@ -42,15 +42,7 @@ describe('DiagramViewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        DiagramViewComponent,
-        ModalMainConfigButtonComponent,
-        ModalFavoriteListButtonComponent,
-        LegendEntryComponent,
-        GeneralTimeSelectionComponent,
-        FavoriteToggleButtonComponent,
-      ],
-      imports: [
+    imports: [
         HelgolandCommonModule,
         HelgolandCoreModule,
         HelgolandD3Module,
@@ -72,8 +64,14 @@ describe('DiagramViewComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         TranslateTestingModule,
-      ]
-    }).compileComponents();
+        DiagramViewComponent,
+        ModalMainConfigButtonComponent,
+        ModalFavoriteListButtonComponent,
+        LegendEntryComponent,
+        GeneralTimeSelectionComponent,
+        FavoriteToggleButtonComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

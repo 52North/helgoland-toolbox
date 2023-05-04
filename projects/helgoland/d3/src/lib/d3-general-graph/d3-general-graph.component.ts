@@ -18,7 +18,8 @@ import {
 @Component({
     selector: 'n52-d3-general-graph',
     templateUrl: './d3-general-graph.component.html',
-    styleUrls: ['./d3-general-graph.component.scss']
+    styleUrls: ['./d3-general-graph.component.scss'],
+    standalone: true
 })
 export class D3GeneralGraphComponent implements AfterViewInit, OnChanges {
 

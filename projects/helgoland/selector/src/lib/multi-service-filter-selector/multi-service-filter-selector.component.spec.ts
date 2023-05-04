@@ -13,17 +13,17 @@ describe('MultiServiceFilterSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        MultiServiceFilterSelectorComponent
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ],
-      declarations: [MultiServiceFilterSelectorComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
@@ -45,17 +45,17 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        MultiServiceFilterSelectorComponent
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ],
-      declarations: [MultiServiceFilterSelectorComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

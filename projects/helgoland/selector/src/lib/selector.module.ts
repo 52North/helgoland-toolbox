@@ -22,29 +22,27 @@ import { ServiceSelectorService } from './service-selector/service-selector.serv
  *   - service selection component
  */
 @NgModule({
-  declarations: [
-    ServiceSelectorComponent,
-    ServiceFilterSelectorComponent,
-    DatasetByStationSelectorComponent,
-    MultiServiceFilterSelectorComponent,
-    ListSelectorComponent
-  ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    HelgolandLabelMapperModule,
-    HelgolandCoreModule
-  ],
-  exports: [
-    ServiceSelectorComponent,
-    ServiceFilterSelectorComponent,
-    DatasetByStationSelectorComponent,
-    MultiServiceFilterSelectorComponent,
-    ListSelectorComponent
-  ],
-  providers: [
-    ServiceSelectorService,
-    ListSelectorService
-  ]
+    imports: [
+        CommonModule,
+        TranslateModule,
+        HelgolandLabelMapperModule,
+        HelgolandCoreModule,
+        ServiceSelectorComponent,
+        ServiceFilterSelectorComponent,
+        DatasetByStationSelectorComponent,
+        MultiServiceFilterSelectorComponent,
+        ListSelectorComponent
+    ],
+    exports: [
+        ServiceSelectorComponent,
+        ServiceFilterSelectorComponent,
+        DatasetByStationSelectorComponent,
+        MultiServiceFilterSelectorComponent,
+        ListSelectorComponent
+    ],
+    providers: [
+        ServiceSelectorService,
+        ListSelectorService
+    ]
 })
 export class HelgolandSelectorModule { }

@@ -7,11 +7,15 @@ import {
   InternalIdHandler,
   Timespan,
 } from '@helgoland/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'n52-dataset-permalink-download',
-  templateUrl: './dataset-permalink-download.component.html',
-  styleUrls: ['./dataset-permalink-download.component.css']
+    selector: 'n52-dataset-permalink-download',
+    templateUrl: './dataset-permalink-download.component.html',
+    styleUrls: ['./dataset-permalink-download.component.css'],
+    standalone: true,
+    imports: [NgIf, TranslateModule]
 })
 export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
 

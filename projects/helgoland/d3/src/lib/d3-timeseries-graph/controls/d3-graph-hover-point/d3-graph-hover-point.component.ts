@@ -30,9 +30,10 @@ interface BarHoverElement extends HoveredElement {
 }
 
 @Component({
-  selector: 'n52-d3-graph-hover-point',
-  template: '',
-  styleUrls: ['./d3-graph-hover-point.component.scss']
+    selector: 'n52-d3-graph-hover-point',
+    template: '',
+    styleUrls: ['./d3-graph-hover-point.component.scss'],
+    standalone: true
 })
 export class D3GraphHoverPointComponent extends D3TimeseriesGraphControl {
 

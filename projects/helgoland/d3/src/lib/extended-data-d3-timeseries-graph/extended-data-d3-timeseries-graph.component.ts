@@ -27,6 +27,12 @@ import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.servi
 import { DataConst, InternalDataEntry } from '../model/d3-general';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
+import { D3GraphOverviewSelectionComponent } from '../d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import { D3GraphHoverPointComponent } from '../d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import { D3GraphHoverLineComponent } from '../d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
+import { NgIf } from '@angular/common';
+import { D3GraphCopyrightComponent } from '../d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphPanZoomInteractionComponent } from '../d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 
 /**
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
@@ -68,11 +74,13 @@ export interface AdditionalDataEntry {
  * the array is reset.
  */
 @Component({
-  selector: 'n52-extended-data-d3-timeseries-graph',
-  templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
-  styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
-  providers: [D3GraphId],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-extended-data-d3-timeseries-graph',
+    templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
+    styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
+    providers: [D3GraphId],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, NgIf, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
 })
 export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit {
 

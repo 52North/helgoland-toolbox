@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Required } from '@helgoland/core';
 
 @Component({
-  selector: 'n52-permalink-new-window',
-  templateUrl: './permalink-new-window.component.html'
+    selector: 'n52-permalink-new-window',
+    templateUrl: './permalink-new-window.component.html',
+    standalone: true
 })
 export class PermalinkNewWindowComponent {
 

@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Required, Time, Timespan } from '@helgoland/core';
 
 @Component({
-  selector: 'n52-auto-update-timespan',
-  templateUrl: './auto-update-timespan.component.html',
-  styleUrls: ['./auto-update-timespan.component.css']
+    selector: 'n52-auto-update-timespan',
+    templateUrl: './auto-update-timespan.component.html',
+    styleUrls: ['./auto-update-timespan.component.css'],
+    standalone: true
 })
 export class AutoUpdateTimespanComponent {
 

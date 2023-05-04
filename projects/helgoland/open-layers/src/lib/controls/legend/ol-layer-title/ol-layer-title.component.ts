@@ -9,8 +9,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
  * Legend component to display the title, gathered by the WMS capabilities
  */
 @Component({
-  selector: 'n52-ol-layer-title',
-  templateUrl: './ol-layer-title.component.html'
+    selector: 'n52-ol-layer-title',
+    templateUrl: './ol-layer-title.component.html',
+    standalone: true
 })
 export class OlLayerTitleComponent implements OnInit {
 

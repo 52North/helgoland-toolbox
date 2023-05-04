@@ -9,8 +9,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
  * Legend component to display the abstract, gathered by the WMS capabilities
  */
 @Component({
-  selector: 'n52-ol-layer-abstract',
-  templateUrl: './ol-layer-abstract.component.html'
+    selector: 'n52-ol-layer-abstract',
+    templateUrl: './ol-layer-abstract.component.html',
+    standalone: true
 })
 export class OlLayerAbstractComponent implements OnInit {
 

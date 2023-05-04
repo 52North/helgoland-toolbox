@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'n52-min-max-range',
-  templateUrl: './min-max-range.component.html',
-  styleUrls: ['./min-max-range.component.css']
+    selector: 'n52-min-max-range',
+    templateUrl: './min-max-range.component.html',
+    styleUrls: ['./min-max-range.component.css'],
+    standalone: true,
+    imports: [FormsModule]
 })
 export class MinMaxRangeComponent implements OnChanges {
 

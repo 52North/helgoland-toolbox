@@ -10,12 +10,12 @@ describe('TimespanShiftSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [TimespanShiftSelectorComponent]
-    }).compileComponents();
+        TranslateTestingModule,
+        TimespanShiftSelectorComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

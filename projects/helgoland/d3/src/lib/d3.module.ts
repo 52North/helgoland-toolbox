@@ -55,28 +55,28 @@ const COMPONENTS = [
  * - graph export control
  */
 @NgModule({
-  declarations: COMPONENTS,
-  imports: [
-    HelgolandCoreModule,
-    CommonModule
-  ],
-  exports: COMPONENTS,
-  providers: [
-    D3TimeFormatLocaleService,
-    D3TimeseriesGraphComponent,
-    // configured default generalizer, can be overridden by self provided service
-    {
-      provide: D3DataGeneralizer,
-      useClass: D3DataSimpleGeneralizer
-    },
-    {
-      provide: D3AssistantService,
-      useClass: EmptyAssistantService
-    },
-    {
-      provide: D3TimeseriesGraphErrorHandler,
-      useClass: D3TimeseriesSimpleGraphErrorHandler
-    }
-  ]
+    imports: [
+        HelgolandCoreModule,
+        CommonModule,
+        ...COMPONENTS
+    ],
+    exports: COMPONENTS,
+    providers: [
+        D3TimeFormatLocaleService,
+        D3TimeseriesGraphComponent,
+        // configured default generalizer, can be overridden by self provided service
+        {
+            provide: D3DataGeneralizer,
+            useClass: D3DataSimpleGeneralizer
+        },
+        {
+            provide: D3AssistantService,
+            useClass: EmptyAssistantService
+        },
+        {
+            provide: D3TimeseriesGraphErrorHandler,
+            useClass: D3TimeseriesSimpleGraphErrorHandler
+        }
+    ]
 })
 export class HelgolandD3Module { }

@@ -16,11 +16,7 @@ describe('ModalFavoriteListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ModalFavoriteListComponent,
-        EditLabelComponent
-      ],
-      imports: [
+    imports: [
         FormsModule,
         HelgolandCoreModule,
         HelgolandFavoriteModule,
@@ -28,8 +24,10 @@ describe('ModalFavoriteListComponent', () => {
         MatFormFieldModule,
         MatIconModule,
         TranslateTestingModule,
-      ]
-    }).compileComponents();
+        ModalFavoriteListComponent,
+        EditLabelComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

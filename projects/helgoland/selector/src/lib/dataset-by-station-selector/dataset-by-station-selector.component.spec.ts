@@ -14,21 +14,19 @@ describe('DatasetByStationSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         TranslateTestingModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-      ],
-      providers: [
+        DatasetByStationSelectorComponent
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         DatasetApiV1ConnectorProvider,
-      ],
-      declarations: [
-        DatasetByStationSelectorComponent
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,17 +11,15 @@ describe('FirstLatestTimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [
+        TranslateTestingModule,
         FirstLatestTimeseriesEntryComponent
-      ],
-      providers: [
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ]
-    })
+    ]
+})
       .compileComponents();
   }));
 

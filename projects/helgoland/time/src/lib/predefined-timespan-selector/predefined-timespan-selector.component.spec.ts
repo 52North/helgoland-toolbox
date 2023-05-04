@@ -9,12 +9,12 @@ describe('PredefinedTimespanSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    imports: [PredefinedTimespanSelectorComponent],
+    providers: [
         SettingsService,
         DefinedTimespanService
-      ],
-      declarations: [PredefinedTimespanSelectorComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

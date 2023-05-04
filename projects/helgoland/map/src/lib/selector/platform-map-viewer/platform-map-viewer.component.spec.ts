@@ -9,11 +9,10 @@ describe('PlatformMapViewerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandMapSelectorModule
-      ],
-      declarations: []
-    })
+    ]
+})
       .compileComponents();
   }));
 

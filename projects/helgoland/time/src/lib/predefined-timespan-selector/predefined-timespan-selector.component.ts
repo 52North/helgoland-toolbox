@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ParsedTimespanPreset, Required, Settings, SettingsService, Timespan, TimespanPreset } from '@helgoland/core';
+import { NgFor, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'n52-predefined-timespan-selector',
-  templateUrl: './predefined-timespan-selector.component.html',
-  styleUrls: ['./predefined-timespan-selector.component.scss']
+    selector: 'n52-predefined-timespan-selector',
+    templateUrl: './predefined-timespan-selector.component.html',
+    styleUrls: ['./predefined-timespan-selector.component.scss'],
+    standalone: true,
+    imports: [NgFor, NgClass]
 })
 
 export class PredefinedTimespanSelectorComponent implements OnInit {
