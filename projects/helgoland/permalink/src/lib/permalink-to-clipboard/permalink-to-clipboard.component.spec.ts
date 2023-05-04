@@ -21,6 +21,7 @@ describe('PermalinkToClipboardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PermalinkToClipboardComponent);
     component = fixture.componentInstance;
+    component.url = "test";
     fixture.detectChanges();
   });
 

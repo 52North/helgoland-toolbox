@@ -3,6 +3,7 @@ import { HelgolandCoreModule } from '@helgoland/core';
 
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { DatasetExportComponent } from './dataset-export.component';
+import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 
 describe('DatasetExportComponent', () => {
   let component: DatasetExportComponent;
@@ -14,7 +15,9 @@ describe('DatasetExportComponent', () => {
         HelgolandCoreModule,
         TranslateTestingModule
       ],
-      providers: [],
+      providers: [
+        SettingsServiceTestingProvider
+      ],
       declarations: [DatasetExportComponent]
     }).compileComponents();
   }));

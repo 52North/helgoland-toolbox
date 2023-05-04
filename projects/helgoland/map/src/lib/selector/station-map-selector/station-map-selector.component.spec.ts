@@ -13,6 +13,7 @@ import {
 } from '@helgoland/core';
 import { Observable, of } from 'rxjs';
 
+import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { MapCache } from '../../base/map-cache.service';
 import { StationMapSelectorComponent } from './station-map-selector.component';
@@ -24,15 +25,15 @@ const timeseries = require('../../../test-data/timeseries.json');
 
 @Injectable()
 class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
-    public getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
+    public override getStations(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Station[]> {
         return of(stations);
     }
 
-    public getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]> {
+    public override getTimeseries(apiUrl: string, params?: ParameterFilter): Observable<Timeseries[]> {
         return of(timeseries);
     }
 
-    public getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras> {
+    public override getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras> {
         return of(require('../../../test-data/timeseriesextras' + id + '.json'));
     }
 }
@@ -54,7 +55,8 @@ describe('StationMapSelectorComponent', () => {
                     provide: DatasetApiInterface,
                     useClass: FakeDatasetApiInterface
                 },
-                MapCache
+                MapCache,
+                SettingsServiceTestingProvider
             ],
             declarations: [StationMapSelectorComponent]
         }).compileComponents();

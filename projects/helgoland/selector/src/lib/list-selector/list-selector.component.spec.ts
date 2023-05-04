@@ -105,16 +105,20 @@ describe('ListSelectorComponent', () => {
     component.parameters = [
       {
         type: MultiServiceFilterEndpoint.category,
-        header: 'Category'
+        header: 'Category',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.feature,
-        header: 'Feature'
+        header: 'Feature',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.phenomenon,
-        header: 'Phenomenon'
+        header: 'Phenomenon',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.procedure,
-        header: 'Procedure'
+        header: 'Procedure',
+        filterList: []
       }
     ];
     component.ngOnChanges({

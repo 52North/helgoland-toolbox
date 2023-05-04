@@ -27,6 +27,7 @@ describe('TrajectoryEntryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrajectoryEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 

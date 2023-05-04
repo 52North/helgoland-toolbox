@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
+import BaseLayer from 'ol/layer/Base';
 
 import { OlLayerAnimateTimeComponent } from './ol-layer-animate-time.component';
 
@@ -17,6 +18,7 @@ describe('OlLayerAnimateTimeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OlLayerAnimateTimeComponent);
     component = fixture.componentInstance;
+    component.layer = new BaseLayer({});
     fixture.detectChanges();
   });
 

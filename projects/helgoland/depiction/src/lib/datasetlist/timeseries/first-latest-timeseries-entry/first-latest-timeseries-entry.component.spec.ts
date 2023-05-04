@@ -28,6 +28,7 @@ describe('FirstLatestTimeseriesEntryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FirstLatestTimeseriesEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = "temp__temp";
     fixture.detectChanges();
   });
 

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HelgolandCoreModule } from '@helgoland/core';
 
 import { OlLayerTimeSelectorComponent } from './ol-layer-time-selector.component';
+import BaseLayer from 'ol/layer/Base';
 
 describe('OlLayerTimeSelectorComponent', () => {
   let component: OlLayerTimeSelectorComponent;
@@ -18,6 +19,7 @@ describe('OlLayerTimeSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OlLayerTimeSelectorComponent);
     component = fixture.componentInstance;
+    component.layer = new BaseLayer({});
     fixture.detectChanges();
   });
 

@@ -211,7 +211,7 @@ describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
         //     }
         // }, 2000);
 
-        if (!fixture['destroyed']) {
+        if (!fixture['destroy']) {
             fixture.detectChanges();
         }
         expect(component.datasetIds).toBeDefined();

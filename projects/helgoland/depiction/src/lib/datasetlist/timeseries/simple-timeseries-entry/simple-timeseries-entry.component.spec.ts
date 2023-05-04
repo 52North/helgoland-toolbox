@@ -26,6 +26,7 @@ describe('SimpleTimeseriesEntryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SimpleTimeseriesEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = "temp__temp";
     fixture.detectChanges();
   });
 

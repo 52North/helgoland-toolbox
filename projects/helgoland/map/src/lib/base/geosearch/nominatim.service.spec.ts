@@ -19,8 +19,8 @@ describe('NominatimService', () => {
     });
   });
 
-  beforeEach(inject([NominatimGeoSearchService], s => {
-    nominatimService = s;
+  beforeEach(inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {
+    nominatimService = service;
   }));
 
   it('should be created', inject([NominatimGeoSearchService], (service: NominatimGeoSearchService) => {

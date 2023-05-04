@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
+import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download.component';
 
@@ -14,6 +15,9 @@ describe('DatasetPermalinkDownloadComponent', () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule
+      ],
+      providers: [
+        SettingsServiceTestingProvider
       ]
     }).compileComponents();
   }));
