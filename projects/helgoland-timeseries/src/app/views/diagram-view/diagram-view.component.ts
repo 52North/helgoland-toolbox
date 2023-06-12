@@ -126,13 +126,13 @@ export class DiagramViewComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.permalinkSrvc.validatePeramlink();
+    this.permalinkSrvc.validatePeramlink().subscribe(res => {
+      if (!this.timeseries.hasDatasets()) {
+        this.openMapSelection();
+      }
+    });
     this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     this.setDatasets();
-
-    if (!this.timeseries.hasDatasets()) {
-      this.openMapSelection();
-    }
   }
 
   setSelected(selectedIds: string[]) {

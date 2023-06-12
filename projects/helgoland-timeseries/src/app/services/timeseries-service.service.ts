@@ -53,10 +53,12 @@ export class TimeseriesService extends RenderingHintsDatasetService<DatasetOptio
     this.timeSrvc.saveTimespan(TIME_CACHE_PARAM, this._timespan);
   }
 
-  public override removeAllDatasets() {
+  public override removeAllDatasets(quiet?: boolean) {
     super.removeAllDatasets();
-    this.la.announce(this.translate.instant('events.all-timeseries-removed'));
-    this.notifier.notify(this.translate.instant('events.all-timeseries-removed'));
+    if (!quiet) {
+      this.la.announce(this.translate.instant('events.all-timeseries-removed'));
+      this.notifier.notify(this.translate.instant('events.all-timeseries-removed'));
+    }
   }
 
   override removeDataset(internalId: string): void {
