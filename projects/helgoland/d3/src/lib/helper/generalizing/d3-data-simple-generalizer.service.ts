@@ -7,7 +7,7 @@ import { D3DataGeneralizer } from './d3-data-generalizer';
 export class D3DataSimpleGeneralizer extends D3DataGeneralizer {
 
   public generalizeData(data: HelgolandTimeseriesData, imageWidth: number, timespan: Timespan): Data<TimeValueTuple> {
-    if (data.values.length > imageWidth && data.values.length > 0) {
+    if (imageWidth > 0 && data.values.length > imageWidth && data.values.length > 0) {
       const duration = timespan.to - timespan.from;
       const dataduration = data.values[data.values.length - 1][0] - data.values[0][0];
       const factor = duration / dataduration;
