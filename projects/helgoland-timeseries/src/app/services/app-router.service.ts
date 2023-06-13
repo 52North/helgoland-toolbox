@@ -34,11 +34,15 @@ export class AppRouterService {
   }
 
   public toMapSelection() {
-    this.router.navigate([MAP_SELECTION_ROUTE]);
+    if (this.router.url.indexOf(LIST_SELECTION_ROUTE) === -1) {
+      this.router.navigate([MAP_SELECTION_ROUTE]);
+    }
   }
 
   public toListSelection() {
-    this.router.navigate([LIST_SELECTION_ROUTE]);
+    if (this.router.url.indexOf(MAP_SELECTION_ROUTE) === -1) {
+      this.router.navigate([LIST_SELECTION_ROUTE]);
+    }
   }
 
   public resetNavigation() {
