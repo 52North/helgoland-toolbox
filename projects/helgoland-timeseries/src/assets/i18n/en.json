@@ -37,6 +37,7 @@
 	"favorites.title": "Favorites",
 	"legend-entry.edit-dataset-button.tooltip": "Style timeseries",
 	"legend-entry.remove-entry-button.tooltip": "Remove timeseries",
+	"legend-entry.separateYAxis.tooltip": "Show timeseries with separate y-axis",
 	"legend-entry.toggle-selection-button.tooltip": "Highlight timeseries",
 	"legend-entry.toggle-visibility-button.tooltip": "Toggle visibility",
 	"list-config.title": "Provider selection",

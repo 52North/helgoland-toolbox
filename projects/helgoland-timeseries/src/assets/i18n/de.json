@@ -37,6 +37,7 @@
 	"favorites.title": "Favoriten",
 	"legend-entry.edit-dataset-button.tooltip": "Zeitreihe anpassen",
 	"legend-entry.remove-entry-button.tooltip": "Zeitreihe entfernen",
+	"legend-entry.separateYAxis.tooltip": "Zeitreihe mit eigener Y-Achse darstellen",
 	"legend-entry.toggle-selection-button.tooltip": "Zeitreihe hervorheben",
 	"legend-entry.toggle-visibility-button.tooltip": "Zeitreihe verbergen",
 	"list-config.title": "Anbieterauswahl",

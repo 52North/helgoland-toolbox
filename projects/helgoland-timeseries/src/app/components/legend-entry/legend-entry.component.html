@@ -44,6 +44,11 @@
         <helgoland-timeseries-entry-symbol [options]="datasetOptions" [size]="48">
         </helgoland-timeseries-entry-symbol>
       </button>
+      <button mat-icon-button (click)="toggleSeparateYAxis(); $event.stopPropagation()"
+        attr.aria-label="{{'legend-entry.separateYAxis.tooltip' | translate}}"
+        matTooltip="{{'legend-entry.separateYAxis.tooltip' | translate}}">
+        <mat-icon>{{datasetOptions.separateYAxis ? 'unfold_less' : 'unfold_more'}}</mat-icon>
+      </button>
       <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
       </helgoland-favorite-toggle-button>
     </div>

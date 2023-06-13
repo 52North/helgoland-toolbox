@@ -58,4 +58,9 @@ export class LegendEntryComponent extends TimeseriesEntryComponent {
     const message = `${this.translateSrvc.instant('events.remove-timeseries')} ${this.dataset!.label}`;
     this.liveAnnouncer.announce(message);
   }
+
+  toggleSeparateYAxis() {
+    this.datasetOptions.separateYAxis = !this.datasetOptions.separateYAxis;
+    this.onUpdateOptions.emit(this.datasetOptions);
+  }
 }
