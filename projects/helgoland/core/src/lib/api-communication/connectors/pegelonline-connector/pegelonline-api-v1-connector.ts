@@ -3,10 +3,9 @@ import moment from 'moment';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { FirstLastValue, Phenomenon } from '../../../../public-api';
+import { FirstLastValue, Offering, Phenomenon, TimeValueTuple } from '../../../../public-api';
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
-import { LocalStorage } from '../../../local-storage/local-storage.service';
 import { Category } from '../../../model/dataset-api/category';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Parameter } from '../../../model/dataset-api/parameter';
@@ -38,6 +37,9 @@ interface PegelonlineTimeseries extends PegelonlineEntity {
   equidistance: number;
   start: string;
   unit: string;
+  gauges: {
+    exchangeNumber: string;
+  }[]
   currentMeasurement: {
     timestamp: string;
     value: number;
@@ -73,8 +75,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
   name = 'PegelonlineApiConnector';
 
   constructor(
-    protected http: HttpService,
-    private localStorage: LocalStorage
+    protected http: HttpService
   ) { }
 
   canHandle(url: string): Observable<boolean> {
@@ -89,51 +90,31 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
   }
 
   getServices(apiUrl: string, params: HelgolandParameterFilter): Observable<HelgolandService[]> {
-
-    return new Observable((observer: Observer<HelgolandService[]>) => {
-      observer.next([this.createService(apiUrl)]);
-
-      observer.complete();
-    });
+    return of([this.createService(apiUrl)]);
   }
 
   getService(id: string, url: string, params: HelgolandParameterFilter): Observable<HelgolandService> {
-
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
   getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {
-    return new Observable((observer: Observer<Category[]>) => {
+    return this.httpCall<PegelonlineWater[]>(url, 'waters', this.createCategoriesFilter(filter))
+      .pipe(map(res => res.map(e => this.createCategory(e))));
+  }
 
-      this.httpCall<any[]>(url, 'waters', this.createCategoriesFilter(filter)).subscribe(res => {
-
-        let categories: Category[] = [];
-
-        for (const [key, value] of Object.entries(res)) {
-
-          categories.push({
-            id: value.shortname,
-            label: this.ucwords(value.longname)
-          });
-        }
-
-        observer.next(categories);
-        observer.complete();
-      });
-    });
+  private createCategory(e: PegelonlineWater): Category {
+    return {
+      id: e.shortname,
+      label: this.ucwords(e.longname)
+    };
   }
 
   protected createCategoriesFilter(filter: HelgolandParameterFilter): string {
-
     let parameter: string[] = [];
-
     if (filter.phenomenon)
       parameter.push(`timeseries=${filter.phenomenon}&includeTimeseries=true`);
-
     if (filter.feature)
       parameter.push(`stations=${filter.feature}&includeStations=true`);
-
-
     return parameter.join('&');
   }
 
@@ -146,16 +127,15 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     return this.http.client().get<T>(`${apiUrl}${endpoint}/${parameters}`);
   }
 
-
-  getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getCategory(id: string, url: string, filter: HelgolandParameterFilter): Observable<Category> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
-  getOfferings(url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getOfferings(url: string, filter: HelgolandParameterFilter): Observable<Offering[]> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
-  getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
@@ -185,24 +165,20 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     return this.adjustList(Array.from(phenomenons.values()));
   }
 
-  protected createPhenomenaFilter(filter: HelgolandParameterFilter): string {
+  private createPhenomenaFilter(filter: HelgolandParameterFilter): string {
     let parameter: string[] = ['includeTimeseries=true'];
-
     if (filter.feature)
       parameter.push(`ids=${filter.feature}`);
-
     if (filter.category)
       parameter.push(`waters=${filter.category}`);
-
     return parameter.join('&');
   }
 
-  getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
   getProcedures(url: string, filter: HelgolandParameterFilter): Observable<Procedure[]> {
-    // ???
     return new Observable((observer: Observer<Procedure[]>) => {
       observer.next([{
         id: '0',
@@ -212,12 +188,12 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     });
   }
 
-  getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<Procedure> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
   getFeatures(url: string, filter: HelgolandParameterFilter): Observable<Feature[]> {
-    return this.httpCall<any[]>(url, 'stations', this.createFeaturesFilter(filter)).pipe(
+    return this.httpCall<PegelonlineStation[]>(url, 'stations', this.createFeaturesFilter(filter)).pipe(
       map(res => {
         let features: Feature[] = [];
         for (const [key, value] of Object.entries(res)) {
@@ -230,26 +206,23 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     );
   }
 
-  protected createFeaturesFilter(filter: HelgolandParameterFilter) {
+  private createFeaturesFilter(filter: HelgolandParameterFilter) {
     let parameter: string[] = [];
-
     if (filter.phenomenon)
       parameter.push(`timeseries=${filter.phenomenon}&includeTimeseries=true`);
-
     if (filter.category)
       parameter.push(`waters=${filter.category}`);
-
     return parameter.length ? parameter.join('&') : undefined;
   }
 
-  prepFeature(item: any): Feature {
+  private prepFeature(item: PegelonlineStation): Feature {
     return {
       id: item.uuid,
       label: this.ucwords(item.longname)
     };
   }
 
-  getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
+  getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature> {
     return this.httpCall(url, 'stations', 'includeTimeseries=true');
   }
 
@@ -284,10 +257,8 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     let lat = 52;
     if (item.latitude)
       lat = item.latitude;
-
     if (item.longitude)
       lon = item.longitude;
-
     return {
       id: item.uuid,
       label: item.longname,
@@ -299,55 +270,39 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     };
   }
 
-
-  private getStationTimeseries(stationData: any | undefined): string[] {
-
+  private getStationTimeseries(stationData: PegelonlineStation): string[] {
     let ret: string[] = [];
     if (stationData.timeseries) {
-      stationData.timeseries.forEach((timeset: any) => {
-
+      stationData.timeseries.forEach((timeset) => {
         if (timeset.gauges) {
-          timeset.gauges.forEach((gauge: any) => {
-
+          timeset.gauges.forEach((gauge) => {
             ret.push(`${stationData.uuid}/${gauge.exchangeNumber}/${timeset.shortname}`);
           });
         }
       });
     }
-
-    return (stationData) ? ret : [];
+    return ret;
   }
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
-
     return new Observable((observer: Observer<HelgolandDataset[]>) => {
-      this.httpCall<any[]>(url, 'stations', this.createDatasetsFilter(filter)).subscribe(
+      this.httpCall<PegelonlineStation[]>(url, 'stations', this.createDatasetsFilter(filter)).subscribe(
         res => {
-
           let ret: HelgolandDataset[] = [];
           for (const [key, value] of Object.entries(res)) {
-
             let item = value;
-            item.timeseries.forEach((timeset: any) => {
-
+            item.timeseries.forEach((timeset) => {
               let longname = timeset.longname;
-
               if (timeset.gauges) {
-                timeset.gauges.forEach((gauge: any) => {
-                  //timeset.longname = '';
+                timeset.gauges.forEach((gauge) => {
                   timeset.longname = `${this.ucwords(longname)} (${timeset.shortname}), ${this.ucwords(item.longname)} (${gauge.exchangeNumber})`;
-                  const dataset = this.prepDataset(url, `${item.uuid}/${gauge.exchangeNumber}`, gauge.exchangeNumber, timeset, false);
-
-                  ret.push(dataset);
+                  const id = `${item.uuid}/${gauge.exchangeNumber}/${timeset.shortname}`;
+                  const label = timeset.longname;
+                  ret.push(new HelgolandDataset(id, url, label));
                 });
               }
-              /* timeset.longname = `${this.ucwords(timeset.longname)} (${timeset.shortname}), ${this.ucwords(item.longname)} (${item.uuid})`;
-              const dataset = this.prepDataset(item.uuid,timeset,false);
-
-              ret.push(dataset); */
             });
           }
-
           observer.next(ret);
           observer.complete();
         },
@@ -360,33 +315,24 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
   }
 
   protected createDatasetsFilter(filter: HelgolandParameterFilter): string {
-
     let parameter: string[] = [];
-
     if (filter.phenomenon)
       parameter.push(`timeseries=${filter.phenomenon}`);
-
     if (filter.feature)
       parameter.push(`ids=${filter.feature}&includeStations=true`);
-
     if (filter.category)
       parameter.push(`waters=${filter.category}`);
-
-
     return `${parameter.join('&')}&includeTimeseries=true`;
   }
 
   getDataset(internalId: PegelonlineInternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     // check if call from selected->emit
     if (internalId.id.indexOf('/') > 0) {
-
       let part = internalId.id.split('/');
-
       internalId.stationId = part[0];
       internalId.gaugeId = part[1];
       internalId.id = part[2];
     }
-
     return new Observable((observer: Observer<HelgolandDataset>) => {
       this.httpCall<PegelonlineStation>(internalId.url, `stations/${internalId.stationId}`, `timeseries=${internalId.id}&includeTimeseries=true&includeCurrentMeasurement=true`).subscribe(
         res => {
@@ -419,55 +365,43 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     });
   }
 
-  protected prepTimeLimitData(data: any): { first: FirstLastValue, last: FirstLastValue } | undefined {
+  protected prepTimeLimitData(data: DatasetItemValue[]): { first: FirstLastValue, last: FirstLastValue } | undefined {
     if (data.length > 0) {
       return {
         first: {
-          timestamp: moment(data[Object.keys(data)[0]].timestamp).valueOf(),
-          value: data[Object.keys(data)[0]].value
+          timestamp: moment(data[0].timestamp).valueOf(),
+          value: data[0].value
         },
         last: {
-          timestamp: moment(data[Object.keys(data)[Object.keys(data).length - 1]].timestamp).valueOf(),
-          value: data[Object.keys(data)[Object.keys(data).length - 1]].value
+          timestamp: moment(data[data.length - 1].timestamp).valueOf(),
+          value: data[data.length - 1].value
         }
       }
     } else {
-      // return [{
-      //   timestamp: 0,
-      //   value: 0
-      // }, {
-      //   timestamp: 0,
-      //   value: 0
-      // }];
       return undefined;
     }
   }
 
-  public prepDataset(url: string, stationId: string | undefined, gaugeId: string | undefined, station: PegelonlineStation, timeseries = true): HelgolandDataset {
-    if (timeseries) {
-      let dataset = station.timeseries[0];
-      const platform = new HelgolandPlatform(station.uuid, this.ucwords(station.longname), [], undefined);
-      const phenomenonLabel = `${this.ucwords(dataset.longname)} (${dataset.shortname}) (${gaugeId})`;
-      const featureLabel = `${station.longname} - ${station.agency}`;
-      const label = `${this.ucwords(dataset.longname)} (${dataset.shortname}) @ ${this.ucwords(station.longname)}`;
-      return new HelgolandTimeseries(`${stationId}/${dataset.shortname}`, url, label, dataset.unit, platform, undefined, undefined, [], undefined,
-        {
-          category: { id: '', label: this.ucwords(station.water.longname) },
-          feature: { id: '', label: featureLabel, domainId: featureLabel },
-          offering: { id: '', label: '2' },
-          phenomenon: { id: dataset.shortname, label: phenomenonLabel },
-          procedure: { id: '', label: 'Einzelwert' },
-          service: { id: '2', label: 'pegelonline.wsv' }
-        }
-      );
-    } else {
-      let dataset = station;
-      return new HelgolandDataset(`${stationId}/${dataset.shortname}`, url, dataset.longname);
-    }
+  private prepDataset(url: string, stationId: string | undefined, gaugeId: string | undefined, station: PegelonlineStation): HelgolandDataset {
+    let dataset = station.timeseries[0];
+    const platform = new HelgolandPlatform(station.uuid, this.ucwords(station.longname), [], undefined);
+    const phenomenonLabel = `${this.ucwords(dataset.longname)} (${dataset.shortname}) (${gaugeId})`;
+    const featureLabel = `${station.longname} - ${station.agency}`;
+    const label = `${this.ucwords(dataset.longname)} (${dataset.shortname}) @ ${this.ucwords(station.longname)}`;
+    return new HelgolandTimeseries(`${stationId}/${dataset.shortname}`, url, label, dataset.unit, platform, undefined, undefined, [], undefined,
+      {
+        category: { id: '', label: this.ucwords(station.water.longname) },
+        feature: { id: '', label: featureLabel, domainId: featureLabel },
+        offering: { id: '', label: '2' },
+        phenomenon: { id: dataset.shortname, label: phenomenonLabel },
+        procedure: { id: '', label: 'Einzelwert' },
+        service: { id: '2', label: 'pegelonline.wsv' }
+      }
+    );
   }
 
 
-  getDatasetLimitValues(ids: PegelonlineInternalDatasetId): Observable<any> {
+  private getDatasetLimitValues(ids: PegelonlineInternalDatasetId): Observable<DatasetItemValue[]> {
     const end = moment().endOf('day');
     const start = moment(end).subtract(1, 'month').startOf('day');
     if (ids.gaugeId) {
@@ -475,18 +409,17 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     } else {
       return this.httpCall(ids.url, `stations/${ids.stationId}/${ids.id}/measurements`, `start=${start.toISOString()}&end=${end.toISOString()}`);
     }
-    throw new Error("No return option found.");
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     if (dataset instanceof HelgolandTimeseries) {
-      return this.requestDatasetData(dataset, timespan)
-        .pipe(map(res => this.createTimeseriesData(res)));
+      return this.requestDatasetData(dataset)
+        .pipe(map(res => this.createTimeseriesData(res, timespan)));
     }
     throw new Error("No return option found.");
   }
 
-  requestDatasetData(dataset: HelgolandDataset, timespan: Timespan) {
+  requestDatasetData(dataset: HelgolandDataset): Observable<DatasetItemValue[]> {
     const end = moment().endOf('day');
     const start = moment(end).subtract(1, 'month').startOf('day');
     if ((dataset.id.match(/\//g) || []).length == 1) {
@@ -500,7 +433,6 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     } else {
       if ((dataset.id.match(/\//g) || []).length == 2) {
         let ids = dataset.id.split('/');
-        let stationId = ids[0];
         let gaugeId = ids[1];
         if (gaugeId) {
           return this.httpCall(dataset.url, `stations/${gaugeId}/measurements.json`, `start=${start.toISOString()}&end=${end.toISOString()}`);
@@ -511,48 +443,27 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     throw new Error("station/ident not given");
   }
 
-  createTimeseriesData(values: any) {
-
-    let items: any[] = [];
-    values.forEach((element: any) => {
-
-      items.push([moment(element.timestamp).valueOf(), element.value]);
+  private createTimeseriesData(values: DatasetItemValue[], timespan: Timespan) {
+    let items: TimeValueTuple[] = [];
+    values.forEach((element, idx) => {
+      const curr = moment(element.timestamp).valueOf();
+      if (curr >= timespan.from && curr <= timespan.to) {
+        items.push([curr, element.value]);
+        return;
+      }
+      const next = moment(values[idx + 1]?.timestamp).valueOf();
+      if (curr <= timespan.from && next >= timespan.from) {
+        items.push([curr, element.value]);
+        return;
+      }
+      const before = moment(values[idx - 1]?.timestamp).valueOf();
+      if (curr >= timespan.to && before <= timespan.to) {
+        items.push([curr, element.value]);
+        return;
+      }
     });
-
-    items = this.generalizeData(items);
-
-
     const data = new HelgolandTimeseriesData(items);
     return data;
-  }
-
-  generalizeData(items: any[]): any[] {
-
-    let days = 31;
-    let valuesPerDay = 48;
-    let dataLength = items.length;
-
-    if (dataLength > (days * valuesPerDay)) {
-
-      let limit = dataLength / (days * valuesPerDay);
-
-      let temp: any[] = [];
-      let timer = 0;
-      items.forEach((elem: any) => {
-
-        if (timer == 0)
-          temp.push(elem);
-
-        if (timer <= limit)
-          timer++;
-        else
-          timer = 0;
-      })
-
-      return temp;
-    }
-
-    return items;
   }
 
   createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {

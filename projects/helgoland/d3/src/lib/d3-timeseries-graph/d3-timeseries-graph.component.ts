@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
     AfterViewInit,
     Component,
@@ -50,18 +51,21 @@ import { D3GraphId } from './../helper/d3-graph-id.service';
 import { D3Graphs } from './../helper/d3-graphs.service';
 import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
 import { RangeCalculationsService } from './../helper/range-calculations.service';
+import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
+import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import {
+    D3GraphOverviewSelectionComponent,
+} from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import {
+    D3GraphPanZoomInteractionComponent,
+} from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 import {
     D3TimeseriesGraphErrorHandler,
     D3TimeseriesSimpleGraphErrorHandler,
 } from './d3-timeseries-graph-error-handler.service';
 import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
-import { D3GraphOverviewSelectionComponent } from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
-import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
-import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
-import { NgIf } from '@angular/common';
-import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
-import { D3GraphPanZoomInteractionComponent } from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 
 interface HighlightDataset {
     id: string;
