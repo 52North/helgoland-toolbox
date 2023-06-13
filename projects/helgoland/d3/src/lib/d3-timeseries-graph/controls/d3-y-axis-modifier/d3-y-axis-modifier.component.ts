@@ -9,11 +9,11 @@ import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service'
 import { D3TimeseriesGraphComponent } from './../../d3-timeseries-graph.component';
 
 @Component({
-    selector: 'n52-d3-y-axis-modifier',
-    template: '',
-    styleUrls: ['./d3-y-axis-modifier.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true
+  selector: 'n52-d3-y-axis-modifier',
+  template: '',
+  styleUrls: ['./d3-y-axis-modifier.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implements OnDestroy {
 
@@ -66,7 +66,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   public afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number) {
-    if (yaxis.range.min && yaxis.range.max) {
+    if (yaxis.range.min !== undefined && yaxis.range.max !== undefined) {
       const buttonSize = 7;
       const xAlign = startX + buttonSize * 2;
       this.drawShiftButtons(yaxis, buttonSize, xAlign);
@@ -76,7 +76,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.d3Graph && this.zoom && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.zoom && yaxis.range.max !== undefined && yaxis.range.min !== undefined) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
       const buffer = this.shift ? 7.5 : 0;
@@ -156,7 +156,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
   }
 
   protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.d3Graph && this.shift && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.shift && yaxis.range.max !== undefined && yaxis.range.min !== undefined) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
       const shiftToCenter = 0.5 * buttonSize;
@@ -217,7 +217,7 @@ export class D3YAxisModifierComponent extends D3TimeseriesGraphControl implement
     if (adjustedRange?.min && adjustedRange.max) {
       adjustedRange.min += adjustMin;
       adjustedRange.max += adjustMax;
-    } else if (axis.range.min && axis.range.max) {
+    } else if (axis.range.min !== undefined && axis.range.max !== undefined) {
       this.adjustedRanges.set(key, {
         min: axis.range.min + adjustMin,
         max: axis.range.max + adjustMax

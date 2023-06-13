@@ -767,10 +767,10 @@ export class D3TimeseriesGraphComponent
                     // add id to axis
                     axis.ids.push(id);
                     // update range for axis
-                    if (!axis.fixedMin && axis.range.min) {
+                    if (!axis.fixedMin && axis.range.min !== undefined) {
                         axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
                     }
-                    if (!axis.fixedMax && axis.range.max) {
+                    if (!axis.fixedMax && axis.range.max !== undefined) {
                         axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
                     }
                     axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
