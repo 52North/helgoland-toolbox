@@ -447,12 +447,15 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     if (timeseries) {
       let dataset = station.timeseries[0];
       const platform = new HelgolandPlatform(station.uuid, this.ucwords(station.longname), [], undefined);
-      return new HelgolandTimeseries(`${stationId}/${dataset.shortname}`, url, '', dataset.unit, platform, undefined, undefined, [], undefined,
+      const phenomenonLabel = `${this.ucwords(dataset.longname)} (${dataset.shortname}) (${gaugeId})`;
+      const featureLabel = `${station.longname} - ${station.agency}`;
+      const label = `${this.ucwords(dataset.longname)} (${dataset.shortname}) @ ${this.ucwords(station.longname)}`;
+      return new HelgolandTimeseries(`${stationId}/${dataset.shortname}`, url, label, dataset.unit, platform, undefined, undefined, [], undefined,
         {
           category: { id: '', label: this.ucwords(station.water.longname) },
-          feature: { id: '', label: `${station.longname} - ${station.agency}`, domainId: `${station.longname} - ${station.agency}` },
+          feature: { id: '', label: featureLabel, domainId: featureLabel },
           offering: { id: '', label: '2' },
-          phenomenon: { id: dataset.shortname, label: `${this.ucwords(dataset.longname)} (${dataset.shortname}) (${gaugeId})` },
+          phenomenon: { id: dataset.shortname, label: phenomenonLabel },
           procedure: { id: '', label: 'Einzelwert' },
           service: { id: '2', label: 'pegelonline.wsv' }
         }
