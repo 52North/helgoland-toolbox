@@ -26,7 +26,7 @@ const options = {
   keepTemp: false,
   rpmDest: './dist',
   files: [
-    { cwd: buildPath, src: '*.*', dest: `/var/www/${targetName}` }
+    { cwd: buildPath, src: '*', dest: `/var/www/${targetName}` }
   ]
 };
 
