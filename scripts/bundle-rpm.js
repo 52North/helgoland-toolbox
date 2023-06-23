@@ -32,7 +32,7 @@ const options = {
 
 console.log(`Build application ${application}`);
 execSync(
-  `rm -rf ${buildPath} && ng build ${application} --output-path=${buildPath} --base-href=/${targetName}/`,
+  `rm -rf ${buildPath} && ng build ${application} --configuration production --output-path=${buildPath} --base-href=/${targetName}/`,
   { stdio: [0, 1, 2] }
 );
 
