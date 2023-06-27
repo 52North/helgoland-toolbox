@@ -1,22 +1,21 @@
 const { execSync } = require('child_process');
 const buildRpm = require('rpm-builder');
-const versionInfo = require('../versions')
+const versionInfo = require('../versions').versions
 
 // BUILD_NUMBER provided by Jenkins
 // Override BUILD_NUMBER by setting a RELEASE_VERSION
-const releaseVersion = process.env.RELEASE_VERSION || process.env.BUILD_NUMBER || "1";
+const releaseVersion = process.env['RELEASE_VERSION'] 
+    || process.env['BUILD_NUMBER']
+    || "1";
 
+console.log(`rpm version: ${versionInfo.version}`)
+console.log(`rpm release version: ${releaseVersion}`)
 
-if (process.argv.length > 2) {
-  if (process.argv[2]) {
-    appname = process.argv[2];
-  }
-}
-
-
-const application = process.argv[2] ?? "helgoland-timeseries";
-const targetName = process.argv[3] ?? application;
+const application = process.argv[2] !== undefined ? process.argv[2] : "helgoland-timeseries";
+const targetName = process.argv[3] !== undefined ?process.argv[3] : application;
 const buildPath = `./dist/${targetName}/`;
+
+console.log(`build application ${application} into ${buildPath}`)
 
 const options = {
   name: 'sensorwebclient',
@@ -38,7 +37,7 @@ execSync(
   { stdio: [0, 1, 2] }
 );
 
-buildRpm(options, function(err, rpm) {
+buildRpm(options, function(err: any, rpm: any) {
   if (err) {
     throw err;
   }
