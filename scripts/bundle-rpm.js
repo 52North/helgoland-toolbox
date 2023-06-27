@@ -1,8 +1,10 @@
 const { execSync } = require('child_process');
 const buildRpm = require('rpm-builder');
+const versionInfo = require('../versions')
 
-// Jenkins provides a build number
-const buildNumber = process.env.BUILD_NUMBER || "1";
+// BUILD_NUMBER provided by Jenkins
+// Override BUILD_NUMBER by setting a RELEASE_VERSION
+const releaseVersion = process.env.RELEASE_VERSION || process.env.BUILD_NUMBER || "1";
 
 
 if (process.argv.length > 2) {
@@ -18,8 +20,8 @@ const buildPath = `./dist/${targetName}/`;
 
 const options = {
   name: 'sensorwebclient',
-  version: '15.0.0',
-  release: buildNumber,
+  version: versionInfo.version,
+  release: releaseVersion,
   description: "The Sensor Web Web Client built for EDIS",
   group: "Applications/Internet",
   buildArch: 'noarch',
