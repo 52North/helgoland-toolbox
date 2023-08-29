@@ -1,11 +1,10 @@
 {
   "name": "@helgoland/eventing",
   "version": "13.0.1",
-  "peerDependencies": {},
   "dependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "@types/geojson": "^7946.0.8",
+    "@angular/common": "^15.2.8",
+    "@angular/core": "^15.2.8",
+    "@types/geojson": "^7946.0.10",
     "tslib": "^2.1.0"
   }
 }

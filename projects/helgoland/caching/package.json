@@ -1,11 +1,11 @@
 {
   "name": "@helgoland/caching",
   "version": "15.0.0",
-  "peerDependencies": {},
   "dependencies": {
     "@angular/common": "^15.2.8",
     "@angular/core": "^15.2.8",
     "@types/geojson": "^7946.0.10",
+    "lodash": "^4.17.21",
     "tslib": "^2.1.0"
   }
 }

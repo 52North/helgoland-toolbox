@@ -29,7 +29,6 @@
     "build:trajectories": "ng build helgoland-trajectories",
     "lib:build": "./node_modules/ts-node/dist/bin.js --skip-project scripts/build.ts",
     "lib:pack": "./node_modules/ts-node/dist/bin.js --skip-project scripts/pack.ts",
-    "lib:bumpVersion": "./node_modules/ts-node/dist/bin.js --skip-project scripts/bumpVersions.ts",
     "lib:test": "./node_modules/ts-node/dist/bin.js --skip-project scripts/test.ts",
     "lib:publish": "./node_modules/ts-node/dist/bin.js --skip-project scripts/publish.ts",
     "lint": "ng lint",
@@ -41,13 +40,15 @@
     "watch": "ng build --watch --configuration development",
     "versions-script": "node scripts/git.version.js",
     "preversion": "npm run license-report && ng lint && npm run lib:test",
-    "version": "npm run lib:bumpVersion && npm run lib:build && git add -A .",
+    "version": "npm run update-versions && npm run lib:build && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",
     "i18n": "npm run i18n:extract:common && npm run i18n:extract:timeseries && npm run i18n:extract:trajectories",
     "i18n:extract:common": "ngx-translate-extract --input ./projects/helgoland-common/src --output ./projects/helgoland-common/src/i18n/*.json --clean --format --sort",
     "i18n:extract:timeseries": "ngx-translate-extract --input ./projects/helgoland-timeseries/src --output ./projects/helgoland-timeseries/src/assets/i18n/*.json --clean --format --sort",
-    "i18n:extract:trajectories": "ngx-translate-extract --input ./projects/helgoland-trajectories/src --output ./projects/helgoland-trajectories/src/assets/i18n/*.json --clean --format --sort"
+    "i18n:extract:trajectories": "ngx-translate-extract --input ./projects/helgoland-trajectories/src --output ./projects/helgoland-trajectories/src/assets/i18n/*.json --clean --format --sort",
+    "list-versions": "syncpack list-mismatches",
+    "update-versions": "syncpack fix-mismatches"
   },
   "private": true,
   "dependencies": {
@@ -120,6 +121,7 @@
     "karma-jasmine-html-reporter": "^2.0.0",
     "license-report": "^6.3.0",
     "ng-packagr": "^15.0.1",
+    "syncpack": "11.2.1",
     "tablemark-cli": "^3.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
