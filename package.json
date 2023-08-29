@@ -23,11 +23,14 @@
     "url": "https://github.com/52North/helgoland-toolbox/issues"
   },
   "homepage": "https://github.com/52North/helgoland-toolbox#readme",
+  "workspaces": [
+    "projects/**"
+  ],
   "scripts": {
     "compodoc": "./node_modules/.bin/compodoc projects -p tsconfig.doc.json --includes docs",
     "build:timeseries": "ng build helgoland-timeseries",
     "build:trajectories": "ng build helgoland-trajectories",
-    "lib:build": "./node_modules/ts-node/dist/bin.js --skip-project scripts/build.ts",
+    "lib:build": "npm run update-versions && ./node_modules/ts-node/dist/bin.js --skip-project scripts/build.ts",
     "lib:pack": "./node_modules/ts-node/dist/bin.js --skip-project scripts/pack.ts",
     "lib:test": "./node_modules/ts-node/dist/bin.js --skip-project scripts/test.ts",
     "lib:publish": "./node_modules/ts-node/dist/bin.js --skip-project scripts/publish.ts",
@@ -40,7 +43,7 @@
     "watch": "ng build --watch --configuration development",
     "versions-script": "node scripts/git.version.js",
     "preversion": "npm run license-report && ng lint && npm run lib:test",
-    "version": "npm run update-versions && npm run lib:build && git add -A .",
+    "version": "npm run lib:build && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",
     "i18n": "npm run i18n:extract:common && npm run i18n:extract:timeseries && npm run i18n:extract:trajectories",
@@ -68,7 +71,7 @@
     "angular-plotly.js": "^3.0.0",
     "bootstrap-slider": "^11.0.2",
     "class-transformer": "^0.4.0",
-    "d3": "^6.7.0",
+    "d3": "^7.8.5",
     "d3-delaunay": "^6.0.4",
     "jquery": "^3.6.1",
     "leaflet": "^1.9.3",
@@ -98,7 +101,7 @@
     "@angular/compiler-cli": "^15.2.8",
     "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@compodoc/compodoc": "^1.1.19",
-    "@types/d3": "^6.7.5",
+    "@types/d3": "^7.4.0",
     "@types/d3-delaunay": "^6.0.1",
     "@types/geojson": "^7946.0.10",
     "@types/jasmine": "^4.3.0",
