@@ -16,15 +16,15 @@ export interface D3GraphObserver {
         timespan: Timespan
     ): void;
     cleanUp?(): void;
-    mousemoveBackground?(): void;
-    mouseoverBackground?(): void;
-    mouseoutBackground?(): void;
-    dragStartBackground?(): void;
-    dragMoveBackground?(): void;
-    dragEndBackground?(): void;
-    zoomStartBackground?(): void;
-    zoomMoveBackground?(): void;
-    zoomEndBackground?(): void;
+    mousemoveBackground?(event: MouseEvent): void;
+    mouseoverBackground?(event: MouseEvent): void;
+    mouseoutBackground?(event: MouseEvent): void;
+    dragStartBackground?(event: MouseEvent): void;
+    dragMoveBackground?(event: MouseEvent): void;
+    dragEndBackground?(event: MouseEvent): void;
+    zoomStartBackground?(event: MouseEvent): void;
+    zoomMoveBackground?(event: MouseEvent): void;
+    zoomEndBackground?(event: MouseEvent): void;
     adjustYAxis?(axis: YAxis): void;
     afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
 }

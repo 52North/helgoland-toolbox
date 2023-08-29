@@ -91,13 +91,13 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     // create brush
     const brush = d3.brushX()
       .extent([[0, 0], [this.graphExtent.width, this.graphExtent.height]])
-      .on('end', () => {
+      .on('end', (event) => {
         // on mouseclick change time after brush was moved
         if (this.mousedownBrush && this.completeTimespan && this.graphComp && this.graphExtent) {
           this.mousedownBrush = false;
           const timeByCoord: [number, number] = this.getTimestampByCoord(
-            d3.event.selection[0],
-            d3.event.selection[1],
+            event.selection[0],
+            event.selection[1],
             this.completeTimespan,
             this.graphExtent.width
           );

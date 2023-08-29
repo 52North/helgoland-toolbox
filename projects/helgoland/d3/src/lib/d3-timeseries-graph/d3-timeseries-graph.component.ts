@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgIf } from "@angular/common";
 import {
     AfterViewInit,
     Component,
@@ -12,7 +12,7 @@ import {
     Output,
     ViewChild,
     ViewEncapsulation,
-} from '@angular/core';
+} from "@angular/core";
 import {
     ColorService,
     Data,
@@ -31,41 +31,41 @@ import {
     Timespan,
     TimeValueTuple,
     TimezoneService,
-} from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import * as d3 from 'd3';
-import moment, { unitOfTime } from 'moment';
-import { Subscription } from 'rxjs';
+} from "@helgoland/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import * as d3 from "d3";
+import moment, { unitOfTime } from "moment";
+import { Subscription } from "rxjs";
 
-import { D3AssistantService, EmptyAssistantService } from '../helper/d3-assistant.service';
-import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
-import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
-import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
-import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
-import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
-import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from '../model/d3-general';
-import { HighlightOutput } from '../model/d3-highlight';
-import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
-import { D3GraphId } from './../helper/d3-graph-id.service';
-import { D3Graphs } from './../helper/d3-graphs.service';
-import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
-import { RangeCalculationsService } from './../helper/range-calculations.service';
-import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
-import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
-import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import { D3AssistantService, EmptyAssistantService } from "../helper/d3-assistant.service";
+import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
+import { D3PointSymbolDrawerService } from "../helper/d3-point-symbol-drawer.service";
+import { D3TimeFormatLocaleService } from "../helper/d3-time-format-locale.service";
+import { D3DataGeneralizer } from "../helper/generalizing/d3-data-generalizer";
+import { D3HoveringService } from "../helper/hovering/d3-hovering-service";
+import { D3SimpleHoveringService } from "../helper/hovering/d3-simple-hovering.service";
+import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from "../model/d3-general";
+import { HighlightOutput } from "../model/d3-highlight";
+import { D3PlotOptions, HoveringStyle } from "../model/d3-plot-options";
+import { D3GraphId } from "./../helper/d3-graph-id.service";
+import { D3Graphs } from "./../helper/d3-graphs.service";
+import { D3DataSimpleGeneralizer } from "./../helper/generalizing/d3-data-simple-generalizer.service";
+import { RangeCalculationsService } from "./../helper/range-calculations.service";
+import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
+import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";
+import { D3GraphHoverPointComponent } from "./controls/d3-graph-hover-point/d3-graph-hover-point.component";
 import {
     D3GraphOverviewSelectionComponent,
-} from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+} from "./controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
 import {
     D3GraphPanZoomInteractionComponent,
-} from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
-import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
+} from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
+import { D3GraphExtent, D3GraphObserver } from "./d3-timeseries-graph-control";
 import {
     D3TimeseriesGraphErrorHandler,
     D3TimeseriesSimpleGraphErrorHandler,
-} from './d3-timeseries-graph-error-handler.service';
-import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
+} from "./d3-timeseries-graph-error-handler.service";
+import { D3TimeseriesGraphInterface } from "./d3-timeseries-graph.interface";
 
 interface HighlightDataset {
     id: string;
@@ -678,23 +678,23 @@ export class D3TimeseriesGraphComponent
 
         this.addTimespanJumpButtons();
 
-        this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
+        this.background.on('mousemove', (event: MouseEvent) => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground(event)));
 
-        this.background.on('mouseover', () => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground()));
+        this.background.on('mouseover', (event: MouseEvent) => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground(event)));
 
-        this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
+        this.background.on('mouseout', (event: MouseEvent) => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground(event)));
 
         if (this.plotOptions.togglePanZoom === false) {
             const zoomHandler: any = d3.zoom()
-                .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
-                .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()));
+                .on('start', (event: MouseEvent) => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground(event)))
+                .on('zoom', (event: MouseEvent) => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground(event)))
+                .on('end', (event: MouseEvent) => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground(event)));
             this.background.call(zoomHandler);
         } else {
             const dragHandler: any = d3.drag()
-                .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
-                .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()));
+                .on('start', (event: MouseEvent) => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground(event)))
+                .on('drag', (event: MouseEvent) => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground(event)))
+                .on('end', (event: MouseEvent) => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground(event)));
             this.background.call(dragHandler);
         }
 

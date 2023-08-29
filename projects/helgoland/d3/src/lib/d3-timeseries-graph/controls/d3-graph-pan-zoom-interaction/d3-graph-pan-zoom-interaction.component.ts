@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { Timespan } from '@helgoland/core';
-import * as d3 from 'd3';
+import { Component } from "@angular/core";
+import { Timespan } from "@helgoland/core";
+import * as d3 from "d3";
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { DataEntry, InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphInterface } from '../../d3-timeseries-graph.interface';
+import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
+import { D3GraphId } from "../../../helper/d3-graph-id.service";
+import { D3Graphs } from "../../../helper/d3-graphs.service";
+import { DataEntry, InternalDataEntry } from "../../../model/d3-general";
+import { D3GraphExtent, D3TimeseriesGraphControl } from "../../d3-timeseries-graph-control";
+import { D3TimeseriesGraphInterface } from "../../d3-timeseries-graph.interface";
 
 @Component({
-    selector: 'n52-d3-graph-pan-zoom-interaction',
-    template: '',
-    styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
-    standalone: true
+  selector: 'n52-d3-graph-pan-zoom-interaction',
+  template: '',
+  styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
+  standalone: true
 })
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
 
@@ -38,7 +38,6 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
 
   protected timespan: Timespan | undefined;
   protected graphExtent: D3GraphExtent | undefined;
-  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
   protected graph: d3.Selection<SVGSVGElement, any, any, any> | undefined;
   protected preparedData: InternalDataEntry[] = [];
 
@@ -63,19 +62,18 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   ) {
     this.timespan = timespan;
     this.graphExtent = graphExtent;
-    this.background = background;
     this.graph = graph;
     this.preparedData = preparedData;
   }
 
-  public zoomStartBackground() {
-    if (this.background && this.timespan)
-      this.zoomStartHandler(this.timespan, this.background);
+  public zoomStartBackground(event: MouseEvent) {
+    if (this.timespan)
+      this.zoomStartHandler(this.timespan, event);
   }
 
-  public zoomMoveBackground() {
-    if (this.graph && this.background && this.graphExtent)
-      this.zoomHandler(this.graph, this.background, this.graphExtent);
+  public zoomMoveBackground(event: MouseEvent) {
+    if (this.graph && this.graphExtent)
+      this.zoomHandler(this.graph, this.graphExtent, event);
   }
 
   public zoomEndBackground() {
@@ -83,28 +81,28 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
       this.zoomEndHandler(this.timespan, this.graphExtent, this.preparedData);
   }
 
-  public dragStartBackground() {
+  public dragStartBackground(event: MouseEvent) {
     if (this.timespan)
-      this.panStartHandler(this.timespan);
+      this.panStartHandler(this.timespan, event);
   }
 
-  public dragMoveBackground() {
+  public dragMoveBackground(event: MouseEvent) {
     if (this.graphExtent && this.dragMoveRange)
-      this.panMoveHandler(this.graphExtent, this.dragMoveRange);
+      this.panMoveHandler(this.graphExtent, this.dragMoveRange, event);
   }
 
-  public dragEndBackground() {
+  public dragEndBackground(event: MouseEvent) {
     this.panEndHandler();
   }
 
   /**
    * Function starting the drag handling for the diagram.
    */
-  protected panStartHandler(timespan: Timespan) {
+  protected panStartHandler(timespan: Timespan, event: MouseEvent) {
     if (this.d3Graph) {
       this.dragTimeStart = new Date().valueOf();
       this.draggingMove = false;
-      this.dragMoveStart = d3.event.x;
+      this.dragMoveStart = event.x;
       this.dragMoveRange = [timespan.from, timespan.to];
       this.isHoverable = this.d3Graph.plotOptions.hoverable || false;
       this.d3Graph.plotOptions.hoverable = false;
@@ -114,14 +112,14 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   /**
    * Function that controlls the panning (dragging) of the graph.
    */
-  protected panMoveHandler(graphExtent: D3GraphExtent, dragMoveRange: [number, number]) {
+  protected panMoveHandler(graphExtent: D3GraphExtent, dragMoveRange: [number, number], event: MouseEvent) {
     this.draggingMove = true;
     if (this.dragMoveStart && this.draggingMove && this.dragTimeStart && this.d3Graph) {
       const timeDiff = (new Date().valueOf() - this.dragTimeStart) >= 50;
       if (!this.plotWhileDrag && timeDiff) {
         this.plotWhileDrag = true;
         this.dragTimeStart = new Date().valueOf();
-        const diff = -(d3.event.x - this.dragMoveStart); // d3.event.subject.x);
+        const diff = -(event.x - this.dragMoveStart); // d3.event.subject.x);
         const amountTimestamp = dragMoveRange[1] - dragMoveRange[0];
         const ratioTimestampDiagCoord = amountTimestamp / graphExtent.width;
         const newTimeMin = dragMoveRange[0] + (ratioTimestampDiagCoord * diff);
@@ -152,22 +150,19 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
   /**
   * Function that starts the zoom handling.
   */
-  protected zoomStartHandler(timespan: Timespan, backgroundElem: d3.Selection<SVGSVGElement, any, any, any>) {
-    const background = backgroundElem.node();
-    if (background) {
-      this.dragging = false;
-      // dependent on point or line hovering
-      this.dragStart = d3.mouse(background);
-      this.xAxisRangeOrigin.push([timespan.from, timespan.to]);
-    }
+  protected zoomStartHandler(timespan: Timespan, event: MouseEvent) {
+    this.dragging = false;
+    // dependent on point or line hovering
+    this.dragStart = d3.pointer(event);
+    this.xAxisRangeOrigin.push([timespan.from, timespan.to]);
   }
 
   /**
    * Function that draws a rectangle when zoom is started and the mouse is moving.
    */
-  protected zoomHandler(d3GraphElem: d3.Selection<SVGSVGElement, any, any, any>, backgroundElem: d3.Selection<SVGSVGElement, any, any, any>, graphExtent: D3GraphExtent) {
+  protected zoomHandler(d3GraphElem: d3.Selection<SVGSVGElement, any, any, any>, graphExtent: D3GraphExtent, event: MouseEvent) {
     this.dragging = true;
-    this.drawDragRectangle(d3GraphElem, backgroundElem, graphExtent);
+    this.drawDragRectangle(d3GraphElem, graphExtent, event);
   }
 
   /**
@@ -255,12 +250,11 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
    */
   protected drawDragRectangle(
     d3GraphElem: d3.Selection<SVGSVGElement, any, any, any>,
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent
+    graphExtent: D3GraphExtent,
+    event: MouseEvent
   ): void {
-    const backgroundNode = background.node();
-    if (!this.dragStart || !backgroundNode) { return; }
-    this.dragCurrent = d3.mouse(backgroundNode);
+    if (!this.dragStart) { return; }
+    this.dragCurrent = d3.pointer(event);
 
     const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
     const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);

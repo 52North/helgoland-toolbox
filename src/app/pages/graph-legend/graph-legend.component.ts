@@ -31,7 +31,6 @@ import { HelgolandModificationModule } from '@helgoland/modification';
 import { HelgolandTimeModule } from '@helgoland/time';
 import moment from 'moment';
 
-import { D3GeneralPopupComponent } from '../../components/d3-general-popup/d3-general-popup.component';
 import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
 import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
@@ -284,38 +283,6 @@ export class GraphLegendComponent {
         // this.dialog.open(D3GeneralPopupComponent, {
         //     data: popupInput
         // });
-    }
-
-    public showPopup() {
-        this.http.get('../assets/dataset/sampledataset.csv', { responseType: 'text' })
-            .subscribe(
-                data => {
-                    const dataSplit = data.split(/\r\n|\n|\r|,/);
-                    const dataset: D3GeneralInput = {
-                        datasets: [],
-                        plotOptions: {
-                            xlabel: dataSplit[0],
-                            ylabel: dataSplit[1],
-                            date: false
-                        }
-                    };
-                    const dataPoints: D3GeneralDataPoint[] = [];
-                    for (let i = 2; i < dataSplit.length; i += 2) {
-                        dataPoints.push({ x: Number(dataSplit[i]), y: Number(dataSplit[i + 1]) });
-                    }
-                    dataset.datasets.push(
-                        {
-                            data: dataPoints,
-                            id: 'csv file'
-                        });
-                    this.dialog.open(D3GeneralPopupComponent, {
-                        data: dataset
-                    });
-                },
-                error => {
-                    console.log(error);
-                }
-            );
     }
 
     public openDownload(id: String) {

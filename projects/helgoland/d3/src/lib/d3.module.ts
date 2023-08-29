@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HelgolandCoreModule } from '@helgoland/core';
 
-import { D3GeneralGraphComponent } from './d3-general-graph/d3-general-graph.component';
 import { D3OverviewTimeseriesGraphComponent } from './d3-overview-timeseries-graph/d3-overview-timeseries-graph.component';
 import { D3GraphCopyrightComponent } from './d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 import { D3GraphHoverLineComponent } from './d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
@@ -32,7 +31,6 @@ import { D3DataGeneralizer } from './helper/generalizing/d3-data-generalizer';
 import { D3DataSimpleGeneralizer } from './helper/generalizing/d3-data-simple-generalizer.service';
 
 const COMPONENTS = [
-  D3GeneralGraphComponent,
   D3GraphCopyrightComponent,
   D3GraphHoverLineComponent,
   D3GraphHoverPointComponent,
