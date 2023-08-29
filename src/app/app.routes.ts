@@ -11,7 +11,6 @@ import { MapSelectorComponent } from './pages/map-selector/map-selector.componen
 import { MapViewComponent } from './pages/map-view/map-view.component';
 import { OlComponent } from './pages/ol/ol.component';
 import { PermalinkComponent } from './pages/permalink/permalink.component';
-import { PlotlyGraphComponent } from './pages/plotly-graph/plotly-graph.component';
 import { ProfileEntryComponent } from './pages/profile-entry/profile-entry.component';
 import { SandboxComponent } from './pages/sandbox/sandbox.component';
 import { SensormlComponent } from './pages/sensorml/sensorml.component';
@@ -31,7 +30,6 @@ export const ROUTES: Routes = [
   { path: 'map-selector', component: MapSelectorComponent },
   { path: 'map-view', component: MapViewComponent },
   { path: 'permalink', component: PermalinkComponent },
-  { path: 'plotly-graph', component: PlotlyGraphComponent },
   { path: 'profile-entry', component: ProfileEntryComponent },
   { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },
   { path: 'service-selector', component: ServiceSelectorComponent },

@@ -597,46 +597,6 @@
         }
       }
     },
-    "@helgoland/plotly": {
-      "projectType": "library",
-      "root": "projects/helgoland/plotly",
-      "sourceRoot": "projects/helgoland/plotly/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/helgoland/plotly/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/helgoland/plotly/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/helgoland/plotly/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/helgoland/plotly/src/test.ts",
-            "tsConfig": "projects/helgoland/plotly/tsconfig.spec.json",
-            "karmaConfig": "projects/helgoland/plotly/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/helgoland/plotly/**/*.ts",
-              "projects/helgoland/plotly/**/*.html"
-            ]
-          }
-        }
-      }
-    },
     "@helgoland/selector": {
       "projectType": "library",
       "root": "projects/helgoland/selector",
