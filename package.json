@@ -73,7 +73,7 @@
     "d3": "^7.8.5",
     "d3-delaunay": "^6.0.4",
     "jquery": "^3.6.1",
-    "leaflet": "^1.9.3",
+    "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
     "material-icons": "^1.12.2",
     "moment": "^2.29.4",
@@ -85,7 +85,6 @@
     "rxjs": "6.6.0",
     "tslib": "^2.1.0",
     "typescript-logging": "^0.6.3",
-    "xlsx": "^0.17.1",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
@@ -104,9 +103,9 @@
     "@types/geojson": "^7946.0.10",
     "@types/jasmine": "^4.3.0",
     "@types/jsonfile": "^6.1.0",
-    "@types/leaflet": "^1.9.0",
+    "@types/leaflet": "^1.9.3",
     "@types/leaflet.markercluster": "^1.5.1",
-    "@types/lodash": "^4.14.191",
+    "@types/lodash": "^4.14.197",
     "@types/node": "^12.20.15",
     "@types/ol": "^5.3.5",
     "@typescript-eslint/eslint-plugin": "^5.43.0",

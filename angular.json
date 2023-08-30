@@ -26,6 +26,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "leaflet",
+              "lodash",
+              "moment-timezone",
+              "leaflet.markercluster"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -820,6 +826,12 @@
             "polyfills": "projects/helgoland-timeseries/src/polyfills.ts",
             "tsConfig": "projects/helgoland-timeseries/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "leaflet",
+              "lodash",
+              "moment-timezone",
+              "leaflet.markercluster"
+            ],
             "assets": [
               "projects/helgoland-timeseries/src/favicon.ico",
               "projects/helgoland-timeseries/src/assets"
