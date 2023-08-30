@@ -829,6 +829,7 @@
             "allowedCommonJsDependencies": [
               "leaflet",
               "lodash",
+              "moment",
               "moment-timezone",
               "leaflet.markercluster"
             ],
