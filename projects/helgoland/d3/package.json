@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/d3",
-  "version": "15.0.1-alpha-1",
+  "version": "15.0.1",
   "dependencies": {
     "@angular/common": "^15.2.8",
     "@angular/core": "^15.2.8",

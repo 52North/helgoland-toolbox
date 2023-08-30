@@ -18,7 +18,7 @@
 | ISC          | git+https://github.com/d3/d3.git                               | 7.8.5             | d3                                     |
 | ISC          | git+https://github.com/d3/d3-delaunay.git                      | 6.0.4             | d3-delaunay                            |
 | MIT          | git+https://github.com/jquery/jquery.git                       | 3.6.1             | jquery                                 |
-| BSD-2-Clause | git://github.com/Leaflet/Leaflet.git                           | 1.9.3             | leaflet                                |
+| BSD-2-Clause | git://github.com/Leaflet/Leaflet.git                           | 1.9.4             | leaflet                                |
 | MIT          | git+https://github.com/Leaflet/Leaflet.markercluster.git       | 1.5.3             | leaflet.markercluster                  |
 | Apache-2.0   | git+https://github.com/marella/material-icons.git              | 1.12.2            | material-icons                         |
 | MIT          | git+https://github.com/moment/moment.git                       | 2.29.4            | moment                                 |
@@ -30,7 +30,6 @@
 | Apache-2.0   | git+https://github.com/reactivex/rxjs.git                      | 6.6.0             | rxjs                                   |
 | 0BSD         | git+https://github.com/Microsoft/tslib.git                     | 2.5.0             | tslib                                  |
 | Apache-2.0   | git+https://github.com/mreuvers/typescript-logging.git         | 0.6.4             | typescript-logging                     |
-| Apache-2.0   | git://github.com/SheetJS/sheetjs.git                           | 0.17.5            | xlsx                                   |
 | MIT          | git://github.com/angular/angular.git                           | 0.11.4            | zone.js                                |
 | MIT          | git+https://github.com/angular/angular-cli.git                 | 15.2.6            | @angular-devkit/build-angular          |
 | MIT          | git+https://github.com/angular-eslint/angular-eslint.git       | 15.2.1            | @angular-eslint/builder                |
@@ -47,9 +46,9 @@
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 7946.0.10         | @types/geojson                         |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 4.3.0             | @types/jasmine                         |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 6.1.0             | @types/jsonfile                        |
-| MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 1.9.0             | @types/leaflet                         |
+| MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 1.9.3             | @types/leaflet                         |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 1.5.1             | @types/leaflet.markercluster           |
-| MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 4.14.191          | @types/lodash                          |
+| MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 4.14.197          | @types/lodash                          |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 12.20.33          | @types/node                            |
 | MIT          | https://github.com/DefinitelyTyped/DefinitelyTyped.git         | 5.3.7             | @types/ol                              |
 | MIT          | git+https://github.com/typescript-eslint/typescript-eslint.git | 5.44.0            | @typescript-eslint/eslint-plugin       |
