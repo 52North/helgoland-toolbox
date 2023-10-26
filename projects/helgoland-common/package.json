@@ -2,8 +2,8 @@
   "name": "helgoland-common",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^15.2.8",
-    "@angular/core": "^15.2.8"
+    "@angular/common": "^15.0.0 || ^16.0.0",
+    "@angular/core": "^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "tslib": "^2.1.0"
