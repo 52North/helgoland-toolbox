@@ -48,7 +48,7 @@
     "version": "npm run lib:build && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",
-    "bundle-rpm:timeseries": "node scripts/bundle-rpm.js helgoland-timeseries",
+    "bundle-rpm:timeseries": "ts-node scripts/bundle-rpm.ts helgoland-timeseries",
     "i18n": "npm run i18n:extract:common && npm run i18n:extract:timeseries && npm run i18n:extract:trajectories",
     "i18n:extract:common": "ngx-translate-extract --input ./projects/helgoland-common/src --output ./projects/helgoland-common/src/i18n/*.json --clean --format --sort",
     "i18n:extract:timeseries": "ngx-translate-extract --input ./projects/helgoland-timeseries/src --output ./projects/helgoland-timeseries/src/assets/i18n/*.json --clean --format --sort",
