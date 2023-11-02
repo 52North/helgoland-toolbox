@@ -126,7 +126,7 @@ export class DiagramViewComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.permalinkSrvc.validatePeramlink().subscribe(res => {
+    this.permalinkSrvc.validatePeramlink().subscribe(() => {
       if (!this.timeseries.hasDatasets()) {
         this.openMapSelection();
       }
