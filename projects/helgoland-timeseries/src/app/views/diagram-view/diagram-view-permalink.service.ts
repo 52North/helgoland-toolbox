@@ -52,7 +52,11 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
       if (timespan) { this.timeseriesSrvc.timespan = timespan; }
     }
-    return of(valid.length == 0) || forkJoin(valid).pipe(map(() => true));
+    if (valid.length) {
+      return forkJoin(valid).pipe(map(() => true));
+    } else {
+      return of(true);
+    };
   }
 
   protected generatePermalink(): string {
