@@ -4,7 +4,7 @@ module.exports = {
   indent: "  ",
   versionGroups: [{
     "dependencies": ["@angular/**"],
-    "pinVersion": "^15.0.0 || ^16.0.0",
+    "pinVersion": "^16.0.0 || ^17.0.0",
     "packages": ["**"],
   }]
 };
