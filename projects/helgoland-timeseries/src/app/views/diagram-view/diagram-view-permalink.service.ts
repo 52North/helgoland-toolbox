@@ -34,12 +34,11 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   }
 
   private handleParams(params: Params): Observable<boolean> {
+    const valid: Observable<boolean>[] = [];
     if (params[PARAM_IDS]) {
       this.timeseriesSrvc.removeAllDatasets(true);
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
-      return forkJoin(
-        ids.map(id => from(this.timeseriesSrvc.addDataset(id)))
-      ).pipe(map(res => true));
+      valid.push(...ids.map((id) => from(this.timeseriesSrvc.addDataset(id))));
     }
     if (params[PARAM_TIME]) {
       const time = (params[PARAM_TIME] as string).split(TIME_SEPERATOR);
@@ -53,7 +52,11 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
       if (timespan) { this.timeseriesSrvc.timespan = timespan; }
     }
-    return of(true);
+    if (valid.length) {
+      return forkJoin(valid).pipe(map(() => true));
+    } else {
+      return of(true);
+    };
   }
 
   protected generatePermalink(): string {
