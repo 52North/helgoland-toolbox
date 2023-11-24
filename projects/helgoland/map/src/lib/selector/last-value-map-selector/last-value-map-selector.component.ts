@@ -199,7 +199,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   }
 
   private setId(m: Layer, id: string) {
-    if (m instanceof Marker<any>) {
+    if (m instanceof Marker) {
       // m.feature = {
       //   id,
       //   type: 'Feature',

@@ -37,7 +37,7 @@ export class D3Graphs {
    */
   public getGraph(graphId: string): Observable<D3TimeseriesGraphInterface> {
     if (this.graphs[graphId]) {
-      if (this.graphs[graphId] instanceof Subject<D3TimeseriesGraphInterface>) {
+      if (this.graphs[graphId] instanceof Subject) {
         return this.graphs[graphId];
       } else {
         return of(this.graphs[graphId]);
