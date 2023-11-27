@@ -6,7 +6,6 @@ export enum ParameterType {
     FEATURE = 'feature',
     OFFERING = 'offering',
     PHENOMENON = 'phenomenon',
-    PLATFORM = 'platform',
     PROCEDURE = 'procedure',
     PROVIDER = 'provider',
     TIMESERIES = 'timeseries',

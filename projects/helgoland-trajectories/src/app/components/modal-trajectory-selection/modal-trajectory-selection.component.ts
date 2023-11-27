@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
 import {
   DatasetApi,
   DatasetType,
@@ -11,20 +11,20 @@ import {
   HelgolandService,
   HelgolandServicesConnector,
   Parameter,
-} from '@helgoland/core';
-import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { TranslateModule } from '@ngx-translate/core';
+} from "@helgoland/core";
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from "@helgoland/selector";
+import { TranslateModule } from "@ngx-translate/core";
 import {
   LoadingOverlayProgressBarComponent,
   ParameterListEntry,
   ParameterListSelectorComponent,
   ParameterType,
   ServiceListSelectorComponent,
-} from 'helgoland-common';
+} from "helgoland-common";
 
-import { ConfigurationService } from './../../services/configuration.service';
-import { TrajectoriesService } from './../../services/trajectories.service';
-import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-type-label.component';
+import { ConfigurationService } from "./../../services/configuration.service";
+import { TrajectoriesService } from "./../../services/trajectories.service";
+import { ParameterTypeLabelComponent } from "./parameter-type-label/parameter-type-label.component";
 
 @Component({
   selector: 'helgoland-trajectories-modal-trajectory-selection',
@@ -82,7 +82,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     }
     this.filterList.push({
       expanded: true,
-      possibleFilters: [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON],
+      possibleFilters: [ParameterType.OFFERING, ParameterType.PHENOMENON],
       apiFilter: [{
         url: service.apiUrl,
         filter: {
@@ -102,9 +102,6 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     }
     if (entry.selectedFilter === ParameterType.FEATURE) {
       delete entry.apiFilter[0].filter?.feature;
-    }
-    if (entry.selectedFilter === ParameterType.PLATFORM) {
-      delete entry.apiFilter[0].filter?.platform;
     }
     entry.selectedFilter = filter;
   }
@@ -129,18 +126,14 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       case ParameterType.FEATURE:
         apiFilter[0].filter!.feature = item.id;
         break;
-      case ParameterType.PLATFORM:
-        apiFilter[0].filter!.platform = item.id;
-        break;
       default:
         throw new Error(`not implemented for ${filter.selectedFilter}`);
     }
-    const possibleFilters = [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON];
+    const possibleFilters = [ParameterType.OFFERING, ParameterType.PHENOMENON];
 
-    // only allow feature filter, if previously platform and offering or phenomenon are selected
+    // only allow feature filter, if previously offering or phenomenon are selected
     const previousFilter = this.filterList.map(e => e.selectedFilter);
-    if (previousFilter.indexOf(ParameterType.PLATFORM) > -1 &&
-      (previousFilter.indexOf(ParameterType.OFFERING) > -1 || previousFilter.indexOf(ParameterType.PHENOMENON) > -1)) {
+    if ((previousFilter.indexOf(ParameterType.OFFERING) > -1 || previousFilter.indexOf(ParameterType.PHENOMENON) > -1)) {
       possibleFilters.push(ParameterType.FEATURE);
     }
     for (let index = 0; index < this.filterList.length; index++) {
