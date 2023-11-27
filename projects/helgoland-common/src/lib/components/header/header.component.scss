@@ -1,0 +1,37 @@
+:host {
+
+    padding: 15px;
+    display: flex;
+
+    .logo-wrapper {
+        max-width: 144px;
+        padding: 0 50px;
+        border-right: 1px solid #e2ebf2;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .header-title {
+        max-width: 285px;
+        height: 62px;
+        padding-left: 22px;
+        overflow: hidden;
+        font-size: .85em;
+        font-weight: 300;
+        line-height: 1.1;
+        color: #2249a6;
+        text-transform: uppercase;
+
+        .title {
+            position: relative;
+            top: 50%;
+            letter-spacing: .01em;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    }
+}

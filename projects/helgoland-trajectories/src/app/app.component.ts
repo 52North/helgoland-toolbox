@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../../../helgoland-common/src/lib/components/header/header.component';
 
 @Component({
   selector: 'helgoland-trajectories-root',
@@ -7,6 +8,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.scss'],
   imports: [
     RouterModule,
+    HeaderComponent
   ],
   standalone: true
 })

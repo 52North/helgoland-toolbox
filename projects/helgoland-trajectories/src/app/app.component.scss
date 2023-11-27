@@ -1,22 +1,5 @@
 :host {
-    .wrapper {
-        height: 100%;
-        background-color: wheat;
-        display: flex;
-        flex-direction: column;
-
-        .header {
-            background-color: red;
-        }
-
-        .map {
-            background-color: green;
-            flex: 1;
-        }
-
-        .chart {
-            background-color: yellow;
-            flex: 1;
-        }
-    }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
