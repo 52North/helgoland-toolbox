@@ -1,7 +1,7 @@
 {
     "defaultService": {
         "serviceId": "1",
-        "apiUrl": "https://fluggs.wupperverband.de/sws5/api/"
+        "apiUrl": "https://sensor-gdi.de/webservices/gis/gdi-sos/api/"
     },
     "datasetApis": [
         {

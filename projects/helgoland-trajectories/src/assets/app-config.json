@@ -1,16 +1,8 @@
 {
   "datasetApis": [
     {
-      "name": "nexos.demo.52north",
-      "url": "http://nexos.demo.52north.org/52n-sos-nexos-test/api/"
-    },
-    {
-      "name": "codm.hzg.de",
-      "url": "http://codm.hzg.de/52n-sos-webapp/api/v1/"
-    },
-    {
-      "name": "eurofleets",
-      "url": "http://eurofleets.utm.csic.es/sos/api/"
+      "name": "test",
+      "url": "http://docker.srv.int.52north.org:8090/sos/api/"
     }
   ],
   "languages": [
