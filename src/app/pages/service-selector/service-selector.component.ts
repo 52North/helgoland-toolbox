@@ -4,26 +4,26 @@ import { DatasetApi, HelgolandCoreModule, HelgolandParameterFilter, Settings, Se
 import { HelgolandSelectorModule } from "@helgoland/selector";
 
 @Component({
-    templateUrl: './service-selector.component.html',
-    styleUrls: ['./service-selector.component.css'],
-    imports: [
-        HelgolandCoreModule,
-        HelgolandSelectorModule,
-        CommonModule
-    ],
-    standalone: true
+  templateUrl: "./service-selector.component.html",
+  styleUrls: ["./service-selector.component.css"],
+  imports: [
+    HelgolandCoreModule,
+    HelgolandSelectorModule,
+    CommonModule
+  ],
+  standalone: true
 })
 export class ServiceSelectorComponent {
 
-    public datasetApis: DatasetApi[] | undefined;
+  public datasetApis: DatasetApi[] | undefined;
 
-    constructor(
+  constructor(
         private settings: SettingsService<Settings>
-    ) {
-        this.datasetApis = this.settings.getSettings().datasetApis;
-    }
+  ) {
+    this.datasetApis = this.settings.getSettings().datasetApis;
+  }
 
-    public providerFilter: HelgolandParameterFilter = {
-        // type: DatasetType.Trajectory
-    };
+  public providerFilter: HelgolandParameterFilter = {
+    // type: DatasetType.Trajectory
+  };
 }

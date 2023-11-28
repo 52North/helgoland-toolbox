@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { AbstractProcess } from './AbstractProcess';
-import { SpatialFrame } from './SpatialFrame';
-import { TemporalFrame } from './TemporalFrame';
-import { SweTime } from '../swe/SweTime';
-import { Position } from './Position';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractProcess } from "./AbstractProcess";
+import { SpatialFrame } from "./SpatialFrame";
+import { TemporalFrame } from "./TemporalFrame";
+import { SweTime } from "../swe/SweTime";
+import { Position } from "./Position";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * A physical process where the spatial and temporal state of the process is
@@ -15,8 +15,8 @@ export abstract class AbstractPhysicalProcess extends AbstractProcess {
      * References the physical component or system (e.g. platform) to which to
      * which this component or system is attached.
      */
-    @DisplayName('Attached to')
-    attachedTo: string;
+    @DisplayName("Attached to")
+      attachedTo: string;
     /**
      * A spatial reference frame of the physical component itself; this reference
      * frame is absolute and defines the relationship of the reference frame to
@@ -25,32 +25,32 @@ export abstract class AbstractPhysicalProcess extends AbstractProcess {
      * specified in the position so they are not specified as part of the
      * SpatialFrame.
      */
-    @DisplayName('Local reference frame')
-    localReferenceFrame: SpatialFrame[] = [];
+    @DisplayName("Local reference frame")
+      localReferenceFrame: SpatialFrame[] = [];
     /**
      * Supports local time reference frames such as "time past mission start".
      * Note that units are handled in timePosition so they are not specified in
      * the TemporalFrame.
      */
-    @DisplayName('Local time frame')
-    localTimeFrame: TemporalFrame[] = [];
+    @DisplayName("Local time frame")
+      localTimeFrame: TemporalFrame[] = [];
     /**
      * Provides positional information relating the component's spatial reference
      * frame to an external spatial reference frame. Positional information can be
      * given by location, by full body state, by a time-tagged trajectory, or by a
      * measuring or computational process.
      */
-    @DisplayName('Position')
-    position: Position[] = [];
+    @DisplayName("Position")
+      position: Position[] = [];
     /**
      * Provides Time positions typically reference a local time frame to an
      * external time frame. For example, a timer-start-time might be given
      * relative to an "absolute" GPS time.
      */
-    @DisplayName('Time position')
-    timePosition: SweTime[] = [];
+    @DisplayName("Time position")
+      timePosition: SweTime[] = [];
 
     override toString() {
-        return 'Abstract physical process';
+      return "Abstract physical process";
     }
 }

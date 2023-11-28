@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { SettingsService } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { SettingsService } from "@helgoland/core";
 
-import { RefreshButtonComponent } from './refresh-button.component';
+import { RefreshButtonComponent } from "./refresh-button.component";
 
-describe('RefreshButtonComponent', () => {
+describe("RefreshButtonComponent", () => {
   let component: RefreshButtonComponent;
   let fixture: ComponentFixture<RefreshButtonComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [RefreshButtonComponent],
-    providers: [SettingsService]
-}).compileComponents();
+      imports: [RefreshButtonComponent],
+      providers: [SettingsService]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('RefreshButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,17 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DatasetType, HelgolandServicesConnector } from '@helgoland/core';
-import { Favorite, FavoriteService, GroupFavorite, SingleFavorite } from '@helgoland/favorite';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { DatasetType, HelgolandServicesConnector } from "@helgoland/core";
+import { Favorite, FavoriteService, GroupFavorite, SingleFavorite } from "@helgoland/favorite";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { forkJoin } from "rxjs";
 
-import { EditLabelComponent } from '../../edit-label/edit-label.component';
-import { TimeseriesService } from './../../../services/timeseries-service.service';
+import { EditLabelComponent } from "../../edit-label/edit-label.component";
+import { TimeseriesService } from "./../../../services/timeseries-service.service";
 
 interface EditableSingleFavorite extends SingleFavorite {
   editMode: boolean;
@@ -22,9 +22,9 @@ interface EditableGroupFavorite extends GroupFavorite {
 }
 
 @Component({
-  selector: 'helgoland-modal-favorite-list',
-  templateUrl: './modal-favorite-list.component.html',
-  styleUrls: ['./modal-favorite-list.component.scss'],
+  selector: "helgoland-modal-favorite-list",
+  templateUrl: "./modal-favorite-list.component.html",
+  styleUrls: ["./modal-favorite-list.component.scss"],
   imports: [
     TranslateModule,
     CommonModule,
@@ -56,7 +56,7 @@ export class ModalFavoriteListComponent implements OnInit {
   public createGroup() {
     forkJoin(this.timeseriesSrvc.datasetIds.map(id => this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries })))
       .subscribe(datasets => {
-        const label = this.translateSrvc.instant('favorite.group-default-label') + ' ' + (this.favoriteSrvc.getFavoriteGroups().length + 1);
+        const label = this.translateSrvc.instant("favorite.group-default-label") + " " + (this.favoriteSrvc.getFavoriteGroups().length + 1);
         const group = datasets.map(e => ({ dataset: e, options: this.timeseriesSrvc.datasetOptions.get(e.internalId)! }));
         this.favoriteSrvc.addFavoriteGroup(group, label);
         this.setFavorites();

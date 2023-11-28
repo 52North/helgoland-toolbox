@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
-import { PermalinkService } from '@helgoland/permalink';
-import { forkJoin, from, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { ActivatedRoute, Params } from "@angular/router";
+import { DefinedTimespan, DefinedTimespanService, Timespan } from "@helgoland/core";
+import { PermalinkService } from "@helgoland/permalink";
+import { forkJoin, from, Observable, of } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
 
-import { TimeseriesService } from './../../services/timeseries-service.service';
+import { TimeseriesService } from "./../../services/timeseries-service.service";
 
-const PARAM_IDS = 'ids';
-const ID_SEPERATOR = '!!';
-const PARAM_TIME = 'time';
-const TIME_SEPERATOR = '|';
-const PARAM_DEFINED_TIME = 'defined_time';
+const PARAM_IDS = "ids";
+const ID_SEPERATOR = "!!";
+const PARAM_TIME = "time";
+const TIME_SEPERATOR = "|";
+const PARAM_DEFINED_TIME = "defined_time";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DiagramViewPermalinkService extends PermalinkService<void> {
 
@@ -60,12 +60,12 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   }
 
   protected generatePermalink(): string {
-    let paramUrl = '';
+    let paramUrl = "";
     if (this.timeseriesSrvc.hasDatasets()) {
       const id = this.timeseriesSrvc.datasetIds.join(ID_SEPERATOR);
-      paramUrl = this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
+      paramUrl = this.createBaseUrl() + "?" + PARAM_IDS + "=" + encodeURIComponent(id);
       if (this.timeseriesSrvc.timespan) {
-        paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.timeseriesSrvc.timespan.from
+        paramUrl = paramUrl + "&" + PARAM_TIME + "=" + encodeURIComponent(this.timeseriesSrvc.timespan.from
           + TIME_SEPERATOR + this.timeseriesSrvc.timespan.to);
       }
     }

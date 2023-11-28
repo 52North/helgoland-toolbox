@@ -1,25 +1,25 @@
-import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, Observer } from "rxjs";
 
-import { UriParameterCoder } from '../../../../dataset-api/api-interface';
-import { HttpService } from '../../../../dataset-api/http.service';
-import { HttpRequestOptions } from '../../../../model/internal/http-requests';
-import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from '../model/datasetreams';
+import { UriParameterCoder } from "../../../../dataset-api/api-interface";
+import { HttpService } from "../../../../dataset-api/http.service";
+import { HttpRequestOptions } from "../../../../model/internal/http-requests";
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from "../model/datasetreams";
 import {
   FeatureOfInterest,
   FeatureOfInterestExpandParams,
   FeatureOfInterestSelectParams,
-} from '../model/features-of-interest';
+} from "../model/features-of-interest";
 import {
   HistoricalLocation,
   HistoricalLocationExpandParams,
   HistoricalLocationSelectParams,
-} from '../model/historical-locations';
-import { Location, LocationExpandParams, LocationSelectParams } from '../model/locations';
-import { Observation, ObservationExpandParams, ObservationSelectParams } from '../model/observations';
-import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from '../model/observed-properties';
-import { Sensor, SensorExpandParams, SensorSelectParams } from '../model/sensors';
+} from "../model/historical-locations";
+import { Location, LocationExpandParams, LocationSelectParams } from "../model/locations";
+import { Observation, ObservationExpandParams, ObservationSelectParams } from "../model/observations";
+import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from "../model/observed-properties";
+import { Sensor, SensorExpandParams, SensorSelectParams } from "../model/sensors";
 import {
   StaEndpoint,
   StaExpandParams,
@@ -27,11 +27,11 @@ import {
   StaReadInterface,
   StaSelectParams,
   StaValueListResponse,
-} from '../model/sta-interface';
-import { Thing, ThingExpandParams, ThingSelectParams } from '../model/things';
-import { StaObject } from './../model/sta-interface';
+} from "../model/sta-interface";
+import { Thing, ThingExpandParams, ThingSelectParams } from "../model/things";
+import { StaObject } from "./../model/sta-interface";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class StaReadInterfaceService implements StaReadInterface {
 
   constructor(
@@ -115,17 +115,17 @@ export class StaReadInterfaceService implements StaReadInterface {
   getDatastreamObservationsRelation(
     url: string, id: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
   ): Observable<StaValueListResponse<Observation>> {
-    return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, 'Observations'), {}, params, options);
+    return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, "Observations"), {}, params, options);
   }
 
   public aggregatePaging<T extends StaObject>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {
     return new Observable((observer: Observer<StaValueListResponse<T>>) => {
       request.subscribe(
         res => {
-          if (res['@iot.nextLink']) {
-            this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(res['@iot.nextLink'])).subscribe(nextPage => {
+          if (res["@iot.nextLink"]) {
+            this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(res["@iot.nextLink"])).subscribe(nextPage => {
               res.value.push(...nextPage.value);
-              delete res['@iot.nextLink'];
+              delete res["@iot.nextLink"];
               observer.next(res);
               observer.complete();
             });
@@ -161,8 +161,8 @@ export class StaReadInterfaceService implements StaReadInterface {
     let httpParams = new HttpParams({ encoder: new UriParameterCoder() });
     Object.getOwnPropertyNames(params).forEach((key) => httpParams = httpParams.set(key, params[key]));
     if (filter.$expand) {
-      if (typeof filter.$expand === 'string') {
-        httpParams = httpParams.set('$expand', filter.$expand);
+      if (typeof filter.$expand === "string") {
+        httpParams = httpParams.set("$expand", filter.$expand);
       } else {
         const $expand = [];
         for (const key in filter.$expand as StaExpandParams) {
@@ -170,7 +170,7 @@ export class StaReadInterfaceService implements StaReadInterface {
             $expand.push(key);
           }
         }
-        httpParams = httpParams.set('$expand', $expand.join(','));
+        httpParams = httpParams.set("$expand", $expand.join(","));
       }
     }
     if (filter.$select) {
@@ -180,19 +180,19 @@ export class StaReadInterfaceService implements StaReadInterface {
           $select.push(key);
         }
       }
-      httpParams = httpParams.set('$select', $select.join(','));
+      httpParams = httpParams.set("$select", $select.join(","));
     }
     if (filter.$orderby) {
-      httpParams = httpParams.set('$orderby', filter.$orderby);
+      httpParams = httpParams.set("$orderby", filter.$orderby);
     }
     if (filter.$filter) {
-      httpParams = httpParams.set('$filter', filter.$filter);
+      httpParams = httpParams.set("$filter", filter.$filter);
     }
     if (filter.$count) {
-      httpParams = httpParams.set('$count', 'true');
+      httpParams = httpParams.set("$count", "true");
     }
     if (filter.$top !== undefined) {
-      httpParams = httpParams.set('$top', filter.$top.toString());
+      httpParams = httpParams.set("$top", filter.$top.toString());
     }
     return httpParams;
   }

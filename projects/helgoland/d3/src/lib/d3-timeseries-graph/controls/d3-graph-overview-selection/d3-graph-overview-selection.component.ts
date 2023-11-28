@@ -1,20 +1,20 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Required, Timespan } from '@helgoland/core';
-import * as d3 from 'd3';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from "@angular/core";
+import { Required, Timespan } from "@helgoland/core";
+import * as d3 from "d3";
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { InternalDataEntry } from '../../../model/d3-general';
-import { D3GraphExtent, D3TimeseriesGraphControl } from '../../d3-timeseries-graph-control';
-import { D3TimeseriesGraphInterface } from './../../d3-timeseries-graph.interface';
+import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
+import { D3GraphId } from "../../../helper/d3-graph-id.service";
+import { D3Graphs } from "../../../helper/d3-graphs.service";
+import { InternalDataEntry } from "../../../model/d3-general";
+import { D3GraphExtent, D3TimeseriesGraphControl } from "../../d3-timeseries-graph-control";
+import { D3TimeseriesGraphInterface } from "./../../d3-timeseries-graph.interface";
 
 @Component({
-    selector: 'n52-d3-graph-overview-selection',
-    template: '',
-    styleUrls: ['./d3-graph-overview-selection.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true
+  selector: "n52-d3-graph-overview-selection",
+  template: "",
+  styleUrls: ["./d3-graph-overview-selection.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
 
@@ -39,7 +39,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectionTimeInterval']) {
+    if (changes["selectionTimeInterval"]) {
       this.drawOverviewSelection();
     }
   }
@@ -56,7 +56,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     timespan: Timespan
   ) {
     if (!this.drawLayer && this.graphComp) {
-      this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
+      this.drawLayer = this.graphComp.getDrawingLayer("overview-layer", true);
     }
 
     this.completeTimespan = timespan;
@@ -75,15 +75,15 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
   protected drawOverviewSelection() {
     if (!this.selectionTimeInterval || !this.completeTimespan || !this.graphExtent || !this.drawLayer) { return; }
 
-    this.drawLayer.selectAll('*').remove();
-    this.drawLayer.append<SVGSVGElement>('svg:rect')
-      .attr('width', this.graphExtent.width - this.graphExtent.leftOffset)
-      .attr('height', this.graphExtent.height)
-      .attr('id', 'backgroundRect')
-      .attr('fill', 'none')
-      .attr('stroke', 'none')
-      .attr('pointer-events', 'all')
-      .attr('transform', 'translate(' + this.graphExtent.leftOffset + ', 0)');
+    this.drawLayer.selectAll("*").remove();
+    this.drawLayer.append<SVGSVGElement>("svg:rect")
+      .attr("width", this.graphExtent.width - this.graphExtent.leftOffset)
+      .attr("height", this.graphExtent.height)
+      .attr("id", "backgroundRect")
+      .attr("fill", "none")
+      .attr("stroke", "none")
+      .attr("pointer-events", "all")
+      .attr("transform", "translate(" + this.graphExtent.leftOffset + ", 0)");
 
     const interval: [number, number] = this.getXDomainByTimestamp(this.completeTimespan, this.graphExtent.width);
     const overviewTimespanInterval = [interval[0], interval[1]];
@@ -91,7 +91,7 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
     // create brush
     const brush = d3.brushX()
       .extent([[0, 0], [this.graphExtent.width, this.graphExtent.height]])
-      .on('end', (event) => {
+      .on("end", (event) => {
         // on mouseclick change time after brush was moved
         if (this.mousedownBrush && this.completeTimespan && this.graphComp && this.graphExtent) {
           this.mousedownBrush = false;
@@ -106,11 +106,11 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
       });
 
     // add brush to svg
-    this.overview = this.drawLayer.append<SVGSVGElement>('g')
-      .attr('width', this.graphExtent.width)
-      .attr('height', this.graphExtent.height)
-      .attr('pointer-events', 'all')
-      .attr('class', 'brush')
+    this.overview = this.drawLayer.append<SVGSVGElement>("g")
+      .attr("width", this.graphExtent.width)
+      .attr("height", this.graphExtent.height)
+      .attr("pointer-events", "all")
+      .attr("class", "brush")
       .call(brush as any)
       .call(brush.move as any, overviewTimespanInterval);
 
@@ -121,19 +121,19 @@ export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl 
      * 'stroke' for borderline-color,
      * 'stroke-dasharray' for customizing borderline-style
      */
-    this.overview.selectAll('.selection')
-      .attr('stroke', 'none')
-      .on('mousedown', () => this.mousedownBrush = true)
-      .on('touchmove', () => this.mousedownBrush = true)
+    this.overview.selectAll(".selection")
+      .attr("stroke", "none")
+      .on("mousedown", () => this.mousedownBrush = true)
+      .on("touchmove", () => this.mousedownBrush = true)
 
     // do not allow clear selection
-    this.overview.selectAll('.overlay').remove();
+    this.overview.selectAll(".overlay").remove();
 
     // add event to resizing handle to allow change time on resize
-    this.overview.selectAll('.handle')
-      .attr('stroke', 'none')
-      .on('mousedown', () => this.mousedownBrush = true)
-      .on('touchmove', () => this.mousedownBrush = true)
+    this.overview.selectAll(".handle")
+      .attr("stroke", "none")
+      .on("mousedown", () => this.mousedownBrush = true)
+      .on("touchmove", () => this.mousedownBrush = true)
   }
 
   /**

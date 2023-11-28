@@ -3,8 +3,8 @@ import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipb
 
 
 @Component({
-  templateUrl: './permalink.component.html',
-  styleUrls: ['./permalink.component.scss'],
+  templateUrl: "./permalink.component.html",
+  styleUrls: ["./permalink.component.scss"],
   imports: [
     PermalinkToClipboardComponent,
     PermalinkNewWindowComponent,
@@ -14,6 +14,6 @@ import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipb
 })
 export class PermalinkComponent {
 
-  public permalinkUrl = 'test-url';
+  public permalinkUrl = "test-url";
 
 }

@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { TrajectoryLabelComponent } from './trajectory-label.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { TrajectoryLabelComponent } from "./trajectory-label.component";
 
-describe('TrajectoryLabelComponent', () => {
+describe("TrajectoryLabelComponent", () => {
   let component: TrajectoryLabelComponent;
   let fixture: ComponentFixture<TrajectoryLabelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         TrajectoryLabelComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('TrajectoryLabelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

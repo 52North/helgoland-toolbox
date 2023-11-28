@@ -1,8 +1,8 @@
-import { InsertObservation, Observation } from './observations';
-import { InsertObservedProperty, ObservedProperty } from './observed-properties';
-import { InsertSensor, Sensor } from './sensors';
-import { InsertId, StaExpandParams, StaObject, StaSelectParams } from './sta-interface';
-import { Thing } from './things';
+import { InsertObservation, Observation } from "./observations";
+import { InsertObservedProperty, ObservedProperty } from "./observed-properties";
+import { InsertSensor, Sensor } from "./sensors";
+import { InsertId, StaExpandParams, StaObject, StaSelectParams } from "./sta-interface";
+import { Thing } from "./things";
 
 export interface UnitOfMeasurement {
     name: string;
@@ -18,13 +18,13 @@ export interface Datastream extends StaObject {
     observedArea?: GeoJSON.GeometryObject;
     phenomenonTime?: string;
     // resultTime: TimeInterval;
-    'Thing@iot.navigationLink'?: string;
+    "Thing@iot.navigationLink"?: string;
     Thing?: Thing;
-    'Sensor@iot.navigationLink'?: string;
+    "Sensor@iot.navigationLink"?: string;
     Sensor?: Sensor;
-    'ObservedProperty@iot.navigationLink'?: string;
+    "ObservedProperty@iot.navigationLink"?: string;
     ObservedProperty?: ObservedProperty;
-    'Observations@iot.navigationLink'?: string;
+    "Observations@iot.navigationLink"?: string;
     Observations?: Observation[];
 }
 

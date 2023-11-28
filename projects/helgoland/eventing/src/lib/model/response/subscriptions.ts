@@ -1,5 +1,5 @@
-import { EventingEndpoint, Id } from './common';
-import { Notification } from './notifications';
+import { EventingEndpoint, Id } from "./common";
+import { Notification } from "./notifications";
 
 export interface Subscription extends Id {
     deliveryMethod: Id;

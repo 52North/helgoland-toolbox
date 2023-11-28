@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import {
   DatasetFilter,
   DatasetType,
@@ -6,10 +6,10 @@ import {
   HelgolandTimeseries,
   InternalDatasetId,
   InternalIdHandler,
-} from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
+} from "@helgoland/core";
+import { TranslateService } from "@ngx-translate/core";
 
-import { ListEntryComponent } from '../../list-entry.component';
+import { ListEntryComponent } from "../../list-entry.component";
 
 /**
  * Implements the abstract ListEntryComponent, which has the following functions:
@@ -18,10 +18,10 @@ import { ListEntryComponent } from '../../list-entry.component';
  *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
  */
 @Component({
-    selector: 'n52-simple-timeseries-entry',
-    templateUrl: './simple-timeseries-entry.component.html',
-    styleUrls: ['./simple-timeseries-entry.component.css'],
-    standalone: true
+  selector: "n52-simple-timeseries-entry",
+  templateUrl: "./simple-timeseries-entry.component.html",
+  styleUrls: ["./simple-timeseries-entry.component.css"],
+  standalone: true
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 

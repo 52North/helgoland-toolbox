@@ -1,29 +1,29 @@
 // @ts-nocheck
-import { AbstractMetadataList } from './AbstractMetadataList';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractMetadataList } from "./AbstractMetadataList";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 export class KeywordList extends AbstractMetadataList {
     /**
      * online dictionary or ontology which defines a collection of possible
      * keywords
      */
-    @DisplayName('Code space')
-    codeSpace: string;
+    @DisplayName("Code space")
+      codeSpace: string;
     /**
      * a short word or phrase that will aid in discovery of this object
      */
-    @DisplayName('Keywords')
-    keywords: string[] = [];
+    @DisplayName("Keywords")
+      keywords: string[] = [];
 
     override toString() {
-        return 'Keyword list';
+      return "Keyword list";
     }
 
     getLabel() {
-        return this.toString();
+      return this.toString();
     }
 
     getValue() {
-        return this.keywords.join(', ');
+      return this.keywords.join(", ");
     }
 }

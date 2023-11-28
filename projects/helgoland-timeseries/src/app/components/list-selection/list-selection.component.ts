@@ -1,28 +1,28 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from '@helgoland/core';
-import { MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from "@helgoland/core";
+import { MultiServiceFilterEndpoint } from "@helgoland/selector";
+import { TranslateModule } from "@ngx-translate/core";
 import {
   ErrorHandlerService,
   FilterLabelComponent,
   ParameterListEntry,
   ParameterListSelectorComponent,
   ParameterType,
-} from 'helgoland-common';
+} from "helgoland-common";
 
-import { ConfigurationService } from '../../services/configuration.service';
-import { TimeseriesListSelectorComponent } from '../timeseries-list-selector/timeseries-list-selector.component';
-import { ListConfig, ModalListSettingsComponent } from './modal-list-settings/modal-list-settings.component';
+import { ConfigurationService } from "../../services/configuration.service";
+import { TimeseriesListSelectorComponent } from "../timeseries-list-selector/timeseries-list-selector.component";
+import { ListConfig, ModalListSettingsComponent } from "./modal-list-settings/modal-list-settings.component";
 
 @Component({
-  selector: 'helgoland-list-selection',
-  templateUrl: './list-selection.component.html',
-  styleUrls: ['./list-selection.component.scss'],
+  selector: "helgoland-list-selection",
+  templateUrl: "./list-selection.component.html",
+  styleUrls: ["./list-selection.component.scss"],
   imports: [
     CommonModule,
     FilterLabelComponent,

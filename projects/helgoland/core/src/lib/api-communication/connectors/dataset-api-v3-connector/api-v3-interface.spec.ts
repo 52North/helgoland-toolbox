@@ -1,14 +1,14 @@
-import { TestBed } from '@angular/core/testing';
-import { BasicAuthInterceptorService } from '@helgoland/auth';
+import { TestBed } from "@angular/core/testing";
+import { BasicAuthInterceptorService } from "@helgoland/auth";
 
-import { BasicAuthTestingProviders } from '../../../../../../../testing/basic-auth.testing';
-import { SettingsServiceTestingProvider } from '../../../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
-import { HTTP_SERVICE_INTERCEPTORS } from '../../../dataset-api/http.service';
-import { HelgolandCoreModule } from './../../../core.module';
-import { ApiV3InterfaceService } from './api-v3-interface';
+import { BasicAuthTestingProviders } from "../../../../../../../testing/basic-auth.testing";
+import { SettingsServiceTestingProvider } from "../../../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../../../testing/translate.testing.module";
+import { HTTP_SERVICE_INTERCEPTORS } from "../../../dataset-api/http.service";
+import { HelgolandCoreModule } from "./../../../core.module";
+import { ApiV3InterfaceService } from "./api-v3-interface";
 
-describe('ApiV3InterfaceService', () => {
+describe("ApiV3InterfaceService", () => {
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
@@ -26,7 +26,7 @@ describe('ApiV3InterfaceService', () => {
     ]
   }));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: ApiV3InterfaceService = TestBed.inject(ApiV3InterfaceService);
     // const timespan: Timespan = new Timespan(new Date(2010, 1, 1), new Date(2020, 1, 1));
     // service.getSamplings('', {

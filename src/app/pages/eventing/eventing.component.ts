@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { BasicAuthServiceMaintainer } from '@helgoland/auth';
+import { CommonModule } from "@angular/common";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { BasicAuthServiceMaintainer } from "@helgoland/auth";
 import {
   EventFilter,
   EventingApiService,
@@ -12,11 +12,11 @@ import {
   PublicationResults,
   SubscriptionFilter,
   SubscriptionResults,
-} from '@helgoland/eventing';
+} from "@helgoland/eventing";
 
 @Component({
-  templateUrl: './eventing.component.html',
-  styleUrls: ['./eventing.component.css'],
+  templateUrl: "./eventing.component.html",
+  styleUrls: ["./eventing.component.css"],
   imports: [
     CommonModule
   ],
@@ -24,7 +24,7 @@ import {
 })
 export class EventingComponent {
 
-  private readonly url = '';
+  private readonly url = "";
 
   public loading: boolean = false;
 
@@ -86,7 +86,7 @@ export class EventingComponent {
 
   public requestNotifications() {
     this.startloading();
-    const params: NotificationFilter = { limit: 10, publications: ['80', '81'] };
+    const params: NotificationFilter = { limit: 10, publications: ["80", "81"] };
     this.eventingApi.getNotifications(this.url, params).subscribe(
       res => this.notificationResults = res,
       (error: HttpErrorResponse) => this.requestError = error.message,

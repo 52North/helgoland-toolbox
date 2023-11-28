@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Settings, SettingsService } from '@helgoland/core';
-import { Observable, Observer } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Settings, SettingsService } from "@helgoland/core";
+import { Observable, Observer } from "rxjs";
 
-import { LabelMapperHandler } from './../label-mapper.service';
+import { LabelMapperHandler } from "./../label-mapper.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class VocabNercLabelMapperService implements LabelMapperHandler {
 
@@ -16,7 +16,7 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
   ) { }
 
   public canHandle(label: string): boolean {
-    return label.startsWith('http://vocab.nerc.ac.uk');
+    return label.startsWith("http://vocab.nerc.ac.uk");
   }
 
   public getMappedLabel(label: string): Observable<string> {
@@ -25,10 +25,10 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
       if (url) {
         const labelUrl =
           this.settingsSrvc.getSettings().proxyUrl ? this.settingsSrvc.getSettings().proxyUrl + url : url;
-        this.httpClient.get(labelUrl, { responseType: 'text' }).subscribe((res) => {
+        this.httpClient.get(labelUrl, { responseType: "text" }).subscribe((res) => {
           try {
-            const xml = new DOMParser().parseFromString(res, 'text/xml');
-            const temp = xml.getElementsByTagNameNS('http://www.w3.org/2004/02/skos/core#', 'prefLabel')[0];
+            const xml = new DOMParser().parseFromString(res, "text/xml");
+            const temp = xml.getElementsByTagNameNS("http://www.w3.org/2004/02/skos/core#", "prefLabel")[0];
             label = temp.textContent ? temp.textContent : label;
             this.confirmLabel(observer, label);
           } catch (error) {
@@ -50,7 +50,7 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
   }
 
   private findUrl(label: string) {
-    const source = (label || '').toString();
+    const source = (label || "").toString();
     const regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?&\/\/=]+)/g;
     const matchArray = regexToken.exec(source);
     if (matchArray !== null) {

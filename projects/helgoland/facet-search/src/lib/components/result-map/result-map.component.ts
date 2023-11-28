@@ -1,24 +1,24 @@
-import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ElementRef } from '@angular/core';
-import { Required } from '@helgoland/core';
-import { CachedMapComponent, MapCache } from '@helgoland/map';
-import { geoJSON } from 'leaflet';
-import * as L from 'leaflet';
-import { Subscription } from 'rxjs';
+import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ElementRef } from "@angular/core";
+import { Required } from "@helgoland/core";
+import { CachedMapComponent, MapCache } from "@helgoland/map";
+import { geoJSON } from "leaflet";
+import * as L from "leaflet";
+import { Subscription } from "rxjs";
 
-import { FacetSearchElement, FacetSearchElementFeature, FacetSearchService } from '../../facet-search-model';
+import { FacetSearchElement, FacetSearchElementFeature, FacetSearchService } from "../../facet-search-model";
 
-delete (L.Icon.Default as any).prototype['_getIconUrl'];
+delete (L.Icon.Default as any).prototype["_getIconUrl"];
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: './assets/images/leaflet/marker-icon-2x.png',
-  iconUrl: './assets/images/leaflet/marker-icon.png',
-  shadowUrl: './assets/images/leaflet/marker-shadow.png',
+  iconRetinaUrl: "./assets/images/leaflet/marker-icon-2x.png",
+  iconUrl: "./assets/images/leaflet/marker-icon.png",
+  shadowUrl: "./assets/images/leaflet/marker-shadow.png",
 });
 
 @Component({
-    selector: 'n52-result-map',
-    templateUrl: './result-map.component.html',
-    styleUrls: ['./result-map.component.scss'],
-    standalone: true
+  selector: "n52-result-map",
+  templateUrl: "./result-map.component.html",
+  styleUrls: ["./result-map.component.scss"],
+  standalone: true
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -114,7 +114,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   private createFeatureGeometry(elem: {feature: FacetSearchElementFeature, url: string}): L.GeoJSON | undefined {
     if (elem.feature) {
       const geometry = geoJSON(elem.feature.geometry);
-      geometry.on('mouseup', () => this.selectedFeature.emit(elem));
+      geometry.on("mouseup", () => this.selectedFeature.emit(elem));
       return geometry;
     }
     return undefined;
@@ -123,7 +123,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
   private createEntryGeometry(entry: FacetSearchElement) {
     if (entry.feature?.geometry) {
       const geometry = geoJSON(entry.feature.geometry);
-      geometry.on('mouseup', () => this.selectedEntry.emit(entry));
+      geometry.on("mouseup", () => this.selectedEntry.emit(entry));
       return geometry;
     }
     return undefined;

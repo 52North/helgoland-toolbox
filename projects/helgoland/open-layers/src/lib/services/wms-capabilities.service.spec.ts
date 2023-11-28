@@ -1,14 +1,14 @@
-import { inject, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { inject, TestBed } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { WmsCapabilitiesService } from './wms-capabilities.service';
+import { WmsCapabilitiesService } from "./wms-capabilities.service";
 
-describe('WmsCapabilitiesService', () => {
+describe("WmsCapabilitiesService", () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [HelgolandCoreModule]
   }));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: WmsCapabilitiesService = TestBed.inject(WmsCapabilitiesService);
     expect(service).toBeTruthy();
   });

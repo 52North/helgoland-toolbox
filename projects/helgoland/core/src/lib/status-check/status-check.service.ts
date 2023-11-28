@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { forkJoin, Observable, Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { forkJoin, Observable, Observer } from "rxjs";
+import { map } from "rxjs/operators";
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   ColorService,
   DatasetOptions,
@@ -7,11 +7,11 @@ import {
   HelgolandTrajectory,
   LocalStorage,
   Timespan,
-} from '@helgoland/core';
-import { forkJoin, Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+} from "@helgoland/core";
+import { forkJoin, Observable, ReplaySubject } from "rxjs";
+import { map } from "rxjs/operators";
 
-const TRAJECTORY_ID_CACHE_PARAM = 'trajectoryId';
+const TRAJECTORY_ID_CACHE_PARAM = "trajectoryId";
 
 export interface TrajectoryResult {
   geometry: GeoJSON.LineString;
@@ -22,7 +22,7 @@ export interface TrajectoryResult {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TrajectoriesService {
 
@@ -71,7 +71,7 @@ export class TrajectoriesService {
             this.loading.next(false);
           });
         } else {
-          console.error('Trajectory doesn\'t have first and last value.')
+          console.error("Trajectory doesn't have first and last value.")
         }
       }
     );
@@ -81,7 +81,7 @@ export class TrajectoriesService {
     return this.servicesConnector.getDatasetData(trajectory, timespan)
       .pipe(map(res => {
         const geometry: GeoJSON.LineString = {
-          type: 'LineString',
+          type: "LineString",
           coordinates: res.values.map(e => e.geometry.coordinates)
         };
         return geometry;

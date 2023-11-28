@@ -1,9 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
-import { inject, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { inject, TestBed } from "@angular/core/testing";
 
-import { BasicAuthService } from './basic-auth.service';
+import { BasicAuthService } from "./basic-auth.service";
 
-describe('BasicAuthService', () => {
+describe("BasicAuthService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('BasicAuthService', () => {
     });
   });
 
-  it('should be created', inject([BasicAuthService], (service: BasicAuthService) => {
+  it("should be created", inject([BasicAuthService], (service: BasicAuthService) => {
     expect(service).toBeTruthy();
   }));
 

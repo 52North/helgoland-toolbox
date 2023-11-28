@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { DatasetApi, Settings, SettingsService } from '@helgoland/core';
+import { Injectable } from "@angular/core";
+import { DatasetApi, Settings, SettingsService } from "@helgoland/core";
 
 interface BasicAuthDatasetApi extends DatasetApi {
   basicAuthPostFix?: string;
@@ -39,7 +39,7 @@ export class BasicAuthServiceMaintainer {
     if (settings && settings.datasetApis && Array.isArray(settings.datasetApis)) {
       const api = (settings.datasetApis as BasicAuthDatasetApi[]).find((e) => url.startsWith(e.url) && e.basicAuth);
       if (api) {
-        return `${api.url}${api.basicAuthPostFix ? api.basicAuthPostFix : ''}`;
+        return `${api.url}${api.basicAuthPostFix ? api.basicAuthPostFix : ""}`;
       }
     }
     return undefined;

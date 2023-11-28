@@ -1,6 +1,6 @@
-import { HelgolandTimeseries } from '@helgoland/core';
+import { HelgolandTimeseries } from "@helgoland/core";
 
-import { DataEntry, InternalDataEntry } from '../../model/d3-general';
+import { DataEntry, InternalDataEntry } from "../../model/d3-general";
 
 export interface HoveringElement {
     dataEntry: DataEntry;

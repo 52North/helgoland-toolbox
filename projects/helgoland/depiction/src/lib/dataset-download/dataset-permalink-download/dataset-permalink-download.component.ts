@@ -11,9 +11,9 @@ import { TranslateModule } from "@ngx-translate/core";
 
 
 @Component({
-  selector: 'n52-dataset-permalink-download',
-  templateUrl: './dataset-permalink-download.component.html',
-  styleUrls: ['./dataset-permalink-download.component.css'],
+  selector: "n52-dataset-permalink-download",
+  templateUrl: "./dataset-permalink-download.component.html",
+  styleUrls: ["./dataset-permalink-download.component.css"],
   standalone: true,
   imports: [TranslateModule]
 })
@@ -43,7 +43,7 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval']) {
+    if (changes["timeInterval"]) {
       if (this.internalId && this.timeInterval) {
         this.createLink(this.internalId, this.timeInterval);
       }
@@ -56,7 +56,7 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
       generalize: true,
       timespan
     };
-    params.lang = this.language && this.language !== '' ? this.language : 'en';
+    params.lang = this.language && this.language !== "" ? this.language : "en";
     this.servicesConnector.createCsvDataExportLink(internalId, params).subscribe(link => this.downloadLink = link);
   }
 

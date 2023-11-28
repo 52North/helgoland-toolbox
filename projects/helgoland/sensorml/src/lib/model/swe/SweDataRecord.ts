@@ -1,6 +1,6 @@
-import { AbstractDataComponent } from './AbstractDataComponent';
-import { SweField } from './SweField';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractDataComponent } from "./AbstractDataComponent";
+import { SweField } from "./SweField";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * Implementation of ISO-11404 Record datatype. This allows grouping (sequence)
@@ -12,14 +12,14 @@ export class SweDataRecord extends AbstractDataComponent {
      * Definition of the field provided as a nested data component. The field can
      * be scalar or can itself be an aggregate such as a record, choice or array
      */
-    @DisplayName('Fields')
-    fields: SweField[] = [];
+    @DisplayName("Fields")
+      fields: SweField[] = [];
 
     override toString() {
-        return 'Data Record Component';
+      return "Data Record Component";
     }
 
     getValue() {
-        this.toString();
+      this.toString();
     }
 }

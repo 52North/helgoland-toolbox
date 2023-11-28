@@ -10,8 +10,8 @@ export abstract class PermalinkService<T> {
 
   protected createBaseUrl() {
     const url = window.location.href;
-    if (url.indexOf('?') !== -1) {
-      return url.substring(0, url.indexOf('?'));
+    if (url.indexOf("?") !== -1) {
+      return url.substring(0, url.indexOf("?"));
     } else {
       return url;
     }

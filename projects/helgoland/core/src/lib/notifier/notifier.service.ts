@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-const ID = 'helgoland-notifier';
+const ID = "helgoland-notifier";
 const TIME_IN_MS = 3000;
 
 @Injectable()
@@ -11,10 +11,10 @@ export class NotifierService {
   constructor() {
     const notifierElement = document.getElementById(ID);
     if (!notifierElement) {
-      const node = document.createElement('div');
+      const node = document.createElement("div");
       node.id = ID;
-      node.className = 'hide';
-      const textNode = document.createTextNode('');
+      node.className = "hide";
+      const textNode = document.createTextNode("");
       node.appendChild(textNode);
       document.body.appendChild(node);
     }
@@ -25,9 +25,9 @@ export class NotifierService {
     const notifierElement = document.getElementById(ID);
     if (notifierElement) {
       notifierElement.innerHTML = text;
-      notifierElement.className = notifierElement.className.replace('hide', 'show');
+      notifierElement.className = notifierElement.className.replace("hide", "show");
       this.notifierTimeout = setTimeout(() => {
-        notifierElement.className = notifierElement.className.replace('show', 'hide');
+        notifierElement.className = notifierElement.className.replace("show", "hide");
       }, TIME_IN_MS);
     }
   }

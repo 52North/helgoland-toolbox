@@ -8,9 +8,9 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 @Component({
-  selector: 'helgoland-share-button',
-  templateUrl: './share-button.component.html',
-  styleUrls: ['./share-button.component.scss'],
+  selector: "helgoland-share-button",
+  templateUrl: "./share-button.component.html",
+  styleUrls: ["./share-button.component.scss"],
   imports: [
     MatIconModule,
     TranslateModule,
@@ -25,8 +25,8 @@ export class ShareButtonComponent {
 
   private readonly snackBarConfig: MatSnackBarConfig = {
     duration: 2000,
-    verticalPosition: 'bottom',
-    horizontalPosition: 'center'
+    verticalPosition: "bottom",
+    horizontalPosition: "center"
   };
 
   constructor(
@@ -40,9 +40,9 @@ export class ShareButtonComponent {
     if (this.generatedUrlFunction) {
       const url = this.generatedUrlFunction();
       if (this.clipboard.copy(url)) {
-        this.inform(this.translate.instant('permalink.copy-to-clipboard'));
+        this.inform(this.translate.instant("permalink.copy-to-clipboard"));
       } else {
-        this.inform(this.translate.instant('permalink.copy-to-clipboard-error'));
+        this.inform(this.translate.instant("permalink.copy-to-clipboard-error"));
       }
     } else {
       throw new Error("generateUrlFunction is not defined");
@@ -51,6 +51,6 @@ export class ShareButtonComponent {
 
   private inform(message: string) {
     this.liveAnnouncer.announce(message);
-    this.snackBar.open(message, this.translate.instant('controls.ok'), this.snackBarConfig);
+    this.snackBar.open(message, this.translate.instant("controls.ok"), this.snackBarConfig);
   }
 }

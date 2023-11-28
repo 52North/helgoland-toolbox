@@ -1,4 +1,4 @@
-import { EventTrigger, EventType, Id, NotificationLevel } from './common';
+import { EventTrigger, EventType, Id, NotificationLevel } from "./common";
 
 export interface Rule extends Id {
     eventTrigger: EventTrigger;

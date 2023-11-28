@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Injectable } from "@angular/core";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ErrorHandlerService {
 
@@ -11,11 +11,11 @@ export class ErrorHandlerService {
   ) { }
 
   error(message: any, userDismiss = false, options: MatSnackBarConfig = {}) {
-    let errorMessage = '';
-    if (typeof message === 'string') {
+    let errorMessage = "";
+    if (typeof message === "string") {
       errorMessage = message;
     }
-    const dismiss = userDismiss ? 'Dismiss' : undefined;
+    const dismiss = userDismiss ? "Dismiss" : undefined;
     if (!dismiss) {
       options.duration = 3000;
     }

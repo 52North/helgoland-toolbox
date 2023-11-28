@@ -3,9 +3,9 @@ import { Component } from "@angular/core";
 import { AbstractProcess, SensorMLXmlService } from "@helgoland/sensorml";
 
 @Component({
-  selector: 'n52-sensorml',
-  templateUrl: './sensorml.component.html',
-  styleUrls: ['./sensorml.component.css'],
+  selector: "n52-sensorml",
+  templateUrl: "./sensorml.component.html",
+  styleUrls: ["./sensorml.component.css"],
   imports: [
     CommonModule
   ],

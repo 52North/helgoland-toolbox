@@ -1,27 +1,27 @@
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatIconModule } from "@angular/material/icon";
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
 
-import { ShareButtonComponent } from './share-button.component';
+import { ShareButtonComponent } from "./share-button.component";
 
-describe('ShareButtonComponent', () => {
+describe("ShareButtonComponent", () => {
   let component: ShareButtonComponent;
   let fixture: ComponentFixture<ShareButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatSnackBarModule,
         HttpClientModule,
         MatIconModule,
         MatTooltipModule,
         TranslateTestingModule,
         ShareButtonComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('ShareButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

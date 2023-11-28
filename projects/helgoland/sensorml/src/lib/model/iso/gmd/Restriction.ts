@@ -8,35 +8,35 @@ export type Restriction =
      * commercial print or label, granted by law for a specified period of time to
      * an author, composer, artist, distributor
      */
-    'copyright' |
+    "copyright" |
     /**
      * government has granted exclusive right to make, sell, use or license an
      * invention or discovery
      */
-    'patent' |
+    "patent" |
     /**
      * produced or sold information awaiting a patent
      */
-    'patentPending' |
+    "patentPending" |
     /**
      * a name, symbol, or other device identifying a product, officially
      * registered and legally restricted to the use of the owner or manufacturer
      */
-    'trademark' |
+    "trademark" |
     /**
      * formal permission to do something
      */
-    'license' |
+    "license" |
     /**
      * rights to financial benefit from and control of distribution of
      * non-tangible property that is a result of creativity
      */
-    'intellectualPropertyRights' |
+    "intellectualPropertyRights" |
     /**
      * withheld from general circulation or disclosure
      */
-    'restricted' |
+    "restricted" |
     /**
      * limitation not listed
      */
-    'otherRestrictions';
+    "otherRestrictions";

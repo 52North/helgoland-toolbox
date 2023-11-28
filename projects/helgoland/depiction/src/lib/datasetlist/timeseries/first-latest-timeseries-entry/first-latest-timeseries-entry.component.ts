@@ -20,9 +20,9 @@ import {
  *  - jump to first and latest value events
  */
 @Component({
-  selector: 'n52-first-latest-timeseries-entry',
-  templateUrl: './first-latest-timeseries-entry.component.html',
-  styleUrls: ['./first-latest-timeseries-entry.component.css'],
+  selector: "n52-first-latest-timeseries-entry",
+  templateUrl: "./first-latest-timeseries-entry.component.html",
+  styleUrls: ["./first-latest-timeseries-entry.component.css"],
   standalone: true,
   imports: [TzDatePipe]
 })
@@ -49,7 +49,7 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval']) {
+    if (changes["timeInterval"]) {
       this.checkDataInTimespan();
     }
   }

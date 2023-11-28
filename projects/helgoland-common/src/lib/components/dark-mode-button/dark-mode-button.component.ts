@@ -5,9 +5,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { LayoutModeService } from "../../services/layout-mode.service";
 
 @Component({
-  selector: 'helgoland-common-dark-mode-button',
-  templateUrl: './dark-mode-button.component.html',
-  styleUrls: ['./dark-mode-button.component.scss'],
+  selector: "helgoland-common-dark-mode-button",
+  templateUrl: "./dark-mode-button.component.html",
+  styleUrls: ["./dark-mode-button.component.scss"],
   imports: [
     TranslateModule,
     MatSlideToggleModule

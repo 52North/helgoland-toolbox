@@ -6,9 +6,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 
 @Component({
-  selector: 'helgoland-basic-auth-login',
-  templateUrl: './basic-auth-login.component.html',
-  styleUrls: ['./basic-auth-login.component.scss'],
+  selector: "helgoland-basic-auth-login",
+  templateUrl: "./basic-auth-login.component.html",
+  styleUrls: ["./basic-auth-login.component.scss"],
   imports: [
     FormsModule,
     MatButtonModule,

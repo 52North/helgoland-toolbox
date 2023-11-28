@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { MinMaxRange } from '@helgoland/core';
+import { Injectable } from "@angular/core";
+import { MinMaxRange } from "@helgoland/core";
 
-import { YAxis } from '../model/d3-general';
+import { YAxis } from "../model/d3-general";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class RangeCalculationsService {
 

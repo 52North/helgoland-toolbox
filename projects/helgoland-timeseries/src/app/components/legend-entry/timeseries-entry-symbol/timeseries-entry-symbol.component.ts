@@ -7,15 +7,15 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-} from '@angular/core';
-import { DatasetOptions } from '@helgoland/core';
-import { D3GraphHelperService } from '@helgoland/d3';
-import * as d3 from 'd3';
+} from "@angular/core";
+import { DatasetOptions } from "@helgoland/core";
+import { D3GraphHelperService } from "@helgoland/d3";
+import * as d3 from "d3";
 
 @Component({
-  selector: 'helgoland-timeseries-entry-symbol',
-  templateUrl: './timeseries-entry-symbol.component.html',
-  styleUrls: ['./timeseries-entry-symbol.component.scss'],
+  selector: "helgoland-timeseries-entry-symbol",
+  templateUrl: "./timeseries-entry-symbol.component.html",
+  styleUrls: ["./timeseries-entry-symbol.component.scss"],
   standalone: true
 })
 export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, OnInit {
@@ -50,10 +50,10 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
 
   private initSVG() {
     this.svg = d3.select<SVGSVGElement, any>(this.el.nativeElement)
-      .append<SVGGElement>('svg')
-      .attr('transform', 'scale(1.5)')
-      .attr('width', this.size)
-      .attr('height', this.size);
+      .append<SVGGElement>("svg")
+      .attr("transform", "scale(1.5)")
+      .attr("width", this.size)
+      .attr("height", this.size);
   }
 
   private drawSymbol() {

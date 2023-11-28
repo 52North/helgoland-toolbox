@@ -36,9 +36,9 @@ import { TimeseriesService } from "./../../services/timeseries-service.service";
 import { DiagramViewPermalinkService } from "./diagram-view-permalink.service";
 
 @Component({
-  selector: 'helgoland-diagram-view',
-  templateUrl: './diagram-view.component.html',
-  styleUrls: ['./diagram-view.component.scss'],
+  selector: "helgoland-diagram-view",
+  templateUrl: "./diagram-view.component.html",
+  styleUrls: ["./diagram-view.component.scss"],
   encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
@@ -81,10 +81,10 @@ export class DiagramViewComponent implements OnInit {
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
     copyright: {
-      label: '',
-      link: 'https://52north.org/',
-      positionX: 'right',
-      positionY: 'bottom'
+      label: "",
+      link: "https://52north.org/",
+      positionX: "right",
+      positionY: "bottom"
     },
     groupYaxis: true
   };
@@ -113,7 +113,7 @@ export class DiagramViewComponent implements OnInit {
     public permalinkSrvc: DiagramViewPermalinkService,
     private time: Time
   ) {
-    this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
+    this.mobileQuery = this.media.matchMedia("(max-width: 1024px)");
     // this._mobileQueryListener = () => {
     //   debugger;
     //   return this.changeDetectorRef.detectChanges();

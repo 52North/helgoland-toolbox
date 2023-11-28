@@ -1,8 +1,8 @@
-import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Timespan } from '@helgoland/core';
-import { Observable } from 'rxjs';
+import { HttpEvent, HttpRequest, HttpResponse } from "@angular/common/http";
+import { Timespan } from "@helgoland/core";
+import { Observable } from "rxjs";
 
-import { CachedIntersection, CachedObject } from './get-data-cache/local-http-cache-interval';
+import { CachedIntersection, CachedObject } from "./get-data-cache/local-http-cache-interval";
 
 export abstract class HttpCache {
     /**

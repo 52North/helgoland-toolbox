@@ -1,7 +1,7 @@
-import { Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { InternalDatasetId, InternalIdHandler, Required } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { InternalDatasetId, InternalIdHandler, Required } from "@helgoland/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { Subscription } from "rxjs";
 
 /**
  * Represents an abstract dataset entry for a list, which has the following functions:
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export abstract class ListEntryComponent implements OnInit, OnDestroy {
 
     @Input() @Required
-    public datasetId!: string;
+  public datasetId!: string;
 
     @Input()
     public selected: boolean | undefined;
@@ -38,28 +38,28 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
-        this.loadDataset(this.internalId, this.translateSrvc.currentLang);
-        this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
+      this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+      this.loadDataset(this.internalId, this.translateSrvc.currentLang);
+      this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
     }
 
     public ngOnDestroy(): void {
-        this.langChangeSubscription?.unsubscribe();
+      this.langChangeSubscription?.unsubscribe();
     }
 
     public removeDataset() {
-        this.onDeleteDataset.emit(true);
+      this.onDeleteDataset.emit(true);
     }
 
     public toggleSelection() {
-        this.selected = !this.selected;
-        this.onSelectDataset.emit(this.selected);
+      this.selected = !this.selected;
+      this.onSelectDataset.emit(this.selected);
     }
 
     protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {
-        if (this.internalId) {
-            this.loadDataset(this.internalId, langChangeEvent.lang);
-        }
+      if (this.internalId) {
+        this.loadDataset(this.internalId, langChangeEvent.lang);
+      }
     }
 
     protected abstract loadDataset(internalId: InternalDatasetId, locale?: string): void;

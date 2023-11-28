@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DefinedTimespanService, SettingsService } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { DefinedTimespanService, SettingsService } from "@helgoland/core";
 
-import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector.component';
+import { PredefinedTimespanSelectorComponent } from "./predefined-timespan-selector.component";
 
-describe('PredefinedTimespanSelectorComponent', () => {
+describe("PredefinedTimespanSelectorComponent", () => {
   let component: PredefinedTimespanSelectorComponent;
   let fixture: ComponentFixture<PredefinedTimespanSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [PredefinedTimespanSelectorComponent],
-    providers: [
+      imports: [PredefinedTimespanSelectorComponent],
+      providers: [
         SettingsService,
         DefinedTimespanService
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('PredefinedTimespanSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

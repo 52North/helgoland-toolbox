@@ -1,7 +1,7 @@
-import { AbstractDataComponent } from './AbstractDataComponent';
-import { SweCategory } from './SweCategory';
-import { SweDataChoiceItem } from './SweDataChoiceItem';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractDataComponent } from "./AbstractDataComponent";
+import { SweCategory } from "./SweCategory";
+import { SweDataChoiceItem } from "./SweDataChoiceItem";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * Implementation of a choice of two or more Data Components (also called
@@ -13,17 +13,17 @@ export class SweDataChoice extends AbstractDataComponent {
      * the actual choice made. Possible choices are listed in the Category
      * constraint section as an enumeration and should map to item names.
      */
-    @DisplayName('Choice value')
-    choiceValue: SweCategory[] = [];
+    @DisplayName("Choice value")
+      choiceValue: SweCategory[] = [];
 
-    @DisplayName('Items')
-    items: SweDataChoiceItem[] = [];
+    @DisplayName("Items")
+      items: SweDataChoiceItem[] = [];
 
     override toString() {
-        return super.toString('SWE data choice');
+      return super.toString("SWE data choice");
     }
 
     getValue() {
-        return this.toString();
+      return this.toString();
     }
 }

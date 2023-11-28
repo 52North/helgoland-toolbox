@@ -1,11 +1,11 @@
-import { StaExpandParams, StaObject, StaSelectParams } from './sta-interface';
+import { StaExpandParams, StaObject, StaSelectParams } from "./sta-interface";
 
 export interface Sensor extends StaObject {
     name?: string;
     description?: string;
     encodingType?: string;
     metadata?: string;
-    'Datastreams@iot.navigationLink'?: string;
+    "Datastreams@iot.navigationLink"?: string;
 }
 
 export interface InsertSensor extends StaObject {

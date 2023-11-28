@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { StatusInterval } from '../../model/dataset-api/dataset';
+import { StatusInterval } from "../../model/dataset-api/dataset";
 
 @Injectable()
 export class StatusIntervalResolverService {

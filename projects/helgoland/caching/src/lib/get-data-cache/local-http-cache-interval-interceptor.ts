@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { HttpEvent, HttpRequest, HttpResponse } from "@angular/common/http";
+import { Inject, Injectable, Optional } from "@angular/core";
 import {
   Data,
   HttpRequestOptions,
@@ -9,14 +9,14 @@ import {
   ReferenceValues,
   Timespan,
   TimeValueTuple,
-} from '@helgoland/core';
-import moment from 'moment';
-import { Observable, Observer } from 'rxjs';
-import { share } from 'rxjs/operators';
+} from "@helgoland/core";
+import moment from "moment";
+import { Observable, Observer } from "rxjs";
+import { share } from "rxjs/operators";
 
-import { CacheConfig, CacheConfigService } from '../config';
-import { HttpCacheInterval } from '../model';
-import { CachedIntersection, CachedObject } from './local-http-cache-interval';
+import { CacheConfig, CacheConfigService } from "../config";
+import { HttpCacheInterval } from "../model";
+import { CachedIntersection, CachedObject } from "./local-http-cache-interval";
 
 @Injectable()
 export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor {
@@ -45,16 +45,16 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     let generalize = false;
 
     // handle GET and getData requests only
-    if (req.method !== 'GET') {
+    if (req.method !== "GET") {
       return next.handle(req, metadata);
     }
-    if (!req.url.includes('/getData')) {
+    if (!req.url.includes("/getData")) {
       return next.handle(req, metadata);
     }
-    if (req.urlWithParams.includes('expanded=true')) {
+    if (req.urlWithParams.includes("expanded=true")) {
       expanded = true;
     }
-    if (req.urlWithParams.includes('generalize=true')) {
+    if (req.urlWithParams.includes("generalize=true")) {
       generalize = true;
     }
 
@@ -65,7 +65,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     let intersectedCache: CachedIntersection | null;
 
     if (!metadata.forceUpdate) {
-      const reqTimespan = this.decodeTimespan(req.params.get('timespan'));
+      const reqTimespan = this.decodeTimespan(req.params.get("timespan"));
       // check cache for existing timespans
       intersectedCache = this.cache.getIntersection(req.url, reqTimespan, generalize);
 
@@ -90,7 +90,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
               body: !expanded ? { values: [], referenceValues: [] } : body,
               // headers: ,
               status: 200,
-              statusText: 'OK',
+              statusText: "OK",
               url: req.url
             }));
             observer.complete();
@@ -111,7 +111,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           // currently for one request only
           intersectedCache.timespans.forEach(ts => {
             let params = req.params;
-            params = params.set('timespan', this.encodeTimespan(ts));
+            params = params.set("timespan", this.encodeTimespan(ts));
             const cReq = req.clone({ params });
             customReqs.push(cReq);
             const cMetadata = metadata;
@@ -143,10 +143,10 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           // for ts data
           const cachedItem: CachedObject = {
             values: !expanded ? res.body : res.body[urlID],
-            expirationDate: moment(moment(new Date())).add(expirationTime, 'milliseconds').toDate(),
+            expirationDate: moment(moment(new Date())).add(expirationTime, "milliseconds").toDate(),
             expirationAtMs: expirationTime,
             httpResponse: res,
-            requestTs: this.decodeTimespan(newRequest.params.get('timespan'))
+            requestTs: this.decodeTimespan(newRequest.params.get("timespan"))
           };
           if (cachedItem.values.values.length > 0) {
             // update cache
@@ -254,7 +254,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param url {string} url of a request
    */
   private getUrlWithoutParams(url: string): string {
-    const end = url.indexOf('?');
+    const end = url.indexOf("?");
     return url.substring(0, end);
   }
 
@@ -264,7 +264,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    */
   private decodeTimespan(ts: string | null): Timespan | null {
     if (ts) {
-      const idx = ts.indexOf('/');
+      const idx = ts.indexOf("/");
       const start = ts.substring(0, idx);
       const end = ts.substring(idx + 1);
       return new Timespan(Math.min(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000), Math.max(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000));
@@ -277,7 +277,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param timespan {Timespan} timespan to be encoded to a string format
    */
   private encodeTimespan(timespan: Timespan): string {
-    return (moment(timespan.from).format() + '/' + moment(timespan.to).format());
+    return (moment(timespan.from).format() + "/" + moment(timespan.to).format());
   }
 
   /**
@@ -285,9 +285,9 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param url {string} url
    */
   private decodeID(url: string): string {
-    const idx = url.indexOf('/getData');
+    const idx = url.indexOf("/getData");
     const start = url.substring(0, idx);
-    const idxID = start.lastIndexOf('/') + 1;
+    const idxID = start.lastIndexOf("/") + 1;
     return start.substring(idxID);
   }
 

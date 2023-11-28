@@ -1,5 +1,5 @@
-import { AbstractReferenced } from './AbstractReferenced';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractReferenced } from "./AbstractReferenced";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * Envelope defines an extent using a pair of positions defining opposite
@@ -10,45 +10,45 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * for each dimension for all points within the envelope).
  */
 export class Envelope extends AbstractReferenced {
-    private _coords = new Array<number>(4);
+  private _coords = new Array<number>(4);
 
-    @DisplayName('Lower corner')
-    get lowerCorner() {
-        return [this._coords[0], this._coords[2]];
-    }
+    @DisplayName("Lower corner")
+  get lowerCorner() {
+    return [this._coords[0], this._coords[2]];
+  }
 
     set lowerCorner(c: [number, number]) {
-        this._coords[0] = c[0];
-        this._coords[2] = c[1];
+      this._coords[0] = c[0];
+      this._coords[2] = c[1];
     }
 
-    @DisplayName('Upper corner')
+    @DisplayName("Upper corner")
     get upperCorner() {
-        return [this._coords[1], this._coords[3]];
+      return [this._coords[1], this._coords[3]];
     }
 
     set upperCorner(c: [number, number]) {
-        this._coords[1] = c[0];
-        this._coords[3] = c[1];
+      this._coords[1] = c[0];
+      this._coords[3] = c[1];
     }
 
-    @DisplayName('Coordinates')
+    @DisplayName("Coordinates")
     get coordinates(): [number, number, number, number] {
-        return [
-            this._coords[0],
-            this._coords[1],
-            this._coords[2],
-            this._coords[3]
-        ];
+      return [
+        this._coords[0],
+        this._coords[1],
+        this._coords[2],
+        this._coords[3]
+      ];
     }
 
     set coordinates(c: [number, number, number, number]) {
-        for (let i = 0; i < 4; ++i) {
-            this._coords[i] = c[i];
-        }
+      for (let i = 0; i < 4; ++i) {
+        this._coords[i] = c[i];
+      }
     }
 
     override toString() {
-        return 'Envelope';
+      return "Envelope";
     }
 }

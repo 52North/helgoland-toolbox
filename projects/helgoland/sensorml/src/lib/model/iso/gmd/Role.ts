@@ -6,44 +6,44 @@ export type Role =
     /**
      * party that supplies the resource
      */
-    'resourceProvider' |
+    "resourceProvider" |
     /**
      * party that accepts accountability and responsability for the data and
      * ensures appropriate care and maintenance of the resource
      */
-    'custodian' |
+    "custodian" |
     /**
      * party who uses the resource
      */
-    'user' |
+    "user" |
     /**
      * party who created the resource
      */
-    'originator' |
+    "originator" |
     /**
      * party who can be contacted for acquiring knowledge about or acquisition
      * of the resource
      */
-    'pointOfContact' |
+    "pointOfContact" |
     /**
      * key party responsible for gathering information and conducting research
      */
-    'principalInvestigator' |
+    "principalInvestigator" |
     /**
      * party wha has processed the data in a manner such that the resource has
      * been modified
      */
-    'processor' |
+    "processor" |
     /**
      * party who published the resource
      */
-    'publisher' |
+    "publisher" |
     /**
      * party who authored the resource
      */
-    'author' |
+    "author" |
     /**
      * party who owned the resource
      */
-    'owner' |
+    "owner" |
     string;

@@ -1,42 +1,42 @@
-import { Injectable } from '@angular/core';
-import moment from 'moment';
-import { forkJoin, Observable, Observer, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import moment from "moment";
+import { forkJoin, Observable, Observer, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
-import { HttpService } from '../../../dataset-api/http.service';
-import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
-import { Category } from '../../../model/dataset-api/category';
-import { Data, LocatedTimeValueEntry, ProfileDataEntry, TimeValueTuple } from '../../../model/dataset-api/data';
-import { FirstLastValue, PlatformParameter } from '../../../model/dataset-api/dataset';
-import { Feature } from '../../../model/dataset-api/feature';
-import { Offering } from '../../../model/dataset-api/offering';
-import { Parameter } from '../../../model/dataset-api/parameter';
-import { Phenomenon } from '../../../model/dataset-api/phenomenon';
-import { Procedure } from '../../../model/dataset-api/procedure';
-import { Timespan } from '../../../model/internal/timeInterval';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
-import { UrlGenerator } from '../../helper/url-generator';
-import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
+import { HttpService } from "../../../dataset-api/http.service";
+import { InternalDatasetId } from "../../../dataset-api/internal-id-handler.service";
+import { Category } from "../../../model/dataset-api/category";
+import { Data, LocatedTimeValueEntry, ProfileDataEntry, TimeValueTuple } from "../../../model/dataset-api/data";
+import { FirstLastValue, PlatformParameter } from "../../../model/dataset-api/dataset";
+import { Feature } from "../../../model/dataset-api/feature";
+import { Offering } from "../../../model/dataset-api/offering";
+import { Parameter } from "../../../model/dataset-api/parameter";
+import { Phenomenon } from "../../../model/dataset-api/phenomenon";
+import { Procedure } from "../../../model/dataset-api/procedure";
+import { Timespan } from "../../../model/internal/timeInterval";
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from "../../helgoland-services-connector";
+import { UrlGenerator } from "../../helper/url-generator";
+import { HelgolandServiceConnector } from "../../interfaces/service-connector-interfaces";
 import {
   HelgolandData,
   HelgolandDataFilter,
   HelgolandProfileData,
   HelgolandTimeseriesData,
   HelgolandTrajectoryData,
-} from '../../model/internal/data';
+} from "../../model/internal/data";
 import {
   DatasetExtras,
   DatasetFilter,
   DatasetType,
   HelgolandDataset,
   HelgolandTimeseries,
-} from '../../model/internal/dataset';
-import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../model/internal/filter';
-import { HelgolandPlatform } from '../../model/internal/platform';
-import { HelgolandService } from '../../model/internal/service';
-import { PlatformTypes } from './../../../model/dataset-api/enums';
-import { HelgolandProfile, HelgolandTrajectory } from './../../model/internal/dataset';
-import { HelgolandServiceQuantities } from './../../model/internal/service';
+} from "../../model/internal/dataset";
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from "../../model/internal/filter";
+import { HelgolandPlatform } from "../../model/internal/platform";
+import { HelgolandService } from "../../model/internal/service";
+import { PlatformTypes } from "./../../../model/dataset-api/enums";
+import { HelgolandProfile, HelgolandTrajectory } from "./../../model/internal/dataset";
+import { HelgolandServiceQuantities } from "./../../model/internal/service";
 import {
   ApiV3Category,
   ApiV3Dataset,
@@ -52,14 +52,14 @@ import {
   ApiV3Procedure,
   ApiV3Service,
   ApiV3ValueTypes,
-} from './api-v3-interface';
+} from "./api-v3-interface";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
-  name = 'DatasetApiV3Connector';
+  name = "DatasetApiV3Connector";
 
   constructor(
     protected http: HttpService,
@@ -71,7 +71,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       map(res => {
         if (res instanceof Array) {
           // check if endpoint 'trajectories' exists
-          return res.findIndex(e => e.id === 'trajectories') >= 0;
+          return res.findIndex(e => e.id === "trajectories") >= 0;
         } else {
           return false;
         }
@@ -246,9 +246,9 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       this.api.getDataset(internalId.id, internalId.url, filter).subscribe(
         res => {
           const dataset = this.createDataset(res, internalId.url);
-          const idx = res.extras?.findIndex(e => e === 'renderingHints');
+          const idx = res.extras?.findIndex(e => e === "renderingHints");
           if (dataset instanceof HelgolandTimeseries && idx && idx >= 0) {
-            this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ['renderingHints'] }).subscribe(
+            this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ["renderingHints"] }).subscribe(
               extras => {
                 dataset.renderingHints = extras.renderingHints;
                 observer.next(dataset);
@@ -273,14 +273,14 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     if (dataset instanceof HelgolandTimeseries) {
-      const maxTimeExtent = moment.duration(1, 'year').asMilliseconds();
-      const params: ApiV3DatasetDataFilter = { format: 'flot' };
+      const maxTimeExtent = moment.duration(1, "year").asMilliseconds();
+      const params: ApiV3DatasetDataFilter = { format: "flot" };
       if (filter.expanded !== undefined) { params.expanded = filter.expanded };
       if (filter.generalize !== undefined) { params.generalize = filter.generalize };
       if ((timespan.to - timespan.from) > maxTimeExtent) {
         const requests: Array<Observable<HelgolandTimeseriesData>> = [];
-        let start = moment(timespan.from).startOf('year');
-        let end = moment(timespan.from).endOf('year');
+        let start = moment(timespan.from).startOf("year");
+        let end = moment(timespan.from).endOf("year");
         while (start.isBefore(moment(timespan.to))) {
           const chunkSpan = new Timespan(start.unix() * 1000, end.unix() * 1000);
           params.timespan = this.createRequestTimespan(chunkSpan);
@@ -288,8 +288,8 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
             this.api.getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
               .pipe(map(res => this.createTimeseriesData(res)))
           );
-          start = end.add(1, 'millisecond');
-          end = moment(start).endOf('year');
+          start = end.add(1, "millisecond");
+          end = moment(start).endOf("year");
         }
         return forkJoin(requests).pipe(map((e) => {
           const mergedResult = e.reduce((previous, current) => {
@@ -347,15 +347,15 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
   createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
     const generator = new UrlGenerator();
-    const url = generator.createBaseUrl(internalId.url, 'datasets', internalId.id) + '/data.zip';
+    const url = generator.createBaseUrl(internalId.url, "datasets", internalId.id) + "/data.zip";
     const reqParams = new Map<string, string>();
     if (params.timespan) {
-      reqParams.set('timespan', generator.createTimespanRequestParam(params.timespan));
+      reqParams.set("timespan", generator.createTimespanRequestParam(params.timespan));
     }
-    if (params.lang) { reqParams.set('locale', params.lang); }
-    if (params.generalize) { reqParams.set('locale', params.generalize.toString()); }
-    if (params.zip) { reqParams.set('locale', params.zip.toString()); }
-    reqParams.set('bom', 'true');
+    if (params.lang) { reqParams.set("locale", params.lang); }
+    if (params.generalize) { reqParams.set("locale", params.generalize.toString()); }
+    if (params.zip) { reqParams.set("locale", params.zip.toString()); }
+    reqParams.set("bom", "true");
     return of(generator.addUrlParams(url, reqParams));
   }
 
@@ -364,7 +364,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createRequestTimespan(timespan: Timespan): string {
-    return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
+    return encodeURI(moment(timespan.from).format() + "/" + moment(timespan.to).format());
   }
 
   protected createTrajectoryData(res: Data<LocatedTimeValueEntry>): HelgolandTrajectoryData {

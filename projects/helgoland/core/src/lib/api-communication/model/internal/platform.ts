@@ -1,10 +1,10 @@
 export class HelgolandPlatform {
 
-    constructor(
+  constructor(
         public id: string,
         public label: string,
         public datasetIds: string[],
         public geometry?: GeoJSON.GeometryObject
-    ) { }
+  ) { }
 
 }

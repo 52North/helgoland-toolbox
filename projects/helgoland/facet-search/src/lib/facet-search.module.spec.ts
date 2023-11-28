@@ -1,15 +1,15 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, waitForAsync } from "@angular/core/testing";
 
-import { HelgolandFacetSearchModule } from './facet-search.module';
+import { HelgolandFacetSearchModule } from "./facet-search.module";
 
-describe('FacetSearchModule', () => {
+describe("FacetSearchModule", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandFacetSearchModule],
     }).compileComponents();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(HelgolandFacetSearchModule).toBeDefined();
   });
 });

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import moment, { unitOfTime, Duration } from 'moment';
+import { Injectable } from "@angular/core";
+import moment, { unitOfTime, Duration } from "moment";
 
-import { TimeValueTuple } from '../model/dataset-api/data';
+import { TimeValueTuple } from "../model/dataset-api/data";
 
 @Injectable()
 export class SumValuesService {
@@ -15,7 +15,7 @@ export class SumValuesService {
 
     let currentBucketStart = moment(data[0][0]).startOf(startOf);
     // substract one millisecond for not overlapping buckets
-    let currentBucketEnd = moment(currentBucketStart).add(period).subtract(1, 'millisecond');
+    let currentBucketEnd = moment(currentBucketStart).add(period).subtract(1, "millisecond");
     let bucketVals = [];
     for (let i = 0; i < data.length; i++) {
       const time = moment(data[i][0]);
@@ -27,7 +27,7 @@ export class SumValuesService {
           let sum = 0;
           let hasValues = false;
           bucketVals.forEach(e => {
-            if (typeof e === 'number') {
+            if (typeof e === "number") {
               sum += e;
               hasValues = true;
             }

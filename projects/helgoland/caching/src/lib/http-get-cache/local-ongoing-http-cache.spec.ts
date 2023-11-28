@@ -1,17 +1,17 @@
-import { inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from "@angular/core/testing";
 
-import { LocalOngoingHttpCache } from './local-ongoing-http-cache';
+import { LocalOngoingHttpCache } from "./local-ongoing-http-cache";
 
-describe('LocalOngoingHttpCache', () => {
+describe("LocalOngoingHttpCache", () => {
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [LocalOngoingHttpCache]
-        });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LocalOngoingHttpCache]
     });
+  });
 
-    it('should be created', inject([LocalOngoingHttpCache], (service: LocalOngoingHttpCache) => {
-        expect(service).toBeTruthy();
-    }));
+  it("should be created", inject([LocalOngoingHttpCache], (service: LocalOngoingHttpCache) => {
+    expect(service).toBeTruthy();
+  }));
 
 });

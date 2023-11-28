@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule, Timespan } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule, Timespan } from "@helgoland/core";
 
-import { AutoUpdateTimespanComponent } from './auto-update-timespan.component';
+import { AutoUpdateTimespanComponent } from "./auto-update-timespan.component";
 
-describe('AutoUpdateTimespanComponent', () => {
+describe("AutoUpdateTimespanComponent", () => {
   let component: AutoUpdateTimespanComponent;
   let fixture: ComponentFixture<AutoUpdateTimespanComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         AutoUpdateTimespanComponent
-    ]
-})
+      ]
+    })
       .compileComponents();
   }));
 
@@ -26,15 +26,15 @@ describe('AutoUpdateTimespanComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not update from beginning', () => {
+  it("should not update from beginning", () => {
     expect(component.toggleAutoUpdate).toBe(false);
   });
 
-  it('should toggle auto update', () => {
+  it("should toggle auto update", () => {
     // off before toggle
     expect(component.toggleAutoUpdate).toBe(false);
     component.toggleUpdateTimeinterval();

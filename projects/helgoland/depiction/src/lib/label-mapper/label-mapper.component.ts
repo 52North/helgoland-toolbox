@@ -4,16 +4,16 @@ import { LabelMapperService } from "./label-mapper.service";
 
 
 @Component({
-    selector: 'n52-label-mapper',
-    templateUrl: './label-mapper.component.html',
-    styleUrls: ['./label-mapper.component.scss'],
-    standalone: true,
-    imports: []
+  selector: "n52-label-mapper",
+  templateUrl: "./label-mapper.component.html",
+  styleUrls: ["./label-mapper.component.scss"],
+  standalone: true,
+  imports: []
 })
 export class LabelMapperComponent implements OnChanges {
 
     @Input()
-    public label: string | undefined;
+  public label: string | undefined;
 
     public determinedLabel: string | undefined;
 
@@ -24,14 +24,14 @@ export class LabelMapperComponent implements OnChanges {
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['label'] && this.label) {
-            this.labelMapperSrvc.getMappedLabel(this.label)
-                .subscribe((label) => {
-                    this.determinedLabel = label;
-                    this.loading = false;
-                });
-        } else {
+      if (changes["label"] && this.label) {
+        this.labelMapperSrvc.getMappedLabel(this.label)
+          .subscribe((label) => {
+            this.determinedLabel = label;
             this.loading = false;
-        }
+          });
+      } else {
+        this.loading = false;
+      }
     }
 }

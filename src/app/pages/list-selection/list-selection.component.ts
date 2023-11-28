@@ -3,47 +3,47 @@ import { DatasetType, FilteredProvider, HelgolandDataset, HelgolandParameterFilt
 import { HelgolandSelectorModule, ListSelectorParameter, MultiServiceFilterEndpoint } from "@helgoland/selector";
 
 @Component({
-    templateUrl: './list-selection.component.html',
-    styleUrls: ['./list-selection.component.scss'],
-    imports: [
-        HelgolandSelectorModule
-    ],
-    standalone: true
+  templateUrl: "./list-selection.component.html",
+  styleUrls: ["./list-selection.component.scss"],
+  imports: [
+    HelgolandSelectorModule
+  ],
+  standalone: true
 })
 export class ListSelectionComponent {
 
-    public categoryParams: ListSelectorParameter[] = [{
-        type: MultiServiceFilterEndpoint.platform,
-        header: 'Platform',
-        filterList: []
-    }, {
-        type: MultiServiceFilterEndpoint.feature,
-        header: 'Station',
-        filterList: []
-    }, {
-        type: MultiServiceFilterEndpoint.phenomenon,
-        header: 'Phänomen',
-        filterList: []
-    }, {
-        type: MultiServiceFilterEndpoint.procedure,
-        header: 'Sensor',
-        filterList: []
-    }];
+  public categoryParams: ListSelectorParameter[] = [{
+    type: MultiServiceFilterEndpoint.platform,
+    header: "Platform",
+    filterList: []
+  }, {
+    type: MultiServiceFilterEndpoint.feature,
+    header: "Station",
+    filterList: []
+  }, {
+    type: MultiServiceFilterEndpoint.phenomenon,
+    header: "Phänomen",
+    filterList: []
+  }, {
+    type: MultiServiceFilterEndpoint.procedure,
+    header: "Sensor",
+    filterList: []
+  }];
 
-    public selectedProviderList: FilteredProvider[] = [];
+  public selectedProviderList: FilteredProvider[] = [];
 
-    public parameterFilter: HelgolandParameterFilter = { type: DatasetType.Timeseries }
+  public parameterFilter: HelgolandParameterFilter = { type: DatasetType.Timeseries }
 
-    constructor() {
-        this.selectedProviderList.push({
-            id: '1',
-            url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/',
-            filter: {}
-        });
-    }
+  constructor() {
+    this.selectedProviderList.push({
+      id: "1",
+      url: "http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/",
+      filter: {}
+    });
+  }
 
-    public onDatasetSelected(datasets: HelgolandDataset[]) {
-        datasets.forEach((dataset) => console.log('Select Dataset: ' + dataset.label + ' with ID: ' + dataset.id));
-    }
+  public onDatasetSelected(datasets: HelgolandDataset[]) {
+    datasets.forEach((dataset) => console.log("Select Dataset: " + dataset.label + " with ID: " + dataset.id));
+  }
 
 }

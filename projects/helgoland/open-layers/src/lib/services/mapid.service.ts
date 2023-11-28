@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, of, Subject } from "rxjs";
 
 /**
  * Service to hold the corresponding map id
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class OlMapId {
 

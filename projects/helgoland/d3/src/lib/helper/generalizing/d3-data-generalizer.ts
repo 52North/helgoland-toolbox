@@ -1,4 +1,4 @@
-import { Data, HelgolandTimeseriesData, Timespan, TimeValueTuple } from '@helgoland/core';
+import { Data, HelgolandTimeseriesData, Timespan, TimeValueTuple } from "@helgoland/core";
 
 export abstract class D3DataGeneralizer {
 

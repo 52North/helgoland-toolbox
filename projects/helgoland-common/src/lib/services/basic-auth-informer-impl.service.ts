@@ -1,15 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { BasicAuthInformer, BasicAuthService } from '@helgoland/auth';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, Observer } from 'rxjs';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BasicAuthInformer, BasicAuthService } from "@helgoland/auth";
+import { TranslateService } from "@ngx-translate/core";
+import { Observable, Observer } from "rxjs";
 
-import { BasicAuthLoginComponent } from '../components/basic-auth-login/basic-auth-login.component';
+import { BasicAuthLoginComponent } from "../components/basic-auth-login/basic-auth-login.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class BasicAuthInformerImplService implements BasicAuthInformer {
 
@@ -23,7 +23,7 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
   public doBasicAuth(url: string): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(BasicAuthLoginComponent, {
-        width: '400px',
+        width: "400px",
         data: url,
       });
 
@@ -36,7 +36,7 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
             },
             error => {
               if (error instanceof HttpErrorResponse && error.status === 401) {
-                this.snackbar.open(this.translate.instant('authentication.failed'), undefined, { duration: 3000 });
+                this.snackbar.open(this.translate.instant("authentication.failed"), undefined, { duration: 3000 });
               }
               observer.next(false);
               observer.complete();

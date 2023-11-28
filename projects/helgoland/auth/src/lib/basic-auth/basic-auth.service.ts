@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 /**
  * Maintains all basic auth tokens and also do the authentication process.
@@ -21,8 +21,8 @@ export class BasicAuthService {
    * Do the authentication.
    */
   public auth(username: string, password: string, url: string): Observable<string> {
-    const token = 'Basic ' + btoa(username + ':' + password);
-    const headers = new HttpHeaders({ 'Authorization': token });
+    const token = "Basic " + btoa(username + ":" + password);
+    const headers = new HttpHeaders({ "Authorization": token });
     return this.http.get(url, { headers })
       .pipe(
         map(res => {

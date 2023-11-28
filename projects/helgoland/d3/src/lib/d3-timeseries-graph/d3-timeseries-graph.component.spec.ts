@@ -1,7 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
-import { SimpleChange } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { BasicAuthInterceptorService, BasicAuthServiceMaintainer } from '@helgoland/auth';
+import { HttpClientModule } from "@angular/common/http";
+import { SimpleChange } from "@angular/core";
+import { ComponentFixture, inject, TestBed, waitForAsync } from "@angular/core/testing";
+import { BasicAuthInterceptorService, BasicAuthServiceMaintainer } from "@helgoland/auth";
 import {
   DatasetApiV1ConnectorProvider,
   DatasetApiV2ConnectorProvider,
@@ -12,17 +12,17 @@ import {
   DefinedTimespanService,
   HelgolandCoreModule,
   HTTP_SERVICE_INTERCEPTORS,
-} from '@helgoland/core';
+} from "@helgoland/core";
 
-import { HelgolandD3Module } from '../d3.module';
-import { HoveringStyle } from '../model/d3-plot-options';
-import { BasicAuthTestingProviders } from '../../../../../testing/basic-auth.testing';
-import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
-import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { D3TimeseriesGraphComponent } from './d3-timeseries-graph.component';
+import { HelgolandD3Module } from "../d3.module";
+import { HoveringStyle } from "../model/d3-plot-options";
+import { BasicAuthTestingProviders } from "../../../../../testing/basic-auth.testing";
+import { DatasetApiInterfaceTesting } from "../../../../../testing/dataset-api-interface.testing";
+import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { D3TimeseriesGraphComponent } from "./d3-timeseries-graph.component";
 
-describe('D3TimeseriesGraphComponent - raw', () => {
+describe("D3TimeseriesGraphComponent - raw", () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
 
@@ -51,35 +51,35 @@ describe('D3TimeseriesGraphComponent - raw', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create svg', () => {
+  it("should create svg", () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(fixture.nativeElement.querySelector('svg')).not.toBe(null);
-    expect(compiled.querySelector('svg')).not.toBe(null);
+    expect(fixture.nativeElement.querySelector("svg")).not.toBe(null);
+    expect(compiled.querySelector("svg")).not.toBe(null);
   });
 
-  it('should have option variables to be undefined', () => {
+  it("should have option variables to be undefined", () => {
     expect(component.presenterOptions).toBe(undefined);
     expect(component.timeInterval).toBe(undefined);
   });
 
-  it('should have no datasetIds', () => {
+  it("should have no datasetIds", () => {
     expect(component.datasetIds).toBeDefined();
-    expect(typeof (component.datasetIds)).toBe('object');
+    expect(typeof (component.datasetIds)).toBe("object");
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBe(0);
   });
 
 });
 
-describe('D3TimeseriesGraphComponent - function', () => {
+describe("D3TimeseriesGraphComponent - function", () => {
   let component: D3TimeseriesGraphComponent;
   let fixture: ComponentFixture<D3TimeseriesGraphComponent>;
-  const datasetID1 = 'https://fluggs.wupperverband.de/sws5/api/__26';
-  const datasetID2 = 'https://geo.irceline.be/sos/api/v1/__6522';
+  const datasetID1 = "https://fluggs.wupperverband.de/sws5/api/__26";
+  const datasetID2 = "https://geo.irceline.be/sos/api/v1/__6522";
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(waitForAsync(() => {
@@ -108,24 +108,24 @@ describe('D3TimeseriesGraphComponent - function', () => {
   }));
 
   beforeEach(inject([BasicAuthServiceMaintainer], (basicAuthServiceMaintainer: BasicAuthServiceMaintainer) => {
-    basicAuthServiceMaintainer.registerService('url');
+    basicAuthServiceMaintainer.registerService("url");
   }));
 
   beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {
     fixture = TestBed.createComponent(D3TimeseriesGraphComponent);
-    (fixture.nativeElement as HTMLElement).style.height = '500px';
+    (fixture.nativeElement as HTMLElement).style.height = "500px";
     component = fixture.componentInstance;
     definedTimespanSrvc = service;
   }));
 
-  it('should have a dataset', () => {
+  it("should have a dataset", () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
     component.datasetIds = [];
 
-    const option1 = new DatasetOptions(datasetID1, '#FF0000');
+    const option1 = new DatasetOptions(datasetID1, "#FF0000");
     // option1.type = 'bar';
-    option1.barPeriod = 'PT1H';
-    option1.barStartOf = 'hour';
+    option1.barPeriod = "PT1H";
+    option1.barStartOf = "hour";
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
     // option1.showReferenceValues = [{
@@ -145,10 +145,10 @@ describe('D3TimeseriesGraphComponent - function', () => {
     datasetOptions.set(datasetID1, option1);
     component.datasetIds.push(datasetID1);
 
-    const option2 = new DatasetOptions(datasetID2, '#00FF00');
+    const option2 = new DatasetOptions(datasetID2, "#00FF00");
     option2.pointRadius = 4;
     option2.pointBorderWidth = 1;
-    option2.pointBorderColor = 'black';
+    option2.pointBorderColor = "black";
     option2.lineDashArray = 5;
     option2.separateYAxis = false;
     // option2.showReferenceValues = [{
@@ -174,9 +174,9 @@ describe('D3TimeseriesGraphComponent - function', () => {
       yAxisStepper: true,
       hoverStyle: HoveringStyle.point,
       copyright: {
-        label: 'Copyright goes here',
-        positionX: 'right',
-        positionY: 'bottom'
+        label: "Copyright goes here",
+        positionX: "right",
+        positionY: "bottom"
       },
       timespanBufferFactor: 0
     };
@@ -191,7 +191,7 @@ describe('D3TimeseriesGraphComponent - function', () => {
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
     expect(component.datasetIds.length).toBeGreaterThan(0);
-    expect(typeof (component.datasetIds)).toBe('object');
+    expect(typeof (component.datasetIds)).toBe("object");
 
     // setTimeout(() => {
     //   // component.datasetOptions.delete(datasetID1);

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HelgolandTimeseries } from '@helgoland/core';
+import { Injectable } from "@angular/core";
+import { HelgolandTimeseries } from "@helgoland/core";
 
 export abstract class D3TimeseriesGraphErrorHandler {
     public abstract handleDataLoadError(error: any, dataset: HelgolandTimeseries): void;
@@ -10,12 +10,12 @@ export abstract class D3TimeseriesGraphErrorHandler {
 @Injectable()
 export class D3TimeseriesSimpleGraphErrorHandler extends D3TimeseriesGraphErrorHandler {
 
-    public handleDataLoadError(error: any, dataset: HelgolandTimeseries) {
-        console.error(error);
-    }
+  public handleDataLoadError(error: any, dataset: HelgolandTimeseries) {
+    console.error(error);
+  }
 
-    public handleDatasetLoadError(error: any) {
-        console.error(error);
-    }
+  public handleDatasetLoadError(error: any) {
+    console.error(error);
+  }
 
 }

@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { LayoutModeService } from './layout-mode.service';
+import { LayoutModeService } from "./layout-mode.service";
 
-describe('LayoutModeService', () => {
+describe("LayoutModeService", () => {
   let service: LayoutModeService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('LayoutModeService', () => {
     service = TestBed.inject(LayoutModeService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

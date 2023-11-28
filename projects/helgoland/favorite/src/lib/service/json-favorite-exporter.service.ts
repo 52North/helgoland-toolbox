@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, Observer } from "rxjs";
 
-import { FavoriteService, GroupFavorite, SingleFavorite } from './favorite.service';
+import { FavoriteService, GroupFavorite, SingleFavorite } from "./favorite.service";
 
 @Injectable()
 export class JsonFavoriteExporterService {
@@ -11,7 +11,7 @@ export class JsonFavoriteExporterService {
   ) { }
 
   public exportFavorites() {
-    const filename = 'favorites.json';
+    const filename = "favorites.json";
     const json = {
       singles: this.favoriteSrvc.getFavorites(),
       groups: this.favoriteSrvc.getFavoriteGroups()
@@ -24,9 +24,9 @@ export class JsonFavoriteExporterService {
     //     window.navigator.msSaveBlob(blob, filename);
     // } else {
     // FF, Chrome ...
-    const a = document.createElement('a');
-    a.href = 'data:application/json,' + encodeURIComponent(JSON.stringify(json));
-    a.target = '_blank';
+    const a = document.createElement("a");
+    a.href = "data:application/json," + encodeURIComponent(JSON.stringify(json));
+    a.target = "_blank";
     a.download = filename;
     document.body.appendChild(a);
     a.click();

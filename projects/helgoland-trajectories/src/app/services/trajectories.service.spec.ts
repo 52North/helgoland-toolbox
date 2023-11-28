@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { TestBed } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { TrajectoriesService } from './trajectories.service';
+import { TrajectoriesService } from "./trajectories.service";
 
-describe('TrajectoriesService', () => {
+describe("TrajectoriesService", () => {
   let service: TrajectoriesService;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('TrajectoriesService', () => {
     service = TestBed.inject(TrajectoriesService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

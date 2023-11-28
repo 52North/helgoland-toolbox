@@ -1,4 +1,4 @@
-import { EventingEndpoint, Id } from './common';
+import { EventingEndpoint, Id } from "./common";
 
 export interface Event extends Id {
     label: string;

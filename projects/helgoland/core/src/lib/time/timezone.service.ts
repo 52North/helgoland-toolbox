@@ -1,11 +1,11 @@
-import 'moment-timezone';
+import "moment-timezone";
 
-import { EventEmitter, Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import moment from 'moment';
+import { EventEmitter, Injectable } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import moment from "moment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TimezoneService {
 
@@ -22,7 +22,7 @@ export class TimezoneService {
     this.calcOffset();
   }
 
-  public setTimezone(tzStr: string = '') {
+  public setTimezone(tzStr: string = "") {
     const tz = moment.tz.zone(tzStr);
     if (tz) {
       this.currentTimezone = tz;
@@ -45,15 +45,15 @@ export class TimezoneService {
   }
 
   public getTimezoneName(): string {
-    return this.currentTimezone?.name ? this.currentTimezone?.name : '';
+    return this.currentTimezone?.name ? this.currentTimezone?.name : "";
   }
 
   public formatTzDate(date: moment.Moment | Date | number | string, format?: string): string {
-    if (typeof (date) === 'number') { date = moment(date); }
-    if (typeof (date) === 'string') { date = moment(date); }
+    if (typeof (date) === "number") { date = moment(date); }
+    if (typeof (date) === "string") { date = moment(date); }
     if (date instanceof Date) { date = moment(date); }
     if (this.translateSrvc.currentLang) { moment.locale(this.translateSrvc.currentLang); }
-    if (!format) { format = 'L LT z'; }
+    if (!format) { format = "L LT z"; }
     return date.tz(this.getTimezoneName()).format(format);
   }
 

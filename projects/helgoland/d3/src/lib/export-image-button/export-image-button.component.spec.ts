@@ -1,29 +1,29 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, inject, TestBed, waitForAsync } from "@angular/core/testing";
+import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from "@helgoland/core";
 
-import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { HelgolandD3Module } from './../d3.module';
-import { ExportImageButtonComponent } from './export-image-button.component';
+import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { HelgolandD3Module } from "./../d3.module";
+import { ExportImageButtonComponent } from "./export-image-button.component";
 
-describe('ExportImageButtonComponent', () => {
+describe("ExportImageButtonComponent", () => {
   let component: ExportImageButtonComponent;
   let fixture: ComponentFixture<ExportImageButtonComponent>;
 
-  const datasetID1 = 'http://fluggs.wupperverband.de/sos2/api/v1/__49';
+  const datasetID1 = "http://fluggs.wupperverband.de/sos2/api/v1/__49";
   let definedTimespanSrvc: DefinedTimespanService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         HelgolandD3Module
-    ],
-    providers: [
+      ],
+      providers: [
         SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {
@@ -33,14 +33,14 @@ describe('ExportImageButtonComponent', () => {
     definedTimespanSrvc = service;
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should work', () => {
+  it("should work", () => {
     const datasetOptions: Map<string, DatasetOptions> = new Map();
 
-    const option1 = new DatasetOptions(datasetID1, '#FF0000');
+    const option1 = new DatasetOptions(datasetID1, "#FF0000");
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
     option1.pointRadius = 4;
@@ -52,12 +52,12 @@ describe('ExportImageButtonComponent', () => {
     component.timespan = definedTimespanSrvc.getInterval(DefinedTimespan.TODAY);
     component.datasetOptions = datasetOptions;
 
-    component.title = 'Test-Export';
+    component.title = "Test-Export";
     component.showLegend = true;
     component.showFirstLastDate = true;
 
     const interval = setInterval(() => {
-      if (!fixture['_isDestroyed']) {
+      if (!fixture["_isDestroyed"]) {
         fixture.detectChanges();
       } else {
         clearInterval(interval);

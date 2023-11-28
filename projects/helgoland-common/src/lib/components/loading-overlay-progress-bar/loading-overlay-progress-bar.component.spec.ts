@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
-import { LoadingOverlayProgressBarComponent } from './loading-overlay-progress-bar.component';
+import { LoadingOverlayProgressBarComponent } from "./loading-overlay-progress-bar.component";
 
-describe('LoadingOverlayProgressBarComponent', () => {
+describe("LoadingOverlayProgressBarComponent", () => {
   let component: LoadingOverlayProgressBarComponent;
   let fixture: ComponentFixture<LoadingOverlayProgressBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatProgressBarModule,
         LoadingOverlayProgressBarComponent
-    ]
-})
+      ]
+    })
       .compileComponents();
   });
 
@@ -23,7 +23,7 @@ describe('LoadingOverlayProgressBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

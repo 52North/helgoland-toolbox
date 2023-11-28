@@ -1,4 +1,4 @@
-import { Parameter } from './parameter';
+import { Parameter } from "./parameter";
 
 export interface Procedure extends Parameter {
 

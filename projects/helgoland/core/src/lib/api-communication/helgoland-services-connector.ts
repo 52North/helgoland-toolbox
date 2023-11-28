@@ -1,24 +1,24 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { combineLatest, Observable, Observer } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { Inject, Injectable, InjectionToken, Optional } from "@angular/core";
+import { combineLatest, Observable, Observer } from "rxjs";
+import { mergeMap } from "rxjs/operators";
 
-import { InternalDatasetId, InternalIdHandler } from '../dataset-api/internal-id-handler.service';
-import { Category } from '../model/dataset-api/category';
-import { Feature } from '../model/dataset-api/feature';
-import { Offering } from '../model/dataset-api/offering';
-import { Phenomenon } from '../model/dataset-api/phenomenon';
-import { Procedure } from '../model/dataset-api/procedure';
-import { Timespan } from '../model/internal/timeInterval';
-import { Settings } from '../model/settings/settings';
-import { SettingsService } from '../settings/settings.service';
-import { HelgolandServiceConnector, HelgolandServiceInterface } from './interfaces/service-connector-interfaces';
+import { InternalDatasetId, InternalIdHandler } from "../dataset-api/internal-id-handler.service";
+import { Category } from "../model/dataset-api/category";
+import { Feature } from "../model/dataset-api/feature";
+import { Offering } from "../model/dataset-api/offering";
+import { Phenomenon } from "../model/dataset-api/phenomenon";
+import { Procedure } from "../model/dataset-api/procedure";
+import { Timespan } from "../model/internal/timeInterval";
+import { Settings } from "../model/settings/settings";
+import { SettingsService } from "../settings/settings.service";
+import { HelgolandServiceConnector, HelgolandServiceInterface } from "./interfaces/service-connector-interfaces";
 import {
   HelgolandData,
   HelgolandDataFilter,
   HelgolandProfileData,
   HelgolandTimeseriesData,
   HelgolandTrajectoryData,
-} from './model/internal/data';
+} from "./model/internal/data";
 import {
   DatasetExtras,
   DatasetFilter,
@@ -27,15 +27,15 @@ import {
   HelgolandProfile,
   HelgolandTimeseries,
   HelgolandTrajectory,
-} from './model/internal/dataset';
-import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from './model/internal/filter';
-import { HelgolandPlatform } from './model/internal/platform';
-import { HelgolandService } from './model/internal/service';
+} from "./model/internal/dataset";
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from "./model/internal/filter";
+import { HelgolandPlatform } from "./model/internal/platform";
+import { HelgolandService } from "./model/internal/service";
 
-export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<HelgolandServiceConnector>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
+export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<HelgolandServiceConnector>("HELGOLAND_SERVICE_CONNECTOR_HANDLER");
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class HelgolandServicesConnector implements HelgolandServiceInterface {
 
@@ -216,7 +216,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
         return;
       }
       if (!this.connectorList) {
-        observer.error(`No service connectors are configured...`);
+        observer.error("No service connectors are configured...");
         observer.complete();
         return;
       }

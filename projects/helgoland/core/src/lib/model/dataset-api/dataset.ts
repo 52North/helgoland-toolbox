@@ -1,7 +1,7 @@
-import { DatasetTypes, PlatformTypes } from './enums';
-import { Feature } from './feature';
-import { Parameter } from './parameter';
-import { Station } from './station';
+import { DatasetTypes, PlatformTypes } from "./enums";
+import { Feature } from "./feature";
+import { Parameter } from "./parameter";
+import { Station } from "./station";
 
 export interface IDataset extends Parameter {
     url: string;
@@ -15,25 +15,25 @@ export interface IDataset extends Parameter {
 }
 
 export class ParameterConstellation {
-    public service?: Parameter;
-    public offering?: Parameter;
-    public feature?: Feature;
-    public procedure?: Parameter;
-    public phenomenon?: Parameter;
-    public category?: Parameter;
+  public service?: Parameter;
+  public offering?: Parameter;
+  public feature?: Feature;
+  public procedure?: Parameter;
+  public phenomenon?: Parameter;
+  public category?: Parameter;
 }
 
 export class FirstLastValue {
-    public timestamp!: number;
-    public value!: number;
+  public timestamp!: number;
+  public value!: number;
 }
 
 export class ReferenceValue {
-    public referenceValueId!: string;
-    public label!: string;
-    public lastValue!: FirstLastValue;
-    public color?: string;
-    public visible?: boolean;
+  public referenceValueId!: string;
+  public label!: string;
+  public lastValue!: FirstLastValue;
+  public color?: string;
+  public visible?: boolean;
 }
 
 export interface RenderingHints {
@@ -44,7 +44,7 @@ export interface RenderingHints {
 }
 
 export interface LineRenderingHints extends RenderingHints {
-    chartType: 'line';
+    chartType: "line";
     properties: {
         color: string;
         width: string;
@@ -53,7 +53,7 @@ export interface LineRenderingHints extends RenderingHints {
 }
 
 export interface BarRenderingHints {
-    chartType: 'bar';
+    chartType: "bar";
     properties: {
         color: string;
         width: string;
@@ -62,39 +62,39 @@ export interface BarRenderingHints {
 }
 
 export class DatasetParameterConstellation extends ParameterConstellation {
-    public platform: PlatformParameter | undefined;
+  public platform: PlatformParameter | undefined;
 }
 
 export class Dataset implements IDataset {
-    public id!: string;
-    public label!: string;
-    public url!: string;
-    public uom!: string;
-    public internalId!: string;
-    public firstValue!: FirstLastValue;
-    public lastValue!: FirstLastValue;
-    public referenceValues!: ReferenceValue[];
-    public datasetType!: DatasetTypes;
-    public platformType!: PlatformTypes;
-    public parameters!: DatasetParameterConstellation;
-    public renderingHints!: RenderingHints;
-    public seriesParameters?: DatasetParameterConstellation;
+  public id!: string;
+  public label!: string;
+  public url!: string;
+  public uom!: string;
+  public internalId!: string;
+  public firstValue!: FirstLastValue;
+  public lastValue!: FirstLastValue;
+  public referenceValues!: ReferenceValue[];
+  public datasetType!: DatasetTypes;
+  public platformType!: PlatformTypes;
+  public parameters!: DatasetParameterConstellation;
+  public renderingHints!: RenderingHints;
+  public seriesParameters?: DatasetParameterConstellation;
 }
 
 export class Timeseries implements IDataset {
-    public id!: string;
-    public label!: string;
-    public url!: string;
-    public uom!: string;
-    public internalId!: string;
-    public firstValue!: FirstLastValue;
-    public lastValue!: FirstLastValue;
-    public referenceValues!: ReferenceValue[];
-    public station!: Station;
-    public parameters!: ParameterConstellation;
-    public renderingHints!: RenderingHints;
-    public hasData = false;
-    public statusIntervals?: StatusInterval[];
+  public id!: string;
+  public label!: string;
+  public url!: string;
+  public uom!: string;
+  public internalId!: string;
+  public firstValue!: FirstLastValue;
+  public lastValue!: FirstLastValue;
+  public referenceValues!: ReferenceValue[];
+  public station!: Station;
+  public parameters!: ParameterConstellation;
+  public renderingHints!: RenderingHints;
+  public hasData = false;
+  public statusIntervals?: StatusInterval[];
 }
 
 export interface TimeseriesExtras {
@@ -114,7 +114,7 @@ export interface PlatformParameter extends Parameter {
 }
 
 export class TimeseriesData {
-    public id!: string;
-    public url!: string;
-    public data!: FirstLastValue[];
+  public id!: string;
+  public url!: string;
+  public data!: FirstLastValue[];
 }

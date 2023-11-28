@@ -1,31 +1,31 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
-import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
-import { MapCache } from '../../base/map-cache.service';
-import { ProfileTrajectoryMapSelectorComponent } from './trajectory-map-selector.component';
+import { DatasetApiInterfaceTesting } from "../../../../../../testing/dataset-api-interface.testing";
+import { SettingsServiceTestingProvider } from "../../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
+import { MapCache } from "../../base/map-cache.service";
+import { ProfileTrajectoryMapSelectorComponent } from "./trajectory-map-selector.component";
 
-describe('ProfileTrajectoryMapSelectorComponent', () => {
+describe("ProfileTrajectoryMapSelectorComponent", () => {
   let component: ProfileTrajectoryMapSelectorComponent;
   let fixture: ComponentFixture<ProfileTrajectoryMapSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         ProfileTrajectoryMapSelectorComponent
-    ],
-    providers: [
+      ],
+      providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         MapCache
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('ProfileTrajectoryMapSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

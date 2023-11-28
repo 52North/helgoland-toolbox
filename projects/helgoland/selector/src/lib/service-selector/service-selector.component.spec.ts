@@ -1,29 +1,29 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DatasetType, HelgolandCoreModule } from '@helgoland/core';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { DatasetType, HelgolandCoreModule } from "@helgoland/core";
 
-import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ServiceSelectorComponent } from './service-selector.component';
-import { ServiceSelectorService } from './service-selector.service';
+import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ServiceSelectorComponent } from "./service-selector.component";
+import { ServiceSelectorService } from "./service-selector.service";
 
-describe('ServiceSelectorComponent', () => {
+describe("ServiceSelectorComponent", () => {
   let component: ServiceSelectorComponent;
   let fixture: ComponentFixture<ServiceSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         ServiceSelectorComponent
-    ],
-    providers: [
+      ],
+      providers: [
         ServiceSelectorService,
         SettingsServiceTestingProvider,
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,13 +34,13 @@ describe('ServiceSelectorComponent', () => {
     //   url: 'url-to-test'
     // }];
     component.filter = {
-      lang: 'de',
+      lang: "de",
       type: DatasetType.Timeseries
     };
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

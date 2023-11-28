@@ -6,8 +6,8 @@ import { HelgolandTimeRangeSliderModule } from "@helgoland/time-range-slider";
 import moment from "moment";
 
 @Component({
-  templateUrl: './time.component.html',
-  styleUrls: ['./time.component.css'],
+  templateUrl: "./time.component.html",
+  styleUrls: ["./time.component.css"],
   imports: [
     HelgolandCoreModule,
     HelgolandTimeModule,
@@ -39,13 +39,13 @@ export class TimeComponent {
   ) { }
 
   public customTimespanFunc(): Timespan {
-    const from = moment().subtract(6, 'days').startOf('day').unix() * 1000;
-    const to = moment().endOf('day').unix() * 1000;
+    const from = moment().subtract(6, "days").startOf("day").unix() * 1000;
+    const to = moment().endOf("day").unix() * 1000;
     return new Timespan(from, to);
   }
 
   public notify() {
-    this.notifier.notify('test');
+    this.notifier.notify("test");
   }
 
 }

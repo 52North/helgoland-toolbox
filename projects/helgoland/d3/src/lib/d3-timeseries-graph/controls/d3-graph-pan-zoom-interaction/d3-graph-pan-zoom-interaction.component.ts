@@ -10,9 +10,9 @@ import { D3GraphExtent, D3TimeseriesGraphControl } from "../../d3-timeseries-gra
 import { D3TimeseriesGraphInterface } from "../../d3-timeseries-graph.interface";
 
 @Component({
-  selector: 'n52-d3-graph-pan-zoom-interaction',
-  template: '',
-  styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
+  selector: "n52-d3-graph-pan-zoom-interaction",
+  template: "",
+  styleUrls: ["./d3-graph-pan-zoom-interaction.component.scss"],
   standalone: true
 })
 export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl {
@@ -261,19 +261,19 @@ export class D3GraphPanZoomInteractionComponent extends D3TimeseriesGraphControl
 
     if (!this.dragRect && !this.dragRectG) {
 
-      this.dragRectG = d3GraphElem.append('g')
-        .style('fill-opacity', .2)
-        .style('fill', 'blue');
+      this.dragRectG = d3GraphElem.append("g")
+        .style("fill-opacity", .2)
+        .style("fill", "blue");
 
-      this.dragRect = this.dragRectG.append('rect')
-        .attr('width', x2 - x1)
-        .attr('height', graphExtent.height)
-        .attr('x', x1 + graphExtent.leftOffset)
-        .attr('class', 'mouse-drag')
-        .style('pointer-events', 'none');
+      this.dragRect = this.dragRectG.append("rect")
+        .attr("width", x2 - x1)
+        .attr("height", graphExtent.height)
+        .attr("x", x1 + graphExtent.leftOffset)
+        .attr("class", "mouse-drag")
+        .style("pointer-events", "none");
     } else {
-      this.dragRect.attr('width', x2 - x1)
-        .attr('x', x1 + graphExtent.leftOffset);
+      this.dragRect.attr("width", x2 - x1)
+        .attr("x", x1 + graphExtent.leftOffset);
     }
   }
 

@@ -1,31 +1,31 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { HelgolandSelectorModule } from '@helgoland/selector';
-import { HelgolandCommonModule } from 'helgoland-common';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { HelgolandSelectorModule } from "@helgoland/selector";
+import { HelgolandCommonModule } from "helgoland-common";
 
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
-import { ModalListSettingsComponent } from './modal-list-settings.component';
+import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
+import { ModalListSettingsComponent } from "./modal-list-settings.component";
 
-describe('ModalListSettingsComponent', () => {
+describe("ModalListSettingsComponent", () => {
   let component: ModalListSettingsComponent;
   let fixture: ComponentFixture<ModalListSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         HelgolandCommonModule,
         MatDialogModule,
         HelgolandSelectorModule,
         ModalListSettingsComponent
-    ],
-    providers: [
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('ModalListSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

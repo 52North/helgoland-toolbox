@@ -1,17 +1,17 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { FacetSearchService } from '../../facet-search-model';
-import { HelgolandFacetSearchModule } from '../../facet-search.module';
-import { ResultListComponent } from './result-list.component';
+import { FacetSearchService } from "../../facet-search-model";
+import { HelgolandFacetSearchModule } from "../../facet-search.module";
+import { ResultListComponent } from "./result-list.component";
 
-describe('ResultListComponent', () => {
+describe("ResultListComponent", () => {
   let component: ResultListComponent;
   let fixture: ComponentFixture<ResultListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandFacetSearchModule]
-}).compileComponents();
+      imports: [HelgolandFacetSearchModule]
+    }).compileComponents();
   }));
 
   beforeEach(inject([FacetSearchService], (service: FacetSearchService) => {
@@ -21,7 +21,7 @@ describe('ResultListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

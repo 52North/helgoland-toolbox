@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { DatasetOptions, HelgolandTimeseries, LocalStorage } from '@helgoland/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { DatasetOptions, HelgolandTimeseries, LocalStorage } from "@helgoland/core";
+import { Observable, ReplaySubject } from "rxjs";
 
 export interface Favorite {
   id: string;
@@ -13,7 +13,7 @@ export interface SingleFavorite extends Favorite {
 }
 
 function isSingleFavorite(object: any): object is SingleFavorite {
-  return 'favorite' in object;
+  return "favorite" in object;
 }
 
 export interface GroupFavorite extends Favorite {
@@ -24,11 +24,11 @@ export interface GroupFavorite extends Favorite {
 }
 
 function isGroupFavorite(object: any): object is GroupFavorite {
-  return 'favorites' in object;
+  return "favorites" in object;
 }
 
-const CACHE_PARAM_FAVORITES_SINGLE = 'SingleFavorites';
-const CACHE_PARAM_FAVORITES_GROUP = 'GroupFavorites';
+const CACHE_PARAM_FAVORITES_SINGLE = "SingleFavorites";
+const CACHE_PARAM_FAVORITES_GROUP = "GroupFavorites";
 
 @Injectable()
 export class FavoriteService {
@@ -92,7 +92,7 @@ export class FavoriteService {
   }
 
   public addFavoriteGroup(datasets: { dataset: HelgolandTimeseries, options: DatasetOptions }[], label?: string): boolean {
-    const id = 'Group' + this.groupCounter++;
+    const id = "Group" + this.groupCounter++;
     this.groupFavs.set(id, {
       id,
       label: label ? label : id,

@@ -1,20 +1,20 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { HelgolandSelectorModule } from '@helgoland/selector';
-import { HelgolandCommonModule } from 'helgoland-common';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { HelgolandSelectorModule } from "@helgoland/selector";
+import { HelgolandCommonModule } from "helgoland-common";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ModalMapSettingsComponent } from './modal-map-settings.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ModalMapSettingsComponent } from "./modal-map-settings.component";
 
-describe('ModalMapSettingsComponent', () => {
+describe("ModalMapSettingsComponent", () => {
   let component: ModalMapSettingsComponent;
   let fixture: ComponentFixture<ModalMapSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatDialogModule,
@@ -22,12 +22,12 @@ describe('ModalMapSettingsComponent', () => {
         HelgolandCommonModule,
         HelgolandSelectorModule,
         ModalMapSettingsComponent
-    ],
-    providers: [
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe('ModalMapSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

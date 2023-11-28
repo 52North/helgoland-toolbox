@@ -1,19 +1,19 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { SettingsService } from '@helgoland/core';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { SettingsService } from "@helgoland/core";
 
-import { LabelMapperComponent } from './label-mapper.component';
-import { LabelMapperService } from './label-mapper.service';
+import { LabelMapperComponent } from "./label-mapper.component";
+import { LabelMapperService } from "./label-mapper.service";
 
-describe('LabelMapperComponent', () => {
+describe("LabelMapperComponent", () => {
   let component: LabelMapperComponent;
   let fixture: ComponentFixture<LabelMapperComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HttpClientModule, LabelMapperComponent],
-    providers: [LabelMapperService, SettingsService]
-}).compileComponents();
+      imports: [HttpClientModule, LabelMapperComponent],
+      providers: [LabelMapperService, SettingsService]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('LabelMapperComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

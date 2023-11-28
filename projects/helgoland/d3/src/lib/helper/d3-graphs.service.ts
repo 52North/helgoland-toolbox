@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, of, Subject } from "rxjs";
 
-import { D3TimeseriesGraphInterface } from './../d3-timeseries-graph/d3-timeseries-graph.interface';
+import { D3TimeseriesGraphInterface } from "./../d3-timeseries-graph/d3-timeseries-graph.interface";
 
 
 /**
  * Service which holds all generated graphs and their ids
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class D3Graphs {
 

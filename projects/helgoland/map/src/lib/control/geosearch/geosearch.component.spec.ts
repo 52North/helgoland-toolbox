@@ -1,54 +1,54 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { GeoSearch, GeoSearchResult } from '../../base/geosearch/geosearch';
-import { NominatimGeoSearchService } from '../../base/geosearch/nominatim.service';
-import { MapCache } from '../../base/map-cache.service';
-import { GeosearchControlComponent } from './geosearch.component';
+import { GeoSearch, GeoSearchResult } from "../../base/geosearch/geosearch";
+import { NominatimGeoSearchService } from "../../base/geosearch/nominatim.service";
+import { MapCache } from "../../base/map-cache.service";
+import { GeosearchControlComponent } from "./geosearch.component";
 
-describe('GeosearchComponent', () => {
+describe("GeosearchComponent", () => {
   let component: GeosearchControlComponent;
   let fixture: ComponentFixture<GeosearchControlComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    providers: [
+      providers: [
         MapCache,
         {
-            provide: GeoSearch,
-            useClass: NominatimGeoSearchService
+          provide: GeoSearch,
+          useClass: NominatimGeoSearchService
         }
-    ],
-    imports: [
+      ],
+      imports: [
         FormsModule,
         HttpClientModule,
         HelgolandCoreModule,
         GeosearchControlComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GeosearchControlComponent);
     component = fixture.componentInstance;
-    component.mapId = 'mapID';
+    component.mapId = "mapID";
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should search with point geometry in result', (done) => {
-    component.searchTerm = 'gent';
+  it("should search with point geometry in result", (done) => {
+    component.searchTerm = "gent";
     component.options = {
       asPointGeometry: true
     };
     component.triggerSearch();
     component.onResultChanged.subscribe((res: GeoSearchResult) => {
-      expect(res.geometry.type === 'Point').toBeTruthy();
+      expect(res.geometry.type === "Point").toBeTruthy();
       done();
     });
   });

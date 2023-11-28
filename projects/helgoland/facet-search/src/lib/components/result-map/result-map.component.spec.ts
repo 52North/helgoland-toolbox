@@ -1,18 +1,18 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandMapModule } from '@helgoland/map';
+import { ComponentFixture, inject, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandMapModule } from "@helgoland/map";
 
-import { FacetSearchService } from '../../facet-search-model';
-import { HelgolandFacetSearchModule } from '../../facet-search.module';
-import { ResultMapComponent } from './result-map.component';
+import { FacetSearchService } from "../../facet-search-model";
+import { HelgolandFacetSearchModule } from "../../facet-search.module";
+import { ResultMapComponent } from "./result-map.component";
 
-describe('ResultMapComponent', () => {
+describe("ResultMapComponent", () => {
   let component: ResultMapComponent;
   let fixture: ComponentFixture<ResultMapComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandMapModule, HelgolandFacetSearchModule]
-}).compileComponents();
+      imports: [HelgolandMapModule, HelgolandFacetSearchModule]
+    }).compileComponents();
   }));
 
   beforeEach(inject([FacetSearchService], (service: FacetSearchService) => {
@@ -22,7 +22,7 @@ describe('ResultMapComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

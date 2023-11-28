@@ -10,9 +10,9 @@ import { HelgolandD3Module } from "@helgoland/d3";
 import { NoDataEntryComponent } from "./no-data-entry/no-data-entry.component";
 
 @Component({
-  selector: 'n52-diagram-export',
-  templateUrl: './diagram-export.component.html',
-  styleUrls: ['./diagram-export.component.css'],
+  selector: "n52-diagram-export",
+  templateUrl: "./diagram-export.component.html",
+  styleUrls: ["./diagram-export.component.css"],
   imports: [
     MatFormFieldModule,
     MatRadioModule,
@@ -26,18 +26,18 @@ import { NoDataEntryComponent } from "./no-data-entry/no-data-entry.component";
 })
 export class DiagramExportComponent implements OnInit {
 
-  public title = 'Exported Diagram';
+  public title = "Exported Diagram";
   public height = 300;
   public width = 500;
   public start = new Date(2019, 10, 13);
   public end = new Date(2019, 10, 14);
 
-  public format: 'png' | 'svg' = 'png';
+  public format: "png" | "svg" = "png";
 
   public datasetOptions: Map<string, DatasetOptions> = new Map();
 
   public datasetIds = [
-    'https://fluggs.wupperverband.de/sws5/api/__26',
+    "https://fluggs.wupperverband.de/sws5/api/__26",
     // 'https://fluggs.wupperverband.de/sws5/api/__49',
     // 'https://fluggs.wupperverband.de/sws5/api/__51',
     // 'https://fluggs.wupperverband.de/sws5/api/__72',

@@ -1,25 +1,25 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HelgolandCommonModule } from 'helgoland-common';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { HelgolandCommonModule } from "helgoland-common";
 
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
-import { ModalMainConfigComponent } from './modal-main-config.component';
+import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
+import { ModalMainConfigComponent } from "./modal-main-config.component";
 
-describe('ModalMainConfigComponent', () => {
+describe("ModalMainConfigComponent", () => {
   let component: ModalMainConfigComponent;
   let fixture: ComponentFixture<ModalMainConfigComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         HelgolandCommonModule,
         NoopAnimationsModule,
         ModalMainConfigComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('ModalMainConfigComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

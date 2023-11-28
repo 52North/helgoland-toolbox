@@ -8,11 +8,11 @@ export interface AppConfig extends Settings {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ConfigurationService<T extends AppConfig = AppConfig> extends SettingsService<T> {
 
-  private readonly CONFIGURATION_URL = './assets/app-config.json';
+  private readonly CONFIGURATION_URL = "./assets/app-config.json";
 
   configuration!: T;
 

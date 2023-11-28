@@ -5,19 +5,19 @@ export type PresentationForm =
     /**
      * digital representation of a primarily textual item (can contain illustrations also)
      */
-    'documentDigital' |
+    "documentDigital" |
     /**
      * representation of a primarily textual item (can contain illustrations also)
      * on paper, photograhic material, or other media
      */
-    'imageDigital' |
+    "imageDigital" |
     /**
      * likeness of natural or man-made features, objects, and activities acquired
      * through the sensing of visual or any other segment of the electromagnetic
      * spectrum by sensors, such as thermal infrared, and high resolution radar
      * and stored in digital format
      */
-    'documentHardcopy' |
+    "documentHardcopy" |
     /**
      * likeness of natural or man-made features, objects, and activities acquired
      * through the sensing of visual or any other segment of the electromagnetic
@@ -25,47 +25,47 @@ export type PresentationForm =
      * and reproduced on paper, photographic material, or other media for use
      * directly by the human user
      */
-    'imageHardcopy' |
+    "imageHardcopy" |
     /**
      * map represented in raster or vector form
      */
-    'mapDigital' |
+    "mapDigital" |
     /**
      * map printed on paper, photographic material, or other media for use
      * directly by the human user
      */
-    'mapHardcopy' |
+    "mapHardcopy" |
     /**
      * multi-dimensional digital representation of a feature, process, etc.
      */
-    'modelDigital' |
+    "modelDigital" |
     /**
      * 3-dimensional, physical model
      */
-    'modelHardcopy' |
+    "modelHardcopy" |
     /**
      * vertical cross-section in digital form
      */
-    'profileDigital' |
+    "profileDigital" |
     /**
      * vertical cross-section printed on paper, etc.
      */
-    'profileHardcopy' |
+    "profileHardcopy" |
     /**
      * digital representation of facts or figures systematically displayed,
      * especially in columns
      */
-    'tableDigital' |
+    "tableDigital" |
     /**
      * representation of facts or figures systematically displayed, especially
      * in columns, printed onpapers, photographic material, or other media
      */
-    'tableHardcopy' |
+    "tableHardcopy" |
     /**
      * digital video recording
      */
-    'videoDigital' |
+    "videoDigital" |
     /**
      * video recording on film
      */
-    'videoHardcopy';
+    "videoHardcopy";

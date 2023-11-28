@@ -5,9 +5,9 @@ import { LocalSelectorComponent } from "@helgoland/core";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'helgoland-common-language-selector',
-  templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.scss'],
+  selector: "helgoland-common-language-selector",
+  templateUrl: "./language-selector.component.html",
+  styleUrls: ["./language-selector.component.scss"],
   imports: [
     CommonModule,
     MatSelectModule,

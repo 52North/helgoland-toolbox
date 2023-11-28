@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from '@helgoland/core';
-import WMSCapabilities from 'ol/format/WMSCapabilities';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpService } from "@helgoland/core";
+import WMSCapabilities from "ol/format/WMSCapabilities";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 interface InternalWMSLayer {
   Name: string;
@@ -45,7 +45,7 @@ const WMS_CAPABILITIES_REQUEST_EXPIRATION = 1000 * 60 * 5;
  * Handler for WMS capabilities
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class WmsCapabilitiesService {
 
@@ -62,7 +62,7 @@ export class WmsCapabilitiesService {
    */
   public getTitle(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
-      map(layer => layer?.Title ? layer.Title : 'no layer title')
+      map(layer => layer?.Title ? layer.Title : "no layer title")
     );
   }
 
@@ -75,7 +75,7 @@ export class WmsCapabilitiesService {
    */
   public getAbstract(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
-      map(layer => layer?.Abstract ? layer.Abstract : 'no layer abstract')
+      map(layer => layer?.Abstract ? layer.Abstract : "no layer abstract")
     );
   }
 
@@ -89,7 +89,7 @@ export class WmsCapabilitiesService {
   public getTimeDimensionArray(layerName: string, wmsurl: string): Observable<Date[]> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       if (layer) {
-        const timeDimension = layer.Dimension.find(e => e.name = 'time');
+        const timeDimension = layer.Dimension.find(e => e.name = "time");
         if (timeDimension) {
           return this.createTimeList(timeDimension);
         }
@@ -107,7 +107,7 @@ export class WmsCapabilitiesService {
    */
   public getLegendUrl(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
-      let legendUrl = '';
+      let legendUrl = "";
       if (layer) layer.Style.forEach(s => s.LegendURL.forEach(l => legendUrl = l.OnlineResource));
       return legendUrl;
     }));
@@ -123,9 +123,9 @@ export class WmsCapabilitiesService {
   public getDefaultTimeDimension(layerName: string, wmsurl: string): Observable<Date | undefined> {
     return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
       if (layer) {
-        const timeDimension = layer.Dimension.find(e => e.name = 'time');
+        const timeDimension = layer.Dimension.find(e => e.name = "time");
         if (timeDimension && timeDimension.default) {
-          if (timeDimension.default === 'current') {
+          if (timeDimension.default === "current") {
             const timeList = this.createTimeList(timeDimension);
             return this.findNearestTimestamp(timeList, new Date());
           } else {
@@ -170,8 +170,8 @@ export class WmsCapabilitiesService {
    */
   public cleanUpWMSUrl(url: string): string {
     let wmsRequesturl = url;
-    if (wmsRequesturl.indexOf('?') !== -1) {
-      wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf('?'));
+    if (wmsRequesturl.indexOf("?") !== -1) {
+      wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf("?"));
     }
     return wmsRequesturl;
   }
@@ -186,8 +186,8 @@ export class WmsCapabilitiesService {
   }
 
   private getCapabilities(url: string): Observable<any> {
-    const wmsRequesturl = this.cleanUpWMSUrl(url) + '?request=GetCapabilities&service=wms&version=1.3.0';
-    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(wmsRequesturl, { responseType: 'text' })
+    const wmsRequesturl = this.cleanUpWMSUrl(url) + "?request=GetCapabilities&service=wms&version=1.3.0";
+    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(wmsRequesturl, { responseType: "text" })
       .pipe(map(res => new WMSCapabilities().read(res)));
   }
 
@@ -216,7 +216,7 @@ export class WmsCapabilitiesService {
   }
 
   private fixExtent(crs: string, extent: number[]): { crs: string, extent: number[] } {
-    if (crs === 'EPSG:4326') {
+    if (crs === "EPSG:4326") {
       const fixExtent = [extent[1], extent[0], extent[3], extent[2]];
       return { crs, extent: fixExtent };
     } else {
@@ -225,7 +225,7 @@ export class WmsCapabilitiesService {
   }
 
   private createTimeList(timeDimension: { name: string; default: string; values: string; }): Date[] {
-    return timeDimension.values.split(',').map(e => new Date(e));
+    return timeDimension.values.split(",").map(e => new Date(e));
   }
 
   private findNearestTimestamp(timeList: Date[], stamp: Date): Date {

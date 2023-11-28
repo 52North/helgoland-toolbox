@@ -1,18 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { OlLayerTimeSelectorComponent } from './ol-layer-time-selector.component';
-import BaseLayer from 'ol/layer/Base';
+import { OlLayerTimeSelectorComponent } from "./ol-layer-time-selector.component";
+import BaseLayer from "ol/layer/Base";
 
-describe('OlLayerTimeSelectorComponent', () => {
+describe("OlLayerTimeSelectorComponent", () => {
   let component: OlLayerTimeSelectorComponent;
   let fixture: ComponentFixture<OlLayerTimeSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [FormsModule, HelgolandCoreModule, OlLayerTimeSelectorComponent]
-}).compileComponents();
+      imports: [FormsModule, HelgolandCoreModule, OlLayerTimeSelectorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('OlLayerTimeSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

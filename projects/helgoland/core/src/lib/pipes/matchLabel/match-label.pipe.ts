@@ -1,8 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-    name: 'matchLabel',
-    standalone: true
+  name: "matchLabel",
+  standalone: true
 })
 export class MatchLabelPipe implements PipeTransform {
 

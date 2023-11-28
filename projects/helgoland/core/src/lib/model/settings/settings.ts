@@ -1,4 +1,4 @@
-import { Timespan } from './../internal/timeInterval';
+import { Timespan } from "./../internal/timeInterval";
 
 export interface Settings {
     datasetApis?: DatasetApi[];

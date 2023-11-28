@@ -3,8 +3,7 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "overrides": [
-    {
+  "overrides": [{
       "files": [
         "*.ts"
       ],
@@ -34,6 +33,12 @@
             "prefix": "n52",
             "style": "kebab-case"
           }
+        ],
+        "quotes": [
+          "warn", "double"
+        ],
+        "indent": [
+          "warn", 2, { "SwitchCase": 1 }
         ]
       }
     },

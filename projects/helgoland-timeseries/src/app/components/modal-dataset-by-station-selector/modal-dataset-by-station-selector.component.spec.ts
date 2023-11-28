@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
-import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatBadgeModule } from "@angular/material/badge";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatListModule } from "@angular/material/list";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
+import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ModalDatasetByStationSelectorComponent } from './modal-dataset-by-station-selector.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ModalDatasetByStationSelectorComponent } from "./modal-dataset-by-station-selector.component";
 
-describe('ModalDatasetByStationSelectorComponent', () => {
+describe("ModalDatasetByStationSelectorComponent", () => {
   let component: ModalDatasetByStationSelectorComponent;
   let fixture: ComponentFixture<ModalDatasetByStationSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         MatBadgeModule,
@@ -28,8 +28,8 @@ describe('ModalDatasetByStationSelectorComponent', () => {
         RouterTestingModule,
         TranslateTestingModule,
         ModalDatasetByStationSelectorComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('ModalDatasetByStationSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

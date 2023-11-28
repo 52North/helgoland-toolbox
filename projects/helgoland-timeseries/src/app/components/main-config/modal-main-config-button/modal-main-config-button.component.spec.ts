@@ -1,27 +1,27 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
-import { ModalMainConfigButtonComponent } from './modal-main-config-button.component';
+import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
+import { ModalMainConfigButtonComponent } from "./modal-main-config-button.component";
 
-describe('ModalMainConfigButtonComponent', () => {
+describe("ModalMainConfigButtonComponent", () => {
   let component: ModalMainConfigButtonComponent;
   let fixture: ComponentFixture<ModalMainConfigButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatDialogModule,
         TranslateTestingModule,
         HttpClientModule,
         MatIconModule,
         MatTooltipModule,
         ModalMainConfigButtonComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('ModalMainConfigButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

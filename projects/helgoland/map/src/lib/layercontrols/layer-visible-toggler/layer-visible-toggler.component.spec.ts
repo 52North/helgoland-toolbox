@@ -1,18 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Layer } from 'leaflet';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { Layer } from "leaflet";
 
-import { MapCache } from '../../base/map-cache.service';
-import { LayerVisibleTogglerComponent } from './layer-visible-toggler.component';
+import { MapCache } from "../../base/map-cache.service";
+import { LayerVisibleTogglerComponent } from "./layer-visible-toggler.component";
 
-describe('LayerVisibleTogglerComponent', () => {
+describe("LayerVisibleTogglerComponent", () => {
   let component: LayerVisibleTogglerComponent;
   let fixture: ComponentFixture<LayerVisibleTogglerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [LayerVisibleTogglerComponent],
-    providers: [MapCache]
-}).compileComponents();
+      imports: [LayerVisibleTogglerComponent],
+      providers: [MapCache]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('LayerVisibleTogglerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

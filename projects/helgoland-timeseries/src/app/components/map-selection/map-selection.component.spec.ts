@@ -1,19 +1,17 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MapSelectionComponent } from './map-selection.component';
+import { MapSelectionComponent } from "./map-selection.component";
 
-describe('MapSelectionComponent', () => {
+describe("MapSelectionComponent", () => {
   let component: MapSelectionComponent;
   let fixture: ComponentFixture<MapSelectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [MapSelectionComponent]
-})
-    .compileComponents();
+      imports: [MapSelectionComponent]
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +20,7 @@ describe('MapSelectionComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

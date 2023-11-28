@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { AppRouterService } from './app-router.service';
+import { AppRouterService } from "./app-router.service";
 
-describe('AppRouterService', () => {
+describe("AppRouterService", () => {
   let service: AppRouterService;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('AppRouterService', () => {
     service = TestBed.inject(AppRouterService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

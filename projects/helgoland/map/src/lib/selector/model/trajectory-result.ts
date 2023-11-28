@@ -1,4 +1,4 @@
-import { HelgolandDataset, LocatedProfileDataEntry } from '@helgoland/core';
+import { HelgolandDataset, LocatedProfileDataEntry } from "@helgoland/core";
 
 export interface TrajectoryResult {
     dataset: HelgolandDataset;

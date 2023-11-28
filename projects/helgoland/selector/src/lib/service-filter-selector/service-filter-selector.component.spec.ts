@@ -1,29 +1,29 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
-import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
+import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 
-import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ServiceFilterSelectorComponent } from './service-filter-selector.component';
+import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ServiceFilterSelectorComponent } from "./service-filter-selector.component";
 
-describe('ServiceFilterSelectorComponent', () => {
+describe("ServiceFilterSelectorComponent", () => {
   let component: ServiceFilterSelectorComponent;
   let fixture: ComponentFixture<ServiceFilterSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         ServiceFilterSelectorComponent
-    ],
-    providers: [
+      ],
+      providers: [
         SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe('ServiceFilterSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

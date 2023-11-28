@@ -7,20 +7,20 @@ export type OnlineFunction =
      * online instructions for transferring data from one storage device or system
      * to another
      */
-    'download' |
+    "download" |
     /**
      * online information about the resource
      */
-    'information' |
+    "information" |
     /**
      * online instructions for requesting the resource from the provider
      */
-    'offlineAccess' |
+    "offlineAccess" |
     /**
      * online order process for obtening the resource
      */
-    'order' |
+    "order" |
     /**
      * online search interface for seeking out information about the resource
      */
-    'search';
+    "search";

@@ -1,16 +1,16 @@
 // @ts-nocheck
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { DisplayName } from "../../common/decorators/DisplayName";
 export class UnitOfMeasure {
-    @DisplayName('Code')
-    code: string;
+    @DisplayName("Code")
+      code: string;
 
-    @DisplayName('Href')
-    href: string;
+    @DisplayName("Href")
+      href: string;
 
-    @DisplayName('Title')
-    title: string;
+    @DisplayName("Title")
+      title: string;
 
     toString() {
-        return this.code || 'Unit of measure';
+      return this.code || "Unit of measure";
     }
 }

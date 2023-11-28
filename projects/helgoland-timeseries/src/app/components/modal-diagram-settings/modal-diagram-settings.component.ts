@@ -14,9 +14,9 @@ export interface DiagramConfig {
 }
 
 @Component({
-  selector: 'helgoland-modal-diagram-settings',
-  templateUrl: './modal-diagram-settings.component.html',
-  styleUrls: ['./modal-diagram-settings.component.scss'],
+  selector: "helgoland-modal-diagram-settings",
+  templateUrl: "./modal-diagram-settings.component.html",
+  styleUrls: ["./modal-diagram-settings.component.scss"],
   imports: [
     MatButtonModule,
     TranslateModule,

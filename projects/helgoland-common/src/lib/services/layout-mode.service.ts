@@ -1,8 +1,8 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from "@angular/common";
+import { Inject, Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LayoutModeService {
 
@@ -10,7 +10,7 @@ export class LayoutModeService {
     @Inject(DOCUMENT) private document: Document
   ) { }
 
-  private readonly dmClass = 'dark-theme';
+  private readonly dmClass = "dark-theme";
 
   /**
    * Toggles the dark mode and returns if dark mode is currently active as boolean.

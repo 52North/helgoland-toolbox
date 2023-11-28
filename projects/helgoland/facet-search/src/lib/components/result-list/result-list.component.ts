@@ -5,9 +5,9 @@ import { Subscription } from "rxjs";
 import { FacetSearchElement, FacetSearchService } from "../../facet-search-model";
 
 @Component({
-  selector: 'n52-result-list',
-  templateUrl: './result-list.component.html',
-  styleUrls: ['./result-list.component.scss'],
+  selector: "n52-result-list",
+  templateUrl: "./result-list.component.html",
+  styleUrls: ["./result-list.component.scss"],
   standalone: true,
   imports: [TzDatePipe]
 })

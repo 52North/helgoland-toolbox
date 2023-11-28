@@ -1,4 +1,4 @@
-import { Settings } from '@helgoland/core';
+import { Settings } from "@helgoland/core";
 
 export const environment = {
   production: true
@@ -7,13 +7,13 @@ export const environment = {
 export let settings: Settings;
 export const settingsPromise = new Promise<Settings>((resolve, reject) => {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', './assets/settings.json');
+  xhr.open("GET", "./assets/settings.json");
   xhr.onload = () => {
     if (xhr.status === 200) {
       settings = JSON.parse(xhr.responseText);
       resolve(settings);
     } else {
-      reject('Cannot load configuration');
+      reject("Cannot load configuration");
     }
   };
   xhr.send();

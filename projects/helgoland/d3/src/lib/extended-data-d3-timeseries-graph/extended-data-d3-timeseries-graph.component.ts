@@ -81,9 +81,9 @@ export interface AdditionalDataEntry {
  * the array is reset.
  */
 @Component({
-  selector: 'n52-extended-data-d3-timeseries-graph',
-  templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
-  styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
+  selector: "n52-extended-data-d3-timeseries-graph",
+  templateUrl: "../d3-timeseries-graph/d3-timeseries-graph.component.html",
+  styleUrls: ["../d3-timeseries-graph/d3-timeseries-graph.component.scss"],
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
@@ -215,7 +215,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
           }
 
         } else {
-          console.warn('Please check the additional entry, it needs at least a \'linkedDatasetId\' or a \'yaxisLabel\' property and a \'data\' property: ', entry);
+          console.warn("Please check the additional entry, it needs at least a 'linkedDatasetId' or a 'yaxisLabel' property and a 'data' property: ", entry);
         }
       });
     }
@@ -224,7 +224,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   private getUom(dataset: DataConst | undefined, entry: AdditionalData): string {
     if (dataset) return dataset.uom;
     if (entry.yaxisLabel) return entry.yaxisLabel;
-    return '';
+    return "";
   }
 
   private getOptions(entry: AdditionalData) {
@@ -237,6 +237,6 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
   }
 
   private generateAdditionalInternalId(entry: AdditionalData): string {
-    return entry.linkedDatasetId ? entry.linkedDatasetId + 'add' : entry.internalId + 'add';
+    return entry.linkedDatasetId ? entry.linkedDatasetId + "add" : entry.internalId + "add";
   }
 }

@@ -25,12 +25,12 @@ import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
 import { D3PlotOptions } from "../model/d3-plot-options";
 
 
-const wrapperClassName = 'export-diagram-wrapper';
+const wrapperClassName = "export-diagram-wrapper";
 
 @Component({
-  selector: 'n52-export-image-button',
-  templateUrl: './export-image-button.component.html',
-  styleUrls: ['./export-image-button.component.scss'],
+  selector: "n52-export-image-button",
+  templateUrl: "./export-image-button.component.html",
+  styleUrls: ["./export-image-button.component.scss"],
   standalone: true,
   imports: []
 })
@@ -39,69 +39,57 @@ export class ExportImageButtonComponent {
   /**
    * List of datasetIds, similiar to the timeseries component
    */
-  @Input()
-  datasetIds: string[] = [];
+  @Input() datasetIds: string[] = [];
 
   /**
    * Map of datasetOptions, similiar to the timeseries component
    */
-  @Input()
-  datasetOptions: Map<string, DatasetOptions> = new Map();
+  @Input() datasetOptions: Map<string, DatasetOptions> = new Map();
 
   /**
    * Timespan, similiar to the timeseries component
    */
-  @Input()
-  @Required
-  timespan!: Timespan;
+  @Input() @Required timespan!: Timespan;
 
   /**
    * Height (as number) in px for the diagram extent, default is 300
    */
-  @Input()
-  height = 300;
+  @Input() height = 300;
 
   /**
    * Width (as number) in px for the diagram extent, default is 600
    */
-  @Input()
-  width = 600;
+  @Input() width = 600;
 
   /**
    * Filename for the exported file, default is 'export'
    */
-  @Input()
-  fileName = 'export';
+  @Input() fileName = "export";
 
   /**
    * Filetype for the export, currently png and svg are possible, default is 'png'
    */
-  @Input()
-  exportType: 'png' | 'svg' = 'png';
+  @Input() exportType: "png" | "svg" = "png";
 
   /**
    * Optional title in the picture of the exported file
    */
-  @Input()
-  title: string | undefined;
+  @Input() title: string | undefined;
 
   /**
    * Option to show a simple legend in th exported picture
    */
-  @Input()
-  showLegend = false;
+  @Input() showLegend = false;
 
   /**
    * Option to show first and last date at the bottom edges of the exported picture
    */
-  @Input()
-  showFirstLastDate: boolean = false;
+  @Input() showFirstLastDate: boolean = false;
 
   /**
    * Presenter Options for the exported image
    */
-  @Input()
-  presenterOptions: D3PlotOptions = {
+  @Input() presenterOptions: D3PlotOptions = {
     showTimeLabel: false,
     showReferenceValues: true,
     grid: true
@@ -133,7 +121,7 @@ export class ExportImageButtonComponent {
     this.internalWidth = this.width;
 
     if (this.showFirstLastDate && !this.presenterOptions.timeRangeLabel) {
-      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' }
+      this.presenterOptions.timeRangeLabel = { show: true, format: "L" }
     }
 
     const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
@@ -152,10 +140,10 @@ export class ExportImageButtonComponent {
           if (svgElem) {
             this.diagramAdjustments(svgElem).subscribe(() => {
               switch (this.exportType) {
-                case 'svg':
+                case "svg":
                   this.createSvgDownload(svgElem);
                   break;
-                case 'png':
+                case "png":
                 default:
                   this.createPngImageDownload(svgElem);
                   break;
@@ -171,10 +159,10 @@ export class ExportImageButtonComponent {
 
   private diagramAdjustments(svgElem: SVGSVGElement): Observable<void> {
     // adjust y axis fill out
-    svgElem.querySelectorAll<SVGSVGElement>('.y.axisDiv').forEach(el => el.style.fill = 'none');
+    svgElem.querySelectorAll<SVGSVGElement>(".y.axisDiv").forEach(el => el.style.fill = "none");
 
     // adjust grid lines
-    d3.selectAll('.d3 .grid .tick line').style('stroke', '#d3d3d3');
+    d3.selectAll(".d3 .grid .tick line").style("stroke", "#d3d3d3");
 
     this.addTitle(svgElem);
 
@@ -190,9 +178,9 @@ export class ExportImageButtonComponent {
           obs.push(
             this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
               if (ts.firstValue && ts.lastValue && this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-                const label = selection.append<SVGGElement>('g').attr('class', 'legend-entry');
+                const label = selection.append<SVGGElement>("g").attr("class", "legend-entry");
                 this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-                label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
+                label.append<SVGGraphicsElement>("svg:text").text(this.createLabelText(ts));
                 this.internalHeight += 25;
                 return {
                   label,
@@ -212,7 +200,7 @@ export class ExportImageButtonComponent {
         const maxWidth = Math.max(...elem.map(e => e.label?.node() ? e.label.node()!.getBBox().width : 0));
         elem.forEach(e => {
           if (e.label) {
-            e.label.attr('transform', `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`);
+            e.label.attr("transform", `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`);
           }
         });
       }));
@@ -226,7 +214,7 @@ export class ExportImageButtonComponent {
     ts.parameters.phenomenon && labels.push(ts.parameters.phenomenon.label);
     ts.parameters.procedure && labels.push(ts.parameters.procedure.label);
     ts.parameters.feature && labels.push(ts.parameters.feature.label);
-    return labels.join(', ');
+    return labels.join(", ");
   }
 
   private addTitle(element: SVGSVGElement) {
@@ -237,42 +225,42 @@ export class ExportImageButtonComponent {
 
       const selection = d3.select(element);
 
-      const graph = selection.select<SVGGraphicsElement>('g');
+      const graph = selection.select<SVGGraphicsElement>("g");
 
       this.moveDown(graph, addedHeight);
-      const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
+      const titleElem = selection.append<SVGGraphicsElement>("svg:text").text(this.title);
       const titleElemNode = titleElem.node();
       if (titleElem && titleElemNode) {
         const titleWidth = titleElemNode.getBBox().width;
-        titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
+        titleElem.attr("x", (this.internalWidth - titleWidth) / 2).attr("y", "15");
       }
     }
   }
 
   private moveDown(graph: d3.Selection<SVGGraphicsElement, any, null, undefined>, sizeToMove: number) {
-    const matrix = (document.getElementById(graph.attr('id')) as any).transform.baseVal.consolidate().matrix;
-    graph.attr('transform', `matrix(${matrix.a} ${matrix.b} ${matrix.c} ${matrix.d} ${matrix.e} ${matrix.f + sizeToMove})`);
+    const matrix = (document.getElementById(graph.attr("id")) as any).transform.baseVal.consolidate().matrix;
+    graph.attr("transform", `matrix(${matrix.a} ${matrix.b} ${matrix.c} ${matrix.d} ${matrix.e} ${matrix.f + sizeToMove})`);
   }
 
   private createPngImageDownload(element: SVGSVGElement) {
-    element.setAttribute('width', `${this.internalWidth}px`);
-    element.setAttribute('height', `${this.internalHeight}px`);
-    const canvas = document.createElement('canvas');
+    element.setAttribute("width", `${this.internalWidth}px`);
+    element.setAttribute("height", `${this.internalHeight}px`);
+    const canvas = document.createElement("canvas");
     canvas.width = this.internalWidth;
     canvas.height = this.internalHeight;
     const data = new XMLSerializer().serializeToString(element);
     const win = window.URL;
     const img = new Image();
-    const blob = new Blob([data], { type: 'image/svg+xml' });
+    const blob = new Blob([data], { type: "image/svg+xml" });
     const url = win.createObjectURL(blob);
     img.onload = () => {
-      canvas.getContext('2d')?.drawImage(img, 0, 0);
+      canvas.getContext("2d")?.drawImage(img, 0, 0);
       win.revokeObjectURL(url);
-      const uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
-      const a = document.createElement('a');
+      const uri = canvas.toDataURL("image/png").replace("image/png", "octet/stream");
+      const a = document.createElement("a");
       document.body.appendChild(a);
       a.href = uri
-      a.download = (element.id || element.getAttribute('name') || element.getAttribute('aria-label') || this.fileName) + '.png';
+      a.download = (element.id || element.getAttribute("name") || element.getAttribute("aria-label") || this.fileName) + ".png";
       a.click();
       window.URL.revokeObjectURL(uri);
       document.body.removeChild(a);
@@ -285,15 +273,15 @@ export class ExportImageButtonComponent {
     const serializer = new XMLSerializer();
     let source = serializer.serializeToString(element);
     if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
-      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      source = source.replace(/^<svg/, "<svg xmlns=\"http://www.w3.org/2000/svg\"");
     }
     if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
-      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+      source = source.replace(/^<svg/, "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
     }
-    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
-    const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+    source = "<?xml version=\"1.0\" standalone=\"no\"?>\r\n" + source;
+    const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
     const svgUrl = URL.createObjectURL(svgBlob);
-    const downloadLink = document.createElement('a');
+    const downloadLink = document.createElement("a");
     downloadLink.href = svgUrl;
     downloadLink.download = `${this.fileName}.svg`;
     document.body.appendChild(downloadLink);
@@ -302,7 +290,7 @@ export class ExportImageButtonComponent {
   }
 
   private prepareSelector(selector: string): string {
-    if (selector.endsWith(' svg')) {
+    if (selector.endsWith(" svg")) {
       return selector;
     }
     return `${selector} svg`;
@@ -321,8 +309,8 @@ export class ExportImageButtonComponent {
       .rootNodes[0] as HTMLElement;
 
     // create wrapper to set position and size
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'absolute';
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "absolute";
     wrapper.style.top = `${-this.internalHeight * 2}px`;
     wrapper.className = wrapperClassName;
     wrapper.style.height = `${this.internalHeight}px`;

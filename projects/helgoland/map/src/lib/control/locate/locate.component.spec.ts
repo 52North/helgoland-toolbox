@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { MapCache } from '../../base/map-cache.service';
-import { LocateControlComponent } from './locate.component';
-import { LocateService } from './locate.service';
+import { MapCache } from "../../base/map-cache.service";
+import { LocateControlComponent } from "./locate.component";
+import { LocateService } from "./locate.service";
 
-describe('LocateControlComponent', () => {
+describe("LocateControlComponent", () => {
   let component: LocateControlComponent;
   let fixture: ComponentFixture<LocateControlComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [LocateControlComponent],
-    providers: [
+      imports: [LocateControlComponent],
+      providers: [
         LocateService,
         MapCache
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('LocateControlComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

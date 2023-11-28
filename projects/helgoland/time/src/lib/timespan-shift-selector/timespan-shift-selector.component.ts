@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Required, Time, Timespan, TzDatePipe } from '@helgoland/core';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Required, Time, Timespan, TzDatePipe } from "@helgoland/core";
 
 @Component({
-    selector: 'n52-timespan-shift-selector',
-    templateUrl: './timespan-shift-selector.component.html',
-    standalone: true,
-    imports: [TzDatePipe]
+  selector: "n52-timespan-shift-selector",
+  templateUrl: "./timespan-shift-selector.component.html",
+  standalone: true,
+  imports: [TzDatePipe]
 })
 export class TimespanShiftSelectorComponent {
 

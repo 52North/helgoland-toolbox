@@ -1,6 +1,6 @@
-import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from '@helgoland/core';
-import { ScaleLinear } from 'd3';
-import { Duration, unitOfTime } from 'moment';
+import { Data, DatasetOptions, HelgolandTimeseries, MinMaxRange, TimeValueTuple } from "@helgoland/core";
+import { ScaleLinear } from "d3";
+import { Duration, unitOfTime } from "moment";
 
 // input tyoe for d3-general-graph component
 export interface D3GeneralInput {

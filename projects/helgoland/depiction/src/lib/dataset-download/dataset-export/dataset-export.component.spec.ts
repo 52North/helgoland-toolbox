@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
-import { DatasetExportComponent } from './dataset-export.component';
-import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
+import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
+import { DatasetExportComponent } from "./dataset-export.component";
+import { SettingsServiceTestingProvider } from "../../../../../../testing/settings.testing";
 
-describe('DatasetExportComponent', () => {
+describe("DatasetExportComponent", () => {
   let component: DatasetExportComponent;
   let fixture: ComponentFixture<DatasetExportComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         DatasetExportComponent
-    ],
-    providers: [
+      ],
+      providers: [
         SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('DatasetExportComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

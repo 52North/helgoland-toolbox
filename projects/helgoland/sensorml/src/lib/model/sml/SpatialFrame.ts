@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { AbstractSWEIdentifiable } from '../swe/AbstractSWEIdentifiable';
-import { Axis } from './Axis';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractSWEIdentifiable } from "../swe/AbstractSWEIdentifiable";
+import { Axis } from "./Axis";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * A general spatial Cartesian Reference Frame where the axes and origin will be
@@ -13,18 +13,18 @@ export class SpatialFrame extends AbstractSWEIdentifiable {
      * physical device (e.g. "the origin is at the point of attachment of the
      * sensor to the platform").
      */
-    @DisplayName('Origin')
-    origin: string;
+    @DisplayName("Origin")
+      origin: string;
     /**
      * Axis with name attribute and a textual description of the relationship of
      * the axis to the physical device; the order of the axes listed determines
      * their relationship according to the right-handed rule (e.g. axis 1 cross
      * axis 2 = axis 3).
      */
-    @DisplayName('Axis')
-    axis: Axis[];
+    @DisplayName("Axis")
+      axis: Axis[];
 
     override toString() {
-        return super.toString('Spatial frame');
+      return super.toString("Spatial frame");
     }
 }

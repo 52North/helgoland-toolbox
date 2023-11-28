@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PermalinkService } from '@helgoland/permalink';
-import { Observable, Observer } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { PermalinkService } from "@helgoland/permalink";
+import { Observable, Observer } from "rxjs";
 
-import { TrajectoriesService } from './trajectories.service';
+import { TrajectoriesService } from "./trajectories.service";
 
-const PARAM_ID = 'id';
+const PARAM_ID = "id";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TrajectoryViewPermalinkService extends PermalinkService<Observable<void>> {
 
@@ -33,9 +33,9 @@ export class TrajectoryViewPermalinkService extends PermalinkService<Observable<
   }
 
   protected generatePermalink(): string {
-    let paramUrl = '';
+    let paramUrl = "";
     if (this.trajectorySrvc.mainTrajectoryId) {
-      paramUrl = this.createBaseUrl() + '?' + PARAM_ID + '=' + encodeURIComponent(this.trajectorySrvc.mainTrajectoryId);
+      paramUrl = this.createBaseUrl() + "?" + PARAM_ID + "=" + encodeURIComponent(this.trajectorySrvc.mainTrajectoryId);
     } else {
       paramUrl = this.createBaseUrl();
     }

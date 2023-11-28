@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { FeatureGroup, GridLayer, ImageOverlay, Path, Popup, Tooltip } from 'leaflet';
+import { Injectable } from "@angular/core";
+import { FeatureGroup, GridLayer, ImageOverlay, Path, Popup, Tooltip } from "leaflet";
 
-import { MapCache } from './map-cache.service';
-import { LayerMap, LayerOptions } from './map-options';
+import { MapCache } from "./map-cache.service";
+import { LayerMap, LayerOptions } from "./map-options";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MapHandlerService {
 

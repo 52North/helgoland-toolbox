@@ -1,8 +1,8 @@
-import { Timespan } from '@helgoland/core';
+import { Timespan } from "@helgoland/core";
 
-import { DataConst } from '../model/d3-general';
-import { D3PlotOptions } from '../model/d3-plot-options';
-import { D3GraphObserver } from './d3-timeseries-graph-control';
+import { DataConst } from "../model/d3-general";
+import { D3PlotOptions } from "../model/d3-plot-options";
+import { D3GraphObserver } from "./d3-timeseries-graph-control";
 
 export interface D3TimeseriesGraphInterface {
     plotOptions: D3PlotOptions;

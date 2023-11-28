@@ -1,16 +1,16 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
-import { Datastream, InsertDatastream } from '../model/datasetreams';
-import { FeatureOfInterest, InsertFeatureOfInterest } from '../model/features-of-interest';
-import { InsertLocation, Location } from '../model/locations';
-import { InsertObservation, Observation } from '../model/observations';
-import { StaEndpoint, StaInsertInterface } from '../model/sta-interface';
-import { InsertThing, Thing } from '../model/things';
-import { HistoricalLocation, InsertHistoricalLocation } from './../model/historical-locations';
-import { InsertObservedProperty, ObservedProperty } from './../model/observed-properties';
-import { InsertSensor, Sensor } from './../model/sensors';
+import { Datastream, InsertDatastream } from "../model/datasetreams";
+import { FeatureOfInterest, InsertFeatureOfInterest } from "../model/features-of-interest";
+import { InsertLocation, Location } from "../model/locations";
+import { InsertObservation, Observation } from "../model/observations";
+import { StaEndpoint, StaInsertInterface } from "../model/sta-interface";
+import { InsertThing, Thing } from "../model/things";
+import { HistoricalLocation, InsertHistoricalLocation } from "./../model/historical-locations";
+import { InsertObservedProperty, ObservedProperty } from "./../model/observed-properties";
+import { InsertSensor, Sensor } from "./../model/sensors";
 
 @Injectable()
 export class StaInsertInterfaceService implements StaInsertInterface {

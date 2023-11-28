@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ClipboardModule } from 'ngx-clipboard';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ClipboardModule } from "ngx-clipboard";
 
-import { PermalinkToClipboardComponent } from './permalink-to-clipboard.component';
+import { PermalinkToClipboardComponent } from "./permalink-to-clipboard.component";
 
-describe('PermalinkToClipboardComponent', () => {
+describe("PermalinkToClipboardComponent", () => {
   let component: PermalinkToClipboardComponent;
   let fixture: ComponentFixture<PermalinkToClipboardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         ClipboardModule,
         PermalinkToClipboardComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('PermalinkToClipboardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

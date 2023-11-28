@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -9,17 +9,17 @@ import {
   OnInit,
   Output,
   ViewChild,
-} from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+} from "@angular/core";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
-  selector: 'helgoland-edit-label',
-  templateUrl: './edit-label.component.html',
-  styleUrls: ['./edit-label.component.scss'],
+  selector: "helgoland-edit-label",
+  templateUrl: "./edit-label.component.html",
+  styleUrls: ["./edit-label.component.scss"],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,13 +33,13 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class EditLabelComponent implements AfterViewInit, OnInit {
 
-  fc = new FormControl('');
+  fc = new FormControl("");
 
   @Input() label: string | undefined;
 
   @Output() labelChanged: EventEmitter<string> = new EventEmitter();
 
-  @ViewChild('input') firstItem!: ElementRef;
+  @ViewChild("input") firstItem!: ElementRef;
 
   editedLabel: string | undefined;
 
