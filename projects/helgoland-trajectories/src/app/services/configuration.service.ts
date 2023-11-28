@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Settings, SettingsService } from '@helgoland/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Settings, SettingsService } from "@helgoland/core";
+import { lastValueFrom, tap } from "rxjs";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AppConfig extends Settings {
 
 }
@@ -21,13 +21,12 @@ export class ConfigurationService extends SettingsService<Settings> {
   }
 
   loadConfiguration(): Promise<AppConfig> {
-    return this.http
+    return lastValueFrom(this.http
       .get<AppConfig>(this.CONFIGURATION_URL)
-      .toPromise()
-      .then((configuration: AppConfig) => {
+      .pipe(tap(configuration => {
         this.configuration = configuration;
         return configuration;
-      });
+      })));
   }
 
 }

@@ -20,7 +20,7 @@ import {
     Required,
     Timespan,
 } from '@helgoland/core';
-import * as L from 'leaflet';
+import L from 'leaflet';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
