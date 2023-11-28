@@ -1,12 +1,18 @@
-<div *ngIf="loading">
+@if (loading) {
+<div>
   loading...
 </div>
-<div *ngIf="!loading && items?.length === 0">
+}
+@if (!loading && items.length === 0) {
+<div>
   no results found
 </div>
+}
 <mat-selection-list #parameters [multiple]="true" (selectionChange)="selectionChanged($event)">
-  <mat-list-option *ngFor="let item of items" [value]="item" color="primary"
+  @for (item of items; track item) {
+  <mat-list-option [value]="item" color="primary"
     [selected]="item.internalId && timeseriesSrvc.hasDataset(item.internalId)">
     {{item.label}}
   </mat-list-option>
+  }
 </mat-selection-list>

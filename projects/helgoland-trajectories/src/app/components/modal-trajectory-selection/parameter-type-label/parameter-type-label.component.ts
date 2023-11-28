@@ -10,14 +10,14 @@ import { Required } from '../../../../../../helgoland/core/src/public-api';
   styleUrls: ['./parameter-type-label.component.scss'],
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })
 export class ParameterTypeLabelComponent {
 
   @Input()
-  @Required 
+  @Required
   parameterType!: ParameterType
 
 }

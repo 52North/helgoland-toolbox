@@ -1,4 +1,5 @@
-<div style="white-space: nowrap;" (click)="toggleVisibility()" *ngIf="datasetOptions && dataset">
+@if (datasetOptions && dataset) {
+<div style="white-space: nowrap;" (click)="toggleVisibility()">
   <span>
     <a class="btn btn-light">
       <span class="fa fa-plus"
@@ -10,3 +11,4 @@
   <span class="fa fa-pencil" (click)="editDatasetOptions(datasetOptions); $event.stopPropagation();"
     [ngStyle]="{color: datasetOptions.color}"></span>
 </div>
+}

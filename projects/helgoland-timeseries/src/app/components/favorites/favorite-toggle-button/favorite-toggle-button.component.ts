@@ -18,7 +18,7 @@ import { NotifierService } from '../../../services/notifier.service';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

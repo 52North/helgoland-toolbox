@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { DatasetOptions, PointSymbolType, Required } from '@helgoland/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component, Input, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSliderModule } from "@angular/material/slider";
+import { DatasetOptions, PointSymbolType, Required } from "@helgoland/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 interface Symbol {
   value: string;
@@ -22,7 +22,7 @@ interface Symbol {
     MatFormFieldModule,
     MatSelectModule,
     MatSliderModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

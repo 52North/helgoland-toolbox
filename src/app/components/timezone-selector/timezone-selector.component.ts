@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { TimezoneService } from '@helgoland/core';
+import { Component, OnInit } from "@angular/core";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { TimezoneService } from "@helgoland/core";
 
 @Component({
   selector: 'n52-timezone-selector',

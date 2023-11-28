@@ -1,7 +1,11 @@
-<span *ngIf="loading">loading ...</span>
-<span *ngIf="!loading">
-    <span>{{currentTime}}</span>
-    <span (click)="startAnimation()"> start </span>
-    <span (click)="stopAnimation()"> stop </span>
-    <span (click)="resetAnimation()"> reset </span>
+@if (loading) {
+<span>loading ...</span>
+}
+@if (!loading) {
+<span>
+  <span>{{currentTime}}</span>
+  <span (click)="startAnimation()"> start </span>
+  <span (click)="stopAnimation()"> stop </span>
+  <span (click)="resetAnimation()"> reset </span>
 </span>
+}

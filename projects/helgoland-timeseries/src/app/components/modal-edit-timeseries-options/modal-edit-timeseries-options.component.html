@@ -1,18 +1,15 @@
 <h1 mat-dialog-title>{{ 'modal-edit-timeseries-options.title' | translate }}</h1>
 <mat-dialog-content>
-
   <div>
     <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
       {{ 'modal-edit-timeseries-options.generalizeData' | translate }}
     </mat-slide-toggle>
   </div>
-
   <div>
     <mat-slide-toggle [(ngModel)]="options.zeroBasedYAxis" color="primary">
       {{ 'modal-edit-timeseries-options.null-based' | translate }}
     </mat-slide-toggle>
   </div>
-
   <div style="margin: 10px 0;">
     {{ 'modal-edit-timeseries-options.adjust-color' | translate }}
     <button mat-raised-button [colorPicker]="options.color" (colorPickerSelect)="confirmColor($event)"
@@ -20,23 +17,21 @@
       [cpOKButtonClass]="'mat-focus-indicator mat-raised-button mat-button-base'"
       [ngStyle]="{'background-color': options.color}">&nbsp;</button>
   </div>
-
-  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && options.type !== 'bar' && loaded">
-    <helgoland-timeseries-symbol-select [options]="options"></helgoland-timeseries-symbol-select>
-  </ng-container>
-
-  <ng-container *ngIf="!config.configuration?.supportTimeseriesSymbols && loaded">
-    <div>
-      {{ 'modal-edit-timeseries-options.point-radius' | translate }}
-    </div>
-    <div style="display: flex;">
-      <mat-slider style="flex: 1;" color="primary" min="1" max="5" style="flex: 1;">
-        <input [value]="options.pointRadius" (valueChange)="options.pointRadius = $event" matSliderThumb />
-      </mat-slider>
-    </div>
-  </ng-container>
-
-  <div *ngIf="loaded">
+  @if (config.configuration.supportTimeseriesSymbols && options.type !== 'bar' && loaded) {
+  <helgoland-timeseries-symbol-select [options]="options"></helgoland-timeseries-symbol-select>
+  }
+  @if (!config.configuration.supportTimeseriesSymbols && loaded) {
+  <div>
+    {{ 'modal-edit-timeseries-options.point-radius' | translate }}
+  </div>
+  <div style="display: flex;">
+    <mat-slider style="flex: 1;" color="primary" min="1" max="5" style="flex: 1;">
+      <input [value]="options.pointRadius" (valueChange)="options.pointRadius = $event" matSliderThumb />
+    </mat-slider>
+  </div>
+  }
+  @if (loaded) {
+  <div>
     <div>
       {{ 'modal-edit-timeseries-options.line-width' | translate }}
     </div>
@@ -46,9 +41,8 @@
       </mat-slider>
     </div>
   </div>
-
+  }
 </mat-dialog-content>
-
 <div mat-dialog-actions>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close cdkFocusInitial>{{'controls.close' | translate}}</button>

@@ -1,24 +1,41 @@
-<div *ngIf="loadingCount > 0">
+@if (loadingCount > 0) {
+<div>
   <span>Requesting {{loadingCount}} providers...</span>
 </div>
+}
 <div class="service-list">
-  <div class="service-item" *ngFor="let service of services" (click)="selectService(service)"
-    [ngClass]="{'selected': isSelected(service)}">
+  @for (service of services; track service) {
+  <div class="service-item" (click)="selectService(service)" [ngClass]="{'selected': isSelected(service)}">
     <div>{{service.label}}</div>
     <div class="small">{{service.type}}, {{service.version}}
     </div>
-    <div class="small" *ngIf="service.apiUrl">{{'service-selector.service-url' | translate}}: {{service.apiUrl}}</div>
-    <div class="small" *ngIf="service.quantities">
-      <span *ngIf="service.quantities.platforms">{{'service-selector.stations' | translate}}:
+    @if (service.apiUrl) {
+    <div class="small">{{'service-selector.service-url' | translate}}: {{service.apiUrl}}</div>
+    }
+    @if (service.quantities) {
+    <div class="small">
+      @if (service.quantities.platforms) {
+      <span>{{'service-selector.stations' | translate}}:
         {{service.quantities.platforms}}</span>
-      <span *ngIf="service.quantities.platforms !== undefined">{{'service-selector.platforms' | translate}}:
+      }
+      @if (service.quantities.platforms !== undefined) {
+      <span>{{'service-selector.platforms' | translate}}:
         {{service.quantities.platforms}}</span>
-      <span *ngIf="service.quantities.datasets !== undefined">{{'service-selector.datasets' | translate}}:
+      }
+      @if (service.quantities.datasets !== undefined) {
+      <span>{{'service-selector.datasets' | translate}}:
         {{service.quantities.datasets}}</span>
+      }
       <span>{{'service-selector.phenomena' | translate}}: {{service.quantities.phenomena}}</span>
     </div>
+    }
   </div>
-  <div *ngIf="showUnresolvableServices">
-    <div *ngFor="let item of unResolvableServices" style="color: red;">{{item.name}} is currently not reachable</div>
+  }
+  @if (showUnresolvableServices) {
+  <div>
+    @for (item of unResolvableServices; track item) {
+    <div style="color: red;">{{item.name}} is currently not reachable</div>
+    }
   </div>
+  }
 </div>

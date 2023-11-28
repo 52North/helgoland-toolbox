@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
-import { LocalSelectorComponent } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { MatSelectModule } from "@angular/material/select";
+import { LocalSelectorComponent } from "@helgoland/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'helgoland-common-language-selector',
@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     MatSelectModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

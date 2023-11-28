@@ -33,7 +33,7 @@ interface EditableGroupFavorite extends GroupFavorite {
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    EditLabelComponent,
+    EditLabelComponent
   ],
   standalone: true
 })

@@ -1,16 +1,16 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Required, MatchLabelPipe } from '@helgoland/core';
-import { Subscription } from 'rxjs';
+import { NgStyle } from "@angular/common";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { MatchLabelPipe, Required } from "@helgoland/core";
+import { Subscription } from "rxjs";
 
-import { FacetParameter, FacetSearchService, ParameterFacetSort, ParameterFacetType } from '../../facet-search-model';
-import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { FacetParameter, FacetSearchService, ParameterFacetSort, ParameterFacetType } from "../../facet-search-model";
 
 @Component({
-    selector: 'n52-parameter-facet',
-    templateUrl: './parameter-facet.component.html',
-    styleUrls: ['./parameter-facet.component.scss'],
-    standalone: true,
-    imports: [NgFor, NgStyle, NgIf, MatchLabelPipe]
+  selector: 'n52-parameter-facet',
+  templateUrl: './parameter-facet.component.html',
+  styleUrls: ['./parameter-facet.component.scss'],
+  standalone: true,
+  imports: [NgStyle, MatchLabelPipe]
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
 

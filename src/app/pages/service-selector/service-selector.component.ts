@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { DatasetApi, HelgolandCoreModule, HelgolandParameterFilter, Settings, SettingsService } from '@helgoland/core';
-import { HelgolandSelectorModule } from '@helgoland/selector';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { DatasetApi, HelgolandCoreModule, HelgolandParameterFilter, Settings, SettingsService } from "@helgoland/core";
+import { HelgolandSelectorModule } from "@helgoland/selector";
 
 @Component({
     templateUrl: './service-selector.component.html',

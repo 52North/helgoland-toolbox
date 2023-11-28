@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./trajectory-label.component.scss'],
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

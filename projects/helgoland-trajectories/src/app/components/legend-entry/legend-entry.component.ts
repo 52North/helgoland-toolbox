@@ -15,7 +15,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     CommonModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatIconModule,
+    MatIconModule
   ],
   standalone: true
 })

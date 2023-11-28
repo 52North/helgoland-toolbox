@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HelgolandPlatform, HelgolandServicesConnector } from '@helgoland/core';
-import { HelgolandMapSelectorModule } from '@helgoland/map';
+import { Component, OnInit } from "@angular/core";
+import { HelgolandPlatform, HelgolandServicesConnector } from "@helgoland/core";
+import { HelgolandMapSelectorModule } from "@helgoland/map";
 
 @Component({
     templateUrl: './sandbox.component.html',

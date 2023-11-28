@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { TimedDatasetOptions } from '@helgoland/core';
-import { HelgolandDatasetlistModule } from '@helgoland/depiction';
+import { Component } from "@angular/core";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { TimedDatasetOptions } from "@helgoland/core";
+import { HelgolandDatasetlistModule } from "@helgoland/depiction";
 
-import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { StyleModificationComponent } from "../../components/style-modification/style-modification.component";
 
 @Component({
     templateUrl: './profile-entry.component.html',

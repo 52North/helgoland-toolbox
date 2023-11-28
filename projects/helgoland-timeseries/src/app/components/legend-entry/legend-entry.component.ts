@@ -35,7 +35,7 @@ import { TimeseriesEntrySymbolComponent } from './timeseries-entry-symbol/timese
     MatSlideToggleModule,
     MatTooltipModule,
     TimeseriesEntrySymbolComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

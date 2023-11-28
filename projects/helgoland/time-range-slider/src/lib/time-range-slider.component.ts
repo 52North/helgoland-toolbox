@@ -6,18 +6,18 @@ import { Required, Timespan, TzDatePipe } from '@helgoland/core';
 import jquery from 'jquery';
 
 import { TimeRangeSliderCache } from './time-range-slider.service';
-import { NgIf } from '@angular/common';
+
 
 @Component({
-    selector: 'n52-time-range-slider',
-    templateUrl: './time-range-slider.component.html',
-    styleUrls: [
-        './time-range-slider.component.scss',
-        '../../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css'
-    ],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [NgIf, TzDatePipe]
+  selector: 'n52-time-range-slider',
+  templateUrl: './time-range-slider.component.html',
+  styleUrls: [
+    './time-range-slider.component.scss',
+    '../../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css'
+  ],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [TzDatePipe]
 })
 export class TimeRangeSliderComponent implements OnChanges {
 

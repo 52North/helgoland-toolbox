@@ -16,7 +16,7 @@ import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config
     TranslateModule,
     MatIconModule,
     MatButtonModule
-  ],
+],
   standalone: true
 })
 export class ModalMainConfigButtonComponent {

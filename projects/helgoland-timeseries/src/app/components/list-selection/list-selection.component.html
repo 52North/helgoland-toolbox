@@ -1,49 +1,67 @@
 <h1 mat-dialog-title>{{'diagram-view.add-timeseries.map' | translate}}</h1>
 <div mat-dialog-content>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let entry of filterList" [expanded]="entry.expanded">
+    @for (entry of filterList; track entry) {
+    <mat-expansion-panel [expanded]="entry.expanded">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span *ngIf="!entry.selectedFilter">
+          @if (!entry.selectedFilter) {
+          <span>
             {{'list-selection.select-a-filter' | translate}}
           </span>
-          <span *ngIf="entry.selectedFilter">
+          }
+          @if (entry.selectedFilter) {
+          <span>
             <helgoland-common-parameter-type-label [filter]="entry.selectedFilter">
             </helgoland-common-parameter-type-label>
           </span>
-          <span *ngIf="entry?.selectedItem">
+          }
+          @if (entry?.selectedItem) {
+          <span>
             : {{entry?.selectedItem?.label}}
           </span>
+          }
         </mat-panel-title>
       </mat-expansion-panel-header>
-
       <div class="filter-selection">
         <mat-button-toggle-group>
-          <mat-button-toggle *ngFor="let filter of entry.possibleFilters" value="filter"
-            (click)="selectFilter(entry, filter)">
+          @for (filter of entry.possibleFilters; track filter) {
+          <mat-button-toggle value="filter" (click)="selectFilter(entry, filter)">
             <helgoland-common-parameter-type-label [filter]="filter"></helgoland-common-parameter-type-label>
           </mat-button-toggle>
+          }
         </mat-button-toggle-group>
       </div>
-      <div [ngSwitch]="entry.selectedFilter" class="item-list">
-        <helgoland-common-parameter-list-selector *ngSwitchCase="'category'" [endpoint]="filterEndpoints.category"
-          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+      <div class="item-list">
+        @switch (entry.selectedFilter) {
+        @case ('category') {
+        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.category" [filterList]="entry.apiFilter"
+          (onItemSelected)="itemSelected(entry, $event)">
         </helgoland-common-parameter-list-selector>
-        <helgoland-common-parameter-list-selector *ngSwitchCase="'feature'" [endpoint]="filterEndpoints.feature"
-          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        }
+        @case ('feature') {
+        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.feature" [filterList]="entry.apiFilter"
+          (onItemSelected)="itemSelected(entry, $event)">
         </helgoland-common-parameter-list-selector>
-        <helgoland-common-parameter-list-selector *ngSwitchCase="'phenomenon'" [endpoint]="filterEndpoints.phenomenon"
-          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        }
+        @case ('phenomenon') {
+        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.phenomenon" [filterList]="entry.apiFilter"
+          (onItemSelected)="itemSelected(entry, $event)">
         </helgoland-common-parameter-list-selector>
-        <helgoland-common-parameter-list-selector *ngSwitchCase="'procedure'" [endpoint]="filterEndpoints.procedure"
-          [filterList]="entry.apiFilter" (onItemSelected)="itemSelected(entry, $event)">
+        }
+        @case ('procedure') {
+        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.procedure" [filterList]="entry.apiFilter"
+          (onItemSelected)="itemSelected(entry, $event)">
         </helgoland-common-parameter-list-selector>
-        <helgoland-timeseries-list-selector *ngSwitchCase="'timeseries'" [endpoint]="filterEndpoints.dataset"
-          [filterList]="entry.apiFilter">
+        }
+        @case ('timeseries') {
+        <helgoland-timeseries-list-selector [endpoint]="filterEndpoints.dataset" [filterList]="entry.apiFilter">
         </helgoland-timeseries-list-selector>
+        }
+        }
       </div>
-
     </mat-expansion-panel>
+    }
   </mat-accordion>
 </div>
 <div mat-dialog-actions>

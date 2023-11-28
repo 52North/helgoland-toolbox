@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HelgolandMapViewModule } from '@helgoland/map';
+import { Component, Inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { HelgolandMapViewModule } from "@helgoland/map";
 
 @Component({
     templateUrl: './geometry-view.component.html',

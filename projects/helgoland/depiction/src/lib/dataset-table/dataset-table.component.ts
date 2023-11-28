@@ -1,14 +1,26 @@
-import { Component, IterableDiffers, OnInit } from '@angular/core';
-import { DatasetOptions, DatasetPresenterComponent, DatasetTableData, DatasetType, HelgolandServicesConnector, HelgolandTimeseries, HelgolandTimeseriesData, InternalIdHandler, Time, TimezoneService, TzDatePipe } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { NgIf, NgFor, NgStyle } from '@angular/common';
+import { NgStyle } from "@angular/common";
+import { Component, IterableDiffers, OnInit } from "@angular/core";
+import {
+  DatasetOptions,
+  DatasetPresenterComponent,
+  DatasetTableData,
+  DatasetType,
+  HelgolandServicesConnector,
+  HelgolandTimeseries,
+  HelgolandTimeseriesData,
+  InternalIdHandler,
+  Time,
+  TimezoneService,
+  TzDatePipe,
+} from "@helgoland/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 
 @Component({
-    selector: 'n52-dataset-table',
-    templateUrl: './dataset-table.component.html',
-    styleUrls: ['./dataset-table.component.scss'],
-    standalone: true,
-    imports: [NgIf, NgFor, NgStyle, TzDatePipe]
+  selector: 'n52-dataset-table',
+  templateUrl: './dataset-table.component.html',
+  styleUrls: ['./dataset-table.component.scss'],
+  standalone: true,
+  imports: [NgStyle, TzDatePipe]
 })
 export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOptions, any> implements OnInit {
   /*

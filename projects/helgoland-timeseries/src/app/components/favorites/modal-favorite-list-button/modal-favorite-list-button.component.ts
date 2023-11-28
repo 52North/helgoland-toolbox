@@ -21,7 +21,7 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

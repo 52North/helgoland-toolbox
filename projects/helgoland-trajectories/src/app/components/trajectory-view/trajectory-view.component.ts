@@ -46,7 +46,7 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     MatTooltipModule,
     ShareButtonComponent,
     TrajectoryLabelComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

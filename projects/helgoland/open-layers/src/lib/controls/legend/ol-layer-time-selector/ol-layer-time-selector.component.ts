@@ -6,16 +6,16 @@ import { TileWMS } from 'ol/source';
 
 import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+
 
 /**
  * Legend component to select time stamps of a layer, the time information is gathered by the WMS capabilities
  */
 @Component({
-    selector: 'n52-ol-layer-time-selector',
-    templateUrl: './ol-layer-time-selector.component.html',
-    standalone: true,
-    imports: [NgIf, FormsModule, NgFor, TzDatePipe]
+  selector: 'n52-ol-layer-time-selector',
+  templateUrl: './ol-layer-time-selector.component.html',
+  standalone: true,
+  imports: [FormsModule, TzDatePipe]
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 

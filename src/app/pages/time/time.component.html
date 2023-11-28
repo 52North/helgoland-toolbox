@@ -2,24 +2,35 @@
   <div>Timeslider:</div>
   <n52-time-range-slider id="time-test" [timeList]="timelist"></n52-time-range-slider>
 </div>
-
 <div>
   <button mat-raised-button color="primary" (click)="notify()">Test Notifier</button>
 </div>
-
 <p>
-  <n52-timespan-button predefined="last_hour" label="Last Hour" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="today" label="Today" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="yesterday" label="Yesterday" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="today_yesterday" label="Today & Yesterday" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="current_week" label="Current Week" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="last_week" label="Last Week" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="current_month" label="Current Month" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="last_month" label="Last Month" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="current_year" label="Current Year" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button predefined="last_year" label="Last Year" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
-  <n52-timespan-button [timespanFunc]="customTimespanFunc" label="Custom" (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
+  <n52-timespan-button predefined="last_hour" label="Last Hour" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="today" label="Today" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="yesterday" label="Yesterday" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="today_yesterday" label="Today & Yesterday"
+    (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
+  <n52-timespan-button predefined="current_week" label="Current Week" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="last_week" label="Last Week" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="current_month" label="Current Month"
+    (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
+  <n52-timespan-button predefined="last_month" label="Last Month" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="current_year" label="Current Year" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button predefined="last_year" label="Last Year" (onTimespanSelected)="selectedTimespan = $event">
+  </n52-timespan-button>
+  <n52-timespan-button [timespanFunc]="customTimespanFunc" label="Custom"
+    (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
 </p>
-<div *ngIf="selectedTimespan">
+@if (selectedTimespan) {
+<div>
   Selected timespan: {{selectedTimespan.from | tzDate:'L LT z'}} - {{selectedTimespan.to | tzDate:'L LT z'}}
 </div>
+}

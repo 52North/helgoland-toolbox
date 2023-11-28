@@ -10,9 +10,11 @@
       <span>{{end | tzDate : 'L LT z'}}</span>
     </div>
   </div>
-  <div class="selection" *ngIf="selectionStart">
+  @if (selectionStart) {
+  <div class="selection">
     <span>{{selectionStart | tzDate : 'L LT z'}}</span>
     <span> - </span>
     <span>{{selectionEnd | tzDate : 'L LT z'}}</span>
   </div>
+  }
 </div>

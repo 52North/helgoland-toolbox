@@ -1,10 +1,15 @@
 <div class="header">
-  <helgoland-trajectories-label *ngIf="trajectory" [trajectory]="trajectory"></helgoland-trajectories-label>
-  <helgoland-loading-overlay-spinner *ngIf="loading" loadingHint="{{'trajectory-view.loading-trajectory' | translate}}">
+  @if (trajectory) {
+  <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
+  }
+  @if (loading) {
+  <helgoland-loading-overlay-spinner loadingHint="{{'trajectory-view.loading-trajectory' | translate}}">
   </helgoland-loading-overlay-spinner>
+  }
 </div>
 
-<div class="content" *ngIf="trajectory">
+@if (trajectory) {
+<div class="content">
   <div class="map">
     <n52-geometry-map-viewer class="map" mapId="trajectory" [geometry]="geometry" [highlight]="highlightGeometry"
       [zoomTo]="zoomToGeometry"></n52-geometry-map-viewer>
@@ -12,10 +17,12 @@
   <div class="chart-wrapper">
     <div class="legend-wrapper">
       <div class="legend">
-        <div *ngFor="let id of datasetIds">
+        @for (id of datasetIds; track id) {
+        <div>
           <helgoland-trajectories-legend-entry [datasetId]="id" [datasetOptions]="options.get(id)">
           </helgoland-trajectories-legend-entry>
         </div>
+        }
       </div>
       <mat-toolbar>
         <mat-toolbar-row>
@@ -35,7 +42,9 @@
       <button class="chart-config-button" mat-mini-fab color="none" [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>
-      <helgoland-loading-overlay-progress-bar *ngIf="trajectoryGraphLoading"></helgoland-loading-overlay-progress-bar>
+      @if (trajectoryGraphLoading) {
+      <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
+      }
       <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
         [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
         (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
@@ -44,14 +53,17 @@
     </div>
   </div>
 </div>
+}
 
 <mat-menu #menu="matMenu" class="chart-styling-menu">
   <div class="title">{{'chart-styling.xaxis.header' | translate}}</div>
-  <div mat-menu-item *ngFor="let at of axisTypes" (click)="setXaxisType(at.type)">
+  @for (at of axisTypes; track at) {
+  <div mat-menu-item (click)="setXaxisType(at.type)">
     <mat-radio-button color="primary" [checked]="isXaxisTypeSelected(at.type)">
       {{at.label | translate}}
     </mat-radio-button>
   </div>
+  }
   <mat-divider></mat-divider>
   <div mat-menu-item (click)="toggleDotted()">
     <mat-slide-toggle class="example-margin" color="primary" [checked]="graphOptions.dotted">

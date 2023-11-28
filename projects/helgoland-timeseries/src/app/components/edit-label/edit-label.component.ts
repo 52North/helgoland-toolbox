@@ -27,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   standalone: true
 })

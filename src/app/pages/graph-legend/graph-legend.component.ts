@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import {
     ColorService,
     DatasetOptions,
@@ -13,10 +13,8 @@ import {
     TimeseriesData,
     Timespan,
     TimezoneService,
-} from '@helgoland/core';
+} from "@helgoland/core";
 import {
-    D3GeneralDataPoint,
-    D3GeneralInput,
     D3PlotOptions,
     D3PointSymbolDrawerService,
     D3SimpleHoveringService,
@@ -25,15 +23,15 @@ import {
     HighlightOutput,
     HoveringStyle,
     InternalDataEntry,
-} from '@helgoland/d3';
-import { HelgolandDatasetDownloadModule, HelgolandDatasetlistModule } from '@helgoland/depiction';
-import { HelgolandModificationModule } from '@helgoland/modification';
-import { HelgolandTimeModule } from '@helgoland/time';
-import moment from 'moment';
+} from "@helgoland/d3";
+import { HelgolandDatasetDownloadModule, HelgolandDatasetlistModule } from "@helgoland/depiction";
+import { HelgolandModificationModule } from "@helgoland/modification";
+import { HelgolandTimeModule } from "@helgoland/time";
+import moment from "moment";
 
-import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
-import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
-import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { ExportPopupComponent } from "../../components/export-popup/export-popup.component";
+import { GeometryViewComponent } from "../../components/geometry-view/geometry-view.component";
+import { StyleModificationComponent } from "../../components/style-modification/style-modification.component";
 
 class HoveringTestService extends D3SimpleHoveringService {
 

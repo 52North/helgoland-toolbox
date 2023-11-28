@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Download Dataset</h1>
-
-<div mat-dialog-content ng-if="disabled" *ngIf="dataset">
+@if (dataset) {
+<div mat-dialog-content ng-if="disabled">
   Measure Parameter - {{dataset.parameters.phenomenon?.label}}
   <br>
   Unit - {{dataset.uom}}
@@ -21,10 +21,9 @@
   <br>
   loading: {{loading}}
 </div>
-
+}
 <n52-dataset-export [inputId]="inputId" [exportOptions]="exportOptions" (onMetadataChange)="onMetadata($event)"
   (onLoadingChange)="onLoading($event)"></n52-dataset-export>
-
 <div mat-dialog-actions style="float: left;">
   <button mat-button (click)="onCSVDownload()">CSV</button>
 </div>

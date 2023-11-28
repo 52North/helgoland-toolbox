@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass, NgStyle } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import {
     DatasetFilter,
     DatasetOptions,
@@ -7,17 +8,16 @@ import {
     HelgolandTrajectory,
     InternalDatasetId,
     InternalIdHandler,
-} from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
+} from "@helgoland/core";
+import { TranslateService } from "@ngx-translate/core";
 
-import { ListEntryComponent } from '../list-entry.component';
-import { NgIf, NgClass, NgStyle } from '@angular/common';
+import { ListEntryComponent } from "../list-entry.component";
 
 @Component({
     selector: 'n52-trajectory-entry',
     templateUrl: './trajectory-entry.component.html',
     standalone: true,
-    imports: [NgIf, NgClass, NgStyle]
+    imports: [NgClass, NgStyle]
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {
 

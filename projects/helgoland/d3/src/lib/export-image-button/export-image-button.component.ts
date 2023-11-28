@@ -6,7 +6,7 @@ import {
   EmbeddedViewRef,
   Injector,
   Input,
-} from '@angular/core';
+} from "@angular/core";
 import {
   DatasetOptions,
   DatasetType,
@@ -15,24 +15,24 @@ import {
   Required,
   Time,
   Timespan,
-} from '@helgoland/core';
-import * as d3 from 'd3';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+} from "@helgoland/core";
+import * as d3 from "d3";
+import { forkJoin, Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 
-import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
-import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3PlotOptions } from '../model/d3-plot-options';
-import { NgIf } from '@angular/common';
+import { D3TimeseriesGraphComponent } from "../d3-timeseries-graph/d3-timeseries-graph.component";
+import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
+import { D3PlotOptions } from "../model/d3-plot-options";
+
 
 const wrapperClassName = 'export-diagram-wrapper';
 
 @Component({
-    selector: 'n52-export-image-button',
-    templateUrl: './export-image-button.component.html',
-    styleUrls: ['./export-image-button.component.scss'],
-    standalone: true,
-    imports: [NgIf]
+  selector: 'n52-export-image-button',
+  templateUrl: './export-image-button.component.html',
+  styleUrls: ['./export-image-button.component.scss'],
+  standalone: true,
+  imports: []
 })
 export class ExportImageButtonComponent {
 

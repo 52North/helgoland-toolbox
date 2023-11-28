@@ -1,4 +1,6 @@
 <button type="button" class="btn" (click)="toggle()" [ngClass]="toggled ? 'btn-primary' : 'btn-light'">
-    <i class="fa fa-refresh" aria-hidden="true"></i>
-    <span *ngIf="toggled">active</span>
+  <i class="fa fa-refresh" aria-hidden="true"></i>
+  @if (toggled) {
+  <span>active</span>
+  }
 </button>

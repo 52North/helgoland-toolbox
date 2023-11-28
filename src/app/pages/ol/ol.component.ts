@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { HelgolandPlatform } from '@helgoland/core';
-import { HelgolandOpenLayersModule, OlMapService } from '@helgoland/open-layers';
-import { Layer } from 'ol/layer';
-import TileLayer from 'ol/layer/Tile';
-import { OSM, TileWMS } from 'ol/source';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { HelgolandPlatform } from "@helgoland/core";
+import { HelgolandOpenLayersModule, OlMapService } from "@helgoland/open-layers";
+import { Layer } from "ol/layer";
+import TileLayer from "ol/layer/Tile";
+import { OSM, TileWMS } from "ol/source";
 
 @Component({
   selector: 'n52-ol',

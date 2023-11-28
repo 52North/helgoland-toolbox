@@ -1,4 +1,3 @@
-import { NgIf } from "@angular/common";
 import {
     AfterViewInit,
     Component,
@@ -67,6 +66,7 @@ import {
 } from "./d3-timeseries-graph-error-handler.service";
 import { D3TimeseriesGraphInterface } from "./d3-timeseries-graph.interface";
 
+
 interface HighlightDataset {
     id: string;
     change: boolean;
@@ -81,7 +81,7 @@ const TICKS_COUNT_YAXIS = 5;
     providers: [D3GraphId],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, NgIf, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
+    imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
 })
 export class D3TimeseriesGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>

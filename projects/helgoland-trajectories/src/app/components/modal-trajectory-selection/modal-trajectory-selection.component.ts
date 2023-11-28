@@ -40,7 +40,7 @@ import { ParameterTypeLabelComponent } from "./parameter-type-label/parameter-ty
     ParameterListSelectorComponent,
     ParameterTypeLabelComponent,
     ServiceListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

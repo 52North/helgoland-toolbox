@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DatasetType, HelgolandDataset, HelgolandPlatform, HelgolandServicesConnector, HelgolandTimeseries, Required, TzDatePipe } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 export class SelectableDataset extends HelgolandTimeseries {
     public selected = false;
@@ -13,7 +13,7 @@ export class SelectableDataset extends HelgolandTimeseries {
     templateUrl: './dataset-by-station-selector.component.html',
     styleUrls: ['./dataset-by-station-selector.component.scss'],
     standalone: true,
-    imports: [NgFor, NgIf, NgClass, HelgolandLabelMapperModule, TzDatePipe]
+    imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe]
 })
 export class DatasetByStationSelectorComponent implements OnInit {
 

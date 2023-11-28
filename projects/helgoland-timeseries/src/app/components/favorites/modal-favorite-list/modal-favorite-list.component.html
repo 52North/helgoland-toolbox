@@ -1,18 +1,22 @@
 <h1 mat-dialog-title>{{'favorites.title' | translate}}</h1>
-
 <mat-dialog-content>
   <div style="max-height: 50vh; overflow: auto;">
-    <mat-card appearance="outlined" *ngFor="let item of singles" style="margin-bottom: 10px;">
-      <div *ngIf="!item.editMode" class="fav-title">
+    @for (item of singles; track item) {
+    <mat-card appearance="outlined" style="margin-bottom: 10px;">
+      @if (!item.editMode) {
+      <div class="fav-title">
         <span style="flex: 1;">{{item.label}}</span>
         <button mat-icon-button (click)="item.editMode = true">
           <mat-icon>create</mat-icon>
         </button>
       </div>
-      <div *ngIf="item.editMode" class="fav-title">
+      }
+      @if (item.editMode) {
+      <div class="fav-title">
         <helgoland-edit-label [label]="item.label" (labelChanged)="setFavLabel(item, $event); item.editMode = false;">
         </helgoland-edit-label>
       </div>
+      }
       <div class="fav-additional">
         {{item.favorite.parameters.phenomenon?.label}} - {{item.favorite.parameters.feature?.label}}
       </div>
@@ -28,23 +32,29 @@
         </button>
       </div>
     </mat-card>
-
-    <mat-card appearance="outlined" *ngFor="let group of groups" style="margin-bottom: 10px;">
-
-      <div *ngIf="!group.editMode" class="fav-title">
+    }
+    @for (group of groups; track group) {
+    <mat-card appearance="outlined" style="margin-bottom: 10px;">
+      @if (!group.editMode) {
+      <div class="fav-title">
         <span style="flex: 1;">{{group.label}}</span>
         <button mat-icon-button (click)="group.editMode = true">
           <mat-icon>create</mat-icon>
         </button>
       </div>
-      <div *ngIf="group.editMode" class="fav-title">
+      }
+      @if (group.editMode) {
+      <div class="fav-title">
         <helgoland-edit-label [label]="group.label"
           (labelChanged)="setFavLabel(group, $event); group.editMode = false;">
         </helgoland-edit-label>
       </div>
-      <div class="fav-additional" *ngFor="let fav of group.favorites">
+      }
+      @for (fav of group.favorites; track fav) {
+      <div class="fav-additional">
         {{fav.dataset.parameters.phenomenon?.label}} - {{fav.dataset.parameters.feature?.label}}
       </div>
+      }
       <div class="fav-actions">
         <button mat-icon-button (click)="deleteFav(group)"
           matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
@@ -57,13 +67,13 @@
         </button>
       </div>
     </mat-card>
-
+    }
   </div>
 </mat-dialog-content>
-
 <div mat-dialog-actions>
-  <button *ngIf="timeseriesSrvc.hasDatasets()" mat-raised-button
-    (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
+  @if (timeseriesSrvc.hasDatasets()) {
+  <button mat-raised-button (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
+  }
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
 </div>

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipboardComponent } from '@helgoland/permalink';
+import { Component } from "@angular/core";
+import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipboardComponent } from "@helgoland/permalink";
 
 
 @Component({

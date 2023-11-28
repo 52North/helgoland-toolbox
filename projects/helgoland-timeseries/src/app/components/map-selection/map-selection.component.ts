@@ -1,29 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule } from "@angular/common";
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDrawer, MatSidenavModule } from "@angular/material/sidenav";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import {
   DatasetType,
   HelgolandParameterFilter,
   HelgolandPlatform,
   HelgolandServicesConnector,
   Phenomenon,
-} from '@helgoland/core';
-import { HelgolandMapSelectorModule, MapCache } from '@helgoland/map';
-import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
-import { TranslateModule } from '@ngx-translate/core';
-import { ErrorHandlerService, ParameterListSelectorComponent } from 'helgoland-common';
-import { MarkerClusterGroupOptions } from 'leaflet';
+} from "@helgoland/core";
+import { HelgolandMapSelectorModule, MapCache } from "@helgoland/map";
+import { MultiServiceFilter, MultiServiceFilterEndpoint } from "@helgoland/selector";
+import { TranslateModule } from "@ngx-translate/core";
+import { ErrorHandlerService, ParameterListSelectorComponent } from "helgoland-common";
+import { MarkerClusterGroupOptions } from "leaflet";
 
-import { AppConfig, ConfigurationService } from '../../services/configuration.service';
+import { AppConfig, ConfigurationService } from "../../services/configuration.service";
 import {
   ModalDatasetByStationSelectorComponent,
-} from '../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component';
-import { MapConfig, ModalMapSettingsComponent } from '../modal-map-settings/modal-map-settings.component';
-import { MapSelectionStateService } from './map-selection-state.service';
+} from "../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component";
+import { MapConfig, ModalMapSettingsComponent } from "../modal-map-settings/modal-map-settings.component";
+import { MapSelectionStateService } from "./map-selection-state.service";
 
 interface MapSelectionAppConfig extends AppConfig {
   mapSelectionClusterConfig: MarkerClusterGroupOptions;
@@ -43,7 +43,7 @@ interface MapSelectionAppConfig extends AppConfig {
     MatSidenavModule,
     MatTooltipModule,
     ParameterListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

@@ -1,4 +1,5 @@
-<div *ngIf="timespan" class="wrapper">
+@if (timespan) {
+<div class="wrapper">
   <div style="flex: 1"></div>
   <button mat-icon-button (click)="back()" matTooltip="{{'time-selection.step-back' | translate}}"
     attr.aria-label="{{'time-selection.step-back' | translate}}">
@@ -19,7 +20,7 @@
   </button>
   <div style="flex: 1"></div>
 </div>
-
+}
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="predefinedRange(LASTHOUR)">
     {{'time-selection.predefined.last-hour' | translate}}

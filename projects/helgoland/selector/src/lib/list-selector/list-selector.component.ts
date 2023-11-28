@@ -5,7 +5,6 @@ import { FilteredProvider, HelgolandDataset, HelgolandParameterFilter, Helgoland
 
 import { FilteredParameter, MultiServiceFilter, MultiServiceFilterSelectorComponent } from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorParameter, ListSelectorService } from './list-selector.service';
-import { NgFor, NgIf } from '@angular/common';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -14,7 +13,7 @@ import { NgFor, NgIf } from '@angular/common';
     selector: 'n52-list-selector',
     templateUrl: './list-selector.component.html',
     standalone: true,
-    imports: [NgFor, NgIf, MultiServiceFilterSelectorComponent]
+    imports: [MultiServiceFilterSelectorComponent]
 })
 export class ListSelectorComponent implements OnChanges {
 
