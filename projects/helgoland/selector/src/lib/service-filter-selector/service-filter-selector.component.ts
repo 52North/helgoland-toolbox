@@ -1,12 +1,6 @@
 import { NgClass } from "@angular/common";
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import {
-  HelgolandParameterFilter,
-  HelgolandServicesConnector,
-  LanguageChangNotifier,
-  Parameter,
-  Required,
-} from "@helgoland/core";
+import { HelgolandParameterFilter, HelgolandServicesConnector, LanguageChangNotifier, Parameter } from "@helgoland/core";
 import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -21,10 +15,10 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
-  @Input() @Required
+  @Input({ required: true })
   public endpoint!: string;
 
-  @Input() @Required
+  @Input({ required: true })
   public serviceUrl!: string;
 
   @Input()

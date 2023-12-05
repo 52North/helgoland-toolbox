@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { ParameterType } from "helgoland-common";
-import { Required } from "../../../../../../helgoland/core/src/public-api";
 
 @Component({
   selector: "helgoland-trajectories-parameter-type-label",
@@ -16,8 +15,7 @@ import { Required } from "../../../../../../helgoland/core/src/public-api";
 })
 export class ParameterTypeLabelComponent {
 
-  @Input()
-  @Required
-    parameterType!: ParameterType
+  @Input({ required: true })
+  parameterType!: ParameterType
 
 }

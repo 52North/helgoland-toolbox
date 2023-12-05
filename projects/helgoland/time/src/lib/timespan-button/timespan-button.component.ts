@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DefinedTimespan, DefinedTimespanService, Required, Timespan } from "@helgoland/core";
+import { DefinedTimespan, DefinedTimespanService, Timespan } from "@helgoland/core";
 
 @Component({
   selector: "n52-timespan-button",
@@ -8,16 +8,13 @@ import { DefinedTimespan, DefinedTimespanService, Required, Timespan } from "@he
 })
 export class TimespanButtonComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public predefined!: string | DefinedTimespan;
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public label!: string;
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timespanFunc!: () => Timespan;
 
   @Output()

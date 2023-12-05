@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required } from "@helgoland/core";
 
 @Component({
   selector: "n52-permalink-new-window",
@@ -8,7 +7,7 @@ import { Required } from "@helgoland/core";
 })
 export class PermalinkNewWindowComponent {
 
-  @Input() @Required
+  @Input({ required: true })
   public url!: string;
 
   @Output()

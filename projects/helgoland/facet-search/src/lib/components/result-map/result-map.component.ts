@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ElementRef } from "@angular/core";
-import { Required } from "@helgoland/core";
+import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output } from "@angular/core";
 import { CachedMapComponent, MapCache } from "@helgoland/map";
 import { geoJSON } from "leaflet";
 import * as L from "leaflet";
@@ -22,7 +21,7 @@ L.Icon.Default.mergeOptions({
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() @Required public facetSearchService!: FacetSearchService;
+  @Input({ required: true }) public facetSearchService!: FacetSearchService;
 
   @Input() public cluster = true;
 
@@ -75,12 +74,12 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         this.markerFeatureGroup = L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const features = new Map<string, {feature: FacetSearchElementFeature, url: string}>();
+        const features = new Map<string, { feature: FacetSearchElementFeature, url: string }>();
         entries.forEach(e => {
           if (e.feature) {
             const id = `${e.feature.id}-${e.url}`;
             if (!features.has(id) && e.url) {
-              features.set(id, {feature: e.feature, url: e.url});
+              features.set(id, { feature: e.feature, url: e.url });
             }
           }
         });
@@ -111,7 +110,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createFeatureGeometry(elem: {feature: FacetSearchElementFeature, url: string}): L.GeoJSON | undefined {
+  private createFeatureGeometry(elem: { feature: FacetSearchElementFeature, url: string }): L.GeoJSON | undefined {
     if (elem.feature) {
       const geometry = geoJSON(elem.feature.geometry);
       geometry.on("mouseup", () => this.selectedFeature.emit(elem));

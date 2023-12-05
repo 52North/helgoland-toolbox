@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { Required, TzDatePipe } from "@helgoland/core";
+import { TzDatePipe } from "@helgoland/core";
 import BaseLayer from "ol/layer/Base";
 import Layer from "ol/layer/Layer";
 import { TileWMS } from "ol/source";
@@ -18,7 +18,7 @@ import { WmsCapabilitiesService } from "../../../services/wms-capabilities.servi
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 
-  @Input() @Required layer!: BaseLayer;
+  @Input({ required: true }) layer!: BaseLayer;
 
   public currentTime: Date | undefined;
 

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ParsedTimespanPreset, Required, Settings, SettingsService, Timespan, TimespanPreset } from "@helgoland/core";
 import { NgClass } from "@angular/common";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ParsedTimespanPreset, Settings, SettingsService, Timespan, TimespanPreset } from "@helgoland/core";
 
 @Component({
   selector: "n52-predefined-timespan-selector",
@@ -12,8 +12,7 @@ import { NgClass } from "@angular/common";
 
 export class PredefinedTimespanSelectorComponent implements OnInit {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timespan!: Timespan;
 
   @Output()

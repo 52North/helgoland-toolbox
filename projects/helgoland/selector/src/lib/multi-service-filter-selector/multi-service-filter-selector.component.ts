@@ -6,7 +6,6 @@ import {
   HelgolandServicesConnector,
   LanguageChangNotifier,
   Parameter,
-  Required,
 } from "@helgoland/core";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -37,7 +36,7 @@ export enum MultiServiceFilterEndpoint {
 })
 export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
-  @Input() @Required
+  @Input({required: true})
   public endpoint!: MultiServiceFilterEndpoint;
 
   @Input()

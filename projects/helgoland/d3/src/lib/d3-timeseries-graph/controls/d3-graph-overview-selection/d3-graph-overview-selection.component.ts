@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from "@angular/core";
-import { Required, Timespan } from "@helgoland/core";
+import { Timespan } from "@helgoland/core";
 import * as d3 from "d3";
 
 import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
@@ -19,8 +19,7 @@ import { D3TimeseriesGraphInterface } from "./../../d3-timeseries-graph.interfac
 export class D3GraphOverviewSelectionComponent extends D3TimeseriesGraphControl implements OnChanges {
 
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  @Input()
-  @Required
+  @Input({ required: true })
   public selectionTimeInterval!: Timespan;
 
   protected mousedownBrush: boolean = false;

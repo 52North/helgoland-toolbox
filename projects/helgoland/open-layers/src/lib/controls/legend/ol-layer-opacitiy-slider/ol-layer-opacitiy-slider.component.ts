@@ -1,7 +1,6 @@
 import { Component, DoCheck, Input, OnInit } from "@angular/core";
-import { Required } from "@helgoland/core";
-import BaseLayer from "ol/layer/Base";
 import { FormsModule } from "@angular/forms";
+import BaseLayer from "ol/layer/Base";
 
 /**
  * Legend component handle the opacity of the layer
@@ -14,9 +13,8 @@ import { FormsModule } from "@angular/forms";
 })
 export class OlLayerOpacitiySliderComponent implements OnInit, DoCheck {
 
-  @Input()
-  @Required
-    layer!: BaseLayer;
+  @Input({ required: true })
+  layer!: BaseLayer;
 
   public opacity: number | undefined;
 

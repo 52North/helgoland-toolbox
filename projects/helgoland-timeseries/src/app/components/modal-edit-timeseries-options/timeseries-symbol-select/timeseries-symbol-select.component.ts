@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSliderModule } from "@angular/material/slider";
-import { DatasetOptions, PointSymbolType, Required } from "@helgoland/core";
+import { DatasetOptions, PointSymbolType } from "@helgoland/core";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 interface Symbol {
@@ -28,7 +28,7 @@ interface Symbol {
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
 
-  @Input() @Required options!: DatasetOptions;
+  @Input({ required: true }) options!: DatasetOptions;
 
   symbols: Symbol[] = [
     { value: "point", viewValue: this.translate.instant("timeseries-symbol-select.type.point") },

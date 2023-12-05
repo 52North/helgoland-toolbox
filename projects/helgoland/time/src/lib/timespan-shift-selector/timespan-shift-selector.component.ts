@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required, Time, Timespan, TzDatePipe } from "@helgoland/core";
+import { Time, Timespan, TzDatePipe } from "@helgoland/core";
 
 @Component({
   selector: "n52-timespan-shift-selector",
@@ -9,8 +9,7 @@ import { Required, Time, Timespan, TzDatePipe } from "@helgoland/core";
 })
 export class TimespanShiftSelectorComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timespan!: Timespan;
 
   @Output()

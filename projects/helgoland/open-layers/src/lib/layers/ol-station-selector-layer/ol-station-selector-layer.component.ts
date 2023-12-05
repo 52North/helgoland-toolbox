@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Host, Input, Output } from "@angular/core";
-import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector, Required } from "@helgoland/core";
+import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector } from "@helgoland/core";
 import { Feature, Map } from "ol";
 import { unlistenByKey } from "ol/events";
 import { click, pointerMove } from "ol/events/condition";
@@ -34,48 +34,47 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * The serviceUrl, where the selection should be loaded.
    */
-  @Input()
-  @Required
-    serviceUrl!: string;
+  @Input({ required: true })
+  serviceUrl!: string;
 
   /**
    * The filter which should be used, while fetching the selection.
    */
   @Input()
-    filter: HelgolandParameterFilter | undefined;
+  filter: HelgolandParameterFilter | undefined;
 
   /**
    * Zoom to the stations after collected and displayed
    */
   @Input()
-    zoomToResult = true;
+  zoomToResult = true;
 
   /**
    * Cluster stations
    */
   @Input()
-    cluster = true;
+  cluster = true;
 
   /**
    * Inform, when a station is selected
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
+  onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * Inform, when no stations are found
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+  onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
   private map!: Map;
 

@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { Required } from "@helgoland/core";
 
 import { MapCache } from "../../base/map-cache.service";
 import { MapControlComponent } from "../map-control-component";
@@ -11,8 +10,7 @@ import { MapControlComponent } from "../map-control-component";
 })
 export class ExtentControlComponent extends MapControlComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public extent!: L.LatLngBoundsExpression;
 
   constructor(

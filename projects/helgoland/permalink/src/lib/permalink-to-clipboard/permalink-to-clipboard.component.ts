@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required } from "@helgoland/core";
 import { ClipboardModule } from "ngx-clipboard";
 
 @Component({
@@ -10,7 +9,7 @@ import { ClipboardModule } from "ngx-clipboard";
 })
 export class PermalinkToClipboardComponent {
 
-  @Input() @Required
+  @Input({ required: true })
   public url!: string;
 
   @Output()

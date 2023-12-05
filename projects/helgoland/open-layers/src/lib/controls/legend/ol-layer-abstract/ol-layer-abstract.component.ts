@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Required } from "@helgoland/core";
 import { Layer } from "ol/layer";
 import { TileWMS } from "ol/source";
 
@@ -15,9 +14,7 @@ import { WmsCapabilitiesService } from "../../../services/wms-capabilities.servi
 })
 export class OlLayerAbstractComponent implements OnInit {
 
-  @Input()
-  @Required
-    layer!: Layer;
+  @Input({ required: true }) layer!: Layer;
 
   public abstract: string | undefined;
 

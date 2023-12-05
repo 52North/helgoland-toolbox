@@ -4,7 +4,6 @@ import {
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
-  Required,
   Time,
   Timespan,
 } from "@helgoland/core";
@@ -41,7 +40,7 @@ export class ExportImageButtonComponent {
   /**
    * Timespan, similiar to the timeseries component
    */
-  @Input() @Required timespan!: Timespan;
+  @Input({ required: true }) timespan!: Timespan;
 
   /**
    * Height (as number) in px for the diagram extent, default is 300

@@ -24,7 +24,6 @@ import {
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   InternalIdHandler,
-  Required,
   SumValuesService,
   Time,
   Timespan,
@@ -88,7 +87,6 @@ export class D3TimeseriesGraphComponent
   implements AfterViewInit, OnDestroy, D3TimeseriesGraphInterface {
 
   @Input()
-  @Required
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
   public mainTimeInterval!: Timespan;
 
