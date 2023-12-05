@@ -8,13 +8,13 @@ import { DefinedTimespan, DefinedTimespanService, Timespan } from "@helgoland/co
 })
 export class TimespanButtonComponent {
 
-  @Input({ required: true })
+  @Input()
   public predefined!: string | DefinedTimespan;
 
   @Input({ required: true })
   public label!: string;
 
-  @Input({ required: true })
+  @Input()
   public timespanFunc!: () => Timespan;
 
   @Output()

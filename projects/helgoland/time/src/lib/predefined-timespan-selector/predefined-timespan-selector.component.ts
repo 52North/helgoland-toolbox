@@ -80,7 +80,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     if (this.isSafeMomentExpression(expression)) {
       // if satisfied, eval the inputs -> the ._d property contains the corresponding Date objects from which the Timespan can be constructed
       // eslint-disable-next-line no-eval
-      return eval(expression)._d;
+      // return eval(expression)._d;
     }
     return null;
   }
