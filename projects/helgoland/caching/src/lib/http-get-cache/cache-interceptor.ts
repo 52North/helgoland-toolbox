@@ -13,9 +13,9 @@ export class CachingInterceptor implements HttpServiceInterceptor {
   private logging: boolean;
 
   constructor(
-        protected cache: HttpCache,
-        protected ongoingCache: OnGoingHttpCache,
-        @Optional() @Inject(CacheConfigService) config: CacheConfig
+    protected cache: HttpCache,
+    protected ongoingCache: OnGoingHttpCache,
+    @Optional() @Inject(CacheConfigService) config: CacheConfig
   ) {
     this.logging = config?.logging || false;
   }
@@ -54,16 +54,19 @@ export class CachingInterceptor implements HttpServiceInterceptor {
       this.doLogging(`do request: ${req.urlWithParams}`);
       return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
         const shared = next.handle(req, metadata).pipe(share());
-        shared.subscribe((res) => {
-          if (res instanceof HttpResponse) {
-            this.cache.put(req, res, metadata.expirationAtMs);
-            this.ongoingCache.clear(req);
-            observer.next(res.clone({ body: JSON.parse(JSON.stringify(res.body)) }));
+        shared.subscribe({
+          next: (res) => {
+            if (res instanceof HttpResponse) {
+              this.cache.put(req, res, metadata.expirationAtMs);
+              this.ongoingCache.clear(req);
+              observer.next(res.clone({ body: JSON.parse(JSON.stringify(res.body)) }));
+              observer.complete();
+            }
+          },
+          error: (error) => {
+            observer.error(error);
             observer.complete();
           }
-        }, (error) => {
-          observer.error(error);
-          observer.complete();
         });
         this.ongoingCache.set(req, shared);
       });

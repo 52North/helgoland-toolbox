@@ -25,18 +25,19 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
       if (url) {
         const labelUrl =
           this.settingsSrvc.getSettings().proxyUrl ? this.settingsSrvc.getSettings().proxyUrl + url : url;
-        this.httpClient.get(labelUrl, { responseType: "text" }).subscribe((res) => {
-          try {
-            const xml = new DOMParser().parseFromString(res, "text/xml");
-            const temp = xml.getElementsByTagNameNS("http://www.w3.org/2004/02/skos/core#", "prefLabel")[0];
-            label = temp.textContent ? temp.textContent : label;
-            this.confirmLabel(observer, label);
-          } catch (error) {
-            // found no matching element, so currently do nothing and use old label
-            this.confirmLabel(observer, url);
-          }
-        }, (error) => {
-          this.confirmLabel(observer, url);
+        this.httpClient.get(labelUrl, { responseType: "text" }).subscribe({
+          next: (res) => {
+            try {
+              const xml = new DOMParser().parseFromString(res, "text/xml");
+              const temp = xml.getElementsByTagNameNS("http://www.w3.org/2004/02/skos/core#", "prefLabel")[0];
+              label = temp.textContent ? temp.textContent : label;
+              this.confirmLabel(observer, label);
+            } catch (error) {
+              // found no matching element, so currently do nothing and use old label
+              this.confirmLabel(observer, url);
+            }
+          },
+          error: () => this.confirmLabel(observer, url)
         });
       } else {
         this.confirmLabel(observer, label);

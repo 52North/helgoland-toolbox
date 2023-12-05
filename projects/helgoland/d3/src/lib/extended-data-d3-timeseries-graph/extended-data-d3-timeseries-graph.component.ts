@@ -183,7 +183,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
             if (prepDataIdx === -1) {
               dataEntry = {
                 internalId: this.generateAdditionalInternalId(entry),
-                hoverId: `hov-${Math.random().toString(36).substr(2, 9)}`,
+                hoverId: `hov-${Math.random().toString(36).substring(2, 9)}`,
                 options,
                 data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
                 axisOptions: {

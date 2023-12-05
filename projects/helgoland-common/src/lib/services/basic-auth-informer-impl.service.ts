@@ -29,19 +29,19 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
 
       dialogRef.afterClosed().subscribe(res => {
         if (res && res.username && res.password) {
-          this.basicAuthSrvc.auth(res.username, res.password, url).subscribe(
-            token => {
+          this.basicAuthSrvc.auth(res.username, res.password, url).subscribe({
+            next: token => {
               observer.next(true);
               observer.complete();
             },
-            error => {
+            error: (error: any) => {
               if (error instanceof HttpErrorResponse && error.status === 401) {
                 this.snackbar.open(this.translate.instant("authentication.failed"), undefined, { duration: 3000 });
               }
               observer.next(false);
               observer.complete();
             }
-          );
+          });
         } else {
           observer.next(false);
           observer.complete();

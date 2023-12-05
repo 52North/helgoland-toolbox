@@ -1,11 +1,11 @@
 import { HttpEvent, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { HttpRequestOptions, HttpServiceHandler, HttpServiceInterceptor, Settings, SettingsService } from "@helgoland/core";
-import { Observable, Observer, throwError } from "rxjs";
+import { Observable, Observer } from "rxjs";
+import { share } from "rxjs/operators";
 
 import { BasicAuthServiceMaintainer } from "./basic-auth-service-maintainer.service";
 import { BasicAuthService } from "./basic-auth.service";
-import { share } from "rxjs/operators";
 
 /**
  * Needs to be implemented to do the authentication for the given url.
@@ -59,17 +59,18 @@ export class BasicAuthInterceptorService implements HttpServiceInterceptor {
               observer.complete();
               return;
             }
-            return next.handle(req, options).subscribe(
-              res => {
+            return next.handle(req, options).subscribe({
+              next: res => {
                 observer.next(res);
                 if (res instanceof HttpResponse) {
                   observer.complete();
                 }
               },
-              error => {
+              error: error => {
                 observer.error(error);
                 observer.complete();
-              });
+              }
+            });
           });
         });
       }

@@ -250,10 +250,10 @@ export class D3TimeseriesGraphComponent
   }
 
   protected addDataset(id: string, url: string): void {
-    this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries }).subscribe(
-      res => this.loadAddedDataset(res),
-      error => this.errorHandler.handleDatasetLoadError(error)
-    );
+    this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries }).subscribe({
+      next: res => this.loadAddedDataset(res),
+      error: error => this.errorHandler.handleDatasetLoadError(error)
+    });
   }
 
   protected removeDataset(internalId: string): void {
@@ -352,16 +352,16 @@ export class D3TimeseriesGraphComponent
         const request = this.servicesConnector.getDatasetData(dataset, buffer, {
           expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
           generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-        }).subscribe(
-          (result) => {
+        }).subscribe({
+          next: (result) => {
             this.prepareData(dataset, result);
             this.onCompleteLoadingData(dataset);
           },
-          (error) => {
+          error: (error) => {
             this.errorHandler.handleDataLoadError(error, dataset);
             this.onCompleteLoadingData(dataset);
           }
-        );
+        });
         if (!request.closed) {
           this.runningDataRequests.set(dataset.internalId, request);
         }

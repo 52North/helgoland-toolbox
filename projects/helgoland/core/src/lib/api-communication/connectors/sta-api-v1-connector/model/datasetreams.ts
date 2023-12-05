@@ -28,11 +28,14 @@ export interface Datastream extends StaObject {
     Observations?: Observation[];
 }
 
-export interface InsertDatastream extends Datastream {
+export interface InsertDatastream {
     name?: string;
     description?: string;
     unitOfMeasurement?: UnitOfMeasurement;
     observationType?: string;
+    properties?: {
+        [key: string]: any;
+    };
     Observations?: (InsertObservation | InsertId)[];
     ObservedProperty?: (InsertObservedProperty | InsertId);
     Sensor?: (InsertSensor | InsertId);

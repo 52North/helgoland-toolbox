@@ -53,31 +53,31 @@ export class EventingComponent {
       expanded: true,
       latest: true
     };
-    this.eventingApi.getEvents(this.url, params).subscribe(
-      res => this.eventResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    this.eventingApi.getEvents(this.url, params).subscribe({
+      next: (res) => this.eventResults = res,
+      error: (error: HttpErrorResponse) => this.requestError = error.message,
+      complete: () => this.loading = false
+    });
   }
 
   public requestSubscriptions() {
     this.startloading();
     const params: SubscriptionFilter = { limit: 1 };
-    this.eventingApi.getSubscriptions(this.url, params).subscribe(
-      res => this.subscriptionResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    this.eventingApi.getSubscriptions(this.url, params).subscribe({
+      next: (res) => this.subscriptionResults = res,
+      error: (error: HttpErrorResponse) => this.requestError = error.message,
+      complete: () => this.loading = false
+    });
   }
 
   public requestPublications() {
     this.startloading();
     const params: PublicationFilter = { limit: 1 };
-    this.eventingApi.getPublications(this.url, params).subscribe(
-      res => this.publicationResults = res,
-      this.showError(),
-      () => this.loading = false
-    );
+    this.eventingApi.getPublications(this.url, params).subscribe({
+      next: res => this.publicationResults = res,
+      error: this.showError(),
+      complete: () => this.loading = false
+    });
   }
 
   private showError(): (error: any) => void {
@@ -87,11 +87,11 @@ export class EventingComponent {
   public requestNotifications() {
     this.startloading();
     const params: NotificationFilter = { limit: 10, publications: ["80", "81"] };
-    this.eventingApi.getNotifications(this.url, params).subscribe(
-      res => this.notificationResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    this.eventingApi.getNotifications(this.url, params).subscribe({
+      next: res => this.notificationResults = res,
+      error: (error: HttpErrorResponse) => this.requestError = error.message,
+      complete: () => this.loading = false
+    });
   }
 
   private startloading() {

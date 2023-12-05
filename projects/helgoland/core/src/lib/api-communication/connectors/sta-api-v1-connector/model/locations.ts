@@ -13,7 +13,7 @@ export interface Location extends StaObject {
     HistoricalLocations?: HistoricalLocation[];
 }
 
-export interface InsertLocation extends Location {
+export interface InsertLocation {
     name: string;
     description: string;
     encodingType: string;

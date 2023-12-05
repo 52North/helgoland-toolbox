@@ -8,7 +8,7 @@ import { Location, LocationExpandParams, LocationSelectParams } from "./location
 import { Observation, ObservationExpandParams, ObservationSelectParams } from "./observations";
 import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from "./observed-properties";
 import { Sensor, SensorExpandParams, SensorSelectParams } from "./sensors";
-import { Thing, ThingExpandParams, ThingSelectParams } from "./things";
+import { InsertThing, Thing, ThingExpandParams, ThingSelectParams } from "./things";
 
 export enum StaEndpoint {
   Things = "Things",
@@ -109,6 +109,6 @@ export interface StaDeleteInterface {
 
 export interface StaInsertInterface {
 
-  insertThing(url: string, thing: Thing): Observable<any>;
+  insertThing(url: string, thing: InsertThing): Observable<any>;
 
 }

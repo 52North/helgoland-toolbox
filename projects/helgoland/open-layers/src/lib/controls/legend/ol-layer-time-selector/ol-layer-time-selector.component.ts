@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { Required, TzDatePipe } from "@helgoland/core";
 import BaseLayer from "ol/layer/Base";
 import Layer from "ol/layer/Layer";
 import { TileWMS } from "ol/source";
 
 import { WmsCapabilitiesService } from "../../../services/wms-capabilities.service";
-import { FormsModule } from "@angular/forms";
-
 
 /**
  * Legend component to select time stamps of a layer, the time information is gathered by the WMS capabilities
@@ -19,9 +18,7 @@ import { FormsModule } from "@angular/forms";
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
 
-  @Input()
-  @Required
-    layer!: BaseLayer;
+  @Input() @Required layer!: BaseLayer;
 
   public currentTime: Date | undefined;
 
@@ -47,11 +44,11 @@ export class OlLayerTimeSelectorComponent implements OnInit {
         this.layerid = source.getParams()["layers"] || source.getParams()["LAYERS"];
         if (this.layerid) {
           this.wmsCaps.getTimeDimensionArray(this.layerid, this.url)
-            .subscribe(
-              res => this.timeDimensions = res,
-              error => { },
-              () => this.loading = false
-            );
+            .subscribe({
+              next: res => this.timeDimensions = res,
+              error: error => { },
+              complete: () => this.loading = false
+            });
         }
         this.determineCurrentTimeParameter();
       }

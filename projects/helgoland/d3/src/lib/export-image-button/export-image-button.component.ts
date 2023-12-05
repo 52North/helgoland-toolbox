@@ -1,12 +1,4 @@
-import {
-  ApplicationRef,
-  Component,
-  ComponentFactoryResolver,
-  ComponentRef,
-  EmbeddedViewRef,
-  Injector,
-  Input,
-} from "@angular/core";
+import { ApplicationRef, Component, ComponentRef, EmbeddedViewRef, Input, ViewContainerRef } from "@angular/core";
 import {
   DatasetOptions,
   DatasetType,
@@ -103,8 +95,7 @@ export class ExportImageButtonComponent {
   constructor(
     private servicesConnector: HelgolandServicesConnector,
     private applicationRef: ApplicationRef,
-    private injector: Injector,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef,
     private timeSrvc: Time,
     private graphHelper: D3GraphHelperService
   ) { }
@@ -298,11 +289,7 @@ export class ExportImageButtonComponent {
 
   private appendComponentToBody(component: any) {
     // create component ref
-    const componentRef = this.componentFactoryResolver.resolveComponentFactory(component)
-      .create(this.injector);
-
-    // attach component to the appRef.
-    this.applicationRef.attachView(componentRef.hostView);
+    const componentRef = this.viewContainerRef.createComponent(component);
 
     // get DOM element from component
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>)

@@ -13,8 +13,9 @@ export interface Observation extends StaObject {
     "FeatureOfInterest@iot.navigationLink"?: string;
 }
 
-export interface InsertObservation extends Observation {
+export interface InsertObservation {
     phenomenonTime: string;
+    result: string;
     Datastream: (InsertDatastream | InsertId);
 }
 

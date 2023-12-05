@@ -286,8 +286,8 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     return new Observable((observer: Observer<HelgolandDataset[]>) => {
-      this.httpCall<PegelonlineStation[]>(url, "stations", this.createDatasetsFilter(filter)).subscribe(
-        res => {
+      this.httpCall<PegelonlineStation[]>(url, "stations", this.createDatasetsFilter(filter)).subscribe({
+        next: res => {
           let ret: HelgolandDataset[] = [];
           for (const [key, value] of Object.entries(res)) {
             let item = value;
@@ -306,11 +306,11 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
           observer.next(ret);
           observer.complete();
         },
-        error => {
+        error: error => {
           observer.error(error);
           observer.complete();
         }
-      );
+      });
     });
   }
 
@@ -334,12 +334,12 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
       internalId.id = part[2];
     }
     return new Observable((observer: Observer<HelgolandDataset>) => {
-      this.httpCall<PegelonlineStation>(internalId.url, `stations/${internalId.stationId}`, `timeseries=${internalId.id}&includeTimeseries=true&includeCurrentMeasurement=true`).subscribe(
-        res => {
+      this.httpCall<PegelonlineStation>(internalId.url, `stations/${internalId.stationId}`, `timeseries=${internalId.id}&includeTimeseries=true&includeCurrentMeasurement=true`).subscribe({
+        next: res => {
           const dataset = this.prepDataset(internalId.url, `${internalId.stationId}/${internalId.gaugeId}`, internalId.gaugeId, res);
           if (dataset instanceof HelgolandTimeseries && internalId.stationId) {
-            this.getDatasetLimitValues(internalId).subscribe(
-              extras => {
+            this.getDatasetLimitValues(internalId).subscribe({
+              next: extras => {
                 let limitData = this.prepTimeLimitData(extras);
                 if (limitData) {
                   dataset.firstValue = limitData.first;
@@ -348,20 +348,21 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
                 observer.next(dataset);
                 observer.complete();
               },
-              error => {
+              error: error => {
                 observer.error(error);
                 observer.complete();
-              })
+              }
+            })
           } else {
             observer.next(dataset);
             observer.complete();
           }
         },
-        error => {
+        error: error => {
           observer.error(error);
           observer.complete();
         }
-      );
+      });
     });
   }
 
@@ -467,7 +468,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
   }
 
   createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
-    return throwError("Could not create csv data export link");
+    return throwError(() => new Error("Could not create csv data export link"));
   }
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {

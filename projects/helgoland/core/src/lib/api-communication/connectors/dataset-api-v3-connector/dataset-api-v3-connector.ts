@@ -243,31 +243,32 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     return new Observable((observer: Observer<HelgolandDataset>) => {
-      this.api.getDataset(internalId.id, internalId.url, filter).subscribe(
-        res => {
+      this.api.getDataset(internalId.id, internalId.url, filter).subscribe({
+        next: res => {
           const dataset = this.createDataset(res, internalId.url);
           const idx = res.extras?.findIndex(e => e === "renderingHints");
           if (dataset instanceof HelgolandTimeseries && idx && idx >= 0) {
-            this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ["renderingHints"] }).subscribe(
-              extras => {
+            this.api.getDatasetExtras(internalId.id, internalId.url, { fields: ["renderingHints"] }).subscribe({
+              next: extras => {
                 dataset.renderingHints = extras.renderingHints;
                 observer.next(dataset);
                 observer.complete();
               },
-              error => {
+              error: error => {
                 observer.error(error);
                 observer.complete();
-              })
+              }
+            })
           } else {
             observer.next(dataset);
             observer.complete();
           }
         },
-        error => {
+        error: error => {
           observer.error(error);
           observer.complete();
         }
-      );
+      });
     });
   }
 

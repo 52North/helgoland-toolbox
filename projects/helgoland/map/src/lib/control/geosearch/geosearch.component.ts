@@ -14,82 +14,82 @@ import { MapControlComponent } from "../map-control-component";
 })
 export class GeosearchControlComponent extends MapControlComponent {
 
-    /**
-     * Additional search options.
-     */
-    @Input() public options: GeoSearchOptions | undefined;
+  /**
+   * Additional search options.
+   */
+  @Input() public options: GeoSearchOptions | undefined;
 
-    /**
-     * Returns the search result.
-     */
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
+  /**
+   * Returns the search result.
+   */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
 
-    /**
-     * Informs, when the search is triggered.
-     */
-    // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
+  /**
+   * Informs, when the search is triggered.
+   */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
-    public result: GeoSearchResult | undefined;
+  public result: GeoSearchResult | undefined;
 
-    public resultGeometry: L.GeoJSON | undefined;
+  public resultGeometry: L.GeoJSON | undefined;
 
-    public searchTerm: string | undefined;
+  public searchTerm: string | undefined;
 
-    public loading: boolean | undefined;
+  public loading: boolean | undefined;
 
-    constructor(
-        protected override mapCache: MapCache,
-        protected geosearch: GeoSearch
-    ) {
-      super(mapCache);
+  constructor(
+    protected override mapCache: MapCache,
+    protected geosearch: GeoSearch
+  ) {
+    super(mapCache);
+  }
+
+  public triggerSearch() {
+    this.onSearchTriggered.emit();
+    if (this.resultGeometry) {
+      this.resultGeometry.remove();
     }
-
-    public triggerSearch() {
-      this.onSearchTriggered.emit();
-      if (this.resultGeometry) {
-        this.resultGeometry.remove();
-      }
-      if (this.searchTerm) {
-        this.loading = true;
-        this.geosearch.searchTerm(this.searchTerm, this.options).subscribe(
-          (result) => {
-            if (!result) {
-              this.searchTerm = "";
-              this.onResultChanged.emit(undefined);
-              return;
-            }
-            this.result = result;
-            if (this.mapId && this.mapCache.getMap(this.mapId)) {
-              this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
-              if (result.bounds) {
-                this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
-              } else {
-                this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
-              }
-            }
-            this.onResultChanged.emit(result);
-          },
-          (error) => {
-            this.searchTerm = "error occurred";
+    if (this.searchTerm) {
+      this.loading = true;
+      this.geosearch.searchTerm(this.searchTerm, this.options).subscribe({
+        next: (result) => {
+          if (!result) {
+            this.searchTerm = "";
             this.onResultChanged.emit(undefined);
-          },
-          () => this.loading = false
-        );
-      }
+            return;
+          }
+          this.result = result;
+          if (this.mapId && this.mapCache.getMap(this.mapId)) {
+            this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
+            if (result.bounds) {
+              this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
+            } else {
+              this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
+            }
+          }
+          this.onResultChanged.emit(result);
+        },
+        error: (error) => {
+          this.searchTerm = "error occurred";
+          this.onResultChanged.emit(undefined);
+        },
+        complete: () => this.loading = false
+      });
     }
+  }
 
-    public clearSearch() {
-      this.searchTerm = "";
-      this.onResultChanged.emit(undefined);
-      this.removeOldGeometry();
-    }
+  public clearSearch() {
+    this.searchTerm = "";
+    this.onResultChanged.emit(undefined);
+    this.removeOldGeometry();
+  }
 
-    private removeOldGeometry() {
-      if (this.resultGeometry) {
-        this.resultGeometry.remove();
-      }
+  private removeOldGeometry() {
+    if (this.resultGeometry) {
+      this.resultGeometry.remove();
     }
+  }
 
 }

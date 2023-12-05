@@ -42,8 +42,8 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * options to define the export parameters
    */
-  @Input() 
-  @Required 
+  @Input()
+  @Required
   public exportOptions!: ExportOptions;
 
   /**
@@ -70,14 +70,14 @@ export class DatasetExportComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.inputId) {
-      this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
-        ds => {
+      this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe({
+        next: ds => {
           this.dataset = ds;
           this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
           this.onMetadataChange.emit(ds);
         },
-        error => this.onError(error)
-      );
+        error: error => this.onError(error)
+      });
     }
   }
 
@@ -120,14 +120,11 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     // get dataset data
     const buffer = new Timespan(this.timespan.from, this.timespan.to);
 
-    this.servicesConnector.getDatasetData(dataset, buffer,
-      {
-        generalize: false
-      }).subscribe(
-      (result) => this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
-      error => this.onError(error),
-      () => this.onCompleteLoadingData(dataset)
-    );
+    this.servicesConnector.getDatasetData(dataset, buffer, { generalize: false }).subscribe({
+      next: (result) => this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
+      error: error => this.onError(error),
+      complete: () => this.onCompleteLoadingData(dataset)
+    });
   }
   private prepareData(dataset: HelgolandTimeseries, result: HelgolandTimeseriesData, dwType: DownloadType): void {
     console.log("Preparing data ...");

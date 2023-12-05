@@ -101,7 +101,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getOffering(id: string, url: string, filter: HelgolandParameterFilter): Observable<Offering> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create offering"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create offering")); }
     return this.sta.getThing(url, id).pipe(map(t => this.createOffering(t)));
   }
 
@@ -127,7 +127,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<Phenomenon> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create phenomenon"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create phenomenon")); }
     return this.sta.getObservedProperty(url, id).pipe(map(prop => this.createPhenomenon(prop)));
   }
 
@@ -155,7 +155,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getProcedure(id: string, url: string, filter: HelgolandParameterFilter): Observable<Procedure> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create procedure"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create procedure")); }
     return this.sta.getSensor(url, id).pipe(map(sensor => this.createProcedure(sensor)));
   }
 
@@ -183,7 +183,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getFeature(id: string, url: string, filter: HelgolandParameterFilter): Observable<Feature> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create feature"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create feature")); }
     return this.sta.getLocation(url, id).pipe(map(loc => this.createFeature(loc)));
   }
 
@@ -194,7 +194,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create platform"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create platform")); }
     // return this.sta.getLocation(url, id, { $expand: "Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor" })
     //   .pipe(map(loc => this.createExtendedPlatform(loc)));
     return this.sta.getLocation(url, id, { $expand: "Things($expand=Locations,Datastreams($filter=properties/hidden ne true;$expand=Thing,Sensor,ObservedProperty))" })
@@ -300,7 +300,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create dataset"); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create dataset")); }
     const firstFilter: StaFilter<DatastreamSelectParams, DatastreamExpandParams> = {
       $expand: "Thing,Thing/Locations,ObservedProperty,Sensor,Observations($orderby=phenomenonTime;$top=1)"
     };
@@ -363,7 +363,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
-    return throwError("Could not create csv data export link");
+    return throwError(() => new Error("Could not create csv data export link"));
   }
 
   getDatasetExtras(internalId: InternalDatasetId): Observable<DatasetExtras> {
