@@ -2,37 +2,38 @@ import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 
-import { UriParameterCoder } from "../../../../dataset-api/api-interface";
-import { HttpService } from "../../../../dataset-api/http.service";
-import { HttpRequestOptions } from "../../../../model/internal/http-requests";
-import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from "../model/datasetreams";
+import { UriParameterCoder } from "../../../dataset-api/api-interface";
+import { HttpService } from "../../../dataset-api/http.service";
+import { HttpRequestOptions } from "../../../model/internal/http-requests";
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams, InsertDatastream } from "./model/datasetreams";
 import {
   FeatureOfInterest,
   FeatureOfInterestExpandParams,
   FeatureOfInterestSelectParams,
-} from "../model/features-of-interest";
+  InsertFeatureOfInterest,
+} from "./model/features-of-interest";
 import {
   HistoricalLocation,
   HistoricalLocationExpandParams,
   HistoricalLocationSelectParams,
-} from "../model/historical-locations";
-import { Location, LocationExpandParams, LocationSelectParams } from "../model/locations";
-import { Observation, ObservationExpandParams, ObservationSelectParams } from "../model/observations";
-import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from "../model/observed-properties";
-import { Sensor, SensorExpandParams, SensorSelectParams } from "../model/sensors";
+  InsertHistoricalLocation,
+} from "./model/historical-locations";
+import { InsertLocation, Location, LocationExpandParams, LocationSelectParams } from "./model/locations";
+import { InsertObservation, Observation, ObservationExpandParams, ObservationSelectParams } from "./model/observations";
+import { InsertObservedProperty, ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from "./model/observed-properties";
+import { InsertSensor, Sensor, SensorExpandParams, SensorSelectParams } from "./model/sensors";
 import {
   StaEndpoint,
   StaExpandParams,
   StaFilter,
-  StaReadInterface,
+  StaObject,
   StaSelectParams,
   StaValueListResponse,
-} from "../model/sta-interface";
-import { Thing, ThingExpandParams, ThingSelectParams } from "../model/things";
-import { StaObject } from "./../model/sta-interface";
+} from "./model/sta-interface";
+import { InsertThing, Thing, ThingExpandParams, ThingSelectParams } from "./model/things";
 
 @Injectable({ providedIn: "root" })
-export class StaReadInterfaceService implements StaReadInterface {
+export class StaInterfaceService {
 
   constructor(
     protected httpService: HttpService
@@ -46,12 +47,36 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<Thing>(this.createRequestUrl(url, StaEndpoint.Things, id), {}, params, options);
   }
 
+  deleteThing(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.Things, id));
+  }
+
+  updateThing(apiUrl: string, id: string, thing: InsertThing): Observable<Thing> {
+    return this.httpService.client().put<Thing>(this.createRequestUrl(apiUrl, StaEndpoint.Things, id), thing);
+  }
+
+  insertThing(apiUrl: string, thing: InsertThing): Observable<Thing> {
+    return this.httpService.client().post<Thing>(this.createRequestUrl(apiUrl, StaEndpoint.Things), thing);
+  }
+
   getObservations(url: string, params?: StaFilter<ObservationSelectParams, ObservationExpandParams>, options?: HttpRequestOptions): Observable<StaValueListResponse<Observation>> {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Observations), {}, params, options);
   }
 
   getObservation(url: string, id: string, params?: StaFilter<ObservationSelectParams, ObservationExpandParams>, options?: HttpRequestOptions): Observable<Observation> {
     return this.requestApi<Observation>(this.createRequestUrl(url, StaEndpoint.Observations, id), {}, params, options);
+  }
+
+  deleteObservation(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.Things, id));
+  }
+
+  updateObservation(apiUrl: string, id: string, observation: InsertObservation): Observable<Observation> {
+    return this.httpService.client().put<Observation>(this.createRequestUrl(apiUrl, StaEndpoint.Observations, id), observation);
+  }
+
+  insertObservation(apiUrl: string, observation: InsertObservation): Observable<Observation> {
+    return this.httpService.client().post<Observation>(this.createRequestUrl(apiUrl, StaEndpoint.Observations), observation);
   }
 
   getHistoricalLocations(url: string, params?: StaFilter<HistoricalLocationSelectParams, HistoricalLocationExpandParams>, options?: HttpRequestOptions)
@@ -63,6 +88,18 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<HistoricalLocation>(this.createRequestUrl(url, StaEndpoint.HistoricalLocations, id), {}, params, options);
   }
 
+  deleteHistoricalLocation(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.HistoricalLocations, id));
+  }
+
+  updateHistoricalLocation(apiUrl: string, id: string, historicalLocation: InsertHistoricalLocation): Observable<HistoricalLocation> {
+    return this.httpService.client().put<HistoricalLocation>(this.createRequestUrl(apiUrl, StaEndpoint.HistoricalLocations, id), historicalLocation);
+  }
+
+  insertHistoricalLocation(apiUrl: string, historicalLocation: InsertHistoricalLocation): Observable<HistoricalLocation> {
+    return this.httpService.client().post<HistoricalLocation>(this.createRequestUrl(apiUrl, StaEndpoint.HistoricalLocations), historicalLocation);
+  }
+
   getLocations(url: string, params?: StaFilter<LocationSelectParams, LocationExpandParams>, options?: HttpRequestOptions): Observable<StaValueListResponse<Location>> {
     return this.requestApi<StaValueListResponse<Location>>(this.createRequestUrl(url, StaEndpoint.Locations), {}, params, options);
   }
@@ -71,12 +108,36 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<Location>(this.createRequestUrl(url, StaEndpoint.Locations, id), {}, params, options);
   }
 
+  deleteLocation(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.Locations, id));
+  }
+
+  updateLocation(apiUrl: string, id: string, location: InsertLocation): Observable<Location> {
+    return this.httpService.client().put<Location>(this.createRequestUrl(apiUrl, StaEndpoint.Locations, id), location);
+  }
+
+  insertLocation(apiUrl: string, location: InsertLocation): Observable<Location> {
+    return this.httpService.client().post<Location>(this.createRequestUrl(apiUrl, StaEndpoint.Locations), location);
+  }
+
   getSensors(url: string, params?: StaFilter<SensorSelectParams, SensorExpandParams>, options?: HttpRequestOptions): Observable<StaValueListResponse<Sensor>> {
     return this.requestApi<StaValueListResponse<Sensor>>(this.createRequestUrl(url, StaEndpoint.Sensors), {}, params, options);
   }
 
   getSensor(url: string, id: string, params?: StaFilter<SensorSelectParams, SensorExpandParams>, options?: HttpRequestOptions): Observable<Sensor> {
     return this.requestApi<Sensor>(this.createRequestUrl(url, StaEndpoint.Sensors, id), {}, params, options);
+  }
+
+  deleteSensor(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.Sensors, id));
+  }
+
+  updateSensor(apiUrl: string, id: string, sensor: InsertSensor): Observable<Sensor> {
+    return this.httpService.client().put<Sensor>(this.createRequestUrl(apiUrl, StaEndpoint.Sensors, id), sensor);
+  }
+
+  insertSensor(apiUrl: string, sensor: InsertSensor): Observable<Sensor> {
+    return this.httpService.client().post<Sensor>(this.createRequestUrl(apiUrl, StaEndpoint.Sensors), sensor);
   }
 
   getFeaturesOfInterest(url: string, params?: StaFilter<FeatureOfInterestSelectParams, FeatureOfInterestExpandParams>, options?: HttpRequestOptions)
@@ -88,6 +149,18 @@ export class StaReadInterfaceService implements StaReadInterface {
     return this.requestApi<FeatureOfInterest>(this.createRequestUrl(url, StaEndpoint.FeaturesOfInterest, id), {}, params, options);
   }
 
+  deleteFeatureOfInterest(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.FeaturesOfInterest, id));
+  }  
+
+  updateFeatureOfInterest(apiUrl: string, id: string, featureOfInterest: InsertFeatureOfInterest): Observable<FeatureOfInterest> {
+    return this.httpService.client().put<FeatureOfInterest>(this.createRequestUrl(apiUrl, StaEndpoint.FeaturesOfInterest, id), featureOfInterest);
+  }
+
+  insertFeatureOfInterest(apiUrl: string, featureOfInterest: InsertFeatureOfInterest): Observable<FeatureOfInterest> {
+    return this.httpService.client().post<FeatureOfInterest>(this.createRequestUrl(apiUrl, StaEndpoint.FeaturesOfInterest), featureOfInterest);
+  }
+
   getObservedProperties(url: string, params?: StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams>, options?: HttpRequestOptions)
     : Observable<StaValueListResponse<ObservedProperty>> {
     return this.requestApi<StaValueListResponse<ObservedProperty>>(this.createRequestUrl(url, StaEndpoint.ObservedProperties), {}, params, options);
@@ -95,6 +168,18 @@ export class StaReadInterfaceService implements StaReadInterface {
 
   getObservedProperty(url: string, id: string, params?: StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams>, options?: HttpRequestOptions): Observable<ObservedProperty> {
     return this.requestApi<ObservedProperty>(this.createRequestUrl(url, StaEndpoint.ObservedProperties, id), {}, params, options);
+  }
+
+  deleteObservedProperty(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.ObservedProperties, id));
+  }
+
+  updateObservedProperty(apiUrl: string, id: string, observedProperty: InsertObservedProperty): Observable<ObservedProperty> {
+    return this.httpService.client().put<ObservedProperty>(this.createRequestUrl(apiUrl, StaEndpoint.ObservedProperties, id), observedProperty);
+  }
+
+  insertObservedProperty(apiUrl: string, observedProperty: InsertObservedProperty): Observable<ObservedProperty> {
+    return this.httpService.client().post<ObservedProperty>(this.createRequestUrl(apiUrl, StaEndpoint.ObservedProperties), observedProperty);
   }
 
   getDatastreams(url: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions): Observable<StaValueListResponse<Datastream>> {
@@ -116,6 +201,18 @@ export class StaReadInterfaceService implements StaReadInterface {
     url: string, id: string, params?: StaFilter<DatastreamSelectParams, DatastreamExpandParams>, options?: HttpRequestOptions
   ): Observable<StaValueListResponse<Observation>> {
     return this.requestApi<StaValueListResponse<Observation>>(this.createRequestUrl(url, StaEndpoint.Datastreams, id, "Observations"), {}, params, options);
+  }
+
+  deleteDatastream(url: string, id: string): Observable<any> {
+    return this.httpService.client().delete(this.createRequestUrl(url, StaEndpoint.Datastreams, id));
+  }
+
+  updateDatastream(apiUrl: string, id: string, datastream: InsertDatastream): Observable<Datastream> {
+    return this.httpService.client().put<Datastream>(this.createRequestUrl(apiUrl, StaEndpoint.Datastreams, id), datastream);
+  }
+
+  insertDatastream(apiUrl: string, datastream: InsertDatastream): Observable<Datastream> {
+    return this.httpService.client().post<Datastream>(this.createRequestUrl(apiUrl, StaEndpoint.Datastreams), datastream);
   }
 
   public aggregatePaging<T extends StaObject>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {

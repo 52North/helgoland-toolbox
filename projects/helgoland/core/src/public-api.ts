@@ -29,10 +29,7 @@ export * from "./lib/api-communication/connectors/dataset-api-v2-connector/datas
 export * from "./lib/api-communication/connectors/dataset-api-v3-connector/api-v3-interface";
 export * from "./lib/api-communication/connectors/dataset-api-v3-connector/dataset-api-v3-connector";
 export * from "./lib/api-communication/connectors/sta-api-v1-connector/sta-api-v1-connector";
-export * from "./lib/api-communication/connectors/sta-api-v1-connector/read/sta-read-interface.service";
-export * from "./lib/api-communication/connectors/sta-api-v1-connector/delete/sta-delete-interface.service";
-export * from "./lib/api-communication/connectors/sta-api-v1-connector/insert/sta-insert-interface.service";
-export * from "./lib/api-communication/connectors/sta-api-v1-connector/insert/sta-update-interface.service";
+export * from "./lib/api-communication/connectors/sta-api-v1-connector/sta-interface.service";
 export * from "./lib/api-communication/connectors/sta-api-v1-connector/model/datasetreams";
 export * from "./lib/api-communication/connectors/sta-api-v1-connector/model/features-of-interest";
 export * from "./lib/api-communication/connectors/sta-api-v1-connector/model/historical-locations";

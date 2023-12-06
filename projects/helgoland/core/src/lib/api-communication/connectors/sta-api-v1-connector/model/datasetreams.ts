@@ -37,8 +37,8 @@ export interface InsertDatastream {
         [key: string]: any;
     };
     Observations?: (InsertObservation | InsertId)[];
-    ObservedProperty?: (InsertObservedProperty | InsertId);
-    Sensor?: (InsertSensor | InsertId);
+    ObservedProperty?: InsertObservedProperty | InsertId;
+    Sensor?: InsertSensor | InsertId;
 }
 
 export interface DatastreamSelectParams extends StaSelectParams {

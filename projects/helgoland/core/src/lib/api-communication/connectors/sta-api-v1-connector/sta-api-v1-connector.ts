@@ -6,12 +6,13 @@ import { catchError, map, mergeMap } from "rxjs/operators";
 import { HttpService } from "../../../dataset-api/http.service";
 import { InternalDatasetId } from "../../../dataset-api/internal-id-handler.service";
 import { Category } from "../../../model/dataset-api/category";
-import { ReferenceValues, TimeValueTuple } from "../../../model/dataset-api/data";
-import { FirstLastValue, ParameterConstellation, ReferenceValue, RenderingHints } from "../../../model/dataset-api/dataset";
+import { TimeValueTuple } from "../../../model/dataset-api/data";
+import { FirstLastValue, ParameterConstellation, ReferenceValue } from "../../../model/dataset-api/dataset";
 import { Feature } from "../../../model/dataset-api/feature";
 import { Offering } from "../../../model/dataset-api/offering";
 import { Phenomenon } from "../../../model/dataset-api/phenomenon";
 import { Procedure } from "../../../model/dataset-api/procedure";
+import { DataParameterFilter } from "../../../model/internal/http-requests";
 import { Timespan } from "../../../model/internal/timeInterval";
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from "../../helgoland-services-connector";
 import { HelgolandServiceConnector } from "../../interfaces/service-connector-interfaces";
@@ -31,9 +32,9 @@ import { Location, LocationExpandParams, LocationSelectParams } from "./model/lo
 import { Observation } from "./model/observations";
 import { ObservedProperty, ObservedPropertyExpandParams, ObservedPropertySelectParams } from "./model/observed-properties";
 import { Sensor, SensorExpandParams, SensorSelectParams } from "./model/sensors";
-import { StaExpandParams, StaFilter, StaSelectParams, StaValueListResponse } from "./model/sta-interface";
+import { StaExpandParams, StaFilter, StaSelectParams } from "./model/sta-interface";
 import { Thing, ThingExpandParams, ThingSelectParams } from "./model/things";
-import { StaReadInterfaceService } from "./read/sta-read-interface.service";
+import { StaInterfaceService } from "./sta-interface.service";
 
 const DEFAULT_SERVICE_LABEL = "OGC SensorThings API";
 const DEFAULT_SERVICE_ID = "1";
@@ -47,7 +48,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   constructor(
     protected http: HttpService,
-    protected sta: StaReadInterfaceService
+    protected sta: StaInterfaceService
   ) { }
 
   canHandle(url: string): Observable<boolean> {
@@ -107,14 +108,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   getPhenomena(url: string, filter: HelgolandParameterFilter): Observable<Phenomenon[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
-    const staFilter = this.createPhenomenaFilter(filter);
-    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, staFilter))
+    return this.sta.aggregatePaging(this.sta.getObservedProperties(url, this.createPhenomenaFilter(filter)))
       .pipe(map(obsProps => obsProps.value.map(e => this.createPhenomenon(e))));
   }
 
   protected createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
     if (params) {
-      const filterList: string[] = ["Datastreams/properties/hidden ne true"];
+      const filterList: string[] = [];
       if (params.category) {
         filterList.push(`id eq '${params.category}'`);
       }
@@ -195,9 +195,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
     if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create platform")); }
-    // return this.sta.getLocation(url, id, { $expand: "Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor" })
-    //   .pipe(map(loc => this.createExtendedPlatform(loc)));
-    return this.sta.getLocation(url, id, { $expand: "Things($expand=Locations,Datastreams($filter=properties/hidden ne true;$expand=Thing,Sensor,ObservedProperty))" })
+    return this.sta.getLocation(url, id, { $expand: "Things/Datastreams/Thing,Things/Locations,Things/Datastreams/ObservedProperty,Things/Datastreams/Sensor" })
       .pipe(map(loc => this.createExtendedPlatform(loc)));
   }
 
@@ -255,7 +253,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     }
   }
 
-  private getFirstLast(obs: Observation[] | undefined) {
+  protected getFirstLast(obs: Observation[] | undefined) {
     let firstLast: FirstLastValue | undefined;
     if (obs?.length === 1) {
       const { phenomenonTime, result } = obs[0];
@@ -300,7 +298,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
-    if (this.filterTimeseriesMatchesNot(filter)) { return throwError(() => new Error("Could not create dataset")); }
+    if (this.filterTimeseriesMatchesNot(filter)) { return throwError("Could not create dataset"); }
     const firstFilter: StaFilter<DatastreamSelectParams, DatastreamExpandParams> = {
       $expand: "Thing,Thing/Locations,ObservedProperty,Sensor,Observations($orderby=phenomenonTime;$top=1)"
     };
@@ -310,56 +308,17 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     };
     const firstRequest = this.sta.getDatastream(internalId.url, internalId.id, firstFilter);
     const lastRequest = this.sta.getDatastream(internalId.url, internalId.id, lastFilter);
-    return forkJoin({ first: firstRequest, last: lastRequest }).pipe(
-      mergeMap(res => {
-        const first = this.getFirstLast(res.first.Observations);
-        const last = this.getFirstLast(res.last.Observations);
-        if (res.first.properties?.["referenceDatastreamList"]) {
-          const refValueIds: string[] = res.first.properties?.["referenceDatastreamList"];
-          const req = refValueIds.map(id => this.sta.getDatastream(internalId.url, id, {
-            $expand: "Thing,Observations($orderby=phenomenonTime desc;$top=1)",
-          }));
-          return forkJoin(req).pipe(
-            map(refValueDs => {
-              const refValues = refValueDs.map(ds => {
-                const id = ds["@iot.id"];
-                const last = this.getFirstLast(ds.Observations);
-                const parameter = this.createTsParameter(ds, ds.Thing!);
-                const name = this.createTimeseriesName(ds, parameter);
-                return new ReferenceValue(id, name, last);
-              })
-              return this.createExpandedTimeseries(res.first, first, last, refValues, internalId.url);
-            })
-          );
-        } else {
-          return of(this.createExpandedTimeseries(res.first, first, last, [], internalId.url));
-        }
-      })
-    );
+    return forkJoin({ first: firstRequest, last: lastRequest }).pipe(map(res => {
+      const first = this.getFirstLast(res.first.Observations);
+      const last = this.getFirstLast(res.last.Observations);
+      return this.createExpandedTimeseries(res.first, first, last, [], internalId.url)
+    }));
   }
 
-  getDatasetData(dataset: HelgolandTimeseries, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
-    const timeFilter = this.createTimespanFilter(timespan);
-    const mainDataReq = this.createDatasetDataRequest(dataset.id, dataset.url, timeFilter);
-    if (filter.expanded) {
-      const requests: { [key: string]: Observable<StaValueListResponse<Observation>> } = { main: mainDataReq };
-      dataset.referenceValues.forEach(rv => {
-        requests[rv.referenceValueId] = this.createDatasetDataRequest(rv.referenceValueId, dataset.url, timeFilter);
-      });
-      return forkJoin(requests).pipe(map(res => {
-        const refValues = new ReferenceValues<TimeValueTuple>();
-        dataset.referenceValues.forEach(e => refValues[e.referenceValueId] = { values: this.createTimeValueTuple(res[e.referenceValueId].value) })
-        return new HelgolandTimeseriesData(this.createTimeValueTuple(res["main"].value), refValues)
-      }));
-    } else {
-      return mainDataReq.pipe(map(res => new HelgolandTimeseriesData(this.createTimeValueTuple(res.value))));
-    }
-  }
-
-  private createDatasetDataRequest(id: string, url: string, timeFilter: string) {
+  getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     return this.sta.aggregatePaging(
-      this.sta.getDatastreamObservationsRelation(url, id, { $orderby: "phenomenonTime", $filter: timeFilter, $top: 1000 })
-    );
+      this.sta.getDatastreamObservationsRelation(dataset.url, dataset.id, { $orderby: "phenomenonTime", $filter: this.createTimespanFilter(timespan), $top: 200 })
+    ).pipe(map(res => this.createData(res.value, filter)));
   }
 
   createCsvDataExportLink(internalId: string | InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
@@ -408,33 +367,31 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return parameters;
   }
 
-  private createExpandedTimeseries(ds: Datastream, first: FirstLastValue | undefined, last: FirstLastValue | undefined, refValues: ReferenceValue[], url: string): HelgolandTimeseries {
-    if (ds["@iot.id"] && ds.unitOfMeasurement?.symbol && ds.Thing?.Locations) {
-      const id = ds["@iot.id"];
-      const symbol = ds.unitOfMeasurement?.symbol;
-      const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
-      const parameter = this.createTsParameter(ds, ds.Thing);
-      const name = this.createTimeseriesName(ds, parameter);
-      const renderingHints: RenderingHints | undefined = ds.properties?.["renderingHints"] || undefined;
-      return new HelgolandTimeseries(id, url, name, symbol, platform, first, last, refValues, renderingHints, parameter);
+  protected createExpandedTimeseries(ds: Datastream, first: FirstLastValue | undefined, last: FirstLastValue | undefined, refValues: ReferenceValue[] = [], url: string): HelgolandTimeseries {
+    if (ds["@iot.id"] && ds.name && ds.unitOfMeasurement?.symbol && ds.Thing?.Locations) {
+      return new HelgolandTimeseries(
+        ds["@iot.id"],
+        url,
+        ds.name,
+        ds.unitOfMeasurement?.symbol,
+        this.createHelgolandPlatform(ds.Thing.Locations[0]),
+        first,
+        last,
+        refValues,
+        undefined,
+        this.createTsParameter(ds, ds.Thing)
+      );
     }
     throw new Error("Could not create feature.");
   }
 
-  private createTimeseriesName(ds: Datastream, parameter: ParameterConstellation) {
-    if (ds.name) {
-      return ds.name;
-    }
-    if (parameter.phenomenon?.label && parameter.feature?.label) {
-      return `${parameter.phenomenon.label} @ ${parameter.feature.label}`;
-    }
-    throw new Error(`Could not create name for this datastream: ${ds}`);
-  }
-
-  protected createTimeValueTuple(observations: Observation[]): TimeValueTuple[] {
-    return observations
+  protected createData(observations: Observation[], params: DataParameterFilter = {}): HelgolandTimeseriesData {
+    const values = observations
       .filter(obs => obs.phenomenonTime)
       .map(obs => [new Date(obs.phenomenonTime!).getTime(), parseFloat(obs.result as string)] as TimeValueTuple);
+    const data = new HelgolandTimeseriesData(values);
+    data.referenceValues = {};
+    return data;
   }
 
   protected createFeature(loc: Location): Feature {

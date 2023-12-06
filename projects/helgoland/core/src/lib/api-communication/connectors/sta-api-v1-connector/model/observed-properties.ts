@@ -7,7 +7,7 @@ export interface ObservedProperty extends StaObject {
     "Datastreams@iot.navigationLink"?: string;
 }
 
-export interface InsertObservedProperty extends ObservedProperty {
+export interface InsertObservedProperty {
     name: string;
     description: string;
     definition: string;
