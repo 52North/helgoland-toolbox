@@ -71,7 +71,7 @@ describe("EventingImplApiInterface", () => {
     service.getSubscription(testData.id, testUrl, options).subscribe(data => expect(data.id).toEqual(testData.id));
     const req = httpTestingController.expectOne(testUrl + "subscriptions/" + testData.id);
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -111,7 +111,7 @@ describe("EventingImplApiInterface", () => {
     service.getEvents(testUrl, {}, options).subscribe(data => expect(data).toEqual(testData));
     const req = httpTestingController.expectOne(testUrl + "events");
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -129,7 +129,7 @@ describe("EventingImplApiInterface", () => {
     service.getEvent(testData.id, testUrl, options).subscribe(data => expect(data.id).toEqual(testData.id));
     const req = httpTestingController.expectOne(testUrl + "events/" + testData.id);
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -156,7 +156,7 @@ describe("EventingImplApiInterface", () => {
     service.getPublications(testUrl, {}, options).subscribe(data => expect(data).toEqual(testData));
     const req = httpTestingController.expectOne(testUrl + "publications");
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -174,7 +174,7 @@ describe("EventingImplApiInterface", () => {
     service.getPublication(testData.id, testUrl, options).subscribe(data => expect(data.id).toEqual(testData.id));
     const req = httpTestingController.expectOne(testUrl + "publications/" + testData.id);
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -201,7 +201,7 @@ describe("EventingImplApiInterface", () => {
     service.getNotifications(testUrl, {}, options).subscribe(data => expect(data).toEqual(testData));
     const req = httpTestingController.expectOne(testUrl + "notifications");
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
@@ -219,7 +219,7 @@ describe("EventingImplApiInterface", () => {
     service.getNotification(testData.id, testUrl, options).subscribe(data => expect(data.id).toEqual(testData.id));
     const req = httpTestingController.expectOne(testUrl + "notifications/" + testData.id);
     expect(req.request.method).toEqual("GET");
-    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken);
+    expect(req.request.headers.get("Authorization")).toEqual(options.basicAuthToken!);
     req.flush(testData);
   }));
 
