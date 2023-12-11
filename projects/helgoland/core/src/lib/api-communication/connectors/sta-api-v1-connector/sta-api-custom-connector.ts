@@ -5,14 +5,14 @@ import { map, mergeMap } from "rxjs/operators";
 import { HttpService } from "../../../dataset-api/http.service";
 import { InternalDatasetId } from "../../../dataset-api/internal-id-handler.service";
 import { ReferenceValues, TimeValueTuple } from "../../../model/dataset-api/data";
-import { FirstLastValue, ParameterConstellation, ReferenceValue, RenderingHints } from "../../../model/dataset-api/dataset";
+import { ReferenceValue } from "../../../model/dataset-api/dataset";
 import { Timespan } from "../../../model/internal/timeInterval";
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from "../../helgoland-services-connector";
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from "../../model/internal/data";
 import { DatasetFilter, HelgolandDataset, HelgolandTimeseries } from "../../model/internal/dataset";
 import { HelgolandParameterFilter } from "../../model/internal/filter";
 import { HelgolandPlatform } from "../../model/internal/platform";
-import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from "./model/datasetreams";
+import { DatastreamExpandParams, DatastreamSelectParams } from "./model/datasetreams";
 import { Observation } from "./model/observations";
 import { ObservedPropertyExpandParams, ObservedPropertySelectParams } from "./model/observed-properties";
 import { StaFilter, StaValueListResponse } from "./model/sta-interface";
@@ -117,29 +117,6 @@ export class StaApiCustomConnector extends StaApiV1Connector {
     return this.sta.aggregatePaging(
       this.sta.getDatastreamObservationsRelation(url, id, { $orderby: "phenomenonTime", $filter: timeFilter, $top: 1000 })
     );
-  }
-
-  protected override createExpandedTimeseries(ds: Datastream, first: FirstLastValue | undefined, last: FirstLastValue | undefined, refValues: ReferenceValue[], url: string): HelgolandTimeseries {
-    if (ds["@iot.id"] && ds.unitOfMeasurement?.symbol && ds.Thing?.Locations) {
-      const id = ds["@iot.id"];
-      const symbol = ds.unitOfMeasurement?.symbol;
-      const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
-      const parameter = this.createTsParameter(ds, ds.Thing);
-      const name = this.createTimeseriesName(ds, parameter);
-      const renderingHints: RenderingHints | undefined = ds.properties?.["renderingHints"] || undefined;
-      return new HelgolandTimeseries(id, url, name, symbol, platform, first, last, refValues, renderingHints, parameter);
-    }
-    throw new Error("Could not create feature.");
-  }
-
-  private createTimeseriesName(ds: Datastream, parameter: ParameterConstellation) {
-    if (ds.name) {
-      return ds.name;
-    }
-    if (parameter.phenomenon?.label && parameter.feature?.label) {
-      return `${parameter.phenomenon.label} @ ${parameter.feature.label}`;
-    }
-    throw new Error(`Could not create name for this datastream: ${ds}`);
   }
 
   protected createTimeValueTuple(observations: Observation[]): TimeValueTuple[] {
