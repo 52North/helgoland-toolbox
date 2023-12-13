@@ -6,7 +6,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatListModule, MatSelectionListChange } from "@angular/material/list";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { HelgolandCoreModule, HelgolandServicesConnector } from "@helgoland/core";
+import { HelgolandCoreModule, HelgolandServicesConnector, Parameter } from "@helgoland/core";
 import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 import { DatasetByStationSelectorComponent, SelectableDataset } from "@helgoland/selector";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
@@ -57,6 +57,10 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     } else {
       this.timeseries.removeDataset(id);
     }
+  }
+
+  public getCategoryLabel(categories: Parameter[]) {
+    return categories.map(e => e.label).join(", ");
   }
 
 }

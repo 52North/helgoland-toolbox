@@ -10,11 +10,10 @@
       <n52-label-mapper [label]="timeseries.parameters.phenomenon?.label"></n52-label-mapper>
     </div>
     <n52-label-mapper [label]="timeseries.parameters.procedure?.label"></n52-label-mapper>
-    @if (timeseries.parameters.category?.label && timeseries.parameters.category?.label !==
-    timeseries.parameters.phenomenon?.label) {
-    <span>
-      ({{timeseries.parameters.category?.label}})
-    </span>
+    @for (item of timeseries.parameters.category; track item) {
+      <span>
+        ({{item.label}})
+      </span>
     }
     @if (timeseries.lastValue) {
     <div class="additionalInfo">

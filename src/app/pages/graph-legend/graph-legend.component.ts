@@ -47,7 +47,7 @@ class HoveringTestService extends D3SimpleHoveringService {
     if (timeseries.parameters.phenomenon)
       textContainer.append("text").attr("dy", "1em").attr("alignment-baseline", "text-before-edge").text(timeseries.parameters.phenomenon.label);
     if (timeseries.parameters.category)
-      textContainer.append("text").attr("dy", "2em").attr("alignment-baseline", "text-before-edge").text(timeseries.parameters.category.label);
+      textContainer.append("text").attr("dy", "2em").attr("alignment-baseline", "text-before-edge").text(timeseries.parameters.category[0].label);
   }
 
 }

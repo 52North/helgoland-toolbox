@@ -9,7 +9,8 @@ export function convertToFacetEntry(timeseries: HelgolandTimeseries): FacetSearc
     url: timeseries.url,
     firstValue: timeseries.firstValue,
     lastValue: timeseries.lastValue,
-    category: timeseries.parameters.category,
+    // TODO: maybe fix
+    // category: timeseries.parameters.category,
     offering: timeseries.parameters.offering,
     phenomenon: timeseries.parameters.phenomenon,
     procedure: timeseries.parameters.procedure

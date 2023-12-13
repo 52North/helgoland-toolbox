@@ -151,7 +151,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       return new HelgolandDataset(ds.id, url, ds.label);
     }
     let firstValue: FirstLastValue | undefined, lastValue: FirstLastValue | undefined;
-    let category: Parameter | undefined, feature: Parameter | undefined, offering: Parameter | undefined, phenomenon: Parameter | undefined, procedure: Parameter | undefined, service: Parameter | undefined;
+    let category: Parameter[] | undefined, feature: Parameter | undefined, offering: Parameter | undefined, phenomenon: Parameter | undefined, procedure: Parameter | undefined, service: Parameter | undefined;
     let platformParam: PlatformParameter | undefined;
     if (ds.firstValue) {
       firstValue = { timestamp: new Date(ds.firstValue.timestamp).getTime(), value: ds.firstValue.value };
@@ -160,7 +160,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       lastValue = { timestamp: new Date(ds.lastValue.timestamp).getTime(), value: ds.lastValue.value };
     }
     if (ds.parameters) {
-      category = this.createCategory(ds.parameters.category);
+      category = [this.createCategory(ds.parameters.category)];
       feature = this.createFeature(ds.feature);
       offering = this.createOffering(ds.parameters.offering);
       phenomenon = this.createPhenomenon(ds.parameters.phenomenon);

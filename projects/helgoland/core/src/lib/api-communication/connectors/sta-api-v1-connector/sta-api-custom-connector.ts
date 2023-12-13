@@ -4,18 +4,22 @@ import { map, mergeMap } from "rxjs/operators";
 
 import { HttpService } from "../../../dataset-api/http.service";
 import { InternalDatasetId } from "../../../dataset-api/internal-id-handler.service";
+import { Category } from "../../../model/dataset-api/category";
 import { ReferenceValues, TimeValueTuple } from "../../../model/dataset-api/data";
-import { ReferenceValue } from "../../../model/dataset-api/dataset";
+import { ParameterConstellation, ReferenceValue } from "../../../model/dataset-api/dataset";
 import { Timespan } from "../../../model/internal/timeInterval";
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from "../../helgoland-services-connector";
 import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from "../../model/internal/data";
 import { DatasetFilter, HelgolandDataset, HelgolandTimeseries } from "../../model/internal/dataset";
 import { HelgolandParameterFilter } from "../../model/internal/filter";
 import { HelgolandPlatform } from "../../model/internal/platform";
-import { DatastreamExpandParams, DatastreamSelectParams } from "./model/datasetreams";
+import { Datastream, DatastreamExpandParams, DatastreamSelectParams } from "./model/datasetreams";
+import { LocationExpandParams, LocationSelectParams } from "./model/locations";
 import { Observation } from "./model/observations";
 import { ObservedPropertyExpandParams, ObservedPropertySelectParams } from "./model/observed-properties";
-import { StaFilter, StaValueListResponse } from "./model/sta-interface";
+import { SensorExpandParams, SensorSelectParams } from "./model/sensors";
+import { StaExpandParams, StaFilter, StaSelectParams, StaValueListResponse } from "./model/sta-interface";
+import { Thing } from "./model/things";
 import { StaApiV1Connector } from "./sta-api-v1-connector";
 import { StaInterfaceService } from "./sta-interface.service";
 
@@ -34,20 +38,6 @@ export class StaApiCustomConnector extends StaApiV1Connector {
     protected override sta: StaInterfaceService
   ) {
     super(http, sta);
-  }
-
-  protected override createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
-    if (params) {
-      const filterList: string[] = ["Datastreams/properties/hidden ne true"];
-      if (params.category) {
-        filterList.push(`id eq '${params.category}'`);
-      }
-      if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
-      }
-      return this.createFilter(filterList);
-    }
-    throw new Error("Could not create PhenomenaFilter.");
   }
 
   override getPlatform(id: string, url: string, filter: HelgolandParameterFilter): Observable<HelgolandPlatform> {
@@ -113,6 +103,60 @@ export class StaApiCustomConnector extends StaApiV1Connector {
     }
   }
 
+  protected override createTsParameter(ds: Datastream, thing: Thing): ParameterConstellation {
+    const params = super.createTsParameter(ds, thing);
+    // use tags instead of categories
+    if (ds.properties?.["tags"] && typeof ds.properties?.["tags"] === "string") {
+      const categories: Category[] = ds.properties["tags"].split(",").map((e: string) => ({
+        id: e,
+        label: e.replace("#", "").charAt(0).toUpperCase() + e.slice(2)
+      }))
+      params.category = categories;
+    } else {
+      params.category = [];
+    }
+    return params;
+  }
+
+  override getCategories(url: string, filter: HelgolandParameterFilter): Observable<Category[]> {
+    // other option is to use an additional datastream for the categories
+    const staFilter = this.createCategoriesFilter(filter);
+    staFilter.$select = "properties/tags";
+    return this.sta.aggregatePaging(this.sta.getDatastreams(url, staFilter))
+      .pipe(map(res => {
+        const tags = new Set<string>();
+        res.value.forEach(e => {
+          if (e.properties?.["tags"] && typeof e.properties?.["tags"] === "string") {
+            e.properties["tags"].split(",").forEach(t => {
+              tags.add(t);
+            })
+          }
+        })
+        return Array.from(tags).map(e => ({
+          id: e,
+          label: e
+        }));
+      }))
+  }
+
+  protected override createCategoriesFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+    if (params) {
+      const filterList: string[] = [];
+      if (params.phenomenon) {
+        debugger;
+        filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
+      }
+      if (params.feature) {
+        filterList.push(`Thing/Locations/id eq ${params.feature}`);
+      }
+      if (params.procedure) {
+        filterList.push(`Sensor/id eq ${params.procedure}`);
+      }
+      return this.createFilter(filterList);
+    }
+    throw new Error("Could not create CategoriesFilter.");
+  }
+
   private createDatasetDataRequest(id: string, url: string, timeFilter: string) {
     return this.sta.aggregatePaging(
       this.sta.getDatastreamObservationsRelation(url, id, { $orderby: "phenomenonTime", $filter: timeFilter, $top: 1000 })
@@ -123,6 +167,79 @@ export class StaApiCustomConnector extends StaApiV1Connector {
     return observations
       .filter(obs => obs.phenomenonTime)
       .map(obs => [new Date(obs.phenomenonTime!).getTime(), parseFloat(obs.result as string)] as TimeValueTuple);
+  }
+
+  protected override createPhenomenaFilter(params: HelgolandParameterFilter): StaFilter<ObservedPropertySelectParams, ObservedPropertyExpandParams> {
+    if (params) {
+      const filterList: string[] = ["Datastreams/properties/hidden ne true"];
+      if (params.category) {
+        filterList.push(`indexof(Datastreams/properties/tags,'${params.category}') ge 1`);
+      }
+      if (params.feature) {
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
+      }
+      if (params.procedure) {
+        filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+      }
+      return this.createFilter(filterList);
+    }
+    throw new Error("Could not create PhenomenaFilter.");
+  }
+
+  protected override createDatastreamFilter(params: DatasetFilter): StaFilter<DatastreamSelectParams, DatastreamExpandParams> {
+    let filter: StaFilter<StaSelectParams, StaExpandParams> = {};
+    if (params) {
+      const filterList: string[] = ["properties/hidden ne true"];
+      if (params.phenomenon) {
+        filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
+      }
+      if (params.category) {
+        filterList.push(`indexof(properties/tags,'${params.category}') ge 1`);
+      }
+      if (params.procedure) {
+        filterList.push(`Sensor/id eq ${params.procedure}`);
+      }
+      if (params.feature) {
+        filterList.push(`Thing/Locations/id eq ${params.feature}`);
+      }
+      filter = this.createFilter(filterList);
+    }
+    filter.$expand = "Thing,Thing/Locations,ObservedProperty,Sensor";
+    return filter;
+  }
+
+  protected override createProceduresFilter(params: HelgolandParameterFilter): StaFilter<SensorSelectParams, SensorExpandParams> {
+    if (params) {
+      const filterList: string[] = [];
+      if (params.category) {
+        filterList.push(`indexof(Datastreams/properties/tags,'${params.category}') ge 1`);
+      }
+      if (params.feature) {
+        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+      }
+      if (params.phenomenon) {
+        filterList.push(`Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
+      }
+      return this.createFilter(filterList);
+    }
+    return {};
+  }
+
+  protected override createFeaturesFilter(params: HelgolandParameterFilter): StaFilter<LocationSelectParams, LocationExpandParams> {
+    if (params) {
+      const filterList: string[] = [];
+      if (params.category) {
+        filterList.push(`indexof(Things/Datastreams/properties/tags,'${params.category}') ge 1`);
+      }
+      if (params.phenomenon) {
+        filterList.push(`Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
+      }
+      if (params.procedure) {
+        filterList.push(`Things/Datastreams/Sensor/id eq ${params.procedure}`);
+      }
+      return this.createFilter(filterList);
+    }
+    throw new Error("Could not create FeaturesFilter.");
   }
 
 }

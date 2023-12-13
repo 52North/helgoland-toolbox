@@ -48,7 +48,7 @@ export interface StaExpandParams {
 }
 
 export interface StaFilter<S extends StaSelectParams, E extends StaExpandParams> {
-  $select?: S;
+  $select?: S | string;
   $expand?: E | string;
   $orderby?: string;
   $filter?: string;

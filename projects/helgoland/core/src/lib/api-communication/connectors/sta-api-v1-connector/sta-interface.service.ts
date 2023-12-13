@@ -272,13 +272,17 @@ export class StaInterfaceService {
       }
     }
     if (filter.$select) {
-      const $select = [];
-      for (const key in filter.$select) {
-        if (filter.$select.hasOwnProperty(key) && filter.$select[key]) {
-          $select.push(key);
+      if (typeof filter.$select === "string") {
+        httpParams = httpParams.set("$select", filter.$select);
+      } else {
+        const $select = [];
+        for (const key in filter.$select) {
+          if (filter.$select.hasOwnProperty(key) && filter.$select[key]) {
+            $select.push(key);
+          }
         }
+        httpParams = httpParams.set("$select", $select.join(","));
       }
-      httpParams = httpParams.set("$select", $select.join(","));
     }
     if (filter.$orderby) {
       httpParams = httpParams.set("$orderby", filter.$orderby);

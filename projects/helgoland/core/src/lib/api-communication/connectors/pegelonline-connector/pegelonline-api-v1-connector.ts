@@ -391,7 +391,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     const label = `${this.ucwords(dataset.longname)} (${dataset.shortname}) @ ${this.ucwords(station.longname)}`;
     return new HelgolandTimeseries(`${stationId}/${dataset.shortname}`, url, label, dataset.unit, platform, undefined, undefined, [], undefined,
       {
-        category: { id: "", label: this.ucwords(station.water.longname) },
+        category: [{ id: "", label: this.ucwords(station.water.longname) }],
         feature: { id: "", label: featureLabel, domainId: featureLabel },
         offering: { id: "", label: "2" },
         phenomenon: { id: dataset.shortname, label: phenomenonLabel },

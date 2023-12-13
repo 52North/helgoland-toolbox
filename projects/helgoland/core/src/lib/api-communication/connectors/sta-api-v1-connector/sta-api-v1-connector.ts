@@ -152,7 +152,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
         filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
       }
       if (params.phenomenon) {
-        filterList.push(`Datastreams/ObservedProperty/id eq ${params.category}`);
+        filterList.push(`Datastreams/ObservedProperty/id eq ${params.phenomenon}`);
       }
       return this.createFilter(filterList);
     }
@@ -373,7 +373,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (thing.Locations?.length) parameters.feature = this.createFeature(thing.Locations[0]);
     if (ds.Sensor) parameters.procedure = this.createProcedure(ds.Sensor);
     if (ds.ObservedProperty) parameters.phenomenon = this.createPhenomenon(ds.ObservedProperty);
-    if (ds.ObservedProperty) parameters.category = this.createCategory(ds.ObservedProperty);
+    if (ds.ObservedProperty) parameters.category = [this.createCategory(ds.ObservedProperty)];
     return parameters;
   }
 
