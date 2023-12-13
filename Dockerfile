@@ -10,7 +10,10 @@ RUN npm install
 # copy the app and build it
 COPY . /usr/src/app
 RUN npm run versions-script
-RUN npm run build:timeseries
+
+ARG type
+
+RUN npm run build:${type}
 
 FROM nginx:alpine
 
@@ -25,7 +28,9 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./adjustment-script.sh /docker-entrypoint.d/
 RUN chmod 0775 /docker-entrypoint.d/adjustment-script.sh
 
+ARG type
+
 # copy build from previous stage
-COPY --from=BUILD /usr/src/app/dist/helgoland-timeseries /usr/share/nginx/html
+COPY --from=BUILD /usr/src/app/dist/helgoland-${type} /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]

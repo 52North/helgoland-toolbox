@@ -1,0 +1,29 @@
+version: '3'
+services:
+  timeseries:
+    image: 52north/helgoland-sdn-timeseries:latest
+    build:
+      context: .
+      args:
+        - type=timeseries
+    environment:
+      BASE_HREF: /timeseries
+      PORT: "9000"
+    ports:
+      - 9000:9000
+  trajectories:
+    image: 52north/helgoland-sdn-trajectories:latest
+    build:
+      context: .
+      args:
+        - type=trajectories
+    environment:
+      BASE_HREF: /trajectories
+      PORT: "8000"
+    ports:
+      - 8000:8000
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
