@@ -1,8 +1,8 @@
 {
   "datasetApis": [
     {
-      "name": "test",
-      "url": "http://docker.srv.int.52north.org:8090/sos/api/"
+      "name": "codm.hzg.de",
+      "url": "https://codm.hzg.de/52n-sos-webapp/api/v1/"
     }
   ],
   "languages": [
