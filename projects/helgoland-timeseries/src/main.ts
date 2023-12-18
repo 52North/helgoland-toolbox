@@ -47,9 +47,10 @@ export class AppTranslateLoader implements TranslateLoader {
 
 export function initApplication(configService: ConfigurationService, translate: TranslateService, localStorage: LocalStorage): () => Promise<void> {
   return () => configService.loadConfiguration().then((config: AppConfig) => {
+    const defaultLanguage = 'en'
     const localStorageLanguageKey = 'client-language';
     registerLocaleData(localeDe);
-    let lang = translate.getBrowserLang() || 'en';
+    let lang = translate.getBrowserLang() || defaultLanguage;
     const storedLang = localStorage.load(localStorageLanguageKey) as string;
     if (storedLang) { lang = storedLang }
     const url = window.location.href;
@@ -57,9 +58,9 @@ export function initApplication(configService: ConfigurationService, translate: 
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
     const results = regex.exec(url);
     if (results && results[2]) {
-      const match = config.languages?.find(e => e.code === results[2]);
-      if (match) { lang = match.code; }
+      lang = results[2];
     }
+    lang = config.languages?.find(e => e.code === lang) ? lang : defaultLanguage;
     translate.setDefaultLang(lang);
     translate.onLangChange.subscribe(lce => {
       localStorage.save(localStorageLanguageKey, lce.lang);
