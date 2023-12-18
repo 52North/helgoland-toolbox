@@ -11,6 +11,8 @@ services:
       PORT: "9000"
     ports:
       - 9000:9000
+    volumes:
+      - ./projects/helgoland-timeseries/src/assets/app-config.json:/usr/share/nginx/html/assets/app-config.json:ro
   trajectories:
     image: 52north/helgoland-sdn-trajectories:latest
     build:
@@ -22,6 +24,8 @@ services:
       PORT: "8000"
     ports:
       - 8000:8000
+    volumes:
+      - ./projects/helgoland-trajectories/src/assets/app-config.json:/usr/share/nginx/html/assets/app-config.json:ro
   nginx:
     image: nginx:alpine
     ports:
