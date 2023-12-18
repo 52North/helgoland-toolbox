@@ -1,8 +1,8 @@
 {
   "datasetApis": [
     {
-      "name": "codm.hzg.de",
-      "url": "https://codm.hzg.de/52n-sos-webapp/api/v1/"
+      "name": "EuroFleets",
+      "url": "http://eurofleets.utm.csic.es/sos/api/"
     }
   ],
   "languages": [
