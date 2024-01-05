@@ -1,13 +1,20 @@
-import { NgStyle } from "@angular/common";
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { NgStyle } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   Filter,
   HelgolandParameterFilter,
   HelgolandServicesConnector,
   LanguageChangNotifier,
   Parameter,
-} from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
   url: string;
@@ -16,27 +23,29 @@ export interface MultiServiceFilter {
 }
 
 export enum MultiServiceFilterEndpoint {
-  offering = "offering",
-  phenomenon = "phenomenon",
-  procedure = "procedure",
-  feature = "feature",
-  category = "category",
-  platform = "platform",
-  dataset = "dataset"
+  offering = 'offering',
+  phenomenon = 'phenomenon',
+  procedure = 'procedure',
+  feature = 'feature',
+  category = 'category',
+  platform = 'platform',
+  dataset = 'dataset',
 }
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
  */
 @Component({
-  selector: "n52-multi-service-filter-selector",
-  templateUrl: "./multi-service-filter-selector.component.html",
+  selector: 'n52-multi-service-filter-selector',
+  templateUrl: './multi-service-filter-selector.component.html',
   standalone: true,
-  imports: [NgStyle]
+  imports: [NgStyle],
 })
-export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
-
-  @Input({required: true})
+export class MultiServiceFilterSelectorComponent
+  extends LanguageChangNotifier
+  implements OnChanges
+{
+  @Input({ required: true })
   public endpoint!: MultiServiceFilterEndpoint;
 
   @Input()
@@ -47,20 +56,21 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<FilteredParameter> = new EventEmitter<FilteredParameter>();
+  public onItemSelected: EventEmitter<FilteredParameter> =
+    new EventEmitter<FilteredParameter>();
 
   public loading = 0;
   public items: FilteredParameter[] = [];
 
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
-    protected override translate: TranslateService
+    protected override translate: TranslateService,
   ) {
     super(translate);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes["filterList"] && this.filterList) {
+    if (changes['filterList'] && this.filterList) {
       this.loadItems();
     }
   }
@@ -83,48 +93,55 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
       switch (this.endpoint) {
         case MultiServiceFilterEndpoint.offering:
           this.servicesConnector.getOfferings(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.phenomenon:
           this.servicesConnector.getPhenomena(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.procedure:
           this.servicesConnector.getProcedures(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.feature:
           this.servicesConnector.getFeatures(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.category:
           this.servicesConnector.getCategories(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.platform:
           this.servicesConnector.getPlatforms(entry.url, filter).subscribe({
-            next: (res) => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         case MultiServiceFilterEndpoint.dataset:
           this.servicesConnector.getDatasets(entry.url, filter).subscribe({
-            next: res => this.setItems(res, filter, entry.url, filter.service),
-            error: (error) => this.errorOnLoading()
+            next: (res) =>
+              this.setItems(res, filter, entry.url, filter.service),
+            error: (error) => this.errorOnLoading(),
           });
           break;
         default:
-          console.error("Wrong endpoint: " + this.endpoint);
+          console.error('Wrong endpoint: ' + this.endpoint);
           this.loading--;
       }
     });
@@ -134,19 +151,28 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     this.loading--;
   }
 
-  protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service?: string): void {
+  protected setItems(
+    res: FilteredParameter[],
+    prevfilter: HelgolandParameterFilter,
+    url: string,
+    service?: string,
+  ): void {
     this.loading--;
-    res.forEach(entry => {
+    res.forEach((entry) => {
       entry.selected = this.selected === entry.label;
       const filter: Filter = {
         filter: prevfilter,
         itemId: entry.id,
         url,
-        service
+        service,
       };
-      const item = this.items.find(e => e.label === entry.label);
+      const item = this.items.find((e) => e.label === entry.label);
       if (item) {
-        if (!item.filterList?.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
+        if (
+          !item.filterList?.find(
+            (e) => e.itemId === filter.itemId && e.service === filter.service,
+          )
+        ) {
           item.filterList?.push(filter);
         }
       } else {
@@ -157,9 +183,8 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
   }
 
   private deselectAllItems() {
-    this.items.forEach(e => e.selected = false);
+    this.items.forEach((e) => (e.selected = false));
   }
-
 }
 
 export interface FilteredParameter extends Parameter {

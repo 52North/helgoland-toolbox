@@ -1,6 +1,6 @@
-import { Identifiable } from "./identifiable";
+import { Identifiable } from './identifiable';
 
 export interface Parameter extends Identifiable {
-    id: string;
-    label: string;
+  id: string;
+  label: string;
 }

@@ -1,6 +1,6 @@
-import { HttpClientModule } from "@angular/common/http";
-import { SimpleChange } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HttpClientModule } from '@angular/common/http';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   DatasetApiV1ConnectorProvider,
   DatasetApiV3ConnectorProvider,
@@ -8,15 +8,15 @@ import {
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
   Timespan,
-} from "@helgoland/core";
+} from '@helgoland/core';
 
-import { DatasetApiInterfaceTesting } from "../../../../../testing/dataset-api-interface.testing";
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { HelgolandD3Module } from "../d3.module";
-import { ExtendedDataD3TimeseriesGraphComponent } from "./extended-data-d3-timeseries-graph.component";
+import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { HelgolandD3Module } from '../d3.module';
+import { ExtendedDataD3TimeseriesGraphComponent } from './extended-data-d3-timeseries-graph.component';
 
-describe("ExtendedDataD3TimeseriesGraphComponent - function", () => {
+describe('ExtendedDataD3TimeseriesGraphComponent - function', () => {
   let component: ExtendedDataD3TimeseriesGraphComponent;
   let fixture: ComponentFixture<ExtendedDataD3TimeseriesGraphComponent>;
 
@@ -26,29 +26,29 @@ describe("ExtendedDataD3TimeseriesGraphComponent - function", () => {
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        HelgolandD3Module
+        HelgolandD3Module,
       ],
       providers: [
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
         DatasetApiV3ConnectorProvider,
         DatasetStaConnectorProvider,
-        SettingsServiceTestingProvider
-      ]
+        SettingsServiceTestingProvider,
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ExtendedDataD3TimeseriesGraphComponent);
-    (fixture.nativeElement as HTMLElement).style.height = "500px";
+    (fixture.nativeElement as HTMLElement).style.height = '500px';
     component = fixture.componentInstance;
   });
 
-  xit("should have a dataset", () => {
-    const datasetID1 = "https://geo.irceline.be/sos/api/v1/__6522";
+  xit('should have a dataset', () => {
+    const datasetID1 = 'https://geo.irceline.be/sos/api/v1/__6522';
     const datasetOptions: Map<string, DatasetOptions> = new Map();
     setNewTimespan(component);
-    const option1 = new DatasetOptions(datasetID1, "#FF0000");
+    const option1 = new DatasetOptions(datasetID1, '#FF0000');
     option1.lineDashArray = [5, 5];
     option1.separateYAxis = false;
     // option1.yAxisRange = {
@@ -61,11 +61,11 @@ describe("ExtendedDataD3TimeseriesGraphComponent - function", () => {
     datasetOptions.set(datasetID1, option1);
     component.datasetIds = [datasetID1];
     component.datasetOptions = datasetOptions;
-    const additionalDataOption = new DatasetOptions("test", "#0000FF");
+    const additionalDataOption = new DatasetOptions('test', '#0000FF');
     additionalDataOption.pointRadius = 6;
     additionalDataOption.lineWidth = 3;
     component.presenterOptions = {
-      yaxis: true
+      yaxis: true,
     };
     // additionalDataOption.yAxisRange = {
     //     min: 0,
@@ -74,53 +74,53 @@ describe("ExtendedDataD3TimeseriesGraphComponent - function", () => {
     // additionalDataOption.autoRangeSelection = true;
     component.additionalData = [
       {
-        internalId: "test",
+        internalId: 'test',
         // yaxisLabel: 'µg/m³',
-        yaxisLabel: "t",
+        yaxisLabel: 't',
         datasetOptions: additionalDataOption,
         data: [
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 10,
-            value: 1
+            value: 1,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 9,
-            value: 2
+            value: 2,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 8,
-            value: 1
+            value: 1,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 7,
-            value: 0
+            value: 0,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 6,
-            value: -0.5
+            value: -0.5,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 5,
-            value: 0
+            value: 0,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 4,
-            value: 1
+            value: 1,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 3,
-            value: 1
+            value: 1,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 2,
-            value: 1
+            value: 1,
           },
           {
             timestamp: 1559858400000 - 1000 * 60 * 60 * 1,
-            value: 1
-          }
-        ]
-      }
+            value: 1,
+          },
+        ],
+      },
     ];
 
     // setTimeout(() => {
@@ -210,19 +210,18 @@ describe("ExtendedDataD3TimeseriesGraphComponent - function", () => {
     //     }
     // }, 2000);
 
-    if (!fixture["destroy"]) {
+    if (!fixture['destroy']) {
       fixture.detectChanges();
     }
     expect(component.datasetIds).toBeDefined();
     expect(component.datasetIds.length).toBeDefined();
-    expect(typeof (component.datasetIds)).toBe("object");
+    expect(typeof component.datasetIds).toBe('object');
   });
 
-  it("should work without any data", () => {
+  it('should work without any data', () => {
     fixture.detectChanges();
-    expect(typeof (component.datasetIds)).toBe("object");
+    expect(typeof component.datasetIds).toBe('object');
   });
-
 });
 
 function setNewTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
@@ -230,7 +229,7 @@ function setNewTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
   const diff = 1000 * 60 * 60 * 24;
   component.timeInterval = new Timespan(end - diff, end);
   component.ngOnChanges({
-    timeInterval: new SimpleChange(null, component.timeInterval, true)
+    timeInterval: new SimpleChange(null, component.timeInterval, true),
   });
 }
 
@@ -239,6 +238,6 @@ function updateTimespan(component: ExtendedDataD3TimeseriesGraphComponent) {
   const diff = 1000 * 60 * 60 * 24;
   component.timeInterval = new Timespan(end - diff, end);
   component.ngOnChanges({
-    timeInterval: new SimpleChange(null, component.timeInterval, true)
+    timeInterval: new SimpleChange(null, component.timeInterval, true),
   });
 }

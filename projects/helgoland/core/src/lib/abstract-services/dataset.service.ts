@@ -1,9 +1,10 @@
-import { EventEmitter } from "@angular/core";
+import { EventEmitter } from '@angular/core';
 
-import { DatasetOptions } from "../model/internal/options";
+import { DatasetOptions } from '../model/internal/options';
 
-export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]> {
-
+export abstract class DatasetService<
+  T extends DatasetOptions | DatasetOptions[],
+> {
   public datasetIds: string[] = [];
 
   public datasetOptions: Map<string, T> = new Map();
@@ -11,12 +12,12 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
   public datasetIdsChanged: EventEmitter<string[]> = new EventEmitter();
 
   /**
-     * Adds the dataset to the selection
-     *
-     * @param internalId
-     * @param [options]
-     * @returns Successfull added the dataset.
-     */
+   * Adds the dataset to the selection
+   *
+   * @param internalId
+   * @param [options]
+   * @returns Successfull added the dataset.
+   */
   public async addDataset(internalId: string, options?: T): Promise<boolean> {
     if (this.datasetIds.indexOf(internalId) < 0) {
       this.datasetIds.push(internalId);
@@ -27,7 +28,7 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
       }
       this.saveState();
     } else if (options instanceof Array) {
-      const temp = (this.datasetOptions.get(internalId) as DatasetOptions[]);
+      const temp = this.datasetOptions.get(internalId) as DatasetOptions[];
       options.forEach((e) => temp.push(e));
       this.saveState();
     }
@@ -65,10 +66,9 @@ export abstract class DatasetService<T extends DatasetOptions | DatasetOptions[]
     this.saveState();
   }
 
-    protected abstract createStyles(internalId: string): T;
+  protected abstract createStyles(internalId: string): T;
 
-    protected abstract saveState(): void;
+  protected abstract saveState(): void;
 
-    protected abstract loadState(): void;
-
+  protected abstract loadState(): void;
 }

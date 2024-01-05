@@ -1,13 +1,11 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { FavoriteTogglerComponent } from "./favorite-toggler/favorite-toggler.component";
-import { FavoriteService } from "./service/favorite.service";
-import { JsonFavoriteExporterService } from "./service/json-favorite-exporter.service";
+import { FavoriteTogglerComponent } from './favorite-toggler/favorite-toggler.component';
+import { FavoriteService } from './service/favorite.service';
+import { JsonFavoriteExporterService } from './service/json-favorite-exporter.service';
 
-const COMPONENTS = [
-  FavoriteTogglerComponent
-];
+const COMPONENTS = [FavoriteTogglerComponent];
 
 /**
  * The favorite module includes the following functionality:
@@ -16,16 +14,8 @@ const COMPONENTS = [
  * - import/export serivce
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    COMPONENTS
-  ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: [
-    FavoriteService,
-    JsonFavoriteExporterService
-  ]
+  imports: [CommonModule, COMPONENTS],
+  exports: [COMPONENTS],
+  providers: [FavoriteService, JsonFavoriteExporterService],
 })
-export class HelgolandFavoriteModule { }
+export class HelgolandFavoriteModule {}

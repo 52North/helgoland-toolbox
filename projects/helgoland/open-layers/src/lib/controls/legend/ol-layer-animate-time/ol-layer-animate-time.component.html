@@ -1,11 +1,11 @@
 @if (loading) {
-<span>loading ...</span>
+  <span>loading ...</span>
 }
 @if (!loading) {
-<span>
-  <span>{{currentTime}}</span>
-  <span (click)="startAnimation()"> start </span>
-  <span (click)="stopAnimation()"> stop </span>
-  <span (click)="resetAnimation()"> reset </span>
-</span>
+  <span>
+    <span>{{ currentTime }}</span>
+    <span (click)="startAnimation()"> start </span>
+    <span (click)="stopAnimation()"> stop </span>
+    <span (click)="resetAnimation()"> reset </span>
+  </span>
 }

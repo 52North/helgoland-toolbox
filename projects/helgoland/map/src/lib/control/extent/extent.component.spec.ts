@@ -1,18 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { MapCache } from "../../base/map-cache.service";
-import { ExtentControlComponent } from "./extent.component";
+import { MapCache } from '../../base/map-cache.service';
+import { ExtentControlComponent } from './extent.component';
 
-describe("ExtentControlComponent", () => {
+describe('ExtentControlComponent', () => {
   let component: ExtentControlComponent;
   let fixture: ComponentFixture<ExtentControlComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ExtentControlComponent],
-      providers: [
-        MapCache
-      ]
+      providers: [MapCache],
     }).compileComponents();
   }));
 
@@ -22,7 +20,7 @@ describe("ExtentControlComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

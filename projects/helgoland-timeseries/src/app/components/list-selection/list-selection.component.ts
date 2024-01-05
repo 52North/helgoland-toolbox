@@ -1,28 +1,36 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { MatExpansionModule } from "@angular/material/expansion";
-import { DatasetType, HelgolandService, HelgolandServicesConnector, Parameter } from "@helgoland/core";
-import { MultiServiceFilterEndpoint } from "@helgoland/selector";
-import { TranslateModule } from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  DatasetType,
+  HelgolandService,
+  HelgolandServicesConnector,
+  Parameter,
+} from '@helgoland/core';
+import { MultiServiceFilterEndpoint } from '@helgoland/selector';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   ErrorHandlerService,
   FilterLabelComponent,
   ParameterListEntry,
   ParameterListSelectorComponent,
   ParameterType,
-} from "helgoland-common";
+} from 'helgoland-common';
 
-import { ConfigurationService } from "../../services/configuration.service";
-import { TimeseriesListSelectorComponent } from "../timeseries-list-selector/timeseries-list-selector.component";
-import { ListConfig, ModalListSettingsComponent } from "./modal-list-settings/modal-list-settings.component";
+import { ConfigurationService } from '../../services/configuration.service';
+import { TimeseriesListSelectorComponent } from '../timeseries-list-selector/timeseries-list-selector.component';
+import {
+  ListConfig,
+  ModalListSettingsComponent,
+} from './modal-list-settings/modal-list-settings.component';
 
 @Component({
-  selector: "helgoland-list-selection",
-  templateUrl: "./list-selection.component.html",
-  styleUrls: ["./list-selection.component.scss"],
+  selector: 'helgoland-list-selection',
+  templateUrl: './list-selection.component.html',
+  styleUrls: ['./list-selection.component.scss'],
   imports: [
     CommonModule,
     FilterLabelComponent,
@@ -32,12 +40,11 @@ import { ListConfig, ModalListSettingsComponent } from "./modal-list-settings/mo
     MatExpansionModule,
     ParameterListSelectorComponent,
     TimeseriesListSelectorComponent,
-    TranslateModule
+    TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ListSelectionComponent implements OnInit {
-
   public selectedService: HelgolandService | undefined;
 
   public filterList: ParameterListEntry[] = [];
@@ -48,38 +55,47 @@ export class ListSelectionComponent implements OnInit {
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,
     private configSrvc: ConfigurationService,
-    private errorHandler: ErrorHandlerService
-  ) { }
+    private errorHandler: ErrorHandlerService,
+  ) {}
 
   ngOnInit(): void {
     if (this.configSrvc.configuration.defaultService?.apiUrl) {
-      this.serviceConnector.getServices(this.configSrvc.configuration.defaultService.apiUrl).subscribe({
-        next: services => {
-          this.selectedService = services.find(e => e.id === this.configSrvc.configuration.defaultService!.serviceId)!;
-          this.resetView(this.selectedService);
-        },
-        error: error => this.errorHandler.error(error)
-      });
+      this.serviceConnector
+        .getServices(this.configSrvc.configuration.defaultService.apiUrl)
+        .subscribe({
+          next: (services) => {
+            this.selectedService = services.find(
+              (e) =>
+                e.id ===
+                this.configSrvc.configuration.defaultService!.serviceId,
+            )!;
+            this.resetView(this.selectedService);
+          },
+          error: (error) => this.errorHandler.error(error),
+        });
     }
   }
 
   openListSettings() {
     if (this.selectedService) {
       const conf: ListConfig = {
-        selectedService: this.selectedService
-      }
+        selectedService: this.selectedService,
+      };
       const dialogRef = this.dialog.open(ModalListSettingsComponent, {
-        data: conf
+        data: conf,
       });
 
       dialogRef.afterClosed().subscribe((newConf: ListConfig) => {
         if (newConf) {
-          if (this.selectedService!.id !== newConf.selectedService.id || this.selectedService!.apiUrl !== newConf.selectedService.apiUrl) {
+          if (
+            this.selectedService!.id !== newConf.selectedService.id ||
+            this.selectedService!.apiUrl !== newConf.selectedService.apiUrl
+          ) {
             this.selectedService = newConf.selectedService;
             this.resetView(this.selectedService);
           }
         }
-      })
+      });
     }
   }
 
@@ -104,13 +120,19 @@ export class ListSelectionComponent implements OnInit {
     filter.expanded = false;
 
     // find entry and clear following
-    const fi = this.filterList.findIndex(e => e === filter);
+    const fi = this.filterList.findIndex((e) => e === filter);
     this.filterList.splice(fi + 1);
 
-    const possibleFilters: ParameterType[] = [ParameterType.CATEGORY, ParameterType.FEATURE, ParameterType.PHENOMENON, ParameterType.PROCEDURE, ParameterType.TIMESERIES];
+    const possibleFilters: ParameterType[] = [
+      ParameterType.CATEGORY,
+      ParameterType.FEATURE,
+      ParameterType.PHENOMENON,
+      ParameterType.PROCEDURE,
+      ParameterType.TIMESERIES,
+    ];
     for (let index = 0; index < this.filterList.length; index++) {
       const f = this.filterList[index].selectedFilter;
-      const idx = possibleFilters.findIndex(e => e === f);
+      const idx = possibleFilters.findIndex((e) => e === f);
       possibleFilters.splice(idx, 1);
     }
 
@@ -118,22 +140,22 @@ export class ListSelectionComponent implements OnInit {
     const copy = JSON.parse(JSON.stringify(filter.apiFilter[0]));
     switch (filter.selectedFilter) {
       case ParameterType.CATEGORY:
-        copy.filter.category = item.id
+        copy.filter.category = item.id;
         break;
       case ParameterType.FEATURE:
-        copy.filter.feature = item.id
+        copy.filter.feature = item.id;
         break;
       case ParameterType.PHENOMENON:
-        copy.filter.phenomenon = item.id
+        copy.filter.phenomenon = item.id;
         break;
       case ParameterType.PROCEDURE:
-        copy.filter.procedure = item.id
+        copy.filter.procedure = item.id;
         break;
     }
     this.filterList.push({
       expanded: true,
       possibleFilters,
-      apiFilter: [copy]
+      apiFilter: [copy],
     });
   }
 
@@ -141,15 +163,21 @@ export class ListSelectionComponent implements OnInit {
     this.filterList = [];
     this.filterList.push({
       expanded: true,
-      possibleFilters: [ParameterType.CATEGORY, ParameterType.FEATURE, ParameterType.PHENOMENON, ParameterType.PROCEDURE],
-      apiFilter: [{
-        url: selectedService.apiUrl,
-        filter: {
-          service: selectedService.id,
-          type: DatasetType.Timeseries
-        }
-      }]
+      possibleFilters: [
+        ParameterType.CATEGORY,
+        ParameterType.FEATURE,
+        ParameterType.PHENOMENON,
+        ParameterType.PROCEDURE,
+      ],
+      apiFilter: [
+        {
+          url: selectedService.apiUrl,
+          filter: {
+            service: selectedService.id,
+            type: DatasetType.Timeseries,
+          },
+        },
+      ],
     });
   }
-
 }

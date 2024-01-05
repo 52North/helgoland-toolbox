@@ -1,18 +1,17 @@
-import { NgClass } from "@angular/common";
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { DatasetOptions, HelgolandTimeseries } from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+import { NgClass } from '@angular/common';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DatasetOptions, HelgolandTimeseries } from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { FavoriteService } from "../service/favorite.service";
+import { FavoriteService } from '../service/favorite.service';
 
 @Component({
-  selector: "n52-favorite-toggler",
-  templateUrl: "./favorite-toggler.component.html",
+  selector: 'n52-favorite-toggler',
+  templateUrl: './favorite-toggler.component.html',
   standalone: true,
-  imports: [NgClass]
+  imports: [NgClass],
 })
 export class FavoriteTogglerComponent implements OnChanges {
-
   @Input({ required: true })
   public dataset!: HelgolandTimeseries;
 
@@ -23,11 +22,11 @@ export class FavoriteTogglerComponent implements OnChanges {
 
   constructor(
     protected favSrvc: FavoriteService,
-    protected translate: TranslateService
-  ) { }
+    protected translate: TranslateService,
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["dataset"] && this.dataset) {
+    if (changes['dataset'] && this.dataset) {
       this.isFavorite = this.favSrvc.hasFavorite(this.dataset);
     }
   }

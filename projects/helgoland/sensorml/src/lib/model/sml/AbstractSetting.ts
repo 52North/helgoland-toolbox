@@ -1,14 +1,14 @@
 // @ts-nocheck
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export abstract class AbstractSetting {
-    @DisplayName("Value")
-      value: any;
+  @DisplayName('Value')
+  value: any;
 
-    @DisplayName("Ref")
-      ref: string;
+  @DisplayName('Ref')
+  ref: string;
 
-    toString() {
-      return "Abstract setting";
-    }
+  toString() {
+    return 'Abstract setting';
+  }
 }

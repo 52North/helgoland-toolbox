@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { DatasetApiInterfaceTesting } from "../../../../../testing/dataset-api-interface.testing";
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DatasetTableComponent } from "./dataset-table.component";
+import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DatasetTableComponent } from './dataset-table.component';
 
-describe("DatasetTableComponent", () => {
+describe('DatasetTableComponent', () => {
   let component: DatasetTableComponent;
   let fixture: ComponentFixture<DatasetTableComponent>;
 
@@ -15,12 +15,9 @@ describe("DatasetTableComponent", () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        DatasetTableComponent
+        DatasetTableComponent,
       ],
-      providers: [
-        DatasetApiInterfaceTesting,
-        SettingsServiceTestingProvider
-      ]
+      providers: [DatasetApiInterfaceTesting, SettingsServiceTestingProvider],
     }).compileComponents();
   }));
 
@@ -30,8 +27,7 @@ describe("DatasetTableComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

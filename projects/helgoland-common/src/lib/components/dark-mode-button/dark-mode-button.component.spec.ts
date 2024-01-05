@@ -1,11 +1,11 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DarkModeButtonComponent } from "./dark-mode-button.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DarkModeButtonComponent } from './dark-mode-button.component';
 
-describe("DarkModeButtonComponent", () => {
+describe('DarkModeButtonComponent', () => {
   let component: DarkModeButtonComponent;
   let fixture: ComponentFixture<DarkModeButtonComponent>;
 
@@ -14,8 +14,8 @@ describe("DarkModeButtonComponent", () => {
       imports: [
         TranslateTestingModule,
         HttpClientTestingModule,
-        DarkModeButtonComponent
-      ]
+        DarkModeButtonComponent,
+      ],
     }).compileComponents();
   }));
 
@@ -25,7 +25,7 @@ describe("DarkModeButtonComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

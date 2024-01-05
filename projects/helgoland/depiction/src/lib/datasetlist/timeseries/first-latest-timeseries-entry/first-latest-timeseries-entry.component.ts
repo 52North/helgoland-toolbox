@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FirstLastValue,
   HelgolandServicesConnector,
@@ -6,13 +13,10 @@ import {
   Time,
   TimeInterval,
   TzDatePipe,
-} from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import {
-  ConfigurableTimeseriesEntryComponent,
-} from "../configurable-timeseries-entry/configurable-timeseries-entry.component";
-
+import { ConfigurableTimeseriesEntryComponent } from '../configurable-timeseries-entry/configurable-timeseries-entry.component';
 
 /**
  * Extends the ConfigurableTimeseriesEntryComponent, with the following functions:
@@ -20,14 +24,16 @@ import {
  *  - jump to first and latest value events
  */
 @Component({
-  selector: "n52-first-latest-timeseries-entry",
-  templateUrl: "./first-latest-timeseries-entry.component.html",
-  styleUrls: ["./first-latest-timeseries-entry.component.css"],
+  selector: 'n52-first-latest-timeseries-entry',
+  templateUrl: './first-latest-timeseries-entry.component.html',
+  styleUrls: ['./first-latest-timeseries-entry.component.css'],
   standalone: true,
-  imports: [TzDatePipe]
+  imports: [TzDatePipe],
 })
-export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesEntryComponent implements OnChanges {
-
+export class FirstLatestTimeseriesEntryComponent
+  extends ConfigurableTimeseriesEntryComponent
+  implements OnChanges
+{
   @Input()
   public timeInterval: TimeInterval | undefined;
 
@@ -43,13 +49,13 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
     protected override servicesConnector: HelgolandServicesConnector,
     protected override internalIdHandler: InternalIdHandler,
     protected override translateSrvc: TranslateService,
-    protected timeSrvc: Time
+    protected timeSrvc: Time,
   ) {
     super(servicesConnector, internalIdHandler, translateSrvc);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["timeInterval"]) {
+    if (changes['timeInterval']) {
       this.checkDataInTimespan();
     }
   }
@@ -76,13 +82,17 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   }
 
   private checkDataInTimespan() {
-    if (this.timeInterval && this.dataset && this.dataset.firstValue && this.dataset.lastValue) {
+    if (
+      this.timeInterval &&
+      this.dataset &&
+      this.dataset.firstValue &&
+      this.dataset.lastValue
+    ) {
       this.hasData = this.timeSrvc.overlaps(
         this.timeInterval,
         this.dataset.firstValue.timestamp,
-        this.dataset.lastValue.timestamp
+        this.dataset.lastValue.timestamp,
       );
     }
   }
-
 }

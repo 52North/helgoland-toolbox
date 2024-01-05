@@ -1,9 +1,14 @@
 <mat-form-field>
-  <input #input matInput [ngModel]="label" (ngModelChange)="changeLabel($event)">
+  <input
+    #input
+    matInput
+    [ngModel]="label"
+    (ngModelChange)="changeLabel($event)"
+  />
   @if (label !== editedLabel) {
-  <button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
-    <mat-icon>close</mat-icon>
-  </button>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+      <mat-icon>close</mat-icon>
+    </button>
   }
   <button matSuffix mat-icon-button aria-label="Clear" (click)="confirm()">
     <mat-icon>check</mat-icon>

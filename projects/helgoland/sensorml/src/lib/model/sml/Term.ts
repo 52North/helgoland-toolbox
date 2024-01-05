@@ -1,27 +1,27 @@
 // @ts-nocheck
-import { AbstractSWE } from "../swe/AbstractSWE";
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { AbstractSWE } from '../swe/AbstractSWE';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class Term extends AbstractSWE {
-    @DisplayName("Label")
-      label: string;
+  @DisplayName('Label')
+  label: string;
 
-    @DisplayName("Code space")
-      codeSpace: string;
+  @DisplayName('Code space')
+  codeSpace: string;
 
-    @DisplayName("Definition")
-      definition: string;
+  @DisplayName('Definition')
+  definition: string;
 
-    @DisplayName("Value")
-      value: string;
+  @DisplayName('Value')
+  value: string;
 
-    override toString() {
-      if (this.label && this.value) {
-        return this.label + ": " + this.value;
-      } else if (this.label) {
-        return this.label;
-      } else {
-        return "Term";
-      }
+  override toString() {
+    if (this.label && this.value) {
+      return this.label + ': ' + this.value;
+    } else if (this.label) {
+      return this.label;
+    } else {
+      return 'Term';
     }
+  }
 }

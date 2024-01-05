@@ -1,45 +1,50 @@
-import { AfterViewInit, Directive, OnDestroy } from "@angular/core";
-import { Timespan } from "@helgoland/core";
+import { AfterViewInit, Directive, OnDestroy } from '@angular/core';
+import { Timespan } from '@helgoland/core';
 
-import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
-import { D3GraphId } from "../helper/d3-graph-id.service";
-import { InternalDataEntry, YAxis } from "../model/d3-general";
-import { D3Graphs } from "./../helper/d3-graphs.service";
-import { D3TimeseriesGraphInterface } from "./d3-timeseries-graph.interface";
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3GraphId } from '../helper/d3-graph-id.service';
+import { InternalDataEntry, YAxis } from '../model/d3-general';
+import { D3Graphs } from './../helper/d3-graphs.service';
+import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
 
 export interface D3GraphObserver {
-    adjustBackground?(
-        background: d3.Selection<SVGSVGElement, any, any, any>,
-        graphExtent: D3GraphExtent,
-        preparedData: InternalDataEntry[],
-        graph: d3.Selection<SVGGElement, any, any, any>,
-        timespan: Timespan
-    ): void;
-    cleanUp?(): void;
-    mousemoveBackground?(event: MouseEvent): void;
-    mouseoverBackground?(event: MouseEvent): void;
-    mouseoutBackground?(event: MouseEvent): void;
-    dragStartBackground?(event: MouseEvent): void;
-    dragMoveBackground?(event: MouseEvent): void;
-    dragEndBackground?(event: MouseEvent): void;
-    zoomStartBackground?(event: MouseEvent): void;
-    zoomMoveBackground?(event: MouseEvent): void;
-    zoomEndBackground?(event: MouseEvent): void;
-    adjustYAxis?(axis: YAxis): void;
-    afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
+  adjustBackground?(
+    background: d3.Selection<SVGSVGElement, any, any, any>,
+    graphExtent: D3GraphExtent,
+    preparedData: InternalDataEntry[],
+    graph: d3.Selection<SVGGElement, any, any, any>,
+    timespan: Timespan,
+  ): void;
+  cleanUp?(): void;
+  mousemoveBackground?(event: MouseEvent): void;
+  mouseoverBackground?(event: MouseEvent): void;
+  mouseoutBackground?(event: MouseEvent): void;
+  dragStartBackground?(event: MouseEvent): void;
+  dragMoveBackground?(event: MouseEvent): void;
+  dragEndBackground?(event: MouseEvent): void;
+  zoomStartBackground?(event: MouseEvent): void;
+  zoomMoveBackground?(event: MouseEvent): void;
+  zoomEndBackground?(event: MouseEvent): void;
+  adjustYAxis?(axis: YAxis): void;
+  afterYAxisDrawn?(
+    yaxis: YAxis,
+    startX: number,
+    axisHeight: number,
+    axisWidth: number,
+  ): void;
 }
 
 export interface D3GraphExtent {
-    width: number;
-    height: number;
-    leftOffset: number;
-    margin: {
-        top: number;
-        right: number;
-        bottom: number;
-        left: number;
-    };
-    xScale: d3.ScaleTime<number, number>;
+  width: number;
+  height: number;
+  leftOffset: number;
+  margin: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+  xScale: d3.ScaleTime<number, number>;
 }
 
 /**
@@ -54,34 +59,41 @@ export interface D3GraphExtent {
  * </n52-d3-timeseries-graph>
  */
 @Directive()
-export abstract class D3TimeseriesGraphControl implements AfterViewInit, OnDestroy, D3GraphObserver {
-
+export abstract class D3TimeseriesGraphControl
+  implements AfterViewInit, OnDestroy, D3GraphObserver
+{
   constructor(
-        protected graphId: D3GraphId,
-        protected graphs: D3Graphs,
-        protected graphHelper: D3GraphHelperService
-  ) { }
+    protected graphId: D3GraphId,
+    protected graphs: D3Graphs,
+    protected graphHelper: D3GraphHelperService,
+  ) {}
 
   public ngAfterViewInit(): void {
-    this.graphId.getId().subscribe(graphId => this.graphs.getGraph(graphId).subscribe(graph => {
-      // needs to be registered first, to react then on the callbacks
-      graph.registerObserver(this);
-      this.graphInitialized(graph);
-    }));
+    this.graphId.getId().subscribe((graphId) =>
+      this.graphs.getGraph(graphId).subscribe((graph) => {
+        // needs to be registered first, to react then on the callbacks
+        graph.registerObserver(this);
+        this.graphInitialized(graph);
+      }),
+    );
   }
 
   public ngOnDestroy(): void {
-    this.graphId.getId().subscribe(graphId => this.graphs.getGraph(graphId).subscribe(graph => graph.unregisterObserver(this)));
+    this.graphId
+      .getId()
+      .subscribe((graphId) =>
+        this.graphs
+          .getGraph(graphId)
+          .subscribe((graph) => graph.unregisterObserver(this)),
+      );
     if (this.cleanUp) {
       this.cleanUp();
     }
   }
 
-    public abstract graphInitialized(graph: D3TimeseriesGraphInterface): void;
+  public abstract graphInitialized(graph: D3TimeseriesGraphInterface): void;
 
-    public adjustYAxis?(axis: YAxis): void;
+  public adjustYAxis?(axis: YAxis): void;
 
-    public cleanUp?(): void;
-
+  public cleanUp?(): void;
 }
-

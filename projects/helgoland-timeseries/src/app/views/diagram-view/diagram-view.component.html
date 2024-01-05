@@ -1,32 +1,48 @@
 <mat-menu #addtsMenu="matMenu">
   <button mat-menu-item (click)="openMapSelection()">
-    {{'diagram-view.add-timeseries.map' | translate}}
+    {{ "diagram-view.add-timeseries.map" | translate }}
   </button>
   <button mat-menu-item (click)="openListSelection()">
-    {{'diagram-view.add-timeseries.list' | translate}}
+    {{ "diagram-view.add-timeseries.list" | translate }}
   </button>
 </mat-menu>
 <mat-sidenav-container class="container">
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
-    autoFocus="false">
+  <mat-sidenav
+    #snav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+    position="start"
+    autoFocus="false"
+  >
     <div class="menu-wrapper">
       <div class="legend">
         @if (mobileQuery.matches) {
-        <button class="legend-menu-button" mat-icon-button (click)="snav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
+          <button
+            class="legend-menu-button"
+            mat-icon-button
+            (click)="snav.toggle()"
+          >
+            <mat-icon>menu</mat-icon>
+          </button>
         }
         <div class="entries">
           <mat-accordion [multi]="true">
             @for (id of datasetIds; track id) {
-            <div>
-              <helgoland-legend-entry [datasetId]="id" [selected]="isSelected(id)"
-                [datasetOptions]="datasetOptions.get(id)!" [timeInterval]="timeseries.timespan"
-                (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
-                (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
-                (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
-              </helgoland-legend-entry>
-            </div>
+              <div>
+                <helgoland-legend-entry
+                  [datasetId]="id"
+                  [selected]="isSelected(id)"
+                  [datasetOptions]="datasetOptions.get(id)!"
+                  [timeInterval]="timeseries.timespan"
+                  (onDeleteDataset)="deleteTimeseries(id)"
+                  (onSelectDataset)="selectTimeseries($event, id)"
+                  (onSelectDate)="jumpToDate($event)"
+                  (onUpdateOptions)="updateOptions($event, id)"
+                  (onEditOptions)="editOption($event)"
+                  (onShowGeometry)="showGeometry($event)"
+                >
+                </helgoland-legend-entry>
+              </div>
             }
           </mat-accordion>
         </div>
@@ -35,26 +51,48 @@
         <mat-toolbar-row>
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
           @if (selectedIds.length > 0) {
-          <button mat-icon-button (click)="clearSelection()"
-            attr.aria-label="{{'diagram-view.clear-selection.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.clear-selection.tooltip' | translate}}">
-            <mat-icon color="accent">remove_done</mat-icon>
-          </button>
+            <button
+              mat-icon-button
+              (click)="clearSelection()"
+              attr.aria-label="{{
+                'diagram-view.clear-selection.tooltip' | translate
+              }}"
+              matTooltip="{{
+                'diagram-view.clear-selection.tooltip' | translate
+              }}"
+            >
+              <mat-icon color="accent">remove_done</mat-icon>
+            </button>
           }
-          <div style="flex:1;"></div>
+          <div style="flex: 1"></div>
           @if (datasetIds.length > 0) {
-          <button mat-icon-button (click)="removeAllTimeseries()"
-            attr.aria-label="{{'diagram-view.remove-legend-entries.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
-            <mat-icon>clear</mat-icon>
-          </button>
+            <button
+              mat-icon-button
+              (click)="removeAllTimeseries()"
+              attr.aria-label="{{
+                'diagram-view.remove-legend-entries.tooltip' | translate
+              }}"
+              matTooltip="{{
+                'diagram-view.remove-legend-entries.tooltip' | translate
+              }}"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
           }
-          <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
-          <helgoland-modal-favorite-list-button style="margin-right: 10px;">
+          <helgoland-share-button
+            [generatedUrlFunction]="permalinkSrvc.createPermalink"
+          ></helgoland-share-button>
+          <helgoland-modal-favorite-list-button style="margin-right: 10px">
           </helgoland-modal-favorite-list-button>
-          <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent"
-            attr.aria-label="{{'diagram-view.add-button.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.add-button.tooltip' | translate}}">
+          <button
+            mat-mini-fab
+            [matMenuTriggerFor]="addtsMenu"
+            color="accent"
+            attr.aria-label="{{
+              'diagram-view.add-button.tooltip' | translate
+            }}"
+            matTooltip="{{ 'diagram-view.add-button.tooltip' | translate }}"
+          >
             <mat-icon>add</mat-icon>
           </button>
         </mat-toolbar-row>
@@ -63,63 +101,91 @@
   </mat-sidenav>
   <mat-sidenav-content class="content">
     @if (mobileQuery.matches) {
-    <button class="legend-button" mat-mini-fab color="none" (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+      <button
+        class="legend-button"
+        mat-mini-fab
+        color="none"
+        (click)="snav.toggle()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
     }
     @if (datasetIds.length === 0) {
-    <div class="no-timeseries">
-      {{'diagram-view.no-timeseries.hint' | translate}}
-      <div>
-        <button mat-button (click)="openMapSelection()">
-          {{'diagram-view.add-timeseries.map' | translate}}
-        </button>
+      <div class="no-timeseries">
+        {{ "diagram-view.no-timeseries.hint" | translate }}
+        <div>
+          <button mat-button (click)="openMapSelection()">
+            {{ "diagram-view.add-timeseries.map" | translate }}
+          </button>
+        </div>
+        <div>
+          <button mat-button (click)="openListSelection()">
+            {{ "diagram-view.add-timeseries.list" | translate }}
+          </button>
+        </div>
       </div>
-      <div>
-        <button mat-button (click)="openListSelection()">
-          {{'diagram-view.add-timeseries.list' | translate}}
-        </button>
-      </div>
-    </div>
     }
     @if (datasetIds.length > 0) {
-    <div class="diagrams">
-      <div class="diagram">
-        @if (diagramLoading) {
-        <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
-        }
-        <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()"
-          matTooltip="{{'diagram-view.open-diagram-settings' | translate}}"
-          attr.aria-label="{{'diagram-view.open-diagram-settings' | translate}}">
-          <mat-icon>query_stats</mat-icon>
-        </button>
-        <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-          [datasetOptions]="datasetOptions" [timeInterval]="timeseries.timespan" [presenterOptions]="d3diagramOptions"
-          (onTimespanChanged)="timeseries.timespan = $event" (onDatasetSelected)="setSelected($event)"
-          (onContentLoading)="onDiagramLoading($event)" #diagram>
-          @if (diagramConfig.yaxisModifier) {
-          <n52-d3-y-axis-modifier [zoom]="true" [shift]="true">
-          </n52-d3-y-axis-modifier>
+      <div class="diagrams">
+        <div class="diagram">
+          @if (diagramLoading) {
+            <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
           }
-        </n52-d3-timeseries-graph>
-      </div>
-      <div>
-        <helgoland-general-time-selection [timespan]="timeseries.timespan"
-          (timespanChanged)="timeseries.timespan = $event">
-        </helgoland-general-time-selection>
-      </div>
-      @if (diagramConfig.overviewVisible) {
-      <div class="overview-diagram desktop-only">
-        @if (overviewLoading) {
-        <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
+          <button
+            class="local-settings-button"
+            mat-mini-fab
+            color="none"
+            (click)="openDiagramSettings()"
+            matTooltip="{{ 'diagram-view.open-diagram-settings' | translate }}"
+            attr.aria-label="{{
+              'diagram-view.open-diagram-settings' | translate
+            }}"
+          >
+            <mat-icon>query_stats</mat-icon>
+          </button>
+          <n52-d3-timeseries-graph
+            class="diagram"
+            [datasetIds]="datasetIds"
+            [selectedDatasetIds]="selectedIds"
+            [datasetOptions]="datasetOptions"
+            [timeInterval]="timeseries.timespan"
+            [presenterOptions]="d3diagramOptions"
+            (onTimespanChanged)="timeseries.timespan = $event"
+            (onDatasetSelected)="setSelected($event)"
+            (onContentLoading)="onDiagramLoading($event)"
+            #diagram
+          >
+            @if (diagramConfig.yaxisModifier) {
+              <n52-d3-y-axis-modifier [zoom]="true" [shift]="true">
+              </n52-d3-y-axis-modifier>
+            }
+          </n52-d3-timeseries-graph>
+        </div>
+        <div>
+          <helgoland-general-time-selection
+            [timespan]="timeseries.timespan"
+            (timespanChanged)="timeseries.timespan = $event"
+          >
+          </helgoland-general-time-selection>
+        </div>
+        @if (diagramConfig.overviewVisible) {
+          <div class="overview-diagram desktop-only">
+            @if (overviewLoading) {
+              <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
+            }
+            <n52-d3-overview-timeseries-graph
+              [datasetIds]="datasetIds"
+              [rangefactor]="2"
+              [datasetOptions]="datasetOptions"
+              [presenterOptions]="d3overviewOptions"
+              [timeInterval]="timeseries.timespan"
+              (onTimespanChanged)="timeseries.timespan = $event"
+              (onContentLoading)="onOverviewLoading($event)"
+            >
+            </n52-d3-overview-timeseries-graph>
+          </div>
         }
-        <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-          [presenterOptions]="d3overviewOptions" [timeInterval]="timeseries.timespan"
-          (onTimespanChanged)="timeseries.timespan = $event" (onContentLoading)="onOverviewLoading($event)">
-        </n52-d3-overview-timeseries-graph>
       </div>
-      }
-    </div>
     }
   </mat-sidenav-content>
 </mat-sidenav-container>

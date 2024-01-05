@@ -11,19 +11,22 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from "@angular/core";
-import * as L from "leaflet";
+} from '@angular/core';
+import * as L from 'leaflet';
 
-import { MapCache } from "./map-cache.service";
-import { LayerMap, LayerOptions } from "./map-options";
+import { MapCache } from './map-cache.service';
+import { LayerMap, LayerOptions } from './map-options';
 
-const DEFAULT_BASE_LAYER_NAME = "BaseLayer";
-const DEFAULT_BASE_LAYER_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const DEFAULT_BASE_LAYER_ATTRIBUTION = "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors";
+const DEFAULT_BASE_LAYER_NAME = 'BaseLayer';
+const DEFAULT_BASE_LAYER_URL =
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const DEFAULT_BASE_LAYER_ATTRIBUTION =
+  '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
 @Directive()
-export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestroy, OnInit {
-
+export abstract class CachedMapComponent
+  implements OnChanges, DoCheck, OnDestroy, OnInit
+{
   /**
    * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
    */
@@ -87,7 +90,7 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
   constructor(
     protected mapCache: MapCache,
-    protected kvDiffers: KeyValueDiffers
+    protected kvDiffers: KeyValueDiffers,
   ) {
     this._differOverlayMaps = this.kvDiffers.find({}).create();
     this._differBaseMaps = this.kvDiffers.find({}).create();
@@ -101,10 +104,10 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (this.map) {
-      if (changes["fitBounds"] && this.fitBounds) {
+      if (changes['fitBounds'] && this.fitBounds) {
         this.map.fitBounds(this.fitBounds);
       }
-      if (changes["zoomControlOptions"]) {
+      if (changes['zoomControlOptions']) {
         this.updateZoomControl();
       }
     }
@@ -114,7 +117,9 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     if (this._differOverlayMaps && this.overlayMaps) {
       const changes = this._differOverlayMaps.diff(this.overlayMaps);
       if (changes) {
-        changes.forEachRemovedItem((e) => this.removeOverlayMap(e.previousValue));
+        changes.forEachRemovedItem((e) =>
+          this.removeOverlayMap(e.previousValue),
+        );
         changes.forEachAddedItem((e) => this.addOverlayMap(e.currentValue));
         this.updateLayerControl();
       }
@@ -138,7 +143,9 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
   }
 
   protected createMap(): void {
-    if (!this.mapOptions || this.zoomControlOptions) { this.mapOptions = { zoomControl: false }; }
+    if (!this.mapOptions || this.zoomControlOptions) {
+      this.mapOptions = { zoomControl: false };
+    }
     this.map = L.map(this.mapId, this.mapOptions);
     this.mapCache.setMap(this.mapId, this.map);
     this.mapInitialized.emit(this.mapId);
@@ -147,7 +154,9 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
     } else {
       this.addBaseMap();
     }
-    if (this.overlayMaps) { this.overlayMaps.forEach((entry, key) => this.addOverlayMap(entry)); }
+    if (this.overlayMaps) {
+      this.overlayMaps.forEach((entry, key) => this.addOverlayMap(entry));
+    }
     this.updateZoomControl();
     this.updateLayerControl();
     if (this.fitBounds) {
@@ -161,20 +170,39 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
         .toString(16)
         .substring(1);
     }
-    return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+    return (
+      s4() +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      s4() +
+      s4()
+    );
   }
 
   private addOverlayMap(layerOptions: LayerOptions | null) {
     if (this.map && layerOptions) {
       if (!this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
         this.oldOverlayLayer[layerOptions.label] = layerOptions.layer;
-        if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
+        if (layerOptions.visible) {
+          layerOptions.layer.addTo(this.map);
+        }
       }
     }
   }
 
   private removeOverlayMap(layerOptions: LayerOptions | null) {
-    if (this.map && layerOptions && this.oldOverlayLayer.hasOwnProperty(layerOptions.label)) {
+    if (
+      this.map &&
+      layerOptions &&
+      this.oldOverlayLayer.hasOwnProperty(layerOptions.label)
+    ) {
       this.map.removeLayer(this.oldOverlayLayer[layerOptions.label]);
       delete this.oldOverlayLayer[layerOptions.label];
     }
@@ -187,19 +215,28 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
           label: DEFAULT_BASE_LAYER_NAME,
           visible: true,
           layer: L.tileLayer(DEFAULT_BASE_LAYER_URL, {
-            attribution: DEFAULT_BASE_LAYER_ATTRIBUTION
-          })
+            attribution: DEFAULT_BASE_LAYER_ATTRIBUTION,
+          }),
         };
       }
-      if (layerOptions && !this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+      if (
+        layerOptions &&
+        !this.oldBaseLayer.hasOwnProperty(layerOptions.label)
+      ) {
         this.oldBaseLayer[layerOptions.label] = layerOptions.layer;
-        if (layerOptions.visible) { layerOptions.layer.addTo(this.map); }
+        if (layerOptions.visible) {
+          layerOptions.layer.addTo(this.map);
+        }
       }
     }
   }
 
   private removeBaseMap(layerOptions: LayerOptions | null) {
-    if (this.map && layerOptions && this.oldBaseLayer.hasOwnProperty(layerOptions.label)) {
+    if (
+      this.map &&
+      layerOptions &&
+      this.oldBaseLayer.hasOwnProperty(layerOptions.label)
+    ) {
       this.map.removeLayer(this.oldBaseLayer[layerOptions.label]);
       delete this.oldBaseLayer[layerOptions.label];
     }
@@ -210,19 +247,31 @@ export abstract class CachedMapComponent implements OnChanges, DoCheck, OnDestro
       if (this.layerControl) {
         this.map.removeControl(this.layerControl);
       }
-      if (this.layerControlOptions
-        && (Object.keys(this.oldBaseLayer).length > 1 || Object.keys(this.oldOverlayLayer).length > 0)) {
-        this.layerControl =
-          L.control.layers(this.oldBaseLayer, this.oldOverlayLayer, this.layerControlOptions).addTo(this.map);
+      if (
+        this.layerControlOptions &&
+        (Object.keys(this.oldBaseLayer).length > 1 ||
+          Object.keys(this.oldOverlayLayer).length > 0)
+      ) {
+        this.layerControl = L.control
+          .layers(
+            this.oldBaseLayer,
+            this.oldOverlayLayer,
+            this.layerControlOptions,
+          )
+          .addTo(this.map);
       }
     }
   }
 
   private updateZoomControl() {
     if (this.map) {
-      if (this.zoomControl) { this.map.removeControl(this.zoomControl); }
+      if (this.zoomControl) {
+        this.map.removeControl(this.zoomControl);
+      }
       if (this.zoomControlOptions) {
-        this.zoomControl = L.control.zoom(this.zoomControlOptions).addTo(this.map);
+        this.zoomControl = L.control
+          .zoom(this.zoomControlOptions)
+          .addTo(this.map);
       }
     }
   }

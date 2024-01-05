@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { StringTogglerComponent } from "./string-toggler.component";
+import { StringTogglerComponent } from './string-toggler.component';
 
-describe("StringTogglerComponent", () => {
+describe('StringTogglerComponent', () => {
   let component: StringTogglerComponent;
   let fixture: ComponentFixture<StringTogglerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [StringTogglerComponent]
-    })
-      .compileComponents();
+      imports: [StringTogglerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe("StringTogglerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

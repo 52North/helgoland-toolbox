@@ -1,5 +1,5 @@
-import { NgClass, NgStyle } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -8,19 +8,18 @@ import {
   HelgolandTrajectory,
   InternalDatasetId,
   InternalIdHandler,
-} from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { ListEntryComponent } from "../list-entry.component";
+import { ListEntryComponent } from '../list-entry.component';
 
 @Component({
-  selector: "n52-trajectory-entry",
-  templateUrl: "./trajectory-entry.component.html",
+  selector: 'n52-trajectory-entry',
+  templateUrl: './trajectory-entry.component.html',
   standalone: true,
-  imports: [NgClass, NgStyle]
+  imports: [NgClass, NgStyle],
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {
-
   @Input()
   public datasetOptions: DatasetOptions | undefined;
 
@@ -39,7 +38,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
     protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService
+    protected override translateSrvc: TranslateService,
   ) {
     super(internalIdHandler, translateSrvc);
   }
@@ -57,12 +56,15 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
 
   protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
     const params: DatasetFilter = {};
-    if (locale) { params.locale = locale; }
+    if (locale) {
+      params.locale = locale;
+    }
     this.loading = true;
-    this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Trajectory })
+    this.servicesConnector
+      .getDataset(internalId, { ...params, type: DatasetType.Trajectory })
       .subscribe({
-        next: trajectory => this.setTrajectory(trajectory),
-        error: error => this.handleTrajectoryLoadError(error),
+        next: (trajectory) => this.setTrajectory(trajectory),
+        error: (error) => this.handleTrajectoryLoadError(error),
       });
   }
 

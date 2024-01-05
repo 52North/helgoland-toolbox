@@ -1,7 +1,7 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 declare var Reflect: any;
 
-const displayNameKey = "DisplayName";
+const displayNameKey = 'DisplayName';
 
 export function DisplayName(displayName: string) {
   return Reflect.metadata(displayNameKey, displayName);

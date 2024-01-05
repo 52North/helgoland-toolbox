@@ -1,40 +1,39 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule, Timespan } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
-import { AutoUpdateTimespanComponent } from "./auto-update-timespan.component";
+import { AutoUpdateTimespanComponent } from './auto-update-timespan.component';
 
-describe("AutoUpdateTimespanComponent", () => {
+describe('AutoUpdateTimespanComponent', () => {
   let component: AutoUpdateTimespanComponent;
   let fixture: ComponentFixture<AutoUpdateTimespanComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule,
-        AutoUpdateTimespanComponent
-      ]
-    })
-      .compileComponents();
+      imports: [HelgolandCoreModule, AutoUpdateTimespanComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AutoUpdateTimespanComponent);
     component = fixture.componentInstance;
-    component.currentTimespan = new Timespan(new Date().getTime() - 10000000, new Date().getTime());
+    component.currentTimespan = new Timespan(
+      new Date().getTime() - 10000000,
+      new Date().getTime(),
+    );
     component.timeInterval = 100000;
     component.refreshInterval = 2;
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should not update from beginning", () => {
+  it('should not update from beginning', () => {
     expect(component.toggleAutoUpdate).toBe(false);
   });
 
-  it("should toggle auto update", () => {
+  it('should toggle auto update', () => {
     // off before toggle
     expect(component.toggleAutoUpdate).toBe(false);
     component.toggleUpdateTimeinterval();
@@ -57,5 +56,4 @@ describe("AutoUpdateTimespanComponent", () => {
   //   expect(component.currentTimespan.from).toBeGreaterThan(oldTimespan.from);
   //   expect(component.currentTimespan.to).toBeGreaterThan(oldTimespan.to);
   // }));
-
 });

@@ -1,29 +1,27 @@
 <span>
   @switch (parameterType) {
-  @case ('provider') {
-  <span>
-    {{'list-selection.parameter-type.provider' | translate}}
-  </span>
-  }
-  @case ('offering') {
-  <span>
-    {{'list-selection.parameter-type.offering' | translate}}
-  </span>
-  }
-  @case ('phenomenon') {
-  <span>
-    {{'list-selection.parameter-type.phenomenon' | translate}}
-  </span>
-  }
-  @case ('feature') {
-  <span>
-    {{'list-selection.parameter-type.feature' | translate}}
-  </span>
-  }
-  @default {
-  <span>
-    '{{parameterType}}' not implemented
-  </span>
-  }
+    @case ("provider") {
+      <span>
+        {{ "list-selection.parameter-type.provider" | translate }}
+      </span>
+    }
+    @case ("offering") {
+      <span>
+        {{ "list-selection.parameter-type.offering" | translate }}
+      </span>
+    }
+    @case ("phenomenon") {
+      <span>
+        {{ "list-selection.parameter-type.phenomenon" | translate }}
+      </span>
+    }
+    @case ("feature") {
+      <span>
+        {{ "list-selection.parameter-type.feature" | translate }}
+      </span>
+    }
+    @default {
+      <span> '{{ parameterType }}' not implemented </span>
+    }
   }
 </span>

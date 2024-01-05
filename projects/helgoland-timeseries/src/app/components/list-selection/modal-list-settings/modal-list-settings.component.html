@@ -1,14 +1,17 @@
-<h1 mat-dialog-title>{{ 'list-config.title' | translate }}</h1>
+<h1 mat-dialog-title>{{ "list-config.title" | translate }}</h1>
 <mat-dialog-content>
-
   <div class="full-height">
-    <helgoland-common-service-list-selector [datasetApiList]="datasetApis"
-      [selectedService]="listConfig.selectedService" [supportStations]="true"
-      (onServiceSelected)="serviceSelected($event)"></helgoland-common-service-list-selector>
+    <helgoland-common-service-list-selector
+      [datasetApiList]="datasetApis"
+      [selectedService]="listConfig.selectedService"
+      [supportStations]="true"
+      (onServiceSelected)="serviceSelected($event)"
+    ></helgoland-common-service-list-selector>
   </div>
-
 </mat-dialog-content>
 <mat-dialog-actions>
   <div style="flex: 1"></div>
-  <button mat-raised-button [mat-dialog-close]="listConfig" cdkFocusInitial>{{'controls.ok' | translate}}</button>
+  <button mat-raised-button [mat-dialog-close]="listConfig" cdkFocusInitial>
+    {{ "controls.ok" | translate }}
+  </button>
 </mat-dialog-actions>

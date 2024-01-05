@@ -1,14 +1,21 @@
 <div class="d3" #d3timeseries>
   <n52-d3-graph-pan-zoom-interaction></n52-d3-graph-pan-zoom-interaction>
-  <n52-d3-graph-copyright [copyright]="plotOptions.copyright"></n52-d3-graph-copyright>
-  @if (plotOptions.hoverStyle === 'line') {
-  <n52-d3-graph-hover-line></n52-d3-graph-hover-line>
+  <n52-d3-graph-copyright
+    [copyright]="plotOptions.copyright"
+  ></n52-d3-graph-copyright>
+  @if (plotOptions.hoverStyle === "line") {
+    <n52-d3-graph-hover-line></n52-d3-graph-hover-line>
   }
-  @if (plotOptions.hoverStyle === 'point') {
-  <n52-d3-graph-hover-point [hoveringService]="hoveringService" (onHighlightChanged)="onHighlightChanged.emit($event)">
-  </n52-d3-graph-hover-point>
+  @if (plotOptions.hoverStyle === "point") {
+    <n52-d3-graph-hover-point
+      [hoveringService]="hoveringService"
+      (onHighlightChanged)="onHighlightChanged.emit($event)"
+    >
+    </n52-d3-graph-hover-point>
   }
   @if (plotOptions.overview) {
-  <n52-d3-graph-overview-selection [selectionTimeInterval]="mainTimeInterval"></n52-d3-graph-overview-selection>
+    <n52-d3-graph-overview-selection
+      [selectionTimeInterval]="mainTimeInterval"
+    ></n52-d3-graph-overview-selection>
   }
 </div>

@@ -1,12 +1,12 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HelgolandCommonModule } from "helgoland-common";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HelgolandCommonModule } from 'helgoland-common';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { ModalMainConfigComponent } from "./modal-main-config.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { ModalMainConfigComponent } from './modal-main-config.component';
 
-describe("ModalMainConfigComponent", () => {
+describe('ModalMainConfigComponent', () => {
   let component: ModalMainConfigComponent;
   let fixture: ComponentFixture<ModalMainConfigComponent>;
 
@@ -17,8 +17,8 @@ describe("ModalMainConfigComponent", () => {
         BrowserAnimationsModule,
         HelgolandCommonModule,
         HttpClientModule,
-        ModalMainConfigComponent
-      ]
+        ModalMainConfigComponent,
+      ],
     }).compileComponents();
   });
 
@@ -28,7 +28,7 @@ describe("ModalMainConfigComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,19 +1,22 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import * as L from "leaflet";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import * as L from 'leaflet';
 
-import { GeoSearch, GeoSearchOptions, GeoSearchResult } from "../../base/geosearch/geosearch";
-import { MapCache } from "../../base/map-cache.service";
-import { MapControlComponent } from "../map-control-component";
+import {
+  GeoSearch,
+  GeoSearchOptions,
+  GeoSearchResult,
+} from '../../base/geosearch/geosearch';
+import { MapCache } from '../../base/map-cache.service';
+import { MapControlComponent } from '../map-control-component';
 
 @Component({
-  selector: "n52-geosearch-control",
-  templateUrl: "./geosearch.component.html",
+  selector: 'n52-geosearch-control',
+  templateUrl: './geosearch.component.html',
   standalone: true,
-  imports: [FormsModule]
+  imports: [FormsModule],
 })
 export class GeosearchControlComponent extends MapControlComponent {
-
   /**
    * Additional search options.
    */
@@ -23,7 +26,8 @@ export class GeosearchControlComponent extends MapControlComponent {
    * Returns the search result.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onResultChanged: EventEmitter<GeoSearchResult> = new EventEmitter();
+  @Output() public onResultChanged: EventEmitter<GeoSearchResult> =
+    new EventEmitter();
 
   /**
    * Informs, when the search is triggered.
@@ -41,7 +45,7 @@ export class GeosearchControlComponent extends MapControlComponent {
 
   constructor(
     protected override mapCache: MapCache,
-    protected geosearch: GeoSearch
+    protected geosearch: GeoSearch,
   ) {
     super(mapCache);
   }
@@ -56,32 +60,36 @@ export class GeosearchControlComponent extends MapControlComponent {
       this.geosearch.searchTerm(this.searchTerm, this.options).subscribe({
         next: (result) => {
           if (!result) {
-            this.searchTerm = "";
+            this.searchTerm = '';
             this.onResultChanged.emit(undefined);
             return;
           }
           this.result = result;
           if (this.mapId && this.mapCache.getMap(this.mapId)) {
-            this.resultGeometry = L.geoJSON(result.geometry).addTo(this.mapCache.getMap(this.mapId));
+            this.resultGeometry = L.geoJSON(result.geometry).addTo(
+              this.mapCache.getMap(this.mapId),
+            );
             if (result.bounds) {
               this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
             } else {
-              this.mapCache.getMap(this.mapId).fitBounds(this.resultGeometry.getBounds());
+              this.mapCache
+                .getMap(this.mapId)
+                .fitBounds(this.resultGeometry.getBounds());
             }
           }
           this.onResultChanged.emit(result);
         },
         error: (error) => {
-          this.searchTerm = "error occurred";
+          this.searchTerm = 'error occurred';
           this.onResultChanged.emit(undefined);
         },
-        complete: () => this.loading = false
+        complete: () => (this.loading = false),
       });
     }
   }
 
   public clearSearch() {
-    this.searchTerm = "";
+    this.searchTerm = '';
     this.onResultChanged.emit(undefined);
     this.removeOldGeometry();
   }
@@ -91,5 +99,4 @@ export class GeosearchControlComponent extends MapControlComponent {
       this.resultGeometry.remove();
     }
   }
-
 }

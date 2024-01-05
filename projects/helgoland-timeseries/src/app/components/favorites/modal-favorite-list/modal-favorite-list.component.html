@@ -1,79 +1,106 @@
-<h1 mat-dialog-title>{{'favorites.title' | translate}}</h1>
+<h1 mat-dialog-title>{{ "favorites.title" | translate }}</h1>
 <mat-dialog-content>
-  <div style="max-height: 50vh; overflow: auto;">
+  <div style="max-height: 50vh; overflow: auto">
     @for (item of singles; track item) {
-    <mat-card appearance="outlined" style="margin-bottom: 10px;">
-      @if (!item.editMode) {
-      <div class="fav-title">
-        <span style="flex: 1;">{{item.label}}</span>
-        <button mat-icon-button (click)="item.editMode = true">
-          <mat-icon>create</mat-icon>
-        </button>
-      </div>
-      }
-      @if (item.editMode) {
-      <div class="fav-title">
-        <helgoland-edit-label [label]="item.label" (labelChanged)="setFavLabel(item, $event); item.editMode = false;">
-        </helgoland-edit-label>
-      </div>
-      }
-      <div class="fav-additional">
-        {{item.favorite.parameters.phenomenon?.label}} - {{item.favorite.parameters.feature?.label}}
-      </div>
-      <div class="fav-actions">
-        <button mat-icon-button (click)="deleteFav(item)"
-          matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
-          attr.aria-label="{{'favorites.single-favorite.remove-from-list' | translate}}">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <div style="flex: 1"></div>
-        <button mat-button (click)="addSingleToDiagram(item)">
-          {{'favorites.single-favorite.add-to-diagram' | translate}}
-        </button>
-      </div>
-    </mat-card>
+      <mat-card appearance="outlined" style="margin-bottom: 10px">
+        @if (!item.editMode) {
+          <div class="fav-title">
+            <span style="flex: 1">{{ item.label }}</span>
+            <button mat-icon-button (click)="item.editMode = true">
+              <mat-icon>create</mat-icon>
+            </button>
+          </div>
+        }
+        @if (item.editMode) {
+          <div class="fav-title">
+            <helgoland-edit-label
+              [label]="item.label"
+              (labelChanged)="setFavLabel(item, $event); item.editMode = false"
+            >
+            </helgoland-edit-label>
+          </div>
+        }
+        <div class="fav-additional">
+          {{ item.favorite.parameters.phenomenon?.label }} -
+          {{ item.favorite.parameters.feature?.label }}
+        </div>
+        <div class="fav-actions">
+          <button
+            mat-icon-button
+            (click)="deleteFav(item)"
+            matTooltip="{{
+              'favorites.single-favorite.remove-from-list' | translate
+            }}"
+            attr.aria-label="{{
+              'favorites.single-favorite.remove-from-list' | translate
+            }}"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <div style="flex: 1"></div>
+          <button mat-button (click)="addSingleToDiagram(item)">
+            {{ "favorites.single-favorite.add-to-diagram" | translate }}
+          </button>
+        </div>
+      </mat-card>
     }
     @for (group of groups; track group) {
-    <mat-card appearance="outlined" style="margin-bottom: 10px;">
-      @if (!group.editMode) {
-      <div class="fav-title">
-        <span style="flex: 1;">{{group.label}}</span>
-        <button mat-icon-button (click)="group.editMode = true">
-          <mat-icon>create</mat-icon>
-        </button>
-      </div>
-      }
-      @if (group.editMode) {
-      <div class="fav-title">
-        <helgoland-edit-label [label]="group.label"
-          (labelChanged)="setFavLabel(group, $event); group.editMode = false;">
-        </helgoland-edit-label>
-      </div>
-      }
-      @for (fav of group.favorites; track fav) {
-      <div class="fav-additional">
-        {{fav.dataset.parameters.phenomenon?.label}} - {{fav.dataset.parameters.feature?.label}}
-      </div>
-      }
-      <div class="fav-actions">
-        <button mat-icon-button (click)="deleteFav(group)"
-          matTooltip="{{'favorites.single-favorite.remove-from-list' | translate}}"
-          attr.aria-label="{{'favorites.single-favorite.remove-from-list' | translate}}">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <div style="flex: 1"></div>
-        <button mat-button (click)="addGroupToDiagram(group)">
-          {{'favorites.single-favorite.add-to-diagram' | translate}}
-        </button>
-      </div>
-    </mat-card>
+      <mat-card appearance="outlined" style="margin-bottom: 10px">
+        @if (!group.editMode) {
+          <div class="fav-title">
+            <span style="flex: 1">{{ group.label }}</span>
+            <button mat-icon-button (click)="group.editMode = true">
+              <mat-icon>create</mat-icon>
+            </button>
+          </div>
+        }
+        @if (group.editMode) {
+          <div class="fav-title">
+            <helgoland-edit-label
+              [label]="group.label"
+              (labelChanged)="
+                setFavLabel(group, $event); group.editMode = false
+              "
+            >
+            </helgoland-edit-label>
+          </div>
+        }
+        @for (fav of group.favorites; track fav) {
+          <div class="fav-additional">
+            {{ fav.dataset.parameters.phenomenon?.label }} -
+            {{ fav.dataset.parameters.feature?.label }}
+          </div>
+        }
+        <div class="fav-actions">
+          <button
+            mat-icon-button
+            (click)="deleteFav(group)"
+            matTooltip="{{
+              'favorites.single-favorite.remove-from-list' | translate
+            }}"
+            attr.aria-label="{{
+              'favorites.single-favorite.remove-from-list' | translate
+            }}"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <div style="flex: 1"></div>
+          <button mat-button (click)="addGroupToDiagram(group)">
+            {{ "favorites.single-favorite.add-to-diagram" | translate }}
+          </button>
+        </div>
+      </mat-card>
     }
   </div>
 </mat-dialog-content>
 <div mat-dialog-actions>
   @if (timeseriesSrvc.hasDatasets()) {
-  <button mat-raised-button (click)="createGroup()">{{'favorites.create-group' | translate}}</button>
+    <button mat-raised-button (click)="createGroup()">
+      {{ "favorites.create-group" | translate }}
+    </button>
   }
   <div style="flex: 1"></div>
-  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>
+    {{ "controls.close" | translate }}
+  </button>
 </div>

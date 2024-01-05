@@ -1,73 +1,114 @@
 <div class="header">
   @if (trajectory) {
-  <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
+    <helgoland-trajectories-label
+      [trajectory]="trajectory"
+    ></helgoland-trajectories-label>
   }
   @if (loading) {
-  <helgoland-loading-overlay-spinner loadingHint="{{'trajectory-view.loading-trajectory' | translate}}">
-  </helgoland-loading-overlay-spinner>
+    <helgoland-loading-overlay-spinner
+      loadingHint="{{ 'trajectory-view.loading-trajectory' | translate }}"
+    >
+    </helgoland-loading-overlay-spinner>
   }
 </div>
 
 @if (trajectory) {
-<div class="content">
-  <div class="map">
-    <n52-geometry-map-viewer class="map" mapId="trajectory" [geometry]="geometry" [highlight]="highlightGeometry"
-      [zoomTo]="zoomToGeometry"></n52-geometry-map-viewer>
-  </div>
-  <div class="chart-wrapper">
-    <div class="legend-wrapper">
-      <div class="legend">
-        @for (id of datasetIds; track id) {
-        <div>
-          <helgoland-trajectories-legend-entry [datasetId]="id" [datasetOptions]="options.get(id)">
-          </helgoland-trajectories-legend-entry>
+  <div class="content">
+    <div class="map">
+      <n52-geometry-map-viewer
+        class="map"
+        mapId="trajectory"
+        [geometry]="geometry"
+        [highlight]="highlightGeometry"
+        [zoomTo]="zoomToGeometry"
+      ></n52-geometry-map-viewer>
+    </div>
+    <div class="chart-wrapper">
+      <div class="legend-wrapper">
+        <div class="legend">
+          @for (id of datasetIds; track id) {
+            <div>
+              <helgoland-trajectories-legend-entry
+                [datasetId]="id"
+                [datasetOptions]="options.get(id)"
+              >
+              </helgoland-trajectories-legend-entry>
+            </div>
+          }
         </div>
-        }
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <button
+              mat-icon-button
+              (click)="openMainConfig()"
+              matTooltip="{{ 'main-config-button.tooltip' | translate }}"
+            >
+              <mat-icon>settings</mat-icon>
+            </button>
+            <div style="flex: 1"></div>
+            <helgoland-share-button
+              [generatedUrlFunction]="permalinkSrvc.createPermalink"
+            ></helgoland-share-button>
+            <button
+              mat-mini-fab
+              (click)="openSelection()"
+              color="accent"
+              matTooltip="{{ 'trajectory-view.change-trajectory' | translate }}"
+            >
+              <mat-icon>find_replace</mat-icon>
+            </button>
+          </mat-toolbar-row>
+        </mat-toolbar>
       </div>
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <button mat-icon-button (click)="openMainConfig()" matTooltip="{{'main-config-button.tooltip' | translate}}">
-            <mat-icon>settings</mat-icon>
-          </button>
-          <div style="flex:1;"></div>
-          <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
-          <button mat-mini-fab (click)="openSelection()" color="accent"
-            matTooltip="{{'trajectory-view.change-trajectory' | translate}}">
-            <mat-icon>find_replace</mat-icon>
-          </button>
-        </mat-toolbar-row>
-      </mat-toolbar>
-    </div>
-    <div class="chart">
-      <button class="chart-config-button" mat-mini-fab color="none" [matMenuTriggerFor]="menu">
-        <mat-icon>settings</mat-icon>
-      </button>
-      @if (trajectoryGraphLoading) {
-      <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
-      }
-      <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
-        [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
-        (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
-        (onContentLoading)="setGraphLoading($event)" (onHoverHighlight)="onChartHighlightChanged($event)">
-      </n52-d3-trajectory-graph>
+      <div class="chart">
+        <button
+          class="chart-config-button"
+          mat-mini-fab
+          color="none"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+        @if (trajectoryGraphLoading) {
+          <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
+        }
+        <n52-d3-trajectory-graph
+          [datasetIds]="datasetIds"
+          [timeInterval]="timespan"
+          [datasetOptions]="options"
+          [presenterOptions]="graphOptions"
+          [selection]="selection"
+          (onSelectionChanged)="onChartSelectionChanged($event)"
+          (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
+          (onContentLoading)="setGraphLoading($event)"
+          (onHoverHighlight)="onChartHighlightChanged($event)"
+        >
+        </n52-d3-trajectory-graph>
+      </div>
     </div>
   </div>
-</div>
 }
 
 <mat-menu #menu="matMenu" class="chart-styling-menu">
-  <div class="title">{{'chart-styling.xaxis.header' | translate}}</div>
+  <div class="title">{{ "chart-styling.xaxis.header" | translate }}</div>
   @for (at of axisTypes; track at) {
-  <div mat-menu-item (click)="setXaxisType(at.type)">
-    <mat-radio-button color="primary" [checked]="isXaxisTypeSelected(at.type)">
-      {{at.label | translate}}
-    </mat-radio-button>
-  </div>
+    <div mat-menu-item (click)="setXaxisType(at.type)">
+      <mat-radio-button
+        color="primary"
+        [checked]="isXaxisTypeSelected(at.type)"
+      >
+        {{ at.label | translate }}
+      </mat-radio-button>
+    </div>
   }
   <mat-divider></mat-divider>
   <div mat-menu-item (click)="toggleDotted()">
-    <mat-slide-toggle class="example-margin" color="primary" [checked]="graphOptions.dotted">
-      {{'chart-styling.dotted' | translate}}
+    <mat-slide-toggle
+      class="example-margin"
+      color="primary"
+      [checked]="graphOptions.dotted"
+    >
+      {{ "chart-styling.dotted" | translate }}
     </mat-slide-toggle>
   </div>
 </mat-menu>

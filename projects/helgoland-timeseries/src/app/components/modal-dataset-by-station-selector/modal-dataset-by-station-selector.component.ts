@@ -1,23 +1,30 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-import { MatBadgeModule } from "@angular/material/badge";
-import { MatButtonModule } from "@angular/material/button";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatExpansionModule } from "@angular/material/expansion";
-import { MatListModule, MatSelectionListChange } from "@angular/material/list";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { HelgolandCoreModule, HelgolandServicesConnector, Parameter } from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
-import { DatasetByStationSelectorComponent, SelectableDataset } from "@helgoland/selector";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule, MatSelectionListChange } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {
+  HelgolandCoreModule,
+  HelgolandServicesConnector,
+  Parameter,
+} from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import {
+  DatasetByStationSelectorComponent,
+  SelectableDataset,
+} from '@helgoland/selector';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { AppRouterService } from "../../services/app-router.service";
-import { TimeseriesService } from "./../../services/timeseries-service.service";
+import { AppRouterService } from '../../services/app-router.service';
+import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
-  selector: "helgoland-modal-dataset-by-station-selector",
-  templateUrl: "./modal-dataset-by-station-selector.component.html",
-  styleUrls: ["./modal-dataset-by-station-selector.component.scss"],
+  selector: 'helgoland-modal-dataset-by-station-selector',
+  templateUrl: './modal-dataset-by-station-selector.component.html',
+  styleUrls: ['./modal-dataset-by-station-selector.component.scss'],
   imports: [
     CommonModule,
     HelgolandCoreModule,
@@ -28,22 +35,24 @@ import { TimeseriesService } from "./../../services/timeseries-service.service";
     MatExpansionModule,
     MatListModule,
     MatProgressBarModule,
-    TranslateModule
+    TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
-
   constructor(
     protected override servicesConnector: HelgolandServicesConnector,
     public override translateSrvc: TranslateService,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService
+    public timeseries: TimeseriesService,
   ) {
     super(servicesConnector, translateSrvc);
   }
 
-  protected override prepareResult(result: SelectableDataset, selection: boolean) {
+  protected override prepareResult(
+    result: SelectableDataset,
+    selection: boolean,
+  ) {
     if (this.timeseries.hasDataset(result.internalId)) {
       selection = true;
     }
@@ -60,7 +69,6 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
   }
 
   public getCategoryLabel(categories: Parameter[]) {
-    return categories.map(e => e.label).join(", ");
+    return categories.map((e) => e.label).join(', ');
   }
-
 }

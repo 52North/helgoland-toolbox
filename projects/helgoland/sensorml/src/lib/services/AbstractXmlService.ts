@@ -1,11 +1,13 @@
 // @ts-nocheck
-import { XmlService } from "./XmlService";
+import { XmlService } from './XmlService';
 
 export abstract class AbstractXmlService<T> extends XmlService<T> {
   serialize(description: T, prettify?: boolean) {
     const serializer = new XMLSerializer();
     let document = this.encode(description);
-    if (prettify) { document = this.prettyPrint(document); }
+    if (prettify) {
+      document = this.prettyPrint(document);
+    }
     return serializer.serializeToString(document);
   }
 
@@ -13,9 +15,9 @@ export abstract class AbstractXmlService<T> extends XmlService<T> {
     let document: Document;
     if (xml instanceof Document) {
       document = xml;
-    } else if (typeof (xml) === "string") {
+    } else if (typeof xml === 'string') {
       const deserializer = new DOMParser();
-      document = deserializer.parseFromString(xml as string, "application/xml");
+      document = deserializer.parseFromString(xml as string, 'application/xml');
     } else {
       return null;
     }
@@ -36,7 +38,9 @@ export abstract class AbstractXmlService<T> extends XmlService<T> {
                 <xsl:apply-templates select="node()|@*"/>
               </xsl:copy>
             </xsl:template>
-          </xsl:stylesheet>`, "application/xml");
+          </xsl:stylesheet>`,
+      'application/xml',
+    );
     const processor = new XSLTProcessor();
     processor.importStylesheet(stylesheet);
     return processor.transformToDocument(source);

@@ -1,15 +1,15 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { HelgolandModificationModule } from "./modification.module";
+import { HelgolandModificationModule } from './modification.module';
 
-describe("ModificationModule", () => {
+describe('ModificationModule', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandModificationModule],
     }).compileComponents();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(HelgolandModificationModule).toBeDefined();
   });
 });

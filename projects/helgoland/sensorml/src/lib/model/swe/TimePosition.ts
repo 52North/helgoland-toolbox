@@ -1,3 +1,3 @@
-import { TimeIndeterminateValue } from "./TimeIndeterminateValue";
+import { TimeIndeterminateValue } from './TimeIndeterminateValue';
 
 export type TimePosition = TimeIndeterminateValue | Date;

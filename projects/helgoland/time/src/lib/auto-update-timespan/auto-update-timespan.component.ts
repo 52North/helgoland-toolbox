@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Time, Timespan } from "@helgoland/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Time, Timespan } from '@helgoland/core';
 
 @Component({
-  selector: "n52-auto-update-timespan",
-  templateUrl: "./auto-update-timespan.component.html",
-  styleUrls: ["./auto-update-timespan.component.css"],
-  standalone: true
+  selector: 'n52-auto-update-timespan',
+  templateUrl: './auto-update-timespan.component.html',
+  styleUrls: ['./auto-update-timespan.component.css'],
+  standalone: true,
 })
 export class AutoUpdateTimespanComponent {
-
   /**
    * optional timeinterval in seconds to be added to current timespan. If not set, the refreshInterval is selected.
    */
@@ -34,9 +33,7 @@ export class AutoUpdateTimespanComponent {
   public toggleAutoUpdate = false;
   private timer = false;
 
-  constructor(
-    protected timeSrvc: Time
-  ) { }
+  constructor(protected timeSrvc: Time) {}
 
   public toggleUpdateTimeinterval() {
     this.toggleAutoUpdate = !this.toggleAutoUpdate;
@@ -45,7 +42,9 @@ export class AutoUpdateTimespanComponent {
 
   public updateTimespan() {
     const stepSeconds = this.timeInterval || this.refreshInterval;
-    this.onChangeTimespan.emit(this.timeSrvc.stepForwardCustom(this.currentTimespan, stepSeconds * 1000));
+    this.onChangeTimespan.emit(
+      this.timeSrvc.stepForwardCustom(this.currentTimespan, stepSeconds * 1000),
+    );
   }
 
   private startTimer() {

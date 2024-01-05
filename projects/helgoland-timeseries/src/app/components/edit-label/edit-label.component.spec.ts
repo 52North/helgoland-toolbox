@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { EditLabelComponent } from "./edit-label.component";
+import { EditLabelComponent } from './edit-label.component';
 
-describe("EditLabelComponent", () => {
+describe('EditLabelComponent', () => {
   let component: EditLabelComponent;
   let fixture: ComponentFixture<EditLabelComponent>;
 
@@ -19,8 +19,8 @@ describe("EditLabelComponent", () => {
         MatInputModule,
         MatIconModule,
         NoopAnimationsModule,
-        EditLabelComponent
-      ]
+        EditLabelComponent,
+      ],
     }).compileComponents();
   });
 
@@ -30,7 +30,7 @@ describe("EditLabelComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

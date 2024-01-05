@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DefinedTimespan, DefinedTimespanService, Timespan } from "@helgoland/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  DefinedTimespan,
+  DefinedTimespanService,
+  Timespan,
+} from '@helgoland/core';
 
 @Component({
-  selector: "n52-timespan-button",
-  templateUrl: "./timespan-button.component.html",
-  standalone: true
+  selector: 'n52-timespan-button',
+  templateUrl: './timespan-button.component.html',
+  standalone: true,
 })
 export class TimespanButtonComponent {
-
   @Input()
   public predefined!: string | DefinedTimespan;
 
@@ -21,13 +24,13 @@ export class TimespanButtonComponent {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 
-  constructor(
-    protected predefinedSrvc: DefinedTimespanService
-  ) { }
+  constructor(protected predefinedSrvc: DefinedTimespanService) {}
 
   public clicked() {
     if (this.predefined) {
-      this.onTimespanSelected.emit(this.predefinedSrvc.getInterval(this.predefined as DefinedTimespan));
+      this.onTimespanSelected.emit(
+        this.predefinedSrvc.getInterval(this.predefined as DefinedTimespan),
+      );
       return;
     }
     if (this.timespanFunc) {
@@ -36,5 +39,4 @@ export class TimespanButtonComponent {
     }
     this.onTimespanSelected.emit();
   }
-
 }

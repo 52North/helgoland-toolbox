@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ColorPickerModule } from "ngx-color-picker";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
-  selector: "n52-color-selector",
-  templateUrl: "./color-selector.component.html",
+  selector: 'n52-color-selector',
+  templateUrl: './color-selector.component.html',
   standalone: true,
-  imports: [ColorPickerModule]
+  imports: [ColorPickerModule],
 })
 export class ColorSelectorComponent {
-
   @Input({ required: true })
   public color!: string;
 
@@ -18,5 +17,4 @@ export class ColorSelectorComponent {
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onColorChange: EventEmitter<string> = new EventEmitter<string>();
-
 }

@@ -1,18 +1,18 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ReactiveFormsModule } from "@angular/forms";
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
-import { GeneralTimeSelectionComponent } from "./general-time-selection.component";
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { GeneralTimeSelectionComponent } from './general-time-selection.component';
 
-describe("GeneralTimeSelectionComponent", () => {
+describe('GeneralTimeSelectionComponent', () => {
   let component: GeneralTimeSelectionComponent;
   let fixture: ComponentFixture<GeneralTimeSelectionComponent>;
 
@@ -29,8 +29,8 @@ describe("GeneralTimeSelectionComponent", () => {
         NoopAnimationsModule,
         ReactiveFormsModule,
         TranslateTestingModule,
-        GeneralTimeSelectionComponent
-      ]
+        GeneralTimeSelectionComponent,
+      ],
     }).compileComponents();
   });
 
@@ -40,7 +40,7 @@ describe("GeneralTimeSelectionComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

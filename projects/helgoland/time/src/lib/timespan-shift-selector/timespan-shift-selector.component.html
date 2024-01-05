@@ -1,7 +1,8 @@
 <div>
-  <button type="button" (click)="back()"> &lt; </button>
+  <button type="button" (click)="back()">&lt;</button>
   <button type="button" (click)="open()">
-    {{timespan.from | tzDate : 'L LT z'}} &nbsp;&ndash;&nbsp; {{timespan.to | tzDate : 'L LT z'}}
+    {{ timespan.from | tzDate: "L LT z" }} &nbsp;&ndash;&nbsp;
+    {{ timespan.to | tzDate: "L LT z" }}
   </button>
-  <button type="button" (click)="forward()"> &gt; </button>
+  <button type="button" (click)="forward()">&gt;</button>
 </div>

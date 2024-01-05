@@ -1,4 +1,4 @@
-import { ParameterFilter } from "./../internal/http-requests";
+import { ParameterFilter } from './../internal/http-requests';
 
 export class Filter {
   public url: string | undefined;

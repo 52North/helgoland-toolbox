@@ -1,20 +1,34 @@
-import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import { HelgolandParameterFilter, HelgolandServicesConnector, LanguageChangNotifier, Parameter } from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
-import { TranslateService } from "@ngx-translate/core";
+import { NgClass } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  HelgolandParameterFilter,
+  HelgolandServicesConnector,
+  LanguageChangNotifier,
+  Parameter,
+} from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
  */
 @Component({
-  selector: "n52-service-filter-selector",
-  templateUrl: "./service-filter-selector.component.html",
+  selector: 'n52-service-filter-selector',
+  templateUrl: './service-filter-selector.component.html',
   standalone: true,
-  imports: [NgClass, HelgolandLabelMapperModule]
+  imports: [NgClass, HelgolandLabelMapperModule],
 })
-export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
-
+export class ServiceFilterSelectorComponent
+  extends LanguageChangNotifier
+  implements OnChanges
+{
   @Input({ required: true })
   public endpoint!: string;
 
@@ -29,11 +43,14 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<Parameter> = new EventEmitter<Parameter>();
+  public onItemSelected: EventEmitter<Parameter> =
+    new EventEmitter<Parameter>();
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<Parameter[]>();
+  public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<
+    Parameter[]
+  >();
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -44,13 +61,13 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
 
   constructor(
     protected override translate: TranslateService,
-    protected servicesConnector: HelgolandServicesConnector
+    protected servicesConnector: HelgolandServicesConnector,
   ) {
     super(translate);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes["endpoint"] || changes["filter"] || changes["serviceUrl"]) {
+    if (changes['endpoint'] || changes['filter'] || changes['serviceUrl']) {
       this.loadItems();
     }
   }
@@ -67,28 +84,48 @@ export class ServiceFilterSelectorComponent extends LanguageChangNotifier implem
     this.loading = true;
     this.onLoading.emit(true);
     switch (this.endpoint) {
-      case "offering":
-        this.servicesConnector.getOfferings(this.serviceUrl, this.filter)
-          .subscribe({ next: (res) => this.setItems(res), error: () => this.errorOnLoading });
+      case 'offering':
+        this.servicesConnector
+          .getOfferings(this.serviceUrl, this.filter)
+          .subscribe({
+            next: (res) => this.setItems(res),
+            error: () => this.errorOnLoading,
+          });
         break;
-      case "phenomenon":
-        this.servicesConnector.getPhenomena(this.serviceUrl, this.filter)
-          .subscribe({ next: (res) => this.setItems(res), error: () => this.errorOnLoading });
+      case 'phenomenon':
+        this.servicesConnector
+          .getPhenomena(this.serviceUrl, this.filter)
+          .subscribe({
+            next: (res) => this.setItems(res),
+            error: () => this.errorOnLoading,
+          });
         break;
-      case "procedure":
-        this.servicesConnector.getProcedures(this.serviceUrl, this.filter)
-          .subscribe({ next: (res) => this.setItems(res), error: () => this.errorOnLoading });
+      case 'procedure':
+        this.servicesConnector
+          .getProcedures(this.serviceUrl, this.filter)
+          .subscribe({
+            next: (res) => this.setItems(res),
+            error: () => this.errorOnLoading,
+          });
         break;
-      case "category":
-        this.servicesConnector.getCategories(this.serviceUrl, this.filter)
-          .subscribe({ next: (res) => this.setItems(res), error: () => this.errorOnLoading });
+      case 'category':
+        this.servicesConnector
+          .getCategories(this.serviceUrl, this.filter)
+          .subscribe({
+            next: (res) => this.setItems(res),
+            error: () => this.errorOnLoading,
+          });
         break;
-      case "feature":
-        this.servicesConnector.getFeatures(this.serviceUrl, this.filter)
-          .subscribe({ next: (res) => this.setItems(res), error: () => this.errorOnLoading });
+      case 'feature':
+        this.servicesConnector
+          .getFeatures(this.serviceUrl, this.filter)
+          .subscribe({
+            next: (res) => this.setItems(res),
+            error: () => this.errorOnLoading,
+          });
         break;
       default:
-        console.error("Wrong endpoint: " + this.endpoint);
+        console.error('Wrong endpoint: ' + this.endpoint);
     }
   }
 

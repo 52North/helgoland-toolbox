@@ -1,18 +1,15 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TranslateTestingModule } from "./../../../../../../testing/translate.testing.module";
-import { FilterLabelComponent } from "./filter-label.component";
+import { TranslateTestingModule } from './../../../../../../testing/translate.testing.module';
+import { FilterLabelComponent } from './filter-label.component';
 
-describe("FilterLabelComponent", () => {
+describe('FilterLabelComponent', () => {
   let component: FilterLabelComponent;
   let fixture: ComponentFixture<FilterLabelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule,
-        FilterLabelComponent
-      ]
+      imports: [TranslateTestingModule, FilterLabelComponent],
     }).compileComponents();
   });
 
@@ -22,7 +19,7 @@ describe("FilterLabelComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,99 +1,171 @@
-<mat-expansion-panel [ngStyle]="{'border-color': datasetOptions.color}" [expanded]="true">
+<mat-expansion-panel
+  [ngStyle]="{ 'border-color': datasetOptions.color }"
+  [expanded]="true"
+>
   <mat-expansion-panel-header>
     <mat-panel-title>
       @if (!error) {
-      <div class="title" [ngClass]="{'noData': !hasData}">
-        <n52-label-mapper label="{{phenomenonLabel}}"></n52-label-mapper>
-        @if (uom) {
-        <span>
-          <span> [<n52-label-mapper label="{{uom}}"></n52-label-mapper>] </span>
-        </span>
-        }
-        <div>{{dataset?.platform?.label}}</div>
-      </div>
+        <div class="title" [ngClass]="{ noData: !hasData }">
+          <n52-label-mapper label="{{ phenomenonLabel }}"></n52-label-mapper>
+          @if (uom) {
+            <span>
+              <span>
+                [<n52-label-mapper label="{{ uom }}"></n52-label-mapper>]
+              </span>
+            </span>
+          }
+          <div>{{ dataset?.platform?.label }}</div>
+        </div>
       }
       @if (error) {
-      <div class="title error">
-        Error occured, while loading {{datasetId}}
-      </div>
+        <div class="title error">
+          Error occured, while loading {{ datasetId }}
+        </div>
       }
       <div style="flex: 1"></div>
-      <button mat-icon-button (click)="removeDataset(); $event.stopPropagation()"
-        attr.aria-label="{{'legend-entry.remove-entry-button.tooltip' | translate}}"
-        matTooltip="{{'legend-entry.remove-entry-button.tooltip' | translate}}">
+      <button
+        mat-icon-button
+        (click)="removeDataset(); $event.stopPropagation()"
+        attr.aria-label="{{
+          'legend-entry.remove-entry-button.tooltip' | translate
+        }}"
+        matTooltip="{{
+          'legend-entry.remove-entry-button.tooltip' | translate
+        }}"
+      >
         <mat-icon>clear</mat-icon>
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
   @if (!loading && !error && dataset) {
-  <div>
-    <div class="small-label">
-      <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
-      @if (categoryLabel !== phenomenonLabel) {
-      <span>
-        - <n52-label-mapper label="{{categoryLabel}}"></n52-label-mapper>
-      </span>
-      }
-    </div>
-    <div class="controls">
-      <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"
-        attr.aria-label="{{'legend-entry.toggle-selection-button.tooltip' | translate}}"
-        matTooltip="{{'legend-entry.toggle-selection-button.tooltip' | translate}}">
-        @if (!selected) {
-        <mat-icon>check_box_outline_blank</mat-icon>
-        }
-        @if (selected) {
-        <mat-icon>check_box</mat-icon>
-        }
-      </button>
-      <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
-        attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
-        matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
-        <mat-icon>{{datasetOptions.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
-      </button>
-      <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
-        attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
-        matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <helgoland-timeseries-entry-symbol [options]="datasetOptions" [size]="48">
-        </helgoland-timeseries-entry-symbol>
-      </button>
-      <button mat-icon-button (click)="toggleSeparateYAxis(); $event.stopPropagation()"
-        attr.aria-label="{{'legend-entry.separateYAxis.tooltip' | translate}}"
-        matTooltip="{{'legend-entry.separateYAxis.tooltip' | translate}}">
-        <mat-icon>{{datasetOptions.separateYAxis ? 'unfold_less' : 'unfold_more'}}</mat-icon>
-      </button>
-      <helgoland-favorite-toggle-button [dataset]="dataset" [options]="datasetOptions">
-      </helgoland-favorite-toggle-button>
-    </div>
-    @if (firstValue) {
-    <div class="entry-line clickable" (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
-      <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
-      <span> {{firstValue.timestamp | date: 'short': undefined : translateSrvc.currentLang}} </span>
-      <span>({{firstValue.value}} {{uom}})</span>
-    </div>
-    }
-    @if (lastValue) {
-    <div class="entry-line clickable" (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
-      <span>{{'diagram-view.legend.entry.last-value-at' | translate}}: </span>
-      <span> {{lastValue.timestamp | date: 'short' : undefined : translateSrvc.currentLang}} </span>
-      <span>({{lastValue.value}} {{uom}})</span>
-    </div>
-    }
-    @if (dataset.referenceValues.length > 0) {
     <div>
-      <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
-      @for (ref of dataset.referenceValues; track ref) {
-      <div>
-        <mat-slide-toggle [checked]="ref.visible" color="primary" (toggleChange)="toggleReferenceValue(ref)">
-          <span [ngStyle]="{color: ref.color}">{{ref.label}}</span>
-        </mat-slide-toggle>
+      <div class="small-label">
+        <n52-label-mapper label="{{ procedureLabel }}"></n52-label-mapper>
+        @if (categoryLabel !== phenomenonLabel) {
+          <span>
+            - <n52-label-mapper label="{{ categoryLabel }}"></n52-label-mapper>
+          </span>
+        }
       </div>
+      <div class="controls">
+        <button
+          mat-icon-button
+          (click)="toggleSelection(); $event.stopPropagation()"
+          attr.aria-label="{{
+            'legend-entry.toggle-selection-button.tooltip' | translate
+          }}"
+          matTooltip="{{
+            'legend-entry.toggle-selection-button.tooltip' | translate
+          }}"
+        >
+          @if (!selected) {
+            <mat-icon>check_box_outline_blank</mat-icon>
+          }
+          @if (selected) {
+            <mat-icon>check_box</mat-icon>
+          }
+        </button>
+        <button
+          mat-icon-button
+          (click)="toggleVisibility(); $event.stopPropagation()"
+          attr.aria-label="{{
+            'legend-entry.toggle-visibility-button.tooltip' | translate
+          }}"
+          matTooltip="{{
+            'legend-entry.toggle-visibility-button.tooltip' | translate
+          }}"
+        >
+          <mat-icon>{{
+            datasetOptions.visible ? "visibility" : "visibility_off"
+          }}</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="editDatasetOptions(); $event.stopPropagation()"
+          attr.aria-label="{{
+            'legend-entry.edit-dataset-button.tooltip' | translate
+          }}"
+          matTooltip="{{
+            'legend-entry.edit-dataset-button.tooltip' | translate
+          }}"
+        >
+          <helgoland-timeseries-entry-symbol
+            [options]="datasetOptions"
+            [size]="48"
+          >
+          </helgoland-timeseries-entry-symbol>
+        </button>
+        <button
+          mat-icon-button
+          (click)="toggleSeparateYAxis(); $event.stopPropagation()"
+          attr.aria-label="{{
+            'legend-entry.separateYAxis.tooltip' | translate
+          }}"
+          matTooltip="{{ 'legend-entry.separateYAxis.tooltip' | translate }}"
+        >
+          <mat-icon>{{
+            datasetOptions.separateYAxis ? "unfold_less" : "unfold_more"
+          }}</mat-icon>
+        </button>
+        <helgoland-favorite-toggle-button
+          [dataset]="dataset"
+          [options]="datasetOptions"
+        >
+        </helgoland-favorite-toggle-button>
+      </div>
+      @if (firstValue) {
+        <div
+          class="entry-line clickable"
+          (click)="jumpToFirstTimeStamp(); $event.stopPropagation()"
+        >
+          <span
+            >{{ "diagram-view.legend.entry.first-value-at" | translate }}:
+          </span>
+          <span>
+            {{
+              firstValue.timestamp
+                | date: "short" : undefined : translateSrvc.currentLang
+            }}
+          </span>
+          <span>({{ firstValue.value }} {{ uom }})</span>
+        </div>
+      }
+      @if (lastValue) {
+        <div
+          class="entry-line clickable"
+          (click)="jumpToLastTimeStamp(); $event.stopPropagation()"
+        >
+          <span
+            >{{ "diagram-view.legend.entry.last-value-at" | translate }}:
+          </span>
+          <span>
+            {{
+              lastValue.timestamp
+                | date: "short" : undefined : translateSrvc.currentLang
+            }}
+          </span>
+          <span>({{ lastValue.value }} {{ uom }})</span>
+        </div>
+      }
+      @if (dataset.referenceValues.length > 0) {
+        <div>
+          <div>{{ "diagram-view.legend-reference-values" | translate }}:</div>
+          @for (ref of dataset.referenceValues; track ref) {
+            <div>
+              <mat-slide-toggle
+                [checked]="ref.visible"
+                color="primary"
+                (toggleChange)="toggleReferenceValue(ref)"
+              >
+                <span [ngStyle]="{ color: ref.color }">{{ ref.label }}</span>
+              </mat-slide-toggle>
+            </div>
+          }
+        </div>
       }
     </div>
-    }
-  </div>
   }
   @if (loading) {
-  <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
+    <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
   }
 </mat-expansion-panel>

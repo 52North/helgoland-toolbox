@@ -1,7 +1,9 @@
 <div>
-  <input [(ngModel)]="searchTerm" (keyup.enter)="triggerSearch()">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="triggerSearch()" />
   @if (loading) {
-  <span>loading...</span>
+    <span>loading...</span>
   }
-  <button type="button" class="btn btn-light btn-sm" (click)="clearSearch()">X</button>
+  <button type="button" class="btn btn-light btn-sm" (click)="clearSearch()">
+    X
+  </button>
 </div>

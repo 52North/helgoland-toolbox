@@ -1,13 +1,13 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { DatasetType, HelgolandCoreModule } from "@helgoland/core";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DatasetType, HelgolandCoreModule } from '@helgoland/core';
 
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { ServiceSelectorComponent } from "./service-selector.component";
-import { ServiceSelectorService } from "./service-selector.service";
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { ServiceSelectorComponent } from './service-selector.component';
+import { ServiceSelectorService } from './service-selector.service';
 
-describe("ServiceSelectorComponent", () => {
+describe('ServiceSelectorComponent', () => {
   let component: ServiceSelectorComponent;
   let fixture: ComponentFixture<ServiceSelectorComponent>;
 
@@ -17,12 +17,9 @@ describe("ServiceSelectorComponent", () => {
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        ServiceSelectorComponent
+        ServiceSelectorComponent,
       ],
-      providers: [
-        ServiceSelectorService,
-        SettingsServiceTestingProvider,
-      ]
+      providers: [ServiceSelectorService, SettingsServiceTestingProvider],
     }).compileComponents();
   }));
 
@@ -34,13 +31,13 @@ describe("ServiceSelectorComponent", () => {
     //   url: 'url-to-test'
     // }];
     component.filter = {
-      lang: "de",
-      type: DatasetType.Timeseries
+      lang: 'de',
+      type: DatasetType.Timeseries,
     };
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

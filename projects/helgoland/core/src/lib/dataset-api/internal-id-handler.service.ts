@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { IDataset } from "../model/dataset-api/dataset";
+import { IDataset } from '../model/dataset-api/dataset';
 
-const INTERNAL_ID_SEPERATOR = "__";
+const INTERNAL_ID_SEPERATOR = '__';
 
 export interface InternalDatasetId {
   id: string;
@@ -14,7 +14,6 @@ export interface InternalDatasetId {
  */
 @Injectable()
 export class InternalIdHandler {
-
   /**
    * Generates and set an internal id for the given dataset.
    * @param dataset The dataset for which the internal id will be generated and saved.
@@ -38,11 +37,19 @@ export class InternalIdHandler {
    * @param internalId The internal id as string
    * @returns Construct of url and API id
    */
-  public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
-    if (typeof (internalId) === "string") {
+  public resolveInternalId(
+    internalId: string | InternalDatasetId,
+  ): InternalDatasetId {
+    if (typeof internalId === 'string') {
       if (internalId.indexOf(INTERNAL_ID_SEPERATOR) > 0) {
-        const url = internalId.substring(0, internalId.indexOf(INTERNAL_ID_SEPERATOR));
-        const id = internalId.substring(internalId.indexOf(INTERNAL_ID_SEPERATOR) + INTERNAL_ID_SEPERATOR.length);
+        const url = internalId.substring(
+          0,
+          internalId.indexOf(INTERNAL_ID_SEPERATOR),
+        );
+        const id = internalId.substring(
+          internalId.indexOf(INTERNAL_ID_SEPERATOR) +
+            INTERNAL_ID_SEPERATOR.length,
+        );
         return { url, id };
       }
     } else if (this.instanceOfInternalDatasetId(internalId)) {
@@ -51,7 +58,9 @@ export class InternalIdHandler {
     throw new Error(`InternalID '${internalId}' is not resolvable`);
   }
 
-  private instanceOfInternalDatasetId(object: any): object is InternalDatasetId {
-    return "id" in object && "url" in object;
+  private instanceOfInternalDatasetId(
+    object: any,
+  ): object is InternalDatasetId {
+    return 'id' in object && 'url' in object;
   }
 }

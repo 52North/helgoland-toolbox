@@ -1,12 +1,19 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { DatasetOptions, HelgolandCoreModule, SettingsService } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  DatasetOptions,
+  HelgolandCoreModule,
+  SettingsService,
+} from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../../../testing/translate.testing.module";
-import { LabelMapperComponent } from "../../../label-mapper/label-mapper.component";
-import { LabelMapperService } from "../../../label-mapper/label-mapper.service";
-import { ReferenceValueColorCache, TimeseriesEntryComponent } from "./timeseries-entry.component";
+import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
+import { LabelMapperComponent } from '../../../label-mapper/label-mapper.component';
+import { LabelMapperService } from '../../../label-mapper/label-mapper.service';
+import {
+  ReferenceValueColorCache,
+  TimeseriesEntryComponent,
+} from './timeseries-entry.component';
 
-describe("TimeseriesEntryComponent", () => {
+describe('TimeseriesEntryComponent', () => {
   let component: TimeseriesEntryComponent;
   let fixture: ComponentFixture<TimeseriesEntryComponent>;
 
@@ -16,26 +23,28 @@ describe("TimeseriesEntryComponent", () => {
         HelgolandCoreModule,
         TranslateTestingModule,
         TimeseriesEntryComponent,
-        LabelMapperComponent
+        LabelMapperComponent,
       ],
       providers: [
         ReferenceValueColorCache,
         LabelMapperService,
-        SettingsService
-      ]
+        SettingsService,
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimeseriesEntryComponent);
     component = fixture.componentInstance;
-    component.datasetId = "temp__temp";
-    component.datasetOptions = new DatasetOptions(component.datasetId, "#123456");
+    component.datasetId = 'temp__temp';
+    component.datasetOptions = new DatasetOptions(
+      component.datasetId,
+      '#123456',
+    );
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

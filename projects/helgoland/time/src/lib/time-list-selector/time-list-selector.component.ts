@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { TzDatePipe } from "@helgoland/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TzDatePipe } from '@helgoland/core';
 
 @Component({
-  selector: "n52-time-list-selector",
-  templateUrl: "./time-list-selector.component.html",
+  selector: 'n52-time-list-selector',
+  templateUrl: './time-list-selector.component.html',
   standalone: true,
-  imports: [TzDatePipe]
+  imports: [TzDatePipe],
 })
 export class TimeListSelectorComponent {
-
   @Input({ required: true })
   public timeList!: number[];
 
@@ -19,5 +18,4 @@ export class TimeListSelectorComponent {
   public selectTime(timestamp: number) {
     this.onTimeSelected.emit(timestamp);
   }
-
 }

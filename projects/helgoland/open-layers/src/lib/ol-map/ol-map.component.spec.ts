@@ -1,16 +1,15 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { OlMapComponent } from "./ol-map.component";
+import { OlMapComponent } from './ol-map.component';
 
-describe("OlMapComponent", () => {
+describe('OlMapComponent', () => {
   // let component: OlMapComponent;
   // let fixture: ComponentFixture<OlMapComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [OlMapComponent]
-    })
-      .compileComponents();
+      imports: [OlMapComponent],
+    }).compileComponents();
   }));
 
   // beforeEach(() => {
@@ -23,7 +22,7 @@ describe("OlMapComponent", () => {
   //   expect(component).toBeTruthy();
   // });
 
-  it("should be fixed", () => {
+  it('should be fixed', () => {
     expect(true).toBeTruthy();
-  })
+  });
 });

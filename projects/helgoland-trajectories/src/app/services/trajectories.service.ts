@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
@@ -7,11 +7,11 @@ import {
   HelgolandTrajectory,
   LocalStorage,
   Timespan,
-} from "@helgoland/core";
-import { forkJoin, Observable, ReplaySubject } from "rxjs";
-import { map } from "rxjs/operators";
+} from '@helgoland/core';
+import { forkJoin, Observable, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-const TRAJECTORY_ID_CACHE_PARAM = "trajectoryId";
+const TRAJECTORY_ID_CACHE_PARAM = 'trajectoryId';
 
 export interface TrajectoryResult {
   geometry: GeoJSON.LineString;
@@ -22,10 +22,9 @@ export interface TrajectoryResult {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class TrajectoriesService {
-
   public loading = new ReplaySubject<boolean>();
   public result = new ReplaySubject<TrajectoryResult>();
   private internalId!: string;
@@ -49,48 +48,56 @@ export class TrajectoriesService {
 
   public loadTrajectory() {
     this.loading.next(true);
-    this.servicesConnector.getDataset(this.internalId, { type: DatasetType.Trajectory }).subscribe(
-      trajectory => {
+    this.servicesConnector
+      .getDataset(this.internalId, { type: DatasetType.Trajectory })
+      .subscribe((trajectory) => {
         if (trajectory.firstValue && trajectory.lastValue) {
           const from = new Date(trajectory.firstValue.timestamp);
           const to = new Date(trajectory.lastValue.timestamp);
           const timespan = new Timespan(from, to);
-          forkJoin([this.getDatasetIds(trajectory), this.getGeometry(trajectory, timespan)]).subscribe(res => {
+          forkJoin([
+            this.getDatasetIds(trajectory),
+            this.getGeometry(trajectory, timespan),
+          ]).subscribe((res) => {
             const options: Map<string, DatasetOptions> = new Map();
-            res[0].forEach(e => {
+            res[0].forEach((e) => {
               options.set(e, this.createStyles(e, this.internalId === e));
-            })
+            });
             this.result.next({
               trajectory: trajectory,
               timespan,
               geometry: res[1],
               datasetIds: res[0],
-              options
-            })
+              options,
+            });
             this.saveState();
             this.loading.next(false);
           });
         } else {
-          console.error("Trajectory doesn't have first and last value.")
+          console.error("Trajectory doesn't have first and last value.");
         }
-      }
-    );
+      });
   }
 
   private getGeometry(trajectory: HelgolandTrajectory, timespan: Timespan) {
-    return this.servicesConnector.getDatasetData(trajectory, timespan)
-      .pipe(map(res => {
+    return this.servicesConnector.getDatasetData(trajectory, timespan).pipe(
+      map((res) => {
         const geometry: GeoJSON.LineString = {
-          type: "LineString",
-          coordinates: res.values.map(e => e.geometry.coordinates)
+          type: 'LineString',
+          coordinates: res.values.map((e) => e.geometry.coordinates),
         };
         return geometry;
-      }))
+      }),
+    );
   }
 
   private getDatasetIds(trajectory: HelgolandTrajectory): Observable<string[]> {
-    return this.servicesConnector.getDatasets(trajectory.url, { type: DatasetType.Trajectory, feature: trajectory.parameters.feature?.id })
-      .pipe(map(res => res.map(e => e.internalId)))
+    return this.servicesConnector
+      .getDatasets(trajectory.url, {
+        type: DatasetType.Trajectory,
+        feature: trajectory.parameters.feature?.id,
+      })
+      .pipe(map((res) => res.map((e) => e.internalId)));
   }
 
   protected createStyles(internalId: string, visible: boolean): DatasetOptions {
@@ -109,5 +116,4 @@ export class TrajectoriesService {
       this.loadTrajectory();
     }
   }
-
 }

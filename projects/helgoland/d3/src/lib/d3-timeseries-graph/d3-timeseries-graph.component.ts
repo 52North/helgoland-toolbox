@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild,
   ViewEncapsulation,
-} from "@angular/core";
+} from '@angular/core';
 import {
   ColorService,
   Data,
@@ -29,42 +29,46 @@ import {
   Timespan,
   TimeValueTuple,
   TimezoneService,
-} from "@helgoland/core";
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
-import * as d3 from "d3";
-import moment, { unitOfTime } from "moment";
-import { Subscription } from "rxjs";
+} from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import * as d3 from 'd3';
+import moment, { unitOfTime } from 'moment';
+import { Subscription } from 'rxjs';
 
-import { D3AssistantService, EmptyAssistantService } from "../helper/d3-assistant.service";
-import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
-import { D3PointSymbolDrawerService } from "../helper/d3-point-symbol-drawer.service";
-import { D3TimeFormatLocaleService } from "../helper/d3-time-format-locale.service";
-import { D3DataGeneralizer } from "../helper/generalizing/d3-data-generalizer";
-import { D3HoveringService } from "../helper/hovering/d3-hovering-service";
-import { D3SimpleHoveringService } from "../helper/hovering/d3-simple-hovering.service";
-import { DataConst, DataEntry, InternalDataEntry, YAxis, YAxisSettings } from "../model/d3-general";
-import { HighlightOutput } from "../model/d3-highlight";
-import { D3PlotOptions, HoveringStyle } from "../model/d3-plot-options";
-import { D3GraphId } from "./../helper/d3-graph-id.service";
-import { D3Graphs } from "./../helper/d3-graphs.service";
-import { D3DataSimpleGeneralizer } from "./../helper/generalizing/d3-data-simple-generalizer.service";
-import { RangeCalculationsService } from "./../helper/range-calculations.service";
-import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
-import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";
-import { D3GraphHoverPointComponent } from "./controls/d3-graph-hover-point/d3-graph-hover-point.component";
 import {
-  D3GraphOverviewSelectionComponent,
-} from "./controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
+  D3AssistantService,
+  EmptyAssistantService,
+} from '../helper/d3-assistant.service';
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { D3DataGeneralizer } from '../helper/generalizing/d3-data-generalizer';
+import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
+import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import {
-  D3GraphPanZoomInteractionComponent,
-} from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
-import { D3GraphExtent, D3GraphObserver } from "./d3-timeseries-graph-control";
+  DataConst,
+  DataEntry,
+  InternalDataEntry,
+  YAxis,
+  YAxisSettings,
+} from '../model/d3-general';
+import { HighlightOutput } from '../model/d3-highlight';
+import { D3PlotOptions, HoveringStyle } from '../model/d3-plot-options';
+import { D3GraphId } from './../helper/d3-graph-id.service';
+import { D3Graphs } from './../helper/d3-graphs.service';
+import { D3DataSimpleGeneralizer } from './../helper/generalizing/d3-data-simple-generalizer.service';
+import { RangeCalculationsService } from './../helper/range-calculations.service';
+import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
+import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import { D3GraphOverviewSelectionComponent } from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import { D3GraphPanZoomInteractionComponent } from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
+import { D3GraphExtent, D3GraphObserver } from './d3-timeseries-graph-control';
 import {
   D3TimeseriesGraphErrorHandler,
   D3TimeseriesSimpleGraphErrorHandler,
-} from "./d3-timeseries-graph-error-handler.service";
-import { D3TimeseriesGraphInterface } from "./d3-timeseries-graph.interface";
-
+} from './d3-timeseries-graph-error-handler.service';
+import { D3TimeseriesGraphInterface } from './d3-timeseries-graph.interface';
 
 interface HighlightDataset {
   id: string;
@@ -74,18 +78,24 @@ interface HighlightDataset {
 const TICKS_COUNT_YAXIS = 5;
 
 @Component({
-  selector: "n52-d3-timeseries-graph",
-  templateUrl: "./d3-timeseries-graph.component.html",
-  styleUrls: ["./d3-timeseries-graph.component.scss"],
+  selector: 'n52-d3-timeseries-graph',
+  templateUrl: './d3-timeseries-graph.component.html',
+  styleUrls: ['./d3-timeseries-graph.component.scss'],
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
+  imports: [
+    D3GraphPanZoomInteractionComponent,
+    D3GraphCopyrightComponent,
+    D3GraphHoverLineComponent,
+    D3GraphHoverPointComponent,
+    D3GraphOverviewSelectionComponent,
+  ],
 })
 export class D3TimeseriesGraphComponent
   extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
-  implements AfterViewInit, OnDestroy, D3TimeseriesGraphInterface {
-
+  implements AfterViewInit, OnDestroy, D3TimeseriesGraphInterface
+{
   @Input()
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
   public mainTimeInterval!: Timespan;
@@ -93,15 +103,20 @@ export class D3TimeseriesGraphComponent
   @Input()
   public yaxisModifier: boolean = false;
 
-  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+  @Input() public hoveringService: D3HoveringService =
+    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
+    new EventEmitter();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onClickDataPoint: EventEmitter<{ timeseries: HelgolandTimeseries, data: HelgolandTimeseriesData }> = new EventEmitter();
+  @Output() public onClickDataPoint: EventEmitter<{
+    timeseries: HelgolandTimeseries;
+    data: HelgolandTimeseriesData;
+  }> = new EventEmitter();
 
-  @ViewChild("d3timeseries", { static: true })
+  @ViewChild('d3timeseries', { static: true })
   public d3Elem: ElementRef | undefined;
 
   // DOM elements
@@ -130,7 +145,7 @@ export class D3TimeseriesGraphComponent
     top: 10,
     right: 0,
     bottom: 45,
-    left: 40
+    left: 40,
   };
   private maxLabelwidth = 0;
   private addLineWidth = 2; // value added to linewidth
@@ -153,11 +168,11 @@ export class D3TimeseriesGraphComponent
     overview: false,
     showTimeLabel: true,
     timeRangeLabel: {
-      show: false
+      show: false,
     },
     requestBeforeAfterValues: false,
     timespanBufferFactor: 0.2,
-    sendDataRequestOnlyIfDatasetTimespanCovered: true
+    sendDataRequestOnlyIfDatasetTimespanCovered: true,
   };
 
   private resizeObserver: ResizeObserver | undefined;
@@ -178,39 +193,65 @@ export class D3TimeseriesGraphComponent
     protected override servicesConnector: HelgolandServicesConnector,
     protected pointSymbolDrawer: D3PointSymbolDrawerService,
     protected zone: NgZone,
-    @Optional() protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
-    @Optional() protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer(),
-    @Optional() protected yAxisLabelSrvc: D3AssistantService = new EmptyAssistantService(),
+    @Optional()
+    protected errorHandler: D3TimeseriesGraphErrorHandler = new D3TimeseriesSimpleGraphErrorHandler(),
+    @Optional()
+    protected generalizer: D3DataGeneralizer = new D3DataSimpleGeneralizer(),
+    @Optional()
+    protected yAxisLabelSrvc: D3AssistantService = new EmptyAssistantService(),
   ) {
-    super(iterableDiffers, servicesConnector, datasetIdResolver, timeSrvc, translateService, timezoneSrvc);
+    super(
+      iterableDiffers,
+      servicesConnector,
+      datasetIdResolver,
+      timeSrvc,
+      translateService,
+      timezoneSrvc,
+    );
   }
 
   public ngAfterViewInit(): void {
-
     this.graphIdService.setId(this.graphId);
     this.graphService.setGraph(this.graphId, this);
 
-    this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem?.nativeElement)
-      .append<SVGSVGElement>("svg")
-      .style("width", "100%")
-      .style("height", "100%")
-      .style("position", "absolute");
+    this.rawSvg = d3
+      .select<SVGSVGElement, any>(this.d3Elem?.nativeElement)
+      .append<SVGSVGElement>('svg')
+      .style('width', '100%')
+      .style('height', '100%')
+      .style('position', 'absolute');
 
     this.graph = this.rawSvg
-      .append<SVGGElement>("g")
-      .attr("id", `graph-${this.graphId}`)
-      .attr("transform", "translate(" + (this.margin.left + this.maxLabelwidth) + "," + this.margin.top + ")");
+      .append<SVGGElement>('g')
+      .attr('id', `graph-${this.graphId}`)
+      .attr(
+        'transform',
+        'translate(' +
+          (this.margin.left + this.maxLabelwidth) +
+          ',' +
+          this.margin.top +
+          ')',
+      );
 
     this.graphInteraction = this.rawSvg
-      .append<SVGSVGElement>("g")
-      .attr("id", `interaction-layer-${this.graphId}`)
-      .attr("transform", "translate(" + (this.margin.left + this.maxLabelwidth) + "," + this.margin.top + ")");
+      .append<SVGSVGElement>('g')
+      .attr('id', `interaction-layer-${this.graphId}`)
+      .attr(
+        'transform',
+        'translate(' +
+          (this.margin.left + this.maxLabelwidth) +
+          ',' +
+          this.margin.top +
+          ')',
+      );
 
     this.addResizeObserver();
   }
 
   private addResizeObserver() {
-    this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
+    this.resizeObserver = new ResizeObserver((entries) =>
+      this.zone.run(() => this.redrawCompleteGraph()),
+    );
     this.resizeObserver.observe(this.d3Elem?.nativeElement);
   }
 
@@ -241,23 +282,33 @@ export class D3TimeseriesGraphComponent
   }
 
   public reloadDataForDatasets(datasetIds: string[]): void {
-    datasetIds.forEach(id => {
+    datasetIds.forEach((id) => {
       const dataset = this.datasetMap.get(id);
       dataset && this.loadDatasetData(dataset, true);
     });
   }
 
   protected addDataset(id: string, url: string): void {
-    this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries }).subscribe({
-      next: res => this.loadAddedDataset(res),
-      error: error => this.errorHandler.handleDatasetLoadError(error)
-    });
+    this.servicesConnector
+      .getDataset(
+        { id, url },
+        {
+          locale: this.translateService.currentLang,
+          type: DatasetType.Timeseries,
+        },
+      )
+      .subscribe({
+        next: (res) => this.loadAddedDataset(res),
+        error: (error) => this.errorHandler.handleDatasetLoadError(error),
+      });
   }
 
   protected removeDataset(internalId: string): void {
     this.datasetMap.delete(internalId);
     this.preparedAxes.delete(internalId);
-    const spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === internalId);
+    const spliceIdx = this.preparedData.findIndex(
+      (entry) => entry.internalId === internalId,
+    );
     if (spliceIdx >= 0) {
       this.preparedData.splice(spliceIdx, 1);
       if (this.preparedData.length <= 0) {
@@ -269,26 +320,41 @@ export class D3TimeseriesGraphComponent
   }
 
   protected setSelectedId(internalId: string): void {
-    const internalEntry = this.preparedData.find((e) => e.internalId === internalId);
-    if (internalEntry) { internalEntry.selected = true; }
+    const internalEntry = this.preparedData.find(
+      (e) => e.internalId === internalId,
+    );
+    if (internalEntry) {
+      internalEntry.selected = true;
+    }
     this.redrawCompleteGraph();
   }
 
   protected removeSelectedId(internalId: string): void {
-    const internalEntry = this.preparedData.find((e) => e.internalId === internalId);
-    if (internalEntry) { internalEntry.selected = false; }
+    const internalEntry = this.preparedData.find(
+      (e) => e.internalId === internalId,
+    );
+    if (internalEntry) {
+      internalEntry.selected = false;
+    }
     this.redrawCompleteGraph();
   }
 
   protected presenterOptionsChanged(options: D3PlotOptions): void {
-    if (this.plotOptions.hoverStyle !== HoveringStyle.point && options.hoverStyle === HoveringStyle.point) {
-      d3.select("g.d3line").attr("visibility", "visible");
+    if (
+      this.plotOptions.hoverStyle !== HoveringStyle.point &&
+      options.hoverStyle === HoveringStyle.point
+    ) {
+      d3.select('g.d3line').attr('visibility', 'visible');
     }
     Object.assign(this.plotOptions, options);
     this.redrawCompleteGraph();
   }
 
-  protected datasetOptionsChanged(internalId: string, options: DatasetOptions, firstChange: boolean): void {
+  protected datasetOptionsChanged(
+    internalId: string,
+    options: DatasetOptions,
+    firstChange: boolean,
+  ): void {
     const dataset = this.datasetMap.get(internalId);
     if (!firstChange && dataset) {
       this.loadDatasetData(dataset, false);
@@ -299,12 +365,14 @@ export class D3TimeseriesGraphComponent
     this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset, false));
   }
 
-  protected onResize(): void {
-  }
+  protected onResize(): void {}
 
   public centerTime(timestamp: number): void {
     if (this.timespan) {
-      const centeredTimespan = this.timeSrvc.centerTimespan(this.timespan, new Date(timestamp));
+      const centeredTimespan = this.timeSrvc.centerTimespan(
+        this.timespan,
+        new Date(timestamp),
+      );
       this.onTimespanChanged.emit(centeredTimespan);
     }
   }
@@ -322,7 +390,9 @@ export class D3TimeseriesGraphComponent
       this.datasetMap.set(dataset.internalId, dataset);
       this.loadDatasetData(dataset, false);
     } else {
-      console.error(`Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`);
+      console.error(
+        `Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`,
+      );
     }
   }
 
@@ -331,15 +401,27 @@ export class D3TimeseriesGraphComponent
     const datasetOptions = this.datasetOptions?.get(dataset.internalId);
 
     if (this.timespan && datasetOptions) {
-      if (this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered
-        && dataset.firstValue
-        && dataset.lastValue
-        && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+      if (
+        this.plotOptions.sendDataRequestOnlyIfDatasetTimespanCovered &&
+        dataset.firstValue &&
+        dataset.lastValue &&
+        !this.timeSrvc.overlaps(
+          this.timespan,
+          dataset.firstValue.timestamp,
+          dataset.lastValue.timestamp,
+        )
+      ) {
         this.prepareData(dataset, new HelgolandTimeseriesData([]));
         this.onCompleteLoadingData(dataset);
       } else {
-        if (this.loadingData.size === 0) { this.onContentLoading.emit(true); }
-        const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.plotOptions.timespanBufferFactor!, moment.duration(1, "day").asMilliseconds());
+        if (this.loadingData.size === 0) {
+          this.onContentLoading.emit(true);
+        }
+        const buffer = this.timeSrvc.getBufferedTimespan(
+          this.timespan,
+          this.plotOptions.timespanBufferFactor!,
+          moment.duration(1, 'day').asMilliseconds(),
+        );
         this.loadingData.add(dataset.internalId);
         this.dataLoaded.emit(this.loadingData);
         const runningRequest = this.runningDataRequests.get(dataset.internalId);
@@ -347,25 +429,34 @@ export class D3TimeseriesGraphComponent
           runningRequest.unsubscribe();
           this.onCompleteLoadingData(dataset);
         }
-        const request = this.servicesConnector.getDatasetData(dataset, buffer, {
-          expanded: this.plotOptions.showReferenceValues || this.plotOptions.requestBeforeAfterValues,
-          generalize: this.plotOptions.generalizeAllways || datasetOptions.generalize
-        }).subscribe({
-          next: (result) => {
-            this.prepareData(dataset, result);
-            this.onCompleteLoadingData(dataset);
-          },
-          error: (error) => {
-            this.errorHandler.handleDataLoadError(error, dataset);
-            this.onCompleteLoadingData(dataset);
-          }
-        });
+        const request = this.servicesConnector
+          .getDatasetData(dataset, buffer, {
+            expanded:
+              this.plotOptions.showReferenceValues ||
+              this.plotOptions.requestBeforeAfterValues,
+            generalize:
+              this.plotOptions.generalizeAllways || datasetOptions.generalize,
+          })
+          .subscribe({
+            next: (result) => {
+              this.prepareData(dataset, result);
+              this.onCompleteLoadingData(dataset);
+            },
+            error: (error) => {
+              this.errorHandler.handleDataLoadError(error, dataset);
+              this.onCompleteLoadingData(dataset);
+            },
+          });
         if (!request.closed) {
           this.runningDataRequests.set(dataset.internalId, request);
         }
       }
     } else {
-      this.graphIdService.getId().subscribe(id => console.warn(`No timespan is configured for graph with ID: ${id}`));
+      this.graphIdService
+        .getId()
+        .subscribe((id) =>
+          console.warn(`No timespan is configured for graph with ID: ${id}`),
+        );
     }
   }
 
@@ -373,38 +464,64 @@ export class D3TimeseriesGraphComponent
     this.runningDataRequests.delete(dataset.internalId);
     this.loadingData.delete(dataset.internalId);
     this.dataLoaded.emit(this.loadingData);
-    if (this.loadingData.size === 0) { this.onContentLoading.emit(false); }
+    if (this.loadingData.size === 0) {
+      this.onContentLoading.emit(false);
+    }
   }
 
   /**
    * Function to prepare each dataset for the graph and adding it to an array of datasets.
    * @param dataset {IDataset} Object of the whole dataset
    */
-  private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
+  private prepareData(
+    dataset: HelgolandTimeseries,
+    rawdata: HelgolandTimeseriesData,
+  ): void {
     const options = this.datasetOptions?.get(dataset.internalId);
     const constellation = this.datasetMap.get(dataset.internalId);
 
-    if (rawdata instanceof HelgolandTimeseriesData && options && constellation && this.timespan) {
+    if (
+      rawdata instanceof HelgolandTimeseriesData &&
+      options &&
+      constellation &&
+      this.timespan
+    ) {
       // add surrounding entries to the set
-      if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
-      if (rawdata.valueAfterTimespan) { rawdata.values.push(rawdata.valueAfterTimespan); }
+      if (rawdata.valueBeforeTimespan) {
+        rawdata.values.unshift(rawdata.valueBeforeTimespan);
+      }
+      if (rawdata.valueAfterTimespan) {
+        rawdata.values.push(rawdata.valueAfterTimespan);
+      }
 
-      const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan);
+      const data = this.generalizer.generalizeData(
+        rawdata,
+        this.width,
+        this.timespan,
+      );
 
       constellation.data = data;
-      const datasetIdx = this.preparedData.findIndex((e) => e.internalId === dataset.internalId);
+      const datasetIdx = this.preparedData.findIndex(
+        (e) => e.internalId === dataset.internalId,
+      );
 
-      let barConfig: { startOf: unitOfTime.StartOf; period: moment.Duration; } | undefined = undefined;
+      let barConfig:
+        | { startOf: unitOfTime.StartOf; period: moment.Duration }
+        | undefined = undefined;
       // sum values for bar chart visualization
-      if (options.type === "bar") {
+      if (options.type === 'bar') {
         barConfig = {
           startOf: options.barStartOf as unitOfTime.StartOf,
-          period: moment.duration(options.barPeriod)
+          period: moment.duration(options.barPeriod),
         };
         if (barConfig.period.asMilliseconds() === 0) {
           throw new Error(`${dataset.internalId} needs a valid barPeriod`);
         }
-        data.values = this.sumValues.sum(barConfig.startOf, barConfig.period, data.values);
+        data.values = this.sumValues.sum(
+          barConfig.startOf,
+          barConfig.period,
+          data.values,
+        );
       }
 
       // generate random color, if color is not defined
@@ -415,10 +532,14 @@ export class D3TimeseriesGraphComponent
       // end of check for datasets
       const dataEntry: InternalDataEntry = {
         internalId: dataset.internalId,
-        hoverId: `hov-${(datasetIdx >= 0 ? datasetIdx : this.preparedData.length)}`,
+        hoverId: `hov-${
+          datasetIdx >= 0 ? datasetIdx : this.preparedData.length
+        }`,
         options,
         selected: this.selectedDatasetIds.indexOf(dataset.internalId) >= 0,
-        data: options.visible ? data.values.map(d => ({ timestamp: d[0], value: d[1] })) : [],
+        data: options.visible
+          ? data.values.map((d) => ({ timestamp: d[0], value: d[1] }))
+          : [],
         axisOptions: {
           uom: dataset.uom,
           label: dataset.label,
@@ -429,21 +550,25 @@ export class D3TimeseriesGraphComponent
           parameters: {
             feature: dataset.parameters.feature,
             phenomenon: dataset.parameters.phenomenon,
-            offering: dataset.parameters.offering
-          }
+            offering: dataset.parameters.offering,
+          },
         },
         referenceValueData: [],
         visible: options.visible,
-        bar: barConfig
+        bar: barConfig,
       };
 
-      const separationIdx: number = this.listOfSeparation.findIndex((id) => id === dataset.internalId);
+      const separationIdx: number = this.listOfSeparation.findIndex(
+        (id) => id === dataset.internalId,
+      );
       if (options.separateYAxis) {
         if (separationIdx < 0) {
           this.listOfSeparation.push(dataset.internalId);
         }
       } else {
-        this.listOfSeparation = this.listOfSeparation.filter(entry => entry !== dataset.internalId);
+        this.listOfSeparation = this.listOfSeparation.filter(
+          (entry) => entry !== dataset.internalId,
+        );
       }
 
       if (datasetIdx >= 0) {
@@ -455,7 +580,6 @@ export class D3TimeseriesGraphComponent
       this.processData(dataEntry);
       this.redrawCompleteGraph();
     }
-
   }
 
   /**
@@ -465,20 +589,31 @@ export class D3TimeseriesGraphComponent
    * @param data {Data} Array of Arrays containing the measurement-data of the dataset
    * @param uom {String} String with the uom of a dataset
    */
-  private addReferenceValueData(dataEntry: InternalDataEntry, styles: DatasetOptions, data: Data<TimeValueTuple>, uom: string): void {
+  private addReferenceValueData(
+    dataEntry: InternalDataEntry,
+    styles: DatasetOptions,
+    data: Data<TimeValueTuple>,
+    uom: string,
+  ): void {
     if (this.plotOptions.showReferenceValues && dataEntry.visible) {
       dataEntry.referenceValueData = styles.showReferenceValues
-        .filter(refValue => data.referenceValues && data.referenceValues[refValue.id])
+        .filter(
+          (refValue) =>
+            data.referenceValues && data.referenceValues[refValue.id],
+        )
         .map((refValue) => ({
           id: refValue.id,
           color: refValue.color,
-          data: this.createReferenceValueData(data, refValue.id)
+          data: this.createReferenceValueData(data, refValue.id),
         }));
     }
   }
 
   // adjust reference values with new structure to old one
-  private createReferenceValueData(data: Data<TimeValueTuple>, refId: string): { timestamp: number; value: number; }[] {
+  private createReferenceValueData(
+    data: Data<TimeValueTuple>,
+    refId: string,
+  ): { timestamp: number; value: number }[] {
     let refValues = data.referenceValues[refId] as any;
     if (!(refValues instanceof Array)) {
       if (refValues.valueBeforeTimespan) {
@@ -504,7 +639,6 @@ export class D3TimeseriesGraphComponent
 
     // set out of yAxisRange
     if (entry.axisOptions.yAxisRange?.min && entry.axisOptions.yAxisRange.max) {
-
       if (!isNaN(entry.axisOptions.yAxisRange.min)) {
         visualMin = entry.axisOptions.yAxisRange.min;
         fixedMin = true;
@@ -535,14 +669,28 @@ export class D3TimeseriesGraphComponent
         }
       });
 
-      const dataExtentRafValues = entry.referenceValueData.map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === "number") ? d.value : null));
+      const dataExtentRafValues = entry.referenceValueData.map((e) =>
+        d3.extent<DataEntry, number>(e.data, (d) =>
+          typeof d.value === 'number' ? d.value : null,
+        ),
+      );
 
       if (visualMin === undefined) {
-        visualMin = d3.min(filterUndefined([baseDataExtent[0], ...dataExtentRafValues.map(e => e[0])]));
+        visualMin = d3.min(
+          filterUndefined([
+            baseDataExtent[0],
+            ...dataExtentRafValues.map((e) => e[0]),
+          ]),
+        );
       }
 
       if (visualMax === undefined) {
-        visualMax = d3.max(filterUndefined([baseDataExtent[1], ...dataExtentRafValues.map(e => e[1])]));
+        visualMax = d3.max(
+          filterUndefined([
+            baseDataExtent[1],
+            ...dataExtentRafValues.map((e) => e[1]),
+          ]),
+        );
       }
     }
 
@@ -559,7 +707,7 @@ export class D3TimeseriesGraphComponent
       visualMax: visualMax!,
       fixedMin,
       fixedMax,
-      entry
+      entry,
     });
   }
 
@@ -567,17 +715,27 @@ export class D3TimeseriesGraphComponent
    * Function that returns the height of the graph diagram.
    */
   private calculateHeight(): number {
-    return (this.d3Elem?.nativeElement as HTMLElement).clientHeight
-      - this.margin.top
-      - this.margin.bottom
-      + (this.plotOptions.showTimeLabel || (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) ? 0 : 20);
+    return (
+      (this.d3Elem?.nativeElement as HTMLElement).clientHeight -
+      this.margin.top -
+      this.margin.bottom +
+      (this.plotOptions.showTimeLabel ||
+      (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show)
+        ? 0
+        : 20)
+    );
   }
 
   /**
    * Function that returns the width of the graph diagram.
    */
   private calculateWidth(): number {
-    return (this.rawSvg.node()?.width.baseVal.value || 100) - this.margin.left - this.margin.right - this.maxLabelwidth;
+    return (
+      (this.rawSvg.node()?.width.baseVal.value || 100) -
+      this.margin.left -
+      this.margin.right -
+      this.maxLabelwidth
+    );
   }
 
   /**
@@ -594,26 +752,44 @@ export class D3TimeseriesGraphComponent
   }
 
   private drawYGridLines() {
-    this.graph.selectAll(".grid.y-grid").remove();
+    this.graph.selectAll('.grid.y-grid').remove();
     if (this.plotOptions.grid) {
-      const idx = this.yAxes.reverse().findIndex(yAxe => yAxe.ids.find(id => this.datasetOptions?.get(id)?.visible));
+      const idx = this.yAxes
+        .reverse()
+        .findIndex((yAxe) =>
+          yAxe.ids.find((id) => this.datasetOptions?.get(id)?.visible),
+        );
       if (idx >= 0 && this.yAxes[idx] && this.yAxes[idx].yScale) {
-        this.graph.append("svg:g")
-          .attr("class", "grid y-grid")
-          .attr("transform", "translate(" + this.leftOffset + ", 0)")
-          .call(d3.axisLeft(this.yAxes[idx].yScale!)
-            .ticks(TICKS_COUNT_YAXIS)
-            .tickSize(-this.width + this.leftOffset)
-            .tickFormat(() => "") as any);
+        this.graph
+          .append('svg:g')
+          .attr('class', 'grid y-grid')
+          .attr('transform', 'translate(' + this.leftOffset + ', 0)')
+          .call(
+            d3
+              .axisLeft(this.yAxes[idx].yScale!)
+              .ticks(TICKS_COUNT_YAXIS)
+              .tickSize(-this.width + this.leftOffset)
+              .tickFormat(() => '') as any,
+          );
       }
     }
   }
 
-  public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
+  public getDrawingLayer(
+    id: string,
+    front?: boolean,
+  ): d3.Selection<SVGGElement, any, any, any> {
     return this.rawSvg
-      .insert("g", !front ? `#interaction-layer-${this.graphId}` : undefined)
-      .attr("id", id)
-      .attr("transform", "translate(" + (this.margin.left + this.maxLabelwidth) + "," + this.margin.top + ")");
+      .insert('g', !front ? `#interaction-layer-${this.graphId}` : undefined)
+      .attr('id', id)
+      .attr(
+        'transform',
+        'translate(' +
+          (this.margin.left + this.maxLabelwidth) +
+          ',' +
+          this.margin.top +
+          ')',
+      );
   }
 
   /**
@@ -621,18 +797,24 @@ export class D3TimeseriesGraphComponent
    * (graph line, graph axes, event handlers)
    */
   public redrawCompleteGraph(): void {
-    if (this.isNotDrawable()) { return; }
+    if (this.isNotDrawable()) {
+      return;
+    }
 
     this.preparedData.forEach((entry) => {
-      const idx: number = this.listOfUoms.findIndex((uom) => uom === entry.axisOptions.uom);
-      if (idx < 0) { this.listOfUoms.push(entry.axisOptions.uom); }
+      const idx: number = this.listOfUoms.findIndex(
+        (uom) => uom === entry.axisOptions.uom,
+      );
+      if (idx < 0) {
+        this.listOfUoms.push(entry.axisOptions.uom);
+      }
     });
 
     this.height = this.calculateHeight();
     this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
-    this.graph.selectAll("*").remove();
-    this.graphInteraction.selectAll("*").remove();
-    this.observer.forEach(e => e.cleanUp && e.cleanUp());
+    this.graph.selectAll('*').remove();
+    this.graphInteraction.selectAll('*').remove();
+    this.observer.forEach((e) => e.cleanUp && e.cleanUp());
 
     this.leftOffset = 0;
     this.yScaleBase = undefined;
@@ -641,8 +823,8 @@ export class D3TimeseriesGraphComponent
     this.yAxes = [];
     this.prepareYAxes();
 
-    this.yAxes.forEach(axis => {
-      axis.first = (this.yScaleBase === undefined);
+    this.yAxes.forEach((axis) => {
+      axis.first = this.yScaleBase === undefined;
       axis.offset = this.leftOffset;
 
       const yAxisResult = this.drawYaxis(axis);
@@ -656,95 +838,161 @@ export class D3TimeseriesGraphComponent
     });
 
     // cancel drawing, without enough space
-    if ((this.width - this.leftOffset) <= 0 || this.height <= 0) { return; }
+    if (this.width - this.leftOffset <= 0 || this.height <= 0) {
+      return;
+    }
 
-    if (!this.yScaleBase) { return; }
+    if (!this.yScaleBase) {
+      return;
+    }
 
     this.drawBaseGraph();
 
     this.drawTimeRangeLabels();
 
     // create background as rectangle providing panning
-    this.background = this.graphInteraction.append<SVGSVGElement>("svg:rect")
-      .attr("width", this.width - this.leftOffset)
-      .attr("height", this.height)
-      .attr("id", "backgroundRect")
-      .attr("fill", "none")
-      .attr("stroke", "none")
-      .attr("pointer-events", "all")
-      .attr("transform", "translate(" + this.leftOffset + ", 0)");
+    this.background = this.graphInteraction
+      .append<SVGSVGElement>('svg:rect')
+      .attr('width', this.width - this.leftOffset)
+      .attr('height', this.height)
+      .attr('id', 'backgroundRect')
+      .attr('fill', 'none')
+      .attr('stroke', 'none')
+      .attr('pointer-events', 'all')
+      .attr('transform', 'translate(' + this.leftOffset + ', 0)');
 
     this.addTimespanJumpButtons();
 
-    this.background.on("mousemove", (event: MouseEvent) => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground(event)));
+    this.background.on('mousemove', (event: MouseEvent) =>
+      this.observer.forEach(
+        (e) => e.mousemoveBackground && e.mousemoveBackground(event),
+      ),
+    );
 
-    this.background.on("mouseover", (event: MouseEvent) => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground(event)));
+    this.background.on('mouseover', (event: MouseEvent) =>
+      this.observer.forEach(
+        (e) => e.mouseoverBackground && e.mouseoverBackground(event),
+      ),
+    );
 
-    this.background.on("mouseout", (event: MouseEvent) => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground(event)));
+    this.background.on('mouseout', (event: MouseEvent) =>
+      this.observer.forEach(
+        (e) => e.mouseoutBackground && e.mouseoutBackground(event),
+      ),
+    );
 
     if (this.plotOptions.togglePanZoom === false) {
-      const zoomHandler: any = d3.zoom()
-        .on("start", (event: MouseEvent) => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground(event)))
-        .on("zoom", (event: MouseEvent) => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground(event)))
-        .on("end", (event: MouseEvent) => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground(event)));
+      const zoomHandler: any = d3
+        .zoom()
+        .on('start', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.zoomStartBackground && e.zoomStartBackground(event),
+          ),
+        )
+        .on('zoom', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.zoomMoveBackground && e.zoomMoveBackground(event),
+          ),
+        )
+        .on('end', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.zoomEndBackground && e.zoomEndBackground(event),
+          ),
+        );
       this.background.call(zoomHandler);
     } else {
-      const dragHandler: any = d3.drag()
-        .on("start", (event: MouseEvent) => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground(event)))
-        .on("drag", (event: MouseEvent) => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground(event)))
-        .on("end", (event: MouseEvent) => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground(event)));
+      const dragHandler: any = d3
+        .drag()
+        .on('start', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.dragStartBackground && e.dragStartBackground(event),
+          ),
+        )
+        .on('drag', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.dragMoveBackground && e.dragMoveBackground(event),
+          ),
+        )
+        .on('end', (event: MouseEvent) =>
+          this.observer.forEach(
+            (e) => e.dragEndBackground && e.dragEndBackground(event),
+          ),
+        );
       this.background.call(dragHandler);
     }
 
-    this.observer.forEach(e => {
-
+    this.observer.forEach((e) => {
       if (e.adjustBackground && this.xScaleBase) {
         const graphExtent: D3GraphExtent = {
           width: this.width,
           height: this.height,
           leftOffset: this.leftOffset,
           margin: this.margin,
-          xScale: this.xScaleBase
+          xScale: this.xScaleBase,
         };
-        e.adjustBackground(this.background, graphExtent, this.preparedData, this.graph, this.timespan!);
+        e.adjustBackground(
+          this.background,
+          graphExtent,
+          this.preparedData,
+          this.graph,
+          this.timespan!,
+        );
       }
     });
     this.drawBackground();
   }
 
   protected drawTimeRangeLabels() {
-    if (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show && this.timespan) {
-      this.graph.append("text")
-        .attr("class", "x axis time-range from")
-        .attr("x", this.leftOffset)
-        .attr("y", this.height + this.margin.bottom - 5)
-        .style("text-anchor", "start")
-        .text(this.timezoneSrvc.formatTzDate(this.timespan.from, this.plotOptions.timeRangeLabel.format));
-      this.graph.append("text")
-        .attr("class", "x axis time-range to")
-        .attr("x", this.width)
-        .attr("y", this.height + this.margin.bottom - 5)
-        .style("text-anchor", "end")
-        .text(this.timezoneSrvc.formatTzDate(this.timespan.to, this.plotOptions.timeRangeLabel.format));
+    if (
+      this.plotOptions.timeRangeLabel &&
+      this.plotOptions.timeRangeLabel.show &&
+      this.timespan
+    ) {
+      this.graph
+        .append('text')
+        .attr('class', 'x axis time-range from')
+        .attr('x', this.leftOffset)
+        .attr('y', this.height + this.margin.bottom - 5)
+        .style('text-anchor', 'start')
+        .text(
+          this.timezoneSrvc.formatTzDate(
+            this.timespan.from,
+            this.plotOptions.timeRangeLabel.format,
+          ),
+        );
+      this.graph
+        .append('text')
+        .attr('class', 'x axis time-range to')
+        .attr('x', this.width)
+        .attr('y', this.height + this.margin.bottom - 5)
+        .style('text-anchor', 'end')
+        .text(
+          this.timezoneSrvc.formatTzDate(
+            this.timespan.to,
+            this.plotOptions.timeRangeLabel.format,
+          ),
+        );
     }
   }
 
   private isNotDrawable() {
     try {
-      return this.rawSvg.node()?.width.baseVal.value === undefined
-        || this.rawSvg.node()?.width.baseVal.value === 0
-        || this.rawSvg.node()?.height.baseVal.value === undefined
-        || this.rawSvg.node()?.height.baseVal.value === 0
-        || !this.graph
-        || !this.rawSvg
-        || !this.datasetIds;
+      return (
+        this.rawSvg.node()?.width.baseVal.value === undefined ||
+        this.rawSvg.node()?.width.baseVal.value === 0 ||
+        this.rawSvg.node()?.height.baseVal.value === undefined ||
+        this.rawSvg.node()?.height.baseVal.value === 0 ||
+        !this.graph ||
+        !this.rawSvg ||
+        !this.datasetIds
+      );
     } catch (error) {
       return true;
     }
   }
 
   protected prepareYAxes() {
-    this.datasetIds.forEach(key => this.createYAxisForId(key));
+    this.datasetIds.forEach((key) => this.createYAxisForId(key));
   }
 
   protected createYAxisForId(id: string) {
@@ -760,11 +1008,14 @@ export class D3TimeseriesGraphComponent
           selected: !!axisSettings.entry.selected,
           seperate: true,
           ids: [id],
-          label: axisSettings.entry.axisOptions.parameters?.feature?.label
+          label: axisSettings.entry.axisOptions.parameters?.feature?.label,
         });
       } else {
         // find matching axis or add new
-        const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate);
+        const axis = this.yAxes.find(
+          (e) =>
+            e.uom.includes(axisSettings.entry.axisOptions.uom) && !e.seperate,
+        );
         if (axis) {
           // add id to axis
           axis.ids.push(id);
@@ -789,7 +1040,7 @@ export class D3TimeseriesGraphComponent
             fixedMax: axisSettings.fixedMax,
             seperate: false,
             selected: !!axisSettings.entry.selected,
-            ids: [id]
+            ids: [id],
           });
         }
       }
@@ -802,13 +1053,28 @@ export class D3TimeseriesGraphComponent
     let laterTimestamp: number | undefined = undefined;
     if (this.plotOptions.requestBeforeAfterValues && this.timespan) {
       this.preparedData.forEach((entry: InternalDataEntry) => {
-        const firstIdxInTimespan = entry.data.findIndex(e => (this.timespan!.from < e.timestamp && this.timespan!.to > e.timestamp) && typeof e.value === "number");
+        const firstIdxInTimespan = entry.data.findIndex(
+          (e) =>
+            this.timespan!.from < e.timestamp &&
+            this.timespan!.to > e.timestamp &&
+            typeof e.value === 'number',
+        );
         if (firstIdxInTimespan < 0) {
-          const lastIdxInTimespan = entry.data.findIndex(e => (e.timestamp > this.timespan!.from && e.timestamp > this.timespan!.to) && typeof e.value === "number");
+          const lastIdxInTimespan = entry.data.findIndex(
+            (e) =>
+              e.timestamp > this.timespan!.from &&
+              e.timestamp > this.timespan!.to &&
+              typeof e.value === 'number',
+          );
           if (lastIdxInTimespan >= 0) {
             laterTimestamp = entry.data[entry.data.length - 1].timestamp;
           }
-          const idx = entry.data.findIndex(e => (e.timestamp < this.timespan!.from && e.timestamp < this.timespan!.to) && typeof e.value === "number");
+          const idx = entry.data.findIndex(
+            (e) =>
+              e.timestamp < this.timespan!.from &&
+              e.timestamp < this.timespan!.to &&
+              typeof e.value === 'number',
+          );
           if (idx >= 0) {
             formerTimestamp = entry.data[entry.data.length - 1].timestamp;
           }
@@ -821,46 +1087,46 @@ export class D3TimeseriesGraphComponent
       const buttonWidth = 50;
       const leftRight = 15;
       if (formerTimestamp !== undefined) {
-        const g = this.background.append("g");
-        g.append("svg:rect")
-          .attr("class", "formerButton")
-          .attr("width", buttonWidth + "px")
-          .attr("height", this.height + "px")
-          .attr("transform", "translate(" + this.leftOffset + ", 0)")
-          .on("click", () => this.centerTime(formerTimestamp!));
-        g.append("line")
-          .attr("class", "arrow")
-          .attr("x1", 0 + this.leftOffset + leftRight + "px")
-          .attr("y1", this.height / 2 + "px")
-          .attr("x2", 0 + this.leftOffset + (buttonWidth - leftRight) + "px")
-          .attr("y2", this.height / 2 - (buttonWidth - leftRight) / 2 + "px");
-        g.append("line")
-          .attr("class", "arrow")
-          .attr("x1", 0 + this.leftOffset + leftRight + "px")
-          .attr("y1", this.height / 2 + "px")
-          .attr("x2", 0 + this.leftOffset + (buttonWidth - leftRight) + "px")
-          .attr("y2", this.height / 2 + (buttonWidth - leftRight) / 2 + "px");
+        const g = this.background.append('g');
+        g.append('svg:rect')
+          .attr('class', 'formerButton')
+          .attr('width', buttonWidth + 'px')
+          .attr('height', this.height + 'px')
+          .attr('transform', 'translate(' + this.leftOffset + ', 0)')
+          .on('click', () => this.centerTime(formerTimestamp!));
+        g.append('line')
+          .attr('class', 'arrow')
+          .attr('x1', 0 + this.leftOffset + leftRight + 'px')
+          .attr('y1', this.height / 2 + 'px')
+          .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
+          .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
+        g.append('line')
+          .attr('class', 'arrow')
+          .attr('x1', 0 + this.leftOffset + leftRight + 'px')
+          .attr('y1', this.height / 2 + 'px')
+          .attr('x2', 0 + this.leftOffset + (buttonWidth - leftRight) + 'px')
+          .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
       }
       if (laterTimestamp !== undefined) {
-        const g = this.background.append("g");
-        g.append("svg:rect")
-          .attr("class", "laterButton")
-          .attr("width", "50px")
-          .attr("height", this.height)
-          .attr("transform", "translate(" + (this.width - 50) + ", 0)")
-          .on("click", () => this.centerTime(laterTimestamp!));
-        g.append("line")
-          .attr("class", "arrow")
-          .attr("x1", this.width - leftRight + "px")
-          .attr("y1", this.height / 2 + "px")
-          .attr("x2", this.width - (buttonWidth - leftRight) + "px")
-          .attr("y2", this.height / 2 - (buttonWidth - leftRight) / 2 + "px");
-        g.append("line")
-          .attr("class", "arrow")
-          .attr("x1", this.width - leftRight + "px")
-          .attr("y1", this.height / 2 + "px")
-          .attr("x2", this.width - (buttonWidth - leftRight) + "px")
-          .attr("y2", this.height / 2 + (buttonWidth - leftRight) / 2 + "px");
+        const g = this.background.append('g');
+        g.append('svg:rect')
+          .attr('class', 'laterButton')
+          .attr('width', '50px')
+          .attr('height', this.height)
+          .attr('transform', 'translate(' + (this.width - 50) + ', 0)')
+          .on('click', () => this.centerTime(laterTimestamp!));
+        g.append('line')
+          .attr('class', 'arrow')
+          .attr('x1', this.width - leftRight + 'px')
+          .attr('y1', this.height / 2 + 'px')
+          .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
+          .attr('y2', this.height / 2 - (buttonWidth - leftRight) / 2 + 'px');
+        g.append('line')
+          .attr('class', 'arrow')
+          .attr('x1', this.width - leftRight + 'px')
+          .attr('y1', this.height / 2 + 'px')
+          .attr('x2', this.width - (buttonWidth - leftRight) + 'px')
+          .attr('y2', this.height / 2 + (buttonWidth - leftRight) / 2 + 'px');
       }
     }
   }
@@ -869,7 +1135,7 @@ export class D3TimeseriesGraphComponent
    * Draws for every preprared data entry the chart.
    */
   protected drawAllCharts(): void {
-    this.graph.selectAll(".diagram-path").remove();
+    this.graph.selectAll('.diagram-path').remove();
     this.preparedData.forEach((entry) => this.drawChart(entry));
   }
 
@@ -879,59 +1145,75 @@ export class D3TimeseriesGraphComponent
    */
   private drawXaxis(bufferXrange: number): void {
     // range for x axis scale
-    this.xScaleBase = d3.scaleTime()
+    this.xScaleBase = d3
+      .scaleTime()
       .domain([new Date(this.timespan!.from), new Date(this.timespan!.to)])
       .range([bufferXrange, this.width]);
 
     const ticks = this.calcTicks();
 
-    const xAxis = d3.axisBottom(this.xScaleBase)
-      .tickFormat(d => this.timeFormatLocaleService.formatTime(d.valueOf()))
+    const xAxis = d3
+      .axisBottom(this.xScaleBase)
+      .tickFormat((d) => this.timeFormatLocaleService.formatTime(d.valueOf()))
       .tickValues(ticks);
 
     // update x axis
-    this.graph.selectAll(".x.axis.bottom").remove();
-    this.graph.append("g")
-      .attr("class", "x axis bottom")
-      .attr("transform", "translate(0," + this.height + ")")
+    this.graph.selectAll('.x.axis.bottom').remove();
+    this.graph
+      .append('g')
+      .attr('class', 'x axis bottom')
+      .attr('transform', 'translate(0,' + this.height + ')')
       .call(xAxis)
-      .selectAll("text")
-      .style("text-anchor", "middle");
+      .selectAll('text')
+      .style('text-anchor', 'middle');
 
     // draw x grid lines
-    this.graph.selectAll(".grid.x-grid").remove();
+    this.graph.selectAll('.grid.x-grid').remove();
     if (this.plotOptions.grid) {
       // draw the x grid lines
-      this.graph.append("svg:g")
-        .attr("class", "grid x-grid")
-        .attr("transform", "translate(0," + this.height + ")")
-        .call(xAxis.tickSize(-this.height).tickFormat(() => "") as any);
+      this.graph
+        .append('svg:g')
+        .attr('class', 'grid x-grid')
+        .attr('transform', 'translate(0,' + this.height + ')')
+        .call(xAxis.tickSize(-this.height).tickFormat(() => '') as any);
     }
 
     // draw upper axis as border
-    this.graph.selectAll(".x.axis.top").remove();
-    this.graph.append("svg:g")
-      .attr("class", "x axis top")
+    this.graph.selectAll('.x.axis.top').remove();
+    this.graph
+      .append('svg:g')
+      .attr('class', 'x axis top')
       .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0) as any);
 
     // draw right axis as border
-    this.graph.selectAll(".y.axis.right").remove();
+    this.graph.selectAll('.y.axis.right').remove();
     if (this.yScaleBase) {
-      this.graph.append("svg:g")
-        .attr("class", "y axis right")
-        .attr("transform", "translate(" + this.width + ",0)")
-        .call(d3.axisRight(this.yScaleBase).tickFormat(() => "").tickSize(0) as any);
+      this.graph
+        .append('svg:g')
+        .attr('class', 'y axis right')
+        .attr('transform', 'translate(' + this.width + ',0)')
+        .call(
+          d3
+            .axisRight(this.yScaleBase)
+            .tickFormat(() => '')
+            .tickSize(0) as any,
+        );
     }
 
     // text label for the x axis
-    this.graph.selectAll(".x.axis.label").remove();
+    this.graph.selectAll('.x.axis.label').remove();
     if (this.plotOptions.showTimeLabel) {
-      this.graph.append("text")
-        .attr("class", "x axis label")
-        .attr("x", (this.width + bufferXrange) / 2)
-        .attr("y", this.height + this.margin.bottom - 5)
-        .style("text-anchor", "middle")
-        .text(this.plotOptions.showTimeLabel === true ? "time" : this.plotOptions.showTimeLabel);
+      this.graph
+        .append('text')
+        .attr('class', 'x axis label')
+        .attr('x', (this.width + bufferXrange) / 2)
+        .attr('y', this.height + this.margin.bottom - 5)
+        .style('text-anchor', 'middle')
+        .text(
+          this.plotOptions.showTimeLabel === true
+            ? 'time'
+            : this.plotOptions.showTimeLabel,
+        );
     }
   }
 
@@ -954,19 +1236,31 @@ export class D3TimeseriesGraphComponent
     return ticks;
   }
 
-  private getFirstTick(start: moment.Moment, t: { interval: unitOfTime.DurationConstructor; step: number; }) {
+  private getFirstTick(
+    start: moment.Moment,
+    t: { interval: unitOfTime.DurationConstructor; step: number },
+  ) {
     return this.round(start, t);
   }
 
-  private round(date: moment.Moment, t: { interval: unitOfTime.DurationConstructor; step: number; }) {
+  private round(
+    date: moment.Moment,
+    t: { interval: unitOfTime.DurationConstructor; step: number },
+  ) {
     const duration = moment.duration(t.step, t.interval);
     const offset = date.utcOffset() * 60 * 1000;
-    const part = (+date + offset) / (+duration);
-    const round = moment(Math.ceil(part) * (+duration) - offset).startOf(t.interval);
+    const part = (+date + offset) / +duration;
+    const round = moment(Math.ceil(part) * +duration - offset).startOf(
+      t.interval,
+    );
     return date > round ? round.add(t.step, t.interval) : round;
   }
 
-  private tickInterval(interval: number, start: number, stop: number): { interval: unitOfTime.DurationConstructor, step: number } {
+  private tickInterval(
+    interval: number,
+    start: number,
+    stop: number,
+  ): { interval: unitOfTime.DurationConstructor; step: number } {
     const durationSecond = 1000,
       durationMinute = durationSecond * 60,
       durationHour = durationMinute * 60,
@@ -975,25 +1269,25 @@ export class D3TimeseriesGraphComponent
       durationMonth = durationDay * 30,
       durationYear = durationDay * 365;
     const tickIntervals: any[] = [
-      ["second", 1, durationSecond],
-      ["second", 5, 5 * durationSecond],
-      ["second", 15, 15 * durationSecond],
-      ["second", 30, 30 * durationSecond],
-      ["minute", 1, durationMinute],
-      ["minute", 5, 5 * durationMinute],
-      ["minute", 15, 15 * durationMinute],
-      ["minute", 30, 30 * durationMinute],
-      ["hour", 1, durationHour],
-      ["hour", 3, 3 * durationHour],
-      ["hour", 6, 6 * durationHour],
-      ["hour", 12, 12 * durationHour],
-      ["day", 1, durationDay],
-      ["day", 2, 2 * durationDay],
-      ["week", 1, durationWeek],
-      ["month", 1, durationMonth],
-      ["month", 3, 3 * durationMonth],
-      ["month", 6, 6 * durationMonth],
-      ["year", 1, durationYear]
+      ['second', 1, durationSecond],
+      ['second', 5, 5 * durationSecond],
+      ['second', 15, 15 * durationSecond],
+      ['second', 30, 30 * durationSecond],
+      ['minute', 1, durationMinute],
+      ['minute', 5, 5 * durationMinute],
+      ['minute', 15, 15 * durationMinute],
+      ['minute', 30, 30 * durationMinute],
+      ['hour', 1, durationHour],
+      ['hour', 3, 3 * durationHour],
+      ['hour', 6, 6 * durationHour],
+      ['hour', 12, 12 * durationHour],
+      ['day', 1, durationDay],
+      ['day', 2, 2 * durationDay],
+      ['week', 1, durationWeek],
+      ['month', 1, durationMonth],
+      ['month', 3, 3 * durationMonth],
+      ['month', 6, 6 * durationMonth],
+      ['year', 1, durationYear],
     ];
     let step;
     // If a desired tick count is specified, pick a reasonable tick interval
@@ -1001,22 +1295,27 @@ export class D3TimeseriesGraphComponent
     // Otherwise, assume interval is already a time interval and use it.
     let detectedInterval: unitOfTime.DurationConstructor;
     const target = Math.abs(stop - start) / interval;
-    const i: number = d3.bisector((j: any) => j[2]).right(tickIntervals, target);
+    const i: number = d3
+      .bisector((j: any) => j[2])
+      .right(tickIntervals, target);
     if (i === tickIntervals.length) {
       step = d3.tickStep(start / durationYear, stop / durationYear, interval);
-      detectedInterval = "year";
+      detectedInterval = 'year';
     } else if (i) {
-      const index = target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i;
+      const index =
+        target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target
+          ? i - 1
+          : i;
       const entry = tickIntervals[index];
       step = entry[1];
       detectedInterval = entry[0];
     } else {
       step = Math.max(d3.tickStep(start, stop, interval), 1);
-      detectedInterval = "millisecond";
+      detectedInterval = 'millisecond';
     }
     return {
       interval: detectedInterval,
-      step: step
+      step: step,
     };
   }
 
@@ -1026,33 +1325,43 @@ export class D3TimeseriesGraphComponent
    * @param axis {DataEntry} Object containing a dataset.
    */
   private drawYaxis(axis: YAxis) {
-    const showAxis = (this.plotOptions.overview ? false : (this.plotOptions.yaxis === undefined ? true : this.plotOptions.yaxis));
+    const showAxis = this.plotOptions.overview
+      ? false
+      : this.plotOptions.yaxis === undefined
+        ? true
+        : this.plotOptions.yaxis;
 
     // adjust to default extend
     this.rangeCalc.setDefaultExtendIfUndefined(axis);
 
     this.rangeCalc.bufferUnfixedRange(axis);
 
-    this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
+    this.observer.forEach((e) => {
+      if (e.adjustYAxis) {
+        e.adjustYAxis(axis);
+      }
+    });
 
     // range for y axis scale
-    const yScale = d3.scaleLinear().domain([axis.range.min!, axis.range.max!]).range([this.height, 0]);
+    const yScale = d3
+      .scaleLinear()
+      .domain([axis.range.min!, axis.range.max!])
+      .range([this.height, 0]);
 
     const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
     let buffer = 0;
 
     // only if yAxis should not be visible
     if (!showAxis) {
-      yAxisGen
-        .tickFormat(() => "")
-        .tickSize(0);
+      yAxisGen.tickFormat(() => '').tickSize(0);
     }
 
     // draw y axis
-    const axisElem = this.graph.append<SVGSVGElement>("svg:g")
-      .attr("class", "y axis")
-      .call(yAxisGen)
-    const axisElemNode = axisElem.node()
+    const axisElem = this.graph
+      .append<SVGSVGElement>('svg:g')
+      .attr('class', 'y axis')
+      .call(yAxisGen);
+    const axisElemNode = axisElem.node();
 
     // only if yAxis should be visible
     if (showAxis && axisElemNode) {
@@ -1063,33 +1372,48 @@ export class D3TimeseriesGraphComponent
       }
 
       // draw y axis label
-      const text = this.graph.append<SVGSVGElement>("text")
-        .attr("transform", "rotate(-90)")
-        .attr("dy", "1em")
-        .attr("class", `yaxisTextLabel ${axis.selected ? "selected" : ""}`)
+      const text = this.graph
+        .append<SVGSVGElement>('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('dy', '1em')
+        .attr('class', `yaxisTextLabel ${axis.selected ? 'selected' : ''}`)
         .text(this.getYAxisLabel(axis))
-        .call((res) => this.wrapText(res, axisHeight - 10, diagramHeight / 2, this.yaxisModifier, axis.label))
+        .call((res) =>
+          this.wrapText(
+            res,
+            axisHeight - 10,
+            diagramHeight / 2,
+            this.yaxisModifier,
+            axis.label,
+          ),
+        );
 
-      const axisWidth = axisElemNode.getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
+      const axisWidth =
+        axisElemNode.getBBox().width +
+        10 +
+        this.graphHelper.getDimensions(text.node()).h;
 
       // if yAxis should not be visible, buffer will be set to 0
       const offset = axis.offset ? axis.offset : 0;
-      buffer = (showAxis ? offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+      buffer = showAxis
+        ? offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth)
+        : 0;
 
-      const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
+      const axisWidthDiv =
+        axisWidth < this.margin.left ? this.margin.left : axisWidth;
 
       if (!axis.first) {
-        axisElem.attr("transform", "translate(" + buffer + ", 0)");
+        axisElem.attr('transform', 'translate(' + buffer + ', 0)');
       } else {
         buffer = axisWidthDiv - this.margin.left;
-        axisElem.attr("transform", "translate(" + buffer + ", 0)");
+        axisElem.attr('transform', 'translate(' + buffer + ', 0)');
       }
 
-      let textOff = - (this.leftOffset);
+      let textOff = -this.leftOffset;
       if (axis.first) {
         textOff = this.margin.left;
       }
-      text.attr("y", 0 - textOff);
+      text.attr('y', 0 - textOff);
       const textNode = text.node();
 
       if (text && textNode) {
@@ -1097,62 +1421,80 @@ export class D3TimeseriesGraphComponent
         const textHeight = textNode.getBBox().height;
         const textPosition = {
           x: textNode.getBBox().x,
-          y: textNode.getBBox().y
+          y: textNode.getBBox().y,
         };
         const axisradius = 4;
         const startOfPoints = {
           x: textPosition.y + textHeight / 2 + axisradius / 2, // + 2 because radius === 4
-          y: Math.abs(textPosition.x + textWidth) - axisradius * 2
+          y: Math.abs(textPosition.x + textWidth) - axisradius * 2,
         };
         let pointOffset = 0;
 
         axis.ids.forEach((entryID) => {
-          const dataentry = this.preparedData.find(el => el.internalId === entryID);
+          const dataentry = this.preparedData.find(
+            (el) => el.internalId === entryID,
+          );
           if (dataentry) {
             if (dataentry.options.type) {
-              this.graphHelper.drawDatasetSign(this.graph, dataentry.options, startOfPoints.x, startOfPoints.y - pointOffset, !!dataentry.selected);
+              this.graphHelper.drawDatasetSign(
+                this.graph,
+                dataentry.options,
+                startOfPoints.x,
+                startOfPoints.y - pointOffset,
+                !!dataentry.selected,
+              );
             }
             pointOffset += axisradius * 3 + (dataentry.selected ? 2 : 0);
           }
         });
 
-        const axisDiv = this.graph.append("rect")
-          .attr("class", `y axisDiv ${axis.selected ? "selected" : ""}`)
-          .attr("width", axisWidthDiv)
-          .attr("height", this.height)
-          .on("mouseup", () => this.highlightLine(axis.ids));
+        const axisDiv = this.graph
+          .append('rect')
+          .attr('class', `y axisDiv ${axis.selected ? 'selected' : ''}`)
+          .attr('width', axisWidthDiv)
+          .attr('height', this.height)
+          .on('mouseup', () => this.highlightLine(axis.ids));
 
         if (!axis.first) {
-          axisDiv.attr("x", offset).attr("y", 0);
+          axisDiv.attr('x', offset).attr('y', 0);
         } else {
-          axisDiv.attr("x", 0 - this.margin.left - this.maxLabelwidth).attr("y", 0);
+          axisDiv
+            .attr('x', 0 - this.margin.left - this.maxLabelwidth)
+            .attr('y', 0);
         }
 
-        this.observer.forEach(e => { if (e.afterYAxisDrawn) { e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth); } });
+        this.observer.forEach((e) => {
+          if (e.afterYAxisDrawn) {
+            e.afterYAxisDrawn(axis, buffer - axisWidth, axisHeight, axisWidth);
+          }
+        });
       }
     }
 
     return {
       buffer,
-      yScale
+      yScale,
     };
   }
 
   private getYAxisLabel(axis: YAxis): string {
     if (this.yAxisLabelSrvc.getLabel) {
-      const datasets = filterUndefined(axis.ids.map(id => this.datasetMap.get(id)));
+      const datasets = filterUndefined(
+        axis.ids.map((id) => this.datasetMap.get(id)),
+      );
       return this.yAxisLabelSrvc.getLabel(axis, datasets);
     }
-    return axis.label ? (axis.uom + " @ " + axis.label) : axis.uom;
+    return axis.label ? axis.uom + ' @ ' + axis.label : axis.uom;
   }
 
   private drawBackground() {
-    this.background = this.graph.insert<SVGSVGElement>("svg:rect", ":first-child")
-      .attr("width", this.width - this.leftOffset)
-      .attr("height", this.height)
-      .attr("class", "graph-background")
-      .attr("fill", "none")
-      .attr("transform", "translate(" + this.leftOffset + ", 0)");
+    this.background = this.graph
+      .insert<SVGSVGElement>('svg:rect', ':first-child')
+      .attr('width', this.width - this.leftOffset)
+      .attr('height', this.height)
+      .attr('class', 'graph-background')
+      .attr('fill', 'none')
+      .attr('transform', 'translate(' + this.leftOffset + ', 0)');
   }
 
   /**
@@ -1179,11 +1521,17 @@ export class D3TimeseriesGraphComponent
   /**
    * Function that changes state of selected Ids.
    */
-  private changeSelectedIds(toHighlightDataset: HighlightDataset[], change: boolean): void {
+  private changeSelectedIds(
+    toHighlightDataset: HighlightDataset[],
+    change: boolean,
+  ): void {
     if (change) {
       toHighlightDataset.forEach((obj) => {
         this.removeSelectedId(obj.id);
-        this.selectedDatasetIds.splice(this.selectedDatasetIds.findIndex((entry) => entry === obj.id), 1);
+        this.selectedDatasetIds.splice(
+          this.selectedDatasetIds.findIndex((entry) => entry === obj.id),
+          1,
+        );
       });
     } else {
       toHighlightDataset.forEach((obj) => {
@@ -1204,117 +1552,159 @@ export class D3TimeseriesGraphComponent
    */
   protected drawChart(entry: InternalDataEntry): void {
     if (entry.data.length > 0) {
-      const yaxis = this.yAxes.find(e => e.ids.indexOf(entry.internalId) >= 0);
+      const yaxis = this.yAxes.find(
+        (e) => e.ids.indexOf(entry.internalId) >= 0,
+      );
       if (yaxis) {
         // create body to clip graph
         // unique ID generated through the current time (current time when initialized)
-        const querySelectorClip = "clip" + this.graphId;
+        const querySelectorClip = 'clip' + this.graphId;
         this.graph
-          .append("svg:clipPath")
-          .attr("class", "diagram-path")
-          .attr("id", querySelectorClip)
-          .append("svg:rect")
-          .attr("x", this.leftOffset)
-          .attr("y", 0)
-          .attr("width", this.width - this.leftOffset)
-          .attr("height", this.height);
+          .append('svg:clipPath')
+          .attr('class', 'diagram-path')
+          .attr('id', querySelectorClip)
+          .append('svg:rect')
+          .attr('x', this.leftOffset)
+          .attr('y', 0)
+          .attr('width', this.width - this.leftOffset)
+          .attr('height', this.height);
         // draw graph line
         this.graphBody = this.graph
-          .append("g")
-          .attr("class", "diagram-path")
-          .attr("clip-path", "url(#" + querySelectorClip + ")");
+          .append('g')
+          .attr('class', 'diagram-path')
+          .attr('clip-path', 'url(#' + querySelectorClip + ')');
 
-        if (entry.options.type === "bar") {
+        if (entry.options.type === 'bar') {
           this.drawBarChart(entry, yaxis.yScale!);
         } else {
           // draw ref value line
-          entry.referenceValueData.forEach(e => this.drawRefLineChart(e.data, e.color, entry.options.lineWidth || 1, yaxis.yScale!));
+          entry.referenceValueData.forEach((e) =>
+            this.drawRefLineChart(
+              e.data,
+              e.color,
+              entry.options.lineWidth || 1,
+              yaxis.yScale!,
+            ),
+          );
           this.drawLineChart(entry, yaxis.yScale!);
         }
       }
     }
   }
 
-  private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
+  private drawRefLineChart(
+    data: DataEntry[],
+    color: string,
+    width: number,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ): void {
     const line = this.createLine(this.xScaleBase!, yScaleBase);
 
     this.graphBody
-      .append("svg:path")
+      .append('svg:path')
       .datum(data)
-      .attr("class", "line")
-      .attr("fill", "none")
-      .attr("stroke", color)
-      .attr("stroke-width", width)
-      .attr("d", line);
+      .attr('class', 'line')
+      .attr('fill', 'none')
+      .attr('stroke', color)
+      .attr('stroke-width', width)
+      .attr('d', line);
   }
 
-  private drawLineChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
-    const pointRadius = this.calculatePointRadius(entry); 0
+  private drawLineChart(
+    entry: InternalDataEntry,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ) {
+    const pointRadius = this.calculatePointRadius(entry);
+    0;
 
     // create graph line
     const line = this.createLine(this.xScaleBase!, yScaleBase);
     // draw line
     this.graphBody
-      .append("svg:path")
+      .append('svg:path')
       .datum(entry.data)
-      .attr("class", "line")
-      .attr("fill", "none")
-      .attr("stroke-dasharray", entry.options.lineDashArray)
-      .attr("stroke", entry.options.color)
-      .attr("stroke-width", this.calculateLineWidth(entry))
-      .attr("d", line);
+      .attr('class', 'line')
+      .attr('fill', 'none')
+      .attr('stroke-dasharray', entry.options.lineDashArray)
+      .attr('stroke', entry.options.color)
+      .attr('stroke-width', this.calculateLineWidth(entry))
+      .attr('d', line);
 
     // draw line dots
     if (entry.options.pointSymbol) {
-      this.pointSymbolDrawer.drawSymboleLine(entry, this.graphBody, this.addLineWidth);
+      this.pointSymbolDrawer.drawSymboleLine(
+        entry,
+        this.graphBody,
+        this.addLineWidth,
+      );
     } else {
-      this.graphBody.selectAll(".graphDots")
+      this.graphBody
+        .selectAll('.graphDots')
         .data(entry.data.filter((d) => !isNaN(d.value)))
-        .enter().append("circle")
-        .attr("class", "graphDots")
-        .attr("id", (d: DataEntry) => "dot-" + d.timestamp + "-" + entry.hoverId)
-        .attr("stroke", entry.options.pointBorderColor)
-        .attr("stroke-width", entry.options.pointBorderWidth)
-        .attr("fill", entry.options.color)
-        .attr("cx", line.x())
-        .attr("cy", line.y())
-        .attr("r", pointRadius);
+        .enter()
+        .append('circle')
+        .attr('class', 'graphDots')
+        .attr(
+          'id',
+          (d: DataEntry) => 'dot-' + d.timestamp + '-' + entry.hoverId,
+        )
+        .attr('stroke', entry.options.pointBorderColor)
+        .attr('stroke-width', entry.options.pointBorderWidth)
+        .attr('fill', entry.options.color)
+        .attr('cx', line.x())
+        .attr('cy', line.y())
+        .attr('r', pointRadius);
     }
-
   }
 
-  private drawBarChart(entry: InternalDataEntry, yScaleBase: d3.ScaleLinear<number, number>) {
+  private drawBarChart(
+    entry: InternalDataEntry,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ) {
     const paddingBefore = 0;
     const paddingAfter = 1;
     const periodInMs = entry.bar?.period.asMilliseconds() || 0;
 
-    this.graphBody.selectAll(".bar")
+    this.graphBody
+      .selectAll('.bar')
       .data(entry.data)
-      .enter().append("rect")
-      .attr("class", "bar")
-      .attr("id", (d: DataEntry) => "bar-" + d.timestamp + "-" + entry.hoverId)
-      .style("fill", entry.options.color)
-      .style("stroke-dasharray", entry.options.lineDashArray)
-      .style("stroke", entry.options.color)
-      .style("stroke-width", this.calculateLineWidth(entry))
-      .style("fill-opacity", 0.5)
-      .attr("x", (d: DataEntry) => (this.xScaleBase!(d.timestamp) || 0) + paddingBefore)
-      .attr("width", (d: DataEntry) => {
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('id', (d: DataEntry) => 'bar-' + d.timestamp + '-' + entry.hoverId)
+      .style('fill', entry.options.color)
+      .style('stroke-dasharray', entry.options.lineDashArray)
+      .style('stroke', entry.options.color)
+      .style('stroke-width', this.calculateLineWidth(entry))
+      .style('fill-opacity', 0.5)
+      .attr(
+        'x',
+        (d: DataEntry) => (this.xScaleBase!(d.timestamp) || 0) + paddingBefore,
+      )
+      .attr('width', (d: DataEntry) => {
         let width = 10;
-        if (typeof d.value === "number") {
-          width = (this.xScaleBase!(d.timestamp + periodInMs) || 0) - (this.xScaleBase!(d.timestamp) || 0);
+        if (typeof d.value === 'number') {
+          width =
+            (this.xScaleBase!(d.timestamp + periodInMs) || 0) -
+            (this.xScaleBase!(d.timestamp) || 0);
         }
         const barWidth = width - paddingBefore - paddingAfter;
         return barWidth < 1 ? 1 : barWidth;
       })
-      .attr("y", (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
-      .attr("height", (d: DataEntry) => !isNaN(d.value) ? this.height - (yScaleBase(d.value) || 0) : 0);
+      .attr('y', (d: DataEntry) => (!isNaN(d.value) ? yScaleBase(d.value) : 0))
+      .attr('height', (d: DataEntry) =>
+        !isNaN(d.value) ? this.height - (yScaleBase(d.value) || 0) : 0,
+      );
   }
 
-  private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
-    return d3.line<DataEntry>()
+  private createLine(
+    xScaleBase: d3.ScaleTime<number, number>,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ) {
+    return d3
+      .line<DataEntry>()
       .defined((d) => {
-        return (!isNaN(d.timestamp)) && (!isNaN(d.value));
+        return !isNaN(d.timestamp) && !isNaN(d.value);
       })
       .x((d) => {
         d.xDiagCoord = xScaleBase(d.timestamp) as number;
@@ -1333,33 +1723,53 @@ export class D3TimeseriesGraphComponent
    * @param width {Number} width of the axis which must not be crossed
    * @param xposition {Number} position to center the label in the middle
    */
-  private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string | undefined): void {
+  private wrapText(
+    textObj: any,
+    width: number,
+    xposition: number,
+    yaxisModifier: boolean,
+    axisLabel: string | undefined,
+  ): void {
     textObj.each((u: any, i: number, d: any) => {
       const bla = d[i];
-      const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
+      const bufferYaxisModifier = yaxisModifier ? (axisLabel ? 0 : 30) : 0; // add buffer to avoid colored circles intersect with yaxismodifier symbols
       let word;
       const text = d3.select(d[i]);
       const words = text.text().split(/\s+/).reverse();
       let line: string[] = [];
-      const lineHeight = (i === d.length - 1 ? 0.3 : 1.1); // ems
-      const y = text.attr("y");
-      const dy = parseFloat(text.attr("dy"));
-      let tspan = text.text(null).append("tspan").attr("x", 0 - xposition).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
+      const lineHeight = i === d.length - 1 ? 0.3 : 1.1; // ems
+      const y = text.attr('y');
+      const dy = parseFloat(text.attr('dy'));
+      let tspan = text
+        .text(null)
+        .append('tspan')
+        .attr('x', 0 - xposition)
+        .attr('y', y)
+        .attr('dy', dy + 'em');
+      while ((word = words.pop())) {
         line.push(word);
-        tspan.text(line.join(" "));
+        tspan.text(line.join(' '));
         const node: SVGTSpanElement = <SVGTSpanElement>tspan.node();
         const hasGreaterWidth: boolean = node.getComputedTextLength() > width;
-        const xyposition = xposition + (node.getComputedTextLength() / 2);
-        node.setAttribute("x", "-" + "" + (xyposition + bufferYaxisModifier));
+        const xyposition = xposition + node.getComputedTextLength() / 2;
+        node.setAttribute('x', '-' + '' + (xyposition + bufferYaxisModifier));
         if (hasGreaterWidth) {
           line.pop();
-          tspan.text(line.join(" "));
+          tspan.text(line.join(' '));
           line = [word];
-          tspan = text.append("tspan").attr("x", 0 - xposition).attr("y", y).attr("dy", lineHeight + dy + "em").text(word);
+          tspan = text
+            .append('tspan')
+            .attr('x', 0 - xposition)
+            .attr('y', y)
+            .attr('dy', lineHeight + dy + 'em')
+            .text(word);
           const nodeGreater: SVGTSpanElement = <SVGTSpanElement>tspan.node();
-          const xpositionGreater = xposition + (nodeGreater.getComputedTextLength());
-          nodeGreater.setAttribute("x", "-" + "" + (xpositionGreater + bufferYaxisModifier));
+          const xpositionGreater =
+            xposition + nodeGreater.getComputedTextLength();
+          nodeGreater.setAttribute(
+            'x',
+            '-' + '' + (xpositionGreater + bufferYaxisModifier),
+          );
         }
       }
     });
@@ -1369,7 +1779,20 @@ export class D3TimeseriesGraphComponent
    * Function to generate uuid for a diagram
    */
   private uuidv4(): string {
-    return this.s4() + this.s4() + "-" + this.s4() + "-" + this.s4() + "-" + this.s4() + "-" + this.s4() + this.s4() + this.s4();
+    return (
+      this.s4() +
+      this.s4() +
+      '-' +
+      this.s4() +
+      '-' +
+      this.s4() +
+      '-' +
+      this.s4() +
+      '-' +
+      this.s4() +
+      this.s4() +
+      this.s4()
+    );
   }
 
   /**
@@ -1391,10 +1814,11 @@ export class D3TimeseriesGraphComponent
 
   private calculatePointRadius(entry: InternalDataEntry) {
     if (entry.selected) {
-      return entry.options.pointRadius > 0 ? entry.options.pointRadius + this.addLineWidth : entry.options.pointRadius;
+      return entry.options.pointRadius > 0
+        ? entry.options.pointRadius + this.addLineWidth
+        : entry.options.pointRadius;
     } else {
       return entry.options.pointRadius;
     }
   }
 }
-

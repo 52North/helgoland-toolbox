@@ -1,71 +1,95 @@
-<h1 mat-dialog-title>{{'diagram-view.add-timeseries.map' | translate}}</h1>
+<h1 mat-dialog-title>{{ "diagram-view.add-timeseries.map" | translate }}</h1>
 <div mat-dialog-content>
   <mat-accordion>
     @for (entry of filterList; track entry) {
-    <mat-expansion-panel [expanded]="entry.expanded">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          @if (!entry.selectedFilter) {
-          <span>
-            {{'list-selection.select-a-filter' | translate}}
-          </span>
+      <mat-expansion-panel [expanded]="entry.expanded">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            @if (!entry.selectedFilter) {
+              <span>
+                {{ "list-selection.select-a-filter" | translate }}
+              </span>
+            }
+            @if (entry.selectedFilter) {
+              <span>
+                <helgoland-common-parameter-type-label
+                  [filter]="entry.selectedFilter"
+                >
+                </helgoland-common-parameter-type-label>
+              </span>
+            }
+            @if (entry?.selectedItem) {
+              <span> : {{ entry?.selectedItem?.label }} </span>
+            }
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-selection">
+          <mat-button-toggle-group>
+            @for (filter of entry.possibleFilters; track filter) {
+              <mat-button-toggle
+                value="filter"
+                (click)="selectFilter(entry, filter)"
+              >
+                <helgoland-common-parameter-type-label
+                  [filter]="filter"
+                ></helgoland-common-parameter-type-label>
+              </mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </div>
+        <div class="item-list">
+          @switch (entry.selectedFilter) {
+            @case ("category") {
+              <helgoland-common-parameter-list-selector
+                [endpoint]="filterEndpoints.category"
+                [filterList]="entry.apiFilter"
+                (onItemSelected)="itemSelected(entry, $event)"
+              >
+              </helgoland-common-parameter-list-selector>
+            }
+            @case ("feature") {
+              <helgoland-common-parameter-list-selector
+                [endpoint]="filterEndpoints.feature"
+                [filterList]="entry.apiFilter"
+                (onItemSelected)="itemSelected(entry, $event)"
+              >
+              </helgoland-common-parameter-list-selector>
+            }
+            @case ("phenomenon") {
+              <helgoland-common-parameter-list-selector
+                [endpoint]="filterEndpoints.phenomenon"
+                [filterList]="entry.apiFilter"
+                (onItemSelected)="itemSelected(entry, $event)"
+              >
+              </helgoland-common-parameter-list-selector>
+            }
+            @case ("procedure") {
+              <helgoland-common-parameter-list-selector
+                [endpoint]="filterEndpoints.procedure"
+                [filterList]="entry.apiFilter"
+                (onItemSelected)="itemSelected(entry, $event)"
+              >
+              </helgoland-common-parameter-list-selector>
+            }
+            @case ("timeseries") {
+              <helgoland-timeseries-list-selector
+                [endpoint]="filterEndpoints.dataset"
+                [filterList]="entry.apiFilter"
+              >
+              </helgoland-timeseries-list-selector>
+            }
           }
-          @if (entry.selectedFilter) {
-          <span>
-            <helgoland-common-parameter-type-label [filter]="entry.selectedFilter">
-            </helgoland-common-parameter-type-label>
-          </span>
-          }
-          @if (entry?.selectedItem) {
-          <span>
-            : {{entry?.selectedItem?.label}}
-          </span>
-          }
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="filter-selection">
-        <mat-button-toggle-group>
-          @for (filter of entry.possibleFilters; track filter) {
-          <mat-button-toggle value="filter" (click)="selectFilter(entry, filter)">
-            <helgoland-common-parameter-type-label [filter]="filter"></helgoland-common-parameter-type-label>
-          </mat-button-toggle>
-          }
-        </mat-button-toggle-group>
-      </div>
-      <div class="item-list">
-        @switch (entry.selectedFilter) {
-        @case ('category') {
-        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.category" [filterList]="entry.apiFilter"
-          (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-common-parameter-list-selector>
-        }
-        @case ('feature') {
-        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.feature" [filterList]="entry.apiFilter"
-          (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-common-parameter-list-selector>
-        }
-        @case ('phenomenon') {
-        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.phenomenon" [filterList]="entry.apiFilter"
-          (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-common-parameter-list-selector>
-        }
-        @case ('procedure') {
-        <helgoland-common-parameter-list-selector [endpoint]="filterEndpoints.procedure" [filterList]="entry.apiFilter"
-          (onItemSelected)="itemSelected(entry, $event)">
-        </helgoland-common-parameter-list-selector>
-        }
-        @case ('timeseries') {
-        <helgoland-timeseries-list-selector [endpoint]="filterEndpoints.dataset" [filterList]="entry.apiFilter">
-        </helgoland-timeseries-list-selector>
-        }
-        }
-      </div>
-    </mat-expansion-panel>
+        </div>
+      </mat-expansion-panel>
     }
   </mat-accordion>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="openListSettings()">{{'provider' | translate}}: {{selectedService?.label}}</button>
+  <button mat-raised-button (click)="openListSettings()">
+    {{ "provider" | translate }}: {{ selectedService?.label }}
+  </button>
   <div style="flex: 1"></div>
-  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>
+    {{ "controls.close" | translate }}
+  </button>
 </div>

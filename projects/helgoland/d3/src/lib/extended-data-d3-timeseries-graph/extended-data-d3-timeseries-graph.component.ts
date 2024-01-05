@@ -7,7 +7,7 @@ import {
   IterableDiffers,
   NgZone,
   ViewEncapsulation,
-} from "@angular/core";
+} from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
@@ -16,30 +16,22 @@ import {
   SumValuesService,
   Time,
   TimezoneService,
-} from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { D3GraphCopyrightComponent } from "../d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component";
-import {
-  D3GraphHoverLineComponent,
-} from "../d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component";
-import {
-  D3GraphHoverPointComponent,
-} from "../d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component";
-import {
-  D3GraphOverviewSelectionComponent,
-} from "../d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
-import {
-  D3GraphPanZoomInteractionComponent,
-} from "../d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
-import { D3TimeseriesGraphComponent } from "../d3-timeseries-graph/d3-timeseries-graph.component";
-import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
-import { D3GraphId } from "../helper/d3-graph-id.service";
-import { D3PointSymbolDrawerService } from "../helper/d3-point-symbol-drawer.service";
-import { D3TimeFormatLocaleService } from "../helper/d3-time-format-locale.service";
-import { DataConst, InternalDataEntry } from "../model/d3-general";
-import { D3Graphs } from "./../helper/d3-graphs.service";
-import { RangeCalculationsService } from "./../helper/range-calculations.service";
+import { D3GraphCopyrightComponent } from '../d3-timeseries-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphHoverLineComponent } from '../d3-timeseries-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
+import { D3GraphHoverPointComponent } from '../d3-timeseries-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
+import { D3GraphOverviewSelectionComponent } from '../d3-timeseries-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import { D3GraphPanZoomInteractionComponent } from '../d3-timeseries-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
+import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
+import { D3GraphId } from '../helper/d3-graph-id.service';
+import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
+import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
+import { DataConst, InternalDataEntry } from '../model/d3-general';
+import { D3Graphs } from './../helper/d3-graphs.service';
+import { RangeCalculationsService } from './../helper/range-calculations.service';
 
 /**
  * Additional Data which can be add to the component {@link ExtendedDataD3TimeseriesGraphComponent} as Input.
@@ -81,19 +73,28 @@ export interface AdditionalDataEntry {
  * the array is reset.
  */
 @Component({
-  selector: "n52-extended-data-d3-timeseries-graph",
-  templateUrl: "../d3-timeseries-graph/d3-timeseries-graph.component.html",
-  styleUrls: ["../d3-timeseries-graph/d3-timeseries-graph.component.scss"],
+  selector: 'n52-extended-data-d3-timeseries-graph',
+  templateUrl: '../d3-timeseries-graph/d3-timeseries-graph.component.html',
+  styleUrls: ['../d3-timeseries-graph/d3-timeseries-graph.component.scss'],
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [D3GraphPanZoomInteractionComponent, D3GraphCopyrightComponent, D3GraphHoverLineComponent, D3GraphHoverPointComponent, D3GraphOverviewSelectionComponent]
+  imports: [
+    D3GraphPanZoomInteractionComponent,
+    D3GraphCopyrightComponent,
+    D3GraphHoverLineComponent,
+    D3GraphHoverPointComponent,
+    D3GraphOverviewSelectionComponent,
+  ],
 })
-export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphComponent implements DoCheck, AfterViewInit {
-
+export class ExtendedDataD3TimeseriesGraphComponent
+  extends D3TimeseriesGraphComponent
+  implements DoCheck, AfterViewInit
+{
   @Input()
   public additionalData: AdditionalData[] = [];
-  private additionalDataDiffer: IterableDiffer<AdditionalData> = this.iterableDiffers.find(this.additionalData).create();
+  private additionalDataDiffer: IterableDiffer<AdditionalData> =
+    this.iterableDiffers.find(this.additionalData).create();
 
   constructor(
     protected override iterableDiffers: IterableDiffers,
@@ -127,17 +128,21 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
       graphIdService,
       servicesConnector,
       pointSymbolDrawer,
-      zone
+      zone,
     );
   }
 
   public override ngDoCheck() {
     super.ngDoCheck();
-    const additionalDataChanges = this.additionalDataDiffer.diff(this.additionalData);
+    const additionalDataChanges = this.additionalDataDiffer.diff(
+      this.additionalData,
+    );
     if (additionalDataChanges && this.additionalData && this.graph) {
       additionalDataChanges.forEachRemovedItem((removedItem) => {
         const id = this.generateAdditionalInternalId(removedItem.item);
-        const spliceIdx = this.preparedData.findIndex((entry) => entry.internalId === id);
+        const spliceIdx = this.preparedData.findIndex(
+          (entry) => entry.internalId === id,
+        );
         if (spliceIdx >= 0) {
           this.preparedData.splice(spliceIdx, 1);
         }
@@ -165,7 +170,7 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   protected override prepareYAxes() {
     super.prepareYAxes();
-    this.additionalData.forEach(entry => {
+    this.additionalData.forEach((entry) => {
       const id = this.generateAdditionalInternalId(entry);
       this.createYAxisForId(id);
     });
@@ -173,11 +178,21 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
 
   private prepareAdditionalData() {
     if (this.additionalData) {
-      this.additionalData.forEach(entry => {
-        if ((entry.linkedDatasetId || entry.yaxisLabel) && entry.data && entry.data.length > 0) {
+      this.additionalData.forEach((entry) => {
+        if (
+          (entry.linkedDatasetId || entry.yaxisLabel) &&
+          entry.data &&
+          entry.data.length > 0
+        ) {
           const options = this.getOptions(entry);
-          const dataset = entry.linkedDatasetId ? this.datasetMap.get(entry.linkedDatasetId) : undefined;
-          const prepDataIdx = this.preparedData.findIndex(e => e.internalId.indexOf(entry.linkedDatasetId!) > -1 || e.internalId.indexOf(entry.internalId) > -1);
+          const dataset = entry.linkedDatasetId
+            ? this.datasetMap.get(entry.linkedDatasetId)
+            : undefined;
+          const prepDataIdx = this.preparedData.findIndex(
+            (e) =>
+              e.internalId.indexOf(entry.linkedDatasetId!) > -1 ||
+              e.internalId.indexOf(entry.internalId) > -1,
+          );
           let dataEntry: InternalDataEntry | undefined = undefined;
           if (options) {
             if (prepDataIdx === -1) {
@@ -185,58 +200,80 @@ export class ExtendedDataD3TimeseriesGraphComponent extends D3TimeseriesGraphCom
                 internalId: this.generateAdditionalInternalId(entry),
                 hoverId: `hov-${Math.random().toString(36).substring(2, 9)}`,
                 options,
-                data: options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [],
+                data: options.visible
+                  ? entry.data.map((e) => ({
+                      timestamp: e.timestamp,
+                      value: e.value,
+                    }))
+                  : [],
                 axisOptions: {
                   uom: this.getUom(dataset, entry),
                   label: dataset ? dataset.label : entry.yaxisLabel,
                   zeroBased: options.zeroBasedYAxis,
                   yAxisRange: options.yAxisRange,
                   autoRangeSelection: options.autoRangeSelection,
-                  separateYAxis: options.separateYAxis
+                  separateYAxis: options.separateYAxis,
                 },
                 referenceValueData: [],
-                visible: options.visible
+                visible: options.visible,
               };
               if (dataset) {
                 dataEntry!.axisOptions.parameters = {
                   feature: dataset.parameters.feature,
                   phenomenon: dataset.parameters.phenomenon,
-                  offering: dataset.parameters.offering
+                  offering: dataset.parameters.offering,
                 };
               }
               this.preparedData.push(dataEntry!);
             } else {
               dataEntry = this.preparedData[prepDataIdx];
               dataEntry.axisOptions.uom = this.getUom(dataset, entry);
-              dataEntry.axisOptions.label = dataset ? dataset.label : entry.yaxisLabel;
-              dataEntry.data = options.visible ? entry.data.map(e => ({ timestamp: e.timestamp, value: e.value })) : [];
+              dataEntry.axisOptions.label = dataset
+                ? dataset.label
+                : entry.yaxisLabel;
+              dataEntry.data = options.visible
+                ? entry.data.map((e) => ({
+                    timestamp: e.timestamp,
+                    value: e.value,
+                  }))
+                : [];
             }
             this.processData(dataEntry!);
           }
-
         } else {
-          console.warn("Please check the additional entry, it needs at least a 'linkedDatasetId' or a 'yaxisLabel' property and a 'data' property: ", entry);
+          console.warn(
+            "Please check the additional entry, it needs at least a 'linkedDatasetId' or a 'yaxisLabel' property and a 'data' property: ",
+            entry,
+          );
         }
       });
     }
   }
 
-  private getUom(dataset: DataConst | undefined, entry: AdditionalData): string {
+  private getUom(
+    dataset: DataConst | undefined,
+    entry: AdditionalData,
+  ): string {
     if (dataset) return dataset.uom;
     if (entry.yaxisLabel) return entry.yaxisLabel;
-    return "";
+    return '';
   }
 
   private getOptions(entry: AdditionalData) {
     if (entry.datasetOptions) {
       return entry.datasetOptions;
-    } else if (entry.linkedDatasetId && this.datasetOptions?.get(entry.linkedDatasetId)) {
+    } else if (
+      entry.linkedDatasetId &&
+      this.datasetOptions?.get(entry.linkedDatasetId)
+    ) {
       return this.datasetOptions?.get(entry.linkedDatasetId);
     }
     return undefined;
   }
 
   private generateAdditionalInternalId(entry: AdditionalData): string {
-    return entry.linkedDatasetId ? entry.linkedDatasetId + "add" : entry.internalId + "add";
+    return entry.linkedDatasetId
+      ? entry.linkedDatasetId + 'add'
+      : entry.internalId + 'add';
   }
 }

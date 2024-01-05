@@ -1,51 +1,43 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-import { HelgolandCoreModule, NotifierService, Timespan } from "@helgoland/core";
-import { HelgolandTimeModule } from "@helgoland/time";
-import { HelgolandTimeRangeSliderModule } from "@helgoland/time-range-slider";
-import moment from "moment";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  HelgolandCoreModule,
+  NotifierService,
+  Timespan,
+} from '@helgoland/core';
+import { HelgolandTimeModule } from '@helgoland/time';
+import { HelgolandTimeRangeSliderModule } from '@helgoland/time-range-slider';
+import moment from 'moment';
 
 @Component({
-  templateUrl: "./time.component.html",
-  styleUrls: ["./time.component.css"],
+  templateUrl: './time.component.html',
+  styleUrls: ['./time.component.css'],
   imports: [
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandTimeRangeSliderModule,
-    CommonModule
+    CommonModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class TimeComponent {
-
   public selectedTimespan!: Timespan;
 
   public timelist = [
-    1500000000000,
-    1600000000000,
-    1700000000000,
-    1800000000000,
-    1900000000000,
-    2000000000000,
-    2100000000000,
-    2200000000000,
-    2300000000000,
-    2400000000000,
-    2500000000000
+    1500000000000, 1600000000000, 1700000000000, 1800000000000, 1900000000000,
+    2000000000000, 2100000000000, 2200000000000, 2300000000000, 2400000000000,
+    2500000000000,
   ];
 
-  constructor(
-    private notifier: NotifierService
-  ) { }
+  constructor(private notifier: NotifierService) {}
 
   public customTimespanFunc(): Timespan {
-    const from = moment().subtract(6, "days").startOf("day").unix() * 1000;
-    const to = moment().endOf("day").unix() * 1000;
+    const from = moment().subtract(6, 'days').startOf('day').unix() * 1000;
+    const to = moment().endOf('day').unix() * 1000;
     return new Timespan(from, to);
   }
 
   public notify() {
-    this.notifier.notify("test");
+    this.notifier.notify('test');
   }
-
 }

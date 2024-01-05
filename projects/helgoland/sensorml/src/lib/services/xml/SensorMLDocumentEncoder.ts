@@ -3,10 +3,10 @@ import {
   AggregateProcess,
   PhysicalComponent,
   PhysicalSystem,
-  SimpleProcess
-} from "../../model/sml";
-import { SensorMLEncoder } from "./SensorMLEncoder";
-import { SensorMLNamespaceResolver } from "./SensorMLNamespaceResolver";
+  SimpleProcess,
+} from '../../model/sml';
+import { SensorMLEncoder } from './SensorMLEncoder';
+import { SensorMLNamespaceResolver } from './SensorMLNamespaceResolver';
 
 export class SensorMLDocumentEncoder {
   private resolver = new SensorMLNamespaceResolver();
@@ -20,25 +20,46 @@ export class SensorMLDocumentEncoder {
 
   public createDocumentForProcess(object: AbstractProcess): Document {
     if (object instanceof SimpleProcess) {
-      return this.createDocument("sml", SimpleProcess.NAME(), SimpleProcess.SCHEMA());
+      return this.createDocument(
+        'sml',
+        SimpleProcess.NAME(),
+        SimpleProcess.SCHEMA(),
+      );
     } else if (object instanceof AggregateProcess) {
-      return this.createDocument("sml", AggregateProcess.NAME(), AggregateProcess.SCHEMA());
+      return this.createDocument(
+        'sml',
+        AggregateProcess.NAME(),
+        AggregateProcess.SCHEMA(),
+      );
     } else if (object instanceof PhysicalComponent) {
-      return this.createDocument("sml", PhysicalComponent.NAME(), PhysicalComponent.SCHEMA());
+      return this.createDocument(
+        'sml',
+        PhysicalComponent.NAME(),
+        PhysicalComponent.SCHEMA(),
+      );
     } else if (object instanceof PhysicalSystem) {
-      return this.createDocument("sml", PhysicalSystem.NAME(), PhysicalSystem.SCHEMA());
+      return this.createDocument(
+        'sml',
+        PhysicalSystem.NAME(),
+        PhysicalSystem.SCHEMA(),
+      );
     } else {
-      throw new Error("Unsupported process type");
+      throw new Error('Unsupported process type');
     }
   }
 
-  private createDocument(prefix: string, name: string, schemaURL: string): Document {
-    const namespaces = this.resolver.getPrefixes()
+  private createDocument(
+    prefix: string,
+    name: string,
+    schemaURL: string,
+  ): Document {
+    const namespaces = this.resolver
+      .getPrefixes()
       .map((entry) => `xmlns:${entry}="${this.resolver.getNamespace(entry)}"`)
-      .join(" ");
+      .join(' ');
     const namespace = this.resolver.getNamespace(prefix);
     const sl = `xsi:schemaLocation="${namespace} ${schemaURL}"`;
     const s = `<${prefix}:${name} ${namespaces} ${sl}></${prefix}:${name}>`;
-    return new DOMParser().parseFromString(s, "application/xml");
+    return new DOMParser().parseFromString(s, 'application/xml');
   }
 }

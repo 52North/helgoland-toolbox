@@ -1,16 +1,20 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { OlLayerOpacitiySliderComponent } from "./ol-layer-opacitiy-slider.component";
+import { OlLayerOpacitiySliderComponent } from './ol-layer-opacitiy-slider.component';
 
-describe("OlLayerOpacitiySliderComponent", () => {
+describe('OlLayerOpacitiySliderComponent', () => {
   let component: OlLayerOpacitiySliderComponent;
   let fixture: ComponentFixture<OlLayerOpacitiySliderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandCoreModule, FormsModule, OlLayerOpacitiySliderComponent]
+      imports: [
+        HelgolandCoreModule,
+        FormsModule,
+        OlLayerOpacitiySliderComponent,
+      ],
     }).compileComponents();
   }));
 
@@ -20,7 +24,7 @@ describe("OlLayerOpacitiySliderComponent", () => {
     expect(() => fixture.detectChanges()).toThrow();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,18 +1,21 @@
-<div>{{activePanel}}</div>
+<div>{{ activePanel }}</div>
 @for (param of parameters; track param; let i = $index) {
-<div>
-  <h3>
-    <span>{{param.header}}</span>
-    @if (param.headerAddition) {
-    <span>-</span>
-    }
-    <span>{{param.headerAddition}}</span>
-  </h3>
-  @if (!param.isDisabled) {
   <div>
-    <n52-multi-service-filter-selector [endpoint]="param.type" [filterList]="param.filterList"
-      (onItemSelected)="itemSelected($event, i)"></n52-multi-service-filter-selector>
+    <h3>
+      <span>{{ param.header }}</span>
+      @if (param.headerAddition) {
+        <span>-</span>
+      }
+      <span>{{ param.headerAddition }}</span>
+    </h3>
+    @if (!param.isDisabled) {
+      <div>
+        <n52-multi-service-filter-selector
+          [endpoint]="param.type"
+          [filterList]="param.filterList"
+          (onItemSelected)="itemSelected($event, i)"
+        ></n52-multi-service-filter-selector>
+      </div>
+    }
   </div>
-  }
-</div>
 }

@@ -1,5 +1,12 @@
 // @ts-nocheck
-import { LFService, Logger, LoggerFactory, LoggerFactoryOptions, LogGroupRule, LogLevel } from "typescript-logging";
+import {
+  LFService,
+  Logger,
+  LoggerFactory,
+  LoggerFactoryOptions,
+  LogGroupRule,
+  LogLevel,
+} from 'typescript-logging';
 
 class ObjectAndProperty {
   private _object: any;
@@ -31,13 +38,23 @@ export class BidiMap {
     this.elementToID = new Map<any, Map<string, string>>();
     this.iDToElement = new Map<string, ObjectAndProperty>();
 
-    this._loggerFactory = LFService.createLoggerFactory(new LoggerFactoryOptions()
-      .addLogGroupRule(new LogGroupRule(new RegExp(".+"), LogLevel.Fatal)));
-    this._logger = this._loggerFactory.getLogger("BidiMap");
+    this._loggerFactory = LFService.createLoggerFactory(
+      new LoggerFactoryOptions().addLogGroupRule(
+        new LogGroupRule(new RegExp('.+'), LogLevel.Fatal),
+      ),
+    );
+    this._logger = this._loggerFactory.getLogger('BidiMap');
   }
 
-  public addLinkage(elementObject: any, objectProperty: string, profileID: string) {
-    const elementAndPrefix = new ObjectAndProperty(elementObject, objectProperty);
+  public addLinkage(
+    elementObject: any,
+    objectProperty: string,
+    profileID: string,
+  ) {
+    const elementAndPrefix = new ObjectAndProperty(
+      elementObject,
+      objectProperty,
+    );
     let innerMap = this.elementToID.get(elementObject);
     if (!innerMap) {
       innerMap = new Map<string, string>();
@@ -50,13 +67,21 @@ export class BidiMap {
   public getProfileID(modelObject: any, objectProperty: string): string {
     if (!modelObject || !objectProperty) {
       throw new Error(
-        "One or both paramerter error: modelObject" + modelObject + " objectProperty:" + objectProperty
+        'One or both paramerter error: modelObject' +
+          modelObject +
+          ' objectProperty:' +
+          objectProperty,
       );
     }
-    this._logger.info("get ProfileID for object:" + modelObject + " and property: " + objectProperty);
+    this._logger.info(
+      'get ProfileID for object:' +
+        modelObject +
+        ' and property: ' +
+        objectProperty,
+    );
     if (this.elementToID.get(modelObject) instanceof Map) {
       const innerMap = this.elementToID.get(modelObject);
-      this._logger.info("found entry in BidiMap for object:" + modelObject);
+      this._logger.info('found entry in BidiMap for object:' + modelObject);
       return innerMap.get(objectProperty);
     }
     return undefined;

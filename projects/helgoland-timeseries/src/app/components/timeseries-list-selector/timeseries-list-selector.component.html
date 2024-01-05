@@ -1,18 +1,21 @@
 @if (loading) {
-<div>
-  loading...
-</div>
+  <div>loading...</div>
 }
 @if (!loading && items.length === 0) {
-<div>
-  no results found
-</div>
+  <div>no results found</div>
 }
-<mat-selection-list #parameters [multiple]="true" (selectionChange)="selectionChanged($event)">
+<mat-selection-list
+  #parameters
+  [multiple]="true"
+  (selectionChange)="selectionChanged($event)"
+>
   @for (item of items; track item) {
-  <mat-list-option [value]="item" color="primary"
-    [selected]="item.internalId && timeseriesSrvc.hasDataset(item.internalId)">
-    {{item.label}}
-  </mat-list-option>
+    <mat-list-option
+      [value]="item"
+      color="primary"
+      [selected]="item.internalId && timeseriesSrvc.hasDataset(item.internalId)"
+    >
+      {{ item.label }}
+    </mat-list-option>
   }
 </mat-selection-list>

@@ -1,8 +1,12 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { DatasetOptions, HelgolandServicesConnector, InternalIdHandler } from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  DatasetOptions,
+  HelgolandServicesConnector,
+  InternalIdHandler,
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { SimpleTimeseriesEntryComponent } from "../simple-timeseries-entry/simple-timeseries-entry.component";
+import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
 
 /**
  * Extends the SimpleTimeseriesEntryComponent, with the following functions:
@@ -10,13 +14,12 @@ import { SimpleTimeseriesEntryComponent } from "../simple-timeseries-entry/simpl
  *  - triggers the show geometry event
  */
 @Component({
-  selector: "n52-configurable-timeseries-entry",
-  templateUrl: "./configurable-timeseries-entry.component.html",
-  styleUrls: ["./configurable-timeseries-entry.component.css"],
-  standalone: true
+  selector: 'n52-configurable-timeseries-entry',
+  templateUrl: './configurable-timeseries-entry.component.html',
+  styleUrls: ['./configurable-timeseries-entry.component.css'],
+  standalone: true,
 })
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
-
   @Input({ required: true })
   public datasetOptions!: DatasetOptions;
 
@@ -33,12 +36,13 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
+  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
+    new EventEmitter();
 
   constructor(
     protected override servicesConnector: HelgolandServicesConnector,
     protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService
+    protected override translateSrvc: TranslateService,
   ) {
     super(servicesConnector, internalIdHandler, translateSrvc);
   }
@@ -57,5 +61,4 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
       this.onShowGeometry.emit(this.dataset.platform.geometry);
     }
   }
-
 }

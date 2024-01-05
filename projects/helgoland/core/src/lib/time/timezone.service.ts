@@ -1,34 +1,33 @@
-import "moment-timezone";
+import 'moment-timezone';
 
-import { EventEmitter, Injectable } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import moment from "moment";
+import { EventEmitter, Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import moment from 'moment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class TimezoneService {
-
   private currentTimezone: moment.MomentZone | null;
 
   // private offsetToLocale: number; // TODO: check if still needed
 
   public timezoneChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(
-    protected translateSrvc: TranslateService
-  ) {
+  constructor(protected translateSrvc: TranslateService) {
     this.currentTimezone = moment.tz.zone(moment.tz.guess());
     this.calcOffset();
   }
 
-  public setTimezone(tzStr: string = "") {
+  public setTimezone(tzStr: string = '') {
     const tz = moment.tz.zone(tzStr);
     if (tz) {
       this.currentTimezone = tz;
     } else {
       this.currentTimezone = moment.tz.zone(moment.tz.guess());
-      console.warn(`Timezone '${tzStr}' is not supported, '${this.currentTimezone?.name}' is used instead`);
+      console.warn(
+        `Timezone '${tzStr}' is not supported, '${this.currentTimezone?.name}' is used instead`,
+      );
     }
     this.calcOffset();
     if (this.currentTimezone) {
@@ -45,15 +44,28 @@ export class TimezoneService {
   }
 
   public getTimezoneName(): string {
-    return this.currentTimezone?.name ? this.currentTimezone?.name : "";
+    return this.currentTimezone?.name ? this.currentTimezone?.name : '';
   }
 
-  public formatTzDate(date: moment.Moment | Date | number | string, format?: string): string {
-    if (typeof (date) === "number") { date = moment(date); }
-    if (typeof (date) === "string") { date = moment(date); }
-    if (date instanceof Date) { date = moment(date); }
-    if (this.translateSrvc.currentLang) { moment.locale(this.translateSrvc.currentLang); }
-    if (!format) { format = "L LT z"; }
+  public formatTzDate(
+    date: moment.Moment | Date | number | string,
+    format?: string,
+  ): string {
+    if (typeof date === 'number') {
+      date = moment(date);
+    }
+    if (typeof date === 'string') {
+      date = moment(date);
+    }
+    if (date instanceof Date) {
+      date = moment(date);
+    }
+    if (this.translateSrvc.currentLang) {
+      moment.locale(this.translateSrvc.currentLang);
+    }
+    if (!format) {
+      format = 'L LT z';
+    }
     return date.tz(this.getTimezoneName()).format(format);
   }
 
@@ -68,5 +80,4 @@ export class TimezoneService {
   // public getOffsetToLocaleInHours() {
   //   return this.offsetToLocale / 60;
   // }
-
 }

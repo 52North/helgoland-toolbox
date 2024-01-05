@@ -1,26 +1,34 @@
 @if (ready) {
-<table>
-  <thead>
-    <tr>
-      <th (click)="sort($event)" [attr.data-column-id]="'datetime'" class="sorted-asc">
-        Zeit
-      </th>
-      @for (series of this.timeseriesArray; track series; let i = $index) {
-      <th (click)="sort($event)" [attr.data-column-id]="i" [ngStyle]="{ 'border-color': preparedColors[i] }">
-        {{series?.label}} [{{series?.uom}}]
-      </th>
+  <table>
+    <thead>
+      <tr>
+        <th
+          (click)="sort($event)"
+          [attr.data-column-id]="'datetime'"
+          class="sorted-asc"
+        >
+          Zeit
+        </th>
+        @for (series of this.timeseriesArray; track series; let i = $index) {
+          <th
+            (click)="sort($event)"
+            [attr.data-column-id]="i"
+            [ngStyle]="{ 'border-color': preparedColors[i] }"
+          >
+            {{ series?.label }} [{{ series?.uom }}]
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of this.preparedData; track row) {
+        <tr>
+          <td>{{ row.datetime | tzDate: "L LT z" }}</td>
+          @for (value of row.values; track value) {
+            <td>{{ value }}</td>
+          }
+        </tr>
       }
-    </tr>
-  </thead>
-  <tbody>
-    @for (row of this.preparedData; track row) {
-    <tr>
-      <td>{{row.datetime | tzDate: 'L LT z'}}</td>
-      @for (value of row.values; track value) {
-      <td>{{value}}</td>
-      }
-    </tr>
-    }
-  </tbody>
-</table>
+    </tbody>
+  </table>
 }
