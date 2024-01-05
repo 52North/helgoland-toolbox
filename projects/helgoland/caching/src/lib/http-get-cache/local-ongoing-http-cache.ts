@@ -1,11 +1,11 @@
-import { HttpEvent, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { HttpEvent, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LocalOngoingHttpCache {
-
-  private cache: { [key: string]: { request: Observable<HttpEvent<any>> } } = {};
+  private cache: { [key: string]: { request: Observable<HttpEvent<any>> } } =
+    {};
 
   public has(req: HttpRequest<any>): boolean {
     return this.cache[req.urlWithParams] !== undefined;
@@ -13,7 +13,7 @@ export class LocalOngoingHttpCache {
 
   public set(req: HttpRequest<any>, request: Observable<HttpEvent<any>>): void {
     this.cache[req.urlWithParams] = {
-      request
+      request,
     };
   }
 

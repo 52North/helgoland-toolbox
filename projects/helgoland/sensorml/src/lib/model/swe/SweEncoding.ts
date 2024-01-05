@@ -1,7 +1,7 @@
-import { AbstractSWE } from "./AbstractSWE";
+import { AbstractSWE } from './AbstractSWE';
 
 export abstract class SweEncoding extends AbstractSWE {
   override toString() {
-    return "SWE encoding";
+    return 'SWE encoding';
   }
 }

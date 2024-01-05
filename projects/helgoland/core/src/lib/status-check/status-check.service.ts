@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { forkJoin, Observable, Observer } from "rxjs";
-import { map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { forkJoin, Observable, Observer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
@@ -9,12 +9,9 @@ import { map } from "rxjs/operators";
  */
 @Injectable()
 export class StatusCheckService {
-
   private urls: string[] = [];
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) {}
 
   /**
    * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable
@@ -44,7 +41,9 @@ export class StatusCheckService {
    */
   public addUrl(url: string) {
     const index = this.urls.indexOf(url);
-    if (index === -1) { this.urls.push(url); }
+    if (index === -1) {
+      this.urls.push(url);
+    }
   }
 
   /**
@@ -52,7 +51,9 @@ export class StatusCheckService {
    */
   public removeUrl(url: string) {
     const index = this.urls.indexOf(url);
-    if (index > -1) { this.urls.splice(index, 1); }
+    if (index > -1) {
+      this.urls.splice(index, 1);
+    }
   }
 
   private doCheckUrl(url: string): Observable<string | null> {
@@ -65,7 +66,7 @@ export class StatusCheckService {
         (error) => {
           observer.next(url);
           observer.complete();
-        }
+        },
       );
     });
   }
@@ -75,5 +76,4 @@ export class StatusCheckService {
     urls.forEach((url) => requests.push(this.doCheckUrl(url)));
     return forkJoin(requests);
   }
-
 }

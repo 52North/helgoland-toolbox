@@ -1,31 +1,34 @@
-import { HttpClientModule } from "@angular/common/http";
-import { inject, TestBed } from "@angular/core/testing";
+import { HttpClientModule } from '@angular/common/http';
+import { inject, TestBed } from '@angular/core/testing';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DefinedTimespan, DefinedTimespanService } from "../time/defined-timespan.service";
-import { DatasetImplApiInterface } from "./dataset-impl-api-interface.service";
-import { HttpService } from "./http.service";
-import { InternalIdHandler } from "./internal-id-handler.service";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import {
+  DefinedTimespan,
+  DefinedTimespanService,
+} from '../time/defined-timespan.service';
+import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
+import { HttpService } from './http.service';
+import { InternalIdHandler } from './internal-id-handler.service';
 
-describe("DatasetImplApiInterface", () => {
+describe('DatasetImplApiInterface', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        TranslateTestingModule,
-      ],
+      imports: [HttpClientModule, TranslateTestingModule],
       providers: [
         DatasetImplApiInterface,
         InternalIdHandler,
         DefinedTimespanService,
-        HttpService
-      ]
+        HttpService,
+      ],
     });
   });
 
-  it("should be created", inject([DatasetImplApiInterface], (service: DatasetImplApiInterface) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [DatasetImplApiInterface],
+    (service: DatasetImplApiInterface) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 
   // TODO: use fake service
   // it('should get data for multiple timeseries', (done) => {
@@ -43,5 +46,4 @@ describe("DatasetImplApiInterface", () => {
   //             });
   //         })();
   // });
-
 });

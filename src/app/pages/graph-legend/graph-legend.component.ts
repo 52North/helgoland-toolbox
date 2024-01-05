@@ -1,7 +1,7 @@
-import { CommonModule } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component } from "@angular/core";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ColorService,
   DatasetOptions,
@@ -13,7 +13,7 @@ import {
   TimeseriesData,
   Timespan,
   TimezoneService,
-} from "@helgoland/core";
+} from '@helgoland/core';
 import {
   D3PlotOptions,
   D3PointSymbolDrawerService,
@@ -23,38 +23,58 @@ import {
   HighlightOutput,
   HoveringStyle,
   InternalDataEntry,
-} from "@helgoland/d3";
-import { HelgolandDatasetDownloadModule, HelgolandDatasetlistModule } from "@helgoland/depiction";
-import { HelgolandModificationModule } from "@helgoland/modification";
-import { HelgolandTimeModule } from "@helgoland/time";
-import moment from "moment";
+} from '@helgoland/d3';
+import {
+  HelgolandDatasetDownloadModule,
+  HelgolandDatasetlistModule,
+} from '@helgoland/depiction';
+import { HelgolandModificationModule } from '@helgoland/modification';
+import { HelgolandTimeModule } from '@helgoland/time';
+import moment from 'moment';
 
-import { ExportPopupComponent } from "../../components/export-popup/export-popup.component";
-import { GeometryViewComponent } from "../../components/geometry-view/geometry-view.component";
-import { StyleModificationComponent } from "../../components/style-modification/style-modification.component";
+import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
+import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
+import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 class HoveringTestService extends D3SimpleHoveringService {
-
-  protected override setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, entry: InternalDataEntry, timeseries: HelgolandTimeseries) {
-    const stringedValue = (typeof d.value === "number") ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
-    const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format("L LT z");
-    textContainer.append("text")
+  protected override setHoveringLabel(
+    textContainer: d3.Selection<SVGGElement, any, any, any>,
+    d: DataEntry,
+    entry: InternalDataEntry,
+    timeseries: HelgolandTimeseries,
+  ) {
+    const stringedValue =
+      typeof d.value === 'number'
+        ? parseFloat(d.value.toPrecision(15)).toString()
+        : d.value;
+    const timelabel = this.timezoneSrvc
+      .createTzDate(d.timestamp)
+      .format('L LT z');
+    textContainer
+      .append('text')
       .text(`${stringedValue} ${entry.axisOptions.uom} ${timelabel}`)
-      .attr("class", "mouseHoverDotLabel")
-      .attr("alignment-baseline", "text-before-edge")
-      .style("pointer-events", "none")
-      .style("fill", "black");
+      .attr('class', 'mouseHoverDotLabel')
+      .attr('alignment-baseline', 'text-before-edge')
+      .style('pointer-events', 'none')
+      .style('fill', 'black');
     if (timeseries.parameters.phenomenon)
-      textContainer.append("text").attr("dy", "1em").attr("alignment-baseline", "text-before-edge").text(timeseries.parameters.phenomenon.label);
+      textContainer
+        .append('text')
+        .attr('dy', '1em')
+        .attr('alignment-baseline', 'text-before-edge')
+        .text(timeseries.parameters.phenomenon.label);
     if (timeseries.parameters.category)
-      textContainer.append("text").attr("dy", "2em").attr("alignment-baseline", "text-before-edge").text(timeseries.parameters.category.label);
+      textContainer
+        .append('text')
+        .attr('dy', '2em')
+        .attr('alignment-baseline', 'text-before-edge')
+        .text(timeseries.parameters.category.label);
   }
-
 }
 
 @Component({
-  templateUrl: "./graph-legend.component.html",
-  styleUrls: ["./graph-legend.component.scss"],
+  templateUrl: './graph-legend.component.html',
+  styleUrls: ['./graph-legend.component.scss'],
   imports: [
     HelgolandD3Module,
     HelgolandModificationModule,
@@ -62,17 +82,16 @@ class HoveringTestService extends D3SimpleHoveringService {
     HelgolandDatasetlistModule,
     HelgolandDatasetDownloadModule,
     MatDialogModule,
-    CommonModule
+    CommonModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class GraphLegendComponent {
-
   public datasetIds = [
-    "https://fluggs.wupperverband.de/sws5/api/__26",
-    "https://fluggs.wupperverband.de/sws5/api/__49",
-    "https://fluggs.wupperverband.de/sws5/api/__51",
-    "https://fluggs.wupperverband.de/sws5/api/__72",
+    'https://fluggs.wupperverband.de/sws5/api/__26',
+    'https://fluggs.wupperverband.de/sws5/api/__49',
+    'https://fluggs.wupperverband.de/sws5/api/__51',
+    'https://fluggs.wupperverband.de/sws5/api/__72',
     // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
     // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
     // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',
@@ -88,7 +107,10 @@ export class GraphLegendComponent {
   public timespan;
   public yaxisModifier = true;
 
-  public hoveringService = new HoveringTestService(this.timezoneSrvc, this.pointSymbolDrawer);
+  public hoveringService = new HoveringTestService(
+    this.timezoneSrvc,
+    this.pointSymbolDrawer,
+  );
 
   public loadings: Set<string> = new Set();
 
@@ -99,16 +121,16 @@ export class GraphLegendComponent {
     yaxis: true,
     hoverStyle: HoveringStyle.point,
     copyright: {
-      label: "This should be bottom right and the text is long.",
-      link: "https://52north.org/",
-      positionX: "right",
-      positionY: "bottom"
+      label: 'This should be bottom right and the text is long.',
+      link: 'https://52north.org/',
+      positionX: 'right',
+      positionY: 'bottom',
     },
     showTimeLabel: false,
     timeRangeLabel: {
-      show: true
+      show: true,
     },
-    groupYaxis: true
+    groupYaxis: true,
   };
 
   public d3overviewOptions: D3PlotOptions = {
@@ -122,7 +144,7 @@ export class GraphLegendComponent {
 
   public selectedIds: string[] = [];
 
-  public overviewLoading = false
+  public overviewLoading = false;
   public graphLoading = false;
 
   public hoverstyle: HoveringStyle = HoveringStyle.point;
@@ -134,15 +156,15 @@ export class GraphLegendComponent {
   public refreshIntervalUpdateTimespan = 2; // seconds to refresh again
 
   constructor(
-        private color: ColorService,
-        private cdr: ChangeDetectorRef,
-        private dialog: MatDialog,
-        private time: Time,
-        private definedTime: DefinedTimespanService,
-        public internalIdHandler: InternalIdHandler,
-        private http: HttpClient,
-        protected timezoneSrvc: TimezoneService,
-        protected pointSymbolDrawer: D3PointSymbolDrawerService
+    private color: ColorService,
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private time: Time,
+    private definedTime: DefinedTimespanService,
+    public internalIdHandler: InternalIdHandler,
+    private http: HttpClient,
+    protected timezoneSrvc: TimezoneService,
+    protected pointSymbolDrawer: D3PointSymbolDrawerService,
   ) {
     this.datasetIds.forEach((entry) => {
       const option = new DatasetOptions(entry, this.color.getColor());
@@ -152,7 +174,11 @@ export class GraphLegendComponent {
       this.datasetOptions.set(entry, option);
     });
 
-    this.timespan = this.time.createByDurationWithEnd(moment.duration(5, "days"), new Date().getTime() - 1000 * 60 * 60 * 24 * 1, "day");
+    this.timespan = this.time.createByDurationWithEnd(
+      moment.duration(5, 'days'),
+      new Date().getTime() - 1000 * 60 * 60 * 24 * 1,
+      'day',
+    );
   }
 
   public timespanChanged(timespan: Timespan) {
@@ -165,7 +191,7 @@ export class GraphLegendComponent {
 
   public showGeometry(geometry: GeoJSON.GeoJsonObject) {
     this.dialog.open(GeometryViewComponent, {
-      data: geometry
+      data: geometry,
     });
   }
 
@@ -210,7 +236,7 @@ export class GraphLegendComponent {
 
   public editOption(option: DatasetOptions) {
     this.dialog.open(StyleModificationComponent, {
-      data: option
+      data: option,
     });
   }
 
@@ -225,7 +251,10 @@ export class GraphLegendComponent {
       }
     } else {
       if (this.selectedIds.indexOf(id) >= 0) {
-        this.selectedIds.splice(this.selectedIds.findIndex((entry) => entry === id), 1);
+        this.selectedIds.splice(
+          this.selectedIds.findIndex((entry) => entry === id),
+          1,
+        );
       }
     }
   }
@@ -248,13 +277,13 @@ export class GraphLegendComponent {
   }
 
   /**
-     * Function that is executed as soons as a hovered datapoint is clicked.
-     * @param tsData {TimeseriesData[]} array of various timeseries with data at the same timestamp
-     */
+   * Function that is executed as soons as a hovered datapoint is clicked.
+   * @param tsData {TimeseriesData[]} array of various timeseries with data at the same timestamp
+   */
   public clickedDataPoint(tsData: {
-        timeseries: HelgolandTimeseries;
-        data: HelgolandTimeseriesData;
-    }) {
+    timeseries: HelgolandTimeseries;
+    data: HelgolandTimeseriesData;
+  }) {
     console.log(tsData);
     // const datasets: D3GeneralDatasetInput[] = [];
     // tsData.forEach(ts => {
@@ -287,9 +316,8 @@ export class GraphLegendComponent {
     this.dialog.open(ExportPopupComponent, {
       data: {
         id,
-        timespan: this.timespan
-      }
+        timespan: this.timespan,
+      },
     });
   }
-
 }

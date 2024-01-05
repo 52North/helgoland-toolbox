@@ -1,18 +1,18 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatRadioModule } from "@angular/material/radio";
-import { ColorService, DatasetOptions, Timespan } from "@helgoland/core";
-import { HelgolandD3Module } from "@helgoland/d3";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
+import { HelgolandD3Module } from '@helgoland/d3';
 
-import { NoDataEntryComponent } from "./no-data-entry/no-data-entry.component";
+import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
 
 @Component({
-  selector: "n52-diagram-export",
-  templateUrl: "./diagram-export.component.html",
-  styleUrls: ["./diagram-export.component.css"],
+  selector: 'n52-diagram-export',
+  templateUrl: './diagram-export.component.html',
+  styleUrls: ['./diagram-export.component.css'],
   imports: [
     MatFormFieldModule,
     MatRadioModule,
@@ -20,24 +20,23 @@ import { NoDataEntryComponent } from "./no-data-entry/no-data-entry.component";
     FormsModule,
     CommonModule,
     HelgolandD3Module,
-    NoDataEntryComponent
+    NoDataEntryComponent,
   ],
-  standalone: true
+  standalone: true,
 })
 export class DiagramExportComponent implements OnInit {
-
-  public title = "Exported Diagram";
+  public title = 'Exported Diagram';
   public height = 300;
   public width = 500;
   public start = new Date(2019, 10, 13);
   public end = new Date(2019, 10, 14);
 
-  public format: "png" | "svg" = "png";
+  public format: 'png' | 'svg' = 'png';
 
   public datasetOptions: Map<string, DatasetOptions> = new Map();
 
   public datasetIds = [
-    "https://fluggs.wupperverband.de/sws5/api/__26",
+    'https://fluggs.wupperverband.de/sws5/api/__26',
     // 'https://fluggs.wupperverband.de/sws5/api/__49',
     // 'https://fluggs.wupperverband.de/sws5/api/__51',
     // 'https://fluggs.wupperverband.de/sws5/api/__72',
@@ -45,9 +44,7 @@ export class DiagramExportComponent implements OnInit {
 
   public timespan: Timespan | undefined;
 
-  constructor(
-    private color: ColorService
-  ) { }
+  constructor(private color: ColorService) {}
 
   ngOnInit() {
     this.datasetIds.forEach((entry) => {
@@ -74,5 +71,4 @@ export class DiagramExportComponent implements OnInit {
   private setTimespan() {
     this.timespan = new Timespan(this.start, this.end);
   }
-
 }

@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { DatasetApi, Settings, SettingsService } from "@helgoland/core";
+import { Injectable } from '@angular/core';
+import { DatasetApi, Settings, SettingsService } from '@helgoland/core';
 
 interface BasicAuthDatasetApi extends DatasetApi {
   basicAuthPostFix?: string;
@@ -11,12 +11,9 @@ interface BasicAuthDatasetApi extends DatasetApi {
  */
 @Injectable()
 export class BasicAuthServiceMaintainer {
-
   private services: string[] = [];
 
-  constructor(
-    protected settingsService: SettingsService<Settings>
-  ) { }
+  constructor(protected settingsService: SettingsService<Settings>) {}
 
   /**
    * Register an additional service url, which is secured with basic auth.
@@ -31,18 +28,23 @@ export class BasicAuthServiceMaintainer {
    * Checks if a given url is registered as secured with basic auth.
    */
   public getCorrespondingService(url: string): string | undefined {
-    const matchedUrl = this.services.find(e => url.startsWith(e));
+    const matchedUrl = this.services.find((e) => url.startsWith(e));
     if (matchedUrl) {
       return matchedUrl;
     }
     const settings = this.settingsService.getSettings();
-    if (settings && settings.datasetApis && Array.isArray(settings.datasetApis)) {
-      const api = (settings.datasetApis as BasicAuthDatasetApi[]).find((e) => url.startsWith(e.url) && e.basicAuth);
+    if (
+      settings &&
+      settings.datasetApis &&
+      Array.isArray(settings.datasetApis)
+    ) {
+      const api = (settings.datasetApis as BasicAuthDatasetApi[]).find(
+        (e) => url.startsWith(e.url) && e.basicAuth,
+      );
       if (api) {
-        return `${api.url}${api.basicAuthPostFix ? api.basicAuthPostFix : ""}`;
+        return `${api.url}${api.basicAuthPostFix ? api.basicAuthPostFix : ''}`;
       }
     }
     return undefined;
   }
-
 }

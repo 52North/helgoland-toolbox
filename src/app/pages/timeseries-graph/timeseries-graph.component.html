@@ -1,9 +1,14 @@
 <div>
-  <div style="height: 300px; width: 400px;">
-    <n52-d3-timeseries-graph [datasetIds]="datasetIdsMultiple" [selectedDatasetIds]="selectedIds"
-      [datasetOptions]="datasetOptionsMultiple" [timeInterval]="timespan" (onTimespanChanged)="timespanChanged($event)"
-      [presenterOptions]="diagramOptionsD3"></n52-d3-timeseries-graph>
+  <div style="height: 300px; width: 400px">
+    <n52-d3-timeseries-graph
+      [datasetIds]="datasetIdsMultiple"
+      [selectedDatasetIds]="selectedIds"
+      [datasetOptions]="datasetOptionsMultiple"
+      [timeInterval]="timespan"
+      (onTimespanChanged)="timespanChanged($event)"
+      [presenterOptions]="diagramOptionsD3"
+    ></n52-d3-timeseries-graph>
   </div>
   <n52-drag-options (onTogglePanZoom)="togglePanZoom()"></n52-drag-options>
-  {{panZoom}}
+  {{ panZoom }}
 </div>

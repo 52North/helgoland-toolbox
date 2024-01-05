@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { SettingsServiceTestingProvider } from "../../../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../../../testing/translate.testing.module";
-import { FirstLatestTimeseriesEntryComponent } from "./first-latest-timeseries-entry.component";
+import { SettingsServiceTestingProvider } from '../../../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
+import { FirstLatestTimeseriesEntryComponent } from './first-latest-timeseries-entry.component';
 
-describe("FirstLatestTimeseriesEntryComponent", () => {
+describe('FirstLatestTimeseriesEntryComponent', () => {
   let component: FirstLatestTimeseriesEntryComponent;
   let fixture: ComponentFixture<FirstLatestTimeseriesEntryComponent>;
 
@@ -14,23 +14,20 @@ describe("FirstLatestTimeseriesEntryComponent", () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        FirstLatestTimeseriesEntryComponent
+        FirstLatestTimeseriesEntryComponent,
       ],
-      providers: [
-        SettingsServiceTestingProvider
-      ]
-    })
-      .compileComponents();
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FirstLatestTimeseriesEntryComponent);
     component = fixture.componentInstance;
-    component.datasetId = "temp__temp";
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

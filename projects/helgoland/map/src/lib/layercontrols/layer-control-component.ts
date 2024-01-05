@@ -1,17 +1,15 @@
-import { Directive, Input } from "@angular/core";
-import { Required } from "@helgoland/core";
+import { Directive, Input } from '@angular/core';
+import { Required } from '@helgoland/core';
 
-import { LayerOptions } from "../base/map-options";
+import { LayerOptions } from '../base/map-options';
 
 @Directive()
 export abstract class LayerControlComponent {
-
-    @Input()
-    @Required
+  @Input()
+  @Required
   public layeroptions!: LayerOptions;
 
-    @Input()
-    @Required
-    public mapId!: string;
-
+  @Input()
+  @Required
+  public mapId!: string;
 }

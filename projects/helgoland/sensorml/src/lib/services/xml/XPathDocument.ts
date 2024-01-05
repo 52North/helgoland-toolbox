@@ -1,16 +1,18 @@
-import { SensorMLNamespaceResolver } from "./SensorMLNamespaceResolver";
+import { SensorMLNamespaceResolver } from './SensorMLNamespaceResolver';
 
 export class XPathDocument {
-
   public static parse(xml: string): XPathDocument {
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, "application/xml");
+    const document = parser.parseFromString(xml, 'application/xml');
     return new XPathDocument(document);
   }
 
-  constructor(public document: Document) { }
+  constructor(public document: Document) {}
 
-  public eval(expr: string, context?: Node): boolean | string | number | Node | Node[] {
+  public eval(
+    expr: string,
+    context?: Node,
+  ): boolean | string | number | Node | Node[] {
     const result = this._eval(expr, context);
 
     switch (result.resultType) {
@@ -33,7 +35,7 @@ export class XPathDocument {
       case XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE:
         return this.parseSnapshot(result);
       default:
-        throw new Error("Unsupported result type: " + result.resultType);
+        throw new Error('Unsupported result type: ' + result.resultType);
     }
   }
 
@@ -60,10 +62,14 @@ export class XPathDocument {
     const resolver: XPathNSResolver = {
       lookupNamespaceURI(prefix: string): string {
         return new SensorMLNamespaceResolver().getNamespace(prefix);
-      }
+      },
     };
     return this.document.evaluate(
-      expression, context, resolver, XPathResult.ANY_TYPE, null);
+      expression,
+      context,
+      resolver,
+      XPathResult.ANY_TYPE,
+      null,
+    );
   }
-
 }

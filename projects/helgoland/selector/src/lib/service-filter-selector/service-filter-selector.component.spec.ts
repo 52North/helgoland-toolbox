@@ -1,13 +1,13 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { ServiceFilterSelectorComponent } from "./service-filter-selector.component";
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { ServiceFilterSelectorComponent } from './service-filter-selector.component';
 
-describe("ServiceFilterSelectorComponent", () => {
+describe('ServiceFilterSelectorComponent', () => {
   let component: ServiceFilterSelectorComponent;
   let fixture: ComponentFixture<ServiceFilterSelectorComponent>;
 
@@ -18,11 +18,9 @@ describe("ServiceFilterSelectorComponent", () => {
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
-        ServiceFilterSelectorComponent
+        ServiceFilterSelectorComponent,
       ],
-      providers: [
-        SettingsServiceTestingProvider
-      ]
+      providers: [SettingsServiceTestingProvider],
     }).compileComponents();
   }));
 
@@ -32,7 +30,7 @@ describe("ServiceFilterSelectorComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,14 +1,17 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  DatasetApiV1ConnectorProvider,
+  HelgolandCoreModule,
+} from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
-import { DatasetApiInterfaceTesting } from "../../../../../testing/dataset-api-interface.testing";
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DatasetByStationSelectorComponent } from "./dataset-by-station-selector.component";
+import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DatasetByStationSelectorComponent } from './dataset-by-station-selector.component';
 
-describe("DatasetByStationSelectorComponent", () => {
+describe('DatasetByStationSelectorComponent', () => {
   let component: DatasetByStationSelectorComponent;
   let fixture: ComponentFixture<DatasetByStationSelectorComponent>;
 
@@ -19,13 +22,13 @@ describe("DatasetByStationSelectorComponent", () => {
         TranslateTestingModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        DatasetByStationSelectorComponent
+        DatasetByStationSelectorComponent,
       ],
       providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         DatasetApiV1ConnectorProvider,
-      ]
+      ],
     }).compileComponents();
   }));
 
@@ -33,15 +36,15 @@ describe("DatasetByStationSelectorComponent", () => {
     fixture = TestBed.createComponent(DatasetByStationSelectorComponent);
     component = fixture.componentInstance;
     component.station = {
-      id: "id",
+      id: 'id',
       datasetIds: [],
-      label: "label"
+      label: 'label',
     };
-    component.url = "url";
+    component.url = 'url';
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

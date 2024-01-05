@@ -1,21 +1,41 @@
 <div>
-  <div style="display: flex; flex-direction: row;">
-    <div style="width: 500px; padding: 5px;">
-      <div style="height: 500px;">
-        <n52-station-map-selector [mapId]="mapId" [serviceUrl]="providerUrl" [filter]="stationFilter"
-          [zoomControlOptions]="zoomControlOptions" [mapOptions]="mapOptions" [fitBounds]="fitBounds"
-          [avoidZoomToSelection]="avoidZoomToSelection" [baseMaps]="baseMaps" [overlayMaps]="overlayMaps"
-          [layerControlOptions]="layerControlOptions" (onSelected)="onStationSelected($event)" [cluster]="cluster"
-          [markerSelectorGenerator]="markerSelectorGenerator" [statusIntervals]="statusIntervals"
-          (onContentLoading)="loadingStations = $event"></n52-station-map-selector>
+  <div style="display: flex; flex-direction: row">
+    <div style="width: 500px; padding: 5px">
+      <div style="height: 500px">
+        <n52-station-map-selector
+          [mapId]="mapId"
+          [serviceUrl]="providerUrl"
+          [filter]="stationFilter"
+          [zoomControlOptions]="zoomControlOptions"
+          [mapOptions]="mapOptions"
+          [fitBounds]="fitBounds"
+          [avoidZoomToSelection]="avoidZoomToSelection"
+          [baseMaps]="baseMaps"
+          [overlayMaps]="overlayMaps"
+          [layerControlOptions]="layerControlOptions"
+          (onSelected)="onStationSelected($event)"
+          [cluster]="cluster"
+          [markerSelectorGenerator]="markerSelectorGenerator"
+          [statusIntervals]="statusIntervals"
+          (onContentLoading)="loadingStations = $event"
+        ></n52-station-map-selector>
       </div>
-      <div>Is loading: {{loadingStations}}</div>
-      <n52-geosearch-control mapId="timeseries" [options]="searchOptions"></n52-geosearch-control>
-      <n52-extent-control mapId="timeseries" [extent]="fitBounds"></n52-extent-control>
+      <div>Is loading: {{ loadingStations }}</div>
+      <n52-geosearch-control
+        mapId="timeseries"
+        [options]="searchOptions"
+      ></n52-geosearch-control>
+      <n52-extent-control
+        mapId="timeseries"
+        [extent]="fitBounds"
+      ></n52-extent-control>
     </div>
-    <div style="width: 200px;">
-      <n52-service-filter-selector [serviceUrl]="providerUrl" endpoint="phenomenon"
-        (onItemSelected)="onSelectPhenomenon($event)"></n52-service-filter-selector>
+    <div style="width: 200px">
+      <n52-service-filter-selector
+        [serviceUrl]="providerUrl"
+        endpoint="phenomenon"
+        (onItemSelected)="onSelectPhenomenon($event)"
+      ></n52-service-filter-selector>
     </div>
     <!-- <div style="width: 300px; padding: 5px;">
     <div style="height: 500px;">
@@ -33,33 +53,41 @@
     </div>
     <n52-locate-control mapId="timeseries"></n52-locate-control>
     <div>
-      <button (click)="cluster = !cluster;">Toggle cluster</button>
+      <button (click)="cluster = !cluster">Toggle cluster</button>
       @if (cluster) {
-      <span>clustering active</span>
+        <span>clustering active</span>
       }
     </div>
     <div>
-      <button (click)="statusIntervals = !statusIntervals;">Toggle statusIntervals</button>
+      <button (click)="statusIntervals = !statusIntervals">
+        Toggle statusIntervals
+      </button>
       @if (statusIntervals) {
-      <span>statusIntervals active</span>
+        <span>statusIntervals active</span>
       }
     </div>
     <div>
-      <button (click)="switchProvider();">Switch Provider</button>
+      <button (click)="switchProvider()">Switch Provider</button>
     </div>
     <div>
-      <button (click)="addOverlayMapLayer();">Add Map Layer</button>
-      <button (click)="removeOverlayMapLayer();">Remove Map Layer</button>
+      <button (click)="addOverlayMapLayer()">Add Map Layer</button>
+      <button (click)="removeOverlayMapLayer()">Remove Map Layer</button>
     </div>
     <div>
-      <button (click)="showZoomControlsLeft();">Show Zoom Controls Left</button>
-      <button (click)="showZoomControlsRight();">Show Zoom Controls Right</button>
+      <button (click)="showZoomControlsLeft()">Show Zoom Controls Left</button>
+      <button (click)="showZoomControlsRight()">
+        Show Zoom Controls Right
+      </button>
     </div>
   </div>
 </div>
-<hr>
-<div style="height: 500px;">
-  <n52-last-value-map-selector [fitBounds]="fitBounds" [lastValueSeriesIDs]="lastValueSeriesIDs"
-    [lastValuePresentation]="lastValuePresentation" [fitBoundsMarkerOptions]="fitBoundsMarkerOptions">
+<hr />
+<div style="height: 500px">
+  <n52-last-value-map-selector
+    [fitBounds]="fitBounds"
+    [lastValueSeriesIDs]="lastValueSeriesIDs"
+    [lastValuePresentation]="lastValuePresentation"
+    [fitBoundsMarkerOptions]="fitBoundsMarkerOptions"
+  >
   </n52-last-value-map-selector>
 </div>

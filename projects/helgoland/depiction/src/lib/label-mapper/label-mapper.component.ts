@@ -1,37 +1,32 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { LabelMapperService } from "./label-mapper.service";
-
+import { LabelMapperService } from './label-mapper.service';
 
 @Component({
-  selector: "n52-label-mapper",
-  templateUrl: "./label-mapper.component.html",
-  styleUrls: ["./label-mapper.component.scss"],
+  selector: 'n52-label-mapper',
+  templateUrl: './label-mapper.component.html',
+  styleUrls: ['./label-mapper.component.scss'],
   standalone: true,
-  imports: []
+  imports: [],
 })
 export class LabelMapperComponent implements OnChanges {
-
-    @Input()
+  @Input()
   public label: string | undefined;
 
-    public determinedLabel: string | undefined;
+  public determinedLabel: string | undefined;
 
-    public loading = true;
+  public loading = true;
 
-    constructor(
-        protected labelMapperSrvc: LabelMapperService
-    ) { }
+  constructor(protected labelMapperSrvc: LabelMapperService) {}
 
-    public ngOnChanges(changes: SimpleChanges): void {
-      if (changes["label"] && this.label) {
-        this.labelMapperSrvc.getMappedLabel(this.label)
-          .subscribe((label) => {
-            this.determinedLabel = label;
-            this.loading = false;
-          });
-      } else {
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['label'] && this.label) {
+      this.labelMapperSrvc.getMappedLabel(this.label).subscribe((label) => {
+        this.determinedLabel = label;
         this.loading = false;
-      }
+      });
+    } else {
+      this.loading = false;
     }
+  }
 }

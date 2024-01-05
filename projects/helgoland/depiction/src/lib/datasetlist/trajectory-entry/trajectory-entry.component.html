@@ -1,14 +1,25 @@
 @if (datasetOptions && dataset) {
-<div style="white-space: nowrap;" (click)="toggleVisibility()">
-  <span>
-    <a class="btn btn-light">
-      <span class="fa fa-plus"
-        [ngClass]="{'fa-eye': !datasetOptions.visible, 'fa-eye-slash': datasetOptions.visible}"></span>
-    </a>
-  </span>
-  <span style="padding-left: 10px;"
-    [ngStyle]="{'color': datasetOptions.color}">{{dataset.parameters.phenomenon?.label}}</span>
-  <span class="fa fa-pencil" (click)="editDatasetOptions(datasetOptions); $event.stopPropagation();"
-    [ngStyle]="{color: datasetOptions.color}"></span>
-</div>
+  <div style="white-space: nowrap" (click)="toggleVisibility()">
+    <span>
+      <a class="btn btn-light">
+        <span
+          class="fa fa-plus"
+          [ngClass]="{
+            'fa-eye': !datasetOptions.visible,
+            'fa-eye-slash': datasetOptions.visible
+          }"
+        ></span>
+      </a>
+    </span>
+    <span
+      style="padding-left: 10px"
+      [ngStyle]="{ color: datasetOptions.color }"
+      >{{ dataset.parameters.phenomenon?.label }}</span
+    >
+    <span
+      class="fa fa-pencil"
+      (click)="editDatasetOptions(datasetOptions); $event.stopPropagation()"
+      [ngStyle]="{ color: datasetOptions.color }"
+    ></span>
+  </div>
 }

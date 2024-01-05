@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatBadgeModule } from "@angular/material/badge";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatIconModule } from "@angular/material/icon";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { HelgolandFavoriteModule } from "@helgoland/favorite";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandFavoriteModule } from '@helgoland/favorite';
 
-import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
-import { ModalFavoriteListButtonComponent } from "./modal-favorite-list-button.component";
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { ModalFavoriteListButtonComponent } from './modal-favorite-list-button.component';
 
-describe("ModalFavoriteListButtonComponent", () => {
+describe('ModalFavoriteListButtonComponent', () => {
   let component: ModalFavoriteListButtonComponent;
   let fixture: ComponentFixture<ModalFavoriteListButtonComponent>;
 
@@ -23,8 +23,8 @@ describe("ModalFavoriteListButtonComponent", () => {
         MatIconModule,
         MatBadgeModule,
         MatTooltipModule,
-        ModalFavoriteListButtonComponent
-      ]
+        ModalFavoriteListButtonComponent,
+      ],
     }).compileComponents();
   });
 
@@ -34,7 +34,7 @@ describe("ModalFavoriteListButtonComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

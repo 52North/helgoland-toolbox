@@ -1,9 +1,11 @@
 <mat-form-field>
-  <mat-select [value]="currentLang" (selectionChange)="setLanguage($event.value)"
-    placeholder="{{'main-config.language-selector.placeholder' | translate}}">
+  <mat-select
+    [value]="currentLang"
+    (selectionChange)="setLanguage($event.value)"
+    placeholder="{{ 'main-config.language-selector.placeholder' | translate }}"
+  >
     @for (lang of languageList; track lang) {
-    <mat-option [value]="lang">{{lang.label}}
-    </mat-option>
+      <mat-option [value]="lang">{{ lang.label }} </mat-option>
     }
   </mat-select>
 </mat-form-field>

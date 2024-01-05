@@ -1,6 +1,9 @@
-import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
-import { MatDatepickerInputEvent, MatDatepickerModule } from "@angular/material/datepicker";
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import {
   ApiV3InterfaceService,
   DatasetType,
@@ -8,7 +11,7 @@ import {
   HelgolandTimeseries,
   Timeseries,
   Timespan,
-} from "@helgoland/core";
+} from '@helgoland/core';
 import {
   convertToFacetEntry,
   FacetSearchElement,
@@ -17,27 +20,20 @@ import {
   HelgolandFacetSearchModule,
   ParameterFacetSort,
   ParameterFacetType,
-} from "@helgoland/facet-search";
-import { MapCache } from "@helgoland/map";
-import { TranslateService } from "@ngx-translate/core";
-import { forkJoin } from "rxjs";
+} from '@helgoland/facet-search';
+import { MapCache } from '@helgoland/map';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: "n52-facet-search",
-  templateUrl: "./facet-search.component.html",
-  styleUrls: ["./facet-search.component.scss"],
-  imports: [
-    HelgolandFacetSearchModule,
-    MatDatepickerModule,
-    CommonModule
-  ],
-  providers: [
-    MapCache
-  ],
-  standalone: true
+  selector: 'n52-facet-search',
+  templateUrl: './facet-search.component.html',
+  styleUrls: ['./facet-search.component.scss'],
+  imports: [HelgolandFacetSearchModule, MatDatepickerModule, CommonModule],
+  providers: [MapCache],
+  standalone: true,
 })
 export class FacetSearchComponent {
-
   public timeseries: Timeseries[] = [];
 
   public categoryType: ParameterFacetType = ParameterFacetType.category;
@@ -65,13 +61,13 @@ export class FacetSearchComponent {
     private servicesConnector: HelgolandServicesConnector,
     private translate: TranslateService,
     private apiv3: ApiV3InterfaceService,
-    public facetSearch: FacetSearchService
+    public facetSearch: FacetSearchService,
   ) {
-    this.translate.onLangChange.subscribe(_ => {
+    this.translate.onLangChange.subscribe((_) => {
       this.fetchDatasets();
     });
 
-    this.facetSearch.getResults().subscribe(ts => {
+    this.facetSearch.getResults().subscribe((ts) => {
       this.resultCount = ts.length;
       this.fetchTime();
       this.resetAllDisabled = !this.facetSearch.areFacetsSelected();
@@ -88,11 +84,14 @@ export class FacetSearchComponent {
       // ),
       // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-      this.servicesConnector.getDatasets("https://fluggs.wupperverband.de/sws5/api/", { expanded: true, type: DatasetType.Timeseries })
-    ]).subscribe(res => {
+      this.servicesConnector.getDatasets(
+        'https://fluggs.wupperverband.de/sws5/api/',
+        { expanded: true, type: DatasetType.Timeseries },
+      ),
+    ]).subscribe((res) => {
       const complete: FacetSearchElement[] = [];
-      res.forEach(dsList => {
-        dsList.forEach(ds => {
+      res.forEach((dsList) => {
+        dsList.forEach((ds) => {
           if (ds instanceof HelgolandTimeseries) {
             complete.push(convertToFacetEntry(ds));
           }
@@ -100,7 +99,6 @@ export class FacetSearchComponent {
       });
       this.facetSearch.setEntries(complete);
     });
-
 
     // const url = 'http://192.168.52.242:8080/52n-sos-webapp/api/';
     // const filter: ApiV3ParameterFilter = {
@@ -118,7 +116,10 @@ export class FacetSearchComponent {
     console.log(entry);
   }
 
-  public onSelectedFeature(elem: { feature: FacetSearchElementFeature, url: string }) {
+  public onSelectedFeature(elem: {
+    feature: FacetSearchElementFeature;
+    url: string;
+  }) {
     console.log(elem);
   }
 
@@ -132,12 +133,16 @@ export class FacetSearchComponent {
 
   public setStart(start: MatDatepickerInputEvent<Date>) {
     if (start.value)
-      this.facetSearch.setSelectedTimespan(new Timespan(start.value, this.selectedEnd));
+      this.facetSearch.setSelectedTimespan(
+        new Timespan(start.value, this.selectedEnd),
+      );
   }
 
   public setEnd(end: MatDatepickerInputEvent<Date>) {
     if (end.value && this.selectedStart)
-      this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
+      this.facetSearch.setSelectedTimespan(
+        new Timespan(this.selectedStart, end.value),
+      );
   }
 
   public setAutocomplete(acString: string | undefined, evt: any) {
@@ -151,5 +156,4 @@ export class FacetSearchComponent {
       this.selectedEnd = new Date(timespan.to);
     }
   }
-
 }

@@ -1,17 +1,17 @@
-import { DatasetTypes, PlatformTypes } from "./enums";
-import { Feature } from "./feature";
-import { Parameter } from "./parameter";
-import { Station } from "./station";
+import { DatasetTypes, PlatformTypes } from './enums';
+import { Feature } from './feature';
+import { Parameter } from './parameter';
+import { Station } from './station';
 
 export interface IDataset extends Parameter {
-    url: string;
-    uom: string;
-    internalId: string;
-    firstValue: FirstLastValue;
-    lastValue: FirstLastValue;
-    referenceValues: ReferenceValue[];
-    parameters: ParameterConstellation;
-    renderingHints: RenderingHints;
+  url: string;
+  uom: string;
+  internalId: string;
+  firstValue: FirstLastValue;
+  lastValue: FirstLastValue;
+  referenceValues: ReferenceValue[];
+  parameters: ParameterConstellation;
+  renderingHints: RenderingHints;
 }
 
 export class ParameterConstellation {
@@ -37,28 +37,28 @@ export class ReferenceValue {
 }
 
 export interface RenderingHints {
-    chartType: string;
-    properties: {
-        color: string;
-    };
+  chartType: string;
+  properties: {
+    color: string;
+  };
 }
 
 export interface LineRenderingHints extends RenderingHints {
-    chartType: "line";
-    properties: {
-        color: string;
-        width: string;
-        lineType: string;
-    };
+  chartType: 'line';
+  properties: {
+    color: string;
+    width: string;
+    lineType: string;
+  };
 }
 
 export interface BarRenderingHints {
-    chartType: "bar";
-    properties: {
-        color: string;
-        width: string;
-        interval: string;
-    };
+  chartType: 'bar';
+  properties: {
+    color: string;
+    width: string;
+    interval: string;
+  };
 }
 
 export class DatasetParameterConstellation extends ParameterConstellation {
@@ -98,19 +98,19 @@ export class Timeseries implements IDataset {
 }
 
 export interface TimeseriesExtras {
-    license?: string;
-    statusIntervals?: StatusInterval[];
+  license?: string;
+  statusIntervals?: StatusInterval[];
 }
 
 export interface StatusInterval {
-    lower: string;
-    upper: string;
-    name: string;
-    color: string;
+  lower: string;
+  upper: string;
+  name: string;
+  color: string;
 }
 
 export interface PlatformParameter extends Parameter {
-    platformType: PlatformTypes;
+  platformType: PlatformTypes;
 }
 
 export class TimeseriesData {

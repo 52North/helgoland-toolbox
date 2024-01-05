@@ -1,20 +1,20 @@
-import { Parameter } from "@helgoland/core";
-import { MultiServiceFilter } from "@helgoland/selector";
+import { Parameter } from '@helgoland/core';
+import { MultiServiceFilter } from '@helgoland/selector';
 
 export enum ParameterType {
-    CATEGORY = "category",
-    FEATURE = "feature",
-    OFFERING = "offering",
-    PHENOMENON = "phenomenon",
-    PROCEDURE = "procedure",
-    PROVIDER = "provider",
-    TIMESERIES = "timeseries",
+  CATEGORY = 'category',
+  FEATURE = 'feature',
+  OFFERING = 'offering',
+  PHENOMENON = 'phenomenon',
+  PROCEDURE = 'procedure',
+  PROVIDER = 'provider',
+  TIMESERIES = 'timeseries',
 }
 
 export interface ParameterListEntry {
-    selectedFilter?: ParameterType;
-    selectedItem?: Parameter;
-    apiFilter: MultiServiceFilter[];
-    expanded: boolean;
-    possibleFilters: ParameterType[];
+  selectedFilter?: ParameterType;
+  selectedItem?: Parameter;
+  apiFilter: MultiServiceFilter[];
+  expanded: boolean;
+  possibleFilters: ParameterType[];
 }

@@ -1,21 +1,29 @@
 @for (favorite of favorites; track favorite) {
-<div>
-  <div (click)="favorite.show = !favorite.show">
-    <span>ID: </span>
-    <span>{{favorite.id}}</span>
+  <div>
+    <div (click)="favorite.show = !favorite.show">
+      <span>ID: </span>
+      <span>{{ favorite.id }}</span>
+    </div>
+    <div (click)="changeLabelName(favorite); $event.stopPropagation()">
+      <span>Label: </span>
+      <span>{{ favorite.label }}</span>
+    </div>
+    @if (favorite.show) {
+      <div style="height: 300px">
+        <n52-d3-timeseries-graph
+          [datasetIds]="createDatasetIdsArray(favorite)"
+          [datasetOptions]="createDatasetOptions(favorite)"
+          [timeInterval]="favorite.timespan"
+        ></n52-d3-timeseries-graph>
+      </div>
+    }
+    <hr />
   </div>
-  <div (click)="changeLabelName(favorite); $event.stopPropagation();">
-    <span>Label: </span>
-    <span>{{favorite.label}}</span>
-  </div>
-  @if (favorite.show) {
-  <div style="height: 300px;">
-    <n52-d3-timeseries-graph [datasetIds]="createDatasetIdsArray(favorite)"
-      [datasetOptions]="createDatasetOptions(favorite)" [timeInterval]="favorite.timespan"></n52-d3-timeseries-graph>
-  </div>
-  }
-  <hr>
-</div>
 }
 <button mat-raised-button color="primary" (click)="export()">Export</button>
-<input type="file" (change)="import($event)" placeholder="Upload file" accept=".json">
+<input
+  type="file"
+  (change)="import($event)"
+  placeholder="Upload file"
+  accept=".json"
+/>

@@ -1,12 +1,12 @@
 @for (entry of entries; track entry) {
-<div (click)="timeseriesSelected(entry)">
-  <div>{{entry?.label}}</div>
-  @if (entry.firstValue && entry.lastValue) {
-  <div class="small">
-    <span>{{entry.firstValue.timestamp | tzDate: 'L LT z'}}</span>
-    <span>-</span>
-    <span>{{entry.lastValue.timestamp | tzDate: 'L LT z'}}</span>
+  <div (click)="timeseriesSelected(entry)">
+    <div>{{ entry?.label }}</div>
+    @if (entry.firstValue && entry.lastValue) {
+      <div class="small">
+        <span>{{ entry.firstValue.timestamp | tzDate: "L LT z" }}</span>
+        <span>-</span>
+        <span>{{ entry.lastValue.timestamp | tzDate: "L LT z" }}</span>
+      </div>
+    }
   </div>
-  }
-</div>
 }

@@ -1,15 +1,14 @@
-import { Injectable } from "@angular/core";
-import { Map } from "ol";
-import { Observable, of, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Map } from 'ol';
+import { Observable, of, Subject } from 'rxjs';
 
 /**
  * Service which holds all generated maps and their ids
  */
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class OlMapService {
-
   private map: { [key: string]: any } = {};
 
   /**
@@ -56,5 +55,4 @@ export class OlMapService {
       delete this.map[id];
     }
   }
-
 }

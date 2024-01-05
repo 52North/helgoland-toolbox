@@ -1,20 +1,21 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 
-import { WmsCapabilitiesService } from "../../../services/wms-capabilities.service";
-import { OlLayerTimeSelectorComponent } from "../ol-layer-time-selector/ol-layer-time-selector.component";
-
+import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
+import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer-time-selector.component';
 
 /**
  * Legend component to animate time dependend layers, the time information is gathered by the WMS capabilities
  */
 @Component({
-  selector: "n52-ol-layer-animate-time",
-  templateUrl: "./ol-layer-animate-time.component.html",
+  selector: 'n52-ol-layer-animate-time',
+  templateUrl: './ol-layer-animate-time.component.html',
   standalone: true,
-  imports: []
+  imports: [],
 })
-export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent implements OnInit {
-
+export class OlLayerAnimateTimeComponent
+  extends OlLayerTimeSelectorComponent
+  implements OnInit
+{
   /**
    * Interval of the animation
    */
@@ -22,9 +23,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
 
   private interval: number | undefined;
 
-  constructor(
-    protected override wmsCaps: WmsCapabilitiesService
-  ) {
+  constructor(protected override wmsCaps: WmsCapabilitiesService) {
     super(wmsCaps);
   }
 
@@ -33,11 +32,15 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
       // get current time parameter
       this.determineCurrentTimeParameter();
       // find index in list
-      let idx = this.timeDimensions.findIndex(e => this.currentTime && e.getTime() === this.currentTime.getTime());
+      let idx = this.timeDimensions.findIndex(
+        (e) => this.currentTime && e.getTime() === this.currentTime.getTime(),
+      );
       // start animation
       this.interval = window.setInterval(() => {
         idx++;
-        if (idx >= this.timeDimensions!.length) { idx = 0; }
+        if (idx >= this.timeDimensions!.length) {
+          idx = 0;
+        }
         this.setTime(this.timeDimensions![idx]);
       }, this.timeInterval);
     }
@@ -49,10 +52,11 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
 
   public resetAnimation() {
     if (this.layerid && this.url) {
-      this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => {
-        if (time) this.setTime(time);
-      });
+      this.wmsCaps
+        .getDefaultTimeDimension(this.layerid, this.url)
+        .subscribe((time) => {
+          if (time) this.setTime(time);
+        });
     }
   }
-
 }

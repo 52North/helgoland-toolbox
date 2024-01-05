@@ -1,13 +1,13 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatListModule } from "@angular/material/list";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { ParameterListSelectorComponent } from "./parameter-list-selector.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { ParameterListSelectorComponent } from './parameter-list-selector.component';
 
-describe("ParameterListSelectorComponent", () => {
+describe('ParameterListSelectorComponent', () => {
   let component: ParameterListSelectorComponent;
   let fixture: ComponentFixture<ParameterListSelectorComponent>;
 
@@ -19,8 +19,8 @@ describe("ParameterListSelectorComponent", () => {
         MatListModule,
         MatProgressBarModule,
         TranslateTestingModule,
-        ParameterListSelectorComponent
-      ]
+        ParameterListSelectorComponent,
+      ],
     }).compileComponents();
   });
 
@@ -30,7 +30,7 @@ describe("ParameterListSelectorComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

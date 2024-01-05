@@ -1,30 +1,60 @@
-<h1 mat-dialog-title>{{'diagram-view.add-timeseries.map' | translate}}</h1>
+<h1 mat-dialog-title>{{ "diagram-view.add-timeseries.map" | translate }}</h1>
 
 <mat-drawer-container class="content" autosize>
   <mat-drawer #drawer class="sidenav" mode="side" opened="true">
-    <button mat-button color="primary" (click)="selectAllPhenomena()" [disabled]="!state.selectedPhenomenonId"
-      style="width: 100%;">{{'map-selection-view.select-all-phenomena' | translate}}</button>
+    <button
+      mat-button
+      color="primary"
+      (click)="selectAllPhenomena()"
+      [disabled]="!state.selectedPhenomenonId"
+      style="width: 100%"
+    >
+      {{ "map-selection-view.select-all-phenomena" | translate }}
+    </button>
     <div class="phenomenon-list">
-      <helgoland-common-parameter-list-selector [endpoint]="phenomenonEndpoint" [selected]="state.selectedPhenomenonId"
-        [filterList]="phenomenonFilter" (onItemSelected)="onPhenomenonSelected($event)">
+      <helgoland-common-parameter-list-selector
+        [endpoint]="phenomenonEndpoint"
+        [selected]="state.selectedPhenomenonId"
+        [filterList]="phenomenonFilter"
+        (onItemSelected)="onPhenomenonSelected($event)"
+      >
       </helgoland-common-parameter-list-selector>
     </div>
   </mat-drawer>
   <div class="map">
-    <button mat-mini-fab (click)="openMapSettings()" color="none" class="local-settings-button"
-      attr.aria-label="{{'map-selection-view.adjust-map-button.tooltip' | translate}}"
-      matTooltip="{{'map-selection-view.adjust-map-button.tooltip' | translate}}">
+    <button
+      mat-mini-fab
+      (click)="openMapSettings()"
+      color="none"
+      class="local-settings-button"
+      attr.aria-label="{{
+        'map-selection-view.adjust-map-button.tooltip' | translate
+      }}"
+      matTooltip="{{
+        'map-selection-view.adjust-map-button.tooltip' | translate
+      }}"
+    >
       <mat-icon>edit_location_alt</mat-icon>
     </button>
-    <n52-station-map-selector [mapId]="mapId" [serviceUrl]="state.selectedService?.apiUrl" [filter]="stationFilter"
-      [clusterConfig]="clusterConfig" (onSelected)="onStationSelected($event)" [cluster]="cluster"
-      class="vbox boxItem fullHeight">
+    <n52-station-map-selector
+      [mapId]="mapId"
+      [serviceUrl]="state.selectedService?.apiUrl"
+      [filter]="stationFilter"
+      [clusterConfig]="clusterConfig"
+      (onSelected)="onStationSelected($event)"
+      [cluster]="cluster"
+      class="vbox boxItem fullHeight"
+    >
     </n52-station-map-selector>
   </div>
 </mat-drawer-container>
 
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="phenomenonToggled()">{{'map-selection-view.phenomena-list' | translate}}</button>
+  <button mat-raised-button (click)="phenomenonToggled()">
+    {{ "map-selection-view.phenomena-list" | translate }}
+  </button>
   <div style="flex: 1"></div>
-  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>
+    {{ "controls.close" | translate }}
+  </button>
 </div>

@@ -1,8 +1,9 @@
-<h1 mat-dialog-title>{{'main-config.title' | translate}}</h1>
+<h1 mat-dialog-title>{{ "main-config.title" | translate }}</h1>
 <div mat-dialog-content class="content">
-
   <p>
-    <helgoland-common-language-selector [languageList]="languages"></helgoland-common-language-selector>
+    <helgoland-common-language-selector
+      [languageList]="languages"
+    ></helgoland-common-language-selector>
   </p>
 
   <p>
@@ -16,9 +17,10 @@
   <p>
     <helgoland-common-version-info></helgoland-common-version-info>
   </p>
-
 </div>
 <div mat-dialog-actions>
   <div style="flex: 1"></div>
-  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>
+    {{ "controls.close" | translate }}
+  </button>
 </div>

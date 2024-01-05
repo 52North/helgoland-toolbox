@@ -1,7 +1,11 @@
 <div class="example-radio-group">
   @for (lang of languageList; track lang) {
-  <mat-radio-button class="example-radio-button" (click)="setLanguage(lang)" [checked]="lang === currentLang">
-    {{lang.label}}
-  </mat-radio-button>
+    <mat-radio-button
+      class="example-radio-button"
+      (click)="setLanguage(lang)"
+      [checked]="lang === currentLang"
+    >
+      {{ lang.label }}
+    </mat-radio-button>
   }
 </div>

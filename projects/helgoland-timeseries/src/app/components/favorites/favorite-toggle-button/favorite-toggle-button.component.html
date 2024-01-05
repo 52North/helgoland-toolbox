@@ -1,10 +1,13 @@
-<button mat-icon-button (click)="toggle(); $event.stopPropagation()"
-  attr.aria-label="{{'favorite-toggle-button.tooltip' | translate}}"
-  matTooltip="{{'favorite-toggle-button.tooltip' | translate}}">
+<button
+  mat-icon-button
+  (click)="toggle(); $event.stopPropagation()"
+  attr.aria-label="{{ 'favorite-toggle-button.tooltip' | translate }}"
+  matTooltip="{{ 'favorite-toggle-button.tooltip' | translate }}"
+>
   @if (isFavorite) {
-  <mat-icon style="color: #c3c30e;">star</mat-icon>
+    <mat-icon style="color: #c3c30e">star</mat-icon>
   }
   @if (!isFavorite) {
-  <mat-icon>star_border</mat-icon>
+    <mat-icon>star_border</mat-icon>
   }
 </button>

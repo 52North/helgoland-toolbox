@@ -1,46 +1,86 @@
 @if (dataset) {
-<div class="legendItem" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
-  <div class="legendItemheader">
-    <div class="legendItemLabel">
-      <n52-label-mapper label="{{dataset.parameters.platform?.label}}"></n52-label-mapper>
-    </div>
-    <div class="small">
-      <n52-label-mapper label="{{dataset.parameters.phenomenon?.label}}"></n52-label-mapper>
-      @if (dataset.uom) {
-      <span>[
-        <n52-label-mapper label="{{dataset.uom}}"></n52-label-mapper>]</span>
+  <div
+    class="legendItem"
+    style="position: relative"
+    [ngClass]="{ selected: selected }"
+    (click)="toggleSelection()"
+  >
+    <div class="legendItemheader">
+      <div class="legendItemLabel">
+        <n52-label-mapper
+          label="{{ dataset.parameters.platform?.label }}"
+        ></n52-label-mapper>
+      </div>
+      <div class="small">
+        <n52-label-mapper
+          label="{{ dataset.parameters.phenomenon?.label }}"
+        ></n52-label-mapper>
+        @if (dataset.uom) {
+          <span
+            >[
+            <n52-label-mapper label="{{ dataset.uom }}"></n52-label-mapper
+            >]</span
+          >
+        }
+      </div>
+      <div class="small">
+        <n52-label-mapper
+          label="{{ dataset.parameters.procedure?.label }}"
+        ></n52-label-mapper>
+      </div>
+      @if (
+        dataset.parameters.category?.label !==
+        dataset.parameters.phenomenon?.label
+      ) {
+        <div class="small">
+          <n52-label-mapper
+            label="{{ dataset.parameters.category?.label }}"
+          ></n52-label-mapper>
+        </div>
       }
     </div>
-    <div class="small">
-      <n52-label-mapper label="{{dataset.parameters.procedure?.label}}"></n52-label-mapper>
-    </div>
-    @if (dataset.parameters.category?.label !== dataset.parameters.phenomenon?.label) {
-    <div class="small">
-      <n52-label-mapper label="{{dataset.parameters.category?.label}}"></n52-label-mapper>
-    </div>
+    @for (item of datasetOptions; track item) {
+      <div>
+        <div>
+          <span [ngStyle]="{ color: item.color }">{{
+            item.timestamp | tzDate: "L LT z"
+          }}</span>
+          <span
+            class="fa"
+            [ngClass]="{
+              'fa-eye-slash': item.visible,
+              'fa-eye': !item.visible
+            }"
+            (click)="toggleVisibility(item); $event.stopPropagation()"
+            title="{{ 'profiles.legend.visibility' | translate }}"
+          ></span>
+          <span
+            class="fa fa-pencil"
+            (click)="editDatasetOptions(item); $event.stopPropagation()"
+            [ngStyle]="{ color: item.color }"
+            title="{{ 'profiles.legend.edit-style' | translate }}"
+          ></span>
+          <span
+            class="fa fa-map-marker"
+            (click)="showGeometry(dataset, item); $event.stopPropagation()"
+            title="{{ 'profiles.legend.show-geometry' | translate }}"
+          ></span>
+          <span
+            class="fa fa-times"
+            (click)="removeDatasetOptions(item); $event.stopPropagation()"
+            title="{{ 'profiles.legend.delete-subentry' | translate }}"
+          ></span>
+        </div>
+        @if (dataset.isMobile) {
+          <div
+            (click)="openInCombiView(item); $event.stopPropagation()"
+            class="toCombiView"
+          >
+            <span class="fa fa-arrow-right"></span>
+            <span>{{ "profiles.legend.go-to-combi-view" | translate }}</span>
+          </div>
+        }
+      </div>
     }
   </div>
-  @for (item of datasetOptions; track item) {
-  <div>
-    <div>
-      <span [ngStyle]="{'color': item.color}">{{item.timestamp | tzDate: 'L LT z'}}</span>
-      <span class="fa" [ngClass]="{'fa-eye-slash': item.visible, 'fa-eye': !item.visible}"
-        (click)="toggleVisibility(item); $event.stopPropagation();"
-        title="{{'profiles.legend.visibility' | translate}}"></span>
-      <span class="fa fa-pencil" (click)="editDatasetOptions(item); $event.stopPropagation();"
-        [ngStyle]="{color: item.color}" title="{{'profiles.legend.edit-style' | translate}}"></span>
-      <span class="fa fa-map-marker" (click)="showGeometry(dataset, item); $event.stopPropagation();"
-        title="{{'profiles.legend.show-geometry' | translate}}"></span>
-      <span class="fa fa-times" (click)="removeDatasetOptions(item); $event.stopPropagation();"
-        title="{{'profiles.legend.delete-subentry' | translate}}"></span>
-    </div>
-    @if (dataset.isMobile) {
-    <div (click)="openInCombiView(item); $event.stopPropagation();" class="toCombiView">
-      <span class="fa fa-arrow-right"></span>
-      <span>{{'profiles.legend.go-to-combi-view' | translate}}</span>
-    </div>
-    }
-  </div>
-  }
-</div>
 }

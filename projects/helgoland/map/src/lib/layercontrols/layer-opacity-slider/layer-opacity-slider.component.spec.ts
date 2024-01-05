@@ -1,17 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
-import { LayerOpacitySliderComponent } from "./layer-opacity-slider.component";
+import { LayerOpacitySliderComponent } from './layer-opacity-slider.component';
 
-describe("LayerOpacitySliderComponent", () => {
+describe('LayerOpacitySliderComponent', () => {
   let component: LayerOpacitySliderComponent;
   let fixture: ComponentFixture<LayerOpacitySliderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, LayerOpacitySliderComponent]
-    })
-      .compileComponents();
+      imports: [FormsModule, LayerOpacitySliderComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,7 +19,7 @@ describe("LayerOpacitySliderComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,34 +1,33 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Required } from "@helgoland/core";
-import { View } from "ol";
-import BaseLayer from "ol/layer/Base";
-import Layer from "ol/layer/Layer";
-import { transformExtent } from "ol/proj";
-import { TileWMS } from "ol/source";
+import { Component, Input, OnInit } from '@angular/core';
+import { Required } from '@helgoland/core';
+import { View } from 'ol';
+import BaseLayer from 'ol/layer/Base';
+import Layer from 'ol/layer/Layer';
+import { transformExtent } from 'ol/proj';
+import { TileWMS } from 'ol/source';
 
-import { OlMapService } from "../../../services/map.service";
-import { WmsCapabilitiesService } from "../../../services/wms-capabilities.service";
+import { OlMapService } from '../../../services/map.service';
+import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 
 /**
  * Legend component to gather the layer extent by the WMS capabilities and provide the ability to zoom to the extent
  */
 @Component({
-  selector: "n52-ol-layer-zoom-extent",
-  templateUrl: "./ol-layer-zoom-extent.component.html",
-  standalone: true
+  selector: 'n52-ol-layer-zoom-extent',
+  templateUrl: './ol-layer-zoom-extent.component.html',
+  standalone: true,
 })
 export class OlLayerZoomExtentComponent implements OnInit {
-
   @Input()
   @Required
-    layer!: BaseLayer;
+  layer!: BaseLayer;
 
   /**
    * corresponding map id
    */
   @Input()
   @Required
-    mapId!: string;
+  mapId!: string;
 
   private extent: number[] | undefined;
   private crs: string | undefined;
@@ -36,8 +35,8 @@ export class OlLayerZoomExtentComponent implements OnInit {
 
   constructor(
     private wmsCaps: WmsCapabilitiesService,
-    private mapServices: OlMapService
-  ) { }
+    private mapServices: OlMapService,
+  ) {}
 
   ngOnInit() {
     if (this.layer.getExtent()) {
@@ -47,11 +46,12 @@ export class OlLayerZoomExtentComponent implements OnInit {
       this.layer.getExtent();
       if (source instanceof TileWMS && source.getUrls()?.length) {
         const url = source.getUrls()![0];
-        this.mapServices.getMap(this.mapId).subscribe(map => {
+        this.mapServices.getMap(this.mapId).subscribe((map) => {
           this.view = map.getView();
           const epsgCode = this.view.getProjection().getCode();
-          const layerid = source.getParams()["layers"] || source.getParams()["LAYERS"];
-          this.wmsCaps.getExtent(layerid, url, epsgCode).subscribe(res => {
+          const layerid =
+            source.getParams()['layers'] || source.getParams()['LAYERS'];
+          this.wmsCaps.getExtent(layerid, url, epsgCode).subscribe((res) => {
             if (res) {
               this.extent = res.extent;
               this.crs = res.crs;
@@ -67,7 +67,11 @@ export class OlLayerZoomExtentComponent implements OnInit {
       if (!this.crs) {
         this.view.fit(this.extent);
       } else {
-        const transformation = transformExtent(this.extent, this.crs, this.view.getProjection().getCode());
+        const transformation = transformExtent(
+          this.extent,
+          this.crs,
+          this.view.getProjection().getCode(),
+        );
         this.view.fit(transformation);
       }
     }

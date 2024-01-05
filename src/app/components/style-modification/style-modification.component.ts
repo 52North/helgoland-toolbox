@@ -1,24 +1,23 @@
-import { Component, Inject } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatCheckboxModule } from "@angular/material/checkbox";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatSelectModule } from "@angular/material/select";
-import { DatasetOptions, MinMaxRange } from "@helgoland/core";
-import { HelgolandModificationModule } from "@helgoland/modification";
+import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { DatasetOptions, MinMaxRange } from '@helgoland/core';
+import { HelgolandModificationModule } from '@helgoland/modification';
 
 @Component({
-  templateUrl: "./style-modification.component.html",
-  styleUrls: ["./style-modification.component.scss"],
+  templateUrl: './style-modification.component.html',
+  styleUrls: ['./style-modification.component.scss'],
   imports: [
     HelgolandModificationModule,
     MatSelectModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class StyleModificationComponent {
-
   public color: string | undefined;
   public generalize: boolean | undefined;
   public zeroBasedYAxis: boolean | undefined;
@@ -31,11 +30,11 @@ export class StyleModificationComponent {
   public colorList: string[];
 
   constructor(
-        public dialogRef: MatDialogRef<StyleModificationComponent>,
-        @Inject(MAT_DIALOG_DATA)
-        public option: DatasetOptions
+    public dialogRef: MatDialogRef<StyleModificationComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public option: DatasetOptions,
   ) {
-    this.colorList = ["#FF0000", "#00FF00", "#0000FF"];
+    this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
     this.generalize = option.generalize;
     this.zeroBasedYAxis = option.zeroBasedYAxis;
     this.autoRangeSelection = option.autoRangeSelection;
@@ -50,7 +49,9 @@ export class StyleModificationComponent {
   }
 
   public onOk() {
-    if (this.color) { this.option.color = this.color; }
+    if (this.color) {
+      this.option.color = this.color;
+    }
     this.option.generalize = this.generalize;
     this.option.zeroBasedYAxis = this.zeroBasedYAxis;
     this.option.autoRangeSelection = this.autoRangeSelection;

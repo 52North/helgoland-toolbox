@@ -1,21 +1,36 @@
 <div class="content">
   <div class="container">
-    <n52-geometry-map-viewer class="map" mapId="trajectory" [geometry]="geometry" [highlight]="highlightGeometry"
-      [zoomTo]="zoomToGeometry"></n52-geometry-map-viewer>
+    <n52-geometry-map-viewer
+      class="map"
+      mapId="trajectory"
+      [geometry]="geometry"
+      [highlight]="highlightGeometry"
+      [zoomTo]="zoomToGeometry"
+    ></n52-geometry-map-viewer>
   </div>
   <div class="container">
     <div class="chart">
-      <n52-d3-trajectory-graph [datasetIds]="datasetIds" [timeInterval]="timespan" [datasetOptions]="options"
-        [presenterOptions]="graphOptions" [selection]="selection" (onSelectionChanged)="onChartSelectionChanged($event)"
+      <n52-d3-trajectory-graph
+        [datasetIds]="datasetIds"
+        [timeInterval]="timespan"
+        [datasetOptions]="options"
+        [presenterOptions]="graphOptions"
+        [selection]="selection"
+        (onSelectionChanged)="onChartSelectionChanged($event)"
         (onSelectionChangedFinished)="onChartSelectionChangedFinished($event)"
-        (onHoverHighlight)="onChartHighlightChanged($event)"></n52-d3-trajectory-graph>
+        (onHoverHighlight)="onChartHighlightChanged($event)"
+      ></n52-d3-trajectory-graph>
     </div>
-    <div class="legend" style="padding: 10px;">
+    <div class="legend" style="padding: 10px">
       @for (id of datasetIds; track id) {
-      <div>
-        <n52-trajectory-entry [datasetId]="id" [datasetOptions]="options.get(id)" (onEditOptions)="editOptions($event)">
-        </n52-trajectory-entry>
-      </div>
+        <div>
+          <n52-trajectory-entry
+            [datasetId]="id"
+            [datasetOptions]="options.get(id)"
+            (onEditOptions)="editOptions($event)"
+          >
+          </n52-trajectory-entry>
+        </div>
       }
     </div>
   </div>

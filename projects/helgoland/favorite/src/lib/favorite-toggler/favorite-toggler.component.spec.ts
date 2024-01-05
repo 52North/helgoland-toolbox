@@ -1,12 +1,12 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { LocalStorage, NotifierService } from "@helgoland/core";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { LocalStorage, NotifierService } from '@helgoland/core';
 
-import { FavoriteService } from "../service/favorite.service";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { FavoriteTogglerComponent } from "./favorite-toggler.component";
+import { FavoriteService } from '../service/favorite.service';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { FavoriteTogglerComponent } from './favorite-toggler.component';
 
-describe("FavoriteTogglerComponent", () => {
+describe('FavoriteTogglerComponent', () => {
   let component: FavoriteTogglerComponent;
   let fixture: ComponentFixture<FavoriteTogglerComponent>;
 
@@ -15,13 +15,9 @@ describe("FavoriteTogglerComponent", () => {
       imports: [
         HttpClientModule,
         TranslateTestingModule,
-        FavoriteTogglerComponent
+        FavoriteTogglerComponent,
       ],
-      providers: [
-        FavoriteService,
-        LocalStorage,
-        NotifierService
-      ]
+      providers: [FavoriteService, LocalStorage, NotifierService],
     }).compileComponents();
   }));
 
@@ -31,7 +27,7 @@ describe("FavoriteTogglerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

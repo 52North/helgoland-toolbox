@@ -1,4 +1,4 @@
 export interface DatasetTableData {
-    datetime: number;
-    values: number[];
+  datetime: number;
+  values: number[];
 }

@@ -1,7 +1,7 @@
-import { AbstractProcess } from "../model/sml";
-import { AbstractXmlService } from "./AbstractXmlService";
-import { SensorMLDocumentEncoder } from "./xml/SensorMLDocumentEncoder";
-import { SensorMLDocumentDecoder } from "./xml/SensorMLDocumentDecoder";
+import { AbstractProcess } from '../model/sml';
+import { AbstractXmlService } from './AbstractXmlService';
+import { SensorMLDocumentEncoder } from './xml/SensorMLDocumentEncoder';
+import { SensorMLDocumentDecoder } from './xml/SensorMLDocumentDecoder';
 
 export class SensorMLXmlService extends AbstractXmlService<AbstractProcess> {
   private encoder = new SensorMLDocumentEncoder();

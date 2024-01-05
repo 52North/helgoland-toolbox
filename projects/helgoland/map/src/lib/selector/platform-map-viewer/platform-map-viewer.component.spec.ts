@@ -1,19 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { HelgolandMapSelectorModule } from "../module";
-import { PlatformMapViewerComponent } from "./platform-map-viewer.component";
+import { HelgolandMapSelectorModule } from '../module';
+import { PlatformMapViewerComponent } from './platform-map-viewer.component';
 
-describe("PlatformMapViewerComponent", () => {
+describe('PlatformMapViewerComponent', () => {
   let component: PlatformMapViewerComponent;
   let fixture: ComponentFixture<PlatformMapViewerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandMapSelectorModule
-      ]
-    })
-      .compileComponents();
+      imports: [HelgolandMapSelectorModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +19,7 @@ describe("PlatformMapViewerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

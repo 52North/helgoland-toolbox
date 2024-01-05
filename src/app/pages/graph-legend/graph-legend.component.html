@@ -1,93 +1,158 @@
-<div style="height: 500px;">
-  <n52-d3-timeseries-graph class="diagram" [datasetIds]="datasetIds" [selectedDatasetIds]="selectedIds"
-    [datasetOptions]="datasetOptions" [timeInterval]="timespan" [presenterOptions]="d3diagramOptions"
-    [hoveringService]="hoveringService" [reloadForDatasets]="reloadForDatasets" [yaxisModifier]="yaxisModifier"
-    (onTimespanChanged)="timespanChanged($event)" (onDatasetSelected)="setSelected($event)"
-    (onContentLoading)="onGraphLoading($event)" (onHighlightChanged)="highlightChanged($event)"
-    (onClickDataPoint)="clickedDataPoint($event)" (dataLoaded)="loadings = $event" #diagram>
+<div style="height: 500px">
+  <n52-d3-timeseries-graph
+    class="diagram"
+    [datasetIds]="datasetIds"
+    [selectedDatasetIds]="selectedIds"
+    [datasetOptions]="datasetOptions"
+    [timeInterval]="timespan"
+    [presenterOptions]="d3diagramOptions"
+    [hoveringService]="hoveringService"
+    [reloadForDatasets]="reloadForDatasets"
+    [yaxisModifier]="yaxisModifier"
+    (onTimespanChanged)="timespanChanged($event)"
+    (onDatasetSelected)="setSelected($event)"
+    (onContentLoading)="onGraphLoading($event)"
+    (onHighlightChanged)="highlightChanged($event)"
+    (onClickDataPoint)="clickedDataPoint($event)"
+    (dataLoaded)="loadings = $event"
+    #diagram
+  >
     @if (yaxisModifier) {
-    <n52-d3-y-axis-modifier [zoom]="true" [shift]="true"></n52-d3-y-axis-modifier>
+      <n52-d3-y-axis-modifier
+        [zoom]="true"
+        [shift]="true"
+      ></n52-d3-y-axis-modifier>
     }
     <!-- <n52-d3-graph-hover-line [showLabels]="false" [showTimelLabel]="false"></n52-d3-graph-hover-line> -->
   </n52-d3-timeseries-graph>
 </div>
 <div>
-  <span>Loading Graph: {{graphLoading}} - {{listLoadings()}}</span>
-  <n52-export-image-button title="Exported Diagram" [datasetOptions]="datasetOptions" [datasetIds]="datasetIds"
-    [height]="900" [width]="1600" [timespan]="timespan" [showLegend]="true" [showFirstLastDate]="true">
+  <span>Loading Graph: {{ graphLoading }} - {{ listLoadings() }}</span>
+  <n52-export-image-button
+    title="Exported Diagram"
+    [datasetOptions]="datasetOptions"
+    [datasetIds]="datasetIds"
+    [height]="900"
+    [width]="1600"
+    [timespan]="timespan"
+    [showLegend]="true"
+    [showFirstLastDate]="true"
+  >
   </n52-export-image-button>
 </div>
-<div style="height: 200px;">
-  <n52-d3-overview-timeseries-graph [datasetIds]="datasetIds" [rangefactor]="2" [datasetOptions]="datasetOptions"
-    [presenterOptions]="d3overviewOptions" [reloadForDatasets]="reloadForDatasets" [timeInterval]="timespan"
-    (onTimespanChanged)="timespanChanged($event)" (onContentLoading)="onOverviewLoading($event)">
+<div style="height: 200px">
+  <n52-d3-overview-timeseries-graph
+    [datasetIds]="datasetIds"
+    [rangefactor]="2"
+    [datasetOptions]="datasetOptions"
+    [presenterOptions]="d3overviewOptions"
+    [reloadForDatasets]="reloadForDatasets"
+    [timeInterval]="timespan"
+    (onTimespanChanged)="timespanChanged($event)"
+    (onContentLoading)="onOverviewLoading($event)"
+  >
   </n52-d3-overview-timeseries-graph>
 </div>
-<div>
-  Loading Overview: {{overviewLoading}}
-</div>
+<div>Loading Overview: {{ overviewLoading }}</div>
 <div>
   <div>
     <button (click)="groupYaxisChanged()">group axis</button>
-    {{d3diagramOptions.groupYaxis}}
+    {{ d3diagramOptions.groupYaxis }}
     <button (click)="changeHovering(HoveringStyleEnum.point)">point</button>
     <button (click)="changeHovering(HoveringStyleEnum.line)">line</button>
-    {{highlightedTime}}
+    {{ highlightedTime }}
     <button (click)="yaxisModifier = !yaxisModifier">Y Axis Modifier</button>
-    <n52-axes-options (onChangeYAxesVisibility)="changeYAxesVisibility()"></n52-axes-options>
-    <n52-timespan-shift-selector [timespan]="timespan" (onTimespanChange)="timespanChanged($event)">
+    <n52-axes-options
+      (onChangeYAxesVisibility)="changeYAxesVisibility()"
+    ></n52-axes-options>
+    <n52-timespan-shift-selector
+      [timespan]="timespan"
+      (onTimespanChange)="timespanChanged($event)"
+    >
     </n52-timespan-shift-selector>
     <button (click)="refreshData()">reload Data</button>
-    <n52-auto-update-timespan [timeInterval]="timeIntervalUpdateTimespan" [currentTimespan]="timespan"
-      [refreshInterval]="refreshIntervalUpdateTimespan" (onChangeTimespan)="timespanChanged($event)">
+    <n52-auto-update-timespan
+      [timeInterval]="timeIntervalUpdateTimespan"
+      [currentTimespan]="timespan"
+      [refreshInterval]="refreshIntervalUpdateTimespan"
+      (onChangeTimespan)="timespanChanged($event)"
+    >
     </n52-auto-update-timespan>
   </div>
   <div>
     Complex legend:
     @for (id of datasetIds; track id) {
-    <div>
-      <n52-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" [highlight]="id === highlightId"
-        [datasetOptions]="datasetOptions.get(id)!" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
-        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
-        (onSelectDate)="dateChanged($event)"></n52-timeseries-entry>
-      <n52-dataset-permalink-download [internalId]="internalIdHandler.resolveInternalId(id)" [timeInterval]="timespan">
-      </n52-dataset-permalink-download>
-      <button (click)="openDownload(id)">Open Download</button>
-    </div>
+      <div>
+        <n52-timeseries-entry
+          [datasetId]="id"
+          [selected]="isSelected(id)"
+          [highlight]="id === highlightId"
+          [datasetOptions]="datasetOptions.get(id)!"
+          [timeInterval]="timespan"
+          (onDeleteDataset)="deleteTimeseries(id)"
+          (onSelectDataset)="selectTimeseries($event, id)"
+          (onUpdateOptions)="updateOptions($event)"
+          (onEditOptions)="editOption($event)"
+          (onShowGeometry)="showGeometry($event)"
+          (onSelectDate)="dateChanged($event)"
+        ></n52-timeseries-entry>
+        <n52-dataset-permalink-download
+          [internalId]="internalIdHandler.resolveInternalId(id)"
+          [timeInterval]="timespan"
+        >
+        </n52-dataset-permalink-download>
+        <button (click)="openDownload(id)">Open Download</button>
+      </div>
     }
   </div>
   <div>
     First last entries legend:
     @for (id of datasetIds; track id) {
-    <div>
-      <n52-first-latest-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
-        [datasetOptions]="datasetOptions.get(id)!" [timeInterval]="timespan" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
-        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)"
-        (onSelectDate)="dateChanged($event)"></n52-first-latest-timeseries-entry>
-    </div>
+      <div>
+        <n52-first-latest-timeseries-entry
+          [datasetId]="id"
+          [selected]="isSelected(id)"
+          [datasetOptions]="datasetOptions.get(id)!"
+          [timeInterval]="timespan"
+          (onDeleteDataset)="deleteTimeseries(id)"
+          (onSelectDataset)="selectTimeseries($event, id)"
+          (onUpdateOptions)="updateOptions($event)"
+          (onEditOptions)="editOption($event)"
+          (onShowGeometry)="showGeometry($event)"
+          (onSelectDate)="dateChanged($event)"
+        ></n52-first-latest-timeseries-entry>
+      </div>
     }
   </div>
   <div>
     Configurable legend:
     @for (id of datasetIds; track id) {
-    <div>
-      <n52-configurable-timeseries-entry [datasetId]="id" [selected]="isSelected(id)"
-        [datasetOptions]="datasetOptions.get(id)!" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)" (onUpdateOptions)="updateOptions($event)"
-        (onEditOptions)="editOption($event)" (onShowGeometry)="showGeometry($event)">
-      </n52-configurable-timeseries-entry>
-    </div>
+      <div>
+        <n52-configurable-timeseries-entry
+          [datasetId]="id"
+          [selected]="isSelected(id)"
+          [datasetOptions]="datasetOptions.get(id)!"
+          (onDeleteDataset)="deleteTimeseries(id)"
+          (onSelectDataset)="selectTimeseries($event, id)"
+          (onUpdateOptions)="updateOptions($event)"
+          (onEditOptions)="editOption($event)"
+          (onShowGeometry)="showGeometry($event)"
+        >
+        </n52-configurable-timeseries-entry>
+      </div>
     }
   </div>
   <div>
     Simple legend:
     @for (id of datasetIds; track id) {
-    <div>
-      <n52-simple-timeseries-entry [datasetId]="id" [selected]="isSelected(id)" (onDeleteDataset)="deleteTimeseries(id)"
-        (onSelectDataset)="selectTimeseries($event, id)"></n52-simple-timeseries-entry>
-    </div>
+      <div>
+        <n52-simple-timeseries-entry
+          [datasetId]="id"
+          [selected]="isSelected(id)"
+          (onDeleteDataset)="deleteTimeseries(id)"
+          (onSelectDataset)="selectTimeseries($event, id)"
+        ></n52-simple-timeseries-entry>
+      </div>
     }
   </div>
 </div>

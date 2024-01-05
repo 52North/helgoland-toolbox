@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -6,10 +6,10 @@ import {
   HelgolandTimeseries,
   InternalDatasetId,
   InternalIdHandler,
-} from "@helgoland/core";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { TranslateService } from '@ngx-translate/core';
 
-import { ListEntryComponent } from "../../list-entry.component";
+import { ListEntryComponent } from '../../list-entry.component';
 
 /**
  * Implements the abstract ListEntryComponent, which has the following functions:
@@ -18,13 +18,12 @@ import { ListEntryComponent } from "../../list-entry.component";
  *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
  */
 @Component({
-  selector: "n52-simple-timeseries-entry",
-  templateUrl: "./simple-timeseries-entry.component.html",
-  styleUrls: ["./simple-timeseries-entry.component.css"],
-  standalone: true
+  selector: 'n52-simple-timeseries-entry',
+  templateUrl: './simple-timeseries-entry.component.html',
+  styleUrls: ['./simple-timeseries-entry.component.css'],
+  standalone: true,
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
-
   public dataset: HelgolandTimeseries | undefined;
 
   public platformLabel: string | undefined;
@@ -37,19 +36,22 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
     protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService
+    protected override translateSrvc: TranslateService,
   ) {
     super(internalIdHandler, translateSrvc);
   }
 
   protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
     const params: DatasetFilter = {};
-    if (locale) { params.locale = locale; }
+    if (locale) {
+      params.locale = locale;
+    }
     this.loading = true;
-    this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Timeseries })
+    this.servicesConnector
+      .getDataset(internalId, { ...params, type: DatasetType.Timeseries })
       .subscribe(
-        dataset => this.setDataset(dataset),
-        error => this.handleError(error)
+        (dataset) => this.setDataset(dataset),
+        (error) => this.handleError(error),
       );
   }
 

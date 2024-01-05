@@ -1,8 +1,22 @@
 <div class="content">
-  <n52-profile-entry [datasetId]="id" [datasetOptions]="datasetOptions" (onDeleteDatasetOptions)="deleteProfileOptions($event)"
-    (onSelectDataset)="selectProfile($event, id)" (onUpdateOptions)="updateOptions($event)" (onEditOptions)="editOption($event)"
-    (onOpenInCombiView)="openCombiView($event)" (onShowGeometry)="showGeometry($event)"></n52-profile-entry>
-  <n52-profile-entry [datasetId]="id2" [datasetOptions]="datasetOptions2" (onDeleteDatasetOptions)="deleteProfileOptions($event)"
-    (onSelectDataset)="selectProfile($event, id2)" (onUpdateOptions)="updateOptions($event)" (onEditOptions)="editOption($event)"
-    (onOpenInCombiView)="openCombiView($event)" (onShowGeometry)="showGeometry($event)"></n52-profile-entry>
+  <n52-profile-entry
+    [datasetId]="id"
+    [datasetOptions]="datasetOptions"
+    (onDeleteDatasetOptions)="deleteProfileOptions($event)"
+    (onSelectDataset)="selectProfile($event, id)"
+    (onUpdateOptions)="updateOptions($event)"
+    (onEditOptions)="editOption($event)"
+    (onOpenInCombiView)="openCombiView($event)"
+    (onShowGeometry)="showGeometry($event)"
+  ></n52-profile-entry>
+  <n52-profile-entry
+    [datasetId]="id2"
+    [datasetOptions]="datasetOptions2"
+    (onDeleteDatasetOptions)="deleteProfileOptions($event)"
+    (onSelectDataset)="selectProfile($event, id2)"
+    (onUpdateOptions)="updateOptions($event)"
+    (onEditOptions)="editOption($event)"
+    (onOpenInCombiView)="openCombiView($event)"
+    (onShowGeometry)="showGeometry($event)"
+  ></n52-profile-entry>
 </div>

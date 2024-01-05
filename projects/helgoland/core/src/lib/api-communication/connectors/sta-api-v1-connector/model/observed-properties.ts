@@ -1,25 +1,25 @@
-import { StaExpandParams, StaObject, StaSelectParams } from "./sta-interface";
+import { StaExpandParams, StaObject, StaSelectParams } from './sta-interface';
 
 export interface ObservedProperty extends StaObject {
-    name?: string;
-    description?: string;
-    definition?: string;
-    "Datastreams@iot.navigationLink"?: string;
+  name?: string;
+  description?: string;
+  definition?: string;
+  'Datastreams@iot.navigationLink'?: string;
 }
 
 export interface InsertObservedProperty extends ObservedProperty {
-    name: string;
-    description: string;
-    definition: string;
+  name: string;
+  description: string;
+  definition: string;
 }
 
 export interface ObservedPropertySelectParams extends StaSelectParams {
-    name?: boolean;
-    description?: boolean;
-    definition?: boolean;
-    Datastreams?: boolean;
+  name?: boolean;
+  description?: boolean;
+  definition?: boolean;
+  Datastreams?: boolean;
 }
 
 export interface ObservedPropertyExpandParams extends StaExpandParams {
-    Datastreams?: boolean;
+  Datastreams?: boolean;
 }

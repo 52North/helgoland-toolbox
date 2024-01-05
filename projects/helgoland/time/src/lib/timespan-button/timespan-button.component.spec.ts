@@ -1,29 +1,27 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { DefinedTimespanService } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DefinedTimespanService } from '@helgoland/core';
 
-import { TimespanButtonComponent } from "./timespan-button.component";
+import { TimespanButtonComponent } from './timespan-button.component';
 
-describe("TimespanButtonComponent", () => {
+describe('TimespanButtonComponent', () => {
   let component: TimespanButtonComponent;
   let fixture: ComponentFixture<TimespanButtonComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TimespanButtonComponent],
-      providers: [
-        DefinedTimespanService
-      ]
+      providers: [DefinedTimespanService],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimespanButtonComponent);
     component = fixture.componentInstance;
-    component.label = "label";
+    component.label = 'label';
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

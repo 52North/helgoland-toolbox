@@ -1,24 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../testing/translate.testing.module";
-import { TimeRangeSliderComponent } from "./time-range-slider.component";
-import { TimeRangeSliderCache } from "./time-range-slider.service";
+import { TranslateTestingModule } from '../../../../testing/translate.testing.module';
+import { TimeRangeSliderComponent } from './time-range-slider.component';
+import { TimeRangeSliderCache } from './time-range-slider.service';
 
-describe("TimeRangeSliderComponent", () => {
+describe('TimeRangeSliderComponent', () => {
   let component: TimeRangeSliderComponent;
   let fixture: ComponentFixture<TimeRangeSliderComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
-        TimeRangeSliderCache
-      ],
+      providers: [TimeRangeSliderCache],
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        TimeRangeSliderComponent
-      ]
+        TimeRangeSliderComponent,
+      ],
     }).compileComponents();
   }));
 
@@ -28,7 +26,7 @@ describe("TimeRangeSliderComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
