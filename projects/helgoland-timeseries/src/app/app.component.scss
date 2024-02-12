@@ -33,6 +33,25 @@
 
     .footer {
       flex: 0;
+
+      p {
+        background-color: #c2e8f4;
+        padding: 1em 0px 10px 1em;
+        font-size: small;
+        text-align: center;
+        margin: 0;
+    }
+      img {
+        float: inline-start;
+      }
+    }
+
+    .header svg {
+      height: 4em;
+      padding-left: 0.5em;
+      padding-top: 0.5em;
+      float: left;
+      margin-right: 2em;
     }
   }
 
