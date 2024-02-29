@@ -5,16 +5,10 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { D3GraphCopyrightComponent } from './d3-series-graph/controls/d3-graph-copyright/d3-graph-copyright.component';
 import { D3GraphHoverLineComponent } from './d3-series-graph/controls/d3-graph-hover-line/d3-graph-hover-line.component';
 import { D3GraphHoverPointComponent } from './d3-series-graph/controls/d3-graph-hover-point/d3-graph-hover-point.component';
-import {
-  D3GraphOverviewSelectionComponent,
-} from './d3-series-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
-import {
-  D3GraphPanZoomInteractionComponent,
-} from './d3-series-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
+import { D3GraphOverviewSelectionComponent } from './d3-series-graph/controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import { D3GraphPanZoomInteractionComponent } from './d3-series-graph/controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 import { D3YAxisModifierComponent } from './d3-series-graph/controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
-import {
-  D3SeriesGraphOverviewWrapperComponent,
-} from './d3-series-graph/d3-series-graph-overview-wrapper/d3-series-graph-overview-wrapper.component';
+import { D3SeriesGraphOverviewWrapperComponent } from './d3-series-graph/d3-series-graph-overview-wrapper/d3-series-graph-overview-wrapper.component';
 import { D3SeriesGraphWrapperComponent } from './d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 import { D3SeriesGraphComponent } from './d3-series-graph/d3-series-graph.component';
 import {
@@ -51,24 +45,19 @@ const COMPONENTS = [
  */
 @NgModule({
   declarations: COMPONENTS,
-  imports: [
-    HelgolandCoreModule,
-    CommonModule
-  ],
+  imports: [HelgolandCoreModule, CommonModule],
   exports: COMPONENTS,
   providers: [
     D3TimeFormatLocaleService,
     // configured default generalizer, can be overridden by self provided service
     {
       provide: D3DataGeneralizer,
-      useClass: D3DataSimpleGeneralizer
+      useClass: D3DataSimpleGeneralizer,
     },
     {
       provide: D3SeriesGraphErrorHandler,
-      useClass: D3SeriesSimpleGraphErrorHandler
-    }
+      useClass: D3SeriesSimpleGraphErrorHandler,
+    },
   ],
-  entryComponents: [
-  ]
 })
-export class HelgolandD3Module { }
+export class HelgolandD3Module {}

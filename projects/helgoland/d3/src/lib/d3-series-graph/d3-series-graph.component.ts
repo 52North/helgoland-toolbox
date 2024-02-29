@@ -111,9 +111,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     @Output()
     public datasetsSelected: EventEmitter<string[]> = new EventEmitter();
 
-    @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-    public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+    @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
     @Output()
     public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
