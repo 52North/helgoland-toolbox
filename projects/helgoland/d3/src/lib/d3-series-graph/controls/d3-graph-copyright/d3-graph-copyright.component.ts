@@ -1,14 +1,14 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Timespan } from '@helgoland/core';
-import { BaseType } from 'd3';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from "@angular/core";
+import { Timespan } from "@helgoland/core";
+import { BaseType } from "d3";
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { D3Copyright } from '../../models/d3-plot-options';
-import { SeriesGraphDataset } from '../../models/series-graph-dataset';
-import { D3GraphInterface } from '../../d3-graph.interface';
-import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
+import { D3GraphId } from "../../../helper/d3-graph-id.service";
+import { D3Graphs } from "../../../helper/d3-graphs.service";
+import { D3GraphInterface } from "../../d3-graph.interface";
+import { D3GraphExtent, D3SeriesGraphControl } from "../../d3-series-graph-control";
+import { D3Copyright } from "../../models/d3-plot-options";
+import { SeriesGraphDataset } from "../../models/series-graph-dataset";
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -23,13 +23,13 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
    */
   @Input() copyright: D3Copyright;
 
-  private d3Graph: D3GraphInterface;
-  private copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
+  protected d3Graph: D3GraphInterface;
+  protected copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
 
-  private labelRect: d3.Selection<BaseType, any, any, any>;
-  private labelText: d3.Selection<BaseType, any, any, any>;
-  private background: d3.Selection<SVGSVGElement, any, any, any>;
-  private graphExtent: D3GraphExtent;
+  protected labelRect: d3.Selection<BaseType, any, any, any>;
+  protected labelText: d3.Selection<BaseType, any, any, any>;
+  protected background: d3.Selection<SVGSVGElement, any, any, any>;
+  protected graphExtent: D3GraphExtent;
 
   constructor(
     protected graphId: D3GraphId,
@@ -71,14 +71,14 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
     this.clearLayer();
   }
 
-  private clearLayer() {
+  protected clearLayer() {
     if (this.copyrightLayer) {
       this.copyrightLayer.remove();
       this.copyrightLayer = null;
     }
   }
 
-  private createLabelText() {
+  protected createLabelText() {
     if (this.copyright.link) {
       this.labelText = this.copyrightLayer.append('a')
         .attr('href', this.copyright.link)
@@ -94,7 +94,7 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
     }
   }
 
-  private createLabelRect() {
+  protected createLabelRect() {
     this.labelRect = this.copyrightLayer.append('svg:rect')
       .attr('class', 'copyright-rect')
       .style('fill', 'none')
@@ -102,7 +102,7 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
       .style('pointer-events', 'none');
   }
 
-  private setText() {
+  protected setText() {
     if (this.copyrightLayer) {
       const backgroundDim = this.graphHelper.getDimensions(this.background.node());
       let x = 3;

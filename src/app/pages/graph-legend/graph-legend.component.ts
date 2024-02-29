@@ -30,17 +30,17 @@ import { StyleModificationComponent } from '../../components/style-modification/
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    protected setHoveringLabel(d: DataEntry, entry: SeriesGraphDataset) {
-        const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
-        const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
-        this.highlightText.append('text')
-            .text(`${stringedValue} ${entry.description.uom} ${timelabel}`)
-            .attr('class', 'mouseHoverDotLabel')
-            .style('pointer-events', 'none')
-            .style('fill', 'black');
-        // this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
-        // this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
-    }
+    // protected setHoveringLabel(d: DataEntry, entry: SeriesGraphDataset) {
+    //     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
+    //     const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
+    //     this.highlightText.append('text')
+    //         .text(`${stringedValue} ${entry.description.uom} ${timelabel}`)
+    //         .attr('class', 'mouseHoverDotLabel')
+    //         .style('pointer-events', 'none')
+    //         .style('fill', 'black');
+    //     // this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
+    //     // this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
+    // }
 
 }
 

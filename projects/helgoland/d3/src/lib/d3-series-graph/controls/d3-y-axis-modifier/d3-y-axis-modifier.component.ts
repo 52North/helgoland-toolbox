@@ -36,8 +36,8 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
    */
   @Input() shiftFactor = 0.2;
 
-  private adjustedRanges: Map<string, MinMaxRange> = new Map();
-  private d3Graph: D3GraphInterface;
+  protected adjustedRanges: Map<string, MinMaxRange> = new Map();
+  protected d3Graph: D3GraphInterface;
 
   constructor(
     protected graphId: D3GraphId,
@@ -73,7 +73,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
     }
   }
 
-  private drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
+  protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (this.zoom) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
@@ -121,7 +121,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
     }
   }
 
-  private drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
+  protected drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (this.adjustedRanges.has(yaxis.uom)) {
       // add a buffer of +/- 2 to fit element into transparent/hover circle
       // reset button line left top to right bottom
@@ -153,7 +153,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
     }
   }
 
-  private drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
+  protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (this.shift) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
@@ -209,7 +209,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
     }
   }
 
-  private adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
+  protected adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
     const key = axis.uom;
     if (this.adjustedRanges.has(key)) {
       this.adjustedRanges.get(key).min += adjustMin;
