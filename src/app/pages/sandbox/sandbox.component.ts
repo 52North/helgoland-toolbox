@@ -73,7 +73,7 @@ export class SandboxComponent implements OnInit {
     }
 
     public loadDataset() {
-        const id = 'https://fluggs.wupperverband.de/sos2/api/v1/__26';
+        const id = 'https://fluggs.wupperverband.de/sws5/api/__26';
         this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries }).subscribe(ds => {
             this.loadDatasetData(ds, id);
         });

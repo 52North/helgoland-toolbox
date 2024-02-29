@@ -59,7 +59,7 @@ export interface D3SeriesGraphOptions {
     /**
     * show the label of the xaxis
     */
-    showTimeLabel?: boolean;
+    showTimeLabel?: boolean | string;
 
     /**
      * Configures an optional timerange label with start and end under the diagram
@@ -706,7 +706,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .attr('x', (this.width + bufferXrange) / 2)
                 .attr('y', this.height + this.margin.bottom - 5)
                 .style('text-anchor', 'middle')
-                .text('time');
+                .text(this.plotOptions.showTimeLabel === true ? 'time' : this.plotOptions.showTimeLabel);
         }
     }
 
