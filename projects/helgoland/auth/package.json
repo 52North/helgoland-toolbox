@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/auth",
-  "version": "13.0.0-alpha",
+  "version": "13.0.0",
   "peerDependencies": {},
   "dependencies": {
     "@angular/common": "^13.1.1",
