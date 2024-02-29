@@ -10,6 +10,7 @@ import {
   Phenomenon,
 } from '@helgoland/core';
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
+import { ErrorHandlerService } from 'helgoland-common';
 import { icon, Marker } from 'leaflet';
 
 import {
@@ -43,7 +44,7 @@ export class MapSelectionViewComponent implements OnInit {
 
   private _mobileQueryListener: () => void;
 
-  public selectedService: HelgolandService;
+  public selectedService: HelgolandService | undefined;
   public selectedPhenomenonId: string;
 
   public stationFilter: HelgolandParameterFilter;
@@ -60,7 +61,8 @@ export class MapSelectionViewComponent implements OnInit {
     private serviceConnector: HelgolandServicesConnector,
     public appRouter: AppRouterService,
     public graphDatasetsSrvc: DatasetsService,
-    private configSrvc: ConfigurationService
+    private configSrvc: ConfigurationService,
+    private errorHandler: ErrorHandlerService
   ) {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
@@ -69,10 +71,13 @@ export class MapSelectionViewComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.configSrvc.configuration) {
-      this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe(services => {
-        this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
-        this.updateFilter();
-      });
+      this.serviceConnector.getServices(this.configSrvc.configuration?.defaultService.apiUrl).subscribe({
+        next: services => {
+          this.selectedService = services.find(e => e.id === this.configSrvc.configuration?.defaultService.serviceId);
+          this.updateFilter();
+        },
+        error: error => this.errorHandler.error(error)
+      })
     }
   }
 
