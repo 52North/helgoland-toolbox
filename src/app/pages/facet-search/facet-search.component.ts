@@ -75,7 +75,7 @@ export class FacetSearchComponent {
     //   // ),
     //   // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
     //   // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-    //   this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sos2/api/v1/', { expanded: true, type: DatasetType.Timeseries })
+    //   this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sws5/api/', { expanded: true, type: DatasetType.Timeseries })
     // ]).subscribe(res => {
     //   const complete: FacetEntry[] = [];
     //   res.forEach(dsList => {

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from "@angular/common/http";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import {
     ColorService,
     DatasetOptions,
@@ -12,7 +12,7 @@ import {
     TimeseriesData,
     Timespan,
     TimezoneService,
-} from '@helgoland/core';
+} from "@helgoland/core";
 import {
     D3PlotOptions,
     D3PointSymbolDrawerService,
@@ -21,26 +21,27 @@ import {
     HighlightOutput,
     HoveringStyle,
     SeriesGraphDataset,
-} from '@helgoland/d3';
-import moment from 'moment';
+} from "@helgoland/d3";
+import moment from "moment";
 
-import { ExportPopupComponent } from '../../components/export-popup/export-popup.component';
-import { GeometryViewComponent } from '../../components/geometry-view/geometry-view.component';
-import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { ExportPopupComponent } from "../../components/export-popup/export-popup.component";
+import { GeometryViewComponent } from "../../components/geometry-view/geometry-view.component";
+import { StyleModificationComponent } from "../../components/style-modification/style-modification.component";
 
 class HoveringTestService extends D3SimpleHoveringService {
 
-    // protected setHoveringLabel(d: DataEntry, entry: SeriesGraphDataset) {
-    //     const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
-    //     const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
-    //     this.highlightText.append('text')
-    //         .text(`${stringedValue} ${entry.description.uom} ${timelabel}`)
-    //         .attr('class', 'mouseHoverDotLabel')
-    //         .style('pointer-events', 'none')
-    //         .style('fill', 'black');
-    //     // this.highlightText.append('text').attr('dy', '1em').text(timeseries.parameters.phenomenon.label);
-    //     // this.highlightText.append('text').attr('dy', '2em').text(timeseries.parameters.category.label);
-    // }
+    protected setHoveringLabel(textContainer: d3.Selection<SVGGElement, any, any, any>, d: DataEntry, dataset: SeriesGraphDataset) {
+        const stringedValue = (typeof d.value === 'number') ? parseFloat(d.value.toPrecision(15)).toString() : d.value;
+        const timelabel = this.timezoneSrvc.createTzDate(d.timestamp).format('L LT z');
+        textContainer.append('text')
+            .text(`${stringedValue} ${dataset.description.uom} ${timelabel}`)
+            .attr('class', 'mouseHoverDotLabel')
+            .attr('alignment-baseline', 'text-before-edge')
+            .style('pointer-events', 'none')
+            .style('fill', 'black');
+        textContainer.append('text').attr('dy', '1em').attr('alignment-baseline', 'text-before-edge').text(dataset.description.phenomenonLabel);
+        textContainer.append('text').attr('dy', '2em').attr('alignment-baseline', 'text-before-edge').text(dataset.description.categoryLabel);
+    }
 
 }
 
@@ -51,10 +52,10 @@ class HoveringTestService extends D3SimpleHoveringService {
 export class GraphLegendComponent {
 
     public datasetIds = [
-        'https://fluggs.wupperverband.de/sos2/api/v1/__26',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__49',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__51',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__72',
+        'https://fluggs.wupperverband.de/sws5/api/__26',
+        'https://fluggs.wupperverband.de/sws5/api/__49',
+        'https://fluggs.wupperverband.de/sws5/api/__51',
+        'https://fluggs.wupperverband.de/sws5/api/__72',
         // 'http://nexos.demo.52north.org:80/52n-sos-nexos-test/api/__100',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__46',
         // 'http://nexos.dev.52north.org/52n-sos-upc/api/__47',

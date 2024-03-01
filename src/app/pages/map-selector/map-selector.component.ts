@@ -100,14 +100,14 @@ export class MapSelectorComponent {
         this.markerSelectorGenerator = new MarkerSelectorGeneratorImpl(this.mapCache, this.mapId);
 
         setTimeout(() => {
-            this.lastValueSeriesIDs.push('https://fluggs.wupperverband.de/sos2/api/v1/__54');
+            this.lastValueSeriesIDs.push('https://fluggs.wupperverband.de/sws5/api/__54');
         }, 2000);
     }
 
     public lastValueSeriesIDs = [
-        'https://fluggs.wupperverband.de/sos2/api/v1/__51',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__78',
-        'https://fluggs.wupperverband.de/sos2/api/v1/__95'
+        'https://fluggs.wupperverband.de/sws5/api/__51',
+        'https://fluggs.wupperverband.de/sws5/api/__78',
+        'https://fluggs.wupperverband.de/sws5/api/__95'
     ];
     public lastValuePresentation = LastValuePresentation.Textual;
     public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };
