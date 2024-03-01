@@ -1,17 +1,41 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Time, TimeInterval } from '@helgoland/core';
-import { SeriesGraphDataset } from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { Time, TimeInterval } from "@helgoland/core";
+import { SeriesGraphDataset } from "@helgoland/d3";
+import { HelgolandLabelMapperModule } from "@helgoland/depiction";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { LoadingOverlayProgressBarComponent } from "helgoland-common";
 
+import { FavoriteToggleButtonComponent } from "../favorites/favorite-toggle-button/favorite-toggle-button.component";
 import {
   ModalEditTimeseriesOptionsComponent,
-} from '../modal-edit-timeseries-options/modal-edit-timeseries-options.component';
+} from "../modal-edit-timeseries-options/modal-edit-timeseries-options.component";
+import { TimeseriesEntrySymbolComponent } from "../timeseries-entry-symbol/timeseries-entry-symbol.component";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: 'helgoland-dataset-legend-entry',
   templateUrl: './dataset-legend-entry.component.html',
-  styleUrls: ['./dataset-legend-entry.component.scss']
+  styleUrls: ['./dataset-legend-entry.component.scss'],
+  imports: [
+    LoadingOverlayProgressBarComponent,
+    MatSlideToggleModule,
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TimeseriesEntrySymbolComponent,
+    TranslateModule,
+    FavoriteToggleButtonComponent,
+    MatExpansionModule,
+    MatButtonModule,
+    HelgolandLabelMapperModule
+  ],
+  standalone: true
 })
 export class DatasetLegendEntryComponent implements OnChanges {
 

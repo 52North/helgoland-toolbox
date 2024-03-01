@@ -1,6 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DatasetApi, HelgolandService } from '@helgoland/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { ServiceListSelectorComponent } from 'helgoland-common';
 
 import { ConfigurationService } from './../../../services/configuration.service';
 
@@ -11,7 +14,14 @@ export interface ListConfig {
 @Component({
   selector: 'helgoland-modal-list-settings',
   templateUrl: './modal-list-settings.component.html',
-  styleUrls: ['./modal-list-settings.component.scss']
+  styleUrls: ['./modal-list-settings.component.scss'],
+  imports: [
+    MatButtonModule,
+    MatDialogModule,
+    ServiceListSelectorComponent,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class ModalListSettingsComponent {
 

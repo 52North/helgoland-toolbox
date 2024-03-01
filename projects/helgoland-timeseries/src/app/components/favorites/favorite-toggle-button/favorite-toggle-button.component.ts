@@ -1,7 +1,11 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, Input, OnInit } from '@angular/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { FavoriteService } from '../../../services/favorite.service';
 import { NotifierService } from '../../../services/notifier.service';
@@ -9,7 +13,15 @@ import { NotifierService } from '../../../services/notifier.service';
 @Component({
   selector: 'helgoland-favorite-toggle-button',
   templateUrl: './favorite-toggle-button.component.html',
-  styleUrls: ['./favorite-toggle-button.component.scss']
+  styleUrls: ['./favorite-toggle-button.component.scss'],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class FavoriteToggleButtonComponent implements OnInit {
 

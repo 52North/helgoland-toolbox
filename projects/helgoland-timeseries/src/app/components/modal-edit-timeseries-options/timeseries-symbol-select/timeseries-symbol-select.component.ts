@@ -1,7 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PointSymbolType } from '@helgoland/core';
-import { LineStyle } from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSliderModule } from "@angular/material/slider";
+import { PointSymbolType } from "@helgoland/core";
+import { LineStyle } from "@helgoland/d3";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 interface Symbol {
   value: string;
@@ -11,7 +16,16 @@ interface Symbol {
 @Component({
   selector: 'helgoland-timeseries-symbol-select',
   templateUrl: './timeseries-symbol-select.component.html',
-  styleUrls: ['./timeseries-symbol-select.component.scss']
+  styleUrls: ['./timeseries-symbol-select.component.scss'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSliderModule,
+    TranslateModule,
+  ],
+  standalone: true
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
 
