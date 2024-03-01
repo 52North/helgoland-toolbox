@@ -45,7 +45,17 @@ import { HelgolandFavoriteModule } from '@helgoland/favorite';
 import { HelgolandMapSelectorModule } from '@helgoland/map';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { HelgolandCommonModule } from 'helgoland-common';
+import {
+  DarkModeButtonComponent,
+  FilterLabelComponent,
+  LanguageSelectorComponent,
+  LoadingOverlayProgressBarComponent,
+  ParameterListSelectorComponent,
+  ServiceListSelectorComponent,
+  ShareButtonComponent,
+  VersionInfoComponent,
+  ClearStorageButtonComponent
+} from 'helgoland-common';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -164,7 +174,6 @@ export function initApplication(configService: ConfigurationService, translate: 
     }),
     ClipboardModule,
     ColorPickerModule,
-    HelgolandCommonModule,
     HelgolandCoreModule,
     HelgolandD3Module,
     HelgolandDatasetlistModule,
@@ -193,6 +202,15 @@ export function initApplication(configService: ConfigurationService, translate: 
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
+    VersionInfoComponent,
+    ShareButtonComponent,
+    ServiceListSelectorComponent,
+    ParameterListSelectorComponent,
+    LoadingOverlayProgressBarComponent,
+    DarkModeButtonComponent,
+    FilterLabelComponent,
+    LanguageSelectorComponent,
+    ClearStorageButtonComponent
   ],
   providers: [
     {
