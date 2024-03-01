@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import {
   ApiV3InterfaceService,
   ApiV3ParameterFilter,
@@ -10,18 +11,28 @@ import {
 import {
   convertFromApiV3Dataset,
   FacetSearchElement,
+  FacetSearchElementFeature,
   FacetSearchService,
+  HelgolandFacetSearchModule,
   ParameterFacetSort,
   ParameterFacetType,
 } from '@helgoland/facet-search';
 import { TranslateService } from '@ngx-translate/core';
-
-import { FacetSearchElementFeature } from '@helgoland/facet-search';
+import { MapCache } from '@helgoland/map';
 
 @Component({
   selector: 'n52-facet-search',
   templateUrl: './facet-search.component.html',
-  styleUrls: ['./facet-search.component.scss']
+  styleUrls: ['./facet-search.component.scss'],
+  imports: [
+    HelgolandFacetSearchModule,
+    MatDatepickerModule,
+    CommonModule
+  ],
+  providers: [
+    MapCache
+  ],
+  standalone: true
 })
 export class FacetSearchComponent {
 

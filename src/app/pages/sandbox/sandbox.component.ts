@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelgolandMapSelectorModule } from '@helgoland/map';
 import {
     ColorService,
     DatasetType,
@@ -13,6 +14,7 @@ import {
     D3Copyright,
     D3SeriesGraphOptions,
     DatasetDescription,
+    HelgolandD3Module,
     HoveringStyle,
     LineStyle,
     SeriesGraphDataset,
@@ -20,7 +22,12 @@ import {
 
 @Component({
     templateUrl: './sandbox.component.html',
-    styleUrls: ['./sandbox.component.scss']
+    styleUrls: ['./sandbox.component.scss'],
+    imports: [
+        HelgolandMapSelectorModule,
+        HelgolandD3Module
+    ],
+    standalone: true
 })
 export class SandboxComponent implements OnInit {
 

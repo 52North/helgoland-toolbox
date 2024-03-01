@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 import { DatasetOptions, Timespan } from '@helgoland/core';
-import { D3PlotOptions } from '@helgoland/d3';
+import { D3PlotOptions, HelgolandD3Module } from '@helgoland/d3';
+import { HelgolandModificationModule } from '@helgoland/modification';
 
 @Component({
     templateUrl: './timeseries-graph.component.html',
-    styleUrls: ['./timeseries-graph.component.css']
+    styleUrls: ['./timeseries-graph.component.css'],
+    imports: [
+        HelgolandD3Module,
+        HelgolandModificationModule
+    ],
+    standalone: true
 })
 export class TimeseriesGraphComponent {
 

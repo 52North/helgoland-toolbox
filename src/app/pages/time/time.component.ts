@@ -1,10 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NotifierService, Timespan } from '@helgoland/core';
+import { HelgolandCoreModule, NotifierService, Timespan } from '@helgoland/core';
+import { HelgolandTimeModule } from '@helgoland/time';
+import { HelgolandTimeRangeSliderModule } from '@helgoland/time-range-slider';
 import moment from 'moment';
 
 @Component({
   templateUrl: './time.component.html',
-  styleUrls: ['./time.component.css']
+  styleUrls: ['./time.component.css'],
+  imports: [
+    HelgolandCoreModule,
+    HelgolandTimeModule,
+    HelgolandTimeRangeSliderModule,
+    CommonModule
+  ],
+  standalone: true
 })
 export class TimeComponent {
 

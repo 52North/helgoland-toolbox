@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { BasicAuthServiceMaintainer } from '@helgoland/auth';
@@ -15,7 +16,11 @@ import {
 
 @Component({
   templateUrl: './eventing.component.html',
-  styleUrls: ['./eventing.component.css']
+  styleUrls: ['./eventing.component.css'],
+  imports: [
+    CommonModule
+  ],
+  standalone: true
 })
 export class EventingComponent {
 

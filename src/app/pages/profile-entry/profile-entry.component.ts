@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TimedDatasetOptions } from '@helgoland/core';
+import { HelgolandDatasetlistModule } from '@helgoland/depiction';
 
 import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
 
 @Component({
     templateUrl: './profile-entry.component.html',
-    styleUrls: ['./profile-entry.component.scss']
+    styleUrls: ['./profile-entry.component.scss'],
+    imports: [
+        HelgolandDatasetlistModule,
+        MatDialogModule
+    ],
+    standalone: true
 })
 export class ProfileEntryComponent {
 

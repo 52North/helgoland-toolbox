@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
-import { DatasetApi, DatasetType, HelgolandParameterFilter, Settings, SettingsService } from '@helgoland/core';
+import { DatasetApi, HelgolandCoreModule, HelgolandParameterFilter, Settings, SettingsService } from '@helgoland/core';
+import { HelgolandSelectorModule } from '@helgoland/selector';
 
 @Component({
     templateUrl: './service-selector.component.html',
-    styleUrls: ['./service-selector.component.css']
+    styleUrls: ['./service-selector.component.css'],
+    imports: [
+        HelgolandCoreModule,
+        HelgolandSelectorModule
+    ],
+    standalone: true
 })
 export class ServiceSelectorComponent {
 

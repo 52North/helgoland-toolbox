@@ -57,7 +57,9 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        this.loadItems();
+        if (changes['filterList'] && this.filterList) {
+            this.loadItems();
+        }
     }
 
     public onSelectItem(item: FilteredParameter): void {

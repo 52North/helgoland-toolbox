@@ -1,12 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IDataset, Timespan } from '@helgoland/core';
-import { DownloadType, ExportOptions } from '@helgoland/depiction';
+import { HelgolandCoreModule, IDataset, Timespan } from '@helgoland/core';
+import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
 
 @Component({
   selector: 'n52-export-popup',
   templateUrl: './export-popup.component.html',
-  styleUrls: ['./export-popup.component.css']
+  styleUrls: ['./export-popup.component.css'],
+  imports: [
+    HelgolandDatasetDownloadModule,
+    MatDatepickerModule,
+    FormsModule,
+    HelgolandCoreModule,
+    CommonModule
+  ],
+  standalone: true
 })
 export class ExportPopupComponent {
 
