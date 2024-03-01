@@ -18,6 +18,7 @@ import { DatasetLegendEntryComponent } from "../../components/dataset-legend-ent
 import {
   ModalFavoriteListButtonComponent,
 } from "../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component";
+import { MapSelectionComponent } from "../../components/map-selection/map-selection.component";
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
@@ -112,6 +113,22 @@ export class DiagramViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();
+    // TODO: 
+    //   this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
+    //   this.setDatasets();
+
+    //   if (!this.timeseries.hasDatasets()) {
+    //     this.openMapSelection();
+    //   }
+    // }
+
+    // private setDatasets() {
+    //   this.datasetIds = this.timeseries.datasetIds;
+    //   this.datasetOptions = this.timeseries.datasetOptions;
+    // }
+
+    // public setSelected(selectedIds: string[]) {
+    //   this.selectedIds = selectedIds;
   }
 
   public onDiagramLoading(loading: boolean) {
@@ -147,11 +164,15 @@ export class DiagramViewComponent implements OnInit {
   }
 
   openMapSelection() {
-    this.appRouter.toMapSelection();
+    this.dialog.open(MapSelectionComponent, {
+      autoFocus: false,
+      panelClass: 'modal-map-selection'
+    });
   }
 
   openListSelection() {
     this.dialog.open(ListSelectionComponent, {
+      autoFocus: false,
       minWidth: '600px'
     });
   }

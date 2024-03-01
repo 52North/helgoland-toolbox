@@ -1,7 +1,6 @@
 {
 	"controls.close": "Close",
 	"controls.ok": "OK",
-	"controls.to-diagram": "Diagram",
 	"dataset-by-station.hint": "Please choose timeseries to display in the diagram",
 	"dataset-by-station.show-additional-datasets": "Show additional measured phenomena on this station",
 	"diagram-config.hoverstyle": "Hovering option",
@@ -47,7 +46,7 @@
 	"map-config.cluster-marker": "Cluster marker",
 	"map-config.title": "Map configuration",
 	"map-selection-view.adjust-map-button.tooltip": "Adjust Map",
-	"map-selection-view.go-to-chart.tooltip": "Diagram view",
+	"map-selection-view.phenomena-list": "Phenomenon list",
 	"map-selection-view.select-all-phenomena": "Select all phenomena",
 	"modal-edit-timeseries-options.adjust-color": "Change color",
 	"modal-edit-timeseries-options.adjust-color-confirm-button": "Ok",
