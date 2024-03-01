@@ -66,6 +66,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-line-layer');
     }
     this.createHoverLine();
+    this.labels.clear();
     this.background = background;
     this.graphExtent = graphExtent;
     this.datasets = datasets;
@@ -179,7 +180,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
       const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
       this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
         .attr('x', onLeftSide ? right : left)
-        .attr('y', 13);
+        .attr('y', 15);
     }
   }
 

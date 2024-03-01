@@ -158,7 +158,8 @@ export function initApplication(configService: ConfigurationService, translate: 
     BrowserAnimationsModule,
     HelgolandCachingModule.forRoot({
       cachingDurationInMilliseconds: 300000,
-      getDataCacheActive: false
+      getDataCacheActive: false,
+      logging: false
     }),
     ClipboardModule,
     ColorPickerModule,

@@ -13,6 +13,8 @@ export interface CacheConfig {
      * Activates the getData cache
      */
     getDataCacheActive?: boolean;
+
+    logging?: boolean;
 }
 
 export const CacheConfigService = new InjectionToken<CacheConfig>('CacheConfigService');
