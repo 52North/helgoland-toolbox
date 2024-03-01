@@ -57,7 +57,7 @@ export class TimeseriesEntrySymbolComponent implements AfterViewInit, DoCheck, O
   private drawSymbol() {
     if (this.svg && this.datasetStyle) {
       this.svg.selectAll("*").remove();
-      this.graphHelper.drawDatasetSign(this.svg, this.datasetStyle, this.size / 2, this.size / 2, false);
+      this.graphHelper.drawDatasetSign(this.svg, this.datasetStyle, this.size / 4, this.size / 4, false);
     }
   }
 }

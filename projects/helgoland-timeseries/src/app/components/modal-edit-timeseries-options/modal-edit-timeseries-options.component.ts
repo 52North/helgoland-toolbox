@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Inject } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatSliderChange } from '@angular/material/slider';
 import { AxisSettings, SeriesGraphDataset, DatasetStyle, LineStyle } from '@helgoland/d3';
 
 import { ConfigurationService } from './../../services/configuration.service';
@@ -11,12 +10,13 @@ import { ConfigurationService } from './../../services/configuration.service';
   templateUrl: './modal-edit-timeseries-options.component.html',
   styleUrls: ['./modal-edit-timeseries-options.component.scss']
 })
-export class ModalEditTimeseriesOptionsComponent {
+export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
 
   public adjustedColor: string;
 
   private style: DatasetStyle;
   private yaxis: AxisSettings;
+  protected loaded = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
@@ -38,6 +38,10 @@ export class ModalEditTimeseriesOptionsComponent {
     return this.style as LineStyle;
   }
 
+  ngAfterContentInit(): void {
+    setTimeout(() => this.loaded = true, 100);
+  }
+
   confirmColor(color: string) {
     this.style.baseColor = color;
     if (this.style instanceof LineStyle) {
@@ -55,13 +59,13 @@ export class ModalEditTimeseriesOptionsComponent {
     this.data.dataset.setStyle(style);
   }
 
-  setPointRadius(sliderChange: MatSliderChange) {
-    this.asLineStyle().pointRadius = sliderChange.value;
+  setPointRadius(val: number) {
+    this.asLineStyle().pointRadius = val;
     this.data.dataset.setStyle(this.style);
   }
 
-  setLineWidth(sliderChange: MatSliderChange) {
-    this.style.lineWidth = sliderChange.value;
+  setLineWidth(val: number) {
+    this.style.lineWidth = val;
     this.data.dataset.setStyle(this.style);
   }
 

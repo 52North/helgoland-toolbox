@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ 'modal-edit-timeseries-options.title' | translate }}</h1>
-<div *ngIf="data.dataset">
+<mat-dialog-content *ngIf="data.dataset">
 
   <!-- <div>
     <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
@@ -21,28 +21,40 @@
       [ngStyle]="{'background-color': data.dataset.style.baseColor}">&nbsp;</button>
   </div>
 
-  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && isLineStyle()">
+  <ng-container *ngIf="config.configuration?.supportTimeseriesSymbols && isLineStyle() && loaded">
     <helgoland-timeseries-symbol-select [lineStyle]="asLineStyle()" (styleChanged)="setLineStyle($event)">
     </helgoland-timeseries-symbol-select>
   </ng-container>
 
-  <ng-container *ngIf="!config.configuration?.supportTimeseriesSymbols">
+  <ng-container *ngIf="!config.configuration?.supportTimeseriesSymbols && loaded">
     <div>
       {{ 'modal-edit-timeseries-options.point-radius' | translate }}
     </div>
-    <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-      [(ngModel)]="asLineStyle().pointRadius" (change)="setPointRadius($event)">
-    </mat-slider>
+    <div style="display: flex;">
+      <mat-slider style="flex: 1;" color="primary" [min]="1" [max]="5">
+        <input [value]="asLineStyle().pointRadius" (valueChange)="setPointRadius($event)" matSliderThumb />
+      </mat-slider>
+    </div>
   </ng-container>
 
-  <div>
+  <!-- <div>
     {{ 'modal-edit-timeseries-options.line-width' | translate }}
   </div>
   <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-    [(ngModel)]="asLineStyle().lineWidth" (change)="setLineWidth($event)">
-  </mat-slider>
+    [(ngModel)]="options.lineWidth">
+  </mat-slider> -->
+  <div *ngIf="loaded">
+    <div>
+      {{ 'modal-edit-timeseries-options.line-width' | translate }}
+    </div>
+    <div style="display: flex;">
+      <mat-slider color="primary" min="1" max="5" step="1" style="flex: 1;">
+        <input [value]="asLineStyle().lineWidth" (valueChange)="setLineWidth($event)" matSliderThumb>
+      </mat-slider>
+    </div>
+  </div>
 
-</div>
+</mat-dialog-content>
 <div mat-dialog-actions>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close cdkFocusInitial>{{'controls.close' | translate}}</button>

@@ -254,8 +254,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   }
 
   protected requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable<HelgolandTimeseries> {
-    // get first and last timestamp
-    if (ds.phenomenonTime && ds.phenomenonTime.indexOf('/')) {
+    if (ds.phenomenonTime && ds.phenomenonTime.indexOf('/') !== -1) {
       const firstLastDates = ds.phenomenonTime.split('/');
       // request for first and last timestamp the values
       const firstReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $filter: this.createTimeFilter(firstLastDates[0]) });

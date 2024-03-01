@@ -865,6 +865,7 @@
               "projects/helgoland-timeseries/src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/helgoland-timeseries/src/styles.scss"
             ],
             "scripts": []
@@ -1017,6 +1018,7 @@
               "projects/helgoland-trajectories/src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/helgoland-trajectories/src/styles.scss"
             ],
             "scripts": []
@@ -1107,5 +1109,13 @@
     "schematicCollections": [
       "@angular-eslint/schematics"
     ]
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
   }
 }

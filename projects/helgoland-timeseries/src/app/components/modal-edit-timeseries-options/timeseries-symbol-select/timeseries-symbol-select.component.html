@@ -1,13 +1,17 @@
-<mat-form-field appearance="fill">
-  <mat-label>{{ 'timeseries-symbol-select.symbole-selection' | translate }}</mat-label>
-  <mat-select [(ngModel)]="selectedSymbol" (selectionChange)="adjustSymbol()">
-    <mat-option [value]="option.value" *ngFor="let option of symbols">{{ option.viewValue }}</mat-option>
-  </mat-select>
-</mat-form-field>
-
 <div>
-  {{ 'timeseries-symbol-select.symbole-size' | translate }}
+  <mat-form-field appearance="fill">
+    <mat-label>{{ 'timeseries-symbol-select.symbole-selection' | translate }}</mat-label>
+    <mat-select [(ngModel)]="selectedSymbol" (selectionChange)="adjustSymbol()">
+      <mat-option [value]="option.value" *ngFor="let option of symbols">{{ option.viewValue }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div>
+    {{ 'timeseries-symbol-select.symbole-size' | translate }}
+  </div>
+  <div style="display: flex;">
+    <mat-slider color="primary" min="1" max="5" step="1" style="flex: 1">
+      <input [(value)]="symbolSize" (valueChange)="adjustSymbol()" matSliderThumb />
+    </mat-slider>
+  </div>
 </div>
-<mat-slider color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-  [(ngModel)]="symbolSize" (valueChange)="adjustSymbol()">
-</mat-slider>
