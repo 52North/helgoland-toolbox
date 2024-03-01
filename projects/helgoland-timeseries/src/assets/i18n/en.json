@@ -56,6 +56,7 @@
 	"modal-edit-timeseries-options.null-based": "Null based",
 	"modal-edit-timeseries-options.point-radius": "Point radius",
 	"modal-edit-timeseries-options.title": "Change timeseries styles",
+	"provider": "Provider",
 	"time-selection.custom-range": "Custom time range",
 	"time-selection.predefined.current-month": "Current month",
 	"time-selection.predefined.current-week": "Current week",

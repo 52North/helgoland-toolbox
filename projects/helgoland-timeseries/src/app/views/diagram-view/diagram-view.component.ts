@@ -25,6 +25,7 @@ import {
 import {
   GeneralTimeSelectionComponent,
 } from "../../components/time/general-time-selection/general-time-selection.component";
+import { ListSelectionComponent } from "./../../components/list-selection/list-selection.component";
 import {
   ModalMainConfigButtonComponent,
 } from "./../../components/main-config/modal-main-config-button/modal-main-config-button.component";
@@ -143,6 +144,16 @@ export class DiagramViewComponent implements OnInit {
 
   public jumpToDate(date: Date) {
     this.graphDatasetsSrvc.timespan = this.time.centerTimespan(this.graphDatasetsSrvc.timespan, date);
+  }
+
+  openMapSelection() {
+    this.appRouter.toMapSelection();
+  }
+
+  openListSelection() {
+    this.dialog.open(ListSelectionComponent, {
+      minWidth: '600px'
+    });
   }
 
 }
