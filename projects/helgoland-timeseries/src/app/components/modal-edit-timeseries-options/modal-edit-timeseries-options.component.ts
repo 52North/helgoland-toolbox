@@ -7,10 +7,11 @@ import { MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/sl
 import { MatSliderModule } from "@angular/material/slider";
 import { AxisSettings, DatasetStyle, LineStyle, SeriesGraphDataset } from "@helgoland/d3";
 import { TranslateModule } from "@ngx-translate/core";
-import { ColorPickerModule } from "ngx-color-picker";
+import { ColorPickerModule, ColorPickerService } from "ngx-color-picker";
 
 import { ConfigurationService } from "./../../services/configuration.service";
 import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/timeseries-symbol-select.component";
+
 
 @Component({
   selector: 'helgoland-modal-edit-timeseries-options',
@@ -27,6 +28,7 @@ import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/time
     TimeseriesSymbolSelectComponent,
     TranslateModule,
   ],
+  providers: [ColorPickerService],
   standalone: true
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {

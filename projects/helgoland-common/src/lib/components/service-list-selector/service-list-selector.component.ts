@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ServiceSelectorComponent } from '@helgoland/selector';
+import { HelgolandSelectorModule, ServiceSelectorComponent } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     MatListModule,
     MatProgressBarModule,
+    HelgolandSelectorModule,
     CommonModule
   ],
   standalone: true
