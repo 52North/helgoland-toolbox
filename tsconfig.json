@@ -13,7 +13,7 @@
       ],
       "@helgoland/control": [
         "dist/helgoland/control",
-        "projects/helgoland/control/src/public-api.ts",
+        "projects/helgoland/control/src/public-api.ts"
       ],
       "@helgoland/core": [
         "dist/helgoland/core",
@@ -21,72 +21,70 @@
       ],
       "@helgoland/d3": [
         "dist/helgoland/d3",
-        "projects/helgoland/d3/src/public-api.ts",
+        "projects/helgoland/d3/src/public-api.ts"
       ],
       "@helgoland/depiction": [
         "dist/helgoland/depiction",
-        "projects/helgoland/depiction/src/public-api.ts",
+        "projects/helgoland/depiction/src/public-api.ts"
       ],
       "@helgoland/eventing": [
         "dist/helgoland/eventing",
-        "projects/helgoland/eventing/src/public-api.ts",
+        "projects/helgoland/eventing/src/public-api.ts"
       ],
       "@helgoland/facet-search": [
         "dist/helgoland/facet-search",
-        "projects/helgoland/facet-search/src/public-api.ts",
+        "projects/helgoland/facet-search/src/public-api.ts"
       ],
       "@helgoland/favorite": [
         "dist/helgoland/favorite",
-        "projects/helgoland/favorite/src/public-api.ts",
+        "projects/helgoland/favorite/src/public-api.ts"
       ],
       "@helgoland/map": [
         "dist/helgoland/map",
-        "projects/helgoland/map/src/public-api.ts",
+        "projects/helgoland/map/src/public-api.ts"
       ],
       "@helgoland/modification": [
         "dist/helgoland/modification",
-        "projects/helgoland/modification/src/public-api.ts",
+        "projects/helgoland/modification/src/public-api.ts"
       ],
       "@helgoland/open-layers": [
         "dist/helgoland/open-layers",
-        "projects/helgoland/open-layers/src/public-api.ts",
+        "projects/helgoland/open-layers/src/public-api.ts"
       ],
       "@helgoland/permalink": [
         "dist/helgoland/permalink",
-        "projects/helgoland/permalink/src/public-api.ts",
+        "projects/helgoland/permalink/src/public-api.ts"
       ],
       "@helgoland/plotly": [
         "dist/helgoland/plotly",
-        "projects/helgoland/plotly/src/public-api.ts",
+        "projects/helgoland/plotly/src/public-api.ts"
       ],
       "@helgoland/selector": [
         "dist/helgoland/selector",
-        "projects/helgoland/selector/src/public-api.ts",
+        "projects/helgoland/selector/src/public-api.ts"
       ],
       "@helgoland/sensorml": [
         "dist/helgoland/sensorml",
-        "projects/helgoland/sensorml/src/public-api.ts",
+        "projects/helgoland/sensorml/src/public-api.ts"
       ],
       "@helgoland/time": [
         "dist/helgoland/time",
-        "projects/helgoland/time/src/public-api.ts",
+        "projects/helgoland/time/src/public-api.ts"
       ],
       "@helgoland/time-range-slider": [
         "dist/helgoland/time-range-slider",
-        "projects/helgoland/time-range-slider/src/public-api.ts",
+        "projects/helgoland/time-range-slider/src/public-api.ts"
       ],
       "helgoland-common": [
         "dist/helgoland-common",
-        "projects/helgoland-common/src/public-api.ts",
+        "projects/helgoland-common/src/public-api.ts"
       ]
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    /* move to true */
     "strict": false,
-    /* move to true */
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -95,12 +93,13 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
