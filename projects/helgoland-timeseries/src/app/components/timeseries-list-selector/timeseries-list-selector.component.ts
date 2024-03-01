@@ -22,8 +22,8 @@ export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorC
   }
 
   public selectionChanged(selection: MatSelectionListChange) {
-    const ds = selection.option.value as HelgolandDataset;
-    if (selection.option.selected) {
+    const ds = selection.options[0].value as HelgolandDataset;
+    if (selection.options[0].selected) {
       this.timeseriesSrvc.addDataset(ds.internalId);
     } else {
       this.timeseriesSrvc.removeDataset(ds.internalId);

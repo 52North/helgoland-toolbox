@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDateRangePicker } from '@angular/material/datepicker';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { DefinedTimespan, DefinedTimespanService, Time, Timespan } from '@helgoland/core';
@@ -22,9 +22,9 @@ export class GeneralTimeSelectionComponent {
   public CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
   public LAST_YEAR = DefinedTimespan.LAST_YEAR;
 
-  public range: FormGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
+  public range: UntypedFormGroup = new UntypedFormGroup({
+    start: new UntypedFormControl(),
+    end: new UntypedFormControl()
   });
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
