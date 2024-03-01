@@ -26,7 +26,7 @@ export abstract class AbstractSWEIdentifiable extends AbstractSWE {
     @DisplayName('Description')
     description: string;
 
-    toString(fallbackLabel = 'Abstract SWE identifiable') {
+    override toString(fallbackLabel = 'Abstract SWE identifiable') {
         return this.label ? this.label : fallbackLabel;
     }
 }

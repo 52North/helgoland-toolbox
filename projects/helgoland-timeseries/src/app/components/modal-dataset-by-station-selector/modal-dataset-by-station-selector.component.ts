@@ -16,8 +16,8 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
 
   constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    public translateSrvc: TranslateService,
+    protected override servicesConnector: HelgolandServicesConnector,
+    public override translateSrvc: TranslateService,
     public appRouter: AppRouterService,
     public graphDatasetsSrvc: DatasetsService,
     public timeseries: TimeseriesService
@@ -25,7 +25,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     super(servicesConnector, translateSrvc);
   }
 
-  protected prepareResult(result: SelectableDataset, selection: boolean) {
+  protected override prepareResult(result: SelectableDataset, selection: boolean) {
     if (this.timeseries.hasDataset(result.internalId)) {
       selection = true;
     }

@@ -22,9 +22,9 @@ export class LineStyle extends DatasetStyle {
      * @param {(number | number[])} [lineDashArray] dasharray to structure the line or bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
      */
     constructor(
-        public baseColor: string,
+        public override baseColor: string,
         public pointRadius: number = 0,
-        public lineWidth: number = 1,
+        public override lineWidth: number = 1,
         public pointSymbol?: PointSymbol,
         public lineDashArray?: number | number[],
         public pointBorderColor: string = baseColor,
@@ -58,10 +58,10 @@ export class BarStyle extends DatasetStyle {
      * @memberof BarStyle
      */
     constructor(
-        public baseColor: string,
+        public override baseColor: string,
         public startOf: unitOfTime.StartOf = 'hour',
         public period: Duration = duration('PT1H'),
-        public lineWidth: number = 1,
+        public override lineWidth: number = 1,
         public lineDashArray?: number | number[],
     ) {
         super(baseColor, lineWidth);

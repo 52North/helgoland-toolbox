@@ -6,7 +6,7 @@ export class ConnectionList extends AbstractSWE {
     @DisplayName('Connections')
     connections: Connection[] = [];
 
-    toString() {
+    override toString() {
         return 'Connection list';
     }
 }

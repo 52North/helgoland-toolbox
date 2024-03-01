@@ -6,7 +6,7 @@ export class OutputList extends AbstractSWE {
     @DisplayName('Outputs')
     outputs: Output[] = [];
 
-    toString() {
+    override toString() {
         return 'Output list';
     }
 }

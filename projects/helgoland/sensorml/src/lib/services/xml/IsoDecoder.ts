@@ -76,6 +76,7 @@ export class IsoDecoder {
             }
             return contact;
         }
+        return undefined;
     }
 
     public decodePhone(elem: Element): Phone {
@@ -98,6 +99,7 @@ export class IsoDecoder {
 
             return phone;
         }
+        return undefined;
     }
 
     public decodeOnlineResource(elem: Element): ReturnObject<OnlineResource> {
@@ -172,6 +174,7 @@ export class IsoDecoder {
             }
             return new ReturnObject(onlineResource, onlineResourceElem);
         }
+        return undefined;
     }
 
     public decodeAddress(elem: Element): Address {
@@ -238,6 +241,7 @@ export class IsoDecoder {
 
             return address;
         }
+        return undefined;
     }
 
     public decodeResponsibleParty(elem: Element): ReturnObject<ResponsibleParty> {
@@ -296,6 +300,7 @@ export class IsoDecoder {
 
             return new ReturnObject(respParty, respPartyElem);
         }
+        return undefined;
     }
 
     public decodeRole(elem: Element): Role {
@@ -314,6 +319,7 @@ export class IsoDecoder {
             if (role.indexOf('author') >= 0) { return 'author'; }
             if (role.indexOf('owner') >= 0) { return 'owner'; }
         }
+        return undefined;
     }
 
     public decodeOnlineFunction(elem: Element): OnlineFunction {
@@ -327,6 +333,7 @@ export class IsoDecoder {
             if (onlineFunction.indexOf('order') >= 0) { return 'order'; }
             if (onlineFunction.indexOf('search') >= 0) { return 'search'; }
         }
+        return undefined;
     }
 
     public decodeRestriction(elem: Element): ReturnObject<Restriction> {
@@ -359,6 +366,7 @@ export class IsoDecoder {
                 return new ReturnObject<Restriction>('otherRestrictions', restrictionElem);
             }
         }
+        return undefined;
     }
 
     public decodeLegalConstraints(elem: Element): ReturnObject<LegalConstraints> {
@@ -390,17 +398,20 @@ export class IsoDecoder {
 
             return new ReturnObject(legalConstraints, legalConstraintsElem);
         }
+        return undefined;
     }
 
     private getDecodedCharacterString(elem: Element): ReturnObject<string> {
         const charStringElem = this.utils.getElement(elem, 'CharacterString', NAMESPACES.GCO);
 
         if (charStringElem != null) { return new ReturnObject(charStringElem.textContent, charStringElem); }
+        return undefined;
     }
 
     private getDecodedUrl(elem: Element): ReturnObject<string> {
         const urlElem = this.utils.getElement(elem, 'URL', NAMESPACES.GMD);
 
         if (urlElem != null) { return new ReturnObject(urlElem.textContent, urlElem); }
+        return undefined;
     }
 }

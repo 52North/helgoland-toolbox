@@ -353,9 +353,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
                     if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
-                } else {
-                    return null;
                 }
+                return null;
             });
 
             const dataExtentChildValues = entry.children

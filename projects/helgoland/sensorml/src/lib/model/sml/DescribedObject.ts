@@ -94,7 +94,7 @@ export abstract class DescribedObject extends AbstractFeature {
     @DisplayName('History')
     history: EventList[] = [];
 
-    toString() {
+    override toString() {
         return 'Described object';
     }
 }

@@ -5,7 +5,7 @@ export abstract class AbstractNamedMetadataList extends AbstractMetadataList {
     @DisplayName('Name')
     name: string;
 
-    toString(fallbackName = 'Abstract named metadata list') {
+    override toString(fallbackName = 'Abstract named metadata list') {
         if (this.name && this.name.length) {
             return this.name;
         }

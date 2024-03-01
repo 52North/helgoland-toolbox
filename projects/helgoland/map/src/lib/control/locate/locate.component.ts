@@ -12,13 +12,13 @@ import { MapCache } from '../../base/map-cache.service';
 export class LocateControlComponent extends MapControlComponent {
 
     @Input()
-    public mapId: string;
+    public override mapId: string;
 
     public isToggled = false;
 
     constructor(
         protected locateService: LocateService,
-        protected mapCache: MapCache
+        protected override mapCache: MapCache
     ) {
         super(mapCache);
     }

@@ -42,8 +42,8 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
     };
 
     constructor(
-        protected mapCache: MapCache,
-        protected kvDiffers: KeyValueDiffers
+        protected override mapCache: MapCache,
+        protected override kvDiffers: KeyValueDiffers
     ) {
         super(mapCache, kvDiffers);
     }
@@ -54,16 +54,16 @@ export class GeometryMapViewerComponent extends CachedMapComponent implements Af
         this.showHighlight();
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (this.map) {
-            if (changes.highlight && changes.highlight.currentValue) {
+            if (changes['highlight'] && changes['highlight'].currentValue) {
                 this.showHighlight();
             }
-            if (changes.geometry) {
+            if (changes['geometry']) {
                 this.drawGeometry();
             }
-            if (changes.zoomTo) {
+            if (changes['zoomTo']) {
                 this.zoomToGeometry();
             }
         }

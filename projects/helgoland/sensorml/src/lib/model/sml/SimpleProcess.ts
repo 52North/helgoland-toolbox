@@ -16,7 +16,7 @@ export class SimpleProcess extends AbstractProcess implements ProcessMethodProce
         return 'SimpleProcess';
     }
 
-    toString() {
+    override toString() {
         return 'Simple process';
     }
 }

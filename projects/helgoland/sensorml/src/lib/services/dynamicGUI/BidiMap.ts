@@ -58,6 +58,7 @@ export class BidiMap {
             this._logger.info('found entry in BidiMap for object:' + modelObject);
             return innerMap.get(objectProperty);
         }
+        return undefined;
     }
 
     public getElementObject(profileID: string): any {

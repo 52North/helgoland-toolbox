@@ -1,7 +1,7 @@
 import { AbstractSWE } from '../swe/AbstractSWE';
 
 export abstract class AbstractModes extends AbstractSWE {
-    toString() {
+    override toString() {
         return 'Abstract modes';
     }
 }

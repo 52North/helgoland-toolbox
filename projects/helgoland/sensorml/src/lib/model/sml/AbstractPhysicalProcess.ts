@@ -49,7 +49,7 @@ export abstract class AbstractPhysicalProcess extends AbstractProcess {
     @DisplayName('Time position')
     timePosition: SweTime[] = [];
 
-    toString() {
+    override toString() {
         return 'Abstract physical process';
     }
 }

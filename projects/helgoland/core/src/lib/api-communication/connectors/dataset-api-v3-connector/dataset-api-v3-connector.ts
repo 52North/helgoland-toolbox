@@ -76,7 +76,10 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           return false;
         }
       }),
-      catchError(() => of(false))
+      catchError((err) => {
+        console.error(err);
+        return of(false);
+      })
     );
   }
 
@@ -198,6 +201,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       default:
         return new HelgolandDataset(ds.id, url, ds.label);
     }
+    throw new Error(`'${ds.datasetType}' not implemented`);
   }
 
   protected createHelgolandPlatform(feature: ApiV3Platform): HelgolandPlatform {
@@ -338,6 +342,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
       return this.api.getDatasetData<ProfileDataEntry>(dataset.id, dataset.url, { timespan: this.createRequestTimespan(timespan), unixTime: true })
         .pipe(map(res => this.createProfileData(res)));
     }
+    throw new Error("No return option found.");
   }
 
   createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {

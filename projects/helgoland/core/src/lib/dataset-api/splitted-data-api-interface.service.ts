@@ -15,14 +15,14 @@ import { InternalIdHandler } from './internal-id-handler.service';
 export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
 
     constructor(
-        protected httpservice: HttpService,
-        protected internalDatasetId: InternalIdHandler,
-        protected translate: TranslateService
+        protected override httpservice: HttpService,
+        protected override internalDatasetId: InternalIdHandler,
+        protected override translate: TranslateService
     ) {
         super(httpservice, internalDatasetId, translate);
     }
 
-    public getTsData<T>(
+    public override getTsData<T>(
         id: string,
         apiUrl: string,
         timespan: Timespan,
@@ -97,7 +97,7 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
         }
     }
 
-    public getData<T>(
+    public override getData<T>(
         id: string,
         apiUrl: string,
         timespan: Timespan,

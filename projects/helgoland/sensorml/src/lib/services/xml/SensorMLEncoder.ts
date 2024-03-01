@@ -877,6 +877,7 @@ export class SensorMLEncoder {
         if (object instanceof AbstractProcess) {
             return this.encodeProcess(object, document);
         }
+        return undefined;
     }
 
     public encodeProcess(object: AbstractProcess, document: Document, node?: Element): Node {
@@ -987,5 +988,6 @@ export class SensorMLEncoder {
         } else if (value instanceof DataInterface) {
             return this.encodeDataInterface(value, document);
         }
+        return undefined;
     }
 }

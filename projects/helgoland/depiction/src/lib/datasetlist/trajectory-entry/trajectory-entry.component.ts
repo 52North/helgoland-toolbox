@@ -18,7 +18,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class TrajectoryEntryComponent extends ListEntryComponent {
 
     @Input()
-    public datasetOptions: DatasetOptions;
+    public datasetOptions: DatasetOptions | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -28,21 +28,23 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
 
-    public dataset: HelgolandTrajectory;
+    public dataset: HelgolandTrajectory | undefined;
 
-    public tempColor: string;
+    public tempColor: string | undefined;
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,
-        protected internalIdHandler: InternalIdHandler,
-        protected translateSrvc: TranslateService
+        protected override internalIdHandler: InternalIdHandler,
+        protected override translateSrvc: TranslateService
     ) {
         super(internalIdHandler, translateSrvc);
     }
 
     public toggleVisibility() {
-        this.datasetOptions.visible = !this.datasetOptions.visible;
-        this.onUpdateOptions.emit(this.datasetOptions);
+        if (this.datasetOptions) {
+            this.datasetOptions.visible = !this.datasetOptions.visible;
+            this.onUpdateOptions.emit(this.datasetOptions);
+        }
     }
 
     public editDatasetOptions(options: DatasetOptions) {

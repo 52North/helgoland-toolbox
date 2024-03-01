@@ -33,12 +33,12 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
     public referenceValues: ReferenceValue[];
 
     constructor(
-        protected servicesConnector: HelgolandServicesConnector,
-        protected timeSrvc: Time,
-        protected internalIdHandler: InternalIdHandler,
+        protected override servicesConnector: HelgolandServicesConnector,
+        protected override timeSrvc: Time,
+        protected override internalIdHandler: InternalIdHandler,
         protected color: ColorService,
         protected refValCache: ReferenceValueColorCache,
-        public translateSrvc: TranslateService
+        public override translateSrvc: TranslateService
     ) {
         super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
     }
@@ -62,7 +62,7 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
         this.onUpdateOptions.emit(options);
     }
 
-    protected setParameters() {
+    protected override setParameters() {
         super.setParameters();
         if (this.dataset.referenceValues) {
             this.dataset.referenceValues.forEach((e) => {

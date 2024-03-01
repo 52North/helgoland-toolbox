@@ -57,10 +57,10 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   private markerFeatureGroup: L.FeatureGroup = featureGroup();
 
   constructor(
-    protected mapCache: MapCache,
-    protected kvDiffers: KeyValueDiffers,
+    protected override mapCache: MapCache,
+    protected override kvDiffers: KeyValueDiffers,
     protected iDiffers: IterableDiffers,
-    protected cd: ChangeDetectorRef,
+    protected override cd: ChangeDetectorRef,
     protected servicesConnector: HelgolandServicesConnector,
     protected lastValueLabelGenerator: LastValueLabelGenerator,
     protected statusIntervalResolver: StatusIntervalResolverService
@@ -69,7 +69,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     this._lastValueSeriesIDsDiff = this.iDiffers.find(this.lastValueSeriesIDs).create();
   }
 
-  public ngDoCheck() {
+  public override ngDoCheck() {
     super.ngDoCheck();
     const changes = this._lastValueSeriesIDsDiff.diff(this.lastValueSeriesIDs);
 
@@ -185,6 +185,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
       geometry.on('click', () => this.onSelected.emit(ts));
       return geometry;
     }
+    throw new Error('Could not create geometry');
   }
 
   private createLabeledMarker(ts: HelgolandTimeseries): Observable<Layer> {

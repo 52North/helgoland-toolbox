@@ -74,7 +74,7 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.timeInterval && this.init) {
+        if (changes['timeInterval'] && this.init) {
             this.calculateOverviewRange();
         }
     }

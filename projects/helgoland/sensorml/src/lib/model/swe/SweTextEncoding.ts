@@ -30,7 +30,7 @@ export class SweTextEncoding extends SweEncoding {
     @DisplayName('Block separator')
     blockSeparator = '@@';
 
-    toString() {
+    override toString() {
         return 'SWE text encoding';
     }
 }

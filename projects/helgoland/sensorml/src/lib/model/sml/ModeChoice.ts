@@ -6,7 +6,7 @@ export class ModeChoice extends AbstractModes {
     @DisplayName('Modes')
     modes: Mode[];
 
-    toString() {
+    override toString() {
         return 'Mode choice';
     }
 }

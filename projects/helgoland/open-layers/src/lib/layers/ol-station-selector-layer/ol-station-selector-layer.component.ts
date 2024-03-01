@@ -73,8 +73,8 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   private layer: VectorLayer;
 
   constructor(
-    protected mapService: OlMapService,
-    @Host() protected mapidService: OlMapId,
+    protected override mapService: OlMapService,
+    @Host() protected override mapidService: OlMapId,
     protected servicesConnector: HelgolandServicesConnector,
   ) {
     super(mapService, mapidService);
@@ -172,10 +172,10 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     });
     clickSelect.on('select', (evt => {
       if (evt.selected.length >= 1) {
-        if (evt.selected[0].getProperties().station) {
-          this.onSelected.emit(evt.selected[0].getProperties().station);
+        if (evt.selected[0].getProperties()['station']) {
+          this.onSelected.emit(evt.selected[0].getProperties()['station']);
         } else {
-          const selectedFeatures = evt.selected[0].getProperties().features;
+          const selectedFeatures = evt.selected[0].getProperties()['features'];
           if (selectedFeatures.length > 1) {
             clickSelect.getFeatures().clear();
             setTimeout(() => {

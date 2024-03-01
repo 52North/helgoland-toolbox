@@ -26,7 +26,7 @@ export class BasicAuthServiceMaintainer {
   /**
    * Checks if a given url is registered as secured with basic auth.
    */
-  public getCorrespondingService(url: string): string {
+  public getCorrespondingService(url: string): string | undefined {
     const matchedUrl = this.services.find(e => url.startsWith(e));
     if (matchedUrl) {
       return matchedUrl;
@@ -38,6 +38,7 @@ export class BasicAuthServiceMaintainer {
         return api.url;
       }
     }
+    return undefined;
   }
 
 }

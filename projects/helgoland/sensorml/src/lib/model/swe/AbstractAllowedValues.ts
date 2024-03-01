@@ -5,7 +5,7 @@ export class AbstractAllowedValues extends AbstractSWE {
     @DisplayName('Values')
     values: any[];
 
-    toString() {
+    override toString() {
         return 'Abstract allowed values';
     }
 }

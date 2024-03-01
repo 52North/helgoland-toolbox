@@ -14,8 +14,8 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
 export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorComponent {
 
   constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected translate: TranslateService,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override translate: TranslateService,
     public timeseriesSrvc: TimeseriesService
   ) {
     super(servicesConnector, translate);

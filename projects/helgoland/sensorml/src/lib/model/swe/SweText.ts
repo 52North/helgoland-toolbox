@@ -12,12 +12,12 @@ export class SweText extends AbstractSimpleComponent {
      * provided using other encodings
      */
     @DisplayName('Value')
-    value: string;
+    override value: string;
 
     @DisplayName('Constraint')
-    constraint: AllowedTokens = new AllowedTokens();
+    override constraint: AllowedTokens = new AllowedTokens();
 
-    toString() {
+    override toString() {
         return 'Text Component';
     }
 
@@ -25,6 +25,7 @@ export class SweText extends AbstractSimpleComponent {
         if (this.value) {
             return this.value;
         }
+        return undefined;
     }
 
 }

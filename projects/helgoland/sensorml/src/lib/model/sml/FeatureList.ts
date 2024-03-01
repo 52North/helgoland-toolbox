@@ -6,7 +6,7 @@ export class FeatureList extends AbstractMetadataList {
     @DisplayName('Features')
     feature: FeatureProperty[] = [];
 
-    toString() {
+    override toString() {
         return 'Feature list';
     }
 }

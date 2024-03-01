@@ -10,9 +10,9 @@ export class SweBoolean extends AbstractSimpleComponent {
      * provided using other encodings
      */
     @DisplayName('Value')
-    value: boolean;
+    override value: boolean;
 
-    toString() {
+    override toString() {
         return 'Boolean Component';
     }
 

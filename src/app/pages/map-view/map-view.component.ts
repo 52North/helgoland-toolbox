@@ -59,8 +59,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         opacity: 1
     };
 
-    public zoomLevel: number;
-    public bounds: LatLngBounds;
+    public zoomLevel: number | undefined;
+    public bounds: LatLngBounds | undefined;
 
     constructor(
         private httpClient: HttpClient,

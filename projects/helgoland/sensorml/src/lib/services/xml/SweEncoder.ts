@@ -444,6 +444,7 @@ export class SweEncoder {
         if (object instanceof AllowedValues) {
             return this.encodeAllowedValues(object, document);
         }
+        return undefined;
     }
 
     public encodeCategoryRange(component: SweCategoryRange, document: Document): Node {

@@ -6,7 +6,7 @@ export class InputList extends AbstractSWE {
     @DisplayName('Inputs')
     inputs: Input[] = [];
 
-    toString() {
+    override toString() {
         return 'Input list';
     }
 }

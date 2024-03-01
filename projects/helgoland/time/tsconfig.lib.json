@@ -8,10 +8,6 @@
     "inlineSources": true,
     "types": [
       "geojson"
-    ],
-    "lib": [
-      "dom",
-      "es2018"
     ]
   },
   "exclude": [

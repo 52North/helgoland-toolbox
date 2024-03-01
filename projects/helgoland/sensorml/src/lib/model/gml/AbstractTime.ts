@@ -1,7 +1,7 @@
 import { AbstractGML } from './AbstractGML';
 
 export class AbstractTime extends AbstractGML {
-    toString() {
+    override toString() {
         return 'Abstract time';
     }
 }

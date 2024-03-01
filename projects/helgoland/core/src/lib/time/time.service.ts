@@ -84,9 +84,8 @@ export class Time {
             const from = moment(timeInterval.timestamp).subtract(d).unix() * 1000;
             const to = moment(timeInterval.timestamp).add(d).unix() * 1000;
             return new Timespan(from, to);
-        } else {
-            console.error('Wrong time interval!');
         }
+        throw new Error('Wrong time interval!');
     }
 
     public getBufferedTimespan(timespan: Timespan, factor: number, maxBufferInMs?: number): Timespan {

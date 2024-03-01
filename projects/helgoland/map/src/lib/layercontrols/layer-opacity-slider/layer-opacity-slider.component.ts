@@ -17,7 +17,7 @@ export class LayerOpacitySliderComponent extends LayerControlComponent implement
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.layeroptions && this.layeroptions.layer instanceof TileLayer) {
+    if (changes['layeroptions'] && this.layeroptions.layer instanceof TileLayer) {
       this.opacity = this.layeroptions.layer.options.opacity * 100;
     }
   }

@@ -17,10 +17,10 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
 
   @Input()
-  public datasetOptions: DatasetOptions;
+  public datasetOptions: DatasetOptions | undefined;
 
   @Input()
-  public highlight: boolean;
+  public highlight: boolean | undefined;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -35,9 +35,9 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> = new EventEmitter();
 
   constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override internalIdHandler: InternalIdHandler,
+    protected override translateSrvc: TranslateService
   ) {
     super(servicesConnector, internalIdHandler, translateSrvc);
   }

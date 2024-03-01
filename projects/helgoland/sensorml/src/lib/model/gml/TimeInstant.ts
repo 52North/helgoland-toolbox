@@ -5,7 +5,7 @@ export class TimeInstant extends AbstractTime {
     @DisplayName('Time')
     time: Date;
 
-    toString() {
+    override toString() {
         return 'Time instant';
     }
 

@@ -12,7 +12,7 @@ export class TimePeriod extends AbstractTime {
     @DisplayName('End')
     end: Date;
 
-    toString() {
+    override toString() {
         return 'Time period';
     }
 

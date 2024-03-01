@@ -22,7 +22,7 @@ export class DataInterface extends AbstractSWEIdentifiable {
     @DisplayName('Interface parameters')
     interfaceParameters: SweDataRecord;
 
-    toString() {
+    override toString() {
         return super.toString('Data interface');
     }
 }

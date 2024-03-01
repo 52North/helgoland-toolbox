@@ -14,29 +14,29 @@ import { ServiceSelectorService } from './service-selector.service';
 export class ServiceSelectorComponent implements OnInit {
 
     @Input()
-    public datasetApiList: DatasetApi[];
+    public datasetApiList: DatasetApi[] = [];
 
     @Input()
-    public providerBlacklist: BlacklistedService[];
+    public providerBlacklist: BlacklistedService[] = [];
 
     @Input()
-    public supportStations: boolean;
+    public supportStations: boolean | undefined; // TODO: needed???
 
     @Input()
-    public selectedService: HelgolandService;
+    public selectedService: HelgolandService | undefined;
 
     @Input()
-    public filter: HelgolandParameterFilter;
+    public filter: HelgolandParameterFilter = {};
 
     @Input()
-    public showUnresolvableServices: boolean;
+    public showUnresolvableServices: boolean | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onServiceSelected: EventEmitter<HelgolandService> = new EventEmitter<HelgolandService>();
 
-    public services: HelgolandService[];
-    public unResolvableServices: DatasetApi[];
+    public services: HelgolandService[] = [];
+    public unResolvableServices: DatasetApi[] = [];
     public loadingCount = 0;
 
     constructor(

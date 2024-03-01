@@ -20,7 +20,7 @@ export class LabelMapperComponent implements OnChanges {
     ) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.label) {
+        if (changes['label']) {
             this.labelMapperSrvc.getMappedLabel(this.label)
                 .subscribe((label) => {
                     this.determinedLabel = label;

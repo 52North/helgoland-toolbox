@@ -29,6 +29,8 @@ import { Duration, duration, unitOfTime } from 'moment';
 import { Favorite } from './favorite.service';
 import { DatasetsService } from './graph-datasets.service';
 import { DatasetFavoriteService, DatasetPermalinkService } from './service-interfaces';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { NotifierService } from './notifier.service';
 
 const TIMESERIES_STATE_LOCALSTORAGE = 'timeseries-state';
 const TIMESERIES_FAVORITES_LOCALSTORAGE = 'timeseries-favorites';
@@ -83,6 +85,8 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     protected translate: TranslateService,
     protected graphDatasetsSrvc: DatasetsService,
     @Optional() protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
+    protected notifier: NotifierService,
+    protected la: LiveAnnouncer,
   ) {
     this.graphDatasetsSrvc.timespanChanged.subscribe(() => this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset.internalId)))
     this.loadFavorites();
@@ -101,7 +105,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   }
 
   public removeDataset(id: string) {
-    this.graphDatasetsSrvc.deleteDataset(id);
+    this.graphDatasetsSrvc.deleteDataset(id, true);
   }
 
   noPermalink() {
@@ -213,6 +217,9 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   protected loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
     if (ts instanceof HelgolandTimeseries) {
+      const message = `${this.translate.instant('events.add-timeseries')}: ${ts.label}`;
+      this.la.announce(message);
+      this.notifier.notify(message);
       this.datasetMap.set(ts.internalId, ts);
       const style = dsStyle ? dsStyle : this.createStyle(ts);
       const yaxis = dsAxis ? dsAxis : this.createYAxis(ts);

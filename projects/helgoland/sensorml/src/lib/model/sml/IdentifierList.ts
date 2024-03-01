@@ -6,7 +6,7 @@ export class IdentifierList extends AbstractMetadataList {
     @DisplayName('Identifiers')
     identifiers: Term[] = [];
 
-    toString() {
+    override toString() {
         return 'Identifier list';
     }
 
@@ -18,5 +18,6 @@ export class IdentifierList extends AbstractMetadataList {
         if (this.identifiers.length > 0) {
             return this.identifiers.join(', ');
         }
+        return undefined;
     }
 }

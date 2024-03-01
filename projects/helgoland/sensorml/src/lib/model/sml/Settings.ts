@@ -22,7 +22,7 @@ export class Settings extends AbstractSWE {
     @DisplayName('Set status')
     setStatus: StatusSetting[] = [];
 
-    toString() {
+    override toString() {
         return 'Settings';
     }
 }

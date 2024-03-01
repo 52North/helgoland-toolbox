@@ -29,7 +29,7 @@ export class SweBinaryEncoding extends SweEncoding {
     @DisplayName('Byte length')
     byteLength: number;
 
-    toString() {
+    override toString() {
         return 'SWE binary encoding';
     }
 }

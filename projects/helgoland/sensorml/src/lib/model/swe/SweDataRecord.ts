@@ -15,7 +15,7 @@ export class SweDataRecord extends AbstractDataComponent {
     @DisplayName('Fields')
     fields: SweField[] = [];
 
-    toString() {
+    override toString() {
         return 'Data Record Component';
     }
 

@@ -39,7 +39,7 @@ export class DatasetLegendEntryComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.timeInterval) {
+    if (changes['timeInterval']) {
       this.checkDataInTimespan();
     }
   }

@@ -19,7 +19,7 @@ export class StatusCheckService {
   /**
    * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable
    */
-  public checkAll(): Observable<string[]> {
+  public checkAll(): Observable<(string | null)[]> {
     return this.doCheck(this.urls);
   }
 
@@ -27,7 +27,7 @@ export class StatusCheckService {
    * Checks the given URL.
    * @returns Observable with the URL if not reachable.
    */
-  public checkUrl(url: string): Observable<string> {
+  public checkUrl(url: string): Observable<string | null> {
     return this.doCheckUrl(url);
   }
 
@@ -35,7 +35,7 @@ export class StatusCheckService {
    * Checks the given URLs.
    * @returns Observable of all not reachable URLs.
    */
-  public checkUrls(urls: string[]): Observable<string[]> {
+  public checkUrls(urls: string[]): Observable<(string | null)[]> {
     return this.doCheck(urls);
   }
 
@@ -55,8 +55,8 @@ export class StatusCheckService {
     if (index > -1) { this.urls.splice(index, 1); }
   }
 
-  private doCheckUrl(url: string): Observable<string> {
-    return new Observable((observer: Observer<string>) => {
+  private doCheckUrl(url: string): Observable<string | null> {
+    return new Observable((observer: Observer<string | null>) => {
       this.httpClient.get(url).subscribe(
         (res) => {
           observer.next(null);
@@ -70,18 +70,10 @@ export class StatusCheckService {
     });
   }
 
-  private doCheck(urls: string[]): Observable<string[]> {
-    const requests: Array<Observable<string>> = [];
+  private doCheck(urls: string[]): Observable<(string | null)[]> {
+    const requests: Array<Observable<string | null>> = [];
     urls.forEach((url) => requests.push(this.doCheckUrl(url)));
-    return forkJoin(requests).pipe(
-      map((checkedUrls) => {
-        return checkedUrls.filter((entry) => {
-          if (entry) {
-            return entry;
-          }
-        });
-      })
-    );
+    return forkJoin(requests);
   }
 
 }

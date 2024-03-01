@@ -53,7 +53,10 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
           return false;
         }
       }),
-      catchError(() => of(false))
+      catchError((err) => {
+        console.error(err);
+        return of(false);
+      })
     );
   }
 
@@ -217,7 +220,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   protected createFilter(filter: HelgolandParameterFilter): ParameterFilter {
     const paramFilter: ParameterFilter = {};
-    if (filter.platform) { paramFilter.station = filter.platform; }
+    if (filter.platform) { paramFilter['station'] = filter.platform; }
     if (filter.category) { paramFilter.category = filter.category; }
     if (filter.offering) { paramFilter.offering = filter.offering; }
     if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }

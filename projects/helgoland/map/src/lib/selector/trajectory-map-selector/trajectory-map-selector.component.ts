@@ -59,16 +59,16 @@ export class ProfileTrajectoryMapSelectorComponent
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,
-        protected mapCache: MapCache,
-        protected kvDiffers: KeyValueDiffers,
-        protected cd: ChangeDetectorRef
+        protected override mapCache: MapCache,
+        protected override kvDiffers: KeyValueDiffers,
+        protected override cd: ChangeDetectorRef
     ) {
         super(mapCache, kvDiffers, cd);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public override ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
-        if (changes.selectedTimespan && this.selectedTimespan && this.map) {
+        if (changes['selectedTimespan'] && this.selectedTimespan && this.map) {
             this.clearMap();
             this.initLayer();
             this.data.forEach((entry) => {

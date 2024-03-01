@@ -97,25 +97,25 @@ export class ListSelectionViewComponent implements OnInit {
     }
 
     // add new Entry
-    const apiFilter: MultiServiceFilter[] = [...filter.apiFilter];
+    const copy = JSON.parse(JSON.stringify(filter.apiFilter[0]));
     switch (filter.selectedFilter) {
       case ParameterType.CATEGORY:
-        apiFilter[0].filter.category = item.id
+        copy.filter.category = item.id
         break;
       case ParameterType.FEATURE:
-        apiFilter[0].filter.feature = item.id
+        copy.filter.feature = item.id
         break;
       case ParameterType.PHENOMENON:
-        apiFilter[0].filter.phenomenon = item.id
+        copy.filter.phenomenon = item.id
         break;
       case ParameterType.PROCEDURE:
-        apiFilter[0].filter.procedure = item.id
+        copy.filter.procedure = item.id
         break;
     }
     this.filterList.push({
       expanded: true,
       possibleFilters,
-      apiFilter
+      apiFilter: [copy]
     });
   }
 

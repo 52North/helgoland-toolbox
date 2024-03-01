@@ -33,7 +33,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
 
     public createFilledMarker(station: HelgolandPlatform, color: string): Layer {
         let geometry: Layer;
-        if (station.geometry.type === 'Point') {
+        if (station.geometry?.type === 'Point') {
             const point = station.geometry as GeoJSON.Point;
             geometry = circleMarker([point.coordinates[1], point.coordinates[0]], {
                 color: '#000',
@@ -102,7 +102,7 @@ export class MapSelectorComponent {
     public overlayMaps: LayerMap = new Map();
     public layerControlOptions: L.Control.LayersOptions = { position: 'bottomleft' };
     public cluster = false;
-    public loadingStations: boolean;
+    public loadingStations: boolean = false;
     public stationFilter: HelgolandParameterFilter = {
         // phenomenon: '8'
     };

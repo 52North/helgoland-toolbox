@@ -12,12 +12,12 @@ export class SweCount extends AbstractSimpleComponent {
      * provided using other encodings
      */
     @DisplayName('Value')
-    value: number;
+    override value: number;
 
     @DisplayName('Constraint')
-    constraint: AllowedValues = new AllowedValues();
+    override constraint: AllowedValues = new AllowedValues();
 
-    toString() {
+    override toString() {
         return 'Count Component';
     }
 

@@ -88,7 +88,7 @@ export class D3GraphHelperService {
     }
   }
 
-  convertDatasetOptions(options: DatasetOptions): DatasetStyle {
+  public convertDatasetOptions(options: DatasetOptions): DatasetStyle {
     if (options.type === 'line') {
       return new LineStyle(options.color, options.pointRadius, options.lineWidth, options.pointSymbol, options.lineDashArray);
     }
@@ -97,6 +97,7 @@ export class D3GraphHelperService {
       const period = duration(options.barPeriod);
       return new BarStyle(options.color, startOf, period, options.lineWidth, options.lineDashArray);
     }
+    throw new Error("Unknwn options type");
   }
 
 }

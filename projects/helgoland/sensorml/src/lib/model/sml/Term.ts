@@ -14,7 +14,7 @@ export class Term extends AbstractSWE {
     @DisplayName('Value')
     value: string;
 
-    toString() {
+    override toString() {
         if (this.label && this.value) {
             return this.label + ': ' + this.value;
         } else if (this.label) {

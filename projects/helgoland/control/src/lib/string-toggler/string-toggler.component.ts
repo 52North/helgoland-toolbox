@@ -25,7 +25,7 @@ export class StringTogglerComponent implements OnChanges {
     public isToggled: boolean;
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.value) {
+        if (changes['value']) {
             this.isToggled = this.option === this.value;
         }
     }

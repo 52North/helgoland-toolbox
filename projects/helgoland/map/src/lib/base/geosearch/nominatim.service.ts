@@ -107,6 +107,7 @@ export class NominatimGeoSearchService implements GeoSearch {
                 if (result.address) { returnResult.address = result.address; }
                 return returnResult;
             }
+            throw new Error("Got no result for corresponding search.");
         }));
     }
 

@@ -19,7 +19,7 @@
         <mat-accordion [multi]="true">
           <div *ngFor="let dataset of graphDatasetsSrvc.datasets">
             <helgoland-dataset-legend-entry [dataset]="dataset" [timeInterval]="graphDatasetsSrvc.timespan"
-              (selectDate)="jumpToDate($event)" (datasetDeleted)="this.graphDatasetsSrvc.deleteDataset(dataset.id)">
+              (selectDate)="jumpToDate($event)" (datasetDeleted)="this.graphDatasetsSrvc.deleteDataset(dataset.id, true)">
             </helgoland-dataset-legend-entry>
             <!-- <helgoland-legend-entry [dataset]="dataset.timeseries" [selected]="isSelected(id)"
               [datasetOptions]="datasetOptions.get(id)" [timeInterval]="graphDatasetsSrvc.timespan"

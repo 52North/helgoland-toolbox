@@ -6,7 +6,7 @@ export class ParameterList extends AbstractSWE {
     @DisplayName('Parameters')
     parameters: Parameter[] = [];
 
-    toString() {
+    override toString() {
         return 'Parameter list';
     }
 }

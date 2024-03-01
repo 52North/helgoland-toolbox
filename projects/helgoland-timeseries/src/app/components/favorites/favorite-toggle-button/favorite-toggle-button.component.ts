@@ -1,11 +1,10 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
-import { SNACK_BAR_CONFIG } from '../../../app.consts';
 import { FavoriteService } from '../../../services/favorite.service';
+import { NotifierService } from '../../../services/notifier.service';
 
 @Component({
   selector: 'helgoland-favorite-toggle-button',
@@ -22,7 +21,7 @@ export class FavoriteToggleButtonComponent implements OnInit {
   constructor(
     protected favSrvc: FavoriteService,
     protected translate: TranslateService,
-    protected snackBar: MatSnackBar,
+    protected notifier: NotifierService,
     protected liveAnnouncer: LiveAnnouncer
   ) { }
 
@@ -56,7 +55,7 @@ export class FavoriteToggleButtonComponent implements OnInit {
 
   private inform(message: string) {
     this.liveAnnouncer.announce(message);
-    this.snackBar.open(message, this.translate.instant('controls.ok'), SNACK_BAR_CONFIG);
+    this.notifier.notify(message);
   }
 
 }

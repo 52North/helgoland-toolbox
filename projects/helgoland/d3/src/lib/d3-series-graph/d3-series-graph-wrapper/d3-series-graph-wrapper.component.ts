@@ -59,7 +59,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   @Input() public mainTimeInterval: Timespan;
 
   public datasets: SeriesGraphDataset[] = [];
-  public timespan: Timespan;
+  public override timespan: Timespan;
 
   public graphOptions: D3SeriesGraphOptions = {
     grid: true,
@@ -78,12 +78,12 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
   constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
+    protected override iterableDiffers: IterableDiffers,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override datasetIdResolver: InternalIdHandler,
+    protected override timeSrvc: Time,
+    protected override translateService: TranslateService,
+    protected override timezoneSrvc: TimezoneService,
     protected sumValues: SumValuesService,
     protected colorService: ColorService,
     protected graphHelper: D3GraphHelperService,
@@ -105,9 +105,9 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     }
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public override ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
-    if (changes.yaxisModifier) {
+    if (changes['yaxisModifier']) {
       this.graphOptions.yaxisModifier = this.yaxisModifier !== undefined ? this.yaxisModifier : this.graphOptions.yaxisModifier;
       this.drawGraph();
     }

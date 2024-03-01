@@ -21,7 +21,7 @@ export class FavoriteTogglerComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.dataset && this.dataset) {
+    if (changes['dataset'] && this.dataset) {
       this.isFavorite = this.favSrvc.hasFavorite(this.dataset);
     }
   }

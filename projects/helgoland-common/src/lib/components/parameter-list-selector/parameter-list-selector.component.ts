@@ -14,8 +14,8 @@ export class ParameterListSelectorComponent extends MultiServiceFilterSelectorCo
   @ViewChild(MatSelectionList) list: MatSelectionList;
 
   constructor(
-    protected translate: TranslateService,
-    protected servicesConnector: HelgolandServicesConnector,
+    protected override translate: TranslateService,
+    protected override servicesConnector: HelgolandServicesConnector,
   ) {
     super(servicesConnector, translate);
   }

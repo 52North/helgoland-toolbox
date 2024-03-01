@@ -5,7 +5,7 @@ export class AbstractNumericAllowedValues extends AbstractAllowedValues {
     @DisplayName('Significant figures')
     significantFigures: number;
 
-    toString() {
+    override toString() {
         return 'Abstract numeric allowed values';
     }
 }

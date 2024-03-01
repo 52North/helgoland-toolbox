@@ -10,13 +10,13 @@ import { MapControlComponent } from '../map-control-component';
 export class ExtentControlComponent extends MapControlComponent {
 
   @Input()
-  public mapId: string;
+  public override mapId: string;
 
   @Input()
   public extent: L.LatLngBoundsExpression;
 
   constructor(
-    protected mapCache: MapCache
+    protected override mapCache: MapCache
   ) {
     super(mapCache);
   }

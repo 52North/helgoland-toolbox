@@ -10,7 +10,7 @@ import { MapControlComponent } from '../map-control-component';
 export class ZoomControlComponent extends MapControlComponent {
 
   constructor(
-    protected mapCache: MapCache
+    protected override mapCache: MapCache
   ) {
     super(mapCache);
   }

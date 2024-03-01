@@ -40,7 +40,7 @@ export class SweBinaryBlock extends AbstractSWE {
     @DisplayName('Ref')
     ref: string;
 
-    toString() {
+    override toString() {
         return 'SWE binary block';
     }
 }

@@ -23,7 +23,7 @@ export class SpatialFrame extends AbstractSWEIdentifiable {
     @DisplayName('Axis')
     axis: Axis[];
 
-    toString() {
+    override toString() {
         return super.toString('Spatial frame');
     }
 }

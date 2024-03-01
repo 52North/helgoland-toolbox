@@ -26,7 +26,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     constructor(
         protected httpservice: HttpService,
         protected internalDatasetId: InternalIdHandler,
-        protected translate: TranslateService
+        protected override translate: TranslateService
     ) {
         super(httpservice, translate);
     }

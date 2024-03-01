@@ -31,7 +31,7 @@ export abstract class AbstractSimpleComponent extends AbstractDataComponent {
     @DisplayName('Nil values')
     nilValues: SweNilValue[] = [];
 
-    toString(fallbackLabel = 'Abstract simple component') {
+    override toString(fallbackLabel = 'Abstract simple component') {
         return super.toString(fallbackLabel);
     }
 }

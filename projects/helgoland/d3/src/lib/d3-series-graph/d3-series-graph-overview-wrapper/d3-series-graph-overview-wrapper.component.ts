@@ -77,7 +77,7 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.timeInterval && this.init) {
+    if (changes['timeInterval'] && this.init) {
       this.calculateOverviewRange();
     }
   }

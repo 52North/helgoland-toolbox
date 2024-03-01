@@ -18,7 +18,7 @@ import moment from 'moment';
 })
 export class TimeComponent {
 
-  public selectedTimespan: Timespan;
+  public selectedTimespan!: Timespan;
 
   public timelist = [
     1500000000000,

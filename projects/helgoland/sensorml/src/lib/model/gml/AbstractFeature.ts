@@ -23,7 +23,7 @@ export abstract class AbstractFeature extends AbstractGML {
     @DisplayName('Location')
     location: any;
 
-    toString() {
+    override toString() {
         return 'Abstract feature';
     }
 }

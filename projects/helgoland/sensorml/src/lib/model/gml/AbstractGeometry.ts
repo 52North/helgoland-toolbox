@@ -15,7 +15,7 @@ export class AbstractGeometry extends AbstractGML implements Referenced {
     @DisplayName('Unit of measure labels')
     uomLabels: string[];
 
-    toString() {
+    override toString() {
         return 'Abstract geometry';
     }
 }

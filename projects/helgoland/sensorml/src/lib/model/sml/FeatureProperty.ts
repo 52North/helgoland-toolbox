@@ -10,7 +10,7 @@ export class FeatureProperty extends AbstractFeature implements AssociationAttri
     @DisplayName('Title')
     title: string;
 
-    toString() {
+    override toString() {
         if (this.href && this.title) {
             return this.href + ' - ' + this.title;
         } else if (this.href) {

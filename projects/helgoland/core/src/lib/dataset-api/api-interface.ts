@@ -84,7 +84,7 @@ export abstract class DatasetApiInterface extends ApiInterface implements Datase
 
     protected prepareParams(params: ParameterFilter): HttpParams {
         if (this.translate && this.translate.currentLang) {
-            params.locale = this.translate.currentLang;
+            params['locale'] = this.translate.currentLang;
         }
         let httpParams = new HttpParams({
             encoder: new UriParameterCoder()

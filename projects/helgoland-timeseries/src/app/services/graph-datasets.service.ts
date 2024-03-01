@@ -4,6 +4,7 @@ import { Time, Timespan, TimezoneService } from '@helgoland/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
+import { NotifierService } from './notifier.service';
 
 const TIME_CACHE_PARAM = 'timeseriesTime';
 
@@ -25,6 +26,7 @@ export class DatasetsService {
     protected translate: TranslateService,
     protected la: LiveAnnouncer,
     protected timezoneSrvc: TimezoneService,
+    protected notifier: NotifierService
   ) {
     this.initTimespan();
   }
@@ -82,9 +84,13 @@ export class DatasetsService {
     this.getOverviewDatasetEntry(id).setDataLoading(loading);
   }
 
-  deleteDataset(id: string) {
+  deleteDataset(id: string, notify: boolean) {
     console.log(`delete ${id}`);
     const dataset = this.getDatasetEntry(id);
+    if (notify) {
+      this.la.announce(this.translate.instant('events.remove-timeseries'));
+      this.notifier.notify(this.translate.instant('events.remove-timeseries'));
+    }
     dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
     this.datasets.splice(idx, 1);
@@ -94,7 +100,9 @@ export class DatasetsService {
   }
 
   deleteAllDatasets() {
-    this.datasets.map(e => e.id).forEach(id => this.deleteDataset(id));
+    this.datasets.map(e => e.id).forEach(id => this.deleteDataset(id, false));
+    this.la.announce(this.translate.instant('events.all-timeseries-removed'));
+    this.notifier.notify(this.translate.instant('events.all-timeseries-removed'));
   }
 
   datasetsSelected(): boolean {
