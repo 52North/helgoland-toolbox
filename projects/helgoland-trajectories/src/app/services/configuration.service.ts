@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Settings } from '@helgoland/core';
+import { Settings, SettingsService } from '@helgoland/core';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AppConfig extends Settings {
@@ -10,13 +10,15 @@ export interface AppConfig extends Settings {
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigurationService {
+export class ConfigurationService extends SettingsService<Settings> {
 
   private readonly CONFIGURATION_URL = './assets/app-config.json';
 
   configuration!: AppConfig;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   loadConfiguration(): Promise<AppConfig> {
     return this.http

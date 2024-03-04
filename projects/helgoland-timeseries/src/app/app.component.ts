@@ -11,7 +11,7 @@ import { StockDatasetService } from './services/stock-dataset.service';
   styleUrls: ['./app.component.scss'],
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule
   ],
   standalone: true
 })
