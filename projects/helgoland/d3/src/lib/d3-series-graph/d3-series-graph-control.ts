@@ -10,10 +10,10 @@ import { D3GraphInterface } from './d3-graph.interface';
 
 export interface D3GraphObserver {
     adjustBackground?(
-        background: d3.Selection<SVGSVGElement, any, any, any>,
+        background: d3.Selection<SVGGElement, any, any, any>,
         graphExtent: D3GraphExtent,
         preparedData: SeriesGraphDataset[],
-        graph: d3.Selection<SVGSVGElement, any, any, any>,
+        graph: d3.Selection<SVGGElement, any, any, any>,
         timespan: Timespan
     ): void;
     cleanUp?();

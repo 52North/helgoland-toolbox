@@ -183,9 +183,9 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
     private _children: DatasetChild[] = [];
 
-    public stateChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
-    public dataChangeEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
-    public deleteEvent: EventEmitter<SeriesGraphDataset<T>> = new EventEmitter();
+    public stateChangeEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
+    public dataChangeEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
+    public deleteEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
 
     constructor(
         private _id: string,
@@ -196,7 +196,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         private _description: DatasetDescription
     ) { }
 
-    clone(): SeriesGraphDataset<DatasetStyle> {
+    clone(): SeriesGraphDataset {
         return new SeriesGraphDataset(
             this.id,
             this.style.clone(),

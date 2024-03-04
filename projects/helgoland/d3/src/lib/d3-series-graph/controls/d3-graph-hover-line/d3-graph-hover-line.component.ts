@@ -11,7 +11,7 @@ import { D3GraphExtent, D3SeriesGraphControl } from "../../d3-series-graph-contr
 import { SeriesGraphDataset } from "../../models/series-graph-dataset";
 
 export interface HoverlineLabel {
-  text: d3.Selection<d3.BaseType, any, any, any>;
+  text: d3.Selection<SVGGElement, any, any, any>;
   rect: d3.Selection<d3.BaseType, any, any, any>;
 }
 

@@ -16,6 +16,7 @@ import {
     HelgolandDataset,
     HelgolandLocatedProfileData,
     HelgolandProfile,
+    HelgolandProfileData,
     HelgolandServicesConnector,
     LocatedProfileDataEntry,
     Timespan,
@@ -89,12 +90,12 @@ export class ProfileTrajectoryMapSelectorComponent
                     this.dataset = dataset;
                     const timespan = new Timespan(dataset.firstValue.timestamp, dataset.lastValue.timestamp);
                     this.servicesConnector.getDatasetData(dataset, timespan)
-                        .subscribe((data: HelgolandLocatedProfileData) => {
+                        .subscribe((data: HelgolandProfileData) => {
                             if (this.map && data.values instanceof Array) {
                                 this.initLayer();
                                 this.data = [];
                                 const timelist: number[] = [];
-                                data.values.forEach((entry) => {
+                                (data.values as LocatedProfileDataEntry[]).forEach((entry) => {
                                     this.data.push(entry);
                                     const geojson = this.createGeoJson(entry, dataset);
                                     timelist.push(entry.timestamp);

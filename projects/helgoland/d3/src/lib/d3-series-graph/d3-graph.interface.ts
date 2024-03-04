@@ -13,7 +13,7 @@ export interface D3GraphInterface {
      * (graph line, graph axes, event handlers)
      */
     redrawCompleteGraph(): void;
-    getGraphElem(): d3.Selection<SVGSVGElement, any, any, any>;
+    getGraphElem(): d3.Selection<SVGGElement, any, any, any>;
     getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any>;
     registerObserver(obs: D3GraphObserver);
     unregisterObserver(obs: D3GraphObserver);

@@ -97,7 +97,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
 
     public getTimeseriesData(apiUrl: string, ids: string[], timespan: Timespan, options?: HttpRequestOptions): Observable<TimeseriesData[]> {
         const url = this.createRequestUrl(apiUrl, 'timeseries/getData');
-        return new Observable<TimeseriesData[]>((observer: Observer<Object>) => {
+        return new Observable<TimeseriesData[]>((observer: Observer<TimeseriesData[]>) => {
             this.requestApiTextedPost(url, {
                 timespan: this.createRequestTimespan(timespan),
                 timeseries: ids

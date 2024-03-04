@@ -4,17 +4,17 @@ export const modules = [
   'auth',
   'control',
   'depiction',
-  'eventing',
+  // 'eventing', // currently not maintained
   'favorite',
   'map',
   'modification',
   'permalink',
   'selector',
   'time',
-  'time-range-slider',
+  // 'time-range-slider', // currently not maintained
   'd3',
-  'plotly',
-  'facet-search',
+  // 'plotly', // currently not maintained
+  // 'facet-search', // currently not maintained
   'open-layers',
-  'sensorml'
+  // 'sensorml' // currently not maintained
 ];

@@ -122,9 +122,9 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     // DOM elements
     protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
-    protected graph: d3.Selection<SVGSVGElement, any, any, any>;
+    protected graph: d3.Selection<SVGGElement, any, any, any>;
     protected graphBody: any;
-    private background: d3.Selection<SVGSVGElement, any, any, any>;
+    private background: d3.Selection<SVGGElement, any, any, any>;
 
     // data types
     protected preparedAxes: Map<string, YAxisSettings> = new Map();
@@ -262,7 +262,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .style('position', 'absolute');
 
         this.graph = this.rawSvg
-            .append<SVGSVGElement>('g')
+            .append<SVGGElement>('g')
             .attr('id', `graph-${this.ID}`)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
 
@@ -295,7 +295,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.observer.delete(obs);
     }
 
-    public getGraphElem(): d3.Selection<SVGSVGElement, any, any, any> {
+    public getGraphElem(): d3.Selection<SVGGElement, any, any, any> {
         return this.graph;
     }
 
@@ -430,7 +430,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     .call(d3.axisLeft(this.yAxes[idx].yScale)
                         .ticks(TICKS_COUNT_YAXIS)
                         .tickSize(-this.width + this.leftOffset)
-                        .tickFormat(() => ''));
+                        .tickFormat(() => '') as any);
             }
         }
     }
@@ -506,7 +506,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.drawTimeRangeLabels();
 
         // create background as rectangle providing panning
-        this.background = this.graphInteraction.append<SVGSVGElement>('svg:rect')
+        this.background = this.graphInteraction.append<SVGGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('id', 'backgroundRect')
@@ -524,17 +524,17 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
 
         if (this.plotOptions.togglePanZoom === false) {
-            this.background.call(d3.zoom()
+            const zoomHandler: any = d3.zoom()
                 .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
                 .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()))
-            );
+                .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()));
+            this.background.call(zoomHandler);
         } else {
-            this.background.call(d3.drag()
+            const dragHandler: any = d3.drag()
                 .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
                 .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()))
-            );
+                .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()));
+            this.background.call(dragHandler);
         }
 
         this.observer.forEach(e => {
@@ -677,24 +677,21 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             this.graph.append('svg:g')
                 .attr('class', 'grid x-grid')
                 .attr('transform', 'translate(0,' + this.height + ')')
-                .call(xAxis
-                    .tickSize(-this.height)
-                    .tickFormat(() => '')
-                );
+                .call(xAxis.tickSize(-this.height).tickFormat(() => '') as any);
         }
 
         // draw upper axis as border
         this.graph.selectAll('.x.axis.top').remove();
         this.graph.append('svg:g')
             .attr('class', 'x axis top')
-            .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0));
+            .call(d3.axisTop(this.xScaleBase).ticks(0).tickSize(0) as any);
 
         // draw right axis as border
         this.graph.selectAll('.y.axis.right').remove();
         this.graph.append('svg:g')
             .attr('class', 'y axis right')
             .attr('transform', 'translate(' + this.width + ',0)')
-            .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0));
+            .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0) as any);
 
         // text label for the x axis
         this.graph.selectAll('.x.axis.label').remove();
@@ -910,7 +907,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     private drawBackground() {
-        this.background = this.graph.insert<SVGSVGElement>('svg:rect', ':first-child')
+        this.background = this.graph.insert<SVGGElement>('svg:rect', ':first-child')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('class', 'graph-background')
