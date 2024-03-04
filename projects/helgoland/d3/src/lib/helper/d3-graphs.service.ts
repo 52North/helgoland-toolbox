@@ -12,7 +12,7 @@ import { D3GraphInterface } from '../d3-series-graph/d3-graph.interface';
 })
 export class D3Graphs {
 
-  private graphs = {};
+  private graphs: { [key: string]: any } = {};
 
   /**
    * Saves id and corresponding graph

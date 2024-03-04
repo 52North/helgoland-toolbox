@@ -218,7 +218,6 @@ export class ApiV3InterfaceService extends ApiInterface {
 
   constructor(
     protected httpService: HttpService,
-    // protected translate: TranslateService,
     protected internalIdHander: InternalIdHandler
   ) { super(); }
 
@@ -306,7 +305,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     const url = this.createRequestUrl(apiUrl, 'datasets', `${id}/observations`);
     return this.requestApi<Data<T>>(url, this.prepareParams(params)).pipe(
       map(res => {
-        if (params.expanded) { res = res[id]; }
+        if (params.expanded) { res = (res as any)[id]; }
         return res;
       })
     );

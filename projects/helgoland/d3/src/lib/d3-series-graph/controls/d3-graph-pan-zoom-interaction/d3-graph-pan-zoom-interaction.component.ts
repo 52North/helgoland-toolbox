@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { SeriesGraphDataset } from '../../models/series-graph-dataset';
+import { GraphDataEntry, SeriesGraphDataset } from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
@@ -162,7 +162,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
   /**
    * Function that ends the zoom handling and calculates the via zoom selected time interval.
    */
-  protected zoomEndHandler(timespan: Timespan, graphExtent: D3GraphExtent, preparedData: any) {
+  protected zoomEndHandler(timespan: Timespan, graphExtent: D3GraphExtent, preparedData: SeriesGraphDataset[]) {
     if (!this.dragStart || !this.dragging) {
       if (this.xAxisRangeOrigin[0]) {
         // back to origin range (from - to)
@@ -189,9 +189,9 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
  * @param start {Number} Number with the minimum diagram coordinate.
  * @param end {Number} Number with the maximum diagram coordinate.
  */
-  protected getxDomain(start: number, end: number, graphExtent: D3GraphExtent, preparedData: any): [number, number] {
-    const domMinArr = [];
-    const domMaxArr = [];
+  protected getxDomain(start: number, end: number, graphExtent: D3GraphExtent, preparedData: SeriesGraphDataset[]): [number, number] {
+    const domMinArr: GraphDataEntry[] = [];
+    const domMaxArr: GraphDataEntry[] = [];
     let domMin: number;
     let domMax: number;
     let tmp;

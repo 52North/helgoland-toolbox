@@ -349,7 +349,7 @@ export class D3TrajectoryGraphComponent
         };
     }
 
-    protected distanceBetween(latitude1, longitude1, latitude2, longitude2): number {
+    protected distanceBetween(latitude1: number, longitude1: number, latitude2: number, longitude2: number): number {
         const R = 6371000;
         const rad = Math.PI / 180;
         const lat1 = latitude1 * rad;

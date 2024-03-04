@@ -102,7 +102,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
                 timespan: this.createRequestTimespan(timespan),
                 timeseries: ids
             }, options).subscribe(
-                (result) => {
+                (result: any) => {
                     const timeseriesList: TimeseriesData[] = [];
                     for (const id in result) {
                         if (id) {

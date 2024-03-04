@@ -16,16 +16,16 @@ export interface D3GraphObserver {
         graph: d3.Selection<SVGGElement, any, any, any>,
         timespan: Timespan
     ): void;
-    cleanUp?();
-    mousemoveBackground?();
-    mouseoverBackground?();
-    mouseoutBackground?();
-    dragStartBackground?();
-    dragMoveBackground?();
-    dragEndBackground?();
-    zoomStartBackground?();
-    zoomMoveBackground?();
-    zoomEndBackground?();
+    cleanUp?(): void;
+    mousemoveBackground?(): void;
+    mouseoverBackground?(): void;
+    mouseoutBackground?(): void;
+    dragStartBackground?(): void;
+    dragMoveBackground?(): void;
+    dragEndBackground?(): void;
+    zoomStartBackground?(): void;
+    zoomMoveBackground?(): void;
+    zoomEndBackground?(): void;
     adjustYAxis?(axis: YAxis): void;
     afterYAxisDrawn?(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number): void;
 }
@@ -78,7 +78,7 @@ export abstract class D3SeriesGraphControl implements AfterViewInit, OnDestroy, 
         }
     }
 
-    public abstract graphInitialized(graph: D3GraphInterface);
+    public abstract graphInitialized(graph: D3GraphInterface): void;
 
     public adjustYAxis?(axis: YAxis): void;
 

@@ -286,7 +286,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
   }
 
   protected createHelgolandPlatform(platform: Platform): HelgolandPlatform {
-    let datasets = [];
+    let datasets: string[] = [];
     if (platform.datasets && platform.datasets.length > 0) {
       datasets = platform.datasets.map(pf => pf.id);
     }

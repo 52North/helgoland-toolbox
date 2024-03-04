@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class LocalStorage {
 
     private localStorageEnabled = false;
-    private defaults = {};
+    private defaults: { [key: string]: any } = {};
 
     constructor() {
         if (typeof (Storage) !== 'undefined') {

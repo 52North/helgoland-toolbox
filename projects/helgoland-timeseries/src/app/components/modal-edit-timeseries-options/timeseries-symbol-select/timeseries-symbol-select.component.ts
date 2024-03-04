@@ -45,7 +45,7 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
 
   constructor(private translate: TranslateService) { }
 
-  selectedSymbol: string;
+  selectedSymbol: PointSymbolType | 'point';
 
   symbolSize: number;
 

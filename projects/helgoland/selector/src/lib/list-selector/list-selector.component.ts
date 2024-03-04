@@ -1,3 +1,5 @@
+// @ts-nocheck
+// seems to be unused
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FilteredProvider, HelgolandDataset, HelgolandParameterFilter, HelgolandServicesConnector } from '@helgoland/core';
 

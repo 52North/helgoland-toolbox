@@ -80,7 +80,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
         } else {
           // case that there is intersection with cache, but the requested time interval contains no data values
           return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-            const body = {};
+            const body: any = {};
             body[urlID] = {
               values: [],
               referenceValues: []
@@ -215,7 +215,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       resObj.valueAfterTimespan = resObj.values[resObj.values.length - 1];
     }
 
-    const body = {};
+    const body: any = {};
     body[urlID] = resObj;
     return new HttpResponse({
       body: !expanded ? resObj : body,

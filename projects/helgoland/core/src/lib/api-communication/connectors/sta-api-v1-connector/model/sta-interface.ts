@@ -31,7 +31,7 @@ export interface InsertId {
 }
 
 export interface StaSelectParams {
-  id?: boolean;
+  [key:string]:any;
 }
 
 export interface StaValueListResponse<T extends StaObject> {
@@ -40,7 +40,9 @@ export interface StaValueListResponse<T extends StaObject> {
   value: T[];
 }
 
-export interface StaExpandParams { }
+export interface StaExpandParams { 
+  [key:string]:any;
+}
 
 export interface StaFilter<S extends StaSelectParams, E extends StaExpandParams> {
   $select?: S;

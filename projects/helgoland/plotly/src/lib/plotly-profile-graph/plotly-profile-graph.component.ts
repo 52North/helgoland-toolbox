@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AfterViewInit, Component, EventEmitter, IterableDiffers, Output } from '@angular/core';
 import {
     DatasetPresenterComponent,

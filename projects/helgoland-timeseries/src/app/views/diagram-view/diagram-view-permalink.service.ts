@@ -54,7 +54,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   protected generatePermalink(): string {
     let paramUrl = '';
     if (this.graphDatasetsSrvc.hasDatasets()) {
-      const ids = [];
+      const ids: string[] = [];
       this.permalinkServices.forEach(pls => {
         pls.getPermaIds().forEach(id => ids.push(id));
       })

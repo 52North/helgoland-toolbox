@@ -349,7 +349,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       }
       refValues = refValues.values;
     }
-    return refValues.map(d => ({ timestamp: d[0], value: d[1] }));
+    return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
   }
 
   private getGraphStyle(options: DatasetOptions): DatasetStyle {

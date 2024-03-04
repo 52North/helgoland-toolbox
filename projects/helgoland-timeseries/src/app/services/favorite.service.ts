@@ -43,7 +43,7 @@ export class FavoriteService {
   }
 
   getFavorites(): Favorite[] {
-    const favorites = [];
+    const favorites: Favorite[] = [];
     this.favoriteServices.map(srv => favorites.push(...srv.getFavorites()));
     return favorites;
   }

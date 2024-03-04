@@ -45,14 +45,14 @@ export class StockDatasetService {
     socket.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'trade' && data.data.length) {
-        data.data.forEach(element => {
+        data.data.forEach((element: any) => {
           dataset.addNewData(element.t, element.p);
         });
       }
     });
 
     // Unsubscribe
-    var unsubscribe = function (symbol) {
+    var unsubscribe = function (symbol: string) {
       socket.send(JSON.stringify({ 'type': 'unsubscribe', 'symbol': symbol }))
     }
   }

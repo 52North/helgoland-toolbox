@@ -35,7 +35,7 @@ import { D3GraphInterface } from './d3-graph.interface';
 import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 import { HighlightOutput } from './models/d3-highlight';
 import { HoveringStyle } from './models/d3-plot-options';
-import { BarStyle, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
+import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -771,7 +771,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         // Otherwise, assume interval is already a time interval and use it.
         let detectedInterval: unitOfTime.DurationConstructor;
         const target = Math.abs(stop - start) / interval;
-        const i: number = d3.bisector(function (j) { return j[2]; }).right(tickIntervals, target);
+        const i: number = d3.bisector((j: any) => j[2]).right(tickIntervals, target);
         if (i === tickIntervals.length) {
             step = d3.tickStep(start / durationYear, stop / durationYear, interval);
             detectedInterval = 'year';
@@ -1002,8 +1002,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .data(ds.data.filter((d) => !isNaN(d.value)))
                 .enter()
                 .append('path')
-                .attr('id', (d: DataEntry) => 'dot-' + d.timestamp + '-' + idx)
-                .attr('transform', (de: DataEntry, idx, data) => `translate(${line.x()(de, idx, data)},${line.y()(de, idx, data)})`)
+                .attr('id', (d: GraphDataEntry) => 'dot-' + d.timestamp + '-' + idx)
+                .attr('transform', (de: GraphDataEntry, idx: number, data: any) => `translate(${line.x()(de, idx, data)},${line.y()(de, idx, data)})`)
                 .attr('stroke', ds.style.pointBorderColor)
                 .attr('fill', ds.style.baseColor)
                 .attr('d', this.pointSymbolDrawer.getSymbolPath(ds.style.pointSymbol, ds.selected, this.addLineWidth))
@@ -1090,12 +1090,13 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * @param xposition {Number} position to center the label in the middle
      */
     private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
-        textObj.each(function (u: any, i: number, d: NodeList) {
+        textObj.each((u: any, i: number, d: any) => {
+            const bla = d[i];
             const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols
             let word;
-            const text = d3.select(this);
+            const text = d3.select(d[i]);
             const words = text.text().split(/\s+/).reverse();
-            let line = [];
+            let line: string[] = [];
             const lineHeight = (i === d.length - 1 ? 0.3 : 1.1); // ems
             const y = text.attr('y');
             const dy = parseFloat(text.attr('dy'));

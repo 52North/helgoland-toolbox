@@ -1,9 +1,10 @@
+import { Type } from '@angular/compiler';
 import { NgModule } from '@angular/core';
 
 import { MapCache } from './map-cache.service';
 import { MapHandlerService } from './map-handler.service';
 
-const COMPONENTS = [
+const COMPONENTS: Type[] = [
 ];
 
 @NgModule({

@@ -10,7 +10,7 @@ import { Observable, of, Subject } from 'rxjs';
 })
 export class OlMapService {
 
-  private map = {};
+  private map: { [key: string]: any } = {};
 
   /**
    * Saves id and corresponding map

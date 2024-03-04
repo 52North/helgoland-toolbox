@@ -50,9 +50,9 @@ interface FavoriteSaveState {
 }
 
 export abstract class TimeseriesService {
-  abstract addDataset(internalId: string);
+  abstract addDataset(internalId: string): void;
   abstract hasDataset(id: string): boolean;
-  abstract removeDataset(id: string);
+  abstract removeDataset(id: string): void;
 }
 
 @Injectable({
@@ -429,7 +429,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
       }
       refValues = refValues.values;
     }
-    return refValues.map(d => ({ timestamp: d[0], value: d[1] }));
+    return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
   }
 
   private prepareOverviewData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {

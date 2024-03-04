@@ -15,6 +15,6 @@ export interface D3GraphInterface {
     redrawCompleteGraph(): void;
     getGraphElem(): d3.Selection<SVGGElement, any, any, any>;
     getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any>;
-    registerObserver(obs: D3GraphObserver);
-    unregisterObserver(obs: D3GraphObserver);
+    registerObserver(obs: D3GraphObserver): void;
+    unregisterObserver(obs: D3GraphObserver): void;
 }

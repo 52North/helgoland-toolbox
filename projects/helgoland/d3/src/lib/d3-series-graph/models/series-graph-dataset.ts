@@ -114,6 +114,8 @@ export interface GraphDataEntry {
     timestamp: number;
     value: number;
     highlight?: boolean;
+    xDiagCoord?: number;
+    yDiagCoord?: number;
 }
 
 export interface DatasetDescription {
