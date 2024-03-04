@@ -18,7 +18,6 @@ import { DatasetLegendEntryComponent } from "../../components/dataset-legend-ent
 import {
   ModalFavoriteListButtonComponent,
 } from "../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component";
-import { MapSelectionComponent } from "../../components/map-selection/map-selection.component";
 import {
   DiagramConfig,
   ModalDiagramSettingsComponent,
@@ -26,7 +25,6 @@ import {
 import {
   GeneralTimeSelectionComponent,
 } from "../../components/time/general-time-selection/general-time-selection.component";
-import { ListSelectionComponent } from "./../../components/list-selection/list-selection.component";
 import {
   ModalMainConfigButtonComponent,
 } from "./../../components/main-config/modal-main-config-button/modal-main-config-button.component";
@@ -62,7 +60,7 @@ import { DiagramViewPermalinkService } from "./diagram-view-permalink.service";
 })
 export class DiagramViewComponent implements OnInit {
 
-  public mobileQuery: MediaQueryList;
+  mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;
 
@@ -87,8 +85,8 @@ export class DiagramViewComponent implements OnInit {
     overview: true
   }
 
-  public diagramLoading: boolean;
-  public overviewLoading: boolean;
+  diagramLoading: boolean;
+  overviewLoading: boolean;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -131,15 +129,15 @@ export class DiagramViewComponent implements OnInit {
     //   this.selectedIds = selectedIds;
   }
 
-  public onDiagramLoading(loading: boolean) {
+  onDiagramLoading(loading: boolean) {
     setTimeout(() => this.diagramLoading = loading);
   }
 
-  public onOverviewLoading(loading: boolean) {
+  onOverviewLoading(loading: boolean) {
     setTimeout(() => this.overviewLoading = loading);
   }
 
-  public openDiagramSettings() {
+  openDiagramSettings() {
     const dialogRef = this.dialog.open(ModalDiagramSettingsComponent, {
       data: {
         overviewVisible: this.diagramConfig.overviewVisible,
@@ -164,17 +162,11 @@ export class DiagramViewComponent implements OnInit {
   }
 
   openMapSelection() {
-    this.dialog.open(MapSelectionComponent, {
-      autoFocus: false,
-      panelClass: 'modal-map-selection'
-    });
+    this.appRouter.toMapSelection();
   }
 
   openListSelection() {
-    this.dialog.open(ListSelectionComponent, {
-      autoFocus: false,
-      minWidth: '600px'
-    });
+    this.appRouter.toListSelection();
   }
 
 }
