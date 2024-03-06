@@ -37,7 +37,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public endpoint: MultiServiceFilterEndpoint;
 
     @Input()
-    public filterList: MultiServiceFilter[] | undefined;
+    public filterList: MultiServiceFilter[] = [];
 
     @Input()
     public selected: string | undefined;
@@ -131,7 +131,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
         this.loading--;
     }
 
-    protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service: string): void {
+    protected setItems(res: FilteredParameter[], prevfilter: HelgolandParameterFilter, url: string, service?: string): void {
         this.loading--;
         res.forEach(entry => {
             entry.selected = this.selected === entry.label;
@@ -143,8 +143,8 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
             };
             const item = this.items.find(e => e.label === entry.label);
             if (item) {
-                if (!item.filterList.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
-                    item.filterList.push(filter);
+                if (!item.filterList?.find(e => e.itemId === filter.itemId && e.service === filter.service)) {
+                    item.filterList?.push(filter);
                 }
             } else {
                 entry.filterList = [filter];

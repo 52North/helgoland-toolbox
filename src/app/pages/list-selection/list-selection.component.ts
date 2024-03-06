@@ -14,16 +14,20 @@ export class ListSelectionComponent {
 
     public categoryParams: ListSelectorParameter[] = [{
         type: MultiServiceFilterEndpoint.platform,
-        header: 'Platform'
+        header: 'Platform',
+        filterList: []
     }, {
         type: MultiServiceFilterEndpoint.feature,
-        header: 'Station'
+        header: 'Station',
+        filterList: []
     }, {
         type: MultiServiceFilterEndpoint.phenomenon,
-        header: 'Phänomen'
+        header: 'Phänomen',
+        filterList: []
     }, {
         type: MultiServiceFilterEndpoint.procedure,
-        header: 'Sensor'
+        header: 'Sensor',
+        filterList: []
     }];
 
     public selectedProviderList: FilteredProvider[] = [];

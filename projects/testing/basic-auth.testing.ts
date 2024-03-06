@@ -13,16 +13,21 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
         return new Observable<boolean>((observer: Observer<boolean>) => {
             const username = prompt('Basic Auth username for ' + url);
             const password = prompt('Basic Auth password for ' + url);
-            this.basicAuthSrvc.auth(username, password, url).subscribe(
-                token => {
-                    observer.next(true);
-                    observer.complete();
-                },
-                error => {
-                    observer.next(false);
-                    observer.complete();
-                }
-            );
+            if (username && password) {
+                this.basicAuthSrvc.auth(username, password, url).subscribe(
+                    token => {
+                        observer.next(true);
+                        observer.complete();
+                    },
+                    error => {
+                        observer.next(false);
+                        observer.complete();
+                    }
+                );
+            } else {
+                observer.error('no valid credentials');
+                observer.complete();
+            }
         });
     }
 

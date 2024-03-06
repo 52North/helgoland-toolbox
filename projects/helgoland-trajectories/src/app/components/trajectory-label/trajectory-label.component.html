@@ -1,7 +1,11 @@
 <div *ngIf="trajectory">
-  <span>{{'main-view.header.mobile-platform' | translate}}: </span>
-  <span>{{trajectory.parameters.platform.label}}</span>
-  <span> - </span>
-  <span>{{'main-view.header.path' | translate}}: </span>
-  <span>{{trajectory.parameters.feature.label}}</span>
+  <span *ngIf="trajectory.parameters.platform">
+    <span>{{'main-view.header.mobile-platform' | translate}}: </span>
+    <span>{{trajectory.parameters.platform.label}}</span>
+    <span> - </span>
+  </span>
+  <span *ngIf="trajectory.parameters.feature">
+    <span>{{'main-view.header.path' | translate}}: </span>
+    <span>{{trajectory.parameters.feature.label}}</span>
+  </span>
 </div>

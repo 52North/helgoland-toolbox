@@ -1,9 +1,11 @@
 <div>
   <mat-checkbox [checked]="datasetOptions?.visible" (change)="toggleVisibility()">
-    {{dataset?.parameters.phenomenon.label}}</mat-checkbox>
+    {{dataset?.parameters?.phenomenon?.label}}</mat-checkbox>
 </div>
 <div style="flex: 1"></div>
-<button mat-icon-button [colorPicker]="datasetOptions?.color" [ngStyle]="{'color': datasetOptions?.color}"
-  (colorPickerSelect)="confirmColor($event)" [cpUseRootViewContainer]="false">
-  <mat-icon>edit</mat-icon>
-</button>
+<div *ngIf="datasetOptions?.color">
+  <button mat-icon-button [colorPicker]="datasetOptions!.color" [ngStyle]="{'color': datasetOptions!.color}"
+    [cpOKButton]="true" (colorPickerSelect)="confirmColor($event)" [cpUseRootViewContainer]="false">
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>

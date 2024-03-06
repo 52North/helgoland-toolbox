@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DescribedObject } from './DescribedObject';
 import { Settings } from './Settings';
 import { FeatureList } from './FeatureList';

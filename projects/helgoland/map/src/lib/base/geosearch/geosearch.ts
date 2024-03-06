@@ -21,7 +21,6 @@ export interface GeoSearchResult {
         state?: string;
         suburb?: string;
         town?: string;
-        [key: string]: string;
     };
 }
 

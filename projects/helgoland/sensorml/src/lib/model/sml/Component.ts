@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DisplayName } from '../../common/decorators/DisplayName';
 import { AbstractProcess } from '../sml';
 

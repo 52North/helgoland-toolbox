@@ -29,7 +29,7 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
           try {
             const xml = new DOMParser().parseFromString(res, 'text/xml');
             const temp = xml.getElementsByTagNameNS('http://www.w3.org/2004/02/skos/core#', 'prefLabel')[0];
-            label = temp.textContent;
+            label = temp.textContent ? temp.textContent : label;
             this.confirmLabel(observer, label);
           } catch (error) {
             // found no matching element, so currently do nothing and use old label

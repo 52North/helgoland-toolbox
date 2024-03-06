@@ -45,17 +45,23 @@ export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesE
   }
 
   public jumpToFirstTimeStamp() {
-    this.onSelectDate.emit(new Date(this.dataset.firstValue.timestamp));
+    if (this.dataset?.firstValue) {
+      this.onSelectDate.emit(new Date(this.dataset.firstValue.timestamp));
+    }
   }
 
   public jumpToLastTimeStamp() {
-    this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
+    if (this.dataset?.lastValue) {
+      this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
+    }
   }
 
   protected override setParameters() {
     super.setParameters();
-    this.firstValue = this.dataset.firstValue;
-    this.lastValue = this.dataset.lastValue;
+    if (this.dataset) {
+      if (this.dataset.firstValue) this.firstValue = this.dataset.firstValue;
+      if (this.dataset.lastValue) this.lastValue = this.dataset.lastValue;
+    }
     this.checkDataInTimespan();
   }
 

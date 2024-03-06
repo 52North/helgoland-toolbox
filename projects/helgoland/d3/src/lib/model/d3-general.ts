@@ -1,7 +1,6 @@
-import { MinMaxRange } from '@helgoland/core';
-import { ScaleLinear } from 'd3';
+import { MinMaxRange } from "@helgoland/core";
 
-import { SeriesGraphDataset } from '../d3-series-graph/models/series-graph-dataset';
+import { SeriesGraphDataset } from "../d3-series-graph/models/series-graph-dataset";
 
 export interface DataEntry {
     timestamp: number;

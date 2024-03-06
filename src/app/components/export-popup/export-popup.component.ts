@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HelgolandCoreModule, IDataset, Timespan } from '@helgoland/core';
+import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from '@helgoland/core';
 import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
 
 @Component({
@@ -25,7 +25,7 @@ export class ExportPopupComponent {
   public inputId: string;
   public loading = false;
   // pre-define variable metadata to avoid errors (undefined)
-  public dataset: IDataset;
+  public dataset: HelgolandTimeseries;
   public disabled = false;
 
   public selectedStart: Date;
@@ -68,11 +68,11 @@ export class ExportPopupComponent {
    * Function that retrieves data about the selected dataset via inputId.
    * @param metadata {ExportData} information about the dataset
    */
-  public onMetadata(dataset: IDataset): void {
-    if (!this.selectedStart) {
+  public onMetadata(dataset: HelgolandTimeseries): void {
+    if (!this.selectedStart && dataset.firstValue) {
       this.selectedStart = new Date(dataset.firstValue.timestamp);
     }
-    if (!this.selectedEnd) {
+    if (!this.selectedEnd && dataset.lastValue) {
       this.selectedEnd = new Date(dataset.lastValue.timestamp);
     }
     this.dataset = dataset;

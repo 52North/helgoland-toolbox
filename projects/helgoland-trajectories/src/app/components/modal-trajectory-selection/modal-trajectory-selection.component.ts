@@ -46,7 +46,7 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
 
-  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis;
+  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
 
   public datasetsLoading: boolean;
 
@@ -95,16 +95,16 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   public selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.OFFERING) {
-      delete entry.apiFilter[0].filter.offering;
+      delete entry.apiFilter[0].filter?.offering;
     }
     if (entry.selectedFilter === ParameterType.PHENOMENON) {
-      delete entry.apiFilter[0].filter.phenomenon;
+      delete entry.apiFilter[0].filter?.phenomenon;
     }
     if (entry.selectedFilter === ParameterType.FEATURE) {
-      delete entry.apiFilter[0].filter.feature;
+      delete entry.apiFilter[0].filter?.feature;
     }
     if (entry.selectedFilter === ParameterType.PLATFORM) {
-      delete entry.apiFilter[0].filter.platform;
+      delete entry.apiFilter[0].filter?.platform;
     }
     entry.selectedFilter = filter;
   }
@@ -121,16 +121,16 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     const apiFilter: MultiServiceFilter[] = [...filter.apiFilter];
     switch (filter.selectedFilter) {
       case ParameterType.OFFERING:
-        apiFilter[0].filter.offering = item.id;
+        apiFilter[0].filter!.offering = item.id;
         break;
       case ParameterType.PHENOMENON:
-        apiFilter[0].filter.phenomenon = item.id;
+        apiFilter[0].filter!.phenomenon = item.id;
         break;
       case ParameterType.FEATURE:
-        apiFilter[0].filter.feature = item.id;
+        apiFilter[0].filter!.feature = item.id;
         break;
       case ParameterType.PLATFORM:
-        apiFilter[0].filter.platform = item.id;
+        apiFilter[0].filter!.platform = item.id;
         break;
       default:
         throw new Error(`not implemented for ${filter.selectedFilter}`);
@@ -154,13 +154,13 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       expanded: true,
       possibleFilters,
       apiFilter,
-      selectedFilter: possibleFilters.length === 1 ? possibleFilters[0] : null
+      selectedFilter: possibleFilters.length === 1 ? possibleFilters[0] : undefined
     });
   }
 
   public featureSelected(filter: ParameterListEntry, item: Parameter) {
     const url = filter.apiFilter[0].url;
-    const dsFilter = filter.apiFilter[0].filter;
+    const dsFilter = filter.apiFilter[0].filter!;
     dsFilter.feature = item.id;
     this.datasetsLoading = true;
     this.servicesConnector.getDatasets(url, dsFilter).subscribe(res => {

@@ -42,26 +42,26 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
 
   ngAfterViewInit(): void {
     this.createMap();
-    this.drawPlatforms();
+    if (this.map) this.drawPlatforms(this.map);
   }
 
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (this.map) {
       if (changes['platforms']) {
-        this.drawPlatforms();
+        this.drawPlatforms(this.map);
       }
     }
   }
 
-  private drawPlatforms() {
+  private drawPlatforms(map: L.Map) {
     if (this.platforms) {
       if (this.layer) {
-        this.map.removeLayer(this.layer);
+        map.removeLayer(this.layer);
       }
       this.layer = L.markerClusterGroup({ animate: false });
 
-      this.geometryOnMap = L.geoJSON(null, {
+      this.geometryOnMap = L.geoJSON(undefined, {
         pointToLayer: (feature, latlng) => {
           if (this.customMarkerIcon) {
             return L.marker(latlng, { icon: this.customMarkerIcon });
@@ -92,8 +92,8 @@ export class PlatformMapViewerComponent extends CachedMapComponent implements Af
         }
       })
       this.layer.addLayer(this.geometryOnMap);
-      this.map.addLayer(this.layer);
-      this.map.fitBounds(this.geometryOnMap.getBounds());
+      map.addLayer(this.layer);
+      map.fitBounds(this.geometryOnMap.getBounds());
     }
   }
 

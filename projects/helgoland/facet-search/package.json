@@ -3,10 +3,10 @@
   "version": "13.0.1",
   "peerDependencies": {},
   "dependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "leaflet": "^1.7.1",
-    "leaflet.markercluster": "^1.5.0",
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "leaflet": "^1.9.3",
+    "leaflet.markercluster": "^1.5.3",
     "tslib": "^2.1.0"
   }
 }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CodeWithAuthority } from '../gml/CodeWithAuthority';
 import { AbstractSWEIdentifiable } from '../swe/AbstractSWEIdentifiable';
 import { SweDataComponent } from '../swe/SweDataComponent';

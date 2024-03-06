@@ -44,8 +44,10 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   }
 
   public ngOnInit() {
-    this.additionalStylesheet = document.getElementById('selectedIdsStylesheet');
-    if (!this.additionalStylesheet) {
+    const elem = document.getElementById('selectedIdsStylesheet')
+    if (elem) {
+      this.additionalStylesheet = elem;
+    } else {
       this.additionalStylesheet = document.createElement('style');
       this.additionalStylesheet.id = 'selectedIdsStylesheet';
       document.body.appendChild(this.additionalStylesheet);
@@ -75,11 +77,11 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
       const index = parseInt(by, 10);
       // basically the same as above, but take care of 'undefined' values
       sortCallback = (e1: any, e2: any) =>
-        (e1.values[index] === undefined ? 1 :
-          (e2.values[index] === undefined ? -1 :
-            (directionNumber * (e1.values[index] - e2.values[index]))
-          )
-        );
+      (e1.values[index] === undefined ? 1 :
+        (e2.values[index] === undefined ? -1 :
+          (directionNumber * (e1.values[index] - e2.values[index]))
+        )
+      );
     }
 
     // do the sort
@@ -133,6 +135,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     // remove entries of this dataset in each datetime's `values` arrays
     this.preparedData.forEach((e) => e.values.splice(index, 1));
     // if a datetime became completely empty (i.e. there's only `undefined`s in the `values` array, delete this datetime)
+    // @ts-ignore
     this.preparedData = this.preparedData.filter((e) => e.values.reduce((a, c) => a || c, undefined) !== undefined);
 
     this.preparedColors.splice(index, 1);
@@ -193,9 +196,9 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
     const index = this.getIndexFromInternalId(timeseries.internalId);
 
     // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
-    if (this.datasetOptions) {
-      const datasetOptions = this.datasetOptions.get(timeseries.internalId);
-      this.preparedColors[index] = datasetOptions.color;
+    const option = this.datasetOptions?.get(timeseries.internalId);
+    if (option) {
+      this.preparedColors[index] = option.color;
     } else {
       // when no color is specified: make border transparent so the header's background color is used for the color band, too
       this.preparedColors[index] = 'rgba(0,0,0,0)';

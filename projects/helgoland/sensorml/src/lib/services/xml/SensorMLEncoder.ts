@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Point
 } from '../../model/gml';

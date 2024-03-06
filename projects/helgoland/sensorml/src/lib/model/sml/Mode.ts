@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DescribedObject } from './DescribedObject';
 import { Settings } from './Settings';
 import { DisplayName } from '../../common/decorators/DisplayName';

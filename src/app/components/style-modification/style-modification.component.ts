@@ -20,13 +20,13 @@ import { HelgolandModificationModule } from '@helgoland/modification';
 export class StyleModificationComponent {
 
     public color: string;
-    public generalize: boolean;
-    public zeroBasedYAxis: boolean;
-    public autoRangeSelection: boolean;
-    public separateYAxis: boolean;
+    public generalize: boolean | undefined;
+    public zeroBasedYAxis: boolean | undefined;
+    public autoRangeSelection: boolean | undefined;
+    public separateYAxis: boolean | undefined;
     public pointRadius: number;
     public lineWidth: number;
-    public range: MinMaxRange;
+    public range: MinMaxRange | undefined;
 
     public colorList: string[];
 

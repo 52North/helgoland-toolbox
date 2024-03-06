@@ -3,14 +3,14 @@
   "version": "13.0.1",
   "peerDependencies": {},
   "dependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "@ngx-translate/core": "^13.0.0",
+    "@angular/common": "^15.0.1",
+    "@angular/core": "^15.0.1",
+    "@ngx-translate/core": "^14.0.0",
     "@types/d3": "^5.7.2",
-    "@types/geojson": "^7946.0.8",
+    "@types/geojson": "^7946.0.10",
     "d3": "^5.12.0",
     "d3-delaunay": "^5.2.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "tslib": "^2.1.0"
   }
 }

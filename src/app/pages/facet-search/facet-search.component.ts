@@ -17,8 +17,8 @@ import {
   ParameterFacetSort,
   ParameterFacetType,
 } from '@helgoland/facet-search';
-import { TranslateService } from '@ngx-translate/core';
 import { MapCache } from '@helgoland/map';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'n52-facet-search',
@@ -129,11 +129,13 @@ export class FacetSearchComponent {
   }
 
   public setStart(start: MatDatepickerInputEvent<Date>) {
-    this.facetSearch.setSelectedTimespan(new Timespan(start.value, this.selectedEnd));
+    if (start.value)
+      this.facetSearch.setSelectedTimespan(new Timespan(start.value, this.selectedEnd));
   }
 
   public setEnd(end: MatDatepickerInputEvent<Date>) {
-    this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
+    if (end.value)
+      this.facetSearch.setSelectedTimespan(new Timespan(this.selectedStart, end.value));
   }
 
   public setAutocomplete(acString: string, evt: any) {

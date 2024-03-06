@@ -56,15 +56,20 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
             options.showReferenceValues.splice(idx, 1);
         } else {
             refValue.visible = true;
-            options.showReferenceValues.push({ id: refValue.referenceValueId, color: refValue.color });
+            options.showReferenceValues.push({
+                id: refValue.referenceValueId,
+                color: refValue.color ? refValue.color : this.color.getColor()
+            });
         }
-        this.refValCache.get(refValId).visible = refValue.visible;
+        if (this.refValCache.has(refValId)) {
+            this.refValCache.get(refValId)!.visible = refValue.visible;
+        }
         this.onUpdateOptions.emit(options);
     }
 
     protected override setParameters() {
         super.setParameters();
-        if (this.dataset.referenceValues) {
+        if (this.dataset?.referenceValues) {
             this.dataset.referenceValues.forEach((e) => {
                 const refValId = this.createRefValId(e.referenceValueId);
                 const refValOption = this.datasetOptions.showReferenceValues.find((o) => o.id === e.referenceValueId);
@@ -80,14 +85,16 @@ export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponen
                         visible: false
                     });
                 }
-                e.color = this.refValCache.get(refValId).color;
-                e.visible = this.refValCache.get(refValId).visible;
+                if (this.refValCache.has(refValId)) {
+                    e.color = this.refValCache.get(refValId)!.color;
+                    e.visible = this.refValCache.get(refValId)!.visible;
+                }
             });
         }
     }
 
     private createRefValId(refId: string) {
-        return this.dataset.url + refId;
+        return this.dataset?.url + refId;
     }
 
 }
