@@ -23,7 +23,7 @@ import { ListEntryComponent } from '../../list-entry.component';
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 
-  public dataset: HelgolandTimeseries;
+  public dataset: HelgolandTimeseries | undefined;
 
   public platformLabel: string;
   public phenomenonLabel: string;

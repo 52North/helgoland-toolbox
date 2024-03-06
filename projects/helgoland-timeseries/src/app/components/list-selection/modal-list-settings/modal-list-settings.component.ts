@@ -25,14 +25,16 @@ export interface ListConfig {
 })
 export class ModalListSettingsComponent {
 
-  public datasetApis: DatasetApi[];
+  public datasetApis: DatasetApi[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ModalListSettingsComponent>,
     private configSrvc: ConfigurationService,
     @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig
   ) {
-    this.datasetApis = this.configSrvc.configuration?.datasetApis;
+    if (this.configSrvc.configuration?.datasetApis) {
+      this.datasetApis = this.configSrvc.configuration?.datasetApis;
+    }
   }
 
   public serviceSelected(service: HelgolandService) {

@@ -42,7 +42,7 @@
         </helgoland-edit-label>
       </div>
       <div class="fav-additional" *ngFor="let fav of group.favorites">
-        {{fav.dataset.parameters.phenomenon.label}} - {{fav.dataset.parameters.feature.label}}
+        {{fav.dataset.parameters.phenomenon?.label}} - {{fav.dataset.parameters.feature?.label}}
       </div>
       <div class="fav-actions">
         <button mat-icon-button (click)="deleteFav(group)"

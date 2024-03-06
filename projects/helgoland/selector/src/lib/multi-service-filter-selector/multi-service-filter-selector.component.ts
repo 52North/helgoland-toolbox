@@ -37,10 +37,10 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public endpoint: MultiServiceFilterEndpoint;
 
     @Input()
-    public filterList: MultiServiceFilter[];
+    public filterList: MultiServiceFilter[] | undefined;
 
     @Input()
-    public selected: string;
+    public selected: string | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix

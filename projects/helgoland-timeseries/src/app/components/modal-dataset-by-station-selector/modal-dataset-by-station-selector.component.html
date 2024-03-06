@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{station?.label}}</h1>
+<h1 mat-dialog-title>{{station.label}}</h1>
 <mat-dialog-content>
 
   <p>
@@ -11,12 +11,14 @@
     <mat-selection-list (selectionChange)="adjustSelection($event)">
       <mat-list-option *ngFor="let ds of phenomenonMatchedList" color="primary" [value]="ds" [selected]="ds.selected">
         <div matListItemTitle>
-          <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+          <n52-label-mapper [label]="ds.parameters.phenomenon?.label"></n52-label-mapper>
         </div>
         <div matListItemLine>
-          <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+          <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
           <span
-            *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+            *ngIf="ds.parameters.category?.label && ds.parameters.category?.label !== ds.parameters.phenomenon?.label">
+            ({{ds.parameters.category?.label}})
+          </span>
         </div>
         <div matListItemLine *ngIf="ds.lastValue">
           <span>{{ds.lastValue.value}}</span>
@@ -38,12 +40,14 @@
         <mat-selection-list color="primary" (selectionChange)="adjustSelection($event)">
           <mat-list-option *ngFor="let ds of othersList" [value]="ds" [selected]="ds.selected">
             <div matListItemTitle>
-              <n52-label-mapper [label]="ds.parameters.phenomenon.label"></n52-label-mapper>
+              <n52-label-mapper [label]="ds.parameters.phenomenon?.label"></n52-label-mapper>
             </div>
             <div matListItemLine>
-              <n52-label-mapper [label]="ds.parameters.procedure.label"></n52-label-mapper>
+              <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
               <span
-                *ngIf="ds.parameters.category.label && ds.parameters.category.label !== ds.parameters.phenomenon.label">({{ds.parameters.category.label}})</span>
+                *ngIf="ds.parameters.category?.label && ds.parameters.category?.label !== ds.parameters.phenomenon?.label">
+                ({{ds.parameters.category?.label}})
+              </span>
             </div>
             <div matListItemLine *ngIf="ds.lastValue">
               <span>{{ds.lastValue.value}}</span>

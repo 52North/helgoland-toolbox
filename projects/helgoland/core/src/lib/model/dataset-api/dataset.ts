@@ -15,12 +15,12 @@ export interface IDataset extends Parameter {
 }
 
 export class ParameterConstellation {
-    public service: Parameter;
-    public offering: Parameter;
-    public feature: Feature;
-    public procedure: Parameter;
-    public phenomenon: Parameter;
-    public category: Parameter;
+    public service?: Parameter;
+    public offering?: Parameter;
+    public feature?: Feature;
+    public procedure?: Parameter;
+    public phenomenon?: Parameter;
+    public category?: Parameter;
 }
 
 export class FirstLastValue {
@@ -62,7 +62,7 @@ export interface BarRenderingHints {
 }
 
 export class DatasetParameterConstellation extends ParameterConstellation {
-    public platform: PlatformParameter;
+    public platform: PlatformParameter | undefined;
 }
 
 export class Dataset implements IDataset {
