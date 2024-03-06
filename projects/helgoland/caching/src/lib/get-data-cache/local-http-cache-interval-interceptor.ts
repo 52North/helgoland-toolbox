@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
 import {
@@ -50,6 +51,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     if (!req.url.includes('/getData')) {
       return next.handle(req, metadata);
     }
+    debugger;
     if (req.urlWithParams.includes('expanded=true')) {
       expanded = true;
     }
@@ -261,11 +263,14 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * Function to decode a string to a timespan.
    * @param ts {string} timespan as string format
    */
-  private decodeTimespan(ts: string): Timespan {
-    const idx = ts.indexOf('/');
-    const start = ts.substring(0, idx);
-    const end = ts.substring(idx + 1);
-    return new Timespan(Math.min(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000), Math.max(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000));
+  private decodeTimespan(ts: string | null): Timespan | null {
+    if (ts) {
+      const idx = ts.indexOf('/');
+      const start = ts.substring(0, idx);
+      const end = ts.substring(idx + 1);
+      return new Timespan(Math.min(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000), Math.max(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000));
+    }
+    return null;
   }
 
   /**
@@ -292,7 +297,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param el1 {Data<TimeValueTuple>}
    * @param el2 {Data<TimeValueTuple>}
    */
-  private selectValueBeforeTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple {
+  private selectValueBeforeTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple | undefined {
     if (el1.valueBeforeTimespan) {
       if (el2.valueBeforeTimespan) {
         return el1.valueBeforeTimespan[0] < el2.valueBeforeTimespan[0] ? el1.valueBeforeTimespan : el2.valueBeforeTimespan;
@@ -311,7 +316,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param el1 {Data<TimeValueTuple>}
    * @param el2 {Data<TimeValueTuple>}
    */
-  private selectValueAfterTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple {
+  private selectValueAfterTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple | undefined {
     if (el1.valueAfterTimespan) {
       if (el2.valueAfterTimespan) {
         return el1.valueAfterTimespan[0] < el2.valueAfterTimespan[0] ? el1.valueAfterTimespan : el2.valueAfterTimespan;

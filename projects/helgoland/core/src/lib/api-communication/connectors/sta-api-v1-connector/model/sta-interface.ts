@@ -36,7 +36,7 @@ export interface StaSelectParams {
 
 export interface StaValueListResponse<T extends StaObject> {
   '@iot.count': number;
-  '@iot.nextLink': string;
+  '@iot.nextLink'?: string;
   value: T[];
 }
 

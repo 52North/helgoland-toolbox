@@ -9,7 +9,7 @@ import moment from 'moment';
 })
 export class TimezoneService {
 
-  private currentTimezone: moment.MomentZone;
+  private currentTimezone: moment.MomentZone | null;
 
   private offsetToLocale: number; // TODO: check if still needed
 
@@ -22,26 +22,30 @@ export class TimezoneService {
     this.calcOffset();
   }
 
-  public setTimezone(tzStr?: string) {
+  public setTimezone(tzStr: string = '') {
     const tz = moment.tz.zone(tzStr);
     if (tz) {
       this.currentTimezone = tz;
     } else {
       this.currentTimezone = moment.tz.zone(moment.tz.guess());
-      console.warn(`Timezone '${tzStr}' is not supported, '${this.currentTimezone.name}' is used instead`);
+      console.warn(`Timezone '${tzStr}' is not supported, '${this.currentTimezone?.name}' is used instead`);
     }
     this.calcOffset();
-    moment.tz.setDefault(this.currentTimezone.name);
-    this.timezoneChange.emit(this.currentTimezone.name);
+    if (this.currentTimezone) {
+      moment.tz.setDefault(this.currentTimezone.name);
+      this.timezoneChange.emit(this.currentTimezone.name);
+    }
   }
 
   private calcOffset() {
     const date = new Date().getTime();
-    this.offsetToLocale = -1 * moment.tz.zone(moment.tz.guess()).utcOffset(date) + this.currentTimezone.utcOffset(date);
+    const guess = moment.tz.zone(moment.tz.guess());
+    if (guess && this.currentTimezone)
+      this.offsetToLocale = -1 * guess.utcOffset(date) + this.currentTimezone.utcOffset(date);
   }
 
   public getTimezoneName(): string {
-    return this.currentTimezone.name;
+    return this.currentTimezone?.name ? this.currentTimezone?.name : '';
   }
 
   public formatTzDate(date: moment.Moment | Date | number | string, format?: string): string {
@@ -50,7 +54,7 @@ export class TimezoneService {
     if (date instanceof Date) { date = moment(date); }
     if (this.translateSrvc.currentLang) { moment.locale(this.translateSrvc.currentLang); }
     if (!format) { format = 'L LT z'; }
-    return date.tz(this.currentTimezone.name).format(format);
+    return date.tz(this.getTimezoneName()).format(format);
   }
 
   public createTzDate(m: moment.MomentInput): moment.Moment {

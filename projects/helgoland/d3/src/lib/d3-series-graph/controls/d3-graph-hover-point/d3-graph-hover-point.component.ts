@@ -49,7 +49,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   protected datasets: SeriesGraphDataset[];
   protected graphExtent: D3GraphExtent;
   protected graphLayer: d3.Selection<SVGSVGElement, any, any, any>;
-  protected previousPoint: HoveredElement;
+  protected previousPoint: HoveredElement | undefined;
 
   protected previousBars: BarHoverElement[] = [];
 
@@ -118,14 +118,16 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   protected mouseMoved() {
     this.unhighlight();
     const pos = this.getCurrentMousePosition();
-    const nearestPoint = this.findNearestPoint(pos.x, pos.y);
-    if (nearestPoint) {
-      this.highlightPoint(nearestPoint);
-    } else {
-      const time = this.graphExtent.xScale.invert(pos.x).getTime();
-      const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
-      if (nearestBar.length) {
-        this.highlightBars(nearestBar);
+    if (pos) {
+      const nearestPoint = this.findNearestPoint(pos.x, pos.y);
+      if (nearestPoint) {
+        this.highlightPoint(nearestPoint);
+      } else {
+        const time = this.graphExtent.xScale.invert(pos.x).getTime();
+        const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
+        if (nearestBar.length) {
+          this.highlightBars(nearestBar);
+        }
       }
     }
   }
@@ -176,7 +178,9 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
       nearestBar.selection.style('fill-opacity', '0.6');
     });
     const pos = this.getCurrentMousePosition();
-    this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
+    if (pos) {
+      this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
+    }
   }
 
   protected unhighlight() {
@@ -195,8 +199,8 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     this.hoveringService.removeTooltip();
   }
 
-  protected findNearestPoint(x: number, y: number): HoveredElement {
-    let nearest: HoveredElement = null;
+  protected findNearestPoint(x: number, y: number): HoveredElement | undefined {
+    let nearest: HoveredElement | undefined = undefined;
     let nearestDist = Infinity;
 
     this.datasets.forEach((ds, i) => {
@@ -247,9 +251,13 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     return nearest;
   }
 
-  protected getCurrentMousePosition(): { x: number, y: number } {
-    const [x, y] = d3.mouse(this.background.node());
-    return { x: x + this.graphExtent.leftOffset, y };
+  protected getCurrentMousePosition(): { x: number, y: number } | undefined {
+    const background = this.background.node();
+    if (background) {
+      const [x, y] = d3.mouse(background);
+      return { x: x + this.graphExtent.leftOffset, y };
+    }
+    return undefined;
   }
 
   protected distance(px: number, py: number, mx: number, my: number): number {

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { Category } from '../../model/dataset-api/category';
-import { Data } from '../../model/dataset-api/data';
+import { Data, IDataEntry } from '../../model/dataset-api/data';
 import { Timeseries, TimeseriesData, TimeseriesExtras } from '../../model/dataset-api/dataset';
 import { Feature } from '../../model/dataset-api/feature';
 import { Offering } from '../../model/dataset-api/offering';
@@ -31,7 +31,9 @@ export interface DatasetApiV1 {
     getSingleTimeseriesByInternalId(internalId: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries>;
     getTimeseriesExtras(id: string, apiUrl: string): Observable<TimeseriesExtras>;
 
-    getTsData<T>(id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions): Observable<Data<T>>;
+    getTsData<T extends IDataEntry>(
+        id: string, apiUrl: string, timespan: Timespan, params?: DataParameterFilter, options?: HttpRequestOptions
+    ): Observable<Data<T>>;
 
     getCategories(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category[]>;
     getCategory(id: string, apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Category>;

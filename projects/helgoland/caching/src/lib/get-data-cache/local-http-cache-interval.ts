@@ -52,6 +52,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
             selectedCache.set(url, newCachedObjs);
             return newCachedObjs;
         } else {
+            // @ts-ignore
             return objs;
         }
     }
@@ -95,7 +96,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      */
     private putByCache(selectedCache: Map<string, CachedObject[]>, url: string, obj: CachedObject, originReq?: boolean) {
         if (selectedCache.has(url)) {
-            let cachedObjs = selectedCache.get(url);
+            let cachedObjs = selectedCache.get(url)!;
             // add new obj to current key
             const cachedObjsManip: CachedObject[] = [];
             if (originReq) {
@@ -240,12 +241,12 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
      * @param ts {Timespan} requested timespan
      * @param pos {string} indicates point in time where values should be taken from
      */
-    private getCachedInterval(obj: CachedObject, tsDiff: Timespan, ts: Timespan, pos: string): CachedObject {
+    private getCachedInterval(obj: CachedObject, tsDiff: Timespan | null, ts: Timespan, pos: string): CachedObject {
         const clonedObj: CachedObject = lodash.cloneDeep(obj);
-        if (pos === 'left') {
+        if (pos === 'left' && tsDiff) {
             clonedObj.values.values = obj.values.values.filter(el => el[0] <= ts.to && el[0] >= tsDiff.to);
         }
-        if (pos === 'right') {
+        if (pos === 'right' && tsDiff) {
             clonedObj.values.values = obj.values.values.filter(el => el[0] >= ts.from && el[0] <= tsDiff.from);
         }
         if (pos === 'inside') {

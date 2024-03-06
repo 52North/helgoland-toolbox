@@ -16,7 +16,7 @@ export abstract class ApiInterface {
         return encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format());
     }
 
-    protected createBasicAuthHeader(token: string): HttpHeaders {
+    protected createBasicAuthHeader(token?: string): HttpHeaders {
         const headers = new HttpHeaders();
         if (token) { return headers.set('Authorization', token); }
         return headers;

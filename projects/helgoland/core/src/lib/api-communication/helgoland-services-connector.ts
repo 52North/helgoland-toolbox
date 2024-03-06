@@ -211,7 +211,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
   private getConnector(url: string): Observable<HelgolandServiceConnector> {
     return new Observable<HelgolandServiceConnector>((observer: Observer<HelgolandServiceConnector>) => {
       if (this.serviceMapping.has(url)) {
-        observer.next(this.serviceMapping.get(url));
+        observer.next(this.serviceMapping.get(url)!);
         observer.complete();
         return;
       }
@@ -221,7 +221,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
         return;
       }
 
-      const serviceConfig = this.settings.getSettings() && this.settings.getSettings().datasetApis && this.settings.getSettings().datasetApis.find(e => e.url === url);
+      const serviceConfig = this.settings.getSettings().datasetApis?.find(e => e.url === url);
       if (serviceConfig && serviceConfig.connector) {
         const connector = this.connectorList.find(c => c.name === serviceConfig.connector);
         if (connector) {
@@ -236,7 +236,7 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
       combineLatest(canHandleObs).subscribe(res => {
         const idx = res.findIndex(e => e);
         if (idx >= 0) {
-          const connector = this.connectorList[idx];
+          const connector = this.connectorList![idx];
           this.setConnector(url, connector, observer);
           this.serviceMapping.set(url, connector);
           // console.log(`${url} uses ${connector.name}`);

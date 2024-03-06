@@ -74,36 +74,40 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
   protected clearLayer() {
     if (this.copyrightLayer) {
       this.copyrightLayer.remove();
-      this.copyrightLayer = null;
+      this.copyrightLayer = undefined;
     }
   }
 
   protected createLabelText() {
-    if (this.copyright.link) {
-      this.labelText = this.copyrightLayer.append('a')
-        .attr('href', this.copyright.link)
-        .attr('target', '_blank')
-        .attr('rel', 'noopener noreferrer')
-        .append('svg:text')
-        .attr('class', 'copyright-text')
-        .style('pointer-events', 'all');
-    } else {
-      this.labelText = this.copyrightLayer.append('svg:text')
-        .attr('class', 'copyright-text')
-        .style('pointer-events', 'none');
+    if (this.copyrightLayer) {
+      if (this.copyright?.link) {
+        this.labelText = this.copyrightLayer.append('a')
+          .attr('href', this.copyright.link)
+          .attr('target', '_blank')
+          .attr('rel', 'noopener noreferrer')
+          .append('svg:text')
+          .attr('class', 'copyright-text')
+          .style('pointer-events', 'all');
+      } else {
+        this.labelText = this.copyrightLayer.append('svg:text')
+          .attr('class', 'copyright-text')
+          .style('pointer-events', 'none');
+      }
     }
   }
 
   protected createLabelRect() {
-    this.labelRect = this.copyrightLayer.append('svg:rect')
-      .attr('class', 'copyright-rect')
-      .style('fill', 'none')
-      .style('stroke', 'none')
-      .style('pointer-events', 'none');
+    if (this.copyrightLayer) {
+      this.labelRect = this.copyrightLayer.append('svg:rect')
+        .attr('class', 'copyright-rect')
+        .style('fill', 'none')
+        .style('stroke', 'none')
+        .style('pointer-events', 'none');
+    }
   }
 
   protected setText() {
-    if (this.copyrightLayer) {
+    if (this.copyrightLayer && this.copyright) {
       const backgroundDim = this.graphHelper.getDimensions(this.background.node());
       let x = 3;
       let y = 3;

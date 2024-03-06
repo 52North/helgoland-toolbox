@@ -194,9 +194,9 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
   protected createDataset(dataset: Dataset, url: string, filter: DatasetFilter): HelgolandDataset {
     switch (filter.type) {
       case DatasetType.Timeseries:
-        if (dataset.parameters) {
+        if (dataset.parameters && dataset.parameters.platform) {
           // TODO: ggf station nachholen
-          const station = new HelgolandPlatform(dataset.parameters.platform.id, dataset.parameters.platform.label, null);
+          const station = new HelgolandPlatform(dataset.parameters.platform.id, dataset.parameters.platform.label, []);
           return new HelgolandTimeseries(
             dataset.id,
             url,

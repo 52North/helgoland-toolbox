@@ -27,15 +27,22 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     if (timespanPresets) {
       this.parsedTimespanPresets = timespanPresets
         .filter((e) => this.isSafeTimespanPreset(e))
-        .map((e) => ({
-          name: e.name,
-          label: e.label,
-          timespan: {
-            from: this.parseMomentExpression(e.timespan.from).getTime(),
-            to: this.parseMomentExpression(e.timespan.to).getTime()
-          },
-          seperatorAfterThisItem: e.seperatorAfterThisItem
-        }));
+        .map((e) => {
+          const from = this.parseMomentExpression(e.timespan.from);
+          const to = this.parseMomentExpression(e.timespan.to);
+          if (from && to) {
+            return {
+              name: e.name,
+              label: e.label,
+              timespan: {
+                from: from.getTime(),
+                to: to.getTime()
+              },
+              seperatorAfterThisItem: e.seperatorAfterThisItem
+            };
+          }
+          throw new Error("Could not parse timespan");
+        });
     }
   }
 
@@ -65,15 +72,14 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     }
   }
 
-  public parseMomentExpression(expression: string): Date {
+  public parseMomentExpression(expression: string): Date | null {
     // just to be sure not to eval() something nasty
     if (this.isSafeMomentExpression(expression)) {
       // if satisfied, eval the inputs -> the ._d property contains the corresponding Date objects from which the Timespan can be constructed
       // eslint-disable-next-line no-eval
       return eval(expression)._d;
-    } else {
-      return null;
     }
+    return null;
   }
 
   public timespanChanged(preset: ParsedTimespanPreset) {

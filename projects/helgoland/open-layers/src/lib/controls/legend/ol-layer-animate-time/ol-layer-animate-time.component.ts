@@ -29,7 +29,7 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
     // get current time parameter
     this.determineCurrentTimeParameter();
     // find index in list
-    let idx = this.timeDimensions.findIndex(e => e.getTime() === this.currentTime.getTime());
+    let idx = this.timeDimensions.findIndex(e => this.currentTime && e.getTime() === this.currentTime.getTime());
     // start animation
     this.interval = window.setInterval(() => {
       idx++;
@@ -43,7 +43,9 @@ export class OlLayerAnimateTimeComponent extends OlLayerTimeSelectorComponent im
   }
 
   public resetAnimation() {
-    this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => this.setTime(time));
+    this.wmsCaps.getDefaultTimeDimension(this.layerid, this.url).subscribe(time => {
+      if (time) this.setTime(time);
+    });
   }
 
 }
