@@ -16,7 +16,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
-import { Time, Timespan, TimezoneService } from '@helgoland/core';
+import { Time, Timespan, TimezoneService, filterUndefined } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
 import moment, { duration, unitOfTime } from 'moment';
@@ -133,7 +133,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private yAxes: YAxis[] = [];
 
     private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
-    private yScaleBase: d3.ScaleLinear<number, number>; // calculate diagram coord of y value
+    private yScaleBase: d3.ScaleLinear<number, number> | undefined; // calculate diagram coord of y value
     private leftOffset: number;
 
     private height: number;
@@ -243,8 +243,8 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private unsubscribeEvents(item: SeriesGraphDataset) {
         if (this.subscriptions.has(item.id)) {
-            this.subscriptions.get(item.id).state.unsubscribe();
-            this.subscriptions.get(item.id).data.unsubscribe();
+            this.subscriptions.get(item.id)!.state.unsubscribe();
+            this.subscriptions.get(item.id)!.data.unsubscribe();
             this.subscriptions.delete(item.id);
         }
     }
@@ -321,13 +321,13 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * @param entry {DataEntry} Object containing dataset related data.
      */
     protected processData(entry: SeriesGraphDataset): void {
-        let visualMin: number;
-        let visualMax: number;
+        let visualMin: number | undefined = undefined;
+        let visualMax: number | undefined = undefined;
         let fixedMin = false;
         let fixedMax = false;
 
         // set out of yAxisRange
-        if (entry.yAxis.range) {
+        if (entry.yAxis.range?.min && entry.yAxis.range?.max) {
 
             if (!isNaN(entry.yAxis.range.min)) {
                 visualMin = entry.yAxis.range.min;
@@ -339,7 +339,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 fixedMax = true;
             }
 
-            if (!isNaN(visualMin) && !isNaN(visualMax) && visualMin > visualMax) {
+            if (visualMin && visualMax && visualMin > visualMax) {
                 const temp = visualMin;
                 visualMin = visualMax;
                 visualMax = temp;
@@ -347,7 +347,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         }
 
         // set variable extend bounds
-        if (isNaN(visualMin) || isNaN(visualMax)) {
+        if (visualMin === undefined || visualMax === undefined) {
             const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
@@ -361,28 +361,28 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .filter(c => c.visible)
                 .map(e => d3.extent<DataEntry, number>(e.data, (d) => (typeof d.value === 'number') ? d.value : null));
 
-            if (isNaN(visualMin)) {
-                visualMin = d3.min([baseDataExtent[0], ...dataExtentChildValues.map(e => e[0])]);
+            if (visualMin === undefined) {
+                visualMin = d3.min(filterUndefined([baseDataExtent[0], ...dataExtentChildValues.map(e => e[0])]));
             }
 
-            if (isNaN(visualMax)) {
-                visualMax = d3.max([baseDataExtent[1], ...dataExtentChildValues.map(e => e[1])]);
+            if (visualMax === undefined) {
+                visualMax = d3.max(filterUndefined([baseDataExtent[1], ...dataExtentChildValues.map(e => e[1])]));
             }
         }
 
         // set out of zeroBasedAxis
         if (entry.yAxis.zeroBased) {
-            if (visualMin > 0) {
+            if (visualMin && visualMin > 0) {
                 visualMin = 0;
             }
-            if (visualMax < 0) {
+            if (visualMax && visualMax < 0) {
                 visualMax = 0;
             }
         }
 
         this.preparedAxes.set(entry.id, {
-            visualMin,
-            visualMax,
+            visualMin: visualMin!,
+            visualMax: visualMax!,
             fixedMin,
             fixedMax,
             entry
@@ -403,7 +403,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function that returns the width of the graph diagram.
      */
     private calculateWidth(): number {
-        return this.rawSvg.node().width.baseVal.value - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return (this.rawSvg.node()?.width.baseVal.value || 100) - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     /**
@@ -427,7 +427,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 this.graph.append('svg:g')
                     .attr('class', 'grid y-grid')
                     .attr('transform', 'translate(' + this.leftOffset + ', 0)')
-                    .call(d3.axisLeft(this.yAxes[idx].yScale)
+                    .call(d3.axisLeft(this.yAxes[idx].yScale!)
                         .ticks(TICKS_COUNT_YAXIS)
                         .tickSize(-this.width + this.leftOffset)
                         .tickFormat(() => '') as any);
@@ -437,7 +437,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     public getDrawingLayer(id: string, front?: boolean): d3.Selection<SVGGElement, any, any, any> {
         return this.rawSvg
-            .insert('g', !front ? `#interaction-layer-${this.ID}` : null)
+            .insert('g', !front ? `#interaction-layer-${this.ID}` : undefined)
             .attr('id', id)
             .attr('transform', 'translate(' + (this.margin.left + this.maxLabelwidth) + ',' + this.margin.top + ')');
     }
@@ -476,18 +476,18 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.observer.forEach(e => e.cleanUp && e.cleanUp());
 
         this.leftOffset = 0;
-        this.yScaleBase = null;
+        this.yScaleBase = undefined;
 
         // reset y axes
         this.yAxes = [];
         this.prepareYAxes();
 
         this.yAxes.forEach(axis => {
-            axis.first = (this.yScaleBase === null);
+            axis.first = (this.yScaleBase === undefined);
             axis.offset = this.leftOffset;
 
             const yAxisResult = this.drawYaxis(axis);
-            if (this.yScaleBase === null) {
+            if (this.yScaleBase === undefined) {
                 this.yScaleBase = yAxisResult.yScale;
                 this.leftOffset = yAxisResult.buffer;
             } else {
@@ -572,10 +572,10 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private isNotDrawable() {
         try {
-            return this.rawSvg.node().width.baseVal.value === undefined
-                || this.rawSvg.node().width.baseVal.value === 0
-                || this.rawSvg.node().height.baseVal.value === undefined
-                || this.rawSvg.node().height.baseVal.value === 0
+            return this.rawSvg.node()?.width.baseVal.value === undefined
+                || this.rawSvg.node()?.width.baseVal.value === 0
+                || this.rawSvg.node()?.height.baseVal.value === undefined
+                || this.rawSvg.node()?.height.baseVal.value === 0
                 || !this.graph
                 || !this.rawSvg
                 || this.datasets === undefined
@@ -591,47 +591,49 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     protected createYAxisForId(id: string) {
         if (this.preparedAxes.has(id)) {
             const axisSettings = this.preparedAxes.get(id);
-            if (axisSettings.entry.yAxis.separate) {
-                // create sepearte axis
-                this.yAxes.push({
-                    uom: axisSettings.entry.description.uom,
-                    range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
-                    fixedMin: axisSettings.fixedMin,
-                    fixedMax: axisSettings.fixedMax,
-                    selected: axisSettings.entry.selected,
-                    seperate: true,
-                    ids: [id],
-                    label: axisSettings.entry.description.featureLabel
-                });
-            } else {
-                // find matching axis or add new
-                const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.description.uom) && !e.seperate);
-                if (axis) {
-                    // add id to axis
-                    axis.ids.push(id);
-                    // update range for axis
-                    if (!axis.fixedMin) {
-                        axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
-                    }
-                    if (!axis.fixedMax) {
-                        axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
-                    }
-                    axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
-                    axis.fixedMax = axis.fixedMax || axisSettings.fixedMax;
-                    // update selection
-                    if (axis.selected) {
-                        axis.selected = axisSettings.entry.selected;
-                    }
-                } else {
+            if (axisSettings) {
+                if (axisSettings.entry.yAxis.separate) {
+                    // create sepearte axis
                     this.yAxes.push({
                         uom: axisSettings.entry.description.uom,
                         range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
                         fixedMin: axisSettings.fixedMin,
                         fixedMax: axisSettings.fixedMax,
-                        seperate: false,
-                        selected: axisSettings.entry.selected ? axisSettings.entry.selected : false,
-                        ids: [id]
+                        selected: !!axisSettings.entry.selected,
+                        seperate: true,
+                        ids: [id],
+                        label: axisSettings.entry.description.featureLabel
                     });
+                } else {
+                    // find matching axis or add new
+                    const axis = this.yAxes.find(e => e.uom.includes(axisSettings.entry.description.uom) && !e.seperate);
+                    if (axis) {
+                        // add id to axis
+                        axis.ids.push(id);
+                        // update range for axis
+                        if (!axis.fixedMin && axis.range.min) {
+                            axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
+                        }
+                        if (!axis.fixedMax && axis.range.max) {
+                            axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
+                        }
+                        axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
+                        axis.fixedMax = axis.fixedMax || axisSettings.fixedMax;
+                        // update selection
+                        if (axis.selected) {
+                            axis.selected = !!axisSettings.entry.selected;
+                        }
+                    } else {
+                        this.yAxes.push({
+                            uom: axisSettings.entry.description.uom,
+                            range: { min: axisSettings.visualMin, max: axisSettings.visualMax },
+                            fixedMin: axisSettings.fixedMin,
+                            fixedMax: axisSettings.fixedMax,
+                            seperate: false,
+                            selected: !!axisSettings.entry.selected,
+                            ids: [id]
+                        });
+                    }
                 }
             }
         }
@@ -688,10 +690,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         // draw right axis as border
         this.graph.selectAll('.y.axis.right').remove();
-        this.graph.append('svg:g')
-            .attr('class', 'y axis right')
-            .attr('transform', 'translate(' + this.width + ',0)')
-            .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0) as any);
+        if (this.yScaleBase) {
+            this.graph.append('svg:g')
+                .attr('class', 'y axis right')
+                .attr('transform', 'translate(' + this.width + ',0)')
+                .call(d3.axisRight(this.yScaleBase).tickFormat(() => '').tickSize(0) as any);
+        }
 
         // text label for the x axis
         this.graph.selectAll('.x.axis.label').remove();
@@ -806,7 +810,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.observer.forEach(e => { if (e.adjustYAxis) { e.adjustYAxis(axis); } });
 
         // range for y axis scale
-        const yScale = d3.scaleLinear().domain([axis.range.min, axis.range.max]).range([this.height, 0]);
+        const yScale = d3.scaleLinear().domain([axis.range.min!, axis.range.max!]).range([this.height, 0]);
 
         const yAxisGen = d3.axisLeft(yScale).ticks(TICKS_COUNT_YAXIS);
         let buffer = 0;
@@ -821,12 +825,13 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         // draw y axis
         const axisElem = this.graph.append<SVGSVGElement>('svg:g')
             .attr('class', 'y axis')
-            .call(yAxisGen);
+            .call(yAxisGen)
+        const axisElemNode = axisElem.node()
 
         // only if yAxis should be visible
-        if (showAxis) {
+        if (showAxis && axisElemNode) {
             const diagramHeight = this.height;
-            let axisHeight = axisElem.node().getBBox().height;
+            let axisHeight = axisElemNode.getBBox().height;
             if (this.plotOptions.yaxisModifier) {
                 axisHeight -= 180;
             }
@@ -839,10 +844,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 .text(axis.label ? (axis.uom + ' @ ' + axis.label) : axis.uom)
                 .call(this.wrapText, axisHeight - 10, diagramHeight / 2, this.plotOptions.yaxisModifier, axis.label);
 
-            const axisWidth = axisElem.node().getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
+            const axisWidth = axisElemNode.getBBox().width + 10 + this.graphHelper.getDimensions(text.node()).h;
 
             // if yAxis should not be visible, buffer will be set to 0
-            buffer = (showAxis ? axis.offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
+            const offset = axis.offset ? axis.offset : 0;
+            buffer = (showAxis ? offset + (axisWidth < this.margin.left ? this.margin.left : axisWidth) : 0);
 
             const axisWidthDiv = (axisWidth < this.margin.left ? this.margin.left : axisWidth);
 
@@ -858,13 +864,14 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 textOff = this.margin.left;
             }
             text.attr('y', 0 - textOff);
+            const textNode = text.node();
 
-            if (text) {
-                const textWidth = text.node().getBBox().width;
-                const textHeight = text.node().getBBox().height;
+            if (text && textNode) {
+                const textWidth = textNode.getBBox().width;
+                const textHeight = textNode.getBBox().height;
                 const textPosition = {
-                    x: text.node().getBBox().x,
-                    y: text.node().getBBox().y
+                    x: textNode.getBBox().x,
+                    y: textNode.getBBox().y
                 };
                 const axisradius = 4;
                 const startOfPoints = {
@@ -891,7 +898,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     .on('mouseup', () => this.highlightAxis(axis));
 
                 if (!axis.first) {
-                    axisDiv.attr('x', axis.offset).attr('y', 0);
+                    axisDiv.attr('x', offset).attr('y', 0);
                 } else {
                     axisDiv.attr('x', 0 - this.margin.left - this.maxLabelwidth).attr('y', 0);
                 }
@@ -920,7 +927,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         axis.ids.forEach(id => {
             const entry = this.datasets.find(e => e.id === id);
             // TODO: maybe with update false
-            entry.setSelected(selection);
+            entry?.setSelected(selection);
         })
         this.redrawGraph();
         const list = this.datasets.filter(e => e.selected).map(e => e.id);
@@ -956,11 +963,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
                 switch (entry.style.constructor) {
                     case BarStyle:
-                        this.drawBarChart(entry as SeriesGraphDataset<BarStyle>, idx, yaxis.yScale);
+                        this.drawBarChart(entry as SeriesGraphDataset<BarStyle>, idx, yaxis.yScale!);
                         break;
                     case LineStyle:
-                        entry.children.forEach(e => e.visible && this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale));
-                        this.drawLineChart(entry as SeriesGraphDataset<LineStyle>, idx, yaxis.yScale);
+                        entry.children.forEach(e => e.visible && this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale!));
+                        this.drawLineChart(entry as SeriesGraphDataset<LineStyle>, idx, yaxis.yScale!);
                         break;
                 }
             }
@@ -1054,17 +1061,17 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .style('stroke', ds.style.baseColor)
             .style('stroke-width', this.calculateLineWidth(ds))
             .style('fill-opacity', 0.5)
-            .attr('x', (d: DataEntry) => this.xScaleBase(d.timestamp) + paddingBefore)
+            .attr('x', (d: DataEntry) => (this.xScaleBase(d.timestamp) || 0) + paddingBefore)
             .attr('width', (d: DataEntry) => {
                 let width = 10;
                 if (typeof d.value === 'number') {
-                    width = this.xScaleBase(d.timestamp + periodInMs) - this.xScaleBase(d.timestamp);
+                    width = (this.xScaleBase(d.timestamp + periodInMs) || 0) - (this.xScaleBase(d.timestamp) || 0);
                 }
                 const barWidth = width - paddingBefore - paddingAfter;
                 return barWidth < 1 ? 1 : barWidth;
             })
             .attr('y', (d: DataEntry) => !isNaN(d.value) ? yScaleBase(d.value) : 0)
-            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - yScaleBase(d.value) : 0);
+            .attr('height', (d: DataEntry) => !isNaN(d.value) ? this.height - (yScaleBase(d.value) || 0) : 0);
     }
 
     private createLine(xScaleBase: d3.ScaleTime<number, number>, yScaleBase: d3.ScaleLinear<number, number>) {
@@ -1073,11 +1080,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 return (!isNaN(d.timestamp)) && (!isNaN(d.value));
             })
             .x((d) => {
-                d.xDiagCoord = xScaleBase(d.timestamp);
+                d.xDiagCoord = xScaleBase(d.timestamp) as number;
                 return d.xDiagCoord;
             })
             .y((d) => {
-                d.yDiagCoord = yScaleBase(d.value);
+                d.yDiagCoord = yScaleBase(d.value) as number;
                 return d.yDiagCoord;
             })
             .curve(d3.curveLinear);
@@ -1089,7 +1096,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * @param width {Number} width of the axis which must not be crossed
      * @param xposition {Number} position to center the label in the middle
      */
-    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string): void {
+    private wrapText(textObj: any, width: number, xposition: number, yaxisModifier: boolean, axisLabel: string | undefined): void {
         textObj.each((u: any, i: number, d: any) => {
             const bla = d[i];
             const bufferYaxisModifier = (yaxisModifier ? (axisLabel ? 0 : 30) : 0); // add buffer to avoid colored circles intersect with yaxismodifier symbols

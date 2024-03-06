@@ -1,9 +1,11 @@
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { BasicAuthInformer, BasicAuthService, BasicAuthServiceMaintainer } from '@helgoland/auth';
+import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
   DatasetApiV1ConnectorProvider,
@@ -54,6 +56,14 @@ Promise.all([settingsPromise]).then((config: any) => {
           }
         })
       ),
+      importProvidersFrom(
+        HelgolandCachingModule.forRoot({
+          cachingDurationInMilliseconds: 300000,
+          getDataCacheActive: false,
+          logging: false
+        })
+      ),
+      importProvidersFrom(MatMomentDateModule),
       provideHttpClient(),
       provideAnimations(),
 

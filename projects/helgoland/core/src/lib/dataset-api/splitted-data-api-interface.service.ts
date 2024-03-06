@@ -5,7 +5,7 @@ import moment from 'moment';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Data } from '../model/dataset-api/data';
+import { Data, IDataEntry } from '../model/dataset-api/data';
 import { DataParameterFilter, HttpRequestOptions } from '../model/internal/http-requests';
 import { Timespan } from '../model/internal/timeInterval';
 import { DatasetImplApiInterface } from './dataset-impl-api-interface.service';
@@ -23,7 +23,7 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
         super(httpservice, internalDatasetId, translate);
     }
 
-    public override getTsData<T>(
+    public override getTsData<T extends IDataEntry>(
         id: string,
         apiUrl: string,
         timespan: Timespan,
@@ -98,7 +98,7 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
         }
     }
 
-    public override getData<T>(
+    public override getData<T extends IDataEntry>(
         id: string,
         apiUrl: string,
         timespan: Timespan,

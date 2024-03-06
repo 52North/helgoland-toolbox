@@ -3,6 +3,7 @@ import {
   BarRenderingHints,
   ColorService,
   DatasetType,
+  FirstLastValue,
   HelgolandDataset,
   HelgolandServicesConnector,
   HelgolandTimeseries,
@@ -231,13 +232,13 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         selected,
         {
           uom: ts.uom,
-          phenomenonLabel: ts.parameters.phenomenon.label,
+          phenomenonLabel: ts.parameters.phenomenon?.label || '',
           platformLabel: ts.platform.label,
-          procedureLabel: ts.parameters.procedure.label,
-          categoryLabel: ts.parameters.category.label,
-          featureLabel: ts.parameters.feature.label,
-          firstValue: ts.firstValue,
-          lastValue: ts.lastValue
+          procedureLabel: ts.parameters.procedure?.label || '',
+          categoryLabel: ts.parameters.category?.label || '',
+          featureLabel: ts.parameters.feature?.label || '',
+          firstValue: ts.firstValue || new FirstLastValue(),
+          lastValue: ts.lastValue || new FirstLastValue()
         }
       )
       this.setState(dataset.id, style, yaxis, selected, visible);
@@ -337,7 +338,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   private loadDatasetData(id: string) {
     this.loadOverviewData(id);
     const dataset = this.datasetMap.get(id);
-    if (this.graphDatasetsSrvc.timespan) {
+    if (this.graphDatasetsSrvc.timespan && dataset) {
       this.graphDatasetsSrvc.setDataLoading(id, true);
       if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
         && dataset.firstValue
@@ -360,6 +361,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   private loadOverviewData(id: string) {
     if (this.graphDatasetsSrvc.overviewTimespan) {
       const dataset = this.datasetMap.get(id);
+      if (!dataset) return;
       this.graphDatasetsSrvc.setOverviewDataLoading(id, true);
       if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
         && dataset.firstValue

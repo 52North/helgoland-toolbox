@@ -50,13 +50,13 @@ export abstract class FacetSearchService {
     abstract getResults(): Observable<FacetSearchElement[]>;
     abstract getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[];
     abstract selectParameter(type: ParameterFacetType, parameter: FacetParameter): any;
-    abstract getSelectedParameter(type: ParameterFacetType): FacetParameter;
+    abstract getSelectedParameter(type: ParameterFacetType): FacetParameter | undefined;
     abstract setEntries(entries: FacetSearchElement[]): void;
     abstract getFilteredResults(): FacetSearchElement[];
     abstract setSelectedTimespan(timespan: Timespan): void;
-    abstract getSelectedTimespan(): Timespan;
-    abstract getFilteredTimespan(): Timespan;
-    abstract getCompleteTimespan(): Timespan;
+    abstract getSelectedTimespan(): Timespan | undefined;
+    abstract getFilteredTimespan(): Timespan | undefined;
+    abstract getCompleteTimespan(): Timespan | undefined;
     abstract resetAllFacets(): void;
     abstract areFacetsSelected(): boolean;
 }

@@ -78,7 +78,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         entries.forEach(e => {
           if (e.feature) {
             const id = `${e.feature.id}-${e.url}`;
-            if (!features.has(id)) {
+            if (!features.has(id) && e.url) {
               features.set(id, {feature: e.feature, url: e.url});
             }
           }
@@ -93,8 +93,10 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         }
       } else {
         entries.forEach(e => {
-          const marker = this.createEntryGeometry(e.feature);
-          if (marker) { this.markerFeatureGroup.addLayer(marker); }
+          if (e.feature) {
+            const marker = this.createEntryGeometry(e.feature);
+            if (marker) { this.markerFeatureGroup.addLayer(marker); }
+          }
         });
       }
       this.markerFeatureGroup.addTo(this.map);

@@ -224,12 +224,14 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     }
     const label = this.labels.get(entry.id);
 
-    if (item !== undefined && item.yDiagCoord && item.value !== undefined) {
-      this.setLabel(label, item, entry);
-      this.positionLabel(label, item);
-      this.displayLabel(label, true);
-    } else {
-      this.displayLabel(label, false);
+    if (label) {
+      if (item !== undefined && item.yDiagCoord && item.value !== undefined) {
+        this.setLabel(label, item, entry);
+        this.positionLabel(label, item);
+        this.displayLabel(label, true);
+      } else {
+        this.displayLabel(label, false);
+      }
     }
   }
 
@@ -253,6 +255,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   }
 
   protected createLineHoveringLabel(entry: SeriesGraphDataset): HoverlineLabel {
+    if (!this.drawLayer) throw new Error('drawLayer is not initialized');
     const rect = this.drawLayer.append('svg:rect')
       .attr('class', 'hoverline-label-rect')
       .style('fill', 'white')

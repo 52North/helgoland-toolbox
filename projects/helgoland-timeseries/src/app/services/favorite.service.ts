@@ -29,31 +29,31 @@ export class FavoriteService {
   }
 
   isFavorite(id: string): boolean {
-    return this.findService(id)?.isFavorite(id);
+    return !!this.findService(id)?.isFavorite(id);
   }
 
   removeFavorite(id: string) {
-    this.findService(id).removeFavorite(id);
+    this.findService(id)?.removeFavorite(id);
     this.updateFavCount();
   }
 
   createFavorite(dataset: SeriesGraphDataset) {
-    const favorite = this.findService(dataset.id).createFavorite(dataset);
+    const favorite = this.findService(dataset.id)?.createFavorite(dataset);
     this.updateFavCount();
   }
 
   getFavorites(): Favorite[] {
     const favorites: Favorite[] = [];
-    this.favoriteServices.map(srv => favorites.push(...srv.getFavorites()));
+    this.favoriteServices?.map(srv => favorites.push(...srv.getFavorites()));
     return favorites;
   }
 
   changeLabel(fav: Favorite, label: string) {
-    this.findService(fav.id).updateFavoriteLabel(fav, label);
+    this.findService(fav.id)?.updateFavoriteLabel(fav, label);
   }
 
   addFavoriteToDiagram(fav: Favorite) {
-    this.findService(fav.id).addFavoriteToDiagram(fav);
+    this.findService(fav.id)?.addFavoriteToDiagram(fav);
   }
 
   private updateFavCount() {
@@ -62,7 +62,7 @@ export class FavoriteService {
   }
 
   private findService(id: string) {
-    return this.favoriteServices.find(e => e.canHandleDatasetAsFavorite(id));
+    return this.favoriteServices?.find(e => e.canHandleDatasetAsFavorite(id));
   }
 
 }

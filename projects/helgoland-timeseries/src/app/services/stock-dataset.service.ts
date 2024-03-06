@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AxisSettings, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
+import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,12 @@ export class StockDatasetService {
         // id: id,
         uom: '€/$',
         phenomenonLabel: 'EUR/USD',
-        platformLabel: null,
-        procedureLabel: null,
-        categoryLabel: null,
-        firstValue: null,
-        lastValue: null,
-        featureLabel: null
+        platformLabel: '',
+        procedureLabel: '',
+        categoryLabel: '',
+        firstValue: new FirstLastValue(),
+        lastValue: new FirstLastValue(),
+        featureLabel: ''
       }
     )
 

@@ -21,7 +21,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
     private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService,
-    @Optional() @Inject(DATASET_PERMALINK_SERVICE_INJECTION) private permalinkServices: DatasetPermalinkService[] | null
+    @Optional() @Inject(DATASET_PERMALINK_SERVICE_INJECTION) private permalinkServices: DatasetPermalinkService[] | undefined
   ) {
     super();
     if (this.permalinkServices === null) { this.permalinkServices = [] };
@@ -44,9 +44,9 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       if (params[PARAM_IDS]) {
         this.graphDatasetsSrvc.deleteAllDatasets();
         const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
-        this.permalinkServices.forEach(pls => pls.validatePermaIds(ids));
+        this.permalinkServices?.forEach(pls => pls.validatePermaIds(ids));
       } else {
-        this.permalinkServices.forEach(pls => pls.noPermalink());
+        this.permalinkServices?.forEach(pls => pls.noPermalink());
       }
     });
   }
@@ -55,7 +55,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
     let paramUrl = '';
     if (this.graphDatasetsSrvc.hasDatasets()) {
       const ids: string[] = [];
-      this.permalinkServices.forEach(pls => {
+      this.permalinkServices?.forEach(pls => {
         pls.getPermaIds().forEach(id => ids.push(id));
       })
       const id = ids.join(ID_SEPERATOR);

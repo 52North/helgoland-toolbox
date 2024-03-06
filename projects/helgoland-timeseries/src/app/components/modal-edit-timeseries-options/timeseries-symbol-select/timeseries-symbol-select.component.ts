@@ -63,7 +63,7 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
 
   adjustSymbol() {
     if (this.selectedSymbol === 'point') {
-      this.lineStyle.pointSymbol = null;
+      this.lineStyle.pointSymbol = undefined;
       this.lineStyle.pointRadius = this.symbolSize;
     } else {
       this.lineStyle.pointSymbol = {

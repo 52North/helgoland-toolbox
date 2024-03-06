@@ -15,6 +15,7 @@ import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetType,
+  FirstLastValue,
   HelgolandDataset,
   HelgolandServicesConnector,
   HelgolandTimeseries,
@@ -179,26 +180,30 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
     this.graphOptions.togglePanZoom = options.togglePanZoom !== undefined ? options.togglePanZoom : this.graphOptions.togglePanZoom;
     this.graphOptions.yaxis = options.yaxis !== undefined ? options.yaxis : this.graphOptions.yaxis;
     this.graphOptions.yaxisModifier = this.yaxisModifier !== undefined ? this.yaxisModifier : this.graphOptions.yaxisModifier;
-    this.presenterOptions.timespanBufferFactor = this.presenterOptions.timespanBufferFactor !== undefined ? this.presenterOptions.timespanBufferFactor : 0.2;
-    this.presenterOptions.requestBeforeAfterValues = this.presenterOptions.requestBeforeAfterValues !== undefined ? this.presenterOptions.requestBeforeAfterValues : false;
+    if (this.presenterOptions) {
+      this.presenterOptions.timespanBufferFactor = this.presenterOptions.timespanBufferFactor !== undefined ? this.presenterOptions.timespanBufferFactor : 0.2;
+      this.presenterOptions.requestBeforeAfterValues = this.presenterOptions.requestBeforeAfterValues !== undefined ? this.presenterOptions.requestBeforeAfterValues : false;
+    }
     this.drawGraph();
   }
 
   protected datasetOptionsChanged(id: string, options: DatasetOptions, firstChange: boolean): void {
     if (!firstChange) {
       const dataset = this.datasets.find((e) => e.id === id);
-      dataset.setYAxis(this.getAxisSettings(options), false);
-      dataset.setStyle(this.getGraphStyle(options), false);
-      dataset.setVisible(options.visible, false);
-      dataset.children.forEach(child => {
-        const ref = options.showReferenceValues.find(e => e.id === child.id);
-        if (ref) {
-          child.setColor(ref.color);
-          child.setVisible(true, false);
-        } else {
-          child.setVisible(false, false);
-        }
-      })
+      if (dataset) {
+        dataset.setYAxis(this.getAxisSettings(options), false);
+        dataset.setStyle(this.getGraphStyle(options), false);
+        dataset.setVisible(options.visible, false);
+        dataset.children.forEach(child => {
+          const ref = options.showReferenceValues.find(e => e.id === child.id);
+          if (ref) {
+            child.setColor(ref.color);
+            child.setVisible(true, false);
+          } else {
+            child.setVisible(false, false);
+          }
+        })
+      }
       this.loadDatasetData(id);
     }
   }
@@ -208,24 +213,24 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   private loadAddedDataset(dataset: HelgolandDataset): void {
     if (dataset instanceof HelgolandTimeseries) {
       let dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
-      if (dsEntry === undefined) {
-        const options = this.datasetOptions.get(dataset.internalId);
+      const options = this.datasetOptions?.get(dataset.internalId);
+      if (dsEntry === undefined && options) {
         const style = this.getGraphStyle(options);
         const yaxis = this.getAxisSettings(options);
         const selected = this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
-          categoryLabel: dataset.parameters.category.label,
-          phenomenonLabel: dataset.parameters.phenomenon.label,
+          categoryLabel: dataset.parameters.category?.label || '',
+          phenomenonLabel: dataset.parameters.phenomenon?.label || '',
           platformLabel: dataset.platform.label,
-          procedureLabel: dataset.parameters.procedure.label,
-          featureLabel: dataset.parameters.feature.label,
+          procedureLabel: dataset.parameters.procedure?.label || '',
+          featureLabel: dataset.parameters.feature?.label || '',
           uom: dataset.uom,
-          firstValue: dataset.firstValue,
-          lastValue: dataset.lastValue
+          firstValue: dataset.firstValue || new FirstLastValue(),
+          lastValue: dataset.lastValue || new FirstLastValue()
         }
         dsEntry = new SeriesGraphDataset(dataset.internalId, style, yaxis, options.visible, selected, description);
         dataset.referenceValues.forEach(ref => {
-          dsEntry.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ''));
+          dsEntry!.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ''));
         });
         this.datasets.push(dsEntry);
       }
@@ -237,41 +242,43 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   }
 
   private loadDatasetData(id: string) {
-    const datasetOptions = this.datasetOptions.get(id);
+    const datasetOptions = this.datasetOptions?.get(id);
     const dataset = this.datasetMap.get(id);
-    const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
-    if (this.timespan) {
-      dsEntry.setDataLoading(true);
-      this.informDatasetLoading(this.getLoadedDatasets());
-      if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
-        && dataset.firstValue
-        && dataset.lastValue
-        && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
-        this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
-        this.onCompleteLoadingData(dsEntry);
-      } else {
-        const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
-        this.onContentLoading.emit(true);
-        // if (this.runningDataRequests.has(dataset.internalId)) {
-        //   this.runningDataRequests.get(dataset.internalId).unsubscribe();
-        //   this.onCompleteLoadingData(dataset);
-        // }
-        const request = this.servicesConnector.getDatasetData(dataset, buffer, {
-          expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
-          generalize: this.presenterOptions.generalizeAllways || datasetOptions.generalize
-        }).subscribe(
-          (result) => {
-            this.prepareData(dsEntry, result);
-            this.onCompleteLoadingData(dsEntry);
-          },
-          (error) => {
-            this.errorHandler.handleDataLoadError(error, dataset);
-            this.onCompleteLoadingData(dsEntry);
-          }
-        );
-        // if (!request.closed) {
-        //   this.runningDataRequests.set(dataset.internalId, request);
-        // }
+    if (dataset && this.timespan) {
+      const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
+      if (dsEntry) {
+        dsEntry.setDataLoading(true);
+        this.informDatasetLoading(this.getLoadedDatasets());
+        if (this.presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered
+          && dataset.firstValue
+          && dataset.lastValue
+          && !this.timeSrvc.overlaps(this.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+          this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
+          this.onCompleteLoadingData(dsEntry);
+        } else if (this.presenterOptions?.timespanBufferFactor) {
+          const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
+          this.onContentLoading.emit(true);
+          // if (this.runningDataRequests.has(dataset.internalId)) {
+          //   this.runningDataRequests.get(dataset.internalId).unsubscribe();
+          //   this.onCompleteLoadingData(dataset);
+          // }
+          const request = this.servicesConnector.getDatasetData(dataset, buffer, {
+            expanded: this.presenterOptions?.showReferenceValues || this.presenterOptions?.requestBeforeAfterValues,
+            generalize: this.presenterOptions?.generalizeAllways || datasetOptions?.generalize
+          }).subscribe(
+            (result) => {
+              this.prepareData(dsEntry, result);
+              this.onCompleteLoadingData(dsEntry);
+            },
+            (error) => {
+              this.errorHandler.handleDataLoadError(error, dataset);
+              this.onCompleteLoadingData(dsEntry);
+            }
+          );
+          // if (!request.closed) {
+          //   this.runningDataRequests.set(dataset.internalId, request);
+          // }
+        }
       }
     }
   }
@@ -309,10 +316,10 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
       const datasetIdx = this.datasets.findIndex((e) => e.id === dsEntry.id);
-      const options = this.datasetOptions.get(dsEntry.id);
+      const options = this.datasetOptions?.get(dsEntry.id);
 
       // sum values for bar chart visualization
-      if (options.type === 'bar') {
+      if (options && options.type === 'bar') {
         const startOf = options.barStartOf as unitOfTime.StartOf;
         const period = duration(options.barPeriod);
         if (period.asMilliseconds() === 0) {

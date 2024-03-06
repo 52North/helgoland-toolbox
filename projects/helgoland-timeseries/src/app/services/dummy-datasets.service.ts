@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AxisSettings, DatasetChild, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
+import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
 
 @Injectable({
   providedIn: 'root'
@@ -54,12 +55,12 @@ export class DummyDatasetsService {
       {
         uom: 'rnd',
         phenomenonLabel: 'Zahlen zwischne 0 und 10',
-        platformLabel: null,
-        procedureLabel: null,
-        categoryLabel: null,
-        firstValue: null,
-        lastValue: null,
-        featureLabel: null
+        platformLabel: 'null',
+        procedureLabel: 'null',
+        categoryLabel: 'null',
+        firstValue: new FirstLastValue(),
+        lastValue: new FirstLastValue(),
+        featureLabel: 'null'
       }
     )
   }

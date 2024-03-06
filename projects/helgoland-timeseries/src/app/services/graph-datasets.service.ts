@@ -1,10 +1,11 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { EventEmitter, Injectable } from '@angular/core';
-import { Time, Timespan, TimezoneService } from '@helgoland/core';
-import { SeriesGraphDataset } from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
-import moment from 'moment';
-import { NotifierService } from './notifier.service';
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { EventEmitter, Injectable } from "@angular/core";
+import { Time, Timespan, TimezoneService } from "@helgoland/core";
+import { SeriesGraphDataset } from "@helgoland/d3";
+import { TranslateService } from "@ngx-translate/core";
+import moment from "moment";
+
+import { NotifierService } from "./notifier.service";
 
 const TIME_CACHE_PARAM = 'timeseriesTime';
 
@@ -125,12 +126,16 @@ export class DatasetsService {
     return this.datasets.findIndex(e => e.id === id);
   }
 
-  getDatasetEntry(id: string): SeriesGraphDataset {
-    return this.datasets.find(e => e.id === id);
+  getDatasetEntry(dsId: string): SeriesGraphDataset {
+    const dataset = this.datasets.find(e => e.id === dsId);
+    if (dataset) return dataset;
+    throw new Error(`No dataset found for ${dsId}`);
   }
 
-  getOverviewDatasetEntry(id: string): SeriesGraphDataset {
-    return this.overviewDatasets.find(e => e.id === id);
+  getOverviewDatasetEntry(dsId: string): SeriesGraphDataset {
+    const dataset = this.overviewDatasets.find(e => e.id === dsId);
+    if (dataset) return dataset;
+    throw new Error(`No dataset found for ${dsId}`);
   }
 
 }

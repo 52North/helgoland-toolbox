@@ -3,22 +3,25 @@ import { ApiV3Dataset, HelgolandTimeseries } from '@helgoland/core';
 import { FacetSearchElement } from './facet-search-model';
 
 export function convertToFacetEntry(timeseries: HelgolandTimeseries): FacetSearchElement {
-    return {
+    const facetEntry: FacetSearchElement = {
         id: timeseries.id,
         label: timeseries.label,
         url: timeseries.url,
         firstValue: timeseries.firstValue,
         lastValue: timeseries.lastValue,
         category: timeseries.parameters.category,
-        feature: {
-            id: timeseries.parameters.feature.id,
-            label: timeseries.parameters.feature.label,
-            geometry: timeseries.platform.geometry
-        },
         offering: timeseries.parameters.offering,
         phenomenon: timeseries.parameters.phenomenon,
         procedure: timeseries.parameters.procedure
+    };
+    if (timeseries.parameters.feature && timeseries.platform.geometry) {
+        facetEntry.feature = {
+            id: timeseries.parameters.feature.id,
+            label: timeseries.parameters.feature.label,
+            geometry: timeseries.platform.geometry
+        }
     }
+    return facetEntry
 }
 
 export function convertFromApiV3Dataset(ds: ApiV3Dataset, url: string): FacetSearchElement {

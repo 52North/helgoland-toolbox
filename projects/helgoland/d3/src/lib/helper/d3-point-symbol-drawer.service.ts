@@ -10,7 +10,7 @@ export class D3PointSymbolDrawerService {
   private symbolScaleFactor = 1.75;
 
   getSymbolPath(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
-    let symbolType;
+    let symbolType: d3.SymbolType | undefined = undefined;
     switch (pointSymbol.type) {
       case PointSymbolType.cross:
         symbolType = d3.symbolCross;
@@ -31,20 +31,22 @@ export class D3PointSymbolDrawerService {
         symbolType = d3.symbolWye;
         break;
       default:
-        break;
+        throw new Error("could not find a matching point symbol");
     }
-    var symbolPathData = d3.symbol().type(symbolType).size(this.calculateSymbolSize(pointSymbol, selected, additionalSize))();
-    return symbolPathData;
+    return d3.symbol().type(symbolType).size(this.calculateSymbolSize(pointSymbol, selected, additionalSize))();
   }
 
   drawSymbol(pointSymbol: PointSymbol, color: string, drawPane: d3.Selection<SVGGElement, any, any, any>, selected: boolean, xPos: number, yPos: number) {
+    const symbolPath = this.getSymbolPath(pointSymbol, selected, 1);
+    if (symbolPath) {
     drawPane.append('path')
       .attr('class', 'y-axis-circle')
       // .attr('id', 'axisdot-circle-' + options.internalId)
       .attr('transform', (d) => `translate(${xPos},${yPos})`)
       .attr('stroke', color)
       .attr('fill', color)
-      .attr('d', this.getSymbolPath(pointSymbol, selected, 1));
+      .attr('d', symbolPath);
+    }
   }
 
   showHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {

@@ -5,6 +5,7 @@ import {
     DatasetType,
     DefinedTimespan,
     DefinedTimespanService,
+    FirstLastValue,
     HelgolandServicesConnector,
     HelgolandTimeseries,
     Timespan,
@@ -88,7 +89,9 @@ export class SandboxComponent implements OnInit {
 
     public changePlotOptions() {
         this.plotOptions.showTimeLabel = !this.plotOptions.showTimeLabel;
-        this.plotOptions.hoverStyle = this.getHoveringStyle(this.plotOptions.hoverStyle);
+        if (this.plotOptions.hoverStyle) {
+            this.plotOptions.hoverStyle = this.getHoveringStyle(this.plotOptions.hoverStyle);
+        }
     }
 
     private getHoveringStyle(hs: HoveringStyle): HoveringStyle {
@@ -107,13 +110,13 @@ export class SandboxComponent implements OnInit {
             const style = new LineStyle('green', 3, 3);
             const yaxis = new AxisSettings();
             const description: DatasetDescription = {
-                categoryLabel: ds.parameters.category.label,
-                firstValue: ds.firstValue,
-                lastValue: ds.lastValue,
-                phenomenonLabel: ds.parameters.phenomenon.label,
+                categoryLabel: ds.parameters.category ? ds.parameters.category.label : '',
+                firstValue: ds.firstValue ? ds.firstValue : new FirstLastValue(),
+                lastValue: ds.lastValue ? ds.lastValue : new FirstLastValue(),
+                phenomenonLabel: ds.parameters.phenomenon ? ds.parameters.phenomenon.label : '',
                 platformLabel: ds.platform.label,
-                procedureLabel: ds.parameters.procedure.label,
-                featureLabel: ds.parameters.feature.label,
+                procedureLabel: ds.parameters.procedure ? ds.parameters.procedure.label : '',
+                featureLabel: ds.parameters.feature ? ds.parameters.feature.label : '',
                 uom: ds.uom
             }
             const datasetData = new SeriesGraphDataset(id, style, yaxis, true, false, description);

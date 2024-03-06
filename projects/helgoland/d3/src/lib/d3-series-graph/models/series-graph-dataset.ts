@@ -120,12 +120,19 @@ export interface GraphDataEntry {
 
 export interface DatasetDescription {
     uom: string,
+    // TODO: make optional?
     phenomenonLabel: string;
+    // TODO: make optional?
     platformLabel: string;
+    // TODO: make optional?
     procedureLabel: string;
+    // TODO: make optional?
     categoryLabel: string;
+    // TODO: make optional?
     featureLabel: string;
+    // TODO: make optional?
     firstValue: FirstLastValue;
+    // TODO: make optional?
     lastValue: FirstLastValue;
 }
 

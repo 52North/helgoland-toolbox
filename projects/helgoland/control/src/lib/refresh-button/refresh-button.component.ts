@@ -22,8 +22,8 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
     protected settings: SettingsService<Settings>
   ) {
     if (!this.refreshInterval) {
-      this.refreshInterval = this.settings.getSettings().refreshDataInterval
-        ? this.settings.getSettings().refreshDataInterval : 60;
+      const refreshDataInterval = this.settings.getSettings().refreshDataInterval;
+      this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
     }
   }
 

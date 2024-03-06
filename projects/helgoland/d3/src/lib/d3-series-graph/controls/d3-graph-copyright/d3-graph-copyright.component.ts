@@ -24,7 +24,7 @@ export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements O
   @Input() copyright: D3Copyright | undefined;
 
   protected d3Graph: D3GraphInterface;
-  protected copyrightLayer: d3.Selection<SVGGElement, any, any, any>;
+  protected copyrightLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
 
   protected labelRect: d3.Selection<BaseType, any, any, any>;
   protected labelText: d3.Selection<BaseType, any, any, any>;

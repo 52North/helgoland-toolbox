@@ -135,12 +135,14 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
     this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, nearestPoint.selection);
-    this.hoveringService.positioningPointHovering(
-      this.previousPoint.dataEntry.xDiagCoord,
-      this.previousPoint.dataEntry.yDiagCoord,
-      this.previousPoint.dataset.style.baseColor,
-      this.background
-    );
+    if (this.previousPoint.dataEntry.xDiagCoord && this.previousPoint.dataEntry.yDiagCoord) {
+      this.hoveringService.positioningPointHovering(
+        this.previousPoint.dataEntry.xDiagCoord,
+        this.previousPoint.dataEntry.yDiagCoord,
+        this.previousPoint.dataset.style.baseColor,
+        this.background
+      );
+    }
 
     const ids: Map<string, HighlightValue> = new Map();
     ids.set(this.previousPoint.dataset.id, {
@@ -186,13 +188,15 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
   protected unhighlight() {
     if (this.previousPoint) {
       this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, this.previousPoint.selection);
-      this.previousPoint = null;
+      this.previousPoint = undefined;
     }
     if (this.previousBars.length) {
       for (let i = this.previousBars.length - 1; i >= 0; i--) {
         const bar = this.previousBars[i];
         this.hoveringService.hidePointHovering(bar.dataEntry, bar.dataset, bar.selection);
-        bar.selection.style('fill-opacity', bar.previousOpacity);
+        if (bar.previousOpacity !== undefined) {
+          bar.selection.style('fill-opacity', bar.previousOpacity);
+        }
         this.previousBars.splice(i, 1);
       }
     }
@@ -205,12 +209,12 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
     this.datasets.forEach((ds, i) => {
       if (ds.style instanceof LineStyle && ds.visible) {
-        const delaunay = Delaunay.from(ds.data, d => d.xDiagCoord, d => d.yDiagCoord);
+        const delaunay = Delaunay.from(ds.data, d => d.xDiagCoord!, d => d.yDiagCoord!);
         const idx = delaunay.find(x, y);
 
         if (idx != null && !isNaN(idx)) {
           const datum = ds.data[idx] as DataEntry;
-          const distance = this.distance(datum.xDiagCoord, datum.yDiagCoord, x, y);
+          const distance = this.distance(datum.xDiagCoord!, datum.yDiagCoord!, x, y);
           if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
             const id = `dot-${datum.timestamp}-${i}`;
             nearest = {
@@ -235,7 +239,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
         if (idx > -1 && ds.data[idx]) {
           const id = `bar-${ds.data[idx].timestamp}-${i}`;
           const match = this.graphLayer.select(`#${id}`);
-          const barHeight = match.attr('height') && Number.parseFloat(match.attr('height'));
+          const barHeight = match.attr('height') ? Number.parseFloat(match.attr('height')): 0;
           if (barHeight > height) {
             nearest.push({
               selection: match,

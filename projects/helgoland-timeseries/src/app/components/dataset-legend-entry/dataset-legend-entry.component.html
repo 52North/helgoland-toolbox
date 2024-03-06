@@ -1,12 +1,12 @@
-<mat-expansion-panel [ngStyle]="{'border-color': dataset?.style.baseColor}" [expanded]="true">
+<mat-expansion-panel [ngStyle]="{'border-color': dataset.style.baseColor}" [expanded]="true">
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{'noData': !hasData}" *ngIf="!error">
-        <n52-label-mapper label="{{dataset?.description.phenomenonLabel}}"></n52-label-mapper>
-        <span *ngIf="dataset?.description.uom">
-          <span> [<n52-label-mapper label="{{dataset?.description.uom}}"></n52-label-mapper>] </span>
+        <n52-label-mapper label="{{dataset.description.phenomenonLabel}}"></n52-label-mapper>
+        <span *ngIf="dataset.description.uom">
+          <span> [<n52-label-mapper label="{{dataset.description.uom}}"></n52-label-mapper>] </span>
         </span>
-        <div>{{dataset?.description.platformLabel}}</div>
+        <div>{{dataset.description.platformLabel}}</div>
       </div>
       <div class="title error" *ngIf="error">
         Error occured, while loading {{dataset.id}}
@@ -36,12 +36,12 @@
       <button mat-icon-button (click)="toggleVisibility(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.toggle-visibility-button.tooltip' | translate}}">
-        <mat-icon>{{dataset?.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-icon>{{dataset.visible ? 'visibility' : 'visibility_off'}}</mat-icon>
       </button>
       <button mat-icon-button (click)="editDatasetOptions(); $event.stopPropagation()"
         attr.aria-label="{{'legend-entry.edit-dataset-button.tooltip' | translate}}"
         matTooltip="{{'legend-entry.edit-dataset-button.tooltip' | translate}}">
-        <helgoland-timeseries-entry-symbol [datasetStyle]="dataset?.style" [size]="40"
+        <helgoland-timeseries-entry-symbol [datasetStyle]="dataset.style" [size]="40"
           style="height: 40px; width: 40px; display: inline-block;">
         </helgoland-timeseries-entry-symbol>
       </button>
@@ -50,16 +50,16 @@
     <div class="entry-line clickable" *ngIf="dataset.description.firstValue"
       (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.first-value-at' | translate}}: </span>
-      <span> {{dataset.description.firstValue.timestamp | date: 'short': null : translateSrvc.currentLang}} </span>
+      <span> {{dataset.description.firstValue.timestamp | date: 'short': undefined : translateSrvc.currentLang}} </span>
       <span>({{dataset.description.firstValue.value}} {{dataset.description.uom}})</span>
     </div>
     <div class="entry-line clickable" *ngIf="dataset.description.lastValue"
       (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
       <span>{{'diagram-view.legend.entry.last-value-at' | translate}}: </span>
-      <span> {{dataset.description.lastValue.timestamp | date: 'short' : null : translateSrvc.currentLang}} </span>
+      <span> {{dataset.description.lastValue.timestamp | date: 'short' : undefined : translateSrvc.currentLang}} </span>
       <span>({{dataset.description.lastValue.value}} {{dataset.description.uom}})</span>
     </div>
-    <div *ngIf="dataset?.children?.length > 0">
+    <div *ngIf="dataset.children.length > 0">
       <div>{{'diagram-view.legend-reference-values' | translate}}: </div>
       <div *ngFor="let child of dataset.children">
         <mat-slide-toggle [checked]="child.visible" color="primary" (change)="child.setVisible($event.checked)">
