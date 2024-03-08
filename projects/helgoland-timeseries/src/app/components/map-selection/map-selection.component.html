@@ -16,7 +16,7 @@
       matTooltip="{{'map-selection-view.adjust-map-button.tooltip' | translate}}">
       <mat-icon>edit_location_alt</mat-icon>
     </button>
-    <n52-station-map-selector [mapId]="'mapId'" [serviceUrl]="state.selectedService?.apiUrl" [filter]="stationFilter"
+    <n52-station-map-selector [mapId]="'mapId'" [serviceUrl]="state.selectedService?.apiUrl" [filter]="stationFilter" [clusterConfig]="clusterConfig"
     (onSelected)="onStationSelected($event)" [cluster]="cluster" class="vbox boxItem fullHeight">
     </n52-station-map-selector>
   </div>

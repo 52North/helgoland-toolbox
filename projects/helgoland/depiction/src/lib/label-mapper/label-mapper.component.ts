@@ -4,7 +4,8 @@ import { LabelMapperService } from './label-mapper.service';
 
 @Component({
     selector: 'n52-label-mapper',
-    templateUrl: './label-mapper.component.html'
+    templateUrl: './label-mapper.component.html',
+    styleUrls: ['./label-mapper.component.scss']
 })
 export class LabelMapperComponent implements OnChanges {
 

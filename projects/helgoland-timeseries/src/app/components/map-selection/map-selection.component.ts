@@ -16,15 +16,20 @@ import { HelgolandMapSelectorModule, MapCache } from "@helgoland/map";
 import { MultiServiceFilter, MultiServiceFilterEndpoint } from "@helgoland/selector";
 import { TranslateModule } from "@ngx-translate/core";
 import { ErrorHandlerService, ParameterListSelectorComponent } from "helgoland-common";
+import { MarkerClusterGroupOptions } from "leaflet";
 
 import { AppRouterService } from "../../services/app-router.service";
-import { ConfigurationService } from "../../services/configuration.service";
+import { AppConfig, ConfigurationService } from "../../services/configuration.service";
 import { DatasetsService } from "../../services/graph-datasets.service";
 import {
   ModalDatasetByStationSelectorComponent,
 } from "../modal-dataset-by-station-selector/modal-dataset-by-station-selector.component";
 import { MapConfig, ModalMapSettingsComponent } from "../modal-map-settings/modal-map-settings.component";
 import { MapSelectionStateService } from "./map-selection-state.service";
+
+interface MapSelectionAppConfig extends AppConfig {
+  mapSelectionClusterConfig: MarkerClusterGroupOptions;
+}
 
 @Component({
   selector: 'helgoland-map-selection',
@@ -52,6 +57,8 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
 
   stationFilter: HelgolandParameterFilter | undefined;
 
+  clusterConfig: MarkerClusterGroupOptions | undefined;
+
   phenomenonFilter: MultiServiceFilter[] = [];
 
   phenomenonEndpoint = MultiServiceFilterEndpoint.phenomenon;
@@ -61,7 +68,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   constructor(
     public appRouter: AppRouterService,
     public graphDatasetsSrvc: DatasetsService,
-    private configSrvc: ConfigurationService,
+    private configSrvc: ConfigurationService<MapSelectionAppConfig>,
     private serviceConnector: HelgolandServicesConnector,
     private errorHandler: ErrorHandlerService,
     private dialog: MatDialog,
@@ -88,6 +95,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
     } else {
       this.updateFilter();
     }
+    this.clusterConfig = this.configSrvc.configuration.mapSelectionClusterConfig;
   }
 
   phenomenonToggled() {

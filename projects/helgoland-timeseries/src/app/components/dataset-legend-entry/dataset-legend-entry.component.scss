@@ -2,12 +2,22 @@ mat-expansion-panel {
     border-radius: 0px !important;
     border-right: 5px solid;
 
+    mat-expansion-panel-header {
+        height: min-content;
+    }
+
     mat-panel-title {
         display: flex;
         flex: 1;
         align-items: center;
+        padding: 0.5em 0;
 
         .title {
+
+            span:first-of-type {
+                line-break: anywhere;
+            }
+
             &.noData {
                 color: lightgray;
             }

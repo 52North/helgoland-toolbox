@@ -239,7 +239,6 @@ export class HelgolandServicesConnector implements HelgolandServiceInterface {
           const connector = this.connectorList![idx];
           this.setConnector(url, connector, observer);
           this.serviceMapping.set(url, connector);
-          // console.log(`${url} uses ${connector.name}`);
           observer.next(connector);
           observer.complete();
         } else {

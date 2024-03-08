@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HelgolandSelectorModule, ServiceSelectorComponent } from '@helgoland/selector';
@@ -10,11 +11,12 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './service-list-selector.component.html',
   styleUrls: ['./service-list-selector.component.scss'],
   imports: [
-    TranslateModule,
+    CommonModule,
+    HelgolandSelectorModule,
+    MatIconModule,
     MatListModule,
     MatProgressBarModule,
-    HelgolandSelectorModule,
-    CommonModule
+    TranslateModule,
   ],
   standalone: true
 })

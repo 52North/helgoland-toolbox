@@ -10,21 +10,21 @@ export interface AppConfig extends Settings {
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigurationService extends SettingsService<Settings> {
+export class ConfigurationService<T extends AppConfig = AppConfig> extends SettingsService<T> {
 
   private readonly CONFIGURATION_URL = './assets/app-config.json';
 
-  configuration!: AppConfig;
+  configuration!: T;
 
   constructor(private http: HttpClient) {
     super();
   }
 
-  loadConfiguration(): Promise<AppConfig> {
+  loadConfiguration(): Promise<T> {
     return this.http
-      .get<AppConfig>(this.CONFIGURATION_URL)
+      .get<T>(this.CONFIGURATION_URL)
       .toPromise()
-      .then((configuration: AppConfig) => {
+      .then((configuration: T) => {
         this.setSettings(configuration);
         this.configuration = configuration;
         return configuration;

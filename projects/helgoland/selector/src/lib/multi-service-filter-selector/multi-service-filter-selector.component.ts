@@ -76,49 +76,49 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     protected loadItems() {
         this.items = [];
         this.filterList.forEach((entry) => {
-            this.loading++;
             const filter = entry.filter || {};
+            this.loading++;
             switch (this.endpoint) {
                 case MultiServiceFilterEndpoint.offering:
                     this.servicesConnector.getOfferings(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.phenomenon:
                     this.servicesConnector.getPhenomena(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.procedure:
                     this.servicesConnector.getProcedures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.feature:
                     this.servicesConnector.getFeatures(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.category:
                     this.servicesConnector.getCategories(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.platform:
                     this.servicesConnector.getPlatforms(entry.url, filter).subscribe(
                         (res) => this.setItems(res, filter, entry.url, filter.service),
-                        (error) => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 case MultiServiceFilterEndpoint.dataset:
                     this.servicesConnector.getDatasets(entry.url, filter).subscribe(
                         res => this.setItems(res, filter, entry.url, filter.service),
-                        error => this.errorOnLoading
+                        (error) => this.errorOnLoading()
                     );
                     break;
                 default:

@@ -4,20 +4,8 @@
     "refreshDataInterval": "10",
     "datasetApis": [
         {
-            "name": "UPC-SOS",
-            "url": "http://nexos.dev.52north.org/52n-sos-upc/api/"
-        },
-        {
-            "name": "nexos.demo.52north",
-            "url": "http://nexos.demo.52north.org/52n-sos-nexos-test/api/"
-        },
-        {
             "name": "codm.hzg.de",
             "url": "http://codm.hzg.de/52n-sos-webapp/api/v1/"
-        },
-        {
-            "name": "sensorwebclient-webapp-stable",
-            "url": "http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/"
         },
         {
             "name": "geo.irceline.be",
@@ -42,6 +30,13 @@
         {
             "name": "STA-Test",
             "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
+        },
+        {
+            "name": "Pegelonline WSV",
+            "url": "https://pegelonline-testprev.wsv.de/webservices/nutzer/rest-api/v2/",
+            "basicAuth": true,
+            "basicAuthPostFix": "stations",
+            "connector": "PegelonlineApiConnector"
         },
         {
             "name": "BasicAuth-API",

@@ -432,13 +432,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     const sensorsReq = this.sta.getSensors(url, filter);
     const datastreamsReq = this.sta.getDatastreams(url, filter);
     return forkJoin([locationsReq, obPropsReq, thingsReq, sensorsReq, datastreamsReq]).pipe(map(res => {
-      service.quantities.categories = res[1]['@iot.count'];
-      service.quantities.features = res[0]['@iot.count'];
-      service.quantities.offerings = res[2]['@iot.count'];
-      service.quantities.phenomena = res[1]['@iot.count'];
-      service.quantities.procedures = res[3]['@iot.count'];
-      service.quantities.platforms = res[0]['@iot.count'];
-      service.quantities.datasets = res[4]['@iot.count'];
+      service.quantities!.categories = res[1]['@iot.count'];
+      service.quantities!.features = res[0]['@iot.count'];
+      service.quantities!.offerings = res[2]['@iot.count'];
+      service.quantities!.phenomena = res[1]['@iot.count'];
+      service.quantities!.procedures = res[3]['@iot.count'];
+      service.quantities!.platforms = res[0]['@iot.count'];
+      service.quantities!.datasets = res[4]['@iot.count'];
       return [service];
     }));
   }

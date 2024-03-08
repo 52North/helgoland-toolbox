@@ -37,6 +37,9 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     public cluster: boolean | undefined;
 
     @Input()
+    public clusterConfig: L.MarkerClusterGroupOptions | undefined;
+
+    @Input()
     public statusIntervals: boolean | undefined;
 
     /**
@@ -156,24 +159,30 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
 
     protected createStationGeometries(serviceUrl: string, map: L.Map) {
         this.servicesConnector.getPlatforms(serviceUrl, this.filter)
-            .subscribe((res) => {
-                if (this.cluster) {
-                    this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
-                } else {
-                    this.markerFeatureGroup = L.featureGroup();
+            .subscribe({
+                next: (res) => {
+                    if (this.cluster) {
+                        this.markerFeatureGroup = L.markerClusterGroup({ animate: true, ...this.clusterConfig });
+                    } else {
+                        this.markerFeatureGroup = L.featureGroup();
+                    }
+                    if (res instanceof Array && res.length > 0) {
+                        res.forEach((entry) => {
+                            const marker = this.createDefaultGeometry(entry);
+                            if (marker) { this.markerFeatureGroup!.addLayer(marker); }
+                        });
+                        this.markerFeatureGroup.addTo(map);
+                        this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds(), map);
+                    } else {
+                        this.onNoResultsFound.emit(true);
+                    }
+                    map.invalidateSize();
+                    this.onContentLoading.emit(false);
+                },
+                error: (error) => {
+                    map.setView([0, 0], 1);
+                    this.onContentLoading.emit(false);
                 }
-                if (res instanceof Array && res.length > 0) {
-                    res.forEach((entry) => {
-                        const marker = this.createDefaultGeometry(entry);
-                        if (marker) { this.markerFeatureGroup!.addLayer(marker); }
-                    });
-                    this.markerFeatureGroup.addTo(map);
-                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds(), map);
-                } else {
-                    this.onNoResultsFound.emit(true);
-                }
-                map.invalidateSize();
-                this.onContentLoading.emit(false);
             });
     }
 

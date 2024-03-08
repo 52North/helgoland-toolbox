@@ -11,6 +11,8 @@ export class BasicAuthService {
 
   private basicAuthTokens: Map<string, string> = new Map();
 
+  public ongoingRequests: Map<string, Observable<boolean>> = new Map();
+
   constructor(
     private http: HttpClient
   ) { }
