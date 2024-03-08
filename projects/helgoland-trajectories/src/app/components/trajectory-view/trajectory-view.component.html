@@ -1,5 +1,5 @@
 <div class="header">
-  <helgoland-trajectories-label [trajectory]="trajectory"></helgoland-trajectories-label>
+  <helgoland-trajectories-label *ngIf="trajectory" [trajectory]="trajectory"></helgoland-trajectories-label>
   <helgoland-loading-overlay-spinner *ngIf="loading" loadingHint="{{'trajectory-view.loading-trajectory' | translate}}">
   </helgoland-loading-overlay-spinner>
 </div>

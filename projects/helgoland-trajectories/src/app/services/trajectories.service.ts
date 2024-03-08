@@ -28,7 +28,7 @@ export class TrajectoriesService {
 
   public loading = new ReplaySubject<boolean>();
   public result = new ReplaySubject<TrajectoryResult>();
-  private internalId: string;
+  private internalId!: string;
 
   constructor(
     private colorSrvc: ColorService,

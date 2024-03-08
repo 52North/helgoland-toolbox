@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSWEIdentifiable } from '../swe/AbstractSWEIdentifiable';
 import { SweDataStream } from '../swe/SweDataStream';
 import { SweDataRecord } from '../swe/SweDataRecord';

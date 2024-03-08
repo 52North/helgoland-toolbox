@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractFeature } from '../gml/AbstractFeature';
 import { KeywordList } from './KeywordList';
 import { IdentifierList } from './IdentifierList';

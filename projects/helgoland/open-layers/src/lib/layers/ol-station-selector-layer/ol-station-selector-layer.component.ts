@@ -33,44 +33,52 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * The serviceUrl, where the selection should be loaded.
    */
-  @Required @Input() public serviceUrl: string;
+  @Input()
+  @Required
+  serviceUrl!: string;
 
   /**
    * The filter which should be used, while fetching the selection.
    */
-  @Input() public filter: HelgolandParameterFilter;
+  @Input()
+  filter: HelgolandParameterFilter | undefined;
 
   /**
    * Zoom to the stations after collected and displayed
    */
-  @Input() public zoomToResult = true;
+  @Input()
+  zoomToResult = true;
 
   /**
    * Cluster stations
    */
-  @Input() public cluster = true;
+  @Input()
+  cluster = true;
 
   /**
    * Inform, when a station is selected
    */
+  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
+  onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
+  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * Inform, when no stations are found
    */
+  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+  onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
-  private map: Map;
+  private map!: Map;
 
-  private layer: VectorLayer;
+  private layer!: VectorLayer;
 
   constructor(
     protected override mapService: OlMapService,

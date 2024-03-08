@@ -6,6 +6,7 @@ import {
     Input,
     OnChanges,
     OnDestroy,
+    OnInit,
     Output,
     SimpleChanges,
 } from '@angular/core';
@@ -18,31 +19,31 @@ import { D3PlotOptions } from '../model/d3-plot-options';
     templateUrl: './d3-overview-timeseries-graph.component.html',
     styleUrls: ['./d3-overview-timeseries-graph.component.scss']
 })
-export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewInit, OnDestroy, OnInit {
 
     @Input()
-    public datasetIds: string[];
+    public datasetIds: string[] = [];
 
     @Input()
-    public datasetOptions: Map<string, DatasetOptions>;
+    public datasetOptions: Map<string, DatasetOptions> = new Map();
 
     @Input()
-    public presenterOptions: D3PlotOptions;
+    public presenterOptions: D3PlotOptions = {};
 
     @Input()
-    public timeInterval: TimeInterval;
+    public timeInterval: TimeInterval | undefined;
 
     @Input()
-    public rangefactor: number;
+    public rangefactor: number = 1;
 
     @Input()
-    public reloadForDatasets: string[];
+    public reloadForDatasets: string[] = [];
 
-    @Output() 
+    @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
-    @Output() 
+    @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onLoading: EventEmitter<boolean> = new EventEmitter();
 
@@ -50,24 +51,21 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
-    public overviewTimespan: Timespan;
-    public timespan: Timespan;
+    public overviewTimespan: Timespan | undefined;
+    public timespan: Timespan | undefined;
 
     private init = false;
 
     constructor(
         protected timeSrvc: Time,
         protected cd: ChangeDetectorRef
-    ) {
-        if (this.presenterOptions) {
-            this.presenterOptions.overview = true;
-        } else {
-            this.presenterOptions = { overview: true };
-        }
+    ) { }
+
+    ngOnInit(): void {
+        this.presenterOptions.overview = true;
     }
 
     public ngAfterViewInit(): void {
-        this.rangefactor = this.rangefactor || 1;
         this.calculateOverviewRange();
         this.init = true;
         this.cd.detectChanges();
@@ -92,8 +90,10 @@ export class D3OverviewTimeseriesGraphComponent implements OnChanges, AfterViewI
     }
 
     private calculateOverviewRange() {
-        const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
-        this.timespan = timespan;
-        this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
+        if (this.timeInterval) {
+            const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+            this.timespan = timespan;
+            this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
+        }
     }
 }

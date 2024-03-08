@@ -5,11 +5,12 @@ import {
     HelgolandPlatform,
     HelgolandServicesConnector,
     HelgolandTimeseries,
+    Required,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export class SelectableDataset extends HelgolandTimeseries {
-    public selected: boolean;
+    public selected = false;
 }
 
 @Component({
@@ -19,11 +20,11 @@ export class SelectableDataset extends HelgolandTimeseries {
 })
 export class DatasetByStationSelectorComponent implements OnInit {
 
-    @Input()
-    public station: HelgolandPlatform;
+    @Input() @Required
+    public station!: HelgolandPlatform;
 
-    @Input()
-    public url: string;
+    @Input() @Required
+    public url!: string;
 
     @Input()
     public defaultSelected = false;
@@ -38,7 +39,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
     public phenomenonMatchedList: SelectableDataset[] = [];
     public othersList: SelectableDataset[] = [];
 
-    public counter: number;
+    public counter = 0;
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,
@@ -46,23 +47,21 @@ export class DatasetByStationSelectorComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-        if (this.station) {
-            this.servicesConnector.getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
-                .subscribe((station) => {
-                    this.station = station;
-                    this.counter = 0;
-                    this.station.datasetIds.forEach(id => {
-                        this.counter++;
-                        this.servicesConnector.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
-                            .subscribe((result) => {
-                                this.prepareResult(result as SelectableDataset, this.defaultSelected);
-                                this.counter--;
-                            }, (error) => {
-                                this.counter--;
-                            });
-                    });
+        this.servicesConnector.getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
+            .subscribe((station) => {
+                this.station = station;
+                this.counter = 0;
+                this.station.datasetIds.forEach(id => {
+                    this.counter++;
+                    this.servicesConnector.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
+                        .subscribe((result) => {
+                            this.prepareResult(result as SelectableDataset, this.defaultSelected);
+                            this.counter--;
+                        }, (error) => {
+                            this.counter--;
+                        });
                 });
-        }
+            });
     }
 
     public toggle(timeseries: SelectableDataset) {

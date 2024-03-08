@@ -5,6 +5,7 @@ import {
     HelgolandServicesConnector,
     LanguageChangNotifier,
     Parameter,
+    Required,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -33,8 +34,8 @@ export enum MultiServiceFilterEndpoint {
 })
 export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 
-    @Input()
-    public endpoint: MultiServiceFilterEndpoint;
+    @Input() @Required
+    public endpoint!: MultiServiceFilterEndpoint;
 
     @Input()
     public filterList: MultiServiceFilter[] = [];
@@ -47,7 +48,7 @@ export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier i
     public onItemSelected: EventEmitter<FilteredParameter> = new EventEmitter<FilteredParameter>();
 
     public loading = 0;
-    public items: FilteredParameter[];
+    public items: FilteredParameter[] = [];
 
     constructor(
         protected servicesConnector: HelgolandServicesConnector,

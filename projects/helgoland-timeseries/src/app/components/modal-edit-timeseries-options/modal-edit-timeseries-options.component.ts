@@ -33,7 +33,7 @@ import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/time
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
 
-  public adjustedColor: string;
+  public adjustedColor: string | undefined;
 
   private style: DatasetStyle;
   private yaxis: AxisSettings;

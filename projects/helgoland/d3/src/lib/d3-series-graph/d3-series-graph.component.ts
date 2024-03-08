@@ -99,7 +99,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
 
     @Input()
-    public timespan: Timespan;
+    public timespan: Timespan | undefined;
     protected oldTimespan: Timespan = { from: 0, to: 0 };
 
     @Input()
@@ -118,13 +118,13 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
     @ViewChild('d3timeseries')
-    public d3Elem: ElementRef;
+    public d3Elem: ElementRef | undefined;
 
     // DOM elements
-    protected rawSvg: d3.Selection<SVGSVGElement, any, any, any>;
-    protected graph: d3.Selection<SVGGElement, any, any, any>;
+    protected rawSvg!: d3.Selection<SVGSVGElement, any, any, any>;
+    protected graph!: d3.Selection<SVGGElement, any, any, any>;
     protected graphBody: any;
-    private background: d3.Selection<SVGGElement, any, any, any>;
+    private background: d3.Selection<SVGGElement, any, any, any> | undefined;
 
     // data types
     protected preparedAxes: Map<string, YAxisSettings> = new Map();
@@ -132,12 +132,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     /** calculated y axes for the diagram */
     private yAxes: YAxis[] = [];
 
-    private xScaleBase: d3.ScaleTime<number, number>; // calculate diagram coord of x value
+    private xScaleBase: d3.ScaleTime<number, number> | undefined; // calculate diagram coord of x value
     private yScaleBase: d3.ScaleLinear<number, number> | undefined; // calculate diagram coord of y value
-    private leftOffset: number;
+    private leftOffset: number = 0;
 
-    private height: number;
-    private width: number;
+    private height: number = 0;
+    private width: number = 0;
     private margin = {
         top: 10,
         right: 0,
@@ -146,12 +146,12 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     };
     private maxLabelwidth = 0;
     private addLineWidth = 2; // value added to linewidth
-    private ID: string;
+    private ID: string | undefined;
 
     private observer: Set<D3GraphObserver> = new Set();
 
     @Input()
-    public graphOptions: D3SeriesGraphOptions;
+    public graphOptions: D3SeriesGraphOptions = {};
     protected graphOptionsDiffer: KeyValueDiffer<any, any>;
 
     // default plot options
@@ -166,13 +166,13 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         },
     };
 
-    private graphInteraction: d3.Selection<SVGSVGElement, any, any, any>;
+    private graphInteraction: d3.Selection<SVGSVGElement, any, any, any> | undefined;
     private langChangeSubscription: Subscription;
     private timezoneSubscription: Subscription;
 
     private subscriptions: Map<string, DatasetEventSubscriptions> = new Map();
 
-    private resizeObserver: ResizeObserver;
+    private resizeObserver: ResizeObserver | undefined;
 
     constructor(
         protected iterableDiffers: IterableDiffers,
@@ -255,7 +255,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.graphId.setId(this.ID);
         this.graphService.setGraph(this.ID, this);
 
-        this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem.nativeElement)
+        this.rawSvg = d3.select<SVGSVGElement, any>(this.d3Elem?.nativeElement)
             .append<SVGSVGElement>('svg')
             .style('width', '100%')
             .style('height', '100%')
@@ -277,14 +277,16 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private addResizeObserver() {
         this.resizeObserver = new ResizeObserver(entries => this.zone.run(() => this.redrawCompleteGraph()));
-        this.resizeObserver.observe(this.d3Elem.nativeElement);
+        this.resizeObserver.observe(this.d3Elem?.nativeElement);
     }
 
     public ngOnDestroy() {
         this.langChangeSubscription.unsubscribe();
         this.timezoneSubscription.unsubscribe();
-        this.resizeObserver.unobserve(this.d3Elem.nativeElement);
-        this.graphService.removeGraph(this.ID);
+        this.resizeObserver?.unobserve(this.d3Elem?.nativeElement);
+        if (this.ID) {
+            this.graphService.removeGraph(this.ID);
+        }
     }
 
     public registerObserver(obs: D3GraphObserver) {
@@ -308,8 +310,10 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     public centerTime(timestamp: number): void {
-        const centeredTimespan = this.timeSrvc.centerTimespan(this.timespan, new Date(timestamp));
-        this.timespanChanged.emit(centeredTimespan);
+        if(this.timespan) {
+            const centeredTimespan = this.timeSrvc.centerTimespan(this.timespan, new Date(timestamp));
+            this.timespanChanged.emit(centeredTimespan);
+        }
     }
 
     public changeTime(from: number, to: number): void {
@@ -325,6 +329,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         let visualMax: number | undefined = undefined;
         let fixedMin = false;
         let fixedMax = false;
+        if (!this.timespan) return;
 
         // set out of yAxisRange
         if (entry.yAxis.range?.min && entry.yAxis.range?.max) {
@@ -352,7 +357,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                 // if (typeof d.value === 'number') {
                 if (!isNaN(d.value)) {
                     // with timespan restriction, it only selects values inside the selected timespan
-                    if (this.timespan.from <= d.timestamp && this.timespan.to >= d.timestamp) { return d.value; }
+                    if (this.timespan!.from <= d.timestamp && this.timespan!.to >= d.timestamp) { return d.value; }
                 }
                 return null;
             });
@@ -393,7 +398,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
      * Function that returns the height of the graph diagram.
      */
     private calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight
+        return (this.d3Elem?.nativeElement as HTMLElement).clientHeight
             - this.margin.top
             - this.margin.bottom
             + (this.plotOptions.showTimeLabel || (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) ? 0 : 20);
@@ -472,7 +477,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.height = this.calculateHeight();
         this.width = this.calculateWidth() - 20; // add buffer to the left to garantee visualization of last date (tick x-axis)
         this.graph.selectAll('*').remove();
-        this.graphInteraction.selectAll('*').remove();
+        this.graphInteraction?.selectAll('*').remove();
         this.observer.forEach(e => e.cleanUp && e.cleanUp());
 
         this.leftOffset = 0;
@@ -506,7 +511,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         this.drawTimeRangeLabels();
 
         // create background as rectangle providing panning
-        this.background = this.graphInteraction.append<SVGGElement>('svg:rect')
+        this.background = this.graphInteraction!.append<SVGGElement>('svg:rect')
             .attr('width', this.width - this.leftOffset)
             .attr('height', this.height)
             .attr('id', 'backgroundRect')
@@ -539,7 +544,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         this.observer.forEach(e => {
 
-            if (e.adjustBackground) {
+            if (e.adjustBackground && this.xScaleBase) {
                 const graphExtent: D3GraphExtent = {
                     width: this.width,
                     height: this.height,
@@ -547,14 +552,14 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
                     margin: this.margin,
                     xScale: this.xScaleBase
                 };
-                e.adjustBackground(this.background, graphExtent, this.datasets, this.graph, this.timespan);
+                e.adjustBackground(this.background!, graphExtent, this.datasets, this.graph, this.timespan!);
             }
         });
         this.drawBackground();
     }
 
     protected drawTimeRangeLabels() {
-        if (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show) {
+        if (this.plotOptions.timeRangeLabel && this.plotOptions.timeRangeLabel.show && this.timespan) {
             this.graph.append('text')
                 .attr('class', 'x axis time-range from')
                 .attr('x', this.leftOffset)
@@ -654,7 +659,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     private drawXaxis(bufferXrange: number): void {
         // range for x axis scale
         this.xScaleBase = d3.scaleTime()
-            .domain([new Date(this.timespan.from), new Date(this.timespan.to)])
+            .domain([new Date(this.timespan!.from), new Date(this.timespan!.to)])
             .range([bufferXrange, this.width]);
 
         const ticks = this.calcTicks();
@@ -711,7 +716,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
     private calcTicks() {
         const tickCount = (this.width - this.leftOffset) / 120;
-        return this.ticks(this.timespan, tickCount);
+        return this.ticks(this.timespan!, tickCount);
     }
 
     private ticks(ts: Timespan, interval: number) {
@@ -975,7 +980,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
     }
 
     private drawRefLineChart(data: DataEntry[], color: string, width: number, yScaleBase: d3.ScaleLinear<number, number>): void {
-        const line = this.createLine(this.xScaleBase, yScaleBase);
+        const line = this.createLine(this.xScaleBase!, yScaleBase);
 
         this.graphBody
             .append('svg:path')
@@ -991,7 +996,7 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
         const pointRadius = this.calculatePointRadius(ds); 0
 
         // create graph line
-        const line = this.createLine(this.xScaleBase, yScaleBase);
+        const line = this.createLine(this.xScaleBase!, yScaleBase);
         // draw line
         this.graphBody
             .append('svg:path')
@@ -1061,11 +1066,11 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
             .style('stroke', ds.style.baseColor)
             .style('stroke-width', this.calculateLineWidth(ds))
             .style('fill-opacity', 0.5)
-            .attr('x', (d: DataEntry) => (this.xScaleBase(d.timestamp) || 0) + paddingBefore)
+            .attr('x', (d: DataEntry) => (this.xScaleBase!(d.timestamp) || 0) + paddingBefore)
             .attr('width', (d: DataEntry) => {
                 let width = 10;
                 if (typeof d.value === 'number') {
-                    width = (this.xScaleBase(d.timestamp + periodInMs) || 0) - (this.xScaleBase(d.timestamp) || 0);
+                    width = (this.xScaleBase!(d.timestamp + periodInMs) || 0) - (this.xScaleBase!(d.timestamp) || 0);
                 }
                 const barWidth = width - paddingBefore - paddingAfter;
                 return barWidth < 1 ? 1 : barWidth;

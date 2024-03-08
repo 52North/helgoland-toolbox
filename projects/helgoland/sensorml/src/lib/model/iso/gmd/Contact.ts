@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Phone } from './Phone';
 import { Address } from './Address';
 import { OnlineResource } from './OnlineResource';

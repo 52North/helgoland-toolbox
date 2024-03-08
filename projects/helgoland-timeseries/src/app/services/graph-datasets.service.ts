@@ -20,7 +20,7 @@ export class DatasetsService {
 
   public overviewDatasets: SeriesGraphDataset[] = [];
 
-  private _timespan: Timespan;
+  private _timespan: Timespan = this.initTimespan();
 
   constructor(
     protected timeSrvc: Time,
@@ -115,11 +115,7 @@ export class DatasetsService {
   }
 
   private initTimespan() {
-    if (!this._timespan) {
-      this._timespan =
-        this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) ||
-        this.timeSrvc.createByDurationWithEnd(moment.duration(1, 'days'), new Date(), 'day');
-    }
+    return this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) || this.timeSrvc.createByDurationWithEnd(moment.duration(1, 'days'), new Date(), 'day');
   }
 
   private getDatasetEntryIndex(id: string): number {

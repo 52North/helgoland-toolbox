@@ -29,7 +29,7 @@ interface Symbol {
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
 
-  @Input() lineStyle: LineStyle;
+  @Input() lineStyle: LineStyle | undefined;
 
   @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
 
@@ -43,11 +43,10 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
     { value: PointSymbolType.wye, viewValue: this.translate.instant('timeseries-symbol-select.type.wye') }
   ];
 
+  selectedSymbol: PointSymbolType | 'point' = 'point';
+  symbolSize = 1;
+
   constructor(private translate: TranslateService) { }
-
-  selectedSymbol: PointSymbolType | 'point';
-
-  symbolSize: number;
 
   ngOnInit() {
     if (this.lineStyle) {
@@ -62,16 +61,18 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   }
 
   adjustSymbol() {
-    if (this.selectedSymbol === 'point') {
-      this.lineStyle.pointSymbol = undefined;
-      this.lineStyle.pointRadius = this.symbolSize;
-    } else {
-      this.lineStyle.pointSymbol = {
-        type: PointSymbolType[this.selectedSymbol],
-        size: this.symbolSize
+    if (this.lineStyle) {
+      if (this.selectedSymbol === 'point') {
+        this.lineStyle.pointSymbol = undefined;
+        this.lineStyle.pointRadius = this.symbolSize;
+      } else {
+        this.lineStyle.pointSymbol = {
+          type: PointSymbolType[this.selectedSymbol],
+          size: this.symbolSize
+        }
       }
+      this.styleChanged.emit(this.lineStyle);
     }
-    this.styleChanged.emit(this.lineStyle);
   }
 
 }

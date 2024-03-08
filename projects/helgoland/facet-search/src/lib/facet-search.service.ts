@@ -23,11 +23,11 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   private facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
-  private entries: FacetSearchElement[];
+  private entries: FacetSearchElement[] = [];
 
   private selectedTimespan: Timespan | undefined;
 
-  private filteredEntries: FacetSearchElement[];
+  private filteredEntries: FacetSearchElement[] = [];
 
   private nullable = false;
 

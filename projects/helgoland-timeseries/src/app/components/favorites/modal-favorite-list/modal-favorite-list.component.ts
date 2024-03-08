@@ -32,7 +32,7 @@ interface EditableFavorite extends Favorite {
 })
 export class ModalFavoriteListComponent implements OnInit {
 
-  public singles: EditableFavorite[];
+  public singles: EditableFavorite[] = [];
 
   constructor(
     public favoriteSrvc: FavoriteService

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSweRange } from './AbstractSweRange';
 import { AllowedValues } from './AllowedValues';
 import { DisplayName } from '../../common/decorators/DisplayName';

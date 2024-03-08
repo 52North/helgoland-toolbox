@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractDataComponent } from './AbstractDataComponent';
 import { SweQuality } from './SweQuality';
 import { AbstractAllowedValues } from './AbstractAllowedValues';

@@ -1,7 +1,7 @@
 import 'bootstrap-slider';
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Timespan } from '@helgoland/core';
+import { Required, Timespan } from '@helgoland/core';
 // @ts-ignore
 import jquery from 'jquery';
 
@@ -22,16 +22,17 @@ export class TimeRangeSliderComponent implements OnChanges {
   public id = '';
 
   @Input()
-  public timeList: number[];
+  @Required
+  public timeList!: number[];
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
 
-  public start: number;
-  public selectionStart: number;
-  public end: number;
-  public selectionEnd: number;
+  public start!: number;
+  public selectionStart!: number;
+  public end!: number;
+  public selectionEnd!: number;
 
   constructor(
     protected cache: TimeRangeSliderCache

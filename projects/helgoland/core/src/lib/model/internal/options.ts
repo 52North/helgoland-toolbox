@@ -81,7 +81,7 @@ export class DatasetOptions {
      * dasharray to structure the line or bar chart border
      * See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
      */
-    public lineDashArray: number | number[];
+    public lineDashArray?: number | number[];
 
     /**
      * color of the point border
@@ -106,6 +106,7 @@ export class DatasetOptions {
     ) {
         this.internalId = internalId;
         this.color = color;
+        this.pointBorderColor = color;
     }
 }
 

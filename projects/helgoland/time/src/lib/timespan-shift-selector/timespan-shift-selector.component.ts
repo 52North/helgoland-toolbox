@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Time, Timespan } from '@helgoland/core';
+import { Required, Time, Timespan } from '@helgoland/core';
 
 @Component({
   selector: 'n52-timespan-shift-selector',
@@ -8,7 +8,8 @@ import { Time, Timespan } from '@helgoland/core';
 export class TimespanShiftSelectorComponent {
 
   @Input()
-  public timespan: Timespan;
+  @Required
+  public timespan!: Timespan;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

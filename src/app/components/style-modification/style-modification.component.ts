@@ -19,7 +19,7 @@ import { HelgolandModificationModule } from '@helgoland/modification';
 })
 export class StyleModificationComponent {
 
-    public color: string;
+    public color: string | undefined;
     public generalize: boolean | undefined;
     public zeroBasedYAxis: boolean | undefined;
     public autoRangeSelection: boolean | undefined;

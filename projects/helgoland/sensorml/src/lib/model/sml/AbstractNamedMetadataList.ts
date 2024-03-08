@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractMetadataList } from './AbstractMetadataList';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

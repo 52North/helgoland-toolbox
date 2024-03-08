@@ -14,7 +14,7 @@ export class GeosearchControlComponent extends MapControlComponent {
     /**
      * Additional search options.
      */
-    @Input() public options: GeoSearchOptions;
+    @Input() public options: GeoSearchOptions | undefined;
 
     /**
      * Returns the search result.
@@ -28,13 +28,13 @@ export class GeosearchControlComponent extends MapControlComponent {
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
     @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
 
-    public result: GeoSearchResult;
+    public result: GeoSearchResult | undefined;
 
-    public resultGeometry: L.GeoJSON;
+    public resultGeometry: L.GeoJSON | undefined;
 
-    public searchTerm: string;
+    public searchTerm: string | undefined;
 
-    public loading: boolean;
+    public loading: boolean | undefined;
 
     constructor(
         protected override mapCache: MapCache,

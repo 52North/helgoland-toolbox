@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SweBinaryComponent } from './SweBinaryComponent';
 import { SweBinaryBlock } from './SweBinaryBlock';
 import { SweByteOrder } from './SweByteOrder';

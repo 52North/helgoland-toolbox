@@ -12,6 +12,7 @@ import {
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
+  Required,
   Time,
   Timespan,
 } from '@helgoland/core';
@@ -35,66 +36,78 @@ export class ExportImageButtonComponent {
   /**
    * List of datasetIds, similiar to the timeseries component
    */
-  @Input() datasetIds: string[];
+  @Input()
+  datasetIds: string[] = [];
 
   /**
    * Map of datasetOptions, similiar to the timeseries component
    */
-  @Input() datasetOptions: Map<string, DatasetOptions>;
+  @Input()
+  datasetOptions: Map<string, DatasetOptions> = new Map();
 
   /**
    * Timespan, similiar to the timeseries component
    */
-  @Input() timespan: Timespan;
+  @Input()
+  @Required
+  timespan!: Timespan;
 
   /**
    * Height (as number) in px for the diagram extent, default is 300
    */
-  @Input() height = 300;
+  @Input()
+  height = 300;
 
   /**
    * Width (as number) in px for the diagram extent, default is 600
    */
-  @Input() width = 600;
+  @Input()
+  width = 600;
 
   /**
    * Filename for the exported file, default is 'export'
    */
-  @Input() fileName = 'export';
+  @Input()
+  fileName = 'export';
 
   /**
    * Filetype for the export, currently png and svg are possible, default is 'png'
    */
-  @Input() exportType: 'png' | 'svg' = 'png';
+  @Input()
+  exportType: 'png' | 'svg' = 'png';
 
   /**
    * Optional title in the picture of the exported file
    */
-  @Input() title: string;
+  @Input()
+  title: string | undefined;
 
   /**
    * Option to show a simple legend in th exported picture
    */
-  @Input() showLegend = false;
+  @Input()
+  showLegend = false;
 
   /**
    * Option to show first and last date at the bottom edges of the exported picture
    */
-  @Input() showFirstLastDate: boolean;
+  @Input()
+  showFirstLastDate: boolean = false;
 
   /**
    * Presenter Options for the exported image
    */
-  @Input() presenterOptions: D3PlotOptions = {
+  @Input()
+  presenterOptions: D3PlotOptions = {
     showTimeLabel: false,
     showReferenceValues: true,
     grid: true
   }
 
-  public loading: boolean;
+  public loading: boolean = false;
 
-  private internalHeight: number;
-  private internalWidth: number;
+  private internalHeight = this.height;
+  private internalWidth = this.width;
 
   constructor(
     private servicesConnector: HelgolandServicesConnector,

@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Time, Timespan } from '@helgoland/core';
+import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Required, Time, Timespan } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -50,11 +50,9 @@ export class GeneralTimeSelectionComponent {
     end: new UntypedFormControl()
   });
 
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
 
-  @ViewChild('picker') picker: MatDateRangePicker<Date>;
-
-  @Input() timespan: Timespan;
+  @Input() @Required timespan!: Timespan;
 
   @Output() timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
@@ -64,11 +62,11 @@ export class GeneralTimeSelectionComponent {
   ) { }
 
   back() {
-    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan));
+    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan!));
   }
 
   forward() {
-    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan));
+    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan!));
   }
 
   predefinedRange(defined: DefinedTimespan) {
@@ -78,12 +76,12 @@ export class GeneralTimeSelectionComponent {
     }
   }
 
-  onMenuOpen() {
-    this.range.setValue({ start: new Date(this.timespan.from), end: new Date(this.timespan.to) })
-    this.picker.closedStream.subscribe(res => {
+  onMenuOpen(picker: MatDateRangePicker<Date>) {
+    this.range.setValue({ start: new Date(this.timespan!.from), end: new Date(this.timespan!.to) })
+    picker.closedStream.subscribe(res => {
       const ts = new Timespan(this.range.value.start.toDate(), this.range.value.end.toDate());
       this.timespanChanged.emit(ts);
-      this.trigger.closeMenu();
+      this.trigger!.closeMenu();
     });
   }
 

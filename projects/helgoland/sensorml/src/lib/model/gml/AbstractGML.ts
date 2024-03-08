@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CodeType } from './CodeType';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

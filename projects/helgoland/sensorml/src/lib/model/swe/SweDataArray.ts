@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { EncodedValues } from './EncodedValues';
 import { AbstractDataComponent } from './AbstractDataComponent';
 import { SweElementType } from './SweElementType';

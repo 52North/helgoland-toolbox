@@ -34,10 +34,10 @@ import { forkJoin } from 'rxjs';
 export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandPlatform> implements OnChanges, AfterViewInit {
 
     @Input()
-    public cluster: boolean;
+    public cluster: boolean | undefined;
 
     @Input()
-    public statusIntervals: boolean;
+    public statusIntervals: boolean | undefined;
 
     /**
      * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
@@ -45,7 +45,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
     @Input()
     public ignoreStatusIntervalIfBeforeDuration = Infinity;
 
-    protected markerFeatureGroup: L.FeatureGroup;
+    protected markerFeatureGroup: L.FeatureGroup | undefined;
 
     constructor(
         protected statusIntervalResolver: StatusIntervalResolverService,
@@ -74,7 +74,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
 
     protected createValuedMarkers(serviceUrl: string, map: L.Map) {
         this.servicesConnector.getDatasets(serviceUrl, {
-            phenomenon: this.filter.phenomenon,
+            phenomenon: this.filter?.phenomenon,
             expanded: true,
             type: DatasetType.Timeseries
         }).subscribe(
@@ -96,12 +96,12 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
                         marker.on('click', () => {
                             this.onSelected.emit(ts.platform);
                         });
-                        this.markerFeatureGroup.addLayer(marker);
+                        this.markerFeatureGroup!.addLayer(marker);
                     });
                 });
 
                 forkJoin(obsList).subscribe(() => {
-                    this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds(), map);
+                    this.zoomToMarkerBounds(this.markerFeatureGroup!.getBounds(), map);
                     map.invalidateSize()
                     this.onContentLoading.emit(false);
                 });
@@ -165,7 +165,7 @@ export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandP
                 if (res instanceof Array && res.length > 0) {
                     res.forEach((entry) => {
                         const marker = this.createDefaultGeometry(entry);
-                        if (marker) { this.markerFeatureGroup.addLayer(marker); }
+                        if (marker) { this.markerFeatureGroup!.addLayer(marker); }
                     });
                     this.markerFeatureGroup.addTo(map);
                     this.zoomToMarkerBounds(this.markerFeatureGroup.getBounds(), map);

@@ -21,7 +21,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ShareButtonComponent {
 
-  @Input() public generatedUrlFunction: () => string;
+  @Input() public generatedUrlFunction: (() => string) | undefined;
 
   private readonly snackBarConfig: MatSnackBarConfig = {
     duration: 2000,
@@ -37,11 +37,15 @@ export class ShareButtonComponent {
   ) { }
 
   public shareState() {
-    const url = this.generatedUrlFunction();
-    if (this.clipboard.copy(url)) {
-      this.inform(this.translate.instant('permalink.copy-to-clipboard'));
+    if (this.generatedUrlFunction) {
+      const url = this.generatedUrlFunction();
+      if (this.clipboard.copy(url)) {
+        this.inform(this.translate.instant('permalink.copy-to-clipboard'));
+      } else {
+        this.inform(this.translate.instant('permalink.copy-to-clipboard-error'));
+      }
     } else {
-      this.inform(this.translate.instant('permalink.copy-to-clipboard-error'));
+      throw new Error("generateUrlFunction is not defined");
     }
   }
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SweDataArray } from './SweDataArray';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

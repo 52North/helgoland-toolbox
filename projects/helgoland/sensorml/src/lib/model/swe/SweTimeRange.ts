@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSweRange } from './AbstractSweRange';
 import { TimePosition } from './TimePosition';
 import { UnitOfMeasure } from './UnitOfMeasure';

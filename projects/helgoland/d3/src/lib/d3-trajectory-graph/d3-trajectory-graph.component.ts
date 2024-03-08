@@ -54,9 +54,9 @@ export enum D3AxisType {
     Ticks
 }
 
-export class D3SelectionRange {
-    public from: number;
-    public to: number;
+export interface D3SelectionRange {
+    from: number;
+    to: number;
 }
 
 interface DataEntry extends LocatedTimeValueEntry {
@@ -101,7 +101,7 @@ export class D3TrajectoryGraphComponent
     implements AfterViewInit, OnChanges {
 
     @Input()
-    public selection: D3SelectionRange;
+    public selection: D3SelectionRange | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -116,13 +116,13 @@ export class D3TrajectoryGraphComponent
     public onHoverHighlight: EventEmitter<number> = new EventEmitter();
 
     @ViewChild('dthree', { static: true })
-    public d3Elem: ElementRef;
+    public d3Elem: ElementRef | undefined;
 
     protected datasetMap: Map<string, DatasetConstellation> = new Map();
     protected rawSvg: any;
     protected graph: any;
-    protected height: number;
-    protected width: number;
+    protected height: number = 0;
+    protected width: number = 0;
     protected margin = {
         top: 10,
         right: 10,
@@ -130,22 +130,21 @@ export class D3TrajectoryGraphComponent
         left: 40
     };
     protected maxLabelwidth = 0;
-    protected xScaleBase: d3.ScaleLinear<number, number>;
+    protected xScaleBase: d3.ScaleLinear<number, number> | undefined;
     protected yScaleBase: d3.ScaleLinear<number, number> | undefined;
     protected background: any;
     protected focusG: any;
     protected highlightFocus: any;
     protected focuslabelTime: any;
     protected focuslabelY: any;
-    protected yAxisGen: d3.Axis<number | { valueOf(): number; }>;
     protected baseValues: DataEntry[] = [];
-    protected dragging: boolean;
+    protected dragging: boolean = false;
     protected dragStart: [number, number] | undefined;
-    protected dragCurrent: [number, number];
+    protected dragCurrent: [number, number] | undefined;
     protected dragRect: any;
     protected dragRectG: any;
-    protected bufferSum: number;
-    protected dataLength: number;
+    protected bufferSum: number = 0;
+    protected dataLength: number = 0;
 
     protected defaultGraphOptions: D3GraphOptions = {
         axisType: D3AxisType.Distance,
@@ -174,7 +173,7 @@ export class D3TrajectoryGraphComponent
     }
 
     public ngAfterViewInit(): void {
-        this.rawSvg = select(this.d3Elem.nativeElement)
+        this.rawSvg = select(this.d3Elem?.nativeElement)
             .append('svg')
             .attr('width', '100%')
             .attr('height', '100%');
@@ -351,17 +350,20 @@ export class D3TrajectoryGraphComponent
     }
 
     protected calcXValue = (d: DataEntry, i: number) => {
-        const xDiagCoord = this.xScaleBase(this.getXValue(d));
-        d.xDiagCoord = xDiagCoord;
-        return xDiagCoord;
+        if (this.xScaleBase) {
+            const xDiagCoord = this.xScaleBase(this.getXValue(d));
+            d.xDiagCoord = xDiagCoord;
+            return xDiagCoord;
+        }
+        return undefined
     }
 
     protected calculateHeight(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
+        return (this.d3Elem?.nativeElement as HTMLElement).clientHeight - this.margin.top - this.margin.bottom;
     }
 
     protected calculateWidth(): number {
-        return (this.d3Elem.nativeElement as HTMLElement).clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
+        return (this.d3Elem?.nativeElement as HTMLElement).clientWidth - this.margin.left - this.margin.right - this.maxLabelwidth;
     }
 
     protected getXValue(data: DataEntry) {
@@ -495,8 +497,10 @@ export class D3TrajectoryGraphComponent
         }
         const coords = mouse(this.background.node());
         const idx = this.getItemForX(coords[0] + this.bufferSum, this.baseValues);
-        this.showDiagramIndicator(idx);
-        this.onHoverHighlight.emit(this.baseValues[idx].tick);
+        if (idx) {
+            this.showDiagramIndicator(idx);
+            this.onHoverHighlight.emit(this.baseValues[idx].tick);
+        }
     }
 
     protected mouseoutHandler = () => {
@@ -514,12 +518,14 @@ export class D3TrajectoryGraphComponent
     }
 
     protected dragEndHandler = () => {
-        if (!this.dragStart || !this.dragging) {
+        if (!this.dragStart || !this.dragging || !this.dragCurrent) {
             this.onSelectionChangedFinished.emit({ from: 0, to: this.dataLength });
         } else {
             const from = this.getItemForX(this.dragStart[0] + this.bufferSum, this.baseValues);
             const to = this.getItemForX(this.dragCurrent[0] + this.bufferSum, this.baseValues);
-            this.onSelectionChangedFinished.emit(this.prepareRange(this.baseValues[from].tick, this.baseValues[to].tick));
+            if (from && to) {
+                this.onSelectionChangedFinished.emit(this.prepareRange(this.baseValues[from].tick, this.baseValues[to].tick));
+            }
         }
         this.dragStart = undefined;
         this.dragging = false;
@@ -540,7 +546,9 @@ export class D3TrajectoryGraphComponent
 
         const from = this.getItemForX(this.dragStart[0] + this.bufferSum, this.baseValues);
         const to = this.getItemForX(this.dragCurrent[0] + this.bufferSum, this.baseValues);
-        this.onSelectionChanged.emit(this.prepareRange(this.baseValues[from].tick, this.baseValues[to].tick));
+        if (from && to) {
+            this.onSelectionChanged.emit(this.prepareRange(this.baseValues[from].tick, this.baseValues[to].tick));
+        }
 
         const x1 = Math.min(this.dragStart[0], this.dragCurrent[0]);
         const x2 = Math.max(this.dragStart[0], this.dragCurrent[0]);
@@ -654,19 +662,22 @@ export class D3TrajectoryGraphComponent
     }
 
     protected getItemForX(x: number, data: DataEntry[]) {
-        const index = this.xScaleBase.invert(x);
-        const bisectDate = bisector((d: DataEntry) => {
-            switch (this.presenterOptions!.axisType) {
-                case D3AxisType.Distance:
-                    return d.dist;
-                case D3AxisType.Time:
-                    return d.timestamp;
-                case D3AxisType.Ticks:
-                default:
-                    return d.tick;
-            }
-        }).left;
-        return bisectDate(this.baseValues, index);
+        if (this.xScaleBase) {
+            const index = this.xScaleBase.invert(x);
+            const bisectDate = bisector((d: DataEntry) => {
+                switch (this.presenterOptions!.axisType) {
+                    case D3AxisType.Distance:
+                        return d.dist;
+                    case D3AxisType.Time:
+                        return d.timestamp;
+                    case D3AxisType.Ticks:
+                    default:
+                        return d.tick;
+                }
+            }).left;
+            return bisectDate(this.baseValues, index);
+        }
+        return undefined;
     }
 
     protected createYAxis() {

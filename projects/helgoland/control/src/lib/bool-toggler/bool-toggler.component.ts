@@ -7,13 +7,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class BoolTogglerComponent {
 
     @Input()
-    public value: boolean;
+    public value: boolean | undefined;
 
     @Input()
-    public icon: string;
+    public icon: string | undefined;
 
     @Input()
-    public tooltip: string;
+    public tooltip: string | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix

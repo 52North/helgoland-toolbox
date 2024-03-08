@@ -1,15 +1,19 @@
 :host {
-    .fav-title {
-        display: flex;
-        align-items: center;
-    }
+    .mat-mdc-card {
+        padding: 10px;
 
-    .fav-additional {
-        font-size: 80%;
-        color: grey;
-    }
+        .fav-title {
+            display: flex;
+            align-items: center;
+        }
 
-    .fav-actions {
-        display: flex;
+        .fav-additional {
+            font-size: 80%;
+            color: grey;
+        }
+
+        .fav-actions {
+            display: flex;
+        }
     }
 }

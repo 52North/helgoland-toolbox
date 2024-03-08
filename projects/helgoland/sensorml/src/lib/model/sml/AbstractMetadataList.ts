@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSWEIdentifiable } from '../swe/AbstractSWEIdentifiable';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

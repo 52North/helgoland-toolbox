@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { MapCache } from '../../base/map-cache.service';
 import { MapControlComponent } from '../map-control-component';
 import { LocateService } from './locate.service';
-import { MapCache } from '../../base/map-cache.service';
 
 @Component({
     selector: 'n52-locate-control',
@@ -10,9 +10,6 @@ import { MapCache } from '../../base/map-cache.service';
     styleUrls: ['./locate.component.scss']
 })
 export class LocateControlComponent extends MapControlComponent {
-
-    @Input()
-    public override mapId: string;
 
     public isToggled = false;
 

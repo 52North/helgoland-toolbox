@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { OnlineFunction } from './OnlineFunction';
 import { DisplayName } from '../../../common/decorators/DisplayName';
 

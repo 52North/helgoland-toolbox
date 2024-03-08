@@ -21,6 +21,7 @@ import {
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   InternalIdHandler,
+  Required,
   SumValuesService,
   Time,
   Timespan,
@@ -50,17 +51,19 @@ import { D3SeriesGraphComponent, D3SeriesGraphOptions } from '../d3-series-graph
 })
 export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions> implements OnChanges {
 
-  @Input() public yaxisModifier: boolean;
+  @Input() public yaxisModifier: boolean | undefined;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
 
   @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
-  @Input() public mainTimeInterval: Timespan;
+  @Input() 
+  @Required 
+  public mainTimeInterval!: Timespan;
 
   public datasets: SeriesGraphDataset[] = [];
-  public override timespan: Timespan;
+  public override timespan: Timespan | undefined;
 
   public graphOptions: D3SeriesGraphOptions = {
     grid: true,

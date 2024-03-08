@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractGeometricPrimitive } from './AbstractGeometricPrimitive';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

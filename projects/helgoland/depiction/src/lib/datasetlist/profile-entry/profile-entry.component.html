@@ -1,4 +1,4 @@
-<div class="legendItem" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
+<div class="legendItem" *ngIf="dataset" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
   <div class="legendItemheader">
     <div class="legendItemLabel">
       <n52-label-mapper label="{{dataset.parameters.platform?.label}}"></n52-label-mapper>
@@ -23,7 +23,7 @@
         title="{{'profiles.legend.visibility' | translate}}"></span>
       <span class="fa fa-pencil" (click)="editDatasetOptions(item); $event.stopPropagation();"
         [ngStyle]="{color: item.color}" title="{{'profiles.legend.edit-style' | translate}}"></span>
-      <span class="fa fa-map-marker" (click)="showGeometry(item); $event.stopPropagation();"
+      <span class="fa fa-map-marker" (click)="showGeometry(dataset, item); $event.stopPropagation();"
         title="{{'profiles.legend.show-geometry' | translate}}"></span>
       <span class="fa fa-times" (click)="removeDatasetOptions(item); $event.stopPropagation();"
         title="{{'profiles.legend.delete-subentry' | translate}}"></span>

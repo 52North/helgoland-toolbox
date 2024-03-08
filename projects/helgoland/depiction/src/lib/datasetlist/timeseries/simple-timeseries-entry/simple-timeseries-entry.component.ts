@@ -4,6 +4,7 @@ import {
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
+  InternalDatasetId,
   InternalIdHandler,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,7 +30,7 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   public phenomenonLabel: string | undefined;
   public procedureLabel: string | undefined;
   public categoryLabel: string | undefined;
-  public uom: string;
+  public uom: string | undefined;
   public error: any;
 
   constructor(
@@ -40,11 +41,11 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
     super(internalIdHandler, translateSrvc);
   }
 
-  protected loadDataset(locale?: string): void {
+  protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
     const params: DatasetFilter = {};
     if (locale) { params.locale = locale; }
     this.loading = true;
-    this.servicesConnector.getDataset(this.internalId, { ...params, type: DatasetType.Timeseries })
+    this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Timeseries })
       .subscribe(
         dataset => this.setDataset(dataset),
         error => this.handleError(error)

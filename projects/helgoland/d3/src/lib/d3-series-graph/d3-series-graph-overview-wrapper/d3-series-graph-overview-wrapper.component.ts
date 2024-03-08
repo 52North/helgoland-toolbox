@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
+import { DatasetOptions, Required, Time, TimeInterval, Timespan } from '@helgoland/core';
 
 import { D3PlotOptions } from '../models/d3-plot-options';
 
@@ -21,22 +21,24 @@ import { D3PlotOptions } from '../models/d3-plot-options';
 export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Input()
-  public datasetIds: string[];
+  @Required
+  public datasetIds!: string[];
 
   @Input()
-  public datasetOptions: Map<string, DatasetOptions>;
+  public datasetOptions: Map<string, DatasetOptions> | undefined;
 
   @Input()
-  public presenterOptions: D3PlotOptions;
+  public presenterOptions: D3PlotOptions | undefined;
 
   @Input()
-  public timeInterval: TimeInterval;
+  @Required
+  public timeInterval!: TimeInterval;
 
   @Input()
-  public rangefactor: number;
+  public rangefactor: number = 1;
 
   @Input()
-  public reloadForDatasets: string[];
+  public reloadForDatasets: string[] = [];
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -50,8 +52,8 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
-  public overviewTimespan: Timespan;
-  public timespan: Timespan;
+  public overviewTimespan: Timespan | undefined;
+  public timespan!: Timespan;
 
   private init = false;
 
@@ -70,7 +72,6 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   }
 
   public ngAfterViewInit(): void {
-    this.rangefactor = this.rangefactor || 1;
     this.calculateOverviewRange();
     this.init = true;
     this.cd.detectChanges();

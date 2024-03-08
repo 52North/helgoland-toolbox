@@ -1,4 +1,5 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
+import { Required } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
 
 /**
@@ -10,9 +11,11 @@ import BaseLayer from 'ol/layer/Base';
 })
 export class OlLayerOpacitiySliderComponent implements OnInit, DoCheck {
 
-  @Input() layer: BaseLayer;
+  @Input()
+  @Required
+  layer!: BaseLayer;
 
-  public opacity: number;
+  public opacity: number | undefined;
 
   constructor() { }
 

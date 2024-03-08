@@ -9,7 +9,7 @@ export abstract class MapControlComponent {
     /**
      * Connect map id.
      */
-    @Input() @Required public mapId: string;
+    @Input() @Required public mapId!: string;
 
     constructor(
         protected mapCache: MapCache

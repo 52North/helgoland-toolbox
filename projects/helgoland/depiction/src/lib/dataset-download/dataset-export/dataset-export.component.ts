@@ -6,6 +6,7 @@ import {
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   IDataset,
+  Required,
   Time,
   Timespan,
 } from '@helgoland/core';
@@ -42,7 +43,9 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * options to define the export parameters
    */
-  @Input() public exportOptions: ExportOptions;
+  @Input() 
+  @Required 
+  public exportOptions!: ExportOptions;
 
   /**
    * id of the dataset that should be downloaded

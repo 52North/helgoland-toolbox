@@ -62,7 +62,7 @@ export class DiagramViewComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
 
-  private _mobileQueryListener: () => void;
+  // private _mobileQueryListener: () => void;
 
   public diagramConfig: DiagramConfig = {
     overviewVisible: true,
@@ -85,8 +85,8 @@ export class DiagramViewComponent implements OnInit {
     overview: true
   }
 
-  diagramLoading: boolean;
-  overviewLoading: boolean;
+  diagramLoading: boolean = false;
+  overviewLoading: boolean = false;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,

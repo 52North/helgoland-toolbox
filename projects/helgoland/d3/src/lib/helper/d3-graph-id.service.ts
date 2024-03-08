@@ -7,7 +7,7 @@ import { Observable, of, Subject } from 'rxjs';
 @Injectable()
 export class D3GraphId {
 
-  private id: string;
+  private id: string | undefined;
 
   private subject: Subject<string> = new Subject();
 

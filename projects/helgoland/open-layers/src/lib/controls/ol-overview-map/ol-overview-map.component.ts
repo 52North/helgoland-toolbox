@@ -29,7 +29,7 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   /**
    * Layers, which are shown in the overview map
    */
-  @Input() layers: Layer[];
+  @Input() layers: Layer[] = [];
 
   /**
    * position of the overview map

@@ -12,7 +12,7 @@ export class MinMaxRangeComponent implements OnChanges {
   public rangeMax: number | undefined;
 
   @Input()
-  public range: MinMaxRange;
+  public range: MinMaxRange | undefined;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractTime } from './AbstractTime';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

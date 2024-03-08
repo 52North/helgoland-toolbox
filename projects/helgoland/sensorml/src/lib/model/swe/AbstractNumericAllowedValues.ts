@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractAllowedValues } from './AbstractAllowedValues';
 import { DisplayName } from '../../common/decorators/DisplayName';
 

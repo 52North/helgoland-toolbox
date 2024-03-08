@@ -16,7 +16,7 @@ import { LayoutModeService } from '../../services/layout-mode.service';
 })
 export class DarkModeButtonComponent implements OnInit {
 
-  public darkModeActive: boolean;
+  public darkModeActive: boolean | undefined;
 
   constructor(
     private layout: LayoutModeService

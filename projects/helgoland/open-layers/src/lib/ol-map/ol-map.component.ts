@@ -29,39 +29,46 @@ export class OlMapComponent implements OnInit, AfterViewInit {
   /**
    * The map id, to reference this map outside of this component. If no id is given, a unique one is generated
    */
-  @Input() mapId: string;
+  @Input()
+  mapId!: string;
 
   /**
    * Longitude to center the map
    */
-  @Input() lon = 0;
+  @Input()
+  lon = 0;
 
   /**
    * Latitude to center the map
    */
-  @Input() lat = 0;
+  @Input()
+  lat = 0;
 
   /**
    * Zoom level of the map
    */
-  @Input() zoom = 1;
+  @Input()
+  zoom = 1;
 
   /**
    * Projection of the map
    */
-  @Input() projection = 'EPSG:3857';
+  @Input()
+  projection = 'EPSG:3857';
 
   /**
    * Should the zoom controls be visible on the map
    */
-  @Input() showZoomControl = true;
+  @Input()
+  showZoomControl = true;
 
   /**
    * Should the attribution label be visible on the map
    */
-  @Input() showAttributionControl = true;
+  @Input()
+  showAttributionControl = true;
 
-  private map: Map;
+  private map!: Map;
 
   constructor(
     private mapService: OlMapService,

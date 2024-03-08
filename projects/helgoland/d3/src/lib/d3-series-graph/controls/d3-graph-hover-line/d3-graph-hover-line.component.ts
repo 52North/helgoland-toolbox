@@ -30,13 +30,13 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
   @Input() showTimelLabel = true;
 
-  protected d3Graph: D3GraphInterface;
-  protected background: d3.Selection<SVGSVGElement, any, any, any>;
-  protected graphExtent: D3GraphExtent;
-  protected disableHovering: boolean;
+  protected d3Graph: D3GraphInterface | undefined;
+  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected graphExtent: D3GraphExtent | undefined;
+  protected disableHovering: boolean = false;
   protected lastDraw = new Date().getTime();
   protected drawLatency = 20;
-  protected datasets: SeriesGraphDataset[];
+  protected datasets: SeriesGraphDataset[] | undefined;
 
   protected labels: Map<string, HoverlineLabel> = new Map();
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
@@ -62,7 +62,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan
   ) {
-    if (!this.drawLayer) {
+    if (!this.drawLayer && this.d3Graph) {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-line-layer');
     }
     this.createHoverLine();
@@ -152,33 +152,34 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
   protected moveHoverLineIndicator(): void {
     const time = new Date().getTime();
-    const background = this.background.node();
-    if ((this.lastDraw + this.drawLatency < time) && background) {
-      const mouse = d3.mouse(background);
-      this.drawLineIndicator(mouse);
-      if (this.showLabels) {
-        this.datasets.forEach((entry, entryIdx) => {
-          const idx = this.getItemForX(mouse[0] + this.graphExtent.leftOffset, entry.data);
-          if (idx) this.showLabel(entry, idx, mouse[0], entryIdx);
-        });
+    if (this.background && this.graphExtent && this.datasets) {
+      const background = this.background.node();
+      if ((this.lastDraw + this.drawLatency < time) && background) {
+        const mouse = d3.mouse(background);
+        this.drawLineIndicator(mouse);
+        if (this.showLabels) {
+          this.datasets.forEach((entry, entryIdx) => {
+            const idx = this.getItemForX(mouse[0] + this.graphExtent!.leftOffset, entry.data);
+            if (idx) this.showLabel(entry, idx, mouse[0], entryIdx);
+          });
+        }
       }
-      this.lastDraw = time;
     }
   }
 
   protected drawLineIndicator(mouse: [number, number]) {
-    if (this.drawLayer) {
+    if (this.drawLayer && this.graphExtent) {
       const xPos = mouse[0] + this.graphExtent.leftOffset;
 
       this.drawLayer.select(`.${HOVERLINE_CLASS}`)
-        .attr('d', () => 'M' + (xPos) + ',' + this.graphExtent.height + ' ' + (xPos) + ',' + 0);
+        .attr('d', () => 'M' + (xPos) + ',' + this.graphExtent!.height + ' ' + (xPos) + ',' + 0);
 
       this.drawTimeLabel(xPos);
     }
   }
 
   protected drawTimeLabel(xPos: number) {
-    if (this.drawLayer && this.showTimelLabel) {
+    if (this.drawLayer && this.showTimelLabel && this.graphExtent) {
       const time = this.graphExtent.xScale.invert(xPos);
 
       // draw label
@@ -194,7 +195,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
   protected getItemForX(xCoord: number, data: DataEntry[]): number | undefined {
     const PixelBuffer = 5;
-    const time = this.graphExtent.xScale.invert(xCoord);
+    const time = this.graphExtent?.xScale.invert(xCoord);
     const idx = d3.bisector((d: DataEntry) => d.timestamp).left(data, time);
     const distIdx = this.calcDist(data[idx], xCoord);
     if (idx > 0) {
@@ -212,7 +213,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   }
 
   protected calcDist(entry: DataEntry, x: number) {
-    const scale = this.graphExtent.xScale(entry.timestamp);
+    const scale = this.graphExtent?.xScale(entry.timestamp);
     return (entry && scale) ? Math.abs(scale - x) : Infinity;
   }
 
@@ -292,8 +293,8 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
    * @param itemCoord {number} x coordinate of the value (e.g. mouse) to be checked
    */
   protected checkLeftSide(itemCoord: number): boolean {
-    const background = this.background.node();
-    if (background) return ((background.getBBox().width + this.graphExtent.leftOffset) / 2 > itemCoord);
+    const background = this.background?.node();
+    if (background && this.graphExtent) return ((background.getBBox().width + this.graphExtent.leftOffset) / 2 > itemCoord);
     return false;
   }
 

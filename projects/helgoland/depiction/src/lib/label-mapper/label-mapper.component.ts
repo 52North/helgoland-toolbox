@@ -11,7 +11,7 @@ export class LabelMapperComponent implements OnChanges {
     @Input()
     public label: string | undefined;
 
-    public determinedLabel: string;
+    public determinedLabel: string | undefined;
 
     public loading = true;
 

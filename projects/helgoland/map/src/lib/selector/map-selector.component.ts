@@ -31,13 +31,13 @@ export abstract class MapSelectorComponent<T>
      * @input The filter which should be used, while fetching the selection.
      */
     @Input()
-    public filter: HelgolandParameterFilter;
+    public filter: HelgolandParameterFilter | undefined;
 
     @Input()
-    public avoidZoomToSelection: boolean;
+    public avoidZoomToSelection: boolean | undefined;
 
     @Input()
-    public markerSelectorGenerator: MarkerSelectorGenerator;
+    public markerSelectorGenerator: MarkerSelectorGenerator | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -51,7 +51,7 @@ export abstract class MapSelectorComponent<T>
      * @input Additional configuration for the marker zooming (https://leafletjs.com/reference-1.3.4.html#fitbounds-options)
      */
     @Input()
-    public fitBoundsMarkerOptions: L.FitBoundsOptions;
+    public fitBoundsMarkerOptions: L.FitBoundsOptions | undefined;
 
     @Output()
     // eslint-disable-next-line @angular-eslint/no-output-on-prefix

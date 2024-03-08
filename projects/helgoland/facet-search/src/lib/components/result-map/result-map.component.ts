@@ -21,7 +21,7 @@ L.Icon.Default.mergeOptions({
 })
 export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() @Required public facetSearchService: FacetSearchService;
+  @Input() @Required public facetSearchService!: FacetSearchService;
 
   @Input() public cluster = true;
 
@@ -37,8 +37,8 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Output() public selectedEntry: EventEmitter<FacetSearchElement> = new EventEmitter();
 
-  private markerFeatureGroup: L.FeatureGroup;
-  private resultsSubs: Subscription;
+  private markerFeatureGroup: L.FeatureGroup | undefined;
+  private resultsSubs: Subscription | undefined;
 
   constructor(
     protected override mapCache: MapCache,
@@ -54,7 +54,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   override ngOnDestroy() {
     super.ngOnDestroy();
-    this.resultsSubs.unsubscribe();
+    this.resultsSubs?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -85,7 +85,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         });
         features.forEach(v => {
           const geom = this.createFeatureGeometry(v);
-          if (geom) { this.markerFeatureGroup.addLayer(geom); }
+          if (geom) { this.markerFeatureGroup!.addLayer(geom); }
         });
         if (features.size === 1 && this.selectSingleStation) {
           const entry = features.get(features.keys().next().value);
@@ -95,7 +95,7 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
         entries.forEach(e => {
           if (e.feature) {
             const marker = this.createEntryGeometry(e.feature);
-            if (marker) { this.markerFeatureGroup.addLayer(marker); }
+            if (marker) { this.markerFeatureGroup!.addLayer(marker); }
           }
         });
       }

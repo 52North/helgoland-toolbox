@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSWEIdentifiable } from './AbstractSWEIdentifiable';
 import { EncodedValues } from './EncodedValues';
 import { SweCount } from './SweCount';

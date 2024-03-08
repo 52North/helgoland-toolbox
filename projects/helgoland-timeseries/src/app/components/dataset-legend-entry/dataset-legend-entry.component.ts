@@ -5,7 +5,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { Time, TimeInterval } from "@helgoland/core";
+import { Required, Time, TimeInterval } from "@helgoland/core";
 import { SeriesGraphDataset } from "@helgoland/d3";
 import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
@@ -44,11 +44,17 @@ export class DatasetLegendEntryComponent implements OnChanges {
   // loading = false;
   //
 
-  @Input() dataset: SeriesGraphDataset;
+  @Input()
+  @Required
+  dataset!: SeriesGraphDataset;
 
-  @Input() selected: boolean;
+  @Input()
+  @Required
+  selected!: boolean;
 
-  @Input() timeInterval: TimeInterval;
+  @Input() 
+  @Required
+  timeInterval!: TimeInterval;
 
   @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
 

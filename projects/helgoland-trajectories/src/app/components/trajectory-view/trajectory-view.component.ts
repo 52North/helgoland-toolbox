@@ -52,23 +52,33 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
 })
 export class TrajectoryViewComponent implements OnInit {
 
-  public trajectory: HelgolandTrajectory;
-  public timespan: Timespan;
-  public selectedTimespan: Timespan;
-  public geometry: GeoJSON.LineString;
-  public highlightGeometry: GeoJSON.GeoJsonObject;
-  public zoomToGeometry: GeoJSON.LineString;
-  public loading: boolean;
+  public trajectory: HelgolandTrajectory | undefined;
+
+  public timespan: Timespan | undefined;
+
+  public selectedTimespan: Timespan | undefined;
+
+  public geometry: GeoJSON.LineString | undefined;
+
+  public highlightGeometry: GeoJSON.GeoJsonObject | undefined;
+
+  public zoomToGeometry: GeoJSON.LineString | undefined;
+
+  public loading: boolean = false;
+
   public datasetIds: string[] = [];
-  public options: Map<string, DatasetOptions>;
-  public selection: D3SelectionRange;
+
+  public options: Map<string, DatasetOptions> = new Map();
+
+  public selection: D3SelectionRange | undefined;
 
   public graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Time,
     dotted: false,
     groupYAxis: true
   };
-  public trajectoryGraphLoading: boolean;
+
+  public trajectoryGraphLoading: boolean = false;
 
   public axisTypes = [
     { type: D3AxisType.Distance, label: this.translateSrvc.instant('chart-styling.xaxis-option.distance') },
@@ -105,26 +115,31 @@ export class TrajectoryViewComponent implements OnInit {
   }
 
   public onChartSelectionChanged(range: D3SelectionRange) {
-    this.highlightGeometry = {
-      type: 'LineString',
-      coordinates: this.geometry.coordinates.slice(range.from, range.to)
-    } as GeoJSON.GeoJsonObject;
+    if (this.geometry) {
+      this.highlightGeometry = {
+        type: 'LineString',
+        coordinates: this.geometry.coordinates.slice(range.from, range.to)
+      } as GeoJSON.GeoJsonObject;
+    }
   }
 
   public onChartSelectionChangedFinished(range: D3SelectionRange) {
-    console.log('Range finished: ' + range.from + ' ' + range.to);
-    this.selection = range;
-    this.zoomToGeometry = {
-      type: 'LineString',
-      coordinates: this.geometry.coordinates.slice(range.from, range.to)
-    };
+    if (this.geometry) {
+      this.selection = range;
+      this.zoomToGeometry = {
+        type: 'LineString',
+        coordinates: this.geometry.coordinates.slice(range.from, range.to)
+      };
+    }
   }
 
   public onChartHighlightChanged(idx: number) {
-    this.highlightGeometry = {
-      type: 'Point',
-      coordinates: this.geometry.coordinates[idx]
-    } as GeoJSON.GeoJsonObject;
+    if (this.geometry) {
+      this.highlightGeometry = {
+        type: 'Point',
+        coordinates: this.geometry.coordinates[idx]
+      } as GeoJSON.GeoJsonObject;
+    }
   }
 
   public setXaxisType(axisType: D3AxisType) {

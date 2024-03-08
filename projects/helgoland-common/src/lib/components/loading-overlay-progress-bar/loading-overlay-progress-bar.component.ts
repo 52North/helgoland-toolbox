@@ -12,7 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class LoadingOverlayProgressBarComponent {
 
-  @Input() progressBarPosition: 'top' | 'bottom';
+  @Input() progressBarPosition: 'top' | 'bottom' | undefined;
 
   @HostBinding('style.align-items') get alignItems() {
     switch (this.progressBarPosition) {

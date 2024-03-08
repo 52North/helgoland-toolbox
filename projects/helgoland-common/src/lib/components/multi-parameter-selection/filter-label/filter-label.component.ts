@@ -17,6 +17,6 @@ import { CommonModule } from '@angular/common';
 })
 export class FilterLabelComponent {
 
-  @Input() filter: ParameterType;
+  @Input() filter: ParameterType | undefined;
 
 }

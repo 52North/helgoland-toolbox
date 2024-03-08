@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Citation } from './Citation';
 import { KeywordType } from './KeywordType';
 import { DisplayName } from '../../../common/decorators/DisplayName';

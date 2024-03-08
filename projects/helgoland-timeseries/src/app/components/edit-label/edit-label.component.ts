@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -5,37 +6,50 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'helgoland-edit-label',
   templateUrl: './edit-label.component.html',
   styleUrls: ['./edit-label.component.scss'],
   imports: [
+    CommonModule,
     FormsModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   standalone: true
 })
-export class EditLabelComponent implements AfterViewInit {
+export class EditLabelComponent implements AfterViewInit, OnInit {
 
-  @Input() label: string;
+  fc = new FormControl('');
+
+  @Input() label: string | undefined;
 
   @Output() labelChanged: EventEmitter<string> = new EventEmitter();
 
-  @ViewChild('input') firstItem: ElementRef;
+  @ViewChild('input') firstItem!: ElementRef;
 
-  private editedLabel: string;
+  editedLabel: string | undefined;
 
   constructor(
     private cd: ChangeDetectorRef
   ) { }
+
+  ngOnInit(): void {
+    this.editedLabel = this.label;
+  }
 
   ngAfterViewInit(): void {
     this.firstItem.nativeElement.focus();

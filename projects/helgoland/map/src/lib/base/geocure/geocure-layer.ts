@@ -13,12 +13,10 @@ export class GeoCureGeoJSON extends GeoJSON {
     public override options: GeoCureGeoJSONOptions;
 
     constructor(
-        options?: GeoCureGeoJSONOptions
+        options: GeoCureGeoJSONOptions
     ) {
         super();
-        if (options) {
-            this.options = options;
-        }
+        this.options = options;
     }
 
     public override getEvents() {

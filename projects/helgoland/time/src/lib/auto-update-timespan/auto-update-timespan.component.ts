@@ -12,19 +12,21 @@ export class AutoUpdateTimespanComponent {
    * optional timeinterval in seconds to be added to current timespan. If not set, the refreshInterval is selected.
    */
   @Input()
-  public timeInterval: number;
+  public timeInterval: number | undefined;
 
   /**
    * current Timespan to calculate new timespan
    */
   @Input()
-  public currentTimespan: Timespan;
+  @Required
+  public currentTimespan!: Timespan;
 
   /**
    * refresh interval in seconds
    */
-  @Required @Input()
-  public refreshInterval: number;
+  @Input()
+  @Required
+  public refreshInterval!: number;
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix

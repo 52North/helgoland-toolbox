@@ -21,15 +21,15 @@ import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@he
 })
 export class ExportPopupComponent {
 
-  public exportOptions: ExportOptions;
+  public exportOptions!: ExportOptions;
   public inputId: string;
   public loading = false;
   // pre-define variable metadata to avoid errors (undefined)
-  public dataset: HelgolandTimeseries;
+  public dataset: HelgolandTimeseries | undefined;
   public disabled = false;
 
-  public selectedStart: Date;
-  public selectedEnd: Date;
+  public selectedStart: Date | undefined;
+  public selectedEnd: Date | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<ExportPopupComponent>,
@@ -58,10 +58,12 @@ export class ExportPopupComponent {
    * @param dwType {string} typy of the download file (csv or xlsx)
    */
   public onDownload(dwType: DownloadType): void {
-    this.exportOptions = {
-      downloadType: dwType,
-      timeperiod: new Timespan(this.selectedStart, this.selectedEnd)
-    };
+    if (this.selectedStart && this.selectedEnd) {
+      this.exportOptions = {
+        downloadType: dwType,
+        timeperiod: new Timespan(this.selectedStart, this.selectedEnd)
+      };
+    }
   }
 
   /**

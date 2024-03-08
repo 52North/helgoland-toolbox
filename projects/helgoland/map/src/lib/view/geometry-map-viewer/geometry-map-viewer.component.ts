@@ -12,22 +12,22 @@ import { MapCache } from '../../base/map-cache.service';
 export class GeometryMapViewerComponent extends CachedMapComponent implements AfterViewInit, OnChanges {
 
     @Input()
-    public highlight: GeoJSON.GeoJsonObject;
+    public highlight: GeoJSON.GeoJsonObject | undefined;
 
     @Input()
-    public geometry: GeoJSON.GeoJsonObject;
+    public geometry: GeoJSON.GeoJsonObject | undefined;
 
     @Input()
-    public zoomTo: GeoJSON.GeoJsonObject;
+    public zoomTo: GeoJSON.GeoJsonObject | undefined;
 
     @Input()
-    public avoidZoomToGeometry: boolean;
+    public avoidZoomToGeometry: boolean | undefined;
 
     @Input()
-    public customMarkerIcon: L.Icon;
+    public customMarkerIcon: L.Icon | undefined;
 
-    private highlightGeometryOnMap: L.GeoJSON;
-    private geometryOnMap: L.GeoJSON;
+    private highlightGeometryOnMap: L.GeoJSON | undefined;
+    private geometryOnMap: L.GeoJSON | undefined;
 
     private defaultStyle: L.PathOptions = {
         color: 'red',

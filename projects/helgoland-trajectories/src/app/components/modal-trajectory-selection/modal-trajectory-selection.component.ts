@@ -48,7 +48,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
 
-  public datasetsLoading: boolean;
+  public datasetsLoading: boolean | undefined;
 
   public filterList: ParameterListEntry[] = [];
 

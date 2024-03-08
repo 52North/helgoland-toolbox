@@ -18,18 +18,20 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 })
 export class OlLayerZoomExtentComponent implements OnInit {
 
-  @Required @Input() layer: BaseLayer;
+  @Input()
+  @Required
+  layer!: BaseLayer;
 
   /**
    * corresponding map id
    */
-  @Required @Input() mapId: string;
+  @Input()
+  @Required
+  mapId!: string;
 
-  private url: string;
-  private layerid: string;
   private extent: number[] | undefined;
-  private crs: string;
-  private view: View;
+  private crs: string | undefined;
+  private view: View | undefined;
 
   constructor(
     private wmsCaps: WmsCapabilitiesService,
@@ -43,12 +45,12 @@ export class OlLayerZoomExtentComponent implements OnInit {
       const source = this.layer.getSource();
       this.layer.getExtent();
       if (source instanceof TileWMS && source.getUrls()?.length) {
-        this.url = source.getUrls()![0];
+        const url = source.getUrls()![0];
         this.mapServices.getMap(this.mapId).subscribe(map => {
           this.view = map.getView();
           const epsgCode = this.view.getProjection().getCode();
-          this.layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
-          this.wmsCaps.getExtent(this.layerid, this.url, epsgCode).subscribe(res => {
+          const layerid = source.getParams()['layers'] || source.getParams()['LAYERS'];
+          this.wmsCaps.getExtent(layerid, url, epsgCode).subscribe(res => {
             if (res) {
               this.extent = res.extent;
               this.crs = res.crs;
@@ -60,7 +62,7 @@ export class OlLayerZoomExtentComponent implements OnInit {
   }
 
   public zoomToExtent() {
-    if (this.extent) {
+    if (this.extent && this.view) {
       if (!this.crs) {
         this.view.fit(this.extent);
       } else {

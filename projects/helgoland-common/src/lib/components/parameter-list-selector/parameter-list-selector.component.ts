@@ -20,7 +20,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
 
-  @ViewChild(MatSelectionList) list: MatSelectionList;
+  @ViewChild(MatSelectionList) list: MatSelectionList | undefined;
 
   constructor(
     protected override translate: TranslateService,

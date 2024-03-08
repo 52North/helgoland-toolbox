@@ -9,7 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 })
 export class OlMapId {
 
-  private id: string;
+  private id: string | undefined;
 
   private subject: Subject<string> = new Subject();
 

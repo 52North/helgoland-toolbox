@@ -14,9 +14,11 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 })
 export class OlLayerTitleComponent implements OnInit {
 
-  @Required @Input() layer: Layer;
+  @Input()
+  @Required
+  layer!: Layer;
 
-  public title: string;
+  public title: string | undefined;
 
   constructor(
     private wmsCaps: WmsCapabilitiesService,

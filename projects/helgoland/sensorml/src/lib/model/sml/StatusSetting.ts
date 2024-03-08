@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AbstractSetting } from './AbstractSetting';
 import { DisplayName } from '../../common/decorators/DisplayName';
 
