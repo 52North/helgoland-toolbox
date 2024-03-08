@@ -225,17 +225,48 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   getDatasets(url: string, filter: DatasetFilter): Observable<HelgolandDataset[]> {
     if (this.filterTimeseriesMatchesNot(filter)) { return of([]); }
-    return this.sta.aggregatePaging(this.sta.getDatastreams(url, this.createDatastreamFilter(filter)))
-      .pipe(mergeMap(ds => {
-        return forkJoin(ds.value.map(d => {
-          if (filter.expanded) {
-            return this.requestExpandedTimeseries(d, url);
-          } else {
-            return of(this.createTimeseries(d, url));
-          }
-        }));
+    if (filter.expanded) {
+      const firstFilter = this.createDatastreamFilter(filter);
+      const firstExpandFilter = `Observations($orderby=phenomenonTime desc;$top=1)`;
+      firstFilter.$expand = firstFilter.$expand ? firstFilter.$expand + `,${firstExpandFilter}` : firstExpandFilter;
+
+      const lastFilter: StaFilter<DatastreamSelectParams, DatastreamExpandParams> = {};
+      lastFilter.$expand = "Observations($orderby=phenomenonTime;$top=1)";
+      lastFilter.$select = {
+        Observations: true,
+        id: true
+      }
+
+      const firstRequest = this.sta.aggregatePaging(this.sta.getDatastreams(url, firstFilter));
+      const lastRequest = this.sta.aggregatePaging(this.sta.getDatastreams(url, lastFilter));
+      return forkJoin({ first: firstRequest, last: lastRequest }).pipe(map(res => {
+        return res.first.value.map(ds => {
+          const first = this.getFirstLast(ds.Observations);
+          const match = res.last.value.find(e => e['@iot.id'] === ds['@iot.id']);
+          const last = this.getFirstLast(match?.Observations);
+          return this.createExpandedTimeseries(ds, first, last, url);
+        })
       }));
+    } else {
+      return this.sta.aggregatePaging(this.sta.getDatastreams(url, this.createDatastreamFilter(filter)))
+        .pipe(map(ds => ds.value.map(d => this.createTimeseries(d, url))))
+    }
   }
+
+  private getFirstLast(obs: Observation[] | undefined) {
+    let firstLast: FirstLastValue | undefined;
+    if (obs?.length === 1) {
+      const { phenomenonTime, result } = obs[0];
+      firstLast = new FirstLastValue();
+      if (phenomenonTime) {
+        firstLast.timestamp = new Date(phenomenonTime).getTime();
+      }
+      if (typeof result === 'number') {
+        firstLast.value = result;
+      }
+    }
+    return firstLast;
+  };
 
   protected createDatastreamFilter(params: DatasetFilter): StaFilter<DatastreamSelectParams, DatastreamExpandParams> {
     let filter: StaFilter<StaSelectParams, StaExpandParams> = {};
@@ -259,31 +290,6 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     return filter;
   }
 
-  protected requestExpandedTimeseries(ds: Datastream, apiUrl: string): Observable<HelgolandTimeseries> {
-    if (ds['@iot.id']) {
-      if (ds.phenomenonTime && ds.phenomenonTime.indexOf('/') !== -1) {
-        const firstLastDates = ds.phenomenonTime.split('/');
-        // request for first and last timestamp the values
-        const firstReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $filter: this.createTimeFilter(firstLastDates[0]) });
-        const lastReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $filter: this.createTimeFilter(firstLastDates[1]) });
-        return forkJoin([firstReq, lastReq]).pipe(map(res => {
-          const first = this.createFirstLastValue(res[0].value[0]);
-          const last = this.createFirstLastValue(res[1].value[0]);
-          return this.createExpandedTimeseries(ds, first, last, apiUrl);
-        }));
-      } else {
-        const firstReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $orderby: 'phenomenonTime', $top: 1 });
-        const lastReq = this.sta.getDatastreamObservationsRelation(apiUrl, ds['@iot.id'], { $orderby: 'phenomenonTime desc', $top: 1 });
-        return forkJoin([firstReq, lastReq]).pipe(map(res => {
-          const first = this.createFirstLastValue(res[0].value[0]);
-          const last = this.createFirstLastValue(res[1].value[0]);
-          return this.createExpandedTimeseries(ds, first, last, apiUrl);
-        }));
-      }
-    }
-    return throwError('Could not request expanded timeseries');
-  }
-
   protected createFirstLastValue(obs: Observation): FirstLastValue | undefined {
     if (obs && obs.phenomenonTime && obs.result) {
       return { timestamp: new Date(obs.phenomenonTime).valueOf(), value: parseFloat(obs.result) };
@@ -297,8 +303,20 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
 
   getDataset(internalId: InternalDatasetId, filter: DatasetFilter): Observable<HelgolandDataset> {
     if (this.filterTimeseriesMatchesNot(filter)) { return throwError('Could not create dataset'); }
-    return this.sta.getDatastream(internalId.url, internalId.id, { $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor' })
-      .pipe(mergeMap(ds => this.requestExpandedTimeseries(ds, internalId.url)));
+    const firstFilter: StaFilter<DatastreamSelectParams, DatastreamExpandParams> = {
+      $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor,Observations($orderby=phenomenonTime;$top=1)'
+    };
+    const lastFilter: StaFilter<DatastreamSelectParams, DatastreamExpandParams> = {
+      $expand: 'Thing,Thing/Locations,ObservedProperty,Sensor,Observations($orderby=phenomenonTime desc;$top=1)',
+      $select: { Observations: true, id: true }
+    };
+    const firstRequest = this.sta.getDatastream(internalId.url, internalId.id, firstFilter);
+    const lastRequest = this.sta.getDatastream(internalId.url, internalId.id, lastFilter);
+    return forkJoin({ first: firstRequest, last: lastRequest }).pipe(map(res => {
+      const first = this.getFirstLast(res.first.Observations);
+      const last = this.getFirstLast(res.last.Observations);
+      return this.createExpandedTimeseries(res.first, first, last, internalId.url)
+    }));
   }
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {

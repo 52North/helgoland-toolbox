@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{'diagram-view.add-timeseries.map' | translate}}</h1>
 
-<mat-drawer-container class="content">
+<mat-drawer-container class="content" autosize>
   <mat-drawer #drawer class="sidenav" mode="side" opened="true">
     <button mat-button color="primary" (click)="selectAllPhenomena()" [disabled]="!state.selectedPhenomenonId"
       style="width: 100%;">{{'map-selection-view.select-all-phenomena' | translate}}</button>

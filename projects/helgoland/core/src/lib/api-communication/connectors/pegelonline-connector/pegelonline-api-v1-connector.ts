@@ -47,7 +47,7 @@ interface PegelonlineTimeseries extends PegelonlineEntity {
 interface PegelonlineStation extends PegelonlineEntity {
   agency: string;
   km: number;
-  latitude: number;
+  latitude: number | undefined;
   longitude: number;
   number: string;
   timeseries: PegelonlineTimeseries[];
@@ -160,46 +160,33 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
   }
 
   getPhenomena(url: string, filter: HelgolandParameterFilter): Observable<Phenomenon[]> {
-    // return new Observable((observer: Observer<any>) => {
-    //   if (Object.keys(filter).length > 2 && (filter.service && filter.type)) {
-    //     this.httpCall(url, 'stations', this.createPhenomenaFilter(filter)).subscribe((res: any) => {
-    //       observer.next(this.getPhenomanaFromStations(res));
-    //       observer.complete();
-    //     });
-    //   } else {
-    //     observer.next(this.getFilteredList(this.localStorage.load(this.localStorageIdentReduced)));
-    //     observer.complete();
-    //   }
-    // });
-    // TODO: filter stations without coordinates
-    return this.httpCall<PegelonlineStation>(url, 'stations', this.createPhenomenaFilter(filter)).pipe(
-      map(res => this.getPhenomenaFromStations(res))
+    const ignoreStationsWithoutCoordinates = !(Object.keys(filter).length >= 2 && (filter.service !== undefined && filter.type !== undefined));
+    return this.httpCall<PegelonlineStation[]>(url, 'stations', this.createPhenomenaFilter(filter)).pipe(
+      map(res => this.getPhenomenaFromStations(res, ignoreStationsWithoutCoordinates))
     )
   }
 
-  getPhenomenaFromStations(items: PegelonlineStation): Phenomenon[] {
-    let list: Parameter[] = [];
-    let keyList: string[] = [];
-    for (const [key, value] of Object.entries(items)) {
-      let item: any = value;
-      if (item && item.timeseries) {
-        item.timeseries.forEach((element: any) => {
-          if (!keyList.includes(element.shortname)) {
-            list.push({
-              id: element.shortname,
-              label: element.longname
-            });
-            keyList.push(element.shortname);
+  getPhenomenaFromStations(stations: PegelonlineStation[], ignoreStationsWithoutCoordinates: boolean): Phenomenon[] {
+    const phenomenons = new Map<string, Phenomenon>();
+    stations.forEach(station => {
+      const hasNoCoordinates = !station.latitude || !station.longitude;
+      if (ignoreStationsWithoutCoordinates && hasNoCoordinates) {
+      } else {
+        station.timeseries.forEach(ts => {
+          if (!phenomenons.has(ts.shortname)) {
+            phenomenons.set(ts.shortname, {
+              id: ts.shortname,
+              label: ts.longname
+            })
           }
-        });
+        })
       }
-    }
-
-    return this.getFilteredList(list);
+    })
+    return this.adjustList(Array.from(phenomenons.values()));
   }
 
   protected createPhenomenaFilter(filter: HelgolandParameterFilter): string {
-    let parameter: string[] = [];
+    let parameter: string[] = ['includeTimeseries=true'];
 
     if (filter.feature)
       parameter.push(`ids=${filter.feature}`);
@@ -207,7 +194,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     if (filter.category)
       parameter.push(`waters=${filter.category}`);
 
-    return `includeTimeseries=true`;
+    return parameter.join('&');
   }
 
   getPhenomenon(id: string, url: string, filter: HelgolandParameterFilter): Observable<any> {
@@ -243,7 +230,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     );
   }
 
-  protected createFeaturesFilter(filter: HelgolandParameterFilter): string {
+  protected createFeaturesFilter(filter: HelgolandParameterFilter) {
     let parameter: string[] = [];
 
     if (filter.phenomenon)
@@ -252,7 +239,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     if (filter.category)
       parameter.push(`waters=${filter.category}`);
 
-    return parameter.join('&');
+    return parameter.length ? parameter.join('&') : undefined;
   }
 
   prepFeature(item: any): Feature {
@@ -599,38 +586,22 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     return (filter.type && filter.type !== DatasetType.Timeseries) || false;
   }
 
-  ucwords(string: string) {
+  private ucwords(string: string) {
     if (!string) return string;
-
     let parts1: string[] = [];
     string.split('-').forEach((word: string) => {
       parts1.push(word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase());
     });
-
-
     return parts1.join('-').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
   }
 
-  public getFilteredList(items: Parameter[]): Phenomenon[] {
-    // sort alphabetically
-    items.sort((a, b) => a.label.localeCompare(b.label));
-    const filteredList: Phenomenon[] = [];
-    for (let key in items) {
-      let elem = items[key];
-      filteredList.push({
-        // filterList: [{
-        //   filter: [{
-        //     service: '2'
-        //   }],
-        //   itemId: '2',
-        //   service: '2',
-        //   url: 'pegelonline.wsv'
-        // }],
-        id: elem.id,
-        label: `${this.ucwords(elem.label)} (${elem.id})`
-      })
-    }
-    return filteredList;
+  private adjustList(items: Parameter[]): Parameter[] {
+    return items
+      .map(i => ({
+        id: i.id,
+        label: `${this.ucwords(i.label)} (${i.id})`
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label))
   }
 }
 
