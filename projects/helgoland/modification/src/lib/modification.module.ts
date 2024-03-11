@@ -15,24 +15,21 @@ import { MinMaxRangeComponent } from './min-max-range/min-max-range.component';
  *   - axes modifications
  */
 @NgModule({
-  declarations: [
-    ColorSelectorComponent,
-    AxesOptionsComponent,
-    DragOptionsComponent,
-    MinMaxRangeComponent
-  ],
-  imports: [
-    HelgolandCoreModule,
-    FormsModule,
-    ColorPickerModule
-  ],
-  exports: [
-    ColorSelectorComponent,
-    AxesOptionsComponent,
-    DragOptionsComponent,
-    MinMaxRangeComponent
-  ],
-  providers: [
-  ]
+    imports: [
+        HelgolandCoreModule,
+        FormsModule,
+        ColorPickerModule,
+        ColorSelectorComponent,
+        AxesOptionsComponent,
+        DragOptionsComponent,
+        MinMaxRangeComponent
+    ],
+    exports: [
+        ColorSelectorComponent,
+        AxesOptionsComponent,
+        DragOptionsComponent,
+        MinMaxRangeComponent
+    ],
+    providers: []
 })
 export class HelgolandModificationModule { }

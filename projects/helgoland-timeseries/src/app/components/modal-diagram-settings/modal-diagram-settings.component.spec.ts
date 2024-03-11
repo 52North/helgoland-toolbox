@@ -13,21 +13,19 @@ describe('ModalDiagramSettingsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ModalDiagramSettingsComponent
-      ],
-      imports: [
+    imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatButtonToggleModule,
         MatSlideToggleModule,
-        MatDialogModule
-      ],
-      providers: [
+        MatDialogModule,
+        ModalDiagramSettingsComponent
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

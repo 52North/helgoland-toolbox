@@ -10,10 +10,11 @@ import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
 @Component({
-  selector: 'n52-d3-graph-overview-selection',
-  template: '',
-  styleUrls: ['./d3-graph-overview-selection.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-d3-graph-overview-selection',
+    template: '',
+    styleUrls: ['./d3-graph-overview-selection.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3GraphOverviewSelectionComponent extends D3SeriesGraphControl implements OnChanges {
 

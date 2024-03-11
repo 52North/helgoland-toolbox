@@ -11,21 +11,22 @@ describe('SimpleTimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        SimpleTimeseriesEntryComponent
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ],
-      declarations: [SimpleTimeseriesEntryComponent]
-    })
+    ]
+})
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SimpleTimeseriesEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = "temp__temp";
     fixture.detectChanges();
   });
 

@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
-import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatBadgeModule } from "@angular/material/badge";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatListModule } from "@angular/material/list";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
+import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { TimeseriesService, TimeseriesServiceImpl } from '../../services/timeseries-service.service';
-import { ModalDatasetByStationSelectorComponent } from './modal-dataset-by-station-selector.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ModalDatasetByStationSelectorComponent } from "./modal-dataset-by-station-selector.component";
 
 describe('ModalDatasetByStationSelectorComponent', () => {
   let component: ModalDatasetByStationSelectorComponent;
@@ -18,8 +17,7 @@ describe('ModalDatasetByStationSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalDatasetByStationSelectorComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         MatBadgeModule,
@@ -29,13 +27,8 @@ describe('ModalDatasetByStationSelectorComponent', () => {
         MatProgressBarModule,
         RouterTestingModule,
         TranslateTestingModule,
-      ],
-      providers: [
-        {
-          provide: TimeseriesService,
-          useClass: TimeseriesServiceImpl
-        }
-      ]
+        ModalDatasetByStationSelectorComponent
+    ]
     }).compileComponents();
   });
 

@@ -14,8 +14,9 @@ import { OlBaseComponent } from '../../ol-base.component';
  * </n52-ol-map>
  */
 @Component({
-  selector: 'n52-ol-layer',
-  template: '',
+    selector: 'n52-ol-layer',
+    template: '',
+    standalone: true
 })
 export class OlLayerComponent extends OlBaseComponent implements AfterViewInit, OnChanges {
 

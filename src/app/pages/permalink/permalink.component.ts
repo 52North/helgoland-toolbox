@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { HelgolandPermalinkModule } from '@helgoland/permalink';
+import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipboardComponent } from '@helgoland/permalink';
 
 @Component({
   templateUrl: './permalink.component.html',
   styleUrls: ['./permalink.component.scss'],
   imports: [
-    HelgolandPermalinkModule
+    PermalinkInMailComponent,
+    PermalinkToClipboardComponent,
+    PermalinkNewWindowComponent
   ],
   standalone: true
 })

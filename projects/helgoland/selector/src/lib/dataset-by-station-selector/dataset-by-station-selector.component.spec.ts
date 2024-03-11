@@ -1,8 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
+import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector.component';
@@ -13,24 +14,30 @@ describe('DatasetByStationSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         TranslateTestingModule,
         HelgolandCoreModule,
-        HelgolandLabelMapperModule
-      ],
-      providers: [
-        SettingsServiceTestingProvider
-      ],
-      declarations: [
+        HelgolandLabelMapperModule,
         DatasetByStationSelectorComponent
-      ]
-    }).compileComponents();
+    ],
+    providers: [
+        DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider,
+        DatasetApiV1ConnectorProvider,
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DatasetByStationSelectorComponent);
     component = fixture.componentInstance;
+    component.station = {
+      id: 'id',
+      datasetIds: [],
+      label: 'label'
+    };
+    component.url = 'url';
     fixture.detectChanges();
   });
 

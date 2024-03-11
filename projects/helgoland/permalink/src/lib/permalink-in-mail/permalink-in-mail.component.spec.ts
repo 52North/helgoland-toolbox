@@ -8,8 +8,8 @@ describe('PermalinkInMailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [PermalinkInMailComponent]
-    }).compileComponents();
+    imports: [PermalinkInMailComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

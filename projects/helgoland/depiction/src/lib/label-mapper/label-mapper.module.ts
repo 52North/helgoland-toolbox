@@ -5,17 +5,15 @@ import { LabelMapperComponent } from './label-mapper.component';
 import { LabelMapperService } from './label-mapper.service';
 
 @NgModule({
-  declarations: [
-    LabelMapperComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    LabelMapperComponent
-  ],
-  providers: [
-    LabelMapperService
-  ]
+    imports: [
+        CommonModule,
+        LabelMapperComponent
+    ],
+    exports: [
+        LabelMapperComponent
+    ],
+    providers: [
+        LabelMapperService
+    ]
 })
 export class HelgolandLabelMapperModule { }

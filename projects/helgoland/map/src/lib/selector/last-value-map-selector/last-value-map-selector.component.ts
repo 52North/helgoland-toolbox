@@ -28,9 +28,10 @@ import { LastValueLabelGenerator, LastValuePresentation } from '../services/last
  * Displays selectable series with their last values on an map.
  */
 @Component({
-  selector: 'n52-last-value-map-selector',
-  templateUrl: '../map-selector.component.html',
-  styleUrls: ['../map-selector.component.scss']
+    selector: 'n52-last-value-map-selector',
+    templateUrl: '../map-selector.component.html',
+    styleUrls: ['../map-selector.component.scss'],
+    standalone: true
 })
 export class LastValueMapSelectorComponent extends MapSelectorComponent<HelgolandTimeseries> implements AfterViewInit, DoCheck, OnChanges {
 

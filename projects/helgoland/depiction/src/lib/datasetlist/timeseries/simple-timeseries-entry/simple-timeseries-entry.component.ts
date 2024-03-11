@@ -18,9 +18,10 @@ import { ListEntryComponent } from '../../list-entry.component';
  *  - translatable, so it triggers the methode onLanguageChanged when the language is switched
  */
 @Component({
-  selector: 'n52-simple-timeseries-entry',
-  templateUrl: './simple-timeseries-entry.component.html',
-  styleUrls: ['./simple-timeseries-entry.component.css']
+    selector: 'n52-simple-timeseries-entry',
+    templateUrl: './simple-timeseries-entry.component.html',
+    styleUrls: ['./simple-timeseries-entry.component.css'],
+    standalone: true
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
 

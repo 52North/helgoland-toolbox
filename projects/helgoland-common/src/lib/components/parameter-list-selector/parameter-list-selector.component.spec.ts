@@ -13,15 +13,15 @@ describe('ParameterListSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ParameterListSelectorComponent],
-      imports: [
+    imports: [
         HelgolandCoreModule,
         HttpClientModule,
         MatListModule,
         MatProgressBarModule,
         TranslateTestingModule,
-      ]
-    }).compileComponents();
+        ParameterListSelectorComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

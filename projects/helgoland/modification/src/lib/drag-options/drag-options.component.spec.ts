@@ -8,8 +8,8 @@ describe('DragOptionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [DragOptionsComponent]
-    }).compileComponents();
+    imports: [DragOptionsComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

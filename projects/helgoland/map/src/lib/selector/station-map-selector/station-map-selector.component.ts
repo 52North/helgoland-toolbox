@@ -29,7 +29,8 @@ import { forkJoin } from 'rxjs';
 @Component({
     selector: 'n52-station-map-selector',
     templateUrl: '../map-selector.component.html',
-    styleUrls: ['../map-selector.component.scss']
+    styleUrls: ['../map-selector.component.scss'],
+    standalone: true
 })
 export class StationMapSelectorComponent extends MapSelectorComponent<HelgolandPlatform> implements OnChanges, AfterViewInit {
 

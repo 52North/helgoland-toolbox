@@ -44,8 +44,11 @@ const COMPONENTS = [
  * - graph export control
  */
 @NgModule({
-  declarations: COMPONENTS,
-  imports: [HelgolandCoreModule, CommonModule],
+  imports: [
+    HelgolandCoreModule, 
+    CommonModule,
+    ...COMPONENTS
+  ],
   exports: COMPONENTS,
   providers: [
     D3TimeFormatLocaleService,

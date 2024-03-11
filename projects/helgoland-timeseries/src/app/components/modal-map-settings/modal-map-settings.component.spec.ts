@@ -14,20 +14,20 @@ describe('ModalMapSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalMapSettingsComponent],
-      imports: [
+    imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatDialogModule,
         MatSlideToggleModule,
         HelgolandCommonModule,
-        HelgolandSelectorModule
-      ],
-      providers: [
+        HelgolandSelectorModule,
+        ModalMapSettingsComponent
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

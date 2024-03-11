@@ -11,8 +11,8 @@ describe('MapSelectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapSelectionComponent ]
-    })
+    imports: [MapSelectionComponent]
+})
     .compileComponents();
   }));
 

@@ -9,11 +9,11 @@ describe('ColorSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ColorPickerModule
-      ],
-      declarations: [ColorSelectorComponent]
-    }).compileComponents();
+    imports: [
+        ColorPickerModule,
+        ColorSelectorComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

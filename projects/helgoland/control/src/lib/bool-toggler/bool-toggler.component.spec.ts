@@ -8,8 +8,8 @@ describe('BoolTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [BoolTogglerComponent]
-    })
+    imports: [BoolTogglerComponent]
+})
       .compileComponents();
   }));
 

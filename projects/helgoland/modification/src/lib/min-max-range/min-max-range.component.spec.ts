@@ -9,9 +9,8 @@ describe('MinMaxRangeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MinMaxRangeComponent],
-      imports: [FormsModule]
-    }).compileComponents();
+    imports: [FormsModule, MinMaxRangeComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

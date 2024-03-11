@@ -9,14 +9,14 @@ describe('TimeListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeListSelectorComponent],
-      imports: [HelgolandCoreModule]
-    }).compileComponents();
+    imports: [HelgolandCoreModule, TimeListSelectorComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimeListSelectorComponent);
     component = fixture.componentInstance;
+    component.timeList = [];
     fixture.detectChanges();
   });
 

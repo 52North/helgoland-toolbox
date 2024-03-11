@@ -1,13 +1,16 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { Required } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Legend component handle the opacity of the layer
  */
 @Component({
-  selector: 'n52-ol-layer-opacitiy-slider',
-  templateUrl: './ol-layer-opacitiy-slider.component.html'
+    selector: 'n52-ol-layer-opacitiy-slider',
+    templateUrl: './ol-layer-opacitiy-slider.component.html',
+    standalone: true,
+    imports: [FormsModule]
 })
 export class OlLayerOpacitiySliderComponent implements OnInit, DoCheck {
 

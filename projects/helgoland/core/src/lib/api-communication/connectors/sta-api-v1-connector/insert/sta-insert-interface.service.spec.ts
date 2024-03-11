@@ -9,6 +9,7 @@ import { SplittedDataDatasetApiInterface } from '../../../../dataset-api/splitte
 import { StaDeleteInterfaceService } from '../delete/sta-delete-interface.service';
 import { StaInsertInterfaceService } from '../insert/sta-insert-interface.service';
 import { InsertLocation } from '../model/locations';
+import { InsertObservation } from '../model/observations';
 import { InsertThing } from '../model/things';
 import { StaReadInterfaceService } from '../read/sta-read-interface.service';
 
@@ -90,12 +91,12 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
         ]
     };
     insert.insertThing(staUrl, thing).subscribe(insThing => {
-        read.getThing(staUrl, insThing['@iot.id'], { $select: { Datastreams: true }, $expand: { Datastreams: true } }).subscribe(
+        read.getThing(staUrl, insThing['@iot.id']!, { $select: { Datastreams: true }, $expand: { Datastreams: true } }).subscribe(
             getThing => {
-                const datastreamId = getThing.Datastreams[0]['@iot.id'];
+                const datastreamId = getThing.Datastreams![0]['@iot.id'];
                 let counter = 0;
                 const interval = setInterval(() => {
-                    const observation = {
+                    const observation: InsertObservation = {
                         phenomenonTime: moment().format(),
                         result: (Math.random() * 20).toString(),
                         Datastream: {
@@ -137,20 +138,20 @@ function addSingleDataStream(insert: StaInsertInterfaceService) {
 
 function clearAll(read: StaReadInterfaceService, del: StaDeleteInterfaceService) {
     read.getThings(staUrl, { $select: { id: true } })
-        .subscribe(res => res.value.forEach(thing => del.deleteThing(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete thing ${thing['@iot.id']}`))));
+        .subscribe(res => res.value.forEach(thing => del.deleteThing(staUrl, thing['@iot.id']!).subscribe(() => console.log(`delete thing ${thing['@iot.id']}`))));
     // read.getDatastreams(staUrl, { $select: { id: true } })
     //   .subscribe(res => res.value.forEach(thing => del.deleteDatastream(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete datastream ${thing['@iot.id']}`))));
     read.getFeaturesOfInterest(staUrl, { $select: { id: true } })
-        .subscribe(res => res.value.forEach(thing => del.deleteFeatureOfInterest(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete feature of interest ${thing['@iot.id']}`))));
+        .subscribe(res => res.value.forEach(thing => del.deleteFeatureOfInterest(staUrl, thing['@iot.id']!).subscribe(() => console.log(`delete feature of interest ${thing['@iot.id']}`))));
     // read.getHistoricalLocations(staUrl, { $select: { id: true } })
     //   .subscribe(res => res.value.forEach(thing => del.deleteHistoricalLocation(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete historical locations ${thing['@iot.id']}`))));
     read.getLocations(staUrl, { $select: { id: true } })
-        .subscribe(res => res.value.forEach(thing => del.deleteLocation(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete location ${thing['@iot.id']}`))));
+        .subscribe(res => res.value.forEach(thing => del.deleteLocation(staUrl, thing['@iot.id']!).subscribe(() => console.log(`delete location ${thing['@iot.id']}`))));
     // read.getObservations(staUrl, { $select: { id: true } })
     //   .subscribe(res => res.value.forEach(thing => del.deleteObservation(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete observation ${thing['@iot.id']}`))));
     read.getObservedProperties(staUrl, { $select: { id: true } })
-        .subscribe(res => res.value.forEach(thing => del.deleteObservedProperty(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete observed property ${thing['@iot.id']}`))));
+        .subscribe(res => res.value.forEach(thing => del.deleteObservedProperty(staUrl, thing['@iot.id']!).subscribe(() => console.log(`delete observed property ${thing['@iot.id']}`))));
     read.getSensors(staUrl, { $select: { id: true } })
-        .subscribe(res => res.value.forEach(thing => del.deleteSensor(staUrl, thing['@iot.id']).subscribe(() => console.log(`delete sensor ${thing['@iot.id']}`))));
+        .subscribe(res => res.value.forEach(thing => del.deleteSensor(staUrl, thing['@iot.id']!).subscribe(() => console.log(`delete sensor ${thing['@iot.id']}`))));
 }
 

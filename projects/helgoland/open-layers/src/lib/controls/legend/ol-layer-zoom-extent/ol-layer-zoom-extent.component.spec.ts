@@ -9,9 +9,8 @@ describe('OlLayerZoomExtentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [OlLayerZoomExtentComponent],
-      imports: [HelgolandCoreModule]
-    }).compileComponents();
+    imports: [HelgolandCoreModule, OlLayerZoomExtentComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

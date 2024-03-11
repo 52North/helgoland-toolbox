@@ -15,16 +15,15 @@ describe('ExportImageButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         HelgolandD3Module
-      ],
-      providers: [
+    ],
+    providers: [
         SettingsServiceTestingProvider
-      ],
-      declarations: [],
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {

@@ -1,18 +1,12 @@
 import { Component, Injectable, OnChanges, ViewEncapsulation } from '@angular/core';
-import {
-    ColorService,
-    DatasetOptions,
-    HelgolandServicesConnector,
-    IdCache,
-    InternalIdHandler,
-    ReferenceValue,
-    Time,
-} from '@helgoland/core';
+import { ColorService, DatasetOptions, HelgolandServicesConnector, IdCache, InternalIdHandler, ReferenceValue, Time, TzDatePipe } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
     FirstLatestTimeseriesEntryComponent,
 } from '../first-latest-timeseries-entry/first-latest-timeseries-entry.component';
+import { LabelMapperComponent } from '../../../label-mapper/label-mapper.component';
+import { NgStyle, NgClass, NgIf, NgFor } from '@angular/common';
 
 @Injectable()
 export class ReferenceValueColorCache extends IdCache<{ color: string, visible: boolean }> { }
@@ -25,7 +19,9 @@ export class ReferenceValueColorCache extends IdCache<{ color: string, visible: 
     selector: 'n52-timeseries-entry',
     templateUrl: './timeseries-entry.component.html',
     styleUrls: ['./timeseries-entry.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgStyle, NgClass, NgIf, LabelMapperComponent, NgFor, TzDatePipe]
 })
 export class TimeseriesEntryComponent extends FirstLatestTimeseriesEntryComponent implements OnChanges {
 

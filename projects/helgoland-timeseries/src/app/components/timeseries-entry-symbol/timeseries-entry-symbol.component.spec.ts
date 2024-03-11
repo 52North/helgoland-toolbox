@@ -9,8 +9,8 @@ describe('TimeseriesEntrySymbolComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeseriesEntrySymbolComponent],
-    }).compileComponents();
+    imports: [TimeseriesEntrySymbolComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

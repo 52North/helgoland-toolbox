@@ -5,8 +5,9 @@ import { Subscription } from 'rxjs';
 import { TimezoneService } from './timezone.service';
 
 @Pipe({
-  name: 'tzDate',
-  pure: false
+    name: 'tzDate',
+    pure: false,
+    standalone: true
 })
 export class TzDatePipe implements PipeTransform, OnDestroy {
 

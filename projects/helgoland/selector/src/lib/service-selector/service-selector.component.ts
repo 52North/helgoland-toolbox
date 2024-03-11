@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlacklistedService, DatasetApi, HelgolandParameterFilter, HelgolandService } from '@helgoland/core';
 
 import { ServiceSelectorService } from './service-selector.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 
 interface ExtendedHelgolandService extends HelgolandService {
     protected?: boolean;
@@ -13,7 +15,9 @@ interface ExtendedHelgolandService extends HelgolandService {
 @Component({
     selector: 'n52-service-selector',
     templateUrl: './service-selector.component.html',
-    styleUrls: ['./service-selector.component.scss']
+    styleUrls: ['./service-selector.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgFor, NgClass, TranslateModule]
 })
 export class ServiceSelectorComponent implements OnInit {
 

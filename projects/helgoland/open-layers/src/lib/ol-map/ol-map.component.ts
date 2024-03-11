@@ -15,14 +15,15 @@ import { OlMapId } from '../services/mapid.service';
  * Basic open layers map component, which creates a map with an OSM layer as first base layer.
  */
 @Component({
-  selector: 'n52-ol-map',
-  template: '<div class="map" [attr.id]="mapId"></div>',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: [
-    '../../../../../../node_modules/ol/ol.css',
-    'ol-map.component.scss'
-  ],
-  providers: [OlMapId]
+    selector: 'n52-ol-map',
+    template: '<div class="map" [attr.id]="mapId"></div>',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: [
+        '../../../../../../node_modules/ol/ol.css',
+        'ol-map.component.scss'
+    ],
+    providers: [OlMapId],
+    standalone: true
 })
 export class OlMapComponent implements OnInit, AfterViewInit {
 

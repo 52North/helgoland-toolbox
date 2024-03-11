@@ -30,21 +30,19 @@ describe('ListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        TranslateTestingModule
-      ],
-      providers: [
-        ListSelectorService,
-        SettingsServiceTestingProvider
-      ],
-      declarations: [
+        TranslateTestingModule,
         ListSelectorComponent,
         MultiServiceFilterSelectorComponent
-      ]
-    }).compileComponents();
+    ],
+    providers: [
+        ListSelectorService,
+        SettingsServiceTestingProvider
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
@@ -65,17 +63,19 @@ describe('ListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
-        HelgolandCachingModule
-      ],
-      providers: [
+        HelgolandCachingModule,
+        ListSelectorComponent,
+        MultiServiceFilterSelectorComponent
+    ],
+    providers: [
         {
-          provide: DatasetApiInterface,
-          useClass: SplittedDataDatasetApiInterface
+            provide: DatasetApiInterface,
+            useClass: SplittedDataDatasetApiInterface
         },
         DatasetApiV1ConnectorProvider,
         DatasetApiV2ConnectorProvider,
@@ -83,12 +83,8 @@ describe('ListSelectorComponent', () => {
         DatasetStaConnectorProvider,
         ListSelectorService,
         SettingsServiceTestingProvider
-      ],
-      declarations: [
-        ListSelectorComponent,
-        MultiServiceFilterSelectorComponent
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
@@ -105,16 +101,20 @@ describe('ListSelectorComponent', () => {
     component.parameters = [
       {
         type: MultiServiceFilterEndpoint.category,
-        header: 'Category'
+        header: 'Category',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.feature,
-        header: 'Feature'
+        header: 'Feature',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.phenomenon,
-        header: 'Phenomenon'
+        header: 'Phenomenon',
+        filterList: []
       }, {
         type: MultiServiceFilterEndpoint.procedure,
-        header: 'Procedure'
+        header: 'Procedure',
+        filterList: []
       }
     ];
     component.ngOnChanges({

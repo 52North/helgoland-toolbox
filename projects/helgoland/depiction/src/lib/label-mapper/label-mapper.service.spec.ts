@@ -6,7 +6,7 @@ import { LABEL_MAPPER_HANDLER, LabelMapperService } from './label-mapper.service
 import { VocabNercLabelMapperService } from './vocab-nerc-label-mapper/vocab-nerc-label-mapper.service';
 
 export class MockedSettingsService extends SettingsService<Settings> {
-  public getSettings(): Settings {
+  public override getSettings(): Settings {
     return {
       proxyUrl: 'https://cors-anywhere.herokuapp.com/'
     };

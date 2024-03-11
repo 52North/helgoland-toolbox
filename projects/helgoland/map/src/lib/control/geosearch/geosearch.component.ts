@@ -4,10 +4,14 @@ import * as L from 'leaflet';
 import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
 import { MapCache } from '../../base/map-cache.service';
 import { MapControlComponent } from '../map-control-component';
+import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'n52-geosearch-control',
-    templateUrl: './geosearch.component.html'
+    templateUrl: './geosearch.component.html',
+    standalone: true,
+    imports: [FormsModule, NgIf]
 })
 export class GeosearchControlComponent extends MapControlComponent {
 

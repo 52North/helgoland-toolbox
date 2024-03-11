@@ -11,9 +11,8 @@ describe('ResultMapComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandMapModule, HelgolandFacetSearchModule],
-      declarations: []
-    }).compileComponents();
+    imports: [HelgolandMapModule, HelgolandFacetSearchModule]
+}).compileComponents();
   }));
 
   beforeEach(inject([FacetSearchService], (service: FacetSearchService) => {

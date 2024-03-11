@@ -13,25 +13,24 @@ describe('ProfileEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [
+        TranslateTestingModule,
         ProfileEntryComponent,
         LabelMapperComponent
-      ],
-      providers: [
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         LabelMapperService,
         SettingsService
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 

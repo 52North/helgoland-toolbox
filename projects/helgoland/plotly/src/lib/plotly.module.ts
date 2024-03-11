@@ -13,16 +13,14 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
  * - plotly based profile chart component
  */
 @NgModule({
-  declarations: [
-    PlotlyProfileGraphComponent
-  ],
-  imports: [
-    HelgolandCoreModule,
-    PlotlyViaCDNModule
-  ],
-  exports: [
-    PlotlyProfileGraphComponent
-  ],
-  providers: []
+    imports: [
+        HelgolandCoreModule,
+        PlotlyViaCDNModule,
+        PlotlyProfileGraphComponent
+    ],
+    exports: [
+        PlotlyProfileGraphComponent
+    ],
+    providers: []
 })
 export class HelgolandPlotlyModule { }

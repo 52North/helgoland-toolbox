@@ -94,7 +94,8 @@ interface YAxisConfig {
     selector: 'n52-d3-trajectory-graph',
     templateUrl: './d3-trajectory-graph.component.html',
     styleUrls: ['./d3-trajectory-graph.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3TrajectoryGraphComponent
     extends DatasetPresenterComponent<DatasetOptions, D3GraphOptions>

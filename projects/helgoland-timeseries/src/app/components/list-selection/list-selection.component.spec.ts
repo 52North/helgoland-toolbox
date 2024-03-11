@@ -11,8 +11,8 @@ describe('ListSelectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListSelectionComponent ]
-    })
+    imports: [ListSelectionComponent]
+})
     .compileComponents();
   }));
 

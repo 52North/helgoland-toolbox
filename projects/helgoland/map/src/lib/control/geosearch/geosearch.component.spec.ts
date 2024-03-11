@@ -14,20 +14,20 @@ describe('GeosearchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
+    providers: [
         MapCache,
         {
-          provide: GeoSearch,
-          useClass: NominatimGeoSearchService
+            provide: GeoSearch,
+            useClass: NominatimGeoSearchService
         }
-      ],
-      imports: [
+    ],
+    imports: [
         FormsModule,
         HttpClientModule,
-        HelgolandCoreModule
-      ],
-      declarations: [GeosearchControlComponent]
-    }).compileComponents();
+        HelgolandCoreModule,
+        GeosearchControlComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

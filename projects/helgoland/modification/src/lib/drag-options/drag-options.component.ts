@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'n52-drag-options',
-    templateUrl: './drag-options.component.html'
+    templateUrl: './drag-options.component.html',
+    standalone: true
 })
 export class DragOptionsComponent {
 

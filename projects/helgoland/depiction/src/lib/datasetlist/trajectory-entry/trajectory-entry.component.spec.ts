@@ -12,21 +12,22 @@ describe('TrajectoryEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
+        TranslateTestingModule,
+        TrajectoryEntryComponent
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider
-      ],
-      declarations: [TrajectoryEntryComponent]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TrajectoryEntryComponent);
     component = fixture.componentInstance;
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 

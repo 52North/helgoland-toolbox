@@ -9,11 +9,11 @@ describe('LoadingOverlayProgressBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoadingOverlayProgressBarComponent],
-      imports: [
-        MatProgressBarModule
-      ]
-    })
+    imports: [
+        MatProgressBarModule,
+        LoadingOverlayProgressBarComponent
+    ]
+})
       .compileComponents();
   });
 

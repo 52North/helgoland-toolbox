@@ -9,11 +9,11 @@ describe('LoadingOverlaySpinnerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoadingOverlaySpinnerComponent],
-      imports: [
-        MatProgressSpinnerModule
-      ]
-    }).compileComponents();
+    imports: [
+        MatProgressSpinnerModule,
+        LoadingOverlaySpinnerComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

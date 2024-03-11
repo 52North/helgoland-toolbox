@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FirstLastValue, HelgolandServicesConnector, InternalIdHandler, Time, TimeInterval } from '@helgoland/core';
+import { FirstLastValue, HelgolandServicesConnector, InternalIdHandler, Time, TimeInterval, TzDatePipe } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import {
   ConfigurableTimeseriesEntryComponent,
 } from '../configurable-timeseries-entry/configurable-timeseries-entry.component';
+import { NgIf } from '@angular/common';
 
 /**
  * Extends the ConfigurableTimeseriesEntryComponent, with the following functions:
@@ -12,9 +13,11 @@ import {
  *  - jump to first and latest value events
  */
 @Component({
-  selector: 'n52-first-latest-timeseries-entry',
-  templateUrl: './first-latest-timeseries-entry.component.html',
-  styleUrls: ['./first-latest-timeseries-entry.component.css']
+    selector: 'n52-first-latest-timeseries-entry',
+    templateUrl: './first-latest-timeseries-entry.component.html',
+    styleUrls: ['./first-latest-timeseries-entry.component.css'],
+    standalone: true,
+    imports: [NgIf, TzDatePipe]
 })
 export class FirstLatestTimeseriesEntryComponent extends ConfigurableTimeseriesEntryComponent implements OnChanges {
 

@@ -7,7 +7,8 @@ import { MapCache } from '../../base/map-cache.service';
 @Component({
     selector: 'n52-geometry-map-viewer',
     templateUrl: './geometry-map-viewer.component.html',
-    styleUrls: ['./geometry-map-viewer.component.scss']
+    styleUrls: ['./geometry-map-viewer.component.scss'],
+    standalone: true
 })
 export class GeometryMapViewerComponent extends CachedMapComponent implements AfterViewInit, OnChanges {
 

@@ -11,10 +11,11 @@ import { D3Copyright } from "../../models/d3-plot-options";
 import { SeriesGraphDataset } from "../../models/series-graph-dataset";
 
 @Component({
-  selector: 'n52-d3-graph-copyright',
-  template: '',
-  styleUrls: ['./d3-graph-copyright.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'n52-d3-graph-copyright',
+    template: '',
+    styleUrls: ['./d3-graph-copyright.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: true
 })
 export class D3GraphCopyrightComponent extends D3SeriesGraphControl implements OnChanges, OnDestroy {
 

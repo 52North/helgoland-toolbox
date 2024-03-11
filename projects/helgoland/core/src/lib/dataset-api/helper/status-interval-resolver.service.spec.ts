@@ -77,9 +77,9 @@ describe('StatusIntervalResolverService', () => {
         color: '#0000FF'
       }
     ];
-    expect(service.getMatchingInterval(4.9, intervals).color).toEqual('#CCFF33');
-    expect(service.getMatchingInterval(5.0, intervals).color).toEqual('#F8E748');
-    expect(service.getMatchingInterval(5.1, intervals).color).toEqual('#F8E748');
+    expect(service.getMatchingInterval(4.9, intervals)!.color).toEqual('#CCFF33');
+    expect(service.getMatchingInterval(5.0, intervals)!.color).toEqual('#F8E748');
+    expect(service.getMatchingInterval(5.1, intervals)!.color).toEqual('#F8E748');
   }));
 
 });

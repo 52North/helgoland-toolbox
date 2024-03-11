@@ -18,7 +18,6 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandD3Module } from '@helgoland/d3';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { HelgolandFavoriteModule } from '@helgoland/favorite';
-import { HelgolandCommonModule } from 'helgoland-common';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import {
@@ -41,15 +40,7 @@ describe('DiagramViewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        DiagramViewComponent,
-        ModalMainConfigButtonComponent,
-        ModalFavoriteListButtonComponent,
-        GeneralTimeSelectionComponent,
-        FavoriteToggleButtonComponent,
-      ],
-      imports: [
-        HelgolandCommonModule,
+    imports: [
         HelgolandCoreModule,
         HelgolandD3Module,
         HelgolandFavoriteModule,
@@ -70,8 +61,13 @@ describe('DiagramViewComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         TranslateTestingModule,
-      ]
-    }).compileComponents();
+        DiagramViewComponent,
+        ModalMainConfigButtonComponent,
+        ModalFavoriteListButtonComponent,
+        GeneralTimeSelectionComponent,
+        FavoriteToggleButtonComponent
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

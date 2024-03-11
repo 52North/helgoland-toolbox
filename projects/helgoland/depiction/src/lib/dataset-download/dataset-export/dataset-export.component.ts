@@ -29,9 +29,10 @@ export enum DownloadType {
 }
 
 @Component({
-  selector: 'n52-dataset-export',
-  templateUrl: './dataset-export.component.html',
-  styleUrls: ['./dataset-export.component.scss']
+    selector: 'n52-dataset-export',
+    templateUrl: './dataset-export.component.html',
+    styleUrls: ['./dataset-export.component.scss'],
+    standalone: true
 })
 
 export class DatasetExportComponent implements OnInit, OnChanges {

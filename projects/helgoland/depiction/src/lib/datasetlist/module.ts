@@ -33,22 +33,20 @@ const COMPONENTS = [
  * - display component of different dataset types
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    HelgolandCoreModule,
-    HelgolandLabelMapperModule,
-    FormsModule
-  ],
-  declarations: [
-    COMPONENTS
-  ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: [
-    ReferenceValueColorCache
-  ]
+    imports: [
+        CommonModule,
+        TranslateModule,
+        HelgolandCoreModule,
+        HelgolandLabelMapperModule,
+        FormsModule,
+        COMPONENTS
+    ],
+    exports: [
+        COMPONENTS
+    ],
+    providers: [
+        ReferenceValueColorCache
+    ]
 })
 export class HelgolandDatasetlistModule {
 }

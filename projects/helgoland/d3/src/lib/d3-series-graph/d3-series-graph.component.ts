@@ -15,27 +15,34 @@ import {
     Output,
     ViewChild,
     ViewEncapsulation,
-} from '@angular/core';
-import { Time, Timespan, TimezoneService, filterUndefined } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
-import * as d3 from 'd3';
-import moment, { duration, unitOfTime } from 'moment';
-import { Subscription } from 'rxjs/internal/Subscription';
+} from "@angular/core";
+import { filterUndefined, Time, Timespan, TimezoneService } from "@helgoland/core";
+import { TranslateService } from "@ngx-translate/core";
+import * as d3 from "d3";
+import moment, { duration, unitOfTime } from "moment";
+import { Subscription } from "rxjs/internal/Subscription";
 
-import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3GraphId } from '../helper/d3-graph-id.service';
-import { D3Graphs } from '../helper/d3-graphs.service';
-import { D3PointSymbolDrawerService } from '../helper/d3-point-symbol-drawer.service';
-import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.service';
-import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
-import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
-import { RangeCalculationsService } from '../helper/range-calculations.service';
-import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
-import { D3GraphInterface } from './d3-graph.interface';
-import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
-import { HighlightOutput } from './models/d3-highlight';
-import { HoveringStyle } from './models/d3-plot-options';
-import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from './models/series-graph-dataset';
+import { D3GraphHelperService } from "../helper/d3-graph-helper.service";
+import { D3GraphId } from "../helper/d3-graph-id.service";
+import { D3Graphs } from "../helper/d3-graphs.service";
+import { D3PointSymbolDrawerService } from "../helper/d3-point-symbol-drawer.service";
+import { D3TimeFormatLocaleService } from "../helper/d3-time-format-locale.service";
+import { D3HoveringService } from "../helper/hovering/d3-hovering-service";
+import { D3SimpleHoveringService } from "../helper/hovering/d3-simple-hovering.service";
+import { RangeCalculationsService } from "../helper/range-calculations.service";
+import { DataEntry, YAxis, YAxisSettings } from "../model/d3-general";
+import { D3GraphInterface } from "./d3-graph.interface";
+import { D3GraphExtent, D3GraphObserver } from "./d3-series-graph-control";
+import { HighlightOutput } from "./models/d3-highlight";
+import { HoveringStyle } from "./models/d3-plot-options";
+import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from "./models/series-graph-dataset";
+import { NgIf } from "@angular/common";
+import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
+import { D3GraphPanZoomInteractionComponent } from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
+import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";
+import { D3GraphHoverPointComponent } from "./controls/d3-graph-hover-point/d3-graph-hover-point.component";
+import { D3GraphOverviewSelectionComponent } from "./controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
+import { D3YAxisModifierComponent } from "./controls/d3-y-axis-modifier/d3-y-axis-modifier.component";
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -90,7 +97,17 @@ interface DatasetEventSubscriptions {
     templateUrl: './d3-series-graph.component.html',
     styleUrls: ['./d3-series-graph.component.scss'],
     providers: [D3GraphId],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [
+        D3GraphPanZoomInteractionComponent, 
+        D3GraphCopyrightComponent, 
+        NgIf, 
+        D3YAxisModifierComponent,
+        D3GraphHoverLineComponent, 
+        D3GraphHoverPointComponent, 
+        D3GraphOverviewSelectionComponent
+    ]
 })
 export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck, OnInit, D3GraphInterface {
 

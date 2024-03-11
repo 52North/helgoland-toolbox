@@ -10,9 +10,10 @@ import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
 
 @Component({
-  selector: 'n52-d3-graph-pan-zoom-interaction',
-  template: '',
-  styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss']
+    selector: 'n52-d3-graph-pan-zoom-interaction',
+    template: '',
+    styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
+    standalone: true
 })
 export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
 

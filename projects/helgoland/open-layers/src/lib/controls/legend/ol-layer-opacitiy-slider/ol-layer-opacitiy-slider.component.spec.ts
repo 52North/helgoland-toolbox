@@ -10,9 +10,8 @@ describe('OlLayerOpacitiySliderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [OlLayerOpacitiySliderComponent],
-      imports: [HelgolandCoreModule, FormsModule]
-    }).compileComponents();
+    imports: [HelgolandCoreModule, FormsModule, OlLayerOpacitiySliderComponent]
+}).compileComponents();
   }));
 
   beforeEach(() => {

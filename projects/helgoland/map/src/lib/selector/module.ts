@@ -26,13 +26,11 @@ export interface HelgolandMapSelectorModuleConfig {
  * - map based selection
  */
 @NgModule({
-    declarations: [
-        COMPONENTS
-    ],
     imports: [
         CommonModule,
         HelgolandCoreModule,
-        HelgolandMapModule
+        HelgolandMapModule,
+        COMPONENTS
     ],
     exports: [
         COMPONENTS

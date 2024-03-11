@@ -15,17 +15,17 @@ describe('ModalFavoriteListButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalFavoriteListButtonComponent],
-      imports: [
+    imports: [
         MatDialogModule,
         HelgolandFavoriteModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         MatIconModule,
         MatBadgeModule,
-        MatTooltipModule
-      ]
-    }).compileComponents();
+        MatTooltipModule,
+        ModalFavoriteListButtonComponent
+    ]
+}).compileComponents();
   });
 
   beforeEach(() => {

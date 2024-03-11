@@ -16,20 +16,19 @@ describe('LastValueMapSelectorComponent with external Data', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         HelgolandMapSelectorModule
-      ],
-      providers: [
+    ],
+    providers: [
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
         SettingsServiceTestingProvider,
         MapCache
-      ],
-      declarations: []
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

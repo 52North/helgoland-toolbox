@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-} from '@angular/core';
+} from "@angular/core";
 import {
   ColorService,
   Data,
@@ -27,27 +27,43 @@ import {
   Timespan,
   TimeValueTuple,
   TimezoneService,
-} from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { duration, unitOfTime } from 'moment';
+} from "@helgoland/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { duration, unitOfTime } from "moment";
 
 import {
   D3SeriesGraphErrorHandler,
   D3SeriesSimpleGraphErrorHandler,
-} from '../../d3-timeseries-graph/d3-series-graph-error-handler.service';
-import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
-import { D3PointSymbolDrawerService } from '../../helper/d3-point-symbol-drawer.service';
-import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
-import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
-import { HighlightOutput } from '../models/d3-highlight';
-import { D3PlotOptions, HoveringStyle } from '../models/d3-plot-options';
-import { AxisSettings, DatasetChild, DatasetDescription, SeriesGraphDataset, DatasetStyle } from '../models/series-graph-dataset';
-import { D3SeriesGraphComponent, D3SeriesGraphOptions } from '../d3-series-graph.component';
+} from "../../d3-timeseries-graph/d3-series-graph-error-handler.service";
+import { D3GraphHelperService } from "../../helper/d3-graph-helper.service";
+import { D3PointSymbolDrawerService } from "../../helper/d3-point-symbol-drawer.service";
+import { D3HoveringService } from "../../helper/hovering/d3-hovering-service";
+import { D3SimpleHoveringService } from "../../helper/hovering/d3-simple-hovering.service";
+import { D3GraphCopyrightComponent } from "../controls/d3-graph-copyright/d3-graph-copyright.component";
+import {
+  D3GraphOverviewSelectionComponent,
+} from "../controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
+import { D3SeriesGraphComponent, D3SeriesGraphOptions } from "../d3-series-graph.component";
+import { HighlightOutput } from "../models/d3-highlight";
+import { D3PlotOptions, HoveringStyle } from "../models/d3-plot-options";
+import {
+  AxisSettings,
+  DatasetChild,
+  DatasetDescription,
+  DatasetStyle,
+  SeriesGraphDataset,
+} from "../models/series-graph-dataset";
 
 @Component({
   selector: 'n52-d3-series-graph-wrapper',
   templateUrl: './d3-series-graph-wrapper.component.html',
-  styleUrls: ['./d3-series-graph-wrapper.component.scss']
+  styleUrls: ['./d3-series-graph-wrapper.component.scss'],
+  imports: [
+    D3GraphCopyrightComponent,
+    D3GraphOverviewSelectionComponent,
+    D3SeriesGraphComponent,
+  ],
+  standalone: true
 })
 export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions> implements OnChanges {
 

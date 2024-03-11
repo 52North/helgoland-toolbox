@@ -26,20 +26,18 @@ const COMPONENTS = [
  * - extent control
  */
 @NgModule({
-  declarations: [
-    COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HelgolandCoreModule,
-    HelgolandMapModule
-  ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: [
-    LocateService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        HelgolandCoreModule,
+        HelgolandMapModule,
+        COMPONENTS
+    ],
+    exports: [
+        COMPONENTS
+    ],
+    providers: [
+        LocateService
+    ]
 })
 export class HelgolandMapControlModule { }
