@@ -13,7 +13,6 @@ export const modules = [
   'time',
   // 'time-range-slider', // currently not maintained
   'd3',
-  // 'plotly', // currently not maintained
   'facet-search',
   'open-layers',
   // 'sensorml' // currently not maintained

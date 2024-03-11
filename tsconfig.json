@@ -55,10 +55,6 @@
         "dist/helgoland/permalink",
         "projects/helgoland/permalink/src/public-api.ts"
       ],
-      "@helgoland/plotly": [
-        "dist/helgoland/plotly",
-        "projects/helgoland/plotly/src/public-api.ts"
-      ],
       "@helgoland/selector": [
         "dist/helgoland/selector",
         "projects/helgoland/selector/src/public-api.ts"

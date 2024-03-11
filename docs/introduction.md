@@ -15,7 +15,6 @@ This project contains [Angular](https://angular.io/) based Modules, Components, 
 - `map` - components to display leaflet maps for view or selection, and also some map controls (geo-search, locate, zoom)
 - `modification` - dataset modification (color or other graph represent points)
 - `permalink` - components to generate permalinks and service to resolve them
-- `plotly` - profile graph presentation with [plotly.js](https://plot.ly/plotly-js-scientific-d3-charting-library/)
 - `selector` - components for dataset selection (list, filter, service)
 - `time` - components to manipulate/select timeperiods or timestamps
 
