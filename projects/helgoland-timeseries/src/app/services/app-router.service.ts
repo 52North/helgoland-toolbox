@@ -34,7 +34,7 @@ export class AppRouterService {
   }
 
   public toMapSelection() {
-    this.router.navigate([MAP_SELECTION_ROUTE])
+    this.router.navigate([MAP_SELECTION_ROUTE]);
   }
 
   public toListSelection() {
