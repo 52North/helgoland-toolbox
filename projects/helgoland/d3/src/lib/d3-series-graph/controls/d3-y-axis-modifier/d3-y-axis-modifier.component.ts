@@ -9,11 +9,11 @@ import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service';
 
 @Component({
-    selector: 'n52-d3-y-axis-modifier',
-    template: '',
-    styleUrls: ['./d3-y-axis-modifier.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true
+  selector: 'n52-d3-y-axis-modifier',
+  template: '',
+  styleUrls: ['./d3-y-axis-modifier.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class D3YAxisModifierComponent extends D3SeriesGraphControl implements OnDestroy {
 
@@ -53,20 +53,20 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
     this.d3Graph.redrawCompleteGraph();
   }
 
-  public override ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.d3Graph?.redrawCompleteGraph();
   }
 
-  public override adjustYAxis(axis: YAxis) {
-    const range = this.adjustedRanges.get(axis.uom);
+  override adjustYAxis(axis: YAxis) {
+    const range = this.adjustedRanges.get(this.generateKey(axis));
     if ((this.shift || this.zoom) && range) {
       axis.range = range;
     }
   }
 
-  public afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number) {
-    if (yaxis.range.min && yaxis.range.max) {
+  afterYAxisDrawn(yaxis: YAxis, startX: number, axisHeight: number, axisWidth: number) {
+    if (yaxis.range.min !== undefined && yaxis.range.max !== undefined) {
       const buttonSize = 7;
       const xAlign = startX + buttonSize * 2;
       this.drawShiftButtons(yaxis, buttonSize, xAlign);
@@ -76,7 +76,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
   }
 
   protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.d3Graph && this.zoom && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.zoom && yaxis.range.max !== undefined && yaxis.range.min !== undefined) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.zoomFactor;
       const buffer = this.shift ? 7.5 : 0;
@@ -124,7 +124,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
   }
 
   protected drawResetButton(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.d3Graph && this.adjustedRanges.has(yaxis.uom)) {
+    if (this.d3Graph && this.adjustedRanges.has(this.generateKey(yaxis))) {
       // add a buffer of +/- 2 to fit element into transparent/hover circle
       // reset button line left top to right bottom
       this.d3Graph.getGraphElem().append('line')
@@ -147,7 +147,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
         .attr('cy', buttonSize * 6)
         .attr('r', buttonSize * 1.5)
         .on('mouseup', () => {
-          this.adjustedRanges.delete(yaxis.uom);
+          this.adjustedRanges.delete(this.generateKey(yaxis));
           this.d3Graph!.redrawCompleteGraph();
         })
         .on('mouseover', () => resetHover.classed('hover', true))
@@ -156,7 +156,7 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
   }
 
   protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
-    if (this.d3Graph && this.shift && yaxis.range.max && yaxis.range.min) {
+    if (this.d3Graph && this.shift && yaxis.range.max !== undefined && yaxis.range.min !== undefined) {
       const diff = yaxis.range.max - yaxis.range.min;
       const step = diff * this.shiftFactor;
       const shiftToCenter = 0.5 * buttonSize;
@@ -213,17 +213,21 @@ export class D3YAxisModifierComponent extends D3SeriesGraphControl implements On
 
   protected adjustAxisRange(axis: YAxis, adjustMin: number, adjustMax: number) {
     const key = axis.uom;
-    const adjustedRange = this.adjustedRanges.get(key);
+    const adjustedRange = this.adjustedRanges.get(this.generateKey(axis));
     if (adjustedRange?.min && adjustedRange.max) {
       adjustedRange.min += adjustMin;
       adjustedRange.max += adjustMax;
-    } else if (axis.range.min && axis.range.max) {
-      this.adjustedRanges.set(key, {
+    } else if (axis.range.min !== undefined && axis.range.max !== undefined) {
+      this.adjustedRanges.set(this.generateKey(axis), {
         min: axis.range.min + adjustMin,
         max: axis.range.max + adjustMax
       });
     }
     this.d3Graph?.redrawCompleteGraph();
+  }
+
+  protected generateKey(axis: YAxis): string {
+    return `${axis.uom}${axis.label}`;
   }
 
 }

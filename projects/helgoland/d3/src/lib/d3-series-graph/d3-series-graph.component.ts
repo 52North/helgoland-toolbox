@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
     AfterViewInit,
     Component,
@@ -36,7 +37,6 @@ import { D3GraphExtent, D3GraphObserver } from "./d3-series-graph-control";
 import { HighlightOutput } from "./models/d3-highlight";
 import { HoveringStyle } from "./models/d3-plot-options";
 import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from "./models/series-graph-dataset";
-import { NgIf } from "@angular/common";
 import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
 import { D3GraphPanZoomInteractionComponent } from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
 import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";

@@ -94,6 +94,12 @@ export class DatasetLegendEntryComponent implements OnChanges {
     });
   }
 
+  toggleSeparateYAxis() {
+    const yAxis = this.dataset.yAxis;
+    yAxis.separate = !yAxis.separate;
+    this.dataset.setYAxis(yAxis);
+  }
+
   jumpToFirstTimeStamp() {
     if (this.dataset.description.firstValue) {
       this.selectDate.emit(new Date(this.dataset.description.firstValue.timestamp));
