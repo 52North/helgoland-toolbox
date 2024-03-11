@@ -34,7 +34,7 @@ import {
     line,
     max,
     min,
-    mouse,
+    pointer,
     ScaleLinear,
     scaleLinear,
     select,
@@ -492,11 +492,11 @@ export class D3TrajectoryGraphComponent
             .attr('class', 'mouse-focus-label-y');
     }
 
-    protected mousemoveHandler = () => {
+    protected mousemoveHandler = (event: MouseEvent) => {
         if (!this.baseValues || this.baseValues.length === 0) {
             return;
         }
-        const coords = mouse(this.background.node());
+        const coords = pointer(event);
         const idx = this.getItemForX(coords[0] + this.bufferSum, this.baseValues);
         if (idx) {
             this.showDiagramIndicator(idx);
@@ -508,9 +508,9 @@ export class D3TrajectoryGraphComponent
         this.hideDiagramIndicator();
     }
 
-    protected dragStartHandler = () => {
+    protected dragStartHandler = (event: MouseEvent) => {
         this.dragging = false;
-        this.dragStart = mouse(this.background.node());
+        this.dragStart = pointer(event);
     }
 
     protected dragHandler = () => {
@@ -543,7 +543,7 @@ export class D3TrajectoryGraphComponent
     protected drawDragRectangle() {
         if (!this.dragStart) { return; }
 
-        this.dragCurrent = mouse(this.background.node());
+        this.dragCurrent = pointer(this.background.node());
 
         const from = this.getItemForX(this.dragStart[0] + this.bufferSum, this.baseValues);
         const to = this.getItemForX(this.dragCurrent[0] + this.bufferSum, this.baseValues);

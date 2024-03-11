@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 declare var Reflect: any;
 
 const displayNameKey = 'DisplayName';

@@ -80,14 +80,14 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     }
   }
 
-  public mousemoveBackground() {
+  public mousemoveBackground(event: MouseEvent) {
     if (!this.disableHovering) {
-      this.moveHoverLineIndicator();
+      this.moveHoverLineIndicator(event);
       this.showHoverLineIndicator();
     }
   }
 
-  public mouseoutBackground() {
+  public mouseoutBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.hideHoverLineIndicator();
       this.hideLabels();
@@ -151,12 +151,11 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     }
   }
 
-  protected moveHoverLineIndicator(): void {
-    const time = new Date().getTime();
-    if (this.background && this.graphExtent && this.datasets) {
-      const background = this.background.node();
-      if ((this.lastDraw + this.drawLatency < time) && background) {
-        const mouse = d3.mouse(background);
+  protected moveHoverLineIndicator(event: MouseEvent): void {
+    if (this.background && this.datasets && this.graphExtent) {
+      const time = new Date().getTime();
+      if ((this.lastDraw + this.drawLatency < time)) {
+        const mouse = d3.pointer(event);
         this.drawLineIndicator(mouse);
         if (this.showLabels) {
           this.datasets.forEach((entry, entryIdx) => {

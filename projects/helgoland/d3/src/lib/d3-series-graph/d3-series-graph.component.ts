@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { NgIf } from "@angular/common";
 import {
     AfterViewInit,
     Component,
@@ -539,23 +539,23 @@ export class D3SeriesGraphComponent implements OnDestroy, AfterViewInit, DoCheck
 
         // this.addTimespanJumpButtons();
 
-        this.background.on('mousemove', () => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground()));
+        this.background.on('mousemove', (event: MouseEvent) => this.observer.forEach(e => e.mousemoveBackground && e.mousemoveBackground(event)));
 
-        this.background.on('mouseover', () => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground()));
+        this.background.on('mouseover', (event: MouseEvent) => this.observer.forEach(e => e.mouseoverBackground && e.mouseoverBackground(event)));
 
-        this.background.on('mouseout', () => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground()));
+        this.background.on('mouseout', (event: MouseEvent) => this.observer.forEach(e => e.mouseoutBackground && e.mouseoutBackground(event)));
 
         if (this.plotOptions.togglePanZoom === false) {
             const zoomHandler: any = d3.zoom()
-                .on('start', () => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground()))
-                .on('zoom', () => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground()));
+                .on('start', (event: MouseEvent) => this.observer.forEach(e => e.zoomStartBackground && e.zoomStartBackground(event)))
+                .on('zoom', (event: MouseEvent) => this.observer.forEach(e => e.zoomMoveBackground && e.zoomMoveBackground(event)))
+                .on('end', (event: MouseEvent) => this.observer.forEach(e => e.zoomEndBackground && e.zoomEndBackground(event)));
             this.background.call(zoomHandler);
         } else {
             const dragHandler: any = d3.drag()
-                .on('start', () => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground()))
-                .on('drag', () => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground()))
-                .on('end', () => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground()));
+                .on('start', (event: MouseEvent) => this.observer.forEach(e => e.dragStartBackground && e.dragStartBackground(event)))
+                .on('drag', (event: MouseEvent) => this.observer.forEach(e => e.dragMoveBackground && e.dragMoveBackground(event)))
+                .on('end', (event: MouseEvent) => this.observer.forEach(e => e.dragEndBackground && e.dragEndBackground(event)));
             this.background.call(dragHandler);
         }
 

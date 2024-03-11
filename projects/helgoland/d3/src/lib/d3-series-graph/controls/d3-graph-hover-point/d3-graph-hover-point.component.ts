@@ -88,9 +88,9 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     this.graphLayer = graph;
   }
 
-  public mousemoveBackground() {
+  public mousemoveBackground(event: MouseEvent) {
     if (!this.disableHovering) {
-      this.mouseMoved();
+      this.mouseMoved(event);
     }
   }
 
@@ -116,9 +116,9 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     this.disableHovering = false;
   }
 
-  protected mouseMoved() {
+  protected mouseMoved(event: MouseEvent) {
     this.unhighlight();
-    const pos = this.getCurrentMousePosition();
+    const pos = this.getCurrentMousePosition(event);
     if (pos && this.graphExtent) {
       const nearestPoint = this.findNearestPoint(pos.x, pos.y);
       if (nearestPoint) {
@@ -127,7 +127,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
         const time = this.graphExtent.xScale.invert(pos.x).getTime();
         const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
         if (nearestBar.length) {
-          this.highlightBars(nearestBar);
+          this.highlightBars(nearestBar, event);
         }
       }
     }
@@ -157,7 +157,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     });
   }
 
-  protected highlightBars(nearestBars: BarHoverElement[]) {
+  protected highlightBars(nearestBars: BarHoverElement[], event: MouseEvent): void {
     const elements: HoveringElement[] = [];
     // add hovering tooltip to array
     nearestBars.forEach(nearestBar => {
@@ -180,7 +180,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
       // mouse position
       nearestBar.selection.style('fill-opacity', '0.6');
     });
-    const pos = this.getCurrentMousePosition();
+    const pos = this.getCurrentMousePosition(event);
     if (pos) {
       this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
     }
@@ -240,7 +240,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
         if (idx > -1 && ds.data[idx] && this.graphLayer) {
           const id = `bar-${ds.data[idx].timestamp}-${i}`;
           const match = this.graphLayer.select(`#${id}`);
-          const barHeight = match.attr('height') ? Number.parseFloat(match.attr('height')): 0;
+          const barHeight = match.attr('height') && Number.parseFloat(match.attr('height')) || 0;
           if (barHeight > height) {
             nearest.push({
               selection: match,
@@ -256,10 +256,9 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     return nearest;
   }
 
-  protected getCurrentMousePosition(): { x: number, y: number } | undefined {
-    const background = this.background?.node();
-    if (background && this.graphExtent) {
-      const [x, y] = d3.mouse(background);
+  protected getCurrentMousePosition(event?: MouseEvent): { x: number, y: number } | undefined {
+    if (this.graphExtent) {
+      const [x, y] = d3.pointer(event);
       return { x: x + this.graphExtent.leftOffset, y };
     }
     return undefined;
