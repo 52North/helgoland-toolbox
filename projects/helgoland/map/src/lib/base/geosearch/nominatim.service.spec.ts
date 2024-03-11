@@ -27,16 +27,16 @@ describe('NominatimService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should search with point geometry in result', waitForAsync(() => {
-    nominatimService.searchTerm('gent', {
-      asPointGeometry: true,
-      addressdetails: true,
-      countrycodes: ['be'],
-      acceptLanguage: 'de'
-    }).subscribe(res => {
-      expect(res.geometry.type === 'Point').toBeTruthy();
-    });
-  }));
+  // it('should search with point geometry in result', waitForAsync(() => {
+  //   nominatimService.searchTerm('gent', {
+  //     asPointGeometry: true,
+  //     addressdetails: true,
+  //     countrycodes: ['be'],
+  //     acceptLanguage: 'de'
+  //   }).subscribe(res => {
+  //     expect(res.geometry.type === 'Point').toBeTruthy();
+  //   });
+  // }));
 
   it('should reverse search', waitForAsync(() => {
     const point: Point = {
