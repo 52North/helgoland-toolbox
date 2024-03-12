@@ -47,10 +47,10 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
     if (locale) { params.locale = locale; }
     this.loading = true;
     this.servicesConnector.getDataset(internalId, { ...params, type: DatasetType.Timeseries })
-      .subscribe(
-        dataset => this.setDataset(dataset),
-        error => this.handleError(error)
-      );
+      .subscribe({
+        next: dataset => this.setDataset(dataset),
+        error: error => this.handleError(error)
+      });
   }
 
   protected handleError(error: any) {

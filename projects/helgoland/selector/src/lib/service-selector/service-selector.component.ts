@@ -60,8 +60,8 @@ export class ServiceSelectorComponent implements OnInit {
         this.unResolvableServices = [];
         this.datasetApiList.forEach((api) => {
           this.serviceSelectorService.fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
-            .subscribe(
-              (res) => {
+            .subscribe({
+              next: (res) => {
                 this.loadingCount--;
                 if (res && res instanceof Array) {
                   res.forEach((entry) => {
@@ -81,10 +81,11 @@ export class ServiceSelectorComponent implements OnInit {
                   })
                 }
               },
-              (error) => {
+              error: (error) => {
                 this.unResolvableServices.push(api);
                 this.loadingCount--;
-              });
+              }
+            });
         });
       }
     }

@@ -1,7 +1,7 @@
 import "bootstrap-slider";
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from "@angular/core";
-import { Required, Timespan, TzDatePipe } from "@helgoland/core";
+import { Timespan, TzDatePipe } from "@helgoland/core";
 // @ts-ignore
 import jquery from "jquery";
 
@@ -24,8 +24,7 @@ export class TimeRangeSliderComponent implements OnChanges {
   @Input()
   public id = "";
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timeList!: number[];
 
   @Output()

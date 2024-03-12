@@ -90,30 +90,33 @@ function addCompleteThing(insert: StaInsertInterfaceService, read: StaReadInterf
       }
     ]
   };
-  insert.insertThing(staUrl, thing).subscribe(insThing => {
-    read.getThing(staUrl, insThing["@iot.id"]!, { $select: { Datastreams: true }, $expand: { Datastreams: true } }).subscribe(
-      getThing => {
-        const datastreamId = getThing.Datastreams![0]["@iot.id"];
-        let counter = 0;
-        const interval = setInterval(() => {
-          const observation: InsertObservation = {
-            phenomenonTime: moment().format(),
-            result: (Math.random() * 20).toString(),
-            Datastream: {
-              "@iot.id": datastreamId
+  insert.insertThing(staUrl, thing).subscribe({
+    next: insThing => {
+      read.getThing(staUrl, insThing["@iot.id"]!, { $select: { Datastreams: true }, $expand: { Datastreams: true } }).subscribe(
+        getThing => {
+          const datastreamId = getThing.Datastreams![0]["@iot.id"];
+          let counter = 0;
+          const interval = setInterval(() => {
+            const observation: InsertObservation = {
+              phenomenonTime: moment().format(),
+              result: (Math.random() * 20).toString(),
+              Datastream: {
+                "@iot.id": datastreamId
+              }
+            };
+            insert.insertObservation(staUrl, observation).subscribe({
+              next: res => console.log(`insert value at ${observation.phenomenonTime}: ${JSON.stringify(res)}`),
+              error: error => console.error(error.error)
+            });
+            counter++;
+            if (counter > 5) {
+              clearInterval(interval);
             }
-          };
-          insert.insertObservation(staUrl, observation).subscribe(
-            res => console.log(`insert value at ${observation.phenomenonTime}: ${JSON.stringify(res)}`),
-            error => console.error(error.error)
-          );
-          counter++;
-          if (counter > 5) {
-            clearInterval(interval);
-          }
-        }, 1000);
-      });
-  }, error => console.error(error));
+          }, 1000);
+        });
+    },
+    error: error => console.error(error)
+  });
 }
 
 function addSingleDataStream(insert: StaInsertInterfaceService) {
@@ -126,13 +129,14 @@ function addSingleDataStream(insert: StaInsertInterfaceService) {
       definition: "definition",
       symbol: "symbol"
     }
-  }).subscribe(
-    res => {
+  }).subscribe({
+    next: res => {
       // TODO: implement
     },
-    error => {
+    error: error => {
       // TODO: implement
     }
+  }
   );
 }
 

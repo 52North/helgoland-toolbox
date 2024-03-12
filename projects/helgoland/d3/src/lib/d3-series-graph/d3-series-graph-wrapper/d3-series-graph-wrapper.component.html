@@ -1,7 +1,17 @@
-<n52-d3-series-graph [datasets]="datasets" [timespan]="timespan" [graphOptions]="graphOptions"
-  [hoveringService]="hoveringService" (timespanChanged)="updateTimespan($event)"
-  (datasetsSelected)="datasetSelected($event)" (onHighlightChanged)="onHighlightChanged.emit($event)">
-  <n52-d3-graph-copyright [copyright]="presenterOptions?.copyright"></n52-d3-graph-copyright>
+<n52-d3-series-graph
+  [datasets]="datasets"
+  [timespan]="timespan"
+  [graphOptions]="graphOptions"
+  [hoveringService]="hoveringService"
+  (timespanChanged)="updateTimespan($event)"
+  (datasetsSelected)="datasetSelected($event)"
+  (onHighlightChanged)="onHighlightChanged.emit($event)"
+>
+  <n52-d3-graph-copyright
+    [copyright]="presenterOptions?.copyright"
+  ></n52-d3-graph-copyright>
+  @if (mainTimeInterval) {
   <n52-d3-graph-overview-selection [selectionTimeInterval]="mainTimeInterval">
   </n52-d3-graph-overview-selection>
+  }
 </n52-d3-series-graph>

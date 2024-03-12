@@ -23,7 +23,7 @@ import {
   SplittedDataDatasetApiInterface,
 } from "@helgoland/core";
 import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
-import { forkJoin, from, Observable } from "rxjs";
+import { firstValueFrom, forkJoin, from, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { BasicAuthInformerImplService } from "../../helgoland-common/src/lib/services/basic-auth-informer-impl.service";
@@ -66,7 +66,7 @@ export function initApplication(configService: ConfigurationService, translate: 
     translate.onLangChange.subscribe(lce => {
       localStorage.save(localStorageLanguageKey, lce.lang);
     });
-    return translate.use(lang).toPromise();
+    return firstValueFrom(translate.use(lang));
   });
 }
 

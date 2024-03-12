@@ -210,10 +210,10 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   }
 
   protected addDatasetbyId(id: string, style?: DatasetStyle, axis?: AxisSettings, visible?: boolean, selected?: boolean): void {
-    this.servicesConnector.getDataset(id, { locale: this.translate.currentLang, type: DatasetType.Timeseries }).subscribe(
-      res => this.loadAddedDataset(res, style, axis, visible, selected),
-      error => this.errorHandler.handleDatasetLoadError(error)
-    );
+    this.servicesConnector.getDataset(id, { locale: this.translate.currentLang, type: DatasetType.Timeseries }).subscribe({
+      next: res => this.loadAddedDataset(res, style, axis, visible, selected),
+      error: error => this.errorHandler.handleDatasetLoadError(error)
+    });
   }
 
   protected loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
@@ -350,10 +350,10 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         this.servicesConnector.getDatasetData(dataset, buffer, {
           expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
           generalize: this.presenterOptions.generalizeAllways
-        }).subscribe(
-          (result) => this.prepareData(dataset, result),
-          (error) => this.errorHandler.handleDataLoadError(error, dataset)
-        );
+        }).subscribe({
+          next: (result) => this.prepareData(dataset, result),
+          error: (error) => this.errorHandler.handleDataLoadError(error, dataset)
+        });
       }
     }
   }
@@ -373,10 +373,10 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         this.servicesConnector.getDatasetData(dataset, buffer, {
           expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
           generalize: true
-        }).subscribe(
-          (result) => this.prepareOverviewData(dataset, result),
-          (error) => this.errorHandler.handleDataLoadError(error, dataset)
-        );
+        }).subscribe({
+          next: (result) => this.prepareOverviewData(dataset, result),
+          error: (error) => this.errorHandler.handleDataLoadError(error, dataset)
+        });
       }
     }
   }

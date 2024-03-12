@@ -9,7 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Required, Time, Timespan } from "@helgoland/core";
+import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Time, Timespan } from "@helgoland/core";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -52,7 +52,7 @@ export class GeneralTimeSelectionComponent {
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
 
-  @Input() @Required timespan!: Timespan;
+  @Input({ required: true }) timespan!: Timespan;
 
   @Output() timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 

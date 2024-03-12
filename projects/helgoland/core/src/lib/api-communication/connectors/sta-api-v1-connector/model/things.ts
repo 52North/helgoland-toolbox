@@ -6,7 +6,9 @@ import { InsertLocation, Location } from "./locations";
 export interface Thing extends StaObject {
     name?: string;
     description?: string;
-    properties?: any;
+    properties?: {
+        [key: string]: any;
+    };
     "Locations@iot.navigationLink"?: string;
     Locations?: Location[];
     "Datastreams@iot.navigationLink"?: string;
@@ -15,7 +17,7 @@ export interface Thing extends StaObject {
     HistoricalLocations?: HistoricalLocation[];
 }
 
-export interface InsertThing extends Thing {
+export interface InsertThing {
     name: string;
     description: string;
     Locations?: (InsertLocation | InsertId)[];

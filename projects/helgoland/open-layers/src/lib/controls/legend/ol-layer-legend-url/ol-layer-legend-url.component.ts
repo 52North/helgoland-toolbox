@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required } from "@helgoland/core";
 import { Layer } from "ol/layer";
 import { TileWMS } from "ol/source";
 
@@ -15,8 +14,7 @@ import { WmsCapabilitiesService } from "../../../services/wms-capabilities.servi
 })
 export class OlLayerLegendUrlComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
     layer!: Layer;
 
   /**

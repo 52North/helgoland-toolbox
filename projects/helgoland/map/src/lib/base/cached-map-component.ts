@@ -12,7 +12,6 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { Required } from "@helgoland/core";
 import * as L from "leaflet";
 
 import { MapCache } from "./map-cache.service";

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { Required, TzDatePipe } from "@helgoland/core";
+import { TzDatePipe } from "@helgoland/core";
 import { Subscription } from "rxjs";
 
 import { FacetSearchElement, FacetSearchService } from "../../facet-search-model";
@@ -13,7 +13,7 @@ import { FacetSearchElement, FacetSearchService } from "../../facet-search-model
 })
 export class ResultListComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService!: FacetSearchService;
+  @Input({ required: true }) public facetSearchService!: FacetSearchService;
 
   @Output() public selected: EventEmitter<FacetSearchElement> = new EventEmitter();
 

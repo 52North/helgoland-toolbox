@@ -1,7 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from "@angular/core";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { MapSelectionComponent } from "./map-selection.component";
 
@@ -9,7 +7,7 @@ describe("MapSelectionComponent", () => {
   let component: MapSelectionComponent;
   let fixture: ComponentFixture<MapSelectionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [MapSelectionComponent]
     })

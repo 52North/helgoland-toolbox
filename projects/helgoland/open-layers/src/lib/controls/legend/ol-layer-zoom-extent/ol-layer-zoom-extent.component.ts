@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Required } from "@helgoland/core";
 import { View } from "ol";
 import BaseLayer from "ol/layer/Base";
 import Layer from "ol/layer/Layer";
@@ -19,15 +18,13 @@ import { WmsCapabilitiesService } from "../../../services/wms-capabilities.servi
 })
 export class OlLayerZoomExtentComponent implements OnInit {
 
-  @Input()
-  @Required
+  @Input({ required: true })
     layer!: BaseLayer;
 
   /**
    * corresponding map id
    */
-  @Input()
-  @Required
+  @Input({ required: true })
     mapId!: string;
 
   private extent: number[] | undefined;

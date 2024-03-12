@@ -21,7 +21,6 @@ import {
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   InternalIdHandler,
-  Required,
   SumValuesService,
   Time,
   Timespan,
@@ -75,8 +74,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   @Input() 
-  @Required 
-  public mainTimeInterval!: Timespan;
+  public mainTimeInterval: Timespan | undefined;
 
   public datasets: SeriesGraphDataset[] = [];
   public override timespan: Timespan | undefined;
@@ -152,10 +150,11 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   }
 
   protected addDataset(id: string, url: string): void {
-    this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries }).subscribe(
-      res => this.loadAddedDataset(res),
-      error => this.errorHandler.handleDatasetLoadError(error)
-    );
+    this.servicesConnector.getDataset({ id, url }, { locale: this.translateService.currentLang, type: DatasetType.Timeseries })
+      .subscribe({
+        next: res => this.loadAddedDataset(res),
+        error: err => this.errorHandler.handleDatasetLoadError(err)
+      })
   }
 
   protected removeDataset(id: string): void {
@@ -284,16 +283,16 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           const request = this.servicesConnector.getDatasetData(dataset, buffer, {
             expanded: this.presenterOptions?.showReferenceValues || this.presenterOptions?.requestBeforeAfterValues,
             generalize: this.presenterOptions?.generalizeAllways || datasetOptions?.generalize
-          }).subscribe(
-            (result) => {
+          }).subscribe({
+            next: (result) => {
               this.prepareData(dsEntry, result);
               this.onCompleteLoadingData(dsEntry);
             },
-            (error) => {
+            error: (error) => {
               this.errorHandler.handleDataLoadError(error, dataset);
               this.onCompleteLoadingData(dsEntry);
             }
-          );
+          });
           // if (!request.closed) {
           //   this.runningDataRequests.set(dataset.internalId, request);
           // }

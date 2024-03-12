@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { Required } from "@helgoland/core";
 import BaseLayer from "ol/layer/Base";
 
 /**
@@ -12,8 +11,7 @@ import BaseLayer from "ol/layer/Base";
 })
 export class OlLayerVisibilityTogglerComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
     layer!: BaseLayer;
 
   public toggleVisibility() {

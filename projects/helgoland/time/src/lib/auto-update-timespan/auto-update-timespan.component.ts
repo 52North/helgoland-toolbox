@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required, Time, Timespan } from "@helgoland/core";
+import { Time, Timespan } from "@helgoland/core";
 
 @Component({
   selector: "n52-auto-update-timespan",
@@ -18,15 +18,13 @@ export class AutoUpdateTimespanComponent {
   /**
    * current Timespan to calculate new timespan
    */
-  @Input()
-  @Required
+  @Input({ required: true })
   public currentTimespan!: Timespan;
 
   /**
    * refresh interval in seconds
    */
-  @Input()
-  @Required
+  @Input({ required: true })
   public refreshInterval!: number;
 
   @Output()

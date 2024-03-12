@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Host, Input, Output } from "@angular/core";
-import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector, Required } from "@helgoland/core";
+import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector } from "@helgoland/core";
 import { Feature, Map } from "ol";
 import { unlistenByKey } from "ol/events";
 import { click, pointerMove } from "ol/events/condition";
@@ -34,8 +34,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * The serviceUrl, where the selection should be loaded.
    */
-  @Input()
-  @Required
+  @Input({ required: true })
     serviceUrl!: string;
 
   /**

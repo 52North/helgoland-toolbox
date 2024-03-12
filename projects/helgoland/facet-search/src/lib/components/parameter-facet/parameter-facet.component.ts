@@ -1,6 +1,6 @@
 import { NgStyle } from "@angular/common";
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { MatchLabelPipe, Required } from "@helgoland/core";
+import { MatchLabelPipe } from "@helgoland/core";
 import { Subscription } from "rxjs";
 
 import { FacetParameter, FacetSearchService, ParameterFacetSort, ParameterFacetType } from "../../facet-search-model";
@@ -14,9 +14,9 @@ import { FacetParameter, FacetSearchService, ParameterFacetSort, ParameterFacetT
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
 
-  @Input() @Required public facetSearchService!: FacetSearchService;
+  @Input({ required: true }) public facetSearchService!: FacetSearchService;
 
-  @Input() @Required public type!: ParameterFacetType;
+  @Input({ required: true }) public type!: ParameterFacetType;
 
   @Input() public sort: ParameterFacetSort = ParameterFacetSort.descCount;
 

@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { forkJoin, Observable, Observer } from "rxjs";
-import { map } from "rxjs/operators";
 
 /**
  * This class checks URLs if they are reachable by a simple get request. If they gets anything back, everything is ok, otherwise
@@ -57,16 +56,16 @@ export class StatusCheckService {
 
   private doCheckUrl(url: string): Observable<string | null> {
     return new Observable((observer: Observer<string | null>) => {
-      this.httpClient.get(url).subscribe(
-        (res) => {
+      this.httpClient.get(url).subscribe({
+        next: (res) => {
           observer.next(null);
           observer.complete();
         },
-        (error) => {
+        error: (error) => {
           observer.next(url);
           observer.complete();
         }
-      );
+      });
     });
   }
 

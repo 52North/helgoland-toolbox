@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from "@angular/core";
-import { DatasetOptions, Required, Time, TimeInterval, Timespan } from "@helgoland/core";
+import { DatasetOptions, Time, TimeInterval, Timespan } from "@helgoland/core";
 
 import { D3PlotOptions } from "../models/d3-plot-options";
 import { D3SeriesGraphWrapperComponent } from "../d3-series-graph-wrapper/d3-series-graph-wrapper.component";
@@ -25,8 +25,7 @@ import { D3SeriesGraphWrapperComponent } from "../d3-series-graph-wrapper/d3-ser
 })
 export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterViewInit, OnDestroy {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public datasetIds!: string[];
 
   @Input()
@@ -35,8 +34,7 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   @Input()
   public presenterOptions: D3PlotOptions | undefined;
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timeInterval!: TimeInterval;
 
   @Input()

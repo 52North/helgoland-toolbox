@@ -99,6 +99,4 @@ export * from "./lib/time/tz-date.pipe";
 
 export * from "./lib/processing/sum-values.service";
 
-export * from "./lib/decorators/required";
-
 export * from "./lib/interceptor/cors-proxy-interceptor";

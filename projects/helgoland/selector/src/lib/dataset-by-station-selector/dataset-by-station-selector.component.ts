@@ -6,7 +6,6 @@ import {
   HelgolandPlatform,
   HelgolandServicesConnector,
   HelgolandTimeseries,
-  Required,
   TzDatePipe,
 } from "@helgoland/core";
 import { HelgolandLabelMapperModule } from "@helgoland/depiction";
@@ -25,10 +24,10 @@ export class SelectableDataset extends HelgolandTimeseries {
 })
 export class DatasetByStationSelectorComponent implements OnInit {
 
-  @Input() @Required
+  @Input({ required: true })
   public station!: HelgolandPlatform;
 
-  @Input() @Required
+  @Input({ required: true })
   public url!: string;
 
   @Input()

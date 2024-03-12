@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Required, TzDatePipe } from "@helgoland/core";
+import { TzDatePipe } from "@helgoland/core";
 
 @Component({
   selector: "n52-time-list-selector",
@@ -9,8 +9,7 @@ import { Required, TzDatePipe } from "@helgoland/core";
 })
 export class TimeListSelectorComponent {
 
-  @Input()
-  @Required
+  @Input({ required: true })
   public timeList!: number[];
 
   @Output()

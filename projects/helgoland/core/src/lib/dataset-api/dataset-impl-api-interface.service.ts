@@ -24,9 +24,9 @@ import { InternalIdHandler } from "./internal-id-handler.service";
 export class DatasetImplApiInterface extends DatasetApiInterface {
 
   constructor(
-        protected httpservice: HttpService,
-        protected internalDatasetId: InternalIdHandler,
-        protected override translate: TranslateService
+    protected httpservice: HttpService,
+    protected internalDatasetId: InternalIdHandler,
+    protected override translate: TranslateService
   ) {
     super(httpservice, translate);
   }
@@ -77,8 +77,8 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
   public getTimeseries(apiUrl: string, params?: ParameterFilter, options?: HttpRequestOptions): Observable<Timeseries[]> {
     const url = this.createRequestUrl(apiUrl, "timeseries");
     return new Observable<Timeseries[]>((observer: Observer<Timeseries[]>) => {
-      this.requestApiTexted(url, params, options).subscribe(
-        (result) => {
+      this.requestApiTexted(url, params, options).subscribe({
+        next: (result) => {
           const timeseriesList = deserializeArray<Timeseries>(Timeseries, result);
           timeseriesList.forEach((entry) => {
             entry.url = apiUrl;
@@ -89,9 +89,9 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
           });
           observer.next(timeseriesList);
         },
-        (error) => observer.error(error),
-        () => observer.complete()
-      );
+        error: (error) => observer.error(error),
+        complete: () => observer.complete()
+      });
     });
   }
 
@@ -101,8 +101,8 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
       this.requestApiTextedPost(url, {
         timespan: this.createRequestTimespan(timespan),
         timeseries: ids
-      }, options).subscribe(
-        (result: any) => {
+      }, options).subscribe({
+        next: (result: any) => {
           const timeseriesList: TimeseriesData[] = [];
           for (const id in result) {
             if (id) {
@@ -117,9 +117,9 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
           }
           observer.next(timeseriesList);
         },
-        (error) => observer.error(error),
-        () => observer.complete()
-      );
+        error: (error) => observer.error(error),
+        complete: () => observer.complete()
+      });
     });
   }
 

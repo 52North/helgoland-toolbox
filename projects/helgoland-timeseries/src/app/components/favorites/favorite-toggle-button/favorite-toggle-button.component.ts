@@ -9,7 +9,6 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 import { FavoriteService } from "../../../services/favorite.service";
 import { NotifierService } from "../../../services/notifier.service";
-import { Required } from "../../../../../../helgoland/core/src/public-api";
 
 @Component({
   selector: "helgoland-favorite-toggle-button",
@@ -26,8 +25,7 @@ import { Required } from "../../../../../../helgoland/core/src/public-api";
 })
 export class FavoriteToggleButtonComponent implements OnInit {
 
-  @Input() 
-  @Required 
+  @Input({ required: true }) 
     dataset!: SeriesGraphDataset;
 
   isFavorite = false;

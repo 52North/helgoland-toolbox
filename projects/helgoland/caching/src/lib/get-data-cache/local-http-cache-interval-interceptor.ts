@@ -6,7 +6,6 @@ import {
   HttpRequestOptions,
   HttpServiceHandler,
   HttpServiceInterceptor,
-  ReferenceValues,
   Timespan,
   TimeValueTuple,
 } from "@helgoland/core";
@@ -136,36 +135,38 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     // or use custom request for not fully covered timespans
     return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
       const shared = next.handle(newRequest, newOptions).pipe(share());
-      shared.subscribe((res) => {
-        if (res instanceof HttpResponse) {
-          const expirationTime = metadata.expirationAtMs ? metadata.expirationAtMs : this.expirationAtMs;
-          const resultUrl = this.getUrlWithoutParams(res.url);
-          // for ts data
-          const cachedItem: CachedObject = {
-            values: !expanded ? res.body : res.body[urlID],
-            expirationDate: moment(moment(new Date())).add(expirationTime, "milliseconds").toDate(),
-            expirationAtMs: expirationTime,
-            httpResponse: res,
-            requestTs: this.decodeTimespan(newRequest.params.get("timespan"))
-          };
-          if (cachedItem.values.values.length > 0) {
-            // update cache
-            this.cache.put(resultUrl, cachedItem, generalize, originReq);
-          }
-          if (!originReq && intersectedCache && intersectedCache.cachedObjects.length > 0) {
+      shared.subscribe({
+        next: (res) => {
+          if (res instanceof HttpResponse) {
+            const expirationTime = metadata.expirationAtMs ? metadata.expirationAtMs : this.expirationAtMs;
+            const resultUrl = this.getUrlWithoutParams(res.url);
+            // for ts data
+            const cachedItem: CachedObject = {
+              values: !expanded ? res.body : res.body[urlID],
+              expirationDate: moment(moment(new Date())).add(expirationTime, "milliseconds").toDate(),
+              expirationAtMs: expirationTime,
+              httpResponse: res,
+              requestTs: this.decodeTimespan(newRequest.params.get("timespan"))
+            };
             if (cachedItem.values.values.length > 0) {
-              res = this.createHttpResponse(urlID, expanded, res, intersectedCache, cachedItem);
-            } else {
-              res = this.createHttpResponse(urlID, expanded, res, intersectedCache);
+              // update cache
+              this.cache.put(resultUrl, cachedItem, generalize, originReq);
             }
+            if (!originReq && intersectedCache && intersectedCache.cachedObjects.length > 0) {
+              if (cachedItem.values.values.length > 0) {
+                res = this.createHttpResponse(urlID, expanded, res, intersectedCache, cachedItem);
+              } else {
+                res = this.createHttpResponse(urlID, expanded, res, intersectedCache);
+              }
+            }
+            observer.next(res);
+            observer.complete();
           }
-          observer.next(res);
+        },
+        error: (error) => {
+          observer.error(error);
           observer.complete();
         }
-
-      }, (error) => {
-        observer.error(error);
-        observer.complete();
       });
     });
 

@@ -120,8 +120,8 @@ export class StaReadInterfaceService implements StaReadInterface {
 
   public aggregatePaging<T extends StaObject>(request: Observable<StaValueListResponse<T>>): Observable<StaValueListResponse<T>> {
     return new Observable((observer: Observer<StaValueListResponse<T>>) => {
-      request.subscribe(
-        res => {
+      request.subscribe({
+        next: res => {
           if (res["@iot.nextLink"]) {
             this.aggregatePaging(this.httpService.client().get<StaValueListResponse<T>>(res["@iot.nextLink"])).subscribe(nextPage => {
               res.value.push(...nextPage.value);
@@ -134,11 +134,12 @@ export class StaReadInterfaceService implements StaReadInterface {
             observer.complete();
           }
         },
-        error => {
+        error: error => {
           observer.error(error);
           observer.complete();
-        });
-    });
+        }
+      })
+    })
   }
 
   protected requestApi<T>(

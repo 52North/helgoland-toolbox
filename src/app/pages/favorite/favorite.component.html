@@ -10,8 +10,8 @@
   </div>
 @if (favorite.show) {
   <div style="height: 300px;">
-    <n52-d3-series-graph-wrapper [datasetIds]="createDatasetIdsArray(favorite)"
-      [datasetOptions]="createDatasetOptions(favorite)" [timeInterval]="favorite.timespan"></n52-d3-series-graph-wrapper>
+    <n52-d3-series-graph-wrapper [datasetIds]="createDatasetIdsArray(favorite)" [mainTimeInterval]="favorite.timespan"
+      [datasetOptions]="createDatasetOptions(favorite)"></n52-d3-series-graph-wrapper>
   </div>
   }
   <hr>
