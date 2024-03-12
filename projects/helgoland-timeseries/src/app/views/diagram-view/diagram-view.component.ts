@@ -116,8 +116,8 @@ export class DiagramViewComponent implements OnInit {
               this.openMapSelection();
             }
           });
-    // TODO: 
-    //   this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
+    // TODO: fix initalization
+      // this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     //   this.setDatasets();
 
     //   if (!this.timeseries.hasDatasets()) {

@@ -56,6 +56,11 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       if (timespan) { this.graphDatasetsSrvc.timespan = timespan; }
     }
     return of(true)
+    // if (valid.length) {
+    //   return forkJoin(valid).pipe(map(() => true));
+    // } else {
+    //   return of(true);
+    // };
   }
 
   protected generatePermalink(): string {
