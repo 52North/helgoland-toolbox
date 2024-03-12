@@ -1,9 +1,9 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { IdCache } from '@helgoland/core';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Inject, Injectable, InjectionToken, Optional } from "@angular/core";
+import { IdCache } from "@helgoland/core";
+import { Observable, of } from "rxjs";
+import { tap } from "rxjs/operators";
 
-export const LABEL_MAPPER_HANDLER = new InjectionToken<LabelMapperHandler>('LABEL_MAPPER_HANDLER');
+export const LABEL_MAPPER_HANDLER = new InjectionToken<LabelMapperHandler>("LABEL_MAPPER_HANDLER");
 
 export interface LabelMapperHandler {
   canHandle(label: string): boolean;
@@ -11,7 +11,7 @@ export interface LabelMapperHandler {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LabelMapperService {
 

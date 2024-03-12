@@ -5,12 +5,12 @@ export type DateType =
     /**
      * date identifies when the resource was brought into existence
      */
-    'creation' |
+    "creation" |
     /**
      * date identifies when the resource was issued
      */
-    'publication' |
+    "publication" |
     /**
      * date identifies when the resource was examined or re-examined and imporved or amended
      */
-    'revision';
+    "revision";

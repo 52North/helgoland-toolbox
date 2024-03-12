@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
-import { AxisSettings, DatasetChild, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
+import { Injectable } from "@angular/core";
+import { AxisSettings, DatasetChild, LineStyle, SeriesGraphDataset } from "@helgoland/d3";
 
-import { DatasetsService } from './graph-datasets.service';
-import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
+import { DatasetsService } from "./graph-datasets.service";
+import { FirstLastValue } from "../../../../helgoland/core/src/public-api";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DummyDatasetsService {
-  datasetId: string = '123';
+  datasetId: string = "123";
 
   constructor(
     protected graphDatasetsSrvc: DatasetsService,
   ) {
-    const dummyDataset = this.createNewDataset('blue');
+    const dummyDataset = this.createNewDataset("blue");
     const child = new DatasetChild(
       this.datasetId,
-      'ChildData',
+      "ChildData",
       false,
       [{
         value: 1.2,
@@ -26,7 +26,7 @@ export class DummyDatasetsService {
         value: 1.8,
         timestamp: new Date().getTime() + (360 * 1000)
       }],
-      'green'
+      "green"
     );
     dummyDataset.addChild(child);
     this.graphDatasetsSrvc.addOrUpdateDataset(dummyDataset);
@@ -53,14 +53,14 @@ export class DummyDatasetsService {
       true,
       false,
       {
-        uom: 'rnd',
-        phenomenonLabel: 'Zahlen zwischne 0 und 10',
-        platformLabel: 'null',
-        procedureLabel: 'null',
-        categoryLabel: 'null',
+        uom: "rnd",
+        phenomenonLabel: "Zahlen zwischne 0 und 10",
+        platformLabel: "null",
+        procedureLabel: "null",
+        categoryLabel: "null",
         firstValue: new FirstLastValue(),
         lastValue: new FirstLastValue(),
-        featureLabel: 'null'
+        featureLabel: "null"
       }
     )
   }

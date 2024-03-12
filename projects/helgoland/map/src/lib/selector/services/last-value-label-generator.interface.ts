@@ -1,4 +1,4 @@
-import { HelgolandTimeseries } from '@helgoland/core';
+import { HelgolandTimeseries } from "@helgoland/core";
 
 export const enum LastValuePresentation {
   /**

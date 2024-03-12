@@ -13,9 +13,9 @@ import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Required,
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'helgoland-general-time-selection',
-  templateUrl: './general-time-selection.component.html',
-  styleUrls: ['./general-time-selection.component.scss'],
+  selector: "helgoland-general-time-selection",
+  templateUrl: "./general-time-selection.component.html",
+  styleUrls: ["./general-time-selection.component.scss"],
   imports: [
     CommonModule,
     HelgolandCoreModule,
@@ -29,7 +29,7 @@ import { TranslateModule } from "@ngx-translate/core";
     MatTooltipModule,
     ReactiveFormsModule,
     TranslateModule
-],
+  ],
   standalone: true
 })
 export class GeneralTimeSelectionComponent {

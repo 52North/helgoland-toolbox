@@ -7,9 +7,9 @@ import { HelgolandSelectorModule, ServiceSelectorComponent } from "@helgoland/se
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'helgoland-common-service-list-selector',
-  templateUrl: './service-list-selector.component.html',
-  styleUrls: ['./service-list-selector.component.scss'],
+  selector: "helgoland-common-service-list-selector",
+  templateUrl: "./service-list-selector.component.html",
+  styleUrls: ["./service-list-selector.component.scss"],
   imports: [
     CommonModule,
     HelgolandSelectorModule,
@@ -17,7 +17,7 @@ import { TranslateModule } from "@ngx-translate/core";
     MatListModule,
     MatProgressBarModule,
     TranslateModule
-],
+  ],
   standalone: true
 })
 export class ServiceListSelectorComponent extends ServiceSelectorComponent { }

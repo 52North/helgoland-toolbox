@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { OlLayerVisibilityTogglerComponent } from './ol-layer-visibility-toggler.component';
+import { OlLayerVisibilityTogglerComponent } from "./ol-layer-visibility-toggler.component";
 
-describe('OlLayerVisibilityTogglerComponent', () => {
+describe("OlLayerVisibilityTogglerComponent", () => {
   let component: OlLayerVisibilityTogglerComponent;
   let fixture: ComponentFixture<OlLayerVisibilityTogglerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [OlLayerVisibilityTogglerComponent]
-})
+      imports: [OlLayerVisibilityTogglerComponent]
+    })
       .compileComponents();
   }));
 
@@ -19,7 +19,7 @@ describe('OlLayerVisibilityTogglerComponent', () => {
     expect(() => fixture.detectChanges()).toThrow();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

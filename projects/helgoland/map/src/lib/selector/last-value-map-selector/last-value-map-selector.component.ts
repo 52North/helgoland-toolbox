@@ -9,29 +9,29 @@ import {
   IterableDiffers,
   KeyValueDiffers,
   OnChanges,
-} from '@angular/core';
+} from "@angular/core";
 import {
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   StatusIntervalResolverService,
-} from '@helgoland/core';
-import { circleMarker, featureGroup, geoJSON, Layer, Map, Marker, marker } from 'leaflet';
-import { forkJoin, Observable, Observer } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+} from "@helgoland/core";
+import { circleMarker, featureGroup, geoJSON, Layer, Map, Marker, marker } from "leaflet";
+import { forkJoin, Observable, Observer } from "rxjs";
+import { switchMap, tap } from "rxjs/operators";
 
-import { MapCache } from '../../base/map-cache.service';
-import { MapSelectorComponent } from '../map-selector.component';
-import { LastValueLabelGenerator, LastValuePresentation } from '../services/last-value-label-generator.interface';
+import { MapCache } from "../../base/map-cache.service";
+import { MapSelectorComponent } from "../map-selector.component";
+import { LastValueLabelGenerator, LastValuePresentation } from "../services/last-value-label-generator.interface";
 
 /**
  * Displays selectable series with their last values on an map.
  */
 @Component({
-    selector: 'n52-last-value-map-selector',
-    templateUrl: '../map-selector.component.html',
-    styleUrls: ['../map-selector.component.scss'],
-    standalone: true
+  selector: "n52-last-value-map-selector",
+  templateUrl: "../map-selector.component.html",
+  styleUrls: ["../map-selector.component.scss"],
+  standalone: true
 })
 export class LastValueMapSelectorComponent extends MapSelectorComponent<HelgolandTimeseries> implements AfterViewInit, DoCheck, OnChanges {
 
@@ -101,7 +101,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
       const tsObs = this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries });
       obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val).pipe(tap(res => {
         this.markerFeatureGroup.addLayer(res);
-        res.on('click', () => this.onSelected.emit(val));
+        res.on("click", () => this.onSelected.emit(val));
       })))));
     });
     this.finalizeMarkerObservables(obsList, map);
@@ -154,15 +154,15 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   }
 
   private createDefaultColoredMarker(ts: HelgolandTimeseries): Layer {
-    return this.createFilledMarker(ts, '#000', 10);
+    return this.createFilledMarker(ts, "#000", 10);
   }
 
   private createFilledMarker(ts: HelgolandTimeseries, color: string, radius: number): Layer {
     let geometry: Layer;
-    if (ts.platform.geometry?.type === 'Point') {
+    if (ts.platform.geometry?.type === "Point") {
       const point = ts.platform.geometry as GeoJSON.Point;
       geometry = circleMarker([point.coordinates[1], point.coordinates[0]], {
-        color: '#000',
+        color: "#000",
         fillColor: color,
         fillOpacity: 0.8,
         radius: 10,
@@ -171,7 +171,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     } else {
       geometry = geoJSON(ts.platform.geometry, {
         style: () => ({
-          color: '#000',
+          color: "#000",
           fillColor: color,
           fillOpacity: 0.8,
           weight: 2
@@ -179,16 +179,16 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
       });
     }
     if (geometry) {
-      geometry.on('click', () => this.onSelected.emit(ts));
+      geometry.on("click", () => this.onSelected.emit(ts));
       return geometry;
     }
-    throw new Error('Could not create geometry');
+    throw new Error("Could not create geometry");
   }
 
   private createLabeledMarker(ts: HelgolandTimeseries): Observable<Marker> {
     return new Observable<Marker>(observer => {
       const icon = this.lastValueLabelGenerator.createIconLabel(ts);
-      if (ts.platform.geometry?.type === 'Point') {
+      if (ts.platform.geometry?.type === "Point") {
         const point = ts.platform.geometry as GeoJSON.Point;
         const genMarker = marker([point.coordinates[1], point.coordinates[0]], { icon });
         this.setId(genMarker, ts.internalId);

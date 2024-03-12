@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { AbstractSweRange } from './AbstractSweRange';
-import { AllowedTokens } from './AllowedTokens';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractSweRange } from "./AbstractSweRange";
+import { AllowedTokens } from "./AllowedTokens";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * Pair of categorical values used to specify a range in an ordinal
@@ -13,19 +13,19 @@ export class SweCategoryRange extends AbstractSweRange {
      * they must be espaced by using XML entities). It is optional, to enable
      * structure to act as a schema for values provided using other encodings
      */
-    @DisplayName('Value')
-    override value: [string, string];
+    @DisplayName("Value")
+  override value: [string, string];
     /**
      * Name of the dictionary defining an ordered set of values with respect to
      * which the range is expressed (ordinal reference system)
      */
-    @DisplayName('Code space')
-    codeSpace: string;
+    @DisplayName("Code space")
+      codeSpace: string;
 
-    @DisplayName('Constraint')
+    @DisplayName("Constraint")
     override constraint: AllowedTokens;
 
     override toString() {
-        return super.toString('SWE category range');
+      return super.toString("SWE category range");
     }
 }

@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ParsedTimespanPreset, Required, Settings, SettingsService, Timespan, TimespanPreset } from '@helgoland/core';
-import { NgClass } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ParsedTimespanPreset, Required, Settings, SettingsService, Timespan, TimespanPreset } from "@helgoland/core";
+import { NgClass } from "@angular/common";
 
 @Component({
-  selector: 'n52-predefined-timespan-selector',
-  templateUrl: './predefined-timespan-selector.component.html',
-  styleUrls: ['./predefined-timespan-selector.component.scss'],
+  selector: "n52-predefined-timespan-selector",
+  templateUrl: "./predefined-timespan-selector.component.html",
+  styleUrls: ["./predefined-timespan-selector.component.scss"],
   standalone: true,
   imports: [NgClass]
 })
@@ -71,7 +71,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     if (isSafe) {
       return true;
     } else {
-      console.log('Timespan preset "' + preset.name + '" has invalid moment() expression!');
+      console.log("Timespan preset \"" + preset.name + "\" has invalid moment() expression!");
       return false;
     }
   }

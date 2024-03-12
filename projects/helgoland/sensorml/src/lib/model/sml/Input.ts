@@ -1,3 +1,3 @@
-import { InputOrOutputOrParameter } from './InputOrOutputOrParameter';
+import { InputOrOutputOrParameter } from "./InputOrOutputOrParameter";
 
 export class Input extends InputOrOutputOrParameter { }

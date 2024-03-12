@@ -1,10 +1,10 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { FacetSearchService } from '../../facet-search-model';
-import { HelgolandFacetSearchModule } from './../../facet-search.module';
-import { ParameterFacetComponent } from './parameter-facet.component';
+import { FacetSearchService } from "../../facet-search-model";
+import { HelgolandFacetSearchModule } from "./../../facet-search.module";
+import { ParameterFacetComponent } from "./parameter-facet.component";
 
-describe('ParameterFacetComponent', () => {
+describe("ParameterFacetComponent", () => {
   let component: ParameterFacetComponent;
   let fixture: ComponentFixture<ParameterFacetComponent>;
 
@@ -21,7 +21,7 @@ describe('ParameterFacetComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

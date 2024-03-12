@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed, inject } from "@angular/core/testing";
 
-import { RangeCalculationsService } from './range-calculations.service';
+import { RangeCalculationsService } from "./range-calculations.service";
 
-describe('RangeCalculationsService', () => {
+describe("RangeCalculationsService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [RangeCalculationsService]
     });
   });
 
-  it('should be created', inject([RangeCalculationsService], (service: RangeCalculationsService) => {
+  it("should be created", inject([RangeCalculationsService], (service: RangeCalculationsService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,7 +1,7 @@
-import { InjectionToken } from '@angular/core';
-import { SeriesGraphDataset } from '@helgoland/d3';
+import { InjectionToken } from "@angular/core";
+import { SeriesGraphDataset } from "@helgoland/d3";
 
-import { Favorite } from './favorite.service';
+import { Favorite } from "./favorite.service";
 
 export interface DatasetPermalinkService {
     noPermalink(): void;
@@ -9,7 +9,7 @@ export interface DatasetPermalinkService {
     validatePermaIds(ids: string[]): void;
 }
 
-export const DATASET_PERMALINK_SERVICE_INJECTION = new InjectionToken<DatasetPermalinkService>('DATASET_PERMALINK_SERVICE');
+export const DATASET_PERMALINK_SERVICE_INJECTION = new InjectionToken<DatasetPermalinkService>("DATASET_PERMALINK_SERVICE");
 
 export interface DatasetFavoriteService {
     addFavoriteToDiagram(fav: Favorite): void;
@@ -22,4 +22,4 @@ export interface DatasetFavoriteService {
     removeFavorite(id: string): void;
 }
 
-export const DATASET_FAVORITE_SERVICE_INJECTION = new InjectionToken<DatasetFavoriteService>('DATASET_FAVORITE_SERVICE');
+export const DATASET_FAVORITE_SERVICE_INJECTION = new InjectionToken<DatasetFavoriteService>("DATASET_FAVORITE_SERVICE");

@@ -1,8 +1,8 @@
-import { Inject, Injectable, Optional } from '@angular/core';
-import { DatasetDescription, SeriesGraphDataset } from '@helgoland/d3';
-import { BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, Optional } from "@angular/core";
+import { DatasetDescription, SeriesGraphDataset } from "@helgoland/d3";
+import { BehaviorSubject } from "rxjs";
 
-import { DATASET_FAVORITE_SERVICE_INJECTION, DatasetFavoriteService } from './service-interfaces';
+import { DATASET_FAVORITE_SERVICE_INJECTION, DatasetFavoriteService } from "./service-interfaces";
 
 export interface Favorite {
   id: string;
@@ -11,7 +11,7 @@ export interface Favorite {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class FavoriteService {
 

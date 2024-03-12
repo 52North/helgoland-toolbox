@@ -15,9 +15,9 @@ interface EditableFavorite extends Favorite {
 }
 
 @Component({
-  selector: 'helgoland-modal-favorite-list',
-  templateUrl: './modal-favorite-list.component.html',
-  styleUrls: ['./modal-favorite-list.component.scss'],
+  selector: "helgoland-modal-favorite-list",
+  templateUrl: "./modal-favorite-list.component.html",
+  styleUrls: ["./modal-favorite-list.component.scss"],
   imports: [
     TranslateModule,
     CommonModule,

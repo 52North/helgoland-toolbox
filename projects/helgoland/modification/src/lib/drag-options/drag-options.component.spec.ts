@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { DragOptionsComponent } from './drag-options.component';
+import { DragOptionsComponent } from "./drag-options.component";
 
-describe('DragOptionsComponent', () => {
+describe("DragOptionsComponent", () => {
   let component: DragOptionsComponent;
   let fixture: ComponentFixture<DragOptionsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [DragOptionsComponent]
-}).compileComponents();
+      imports: [DragOptionsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('DragOptionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

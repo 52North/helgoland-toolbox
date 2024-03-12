@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDataEntry { }
 
 export interface Data<T extends IDataEntry> {

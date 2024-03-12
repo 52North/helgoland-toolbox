@@ -11,13 +11,13 @@ import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
 import { ModalDatasetByStationSelectorComponent } from "./modal-dataset-by-station-selector.component";
 
-describe('ModalDatasetByStationSelectorComponent', () => {
+describe("ModalDatasetByStationSelectorComponent", () => {
   let component: ModalDatasetByStationSelectorComponent;
   let fixture: ComponentFixture<ModalDatasetByStationSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         MatBadgeModule,
@@ -28,7 +28,7 @@ describe('ModalDatasetByStationSelectorComponent', () => {
         RouterTestingModule,
         TranslateTestingModule,
         ModalDatasetByStationSelectorComponent
-    ]
+      ]
     }).compileComponents();
   });
 
@@ -38,7 +38,7 @@ describe('ModalDatasetByStationSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

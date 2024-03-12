@@ -8,14 +8,14 @@ import { map, mergeMap } from "rxjs/operators";
 import { DATASET_PERMALINK_SERVICE_INJECTION, DatasetPermalinkService } from "../../services/service-interfaces";
 import { DatasetsService } from "./../../services/graph-datasets.service";
 
-const PARAM_IDS = 'ids';
-const ID_SEPERATOR = '!!';
-const PARAM_TIME = 'time';
-const TIME_SEPERATOR = '|';
-const PARAM_DEFINED_TIME = 'defined_time';
+const PARAM_IDS = "ids";
+const ID_SEPERATOR = "!!";
+const PARAM_TIME = "time";
+const TIME_SEPERATOR = "|";
+const PARAM_DEFINED_TIME = "defined_time";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DiagramViewPermalinkService extends PermalinkService<void> {
 
@@ -64,16 +64,16 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   }
 
   protected generatePermalink(): string {
-    let paramUrl = '';
+    let paramUrl = "";
     if (this.graphDatasetsSrvc.hasDatasets()) {
       const ids: string[] = [];
       this.permalinkServices?.forEach(pls => {
         pls.getPermaIds().forEach(id => ids.push(id));
       })
       const id = ids.join(ID_SEPERATOR);
-      paramUrl = this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
+      paramUrl = this.createBaseUrl() + "?" + PARAM_IDS + "=" + encodeURIComponent(id);
       if (this.graphDatasetsSrvc.timespan) {
-        paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.graphDatasetsSrvc.timespan.from
+        paramUrl = paramUrl + "&" + PARAM_TIME + "=" + encodeURIComponent(this.graphDatasetsSrvc.timespan.from
           + TIME_SEPERATOR + this.graphDatasetsSrvc.timespan.to);
       }
     }

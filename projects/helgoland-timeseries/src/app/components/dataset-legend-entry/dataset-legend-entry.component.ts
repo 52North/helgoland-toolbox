@@ -19,9 +19,9 @@ import { TimeseriesEntrySymbolComponent } from "../timeseries-entry-symbol/times
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: 'helgoland-dataset-legend-entry',
-  templateUrl: './dataset-legend-entry.component.html',
-  styleUrls: ['./dataset-legend-entry.component.scss'],
+  selector: "helgoland-dataset-legend-entry",
+  templateUrl: "./dataset-legend-entry.component.html",
+  styleUrls: ["./dataset-legend-entry.component.scss"],
   imports: [
     LoadingOverlayProgressBarComponent,
     MatSlideToggleModule,
@@ -46,15 +46,15 @@ export class DatasetLegendEntryComponent implements OnChanges {
 
   @Input()
   @Required
-  dataset!: SeriesGraphDataset;
+    dataset!: SeriesGraphDataset;
 
   @Input()
   @Required
-  selected!: boolean;
+    selected!: boolean;
 
   @Input() 
   @Required
-  timeInterval!: TimeInterval;
+    timeInterval!: TimeInterval;
 
   @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
 
@@ -69,7 +69,7 @@ export class DatasetLegendEntryComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval']) {
+    if (changes["timeInterval"]) {
       this.checkDataInTimespan();
     }
   }

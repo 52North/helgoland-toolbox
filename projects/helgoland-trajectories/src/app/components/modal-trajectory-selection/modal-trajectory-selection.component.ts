@@ -27,9 +27,9 @@ import { TrajectoriesService } from "./../../services/trajectories.service";
 import { ParameterTypeLabelComponent } from "./parameter-type-label/parameter-type-label.component";
 
 @Component({
-  selector: 'helgoland-trajectories-modal-trajectory-selection',
-  templateUrl: './modal-trajectory-selection.component.html',
-  styleUrls: ['./modal-trajectory-selection.component.scss'],
+  selector: "helgoland-trajectories-modal-trajectory-selection",
+  templateUrl: "./modal-trajectory-selection.component.html",
+  styleUrls: ["./modal-trajectory-selection.component.scss"],
   imports: [
     CommonModule,
     LoadingOverlayProgressBarComponent,

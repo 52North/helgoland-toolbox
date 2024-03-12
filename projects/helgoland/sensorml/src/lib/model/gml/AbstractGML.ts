@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { CodeType } from './CodeType';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { CodeType } from "./CodeType";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * The abstract element gml:AbstractGML is "any GML object having identity".
@@ -10,8 +10,8 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * is effectively an abstract superclass for all GML objects.
  */
 export abstract class AbstractGML {
-    @DisplayName('GML ID')
-    gmlId: string;
+    @DisplayName("GML ID")
+      gmlId: string;
     /**
      * The value of this property is a text description of the object.
      * gml:description uses gml:StringOrRefType as its content model, so it may
@@ -20,15 +20,15 @@ export abstract class AbstractGML {
      * description has been deprecated and replaced by the
      * gml:descriptionReference property.
      */
-    @DisplayName('Description')
-    description: string;
+    @DisplayName("Description")
+      description: string;
     /**
      * The value of this property is a remote text description of the object.
      * The xlink:href attribute of the gml:descriptionReference property
      * references the external description.
      */
-    @DisplayName('Description reference')
-    descriptionReference: string;
+    @DisplayName("Description reference")
+      descriptionReference: string;
     /**
      * The gml:name property provides a label or identifier for the object,
      * commonly a descriptive name. An object may have several names, typically
@@ -39,8 +39,8 @@ export abstract class AbstractGML {
      * usage there will be one name per authority, so a processing application
      * may select the name from its preferred codeSpace.
      */
-    @DisplayName('Name')
-    name: CodeType[];
+    @DisplayName("Name")
+      name: CodeType[];
     /**
      * Often, a special identifier is assigned to an object by the maintaining
      * authority with the intention that it is used in references to the object.
@@ -48,10 +48,10 @@ export abstract class AbstractGML {
      * unique either globally or within an application domain. gml:identifier is a
      * pre-defined property for such identifiers.
      */
-    @DisplayName('Identifier')
-    identifier: CodeType;
+    @DisplayName("Identifier")
+      identifier: CodeType;
 
     toString() {
-        return 'Abstract GML';
+      return "Abstract GML";
     }
 }

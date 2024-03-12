@@ -7,9 +7,9 @@ import TileLayer from "ol/layer/Tile";
 import { OSM, TileWMS } from "ol/source";
 
 @Component({
-  selector: 'n52-ol',
-  templateUrl: './ol.component.html',
-  styleUrls: ['./ol.component.scss'],
+  selector: "n52-ol",
+  templateUrl: "./ol.component.html",
+  styleUrls: ["./ol.component.scss"],
   imports: [
     HelgolandOpenLayersModule,
     CommonModule
@@ -22,7 +22,7 @@ export class OlComponent implements OnInit {
 
   public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 
-  public mapId = 'test-map';
+  public mapId = "test-map";
 
   constructor(
     private mapService: OlMapService
@@ -33,9 +33,9 @@ export class OlComponent implements OnInit {
     this.layers.push(new TileLayer({
       visible: true,
       source: new TileWMS({
-        url: 'https://maps.dwd.de/geoserver/ows',
+        url: "https://maps.dwd.de/geoserver/ows",
         params: {
-          'LAYERS': 'dwd:RX-Produkt',
+          "LAYERS": "dwd:RX-Produkt",
         }
       })
     }));
@@ -43,9 +43,9 @@ export class OlComponent implements OnInit {
     this.layers.push(new TileLayer({
       visible: false,
       source: new TileWMS({
-        url: 'https://maps.dwd.de/geoserver/ows',
+        url: "https://maps.dwd.de/geoserver/ows",
         params: {
-          'LAYERS': 'dwd:FX-Produkt',
+          "LAYERS": "dwd:FX-Produkt",
         }
       })
     }));

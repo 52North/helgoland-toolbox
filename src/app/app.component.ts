@@ -12,9 +12,9 @@ import { LocalSelectorImplComponent } from "./components/local-selector/local-se
 import { TimezoneSelectorComponent } from "./components/timezone-selector/timezone-selector.component";
 
 @Component({
-  selector: 'n52-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "n52-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   imports: [
     LocalSelectorImplComponent,
     TimezoneSelectorComponent,
@@ -33,8 +33,8 @@ export class AppComponent {
     status: StatusCheckService,
     d3translate: D3TimeFormatLocaleService
   ) {
-    translate.setDefaultLang('en');
-    translate.use('en');
+    translate.setDefaultLang("en");
+    translate.use("en");
 
     status.checkAll().subscribe((res) => res.forEach((entry) => console.log(entry)));
 
@@ -43,12 +43,12 @@ export class AppComponent {
 
     this.languageList = [
       {
-        label: 'Deutsch',
-        code: 'de'
+        label: "Deutsch",
+        code: "de"
       },
       {
-        label: 'English',
-        code: 'en'
+        label: "English",
+        code: "en"
       }
     ];
 

@@ -1,3 +1,3 @@
-import { EventingFilter } from './common';
+import { EventingFilter } from "./common";
 
 export interface SubscriptionFilter extends EventingFilter { }

@@ -33,9 +33,9 @@ import { DatasetsService } from "./../../services/graph-datasets.service";
 import { DiagramViewPermalinkService } from "./diagram-view-permalink.service";
 
 @Component({
-  selector: 'helgoland-diagram-view',
-  templateUrl: './diagram-view.component.html',
-  styleUrls: ['./diagram-view.component.scss'],
+  selector: "helgoland-diagram-view",
+  templateUrl: "./diagram-view.component.html",
+  styleUrls: ["./diagram-view.component.scss"],
   encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
@@ -97,7 +97,7 @@ export class DiagramViewComponent implements OnInit {
     private time: Time,
     public graphDatasetsSrvc: DatasetsService
   ) {
-    this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
+    this.mobileQuery = this.media.matchMedia("(max-width: 1024px)");
     // this._mobileQueryListener = () => {
     //   debugger;
     //   return this.changeDetectorRef.detectChanges();
@@ -112,12 +112,12 @@ export class DiagramViewComponent implements OnInit {
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink();
     this.permalinkSrvc.validatePeramlink().subscribe(res => {
-            if (!this.graphDatasetsSrvc.hasDatasets()) {
-              this.openMapSelection();
-            }
-          });
+      if (!this.graphDatasetsSrvc.hasDatasets()) {
+        this.openMapSelection();
+      }
+    });
     // TODO: fix initalization
-      // this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
+    // this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     //   this.setDatasets();
 
     //   if (!this.timeseries.hasDatasets()) {

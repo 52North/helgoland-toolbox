@@ -22,9 +22,9 @@ import { ConfigurationService } from "./../../services/configuration.service";
 import { ListConfig, ModalListSettingsComponent } from "./modal-list-settings/modal-list-settings.component";
 
 @Component({
-  selector: 'helgoland-list-selection',
-  templateUrl: './list-selection.component.html',
-  styleUrls: ['./list-selection.component.scss'],
+  selector: "helgoland-list-selection",
+  templateUrl: "./list-selection.component.html",
+  styleUrls: ["./list-selection.component.scss"],
   imports: [
     CommonModule,
     FilterLabelComponent,

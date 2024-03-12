@@ -1,1 +1,1 @@
-export * from './iso/gmd';
+export * from "./iso/gmd";

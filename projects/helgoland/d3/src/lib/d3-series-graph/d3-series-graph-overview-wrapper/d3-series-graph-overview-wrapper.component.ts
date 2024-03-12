@@ -8,16 +8,16 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
-} from '@angular/core';
-import { DatasetOptions, Required, Time, TimeInterval, Timespan } from '@helgoland/core';
+} from "@angular/core";
+import { DatasetOptions, Required, Time, TimeInterval, Timespan } from "@helgoland/core";
 
-import { D3PlotOptions } from '../models/d3-plot-options';
-import { D3SeriesGraphWrapperComponent } from '../d3-series-graph-wrapper/d3-series-graph-wrapper.component';
+import { D3PlotOptions } from "../models/d3-plot-options";
+import { D3SeriesGraphWrapperComponent } from "../d3-series-graph-wrapper/d3-series-graph-wrapper.component";
 
 @Component({
-  selector: 'n52-d3-series-graph-overview-wrapper',
-  templateUrl: './d3-series-graph-overview-wrapper.component.html',
-  styleUrls: ['./d3-series-graph-overview-wrapper.component.scss'],
+  selector: "n52-d3-series-graph-overview-wrapper",
+  templateUrl: "./d3-series-graph-overview-wrapper.component.html",
+  styleUrls: ["./d3-series-graph-overview-wrapper.component.scss"],
   imports: [
     D3SeriesGraphWrapperComponent
   ],
@@ -83,7 +83,7 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes['timeInterval'] && this.init) {
+    if (changes["timeInterval"] && this.init) {
       this.calculateOverviewRange();
     }
   }

@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { PointSymbol, PointSymbolType } from '@helgoland/core';
-import * as d3 from 'd3';
+import { Injectable } from "@angular/core";
+import { PointSymbol, PointSymbolType } from "@helgoland/core";
+import * as d3 from "d3";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class D3PointSymbolDrawerService {
 
@@ -39,29 +39,29 @@ export class D3PointSymbolDrawerService {
   drawSymbol(pointSymbol: PointSymbol, color: string, drawPane: d3.Selection<SVGGElement, any, any, any>, selected: boolean, xPos: number, yPos: number) {
     const symbolPath = this.getSymbolPath(pointSymbol, selected, 1);
     if (symbolPath) {
-    drawPane.append('path')
-      .attr('class', 'y-axis-circle')
+      drawPane.append("path")
+        .attr("class", "y-axis-circle")
       // .attr('id', 'axisdot-circle-' + options.internalId)
-      .attr('transform', (d) => `translate(${xPos},${yPos})`)
-      .attr('stroke', color)
-      .attr('fill', color)
-      .attr('d', symbolPath);
+        .attr("transform", (d) => `translate(${xPos},${yPos})`)
+        .attr("stroke", color)
+        .attr("fill", color)
+        .attr("d", symbolPath);
     }
   }
 
   showHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {
-    const tr = symbolElem.attr('transform');
+    const tr = symbolElem.attr("transform");
     const scaleTerm = `scale(${this.symbolScaleFactor})`;
     if (tr.indexOf(scaleTerm) < 0) {
-      symbolElem.attr('transform', `${tr} scale(${this.symbolScaleFactor})`);
+      symbolElem.attr("transform", `${tr} scale(${this.symbolScaleFactor})`);
     }
   }
 
   hideHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {
-    let tr = symbolElem.attr('transform');
+    let tr = symbolElem.attr("transform");
     const scaleTerm = `scale(${this.symbolScaleFactor})`;
-    tr = tr.replace(scaleTerm, '');
-    symbolElem.attr('transform', `${tr}`);
+    tr = tr.replace(scaleTerm, "");
+    symbolElem.attr("transform", `${tr}`);
   }
 
   private calculateSymbolSize(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {

@@ -1,7 +1,7 @@
-import { Directive, Input } from '@angular/core';
-import { Required } from '@helgoland/core';
+import { Directive, Input } from "@angular/core";
+import { Required } from "@helgoland/core";
 
-import { MapCache } from '../base/map-cache.service';
+import { MapCache } from "../base/map-cache.service";
 
 @Directive()
 export abstract class MapControlComponent {

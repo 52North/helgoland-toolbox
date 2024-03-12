@@ -1,5 +1,5 @@
-import { EventingEndpoint, Id } from './common';
-import { Rule } from './rules';
+import { EventingEndpoint, Id } from "./common";
+import { Rule } from "./rules";
 
 export interface Notification extends Id {
     label: string;

@@ -1,32 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DatasetOptions, HelgolandTrajectory, Timespan } from '@helgoland/core';
-import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandMapViewModule } from '@helgoland/map';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LoadingOverlayProgressBarComponent, LoadingOverlaySpinnerComponent, ShareButtonComponent } from 'helgoland-common';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { DatasetOptions, HelgolandTrajectory, Timespan } from "@helgoland/core";
+import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from "@helgoland/d3";
+import { HelgolandMapViewModule } from "@helgoland/map";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { LoadingOverlayProgressBarComponent, LoadingOverlaySpinnerComponent, ShareButtonComponent } from "helgoland-common";
 
-import { TrajectoriesService } from '../../services/trajectories.service';
-import { LegendEntryComponent } from '../legend-entry/legend-entry.component';
-import { TrajectoryViewPermalinkService } from './../../services/trajectory-view-permalink.service';
-import { ModalMainConfigComponent } from './../modal-main-config/modal-main-config.component';
-import { ModalTrajectorySelectionComponent } from './../modal-trajectory-selection/modal-trajectory-selection.component';
-import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label.component';
+import { TrajectoriesService } from "../../services/trajectories.service";
+import { LegendEntryComponent } from "../legend-entry/legend-entry.component";
+import { TrajectoryViewPermalinkService } from "./../../services/trajectory-view-permalink.service";
+import { ModalMainConfigComponent } from "./../modal-main-config/modal-main-config.component";
+import { ModalTrajectorySelectionComponent } from "./../modal-trajectory-selection/modal-trajectory-selection.component";
+import { TrajectoryLabelComponent } from "./../trajectory-label/trajectory-label.component";
 
 @Component({
-  selector: 'helgoland-trajectories-view',
-  templateUrl: './trajectory-view.component.html',
-  styleUrls: ['./trajectory-view.component.scss'],
+  selector: "helgoland-trajectories-view",
+  templateUrl: "./trajectory-view.component.html",
+  styleUrls: ["./trajectory-view.component.scss"],
   imports: [
     CommonModule,
     HelgolandD3Module,
@@ -81,9 +81,9 @@ export class TrajectoryViewComponent implements OnInit {
   public trajectoryGraphLoading: boolean = false;
 
   public axisTypes = [
-    { type: D3AxisType.Distance, label: this.translateSrvc.instant('chart-styling.xaxis-option.distance') },
-    { type: D3AxisType.Time, label: this.translateSrvc.instant('chart-styling.xaxis-option.time') },
-    { type: D3AxisType.Ticks, label: this.translateSrvc.instant('chart-styling.xaxis-option.ticks') }
+    { type: D3AxisType.Distance, label: this.translateSrvc.instant("chart-styling.xaxis-option.distance") },
+    { type: D3AxisType.Time, label: this.translateSrvc.instant("chart-styling.xaxis-option.time") },
+    { type: D3AxisType.Ticks, label: this.translateSrvc.instant("chart-styling.xaxis-option.ticks") }
   ]
 
   constructor(
@@ -117,7 +117,7 @@ export class TrajectoryViewComponent implements OnInit {
   public onChartSelectionChanged(range: D3SelectionRange) {
     if (this.geometry) {
       this.highlightGeometry = {
-        type: 'LineString',
+        type: "LineString",
         coordinates: this.geometry.coordinates.slice(range.from, range.to)
       } as GeoJSON.GeoJsonObject;
     }
@@ -127,7 +127,7 @@ export class TrajectoryViewComponent implements OnInit {
     if (this.geometry) {
       this.selection = range;
       this.zoomToGeometry = {
-        type: 'LineString',
+        type: "LineString",
         coordinates: this.geometry.coordinates.slice(range.from, range.to)
       };
     }
@@ -136,7 +136,7 @@ export class TrajectoryViewComponent implements OnInit {
   public onChartHighlightChanged(idx: number) {
     if (this.geometry) {
       this.highlightGeometry = {
-        type: 'Point',
+        type: "Point",
         coordinates: this.geometry.coordinates[idx]
       } as GeoJSON.GeoJsonObject;
     }

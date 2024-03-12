@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { OlLayerLegendUrlComponent } from './ol-layer-legend-url.component';
+import { OlLayerLegendUrlComponent } from "./ol-layer-legend-url.component";
 
-describe('OlLayerLegendUrlComponent', () => {
+describe("OlLayerLegendUrlComponent", () => {
   let component: OlLayerLegendUrlComponent;
   let fixture: ComponentFixture<OlLayerLegendUrlComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerLegendUrlComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerLegendUrlComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('OlLayerLegendUrlComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

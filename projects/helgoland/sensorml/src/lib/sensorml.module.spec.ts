@@ -1,15 +1,15 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, waitForAsync } from "@angular/core/testing";
 
-import { HelgolandSensormlModule } from './sensorml.module';
+import { HelgolandSensormlModule } from "./sensorml.module";
 
-describe('SensormlModule', () => {
+describe("SensormlModule", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandSensormlModule],
     }).compileComponents();
   }));
 
-  it('should create', () => {
+  it("should create", () => {
     expect(HelgolandSensormlModule).toBeDefined();
   });
 });

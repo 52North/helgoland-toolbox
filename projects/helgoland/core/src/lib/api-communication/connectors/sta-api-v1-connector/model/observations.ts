@@ -1,5 +1,5 @@
-import { InsertDatastream } from './datasetreams';
-import { InsertId, StaExpandParams, StaObject, StaSelectParams } from './sta-interface';
+import { InsertDatastream } from "./datasetreams";
+import { InsertId, StaExpandParams, StaObject, StaSelectParams } from "./sta-interface";
 
 export interface Observation extends StaObject {
     phenomenonTime?: string;
@@ -9,8 +9,8 @@ export interface Observation extends StaObject {
         name: string;
         value: string;
     }[];
-    'Datastream@iot.navigationLink'?: string;
-    'FeatureOfInterest@iot.navigationLink'?: string;
+    "Datastream@iot.navigationLink"?: string;
+    "FeatureOfInterest@iot.navigationLink"?: string;
 }
 
 export interface InsertObservation extends Observation {

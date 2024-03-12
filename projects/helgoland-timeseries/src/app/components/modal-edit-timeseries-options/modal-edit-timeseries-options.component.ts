@@ -13,9 +13,9 @@ import { ConfigurationService } from "./../../services/configuration.service";
 import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/timeseries-symbol-select.component";
 
 @Component({
-  selector: 'helgoland-modal-edit-timeseries-options',
-  templateUrl: './modal-edit-timeseries-options.component.html',
-  styleUrls: ['./modal-edit-timeseries-options.component.scss'],
+  selector: "helgoland-modal-edit-timeseries-options",
+  templateUrl: "./modal-edit-timeseries-options.component.html",
+  styleUrls: ["./modal-edit-timeseries-options.component.scss"],
   imports: [
     CommonModule,
     ColorPickerModule,

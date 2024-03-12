@@ -49,14 +49,14 @@ export class AppTranslateLoader implements TranslateLoader {
 
 export function initApplication(configService: ConfigurationService, translate: TranslateService, localStorage: LocalStorage): () => Promise<void> {
   return () => configService.loadConfiguration().then((config: AppConfig) => {
-    const localStorageLanguageKey = 'client-language';
+    const localStorageLanguageKey = "client-language";
     registerLocaleData(localeDe);
-    let lang = translate.getBrowserLang() || 'en';
+    let lang = translate.getBrowserLang() || "en";
     const storedLang = localStorage.load(localStorageLanguageKey) as string;
     if (storedLang) { lang = storedLang }
     const url = window.location.href;
-    const name = 'locale';
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const name = "locale";
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
     const results = regex.exec(url);
     if (results && results[2]) {
       const match = config.languages?.find(e => e.code === results[2]);

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { OlLayerTitleComponent } from './ol-layer-title.component';
+import { OlLayerTitleComponent } from "./ol-layer-title.component";
 
-describe('OlLayerTitleComponent', () => {
+describe("OlLayerTitleComponent", () => {
   let component: OlLayerTitleComponent;
   let fixture: ComponentFixture<OlLayerTitleComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerTitleComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerTitleComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('OlLayerTitleComponent', () => {
     expect(() => fixture.detectChanges()).toThrow();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

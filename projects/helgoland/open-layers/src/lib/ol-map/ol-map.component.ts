@@ -1,29 +1,29 @@
-import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { View } from 'ol';
-import { Control } from 'ol/control';
-import Attribution from 'ol/control/Attribution';
-import Zoom from 'ol/control/Zoom';
-import TileLayer from 'ol/layer/Tile';
-import Map from 'ol/Map';
-import { fromLonLat } from 'ol/proj';
-import OSM from 'ol/source/OSM';
+import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { View } from "ol";
+import { Control } from "ol/control";
+import Attribution from "ol/control/Attribution";
+import Zoom from "ol/control/Zoom";
+import TileLayer from "ol/layer/Tile";
+import Map from "ol/Map";
+import { fromLonLat } from "ol/proj";
+import OSM from "ol/source/OSM";
 
-import { OlMapService } from '../services/map.service';
-import { OlMapId } from '../services/mapid.service';
+import { OlMapService } from "../services/map.service";
+import { OlMapId } from "../services/mapid.service";
 
 /**
  * Basic open layers map component, which creates a map with an OSM layer as first base layer.
  */
 @Component({
-    selector: 'n52-ol-map',
-    template: '<div class="map" [attr.id]="mapId"></div>',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: [
-        '../../../../../../node_modules/ol/ol.css',
-        'ol-map.component.scss'
-    ],
-    providers: [OlMapId],
-    standalone: true
+  selector: "n52-ol-map",
+  template: "<div class=\"map\" [attr.id]=\"mapId\"></div>",
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: [
+    "../../../../../../node_modules/ol/ol.css",
+    "ol-map.component.scss"
+  ],
+  providers: [OlMapId],
+  standalone: true
 })
 export class OlMapComponent implements OnInit, AfterViewInit {
 
@@ -31,43 +31,43 @@ export class OlMapComponent implements OnInit, AfterViewInit {
    * The map id, to reference this map outside of this component. If no id is given, a unique one is generated
    */
   @Input()
-  mapId!: string;
+    mapId!: string;
 
   /**
    * Longitude to center the map
    */
   @Input()
-  lon = 0;
+    lon = 0;
 
   /**
    * Latitude to center the map
    */
   @Input()
-  lat = 0;
+    lat = 0;
 
   /**
    * Zoom level of the map
    */
   @Input()
-  zoom = 1;
+    zoom = 1;
 
   /**
    * Projection of the map
    */
   @Input()
-  projection = 'EPSG:3857';
+    projection = "EPSG:3857";
 
   /**
    * Should the zoom controls be visible on the map
    */
   @Input()
-  showZoomControl = true;
+    showZoomControl = true;
 
   /**
    * Should the attribution label be visible on the map
    */
   @Input()
-  showAttributionControl = true;
+    showAttributionControl = true;
 
   private map!: Map;
 
@@ -108,6 +108,6 @@ export class OlMapComponent implements OnInit, AfterViewInit {
         .toString(16)
         .substring(1);
     }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
   }
 }

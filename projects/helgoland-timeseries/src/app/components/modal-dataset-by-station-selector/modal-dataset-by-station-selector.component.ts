@@ -11,14 +11,14 @@ import { HelgolandLabelMapperModule } from "@helgoland/depiction";
 import { DatasetByStationSelectorComponent, SelectableDataset } from "@helgoland/selector";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
-import { AppRouterService } from '../../services/app-router.service';
-import { DatasetsService } from '../../services/graph-datasets.service';
-import { TimeseriesService } from './../../services/timeseries-service.service';
+import { AppRouterService } from "../../services/app-router.service";
+import { DatasetsService } from "../../services/graph-datasets.service";
+import { TimeseriesService } from "./../../services/timeseries-service.service";
 
 @Component({
-  selector: 'helgoland-modal-dataset-by-station-selector',
-  templateUrl: './modal-dataset-by-station-selector.component.html',
-  styleUrls: ['./modal-dataset-by-station-selector.component.scss'],
+  selector: "helgoland-modal-dataset-by-station-selector",
+  templateUrl: "./modal-dataset-by-station-selector.component.html",
+  styleUrls: ["./modal-dataset-by-station-selector.component.scss"],
   imports: [
     CommonModule,
     HelgolandCoreModule,

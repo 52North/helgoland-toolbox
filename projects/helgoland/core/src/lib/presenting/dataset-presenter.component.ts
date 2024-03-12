@@ -1,26 +1,26 @@
 import {
-    Directive,
-    DoCheck,
-    EventEmitter,
-    Input,
-    IterableDiffer,
-    IterableDiffers,
-    OnChanges,
-    OnDestroy,
-    Output,
-    SimpleChanges,
-} from '@angular/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+  Directive,
+  DoCheck,
+  EventEmitter,
+  Input,
+  IterableDiffer,
+  IterableDiffers,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { Subscription } from "rxjs";
 
-import { HelgolandServicesConnector } from '../api-communication/helgoland-services-connector';
-import { InternalIdHandler } from '../dataset-api/internal-id-handler.service';
-import { DatasetOptions } from '../model/internal/options';
-import { ResizableComponent } from '../model/internal/ResizableComponent';
-import { TimeInterval, Timespan } from '../model/internal/timeInterval';
-import { Time } from '../time/time.service';
-import { TimezoneService } from './../time/timezone.service';
-import { PresenterMessage } from './presenter-message';
+import { HelgolandServicesConnector } from "../api-communication/helgoland-services-connector";
+import { InternalIdHandler } from "../dataset-api/internal-id-handler.service";
+import { DatasetOptions } from "../model/internal/options";
+import { ResizableComponent } from "../model/internal/ResizableComponent";
+import { TimeInterval, Timespan } from "../model/internal/timeInterval";
+import { Time } from "../time/time.service";
+import { TimezoneService } from "./../time/timezone.service";
+import { PresenterMessage } from "./presenter-message";
 
 export interface PresenterOptions { }
 
@@ -29,14 +29,14 @@ export interface PresenterOptions { }
  */
 @Directive()
 export abstract class DatasetPresenterComponent<T extends DatasetOptions | DatasetOptions[], U extends PresenterOptions>
-    // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-    extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
+// eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
+  extends ResizableComponent implements OnChanges, DoCheck, OnDestroy {
 
     /**
      * List of presented dataset ids.
      */
     @Input()
-    public datasetIds: string[] = [];
+  public datasetIds: string[] = [];
 
     /**
      * List of presented selected dataset ids.
@@ -114,103 +114,103 @@ export abstract class DatasetPresenterComponent<T extends DatasetOptions | Datas
         protected translateService: TranslateService,
         protected timezoneSrvc: TimezoneService
     ) {
-        super();
-        this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
-        this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();
-        this.langChangeSubscription = this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
-        this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe((tz: string) => this.onTimezoneChanged(tz));
+      super();
+      this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
+      this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();
+      this.langChangeSubscription = this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
+      this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe((tz: string) => this.onTimezoneChanged(tz));
     }
 
     // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['timeInterval'] && this.timeInterval) {
-            this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
-            this.timeIntervalChanges();
-        }
-        if (changes['reloadForDatasets'] && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
-            this.reloadDataForDatasets(this.reloadForDatasets);
-        }
+      if (changes["timeInterval"] && this.timeInterval) {
+        this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+        this.timeIntervalChanges();
+      }
+      if (changes["reloadForDatasets"] && this.reloadForDatasets && this.reloadDataForDatasets.length > 0) {
+        this.reloadDataForDatasets(this.reloadForDatasets);
+      }
     }
 
     // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngDoCheck(): void {
 
-        if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
-            this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
-            const options = Object.assign({}, this.presenterOptions);
-            this.presenterOptionsChanged(options);
-        }
+      if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
+        this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
+        const options = Object.assign({}, this.presenterOptions);
+        this.presenterOptionsChanged(options);
+      }
 
-        const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds);
-        if (datasetIdsChanges) {
-            datasetIdsChanges.forEachAddedItem((addedItem) => {
-                this.addDatasetByInternalId(addedItem.item);
-            });
-            datasetIdsChanges.forEachRemovedItem((removedItem) => {
-                this.removeDataset(removedItem.item);
-            });
-        }
+      const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds);
+      if (datasetIdsChanges) {
+        datasetIdsChanges.forEachAddedItem((addedItem) => {
+          this.addDatasetByInternalId(addedItem.item);
+        });
+        datasetIdsChanges.forEachRemovedItem((removedItem) => {
+          this.removeDataset(removedItem.item);
+        });
+      }
 
-        const selectedDatasetIdsChanges = this.selectedDatasetIdsDiffer.diff(this.selectedDatasetIds);
-        if (selectedDatasetIdsChanges) {
-            selectedDatasetIdsChanges.forEachAddedItem((addedItem) => {
-                this.setSelectedId(addedItem.item);
-            });
-            selectedDatasetIdsChanges.forEachRemovedItem((removedItem) => {
-                this.removeSelectedId(removedItem.item);
-            });
-        }
+      const selectedDatasetIdsChanges = this.selectedDatasetIdsDiffer.diff(this.selectedDatasetIds);
+      if (selectedDatasetIdsChanges) {
+        selectedDatasetIdsChanges.forEachAddedItem((addedItem) => {
+          this.setSelectedId(addedItem.item);
+        });
+        selectedDatasetIdsChanges.forEachRemovedItem((removedItem) => {
+          this.removeSelectedId(removedItem.item);
+        });
+      }
 
-        if (this.datasetOptions) {
-            const firstChange = this.oldDatasetOptions === undefined;
-            if (firstChange) { this.oldDatasetOptions = new Map(); }
-            this.datasetOptions.forEach((value, key) => {
-                if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
-                    this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions!.get(key)));
-                    this.datasetOptionsChanged(key, value, firstChange);
-                }
-            });
-        }
+      if (this.datasetOptions) {
+        const firstChange = this.oldDatasetOptions === undefined;
+        if (firstChange) { this.oldDatasetOptions = new Map(); }
+        this.datasetOptions.forEach((value, key) => {
+          if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
+            this.oldDatasetOptions.set(key, Object.assign({}, this.datasetOptions!.get(key)));
+            this.datasetOptionsChanged(key, value, firstChange);
+          }
+        });
+      }
     }
 
     // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
     public ngOnDestroy(): void {
-        this.langChangeSubscription.unsubscribe();
-        this.timezoneSubscription.unsubscribe();
+      this.langChangeSubscription.unsubscribe();
+      this.timezoneSubscription.unsubscribe();
     }
 
     protected deepEqual(obj1: any, obj2: any) {
 
-        if (obj1 === obj2) // it's just the same object. No need to compare.
-            return true;
-
-        if (!obj1 || !obj2) return false;
-
-        if (this.isPrimitive(obj1) && this.isPrimitive(obj2)) // compare primitives
-            return obj1 === obj2;
-
-        if (Object.keys(obj1).length !== Object.keys(obj2).length)
-            return false;
-
-        // compare objects with same number of keys
-        for (const key in obj1) {
-            if (Object.prototype.hasOwnProperty.call(obj1, key)) {
-                if (!(key in obj2)) return false; //other object doesn't have this prop
-                if (!this.deepEqual(obj1[key], obj2[key])) return false;
-            }
-        }
+      if (obj1 === obj2) // it's just the same object. No need to compare.
         return true;
+
+      if (!obj1 || !obj2) return false;
+
+      if (this.isPrimitive(obj1) && this.isPrimitive(obj2)) // compare primitives
+        return obj1 === obj2;
+
+      if (Object.keys(obj1).length !== Object.keys(obj2).length)
+        return false;
+
+      // compare objects with same number of keys
+      for (const key in obj1) {
+        if (Object.prototype.hasOwnProperty.call(obj1, key)) {
+          if (!(key in obj2)) return false; //other object doesn't have this prop
+          if (!this.deepEqual(obj1[key], obj2[key])) return false;
+        }
+      }
+      return true;
     }
 
     protected isPrimitive(obj: any) {
-        return (obj !== Object(obj));
+      return (obj !== Object(obj));
     }
 
     public abstract reloadDataForDatasets(datasets: string[]): void;
 
     protected addDatasetByInternalId(internalId: string) {
-        const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);
-        this.addDataset(internalIdObj.id, internalIdObj.url);
+      const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);
+      this.addDataset(internalIdObj.id, internalIdObj.url);
     }
 
     protected abstract onLanguageChanged(langChangeEvent: LangChangeEvent): void;

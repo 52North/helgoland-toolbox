@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { AxisSettings, LineStyle, SeriesGraphDataset } from '@helgoland/d3';
+import { Injectable } from "@angular/core";
+import { AxisSettings, LineStyle, SeriesGraphDataset } from "@helgoland/d3";
 
-import { DatasetsService } from './graph-datasets.service';
-import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
+import { DatasetsService } from "./graph-datasets.service";
+import { FirstLastValue } from "../../../../helgoland/core/src/public-api";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class StockDatasetService {
 
@@ -13,39 +13,39 @@ export class StockDatasetService {
     protected graphDatasetsSrvc: DatasetsService
   ) {
 
-    const socket = new WebSocket('wss://ws.finnhub.io?token=bqd2lt7rh5rdevg57qp0');
+    const socket = new WebSocket("wss://ws.finnhub.io?token=bqd2lt7rh5rdevg57qp0");
 
-    const id = 'usdeuro';
+    const id = "usdeuro";
     const dataset = new SeriesGraphDataset(
       id,
-      new LineStyle('blue', 3, 3),
+      new LineStyle("blue", 3, 3),
       new AxisSettings(),
       true,
       false,
       {
         // id: id,
-        uom: '€/$',
-        phenomenonLabel: 'EUR/USD',
-        platformLabel: '',
-        procedureLabel: '',
-        categoryLabel: '',
+        uom: "€/$",
+        phenomenonLabel: "EUR/USD",
+        platformLabel: "",
+        procedureLabel: "",
+        categoryLabel: "",
         firstValue: new FirstLastValue(),
         lastValue: new FirstLastValue(),
-        featureLabel: ''
+        featureLabel: ""
       }
     )
 
     this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
 
     // Connection opened -> Subscribe
-    socket.addEventListener('open', function (event) {
-      socket.send(JSON.stringify({ 'type': 'subscribe', 'symbol': 'OANDA:EUR_USD' }))
+    socket.addEventListener("open", function (event) {
+      socket.send(JSON.stringify({ "type": "subscribe", "symbol": "OANDA:EUR_USD" }))
     });
 
     // Listen for messages
-    socket.addEventListener('message', (event) => {
+    socket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
-      if (data.type === 'trade' && data.data.length) {
+      if (data.type === "trade" && data.data.length) {
         data.data.forEach((element: any) => {
           dataset.addNewData(element.t, element.p);
         });
@@ -54,7 +54,7 @@ export class StockDatasetService {
 
     // Unsubscribe
     var unsubscribe = function (symbol: string) {
-      socket.send(JSON.stringify({ 'type': 'unsubscribe', 'symbol': symbol }))
+      socket.send(JSON.stringify({ "type": "unsubscribe", "symbol": symbol }))
     }
   }
 

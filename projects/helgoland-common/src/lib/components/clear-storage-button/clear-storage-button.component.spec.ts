@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ClearStorageButtonComponent } from './clear-storage-button.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ClearStorageButtonComponent } from "./clear-storage-button.component";
 
-describe('ClearStorageButtonComponent', () => {
+describe("ClearStorageButtonComponent", () => {
   let component: ClearStorageButtonComponent;
   let fixture: ComponentFixture<ClearStorageButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         ClearStorageButtonComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('ClearStorageButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

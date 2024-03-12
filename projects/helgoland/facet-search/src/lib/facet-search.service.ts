@@ -1,6 +1,6 @@
-import { Injectable, Optional } from '@angular/core';
-import { Timespan } from '@helgoland/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Injectable, Optional } from "@angular/core";
+import { Timespan } from "@helgoland/core";
+import { Observable, ReplaySubject } from "rxjs";
 
 import {
   FacetParameter,
@@ -9,7 +9,7 @@ import {
   FacetSearchService,
   ParameterFacetSort,
   ParameterFacetType,
-} from './facet-search-model';
+} from "./facet-search-model";
 
 @Injectable()
 export class FacetSearchConfig {

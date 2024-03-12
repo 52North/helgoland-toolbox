@@ -1,11 +1,11 @@
-import { StaExpandParams, StaObject, StaSelectParams } from './sta-interface';
+import { StaExpandParams, StaObject, StaSelectParams } from "./sta-interface";
 
 export interface FeatureOfInterest extends StaObject {
     name?: string;
     description?: string;
     encodingType?: string;
     feature?: GeoJSON.GeometryObject;
-    'Observations@iot.navigationLink'?: string;
+    "Observations@iot.navigationLink"?: string;
 }
 
 export interface InsertFeatureOfInterest extends StaObject {

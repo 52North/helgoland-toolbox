@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-import { LoadingOverlaySpinnerComponent } from './loading-overlay-spinner.component';
+import { LoadingOverlaySpinnerComponent } from "./loading-overlay-spinner.component";
 
-describe('LoadingOverlaySpinnerComponent', () => {
+describe("LoadingOverlaySpinnerComponent", () => {
   let component: LoadingOverlaySpinnerComponent;
   let fixture: ComponentFixture<LoadingOverlaySpinnerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatProgressSpinnerModule,
         LoadingOverlaySpinnerComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('LoadingOverlaySpinnerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

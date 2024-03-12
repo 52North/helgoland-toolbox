@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { IDataset } from '../model/dataset-api/dataset';
+import { IDataset } from "../model/dataset-api/dataset";
 
-const INTERNAL_ID_SEPERATOR = '__';
+const INTERNAL_ID_SEPERATOR = "__";
 
 export interface InternalDatasetId {
   id: string;
@@ -39,7 +39,7 @@ export class InternalIdHandler {
    * @returns Construct of url and API id
    */
   public resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
-    if (typeof (internalId) === 'string') {
+    if (typeof (internalId) === "string") {
       if (internalId.indexOf(INTERNAL_ID_SEPERATOR) > 0) {
         const url = internalId.substring(0, internalId.indexOf(INTERNAL_ID_SEPERATOR));
         const id = internalId.substring(internalId.indexOf(INTERNAL_ID_SEPERATOR) + INTERNAL_ID_SEPERATOR.length);
@@ -52,6 +52,6 @@ export class InternalIdHandler {
   }
 
   private instanceOfInternalDatasetId(object: any): object is InternalDatasetId {
-    return 'id' in object && 'url' in object;
+    return "id" in object && "url" in object;
   }
 }

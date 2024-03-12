@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
-import BaseLayer from 'ol/layer/Base';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
+import BaseLayer from "ol/layer/Base";
 
-import { OlLayerAnimateTimeComponent } from './ol-layer-animate-time.component';
+import { OlLayerAnimateTimeComponent } from "./ol-layer-animate-time.component";
 
-describe('OlLayerAnimateTimeComponent', () => {
+describe("OlLayerAnimateTimeComponent", () => {
   let component: OlLayerAnimateTimeComponent;
   let fixture: ComponentFixture<OlLayerAnimateTimeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerAnimateTimeComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerAnimateTimeComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('OlLayerAnimateTimeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

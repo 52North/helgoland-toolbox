@@ -1,43 +1,43 @@
 // @ts-nocheck
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
-import { DatasetApiInterface } from '../../../dataset-api/api-interface';
-import { HttpService } from '../../../dataset-api/http.service';
-import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
-import { Category } from '../../../model/dataset-api/category';
-import { TimeValueTuple } from '../../../model/dataset-api/data';
-import { FirstLastValue, IDataset, Timeseries } from '../../../model/dataset-api/dataset';
-import { Feature } from '../../../model/dataset-api/feature';
-import { Offering } from '../../../model/dataset-api/offering';
-import { Phenomenon } from '../../../model/dataset-api/phenomenon';
-import { Procedure } from '../../../model/dataset-api/procedure';
-import { Service } from '../../../model/dataset-api/service';
-import { Station } from '../../../model/dataset-api/station';
-import { DataParameterFilter, ParameterFilter } from '../../../model/internal/http-requests';
-import { Timespan } from '../../../model/internal/timeInterval';
-import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
-import { UrlGenerator } from '../../helper/url-generator';
-import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
-import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from '../../model/internal/data';
+import { DatasetApiInterface } from "../../../dataset-api/api-interface";
+import { HttpService } from "../../../dataset-api/http.service";
+import { InternalDatasetId } from "../../../dataset-api/internal-id-handler.service";
+import { Category } from "../../../model/dataset-api/category";
+import { TimeValueTuple } from "../../../model/dataset-api/data";
+import { FirstLastValue, IDataset, Timeseries } from "../../../model/dataset-api/dataset";
+import { Feature } from "../../../model/dataset-api/feature";
+import { Offering } from "../../../model/dataset-api/offering";
+import { Phenomenon } from "../../../model/dataset-api/phenomenon";
+import { Procedure } from "../../../model/dataset-api/procedure";
+import { Service } from "../../../model/dataset-api/service";
+import { Station } from "../../../model/dataset-api/station";
+import { DataParameterFilter, ParameterFilter } from "../../../model/internal/http-requests";
+import { Timespan } from "../../../model/internal/timeInterval";
+import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from "../../helgoland-services-connector";
+import { UrlGenerator } from "../../helper/url-generator";
+import { HelgolandServiceConnector } from "../../interfaces/service-connector-interfaces";
+import { HelgolandData, HelgolandDataFilter, HelgolandTimeseriesData } from "../../model/internal/data";
 import {
   DatasetExtras,
   DatasetFilter,
   DatasetType,
   HelgolandDataset,
   HelgolandTimeseries,
-} from '../../model/internal/dataset';
-import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from '../../model/internal/filter';
-import { HelgolandPlatform } from '../../model/internal/platform';
-import { HelgolandService } from '../../model/internal/service';
+} from "../../model/internal/dataset";
+import { HelgolandCsvExportLinkParams, HelgolandParameterFilter } from "../../model/internal/filter";
+import { HelgolandPlatform } from "../../model/internal/platform";
+import { HelgolandService } from "../../model/internal/service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
-  name = 'DatasetApiV1Connector';
+  name = "DatasetApiV1Connector";
 
   constructor(
     protected http: HttpService,
@@ -49,7 +49,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
       map(res => {
         if (res instanceof Array) {
           // check if endpoint 'trajectories' not exists
-          return res.findIndex(e => e.id === 'trajectories') === -1 && res.findIndex(e => e.id === 'platforms') === -1;
+          return res.findIndex(e => e.id === "trajectories") === -1 && res.findIndex(e => e.id === "platforms") === -1;
         } else {
           return false;
         }
@@ -138,7 +138,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   getDatasetData(dataset: HelgolandDataset, timespan: Timespan, filter: HelgolandDataFilter): Observable<HelgolandData> {
     const dataFilter = this.createDataFilter(filter);
-    dataFilter.format = 'flot';
+    dataFilter.format = "flot";
     return this.api.getTsData<TimeValueTuple>(dataset.id, dataset.url, timespan, dataFilter).pipe(map(res => {
       const data = new HelgolandTimeseriesData(res.values);
       data.referenceValues = res.referenceValues ? res.referenceValues : {};
@@ -150,15 +150,15 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   createCsvDataExportLink(internalId: InternalDatasetId, params: HelgolandCsvExportLinkParams): Observable<string> {
     const generator = new UrlGenerator();
-    const url = generator.createBaseUrl(internalId.url, 'timeseries', internalId.id) + '/getData.zip';
+    const url = generator.createBaseUrl(internalId.url, "timeseries", internalId.id) + "/getData.zip";
     const reqParams = new Map<string, string>();
     if (params.timespan) {
-      reqParams.set('timespan', generator.createTimespanRequestParam(params.timespan));
+      reqParams.set("timespan", generator.createTimespanRequestParam(params.timespan));
     }
-    if (params.lang) { reqParams.set('locale', params.lang); }
-    if (params.generalize) { reqParams.set('generalize', params.generalize.toString()); }
-    if (params.zip) { reqParams.set('zip', params.zip.toString()); }
-    reqParams.set('bom', 'true');
+    if (params.lang) { reqParams.set("locale", params.lang); }
+    if (params.generalize) { reqParams.set("generalize", params.generalize.toString()); }
+    if (params.zip) { reqParams.set("zip", params.zip.toString()); }
+    reqParams.set("bom", "true");
     return of(generator.addUrlParams(url, reqParams));
   }
 
@@ -221,7 +221,7 @@ export class DatasetApiV1Connector implements HelgolandServiceConnector {
 
   protected createFilter(filter: HelgolandParameterFilter): ParameterFilter {
     const paramFilter: ParameterFilter = {};
-    if (filter.platform) { paramFilter['station'] = filter.platform; }
+    if (filter.platform) { paramFilter["station"] = filter.platform; }
     if (filter.category) { paramFilter.category = filter.category; }
     if (filter.offering) { paramFilter.offering = filter.offering; }
     if (filter.phenomenon) { paramFilter.phenomenon = filter.phenomenon; }

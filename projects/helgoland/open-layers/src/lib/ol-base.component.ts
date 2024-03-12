@@ -1,8 +1,8 @@
-import { AfterViewInit, Directive, Host } from '@angular/core';
-import Map from 'ol/Map.js';
+import { AfterViewInit, Directive, Host } from "@angular/core";
+import Map from "ol/Map.js";
 
-import { OlMapService } from './services/map.service';
-import { OlMapId } from './services/mapid.service';
+import { OlMapService } from "./services/map.service";
+import { OlMapId } from "./services/mapid.service";
 
 
 /**

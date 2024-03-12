@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
 
-import { MinMaxRangeComponent } from './min-max-range.component';
+import { MinMaxRangeComponent } from "./min-max-range.component";
 
-describe('MinMaxRangeComponent', () => {
+describe("MinMaxRangeComponent", () => {
   let component: MinMaxRangeComponent;
   let fixture: ComponentFixture<MinMaxRangeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [FormsModule, MinMaxRangeComponent]
-}).compileComponents();
+      imports: [FormsModule, MinMaxRangeComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('MinMaxRangeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

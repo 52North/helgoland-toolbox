@@ -1,6 +1,6 @@
 
-import { ComponentList } from './ComponentList';
-import { ConnectionList } from './ConnectionList';
+import { ComponentList } from "./ComponentList";
+import { ConnectionList } from "./ConnectionList";
 
 export interface AggregatingProcess {
     /**

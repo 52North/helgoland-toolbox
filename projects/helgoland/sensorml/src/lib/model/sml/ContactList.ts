@@ -1,23 +1,23 @@
-import { AbstractMetadataList } from './AbstractMetadataList';
-import { ResponsibleParty } from '../iso/gmd/ResponsibleParty';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractMetadataList } from "./AbstractMetadataList";
+import { ResponsibleParty } from "../iso/gmd/ResponsibleParty";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 export class ContactList extends AbstractMetadataList {
-    @DisplayName('Contacts')
-    contacts: ResponsibleParty[] = [];
+    @DisplayName("Contacts")
+      contacts: ResponsibleParty[] = [];
 
     override toString() {
-        return 'Contact list';
+      return "Contact list";
     }
 
     getLabel() {
-        return this.toString();
+      return this.toString();
     }
 
     getValue() {
-        if (this.contacts.length > 0) {
-            return this.contacts.join(', ');
-        }
-        return undefined;
+      if (this.contacts.length > 0) {
+        return this.contacts.join(", ");
+      }
+      return undefined;
     }
 }

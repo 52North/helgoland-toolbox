@@ -1,21 +1,21 @@
-import { inject, TestBed } from '@angular/core/testing';
-import moment from 'moment';
+import { inject, TestBed } from "@angular/core/testing";
+import moment from "moment";
 
-import { TimeValueTuple } from '../model/dataset-api/data';
-import { SumValuesService } from './sum-values.service';
+import { TimeValueTuple } from "../model/dataset-api/data";
+import { SumValuesService } from "./sum-values.service";
 
-describe('SumValuesService', () => {
+describe("SumValuesService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SumValuesService]
     });
   });
 
-  it('should be created', inject([SumValuesService], (service: SumValuesService) => {
+  it("should be created", inject([SumValuesService], (service: SumValuesService) => {
     expect(service).toBeTruthy();
   }));
 
-  it('should be created', inject([SumValuesService],
+  it("should be created", inject([SumValuesService],
     (sumValues: SumValuesService, ) => {
       const data: TimeValueTuple[] = [
         [1558634400000, 1.075],
@@ -55,7 +55,7 @@ describe('SumValuesService', () => {
       //   const val: number | string = (index % 3 === 0) ? 1 : NaN;
       //   data.push([time, val]);
       // }
-      const result = sumValues.sum('hour', moment.duration(2, 'hour'), data);
+      const result = sumValues.sum("hour", moment.duration(2, "hour"), data);
       expect(sumValues).toBeTruthy();
     })
   );

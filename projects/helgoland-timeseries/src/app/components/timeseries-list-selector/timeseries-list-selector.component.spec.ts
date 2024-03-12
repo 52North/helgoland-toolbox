@@ -5,19 +5,19 @@ import { HelgolandCoreModule } from "@helgoland/core";
 import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
 import { TimeseriesListSelectorComponent } from "./timeseries-list-selector.component";
 
-describe('TimeseriesListSelectorComponent', () => {
+describe("TimeseriesListSelectorComponent", () => {
   let component: TimeseriesListSelectorComponent;
   let fixture: ComponentFixture<TimeseriesListSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         MatListModule,
         TimeseriesListSelectorComponent
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('TimeseriesListSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

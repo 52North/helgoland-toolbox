@@ -1,5 +1,5 @@
-import { Id, EventingEndpoint } from './common';
-import { Notification } from './notifications';
+import { Id, EventingEndpoint } from "./common";
+import { Notification } from "./notifications";
 
 export interface Publication extends Id {
     label: string;

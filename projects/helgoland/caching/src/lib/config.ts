@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken } from "@angular/core";
 
 /**
  * Configuration for the HelgolandCachingModule
@@ -17,4 +17,4 @@ export interface CacheConfig {
     logging?: boolean;
 }
 
-export const CacheConfigService = new InjectionToken<CacheConfig>('CacheConfigService');
+export const CacheConfigService = new InjectionToken<CacheConfig>("CacheConfigService");

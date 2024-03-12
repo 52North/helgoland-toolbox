@@ -7,9 +7,9 @@ import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from "@helgoland/c
 import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from "@helgoland/depiction";
 
 @Component({
-  selector: 'n52-export-popup',
-  templateUrl: './export-popup.component.html',
-  styleUrls: ['./export-popup.component.css'],
+  selector: "n52-export-popup",
+  templateUrl: "./export-popup.component.html",
+  styleUrls: ["./export-popup.component.css"],
   imports: [
     HelgolandDatasetDownloadModule,
     MatDatepickerModule,
@@ -86,7 +86,7 @@ export class ExportPopupComponent {
   }
 
   public onClose(): void {
-    this.dialogRef.close('closes');
+    this.dialogRef.close("closes");
   }
 
 }

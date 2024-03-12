@@ -1,19 +1,19 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Map } from 'ol';
-import { OverviewMap } from 'ol/control';
-import { Layer } from 'ol/layer';
+import { Component, Input, ViewEncapsulation } from "@angular/core";
+import { Map } from "ol";
+import { OverviewMap } from "ol/control";
+import { Layer } from "ol/layer";
 
-import { OlBaseComponent } from '../../ol-base.component';
+import { OlBaseComponent } from "../../ol-base.component";
 
 /**
  * Control component for an overview map
  */
 @Component({
-    selector: 'n52-ol-overview-map',
-    template: '',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['ol-overview-map.component.scss'],
-    standalone: true
+  selector: "n52-ol-overview-map",
+  template: "",
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ["ol-overview-map.component.scss"],
+  standalone: true
 })
 export class OlOverviewMapComponent extends OlBaseComponent {
 
@@ -35,7 +35,7 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   /**
    * position of the overview map
    */
-  @Input() position: 'upperleft' | 'upperright' | 'bottomleft' | 'bottomright' = 'bottomleft';
+  @Input() position: "upperleft" | "upperright" | "bottomleft" | "bottomright" = "bottomleft";
 
   mapInitialized(map: Map) {
     const control = new OverviewMap({
@@ -50,18 +50,18 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   }
 
   private createLabel(): string {
-    if (this.position === 'bottomright' || this.position === 'upperright') {
-      return '\u00AB';
+    if (this.position === "bottomright" || this.position === "upperright") {
+      return "\u00AB";
     } else {
-      return '\u00BB';
+      return "\u00BB";
     }
   }
 
   private createCollapseLabel(): string {
-    if (this.position === 'bottomright' || this.position === 'upperright') {
-      return '\u00BB';
+    if (this.position === "bottomright" || this.position === "upperright") {
+      return "\u00BB";
     } else {
-      return '\u00AB';
+      return "\u00AB";
     }
   }
 

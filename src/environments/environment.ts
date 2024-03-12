@@ -1,4 +1,4 @@
-import { Settings } from '@helgoland/core';
+import { Settings } from "@helgoland/core";
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -19,13 +19,13 @@ export const environment = {
 export let settings: Settings;
 export const settingsPromise = new Promise<Settings>((resolve, reject) => {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', './assets/settings.json');
+  xhr.open("GET", "./assets/settings.json");
   xhr.onload = () => {
     if (xhr.status === 200) {
       settings = JSON.parse(xhr.responseText);
       resolve(settings);
     } else {
-      reject('Cannot load configuration');
+      reject("Cannot load configuration");
     }
   };
   xhr.send();

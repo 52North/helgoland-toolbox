@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional } from "@angular/core";
 import {
   BarRenderingHints,
   ColorService,
@@ -12,7 +12,7 @@ import {
   LocalStorage,
   SumValuesService,
   Time,
-} from '@helgoland/core';
+} from "@helgoland/core";
 import {
   AxisSettings,
   BarStyle,
@@ -23,20 +23,20 @@ import {
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
-} from '@helgoland/d3';
-import { TranslateService } from '@ngx-translate/core';
-import { Duration, duration, unitOfTime } from 'moment';
+} from "@helgoland/d3";
+import { TranslateService } from "@ngx-translate/core";
+import { Duration, duration, unitOfTime } from "moment";
 
-import { Favorite } from './favorite.service';
-import { DatasetsService } from './graph-datasets.service';
-import { DatasetFavoriteService, DatasetPermalinkService } from './service-interfaces';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { NotifierService } from './notifier.service';
+import { Favorite } from "./favorite.service";
+import { DatasetsService } from "./graph-datasets.service";
+import { DatasetFavoriteService, DatasetPermalinkService } from "./service-interfaces";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { NotifierService } from "./notifier.service";
 
-const TIMESERIES_STATE_LOCALSTORAGE = 'timeseries-state';
-const TIMESERIES_FAVORITES_LOCALSTORAGE = 'timeseries-favorites';
+const TIMESERIES_STATE_LOCALSTORAGE = "timeseries-state";
+const TIMESERIES_FAVORITES_LOCALSTORAGE = "timeseries-favorites";
 
-const FAVORITE_PREFIX = 'ts_fav_';
+const FAVORITE_PREFIX = "ts_fav_";
 interface SaveState {
   style: DatasetStyle,
   yaxis: AxisSettings,
@@ -57,7 +57,7 @@ export abstract class TimeseriesService {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalinkService, DatasetFavoriteService {
 
@@ -120,7 +120,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   validatePermaIds(ids: string[]) {
     ids.forEach(id => {
-      if (id.startsWith('ts_')) {
+      if (id.startsWith("ts_")) {
         id = id.substring(3);
         this.addDataset(id);
       }
@@ -218,7 +218,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   protected loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
     if (ts instanceof HelgolandTimeseries) {
-      const message = `${this.translate.instant('events.add-timeseries')}: ${ts.label}`;
+      const message = `${this.translate.instant("events.add-timeseries")}: ${ts.label}`;
       this.la.announce(message);
       this.notifier.notify(message);
       this.datasetMap.set(ts.internalId, ts);
@@ -232,11 +232,11 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         selected,
         {
           uom: ts.uom,
-          phenomenonLabel: ts.parameters.phenomenon?.label || '',
+          phenomenonLabel: ts.parameters.phenomenon?.label || "",
           platformLabel: ts.platform.label,
-          procedureLabel: ts.parameters.procedure?.label || '',
-          categoryLabel: ts.parameters.category?.label || '',
-          featureLabel: ts.parameters.feature?.label || '',
+          procedureLabel: ts.parameters.procedure?.label || "",
+          categoryLabel: ts.parameters.category?.label || "",
+          featureLabel: ts.parameters.feature?.label || "",
           firstValue: ts.firstValue || new FirstLastValue(),
           lastValue: ts.lastValue || new FirstLastValue()
         }
@@ -265,7 +265,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   private createYAxis(ds: HelgolandTimeseries): AxisSettings {
     const axisSettings = new AxisSettings();
-    if (ds.renderingHints?.chartType === 'bar') {
+    if (ds.renderingHints?.chartType === "bar") {
       axisSettings.range = { min: 0 };
     }
     return axisSettings;
@@ -274,9 +274,9 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   private createStyle(ds: HelgolandTimeseries): DatasetStyle {
     if (ds.renderingHints && ds.renderingHints.chartType) {
       switch (ds.renderingHints.chartType) {
-        case 'line':
+        case "line":
           return this.handleLineRenderingHints(ds.renderingHints as LineRenderingHints);
-        case 'bar':
+        case "bar":
           return this.handleBarRenderingHints(ds.renderingHints as BarRenderingHints);
       }
     }
@@ -306,20 +306,20 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   protected handleBarRenderingHints(barHints: BarRenderingHints): DatasetStyle {
     let lineWidth = 2;
-    let startOf: unitOfTime.StartOf = 'day';
-    let period: Duration = duration('P1D');
+    let startOf: unitOfTime.StartOf = "day";
+    let period: Duration = duration("P1D");
     if (barHints && barHints.properties.width) {
       lineWidth = Math.round(parseFloat(barHints.properties.width));
     }
     const color = barHints.properties?.color || this.colorService.getColor();
     if (barHints && barHints.properties.interval) {
-      if (barHints.properties.interval === 'byDay') {
-        period = duration('P1D');
-        startOf = 'day';
+      if (barHints.properties.interval === "byDay") {
+        period = duration("P1D");
+        startOf = "day";
       }
-      if (barHints.properties.interval === 'byHour') {
-        period = duration('PT1H');
-        startOf = 'hour';
+      if (barHints.properties.interval === "byHour") {
+        period = duration("PT1H");
+        startOf = "hour";
       }
     }
     return new BarStyle(color, startOf, period, lineWidth);
@@ -346,7 +346,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         && !this.timeSrvc.overlaps(this.graphDatasetsSrvc.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
         this.prepareData(dataset, new HelgolandTimeseriesData([]));
       } else {
-        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.timespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
+        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.timespan, this.presenterOptions.timespanBufferFactor, duration(1, "day").asMilliseconds());
         this.servicesConnector.getDatasetData(dataset, buffer, {
           expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
           generalize: this.presenterOptions.generalizeAllways
@@ -369,7 +369,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         && !this.timeSrvc.overlaps(this.graphDatasetsSrvc.overviewTimespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
         this.prepareOverviewData(dataset, new HelgolandTimeseriesData([]));
       } else {
-        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.overviewTimespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
+        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.overviewTimespan, this.presenterOptions.timespanBufferFactor, duration(1, "day").asMilliseconds());
         this.servicesConnector.getDatasetData(dataset, buffer, {
           expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
           generalize: true

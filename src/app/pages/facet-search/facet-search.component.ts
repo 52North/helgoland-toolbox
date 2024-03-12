@@ -23,9 +23,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { forkJoin } from "rxjs";
 
 @Component({
-  selector: 'n52-facet-search',
-  templateUrl: './facet-search.component.html',
-  styleUrls: ['./facet-search.component.scss'],
+  selector: "n52-facet-search",
+  templateUrl: "./facet-search.component.html",
+  styleUrls: ["./facet-search.component.scss"],
   imports: [
     HelgolandFacetSearchModule,
     MatDatepickerModule,
@@ -88,7 +88,7 @@ export class FacetSearchComponent {
       // ),
       // this.servicesHandler.getDatasets('https://geo.irceline.be/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
       // this.servicesHandler.getDatasets('http://monalisasos.eurac.edu/sos/api/v1/', { expanded: true, type: DatasetType.Timeseries }),
-      this.servicesConnector.getDatasets('https://fluggs.wupperverband.de/sws5/api/', { expanded: true, type: DatasetType.Timeseries })
+      this.servicesConnector.getDatasets("https://fluggs.wupperverband.de/sws5/api/", { expanded: true, type: DatasetType.Timeseries })
     ]).subscribe(res => {
       const complete: FacetSearchElement[] = [];
       res.forEach(dsList => {

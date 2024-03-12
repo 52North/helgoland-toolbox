@@ -1,20 +1,20 @@
-import { FirstLastValue, Timespan } from '@helgoland/core';
-import { Observable } from 'rxjs';
+import { FirstLastValue, Timespan } from "@helgoland/core";
+import { Observable } from "rxjs";
 
 export enum ParameterFacetType {
-    category = 'category',
-    phenomenon = 'phenomenon',
-    procedure = 'procedure',
-    feature = 'feature',
-    offering = 'offering'
+    category = "category",
+    phenomenon = "phenomenon",
+    procedure = "procedure",
+    feature = "feature",
+    offering = "offering"
 }
 
 export enum ParameterFacetSort {
-    none = 'none',
-    ascAlphabet = 'ascAlphabet',
-    descAlphabet = 'descAlphabet',
-    ascCount = 'ascCount',
-    descCount = 'descCount',
+    none = "none",
+    ascAlphabet = "ascAlphabet",
+    descAlphabet = "descAlphabet",
+    ascCount = "ascCount",
+    descCount = "descCount",
 }
 
 export interface FacetParameter {

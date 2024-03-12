@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Settings, SettingsService } from "@helgoland/core";
 
 @Component({
-  selector: 'n52-refresh-button',
-  templateUrl: './refresh-button.component.html',
+  selector: "n52-refresh-button",
+  templateUrl: "./refresh-button.component.html",
   standalone: true,
   imports: [NgClass]
 })
@@ -34,7 +34,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['toggled']) {
+    if (changes["toggled"]) {
       this.evaluteRefreshing();
     }
   }

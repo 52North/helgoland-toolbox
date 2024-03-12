@@ -1,13 +1,13 @@
 export class HelgolandService {
 
-    constructor(
+  constructor(
         public id: string,
         public apiUrl: string,
         public label: string,
         public type: string,
         public version: string,
         public quantities?: HelgolandServiceQuantities
-    ) { }
+  ) { }
 }
 
 

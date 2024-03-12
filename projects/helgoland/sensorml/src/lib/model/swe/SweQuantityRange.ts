@@ -1,7 +1,7 @@
-import { AbstractSweRange } from './AbstractSweRange';
-import { UnitOfMeasure } from './UnitOfMeasure';
-import { AllowedValues } from './AllowedValues';
-import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractSweRange } from "./AbstractSweRange";
+import { UnitOfMeasure } from "./UnitOfMeasure";
+import { AllowedValues } from "./AllowedValues";
+import { DisplayName } from "../../common/decorators/DisplayName";
 
 /**
  * Decimal pair for specifying a quantity range with a unit of measure
@@ -12,18 +12,18 @@ export class SweQuantityRange extends AbstractSweRange {
      * enable structure to act as a schema for values provided using other
      * encodings
      */
-    @DisplayName('Value')
-    override value: [number, number] = [0, 0];
+    @DisplayName("Value")
+  override value: [number, number] = [0, 0];
     /**
      * Unit of measure used to express the value of this data component
      */
-    @DisplayName('Unit of measure')
-    uom: UnitOfMeasure = new UnitOfMeasure();
+    @DisplayName("Unit of measure")
+      uom: UnitOfMeasure = new UnitOfMeasure();
 
-    @DisplayName('Constraint')
+    @DisplayName("Constraint")
     override constraint: AllowedValues = new AllowedValues();
 
     override toString() {
-        return 'Quantity Range Component';
+      return "Quantity Range Component";
     }
 }

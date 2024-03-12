@@ -2,17 +2,17 @@ import { Component } from "@angular/core";
 import { Timespan } from "@helgoland/core";
 import * as d3 from "d3";
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import { GraphDataEntry, SeriesGraphDataset } from '../../models/series-graph-dataset';
-import { D3GraphInterface } from '../../d3-graph.interface';
-import { D3GraphExtent, D3SeriesGraphControl } from '../../d3-series-graph-control';
+import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
+import { D3GraphId } from "../../../helper/d3-graph-id.service";
+import { D3Graphs } from "../../../helper/d3-graphs.service";
+import { GraphDataEntry, SeriesGraphDataset } from "../../models/series-graph-dataset";
+import { D3GraphInterface } from "../../d3-graph.interface";
+import { D3GraphExtent, D3SeriesGraphControl } from "../../d3-series-graph-control";
 
 @Component({
-  selector: 'n52-d3-graph-pan-zoom-interaction',
-  template: '',
-  styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
+  selector: "n52-d3-graph-pan-zoom-interaction",
+  template: "",
+  styleUrls: ["./d3-graph-pan-zoom-interaction.component.scss"],
   standalone: true
 })
 export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
@@ -261,19 +261,19 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
 
     if (!this.dragRect && !this.dragRectG) {
 
-      this.dragRectG = d3GraphElem.append('g')
-        .style('fill-opacity', .2)
-        .style('fill', 'blue');
+      this.dragRectG = d3GraphElem.append("g")
+        .style("fill-opacity", .2)
+        .style("fill", "blue");
 
-      this.dragRect = this.dragRectG.append('rect')
-        .attr('width', x2 - x1)
-        .attr('height', graphExtent.height)
-        .attr('x', x1 + graphExtent.leftOffset)
-        .attr('class', 'mouse-drag')
-        .style('pointer-events', 'none');
+      this.dragRect = this.dragRectG.append("rect")
+        .attr("width", x2 - x1)
+        .attr("height", graphExtent.height)
+        .attr("x", x1 + graphExtent.leftOffset)
+        .attr("class", "mouse-drag")
+        .style("pointer-events", "none");
     } else {
-      this.dragRect.attr('width', x2 - x1)
-        .attr('x', x1 + graphExtent.leftOffset);
+      this.dragRect.attr("width", x2 - x1)
+        .attr("x", x1 + graphExtent.leftOffset);
     }
   }
 

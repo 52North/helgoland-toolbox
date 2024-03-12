@@ -15,15 +15,15 @@ export interface HoverlineLabel {
   rect: d3.Selection<d3.BaseType, any, any, any>;
 }
 
-const HOVERLINE_CLASS = 'hover-line';
-const TIME_LABEL_CLASS = 'time-label';
+const HOVERLINE_CLASS = "hover-line";
+const TIME_LABEL_CLASS = "time-label";
 
 @Component({
-    selector: 'n52-d3-graph-hover-line',
-    template: '',
-    styleUrls: ['./d3-graph-hover-line.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true
+  selector: "n52-d3-graph-hover-line",
+  template: "",
+  styleUrls: ["./d3-graph-hover-line.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
@@ -64,7 +64,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     timespan: Timespan
   ) {
     if (!this.drawLayer && this.d3Graph) {
-      this.drawLayer = this.d3Graph.getDrawingLayer('hovering-line-layer');
+      this.drawLayer = this.d3Graph.getDrawingLayer("hovering-line-layer");
     }
     this.createHoverLine();
     this.labels.clear();
@@ -117,37 +117,37 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   protected createHoverLine() {
     if (this.drawLayer) {
       if (this.drawLayer.select(`.${HOVERLINE_CLASS}`).empty()) {
-        this.drawLayer.append('path')
-          .attr('class', HOVERLINE_CLASS)
-          .style('opacity', '0');
+        this.drawLayer.append("path")
+          .attr("class", HOVERLINE_CLASS)
+          .style("opacity", "0");
       }
 
       if (this.drawLayer.select(`.${TIME_LABEL_CLASS}`).empty()) {
-        this.drawLayer.append('svg:text')
-          .attr('class', `${TIME_LABEL_CLASS}`)
-          .style('pointer-events', 'none');
+        this.drawLayer.append("svg:text")
+          .attr("class", `${TIME_LABEL_CLASS}`)
+          .style("pointer-events", "none");
       }
     }
   }
 
   protected hideHoverLineIndicator(): void {
     if (this.drawLayer) {
-      this.drawLayer.select(`.${HOVERLINE_CLASS}`).style('opacity', '0');
-      this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style('opacity', '0');
+      this.drawLayer.select(`.${HOVERLINE_CLASS}`).style("opacity", "0");
+      this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style("opacity", "0");
     }
   }
 
   protected hideLabels() {
     this.labels.forEach(e => {
-      e.rect.style('opacity', '0');
-      e.text.style('opacity', '0');
+      e.rect.style("opacity", "0");
+      e.text.style("opacity", "0");
     });
   }
 
   protected showHoverLineIndicator(): void {
     if (this.drawLayer) {
-      this.drawLayer.select(`.${HOVERLINE_CLASS}`).style('opacity', '1');
-      this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style('opacity', '1');
+      this.drawLayer.select(`.${HOVERLINE_CLASS}`).style("opacity", "1");
+      this.drawLayer.select(`.${TIME_LABEL_CLASS}`).style("opacity", "1");
     }
   }
 
@@ -172,7 +172,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
       const xPos = mouse[0] + this.graphExtent.leftOffset;
 
       this.drawLayer.select(`.${HOVERLINE_CLASS}`)
-        .attr('d', () => 'M' + (xPos) + ',' + this.graphExtent!.height + ' ' + (xPos) + ',' + 0);
+        .attr("d", () => "M" + (xPos) + "," + this.graphExtent!.height + " " + (xPos) + "," + 0);
 
       this.drawTimeLabel(xPos);
     }
@@ -188,8 +188,8 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
       const right = xPos + 2;
       const left = xPos - this.graphHelper.getDimensions(this.drawLayer.select(`.${TIME_LABEL_CLASS}`).node()).w - 2;
       this.drawLayer.select(`.${TIME_LABEL_CLASS}`)
-        .attr('x', onLeftSide ? right : left)
-        .attr('y', 15);
+        .attr("x", onLeftSide ? right : left)
+        .attr("y", 15);
     }
   }
 
@@ -243,11 +243,11 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
    */
   protected displayLabel(label: HoverlineLabel, visible: boolean): void {
     if (visible) {
-      label.text.style('opacity', '1');
-      label.rect.style('opacity', '1');
+      label.text.style("opacity", "1");
+      label.rect.style("opacity", "1");
     } else {
-      label.text.style('opacity', '0');
-      label.rect.style('opacity', '0');
+      label.text.style("opacity", "0");
+      label.rect.style("opacity", "0");
     }
   }
 
@@ -256,26 +256,26 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   }
 
   protected createLineHoveringLabel(entry: SeriesGraphDataset): HoverlineLabel {
-    if (!this.drawLayer) throw new Error('drawLayer is not initialized');
-    const rect = this.drawLayer.append('svg:rect')
-      .attr('class', 'hoverline-label-rect')
-      .style('fill', 'white')
-      .style('stroke', entry.style.baseColor)
-      .style('stroke-width', '1px')
-      .style('pointer-events', 'none');
-    const text = this.drawLayer.append('g');
+    if (!this.drawLayer) throw new Error("drawLayer is not initialized");
+    const rect = this.drawLayer.append("svg:rect")
+      .attr("class", "hoverline-label-rect")
+      .style("fill", "white")
+      .style("stroke", entry.style.baseColor)
+      .style("stroke-width", "1px")
+      .style("pointer-events", "none");
+    const text = this.drawLayer.append("g");
     return { rect, text }
   }
 
   protected positionLabel(label: HoverlineLabel, item: DataEntry): void {
     const padding = 2;
     const entryX: number = this.checkLeftSide(item.xDiagCoord!) ? item.xDiagCoord! + 4 : item.xDiagCoord! - this.graphHelper.getDimensions(label.text.node()).w - 4;
-    label.text.attr('transform', `translate(${entryX + padding}, ${item.yDiagCoord! + padding})`);
+    label.text.attr("transform", `translate(${entryX + padding}, ${item.yDiagCoord! + padding})`);
     label.rect
-      .attr('x', entryX)
-      .attr('y', item.yDiagCoord!)
-      .attr('width', this.graphHelper.getDimensions(label.text.node()).w + padding * 2)
-      .attr('height', this.graphHelper.getDimensions(label.text.node()).h + padding * 2);
+      .attr("x", entryX)
+      .attr("y", item.yDiagCoord!)
+      .attr("width", this.graphHelper.getDimensions(label.text.node()).w + padding * 2)
+      .attr("height", this.graphHelper.getDimensions(label.text.node()).h + padding * 2);
   }
 
   /**
@@ -284,8 +284,8 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
    * @param item {DataEntry} Object of the entry in the dataset.
    */
   protected setLabel(label: HoverlineLabel, item: DataEntry, entry: SeriesGraphDataset) {
-    label.text.selectAll('*').remove();
-    label.text.append('text').text(`${item.value} ${(entry.description.uom ? entry.description.uom : '')}`).attr('alignment-baseline', 'text-before-edge').attr('class', 'hoverline-label-text');
+    label.text.selectAll("*").remove();
+    label.text.append("text").text(`${item.value} ${(entry.description.uom ? entry.description.uom : "")}`).attr("alignment-baseline", "text-before-edge").attr("class", "hoverline-label-text");
   }
 
   /**

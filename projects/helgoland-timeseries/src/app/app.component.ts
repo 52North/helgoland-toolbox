@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
-import { DummyDatasetsService } from './services/dummy-datasets.service';
-import { StockDatasetService } from './services/stock-dataset.service';
+import { DummyDatasetsService } from "./services/dummy-datasets.service";
+import { StockDatasetService } from "./services/stock-dataset.service";
 
 @Component({
-  selector: 'helgoland-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "helgoland-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   imports: [
     CommonModule,
     RouterModule
@@ -16,7 +16,7 @@ import { StockDatasetService } from './services/stock-dataset.service';
   standalone: true
 })
 export class AppComponent {
-  title = 'helgoland';
+  title = "helgoland";
   fullscreen = true;
 
   constructor(

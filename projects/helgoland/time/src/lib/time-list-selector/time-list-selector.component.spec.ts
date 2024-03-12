@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { HelgolandCoreModule } from "@helgoland/core";
 
-import { TimeListSelectorComponent } from './time-list-selector.component';
+import { TimeListSelectorComponent } from "./time-list-selector.component";
 
-describe('TimeListSelectorComponent', () => {
+describe("TimeListSelectorComponent", () => {
   let component: TimeListSelectorComponent;
   let fixture: ComponentFixture<TimeListSelectorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, TimeListSelectorComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, TimeListSelectorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('TimeListSelectorComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

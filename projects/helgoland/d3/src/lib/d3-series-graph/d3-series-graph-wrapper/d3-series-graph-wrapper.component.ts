@@ -55,9 +55,9 @@ import {
 } from "../models/series-graph-dataset";
 
 @Component({
-  selector: 'n52-d3-series-graph-wrapper',
-  templateUrl: './d3-series-graph-wrapper.component.html',
-  styleUrls: ['./d3-series-graph-wrapper.component.scss'],
+  selector: "n52-d3-series-graph-wrapper",
+  templateUrl: "./d3-series-graph-wrapper.component.html",
+  styleUrls: ["./d3-series-graph-wrapper.component.scss"],
   imports: [
     D3GraphCopyrightComponent,
     D3GraphOverviewSelectionComponent,
@@ -127,7 +127,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
 
   public override ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
-    if (changes['yaxisModifier']) {
+    if (changes["yaxisModifier"]) {
       this.graphOptions.yaxisModifier = this.yaxisModifier !== undefined ? this.yaxisModifier : this.graphOptions.yaxisModifier;
       this.drawGraph();
     }
@@ -144,7 +144,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
   protected onLanguageChanged(langChangeEvent: LangChangeEvent): void { }
 
   protected onTimezoneChanged(timezone: string): void {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   protected timeIntervalChanges(): void {
@@ -238,18 +238,18 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
         const yaxis = this.getAxisSettings(options);
         const selected = this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
-          categoryLabel: dataset.parameters.category?.label || '',
-          phenomenonLabel: dataset.parameters.phenomenon?.label || '',
+          categoryLabel: dataset.parameters.category?.label || "",
+          phenomenonLabel: dataset.parameters.phenomenon?.label || "",
           platformLabel: dataset.platform.label,
-          procedureLabel: dataset.parameters.procedure?.label || '',
-          featureLabel: dataset.parameters.feature?.label || '',
+          procedureLabel: dataset.parameters.procedure?.label || "",
+          featureLabel: dataset.parameters.feature?.label || "",
           uom: dataset.uom,
           firstValue: dataset.firstValue || new FirstLastValue(),
           lastValue: dataset.lastValue || new FirstLastValue()
         }
         dsEntry = new SeriesGraphDataset(dataset.internalId, style, yaxis, options.visible, selected, description);
         dataset.referenceValues.forEach(ref => {
-          dsEntry!.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ''));
+          dsEntry!.addChild(new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], ""));
         });
         this.datasets.push(dsEntry);
       }
@@ -275,7 +275,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
           this.onCompleteLoadingData(dsEntry);
         } else if (this.presenterOptions?.timespanBufferFactor) {
-          const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.presenterOptions.timespanBufferFactor, duration(1, 'day').asMilliseconds());
+          const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, this.presenterOptions.timespanBufferFactor, duration(1, "day").asMilliseconds());
           this.onContentLoading.emit(true);
           // if (this.runningDataRequests.has(dataset.internalId)) {
           //   this.runningDataRequests.get(dataset.internalId).unsubscribe();
@@ -338,7 +338,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
       const options = this.datasetOptions?.get(dsEntry.id);
 
       // sum values for bar chart visualization
-      if (options && options.type === 'bar') {
+      if (options && options.type === "bar") {
         const startOf = options.barStartOf as unitOfTime.StartOf;
         const period = duration(options.barPeriod);
         if (period.asMilliseconds() === 0) {

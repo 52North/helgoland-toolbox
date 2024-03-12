@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
-import { HttpService } from '../../../../dataset-api/http.service';
-import { StaDeleteInterface, StaEndpoint } from '../model/sta-interface';
+import { HttpService } from "../../../../dataset-api/http.service";
+import { StaDeleteInterface, StaEndpoint } from "../model/sta-interface";
 
 @Injectable()
 export class StaDeleteInterfaceService implements StaDeleteInterface {

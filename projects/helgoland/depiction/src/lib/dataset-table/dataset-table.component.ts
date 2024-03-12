@@ -16,9 +16,9 @@ import {
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 
 @Component({
-  selector: 'n52-dataset-table',
-  templateUrl: './dataset-table.component.html',
-  styleUrls: ['./dataset-table.component.scss'],
+  selector: "n52-dataset-table",
+  templateUrl: "./dataset-table.component.html",
+  styleUrls: ["./dataset-table.component.scss"],
   standalone: true,
   imports: [NgStyle, TzDatePipe]
 })
@@ -48,12 +48,12 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   }
 
   public ngOnInit() {
-    const elem = document.getElementById('selectedIdsStylesheet')
+    const elem = document.getElementById("selectedIdsStylesheet")
     if (elem) {
       this.additionalStylesheet = elem;
     } else {
-      this.additionalStylesheet = document.createElement('style');
-      this.additionalStylesheet.id = 'selectedIdsStylesheet';
+      this.additionalStylesheet = document.createElement("style");
+      this.additionalStylesheet.id = "selectedIdsStylesheet";
       document.body.appendChild(this.additionalStylesheet);
     }
   }
@@ -62,30 +62,30 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
   public sort(event: any) {
     // can be 'datetime' or an integer indicating the index of the column in the values array
     const by = event.target.dataset.columnId;
-    const direction = event.target.classList.contains('sorted-asc') ? 'desc' : 'asc';
-    const directionNumber = (direction === 'asc' ? 1 : -1);
+    const direction = event.target.classList.contains("sorted-asc") ? "desc" : "asc";
+    const directionNumber = (direction === "asc" ? 1 : -1);
 
     // set CSS classes
-    (Array.from(event.target.parentElement.children) as Element[]).forEach(child => child.className = '');
-    if (direction === 'asc') {
-      (event.target as Element).classList.add('sorted-asc');
+    (Array.from(event.target.parentElement.children) as Element[]).forEach(child => child.className = "");
+    if (direction === "asc") {
+      (event.target as Element).classList.add("sorted-asc");
     } else {
-      (event.target as Element).classList.add('sorted-desc');
+      (event.target as Element).classList.add("sorted-desc");
     }
 
     // define correct callback function for sort method
     let sortCallback;
-    if (by === 'datetime') {
+    if (by === "datetime") {
       sortCallback = (e1: any, e2: any) => directionNumber * (e1.datetime - e2.datetime);
     } else {
       const index = parseInt(by, 10);
       // basically the same as above, but take care of 'undefined' values
       sortCallback = (e1: any, e2: any) =>
-      (e1.values[index] === undefined ? 1 :
-        (e2.values[index] === undefined ? -1 :
-          (directionNumber * (e1.values[index] - e2.values[index]))
-        )
-      );
+        (e1.values[index] === undefined ? 1 :
+          (e2.values[index] === undefined ? -1 :
+            (directionNumber * (e1.values[index] - e2.values[index]))
+          )
+        );
     }
 
     // do the sort
@@ -112,18 +112,18 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
 
   protected setSelectedId(internalId: string) {
     // quite fairly tested
-    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    const rules = this.additionalStylesheet.innerHTML.split("\r\n");
     const index = this.getIndexFromInternalId(internalId);
-    rules[index] = 'td:nth-child(' + (index + 2) + ') {font-weight: bold}';
-    this.additionalStylesheet.innerHTML = rules.join('\r\n');
+    rules[index] = "td:nth-child(" + (index + 2) + ") {font-weight: bold}";
+    this.additionalStylesheet.innerHTML = rules.join("\r\n");
   }
 
   protected removeSelectedId(internalId: string) {
     // fairly tested
-    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    const rules = this.additionalStylesheet.innerHTML.split("\r\n");
     const index = this.getIndexFromInternalId(internalId);
-    rules[index] = '';
-    this.additionalStylesheet.innerHTML = rules.join('\r\n');
+    rules[index] = "";
+    this.additionalStylesheet.innerHTML = rules.join("\r\n");
   }
 
   protected timeIntervalChanges() {
@@ -144,17 +144,17 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
 
     this.preparedColors.splice(index, 1);
 
-    const rules = this.additionalStylesheet.innerHTML.split('\r\n');
+    const rules = this.additionalStylesheet.innerHTML.split("\r\n");
     rules.splice(index, 1);
-    this.additionalStylesheet.innerHTML = rules.join('\r\n');
+    this.additionalStylesheet.innerHTML = rules.join("\r\n");
 
     this.timeseriesArray.splice(index, 1);
   }
 
   protected addDataset(id: string, url: string): void {
     this.timeseriesArray.length += 1;  // create new empty slot
-    this.preparedColors.push('darkgrey');
-    this.additionalStylesheet.innerHTML += '\r\n';
+    this.preparedColors.push("darkgrey");
+    this.additionalStylesheet.innerHTML += "\r\n";
     this.servicesConnector.getDataset({ id, url }, { type: DatasetType.Timeseries })
       .subscribe(ds => this.addTimeseries(ds));
   }
@@ -205,7 +205,7 @@ export class DatasetTableComponent extends DatasetPresenterComponent<DatasetOpti
       this.preparedColors[index] = option.color;
     } else {
       // when no color is specified: make border transparent so the header's background color is used for the color band, too
-      this.preparedColors[index] = 'rgba(0,0,0,0)';
+      this.preparedColors[index] = "rgba(0,0,0,0)";
     }
 
     if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {

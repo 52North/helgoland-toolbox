@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import * as L from 'leaflet';
+import { Injectable } from "@angular/core";
+import * as L from "leaflet";
 
-import { MapCache } from '../../base/map-cache.service';
+import { MapCache } from "../../base/map-cache.service";
 
-const LOCATION_FOUND_EVENT = 'locationfound';
-const LOCATION_ERROR = 'locationerror';
-const LOCATED_MARKER_ID = 'located';
+const LOCATION_FOUND_EVENT = "locationfound";
+const LOCATION_ERROR = "locationerror";
+const LOCATED_MARKER_ID = "located";
 
 @Injectable()
 export class LocateService {

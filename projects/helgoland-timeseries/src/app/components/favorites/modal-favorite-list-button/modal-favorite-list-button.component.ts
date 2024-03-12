@@ -11,9 +11,9 @@ import { FavoriteService } from "../../../services/favorite.service";
 import { ModalFavoriteListComponent } from "./../modal-favorite-list/modal-favorite-list.component";
 
 @Component({
-  selector: 'helgoland-modal-favorite-list-button',
-  templateUrl: './modal-favorite-list-button.component.html',
-  styleUrls: ['./modal-favorite-list-button.component.scss'],
+  selector: "helgoland-modal-favorite-list-button",
+  templateUrl: "./modal-favorite-list-button.component.html",
+  styleUrls: ["./modal-favorite-list-button.component.scss"],
   imports: [
     MatBadgeModule,
     MatButtonModule,
@@ -32,7 +32,7 @@ export class ModalFavoriteListButtonComponent {
   ) { }
 
   public openFavoriteList() {
-    this.dialog.open(ModalFavoriteListComponent, { autoFocus: false, width: '500px' })
+    this.dialog.open(ModalFavoriteListComponent, { autoFocus: false, width: "500px" })
   }
 
 }

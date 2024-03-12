@@ -1,31 +1,31 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { ModalDiagramSettingsComponent } from './modal-diagram-settings.component';
+import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ModalDiagramSettingsComponent } from "./modal-diagram-settings.component";
 
-describe('ModalDiagramSettingsComponent', () => {
+describe("ModalDiagramSettingsComponent", () => {
   let component: ModalDiagramSettingsComponent;
   let fixture: ComponentFixture<ModalDiagramSettingsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatButtonToggleModule,
         MatSlideToggleModule,
         MatDialogModule,
         ModalDiagramSettingsComponent
-    ],
-    providers: [
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('ModalDiagramSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

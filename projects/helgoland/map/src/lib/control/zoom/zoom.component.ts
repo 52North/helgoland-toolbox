@@ -1,12 +1,12 @@
-import { MapCache } from './../../base/map-cache.service';
-import { Component } from '@angular/core';
+import { MapCache } from "./../../base/map-cache.service";
+import { Component } from "@angular/core";
 
-import { MapControlComponent } from '../map-control-component';
+import { MapControlComponent } from "../map-control-component";
 
 @Component({
-    selector: 'n52-zoom-control',
-    templateUrl: './zoom.component.html',
-    standalone: true
+  selector: "n52-zoom-control",
+  templateUrl: "./zoom.component.html",
+  standalone: true
 })
 export class ZoomControlComponent extends MapControlComponent {
 

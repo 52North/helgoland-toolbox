@@ -1,22 +1,22 @@
-import { inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from "@angular/core/testing";
 
-import { HttpCache, OnGoingHttpCache } from '../model';
-import { CachingInterceptor } from './cache-interceptor';
+import { HttpCache, OnGoingHttpCache } from "../model";
+import { CachingInterceptor } from "./cache-interceptor";
 
-describe('CachingInterceptor', () => {
+describe("CachingInterceptor", () => {
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                CachingInterceptor,
-                HttpCache,
-                OnGoingHttpCache
-            ]
-        });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        CachingInterceptor,
+        HttpCache,
+        OnGoingHttpCache
+      ]
     });
+  });
 
-    it('should be created', inject([CachingInterceptor], (service: CachingInterceptor) => {
-        expect(service).toBeTruthy();
-    }));
+  it("should be created", inject([CachingInterceptor], (service: CachingInterceptor) => {
+    expect(service).toBeTruthy();
+  }));
 
 });

@@ -7,10 +7,10 @@ import moment from "moment";
 
 import { NotifierService } from "./notifier.service";
 
-const TIME_CACHE_PARAM = 'timeseriesTime';
+const TIME_CACHE_PARAM = "timeseriesTime";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DatasetsService {
 
@@ -41,7 +41,7 @@ export class DatasetsService {
   }
 
   set timespan(ts: Timespan) {
-    const message = `${this.translate.instant('events.timespan-changed-from')} ${this.timezoneSrvc.formatTzDate(ts.from)} ${this.translate.instant('events.timespan-changed-to')} ${this.timezoneSrvc.formatTzDate(ts.to)}`;
+    const message = `${this.translate.instant("events.timespan-changed-from")} ${this.timezoneSrvc.formatTzDate(ts.from)} ${this.translate.instant("events.timespan-changed-to")} ${this.timezoneSrvc.formatTzDate(ts.to)}`;
     this.la.announce(message);
     this._timespan = ts;
     this.timespanChanged.emit(ts);
@@ -89,8 +89,8 @@ export class DatasetsService {
     console.log(`delete ${id}`);
     const dataset = this.getDatasetEntry(id);
     if (notify) {
-      this.la.announce(this.translate.instant('events.remove-timeseries'));
-      this.notifier.notify(this.translate.instant('events.remove-timeseries'));
+      this.la.announce(this.translate.instant("events.remove-timeseries"));
+      this.notifier.notify(this.translate.instant("events.remove-timeseries"));
     }
     dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
@@ -102,8 +102,8 @@ export class DatasetsService {
 
   deleteAllDatasets() {
     this.datasets.map(e => e.id).forEach(id => this.deleteDataset(id, false));
-    this.la.announce(this.translate.instant('events.all-timeseries-removed'));
-    this.notifier.notify(this.translate.instant('events.all-timeseries-removed'));
+    this.la.announce(this.translate.instant("events.all-timeseries-removed"));
+    this.notifier.notify(this.translate.instant("events.all-timeseries-removed"));
   }
 
   datasetsSelected(): boolean {
@@ -115,7 +115,7 @@ export class DatasetsService {
   }
 
   private initTimespan() {
-    return this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) || this.timeSrvc.createByDurationWithEnd(moment.duration(1, 'days'), new Date(), 'day');
+    return this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) || this.timeSrvc.createByDurationWithEnd(moment.duration(1, "days"), new Date(), "day");
   }
 
   private getDatasetEntryIndex(id: string): number {

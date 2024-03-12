@@ -1,15 +1,15 @@
-import { CodeType } from './CodeType';
+import { CodeType } from "./CodeType";
 
 /**
  * gml:CodeWithAuthorityType requires that the codeSpace attribute is provided
  * in an instance.
  */
 export class CodeWithAuthority extends CodeType {
-    constructor(value: string, codeSpace: string) {
-        super(value, codeSpace);
-    }
+  constructor(value: string, codeSpace: string) {
+    super(value, codeSpace);
+  }
 
-    override toString() {
-        return 'Code with authority';
-    }
+  override toString() {
+    return "Code with authority";
+  }
 }

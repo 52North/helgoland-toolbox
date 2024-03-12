@@ -5,20 +5,20 @@ export type KeywordType =
     /**
      * keyword identifies a branch of instruction or specialized learning
      */
-    'discipline' |
+    "discipline" |
     /**
      * keyword identifies a location
      */
-    'place' |
+    "place" |
     /**
      * keyword identifies the layer(s) of any deposited substance
      */
-    'stratum' |
+    "stratum" |
     /**
      * keyword identifies a time period related to the dataset
      */
-    'temporal' |
+    "temporal" |
     /**
      * keyword identifies a particular subject or topic
      */
-    'theme';
+    "theme";

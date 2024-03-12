@@ -32,9 +32,9 @@ interface MapSelectionAppConfig extends AppConfig {
 }
 
 @Component({
-  selector: 'helgoland-map-selection',
-  templateUrl: './map-selection.component.html',
-  styleUrls: ['./map-selection.component.scss'],
+  selector: "helgoland-map-selection",
+  templateUrl: "./map-selection.component.html",
+  styleUrls: ["./map-selection.component.scss"],
   encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
@@ -51,9 +51,9 @@ interface MapSelectionAppConfig extends AppConfig {
 })
 export class MapSelectionComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('drawer') drawer: MatDrawer | undefined;
+  @ViewChild("drawer") drawer: MatDrawer | undefined;
 
-  mapId = 'timeseries';
+  mapId = "timeseries";
 
   stationFilter: HelgolandParameterFilter | undefined;
 

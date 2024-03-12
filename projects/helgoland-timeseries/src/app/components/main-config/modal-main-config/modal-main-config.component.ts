@@ -12,9 +12,9 @@ import {
 import { ConfigurationService } from "./../../../services/configuration.service";
 
 @Component({
-  selector: 'helgoland-modal-main-config',
-  templateUrl: './modal-main-config.component.html',
-  styleUrls: ['./modal-main-config.component.scss'],
+  selector: "helgoland-modal-main-config",
+  templateUrl: "./modal-main-config.component.html",
+  styleUrls: ["./modal-main-config.component.scss"],
   imports: [
     ClearStorageButtonComponent,
     DarkModeButtonComponent,

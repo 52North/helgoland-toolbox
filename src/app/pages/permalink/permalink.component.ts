@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipboardComponent } from "@helgoland/permalink";
 
 @Component({
-  templateUrl: './permalink.component.html',
-  styleUrls: ['./permalink.component.scss'],
+  templateUrl: "./permalink.component.html",
+  styleUrls: ["./permalink.component.scss"],
   imports: [
     PermalinkInMailComponent,
     PermalinkToClipboardComponent,
@@ -13,6 +13,6 @@ import { PermalinkInMailComponent, PermalinkNewWindowComponent, PermalinkToClipb
 })
 export class PermalinkComponent {
 
-  public permalinkUrl = 'test-url';
+  public permalinkUrl = "test-url";
 
 }

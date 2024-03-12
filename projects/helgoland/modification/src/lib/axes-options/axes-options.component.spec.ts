@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { AxesOptionsComponent } from './axes-options.component';
+import { AxesOptionsComponent } from "./axes-options.component";
 
-describe('AxesOptionsComponent', () => {
+describe("AxesOptionsComponent", () => {
   let component: AxesOptionsComponent;
   let fixture: ComponentFixture<AxesOptionsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [AxesOptionsComponent]
-}).compileComponents();
+      imports: [AxesOptionsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('AxesOptionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

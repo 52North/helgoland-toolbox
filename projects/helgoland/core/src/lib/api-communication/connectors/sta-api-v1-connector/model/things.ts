@@ -1,17 +1,17 @@
-import { HistoricalLocation } from './historical-locations';
-import { InsertDatastream, Datastream } from './datasetreams';
-import { StaExpandParams, StaObject, StaSelectParams, InsertId } from './sta-interface';
-import { InsertLocation, Location } from './locations';
+import { HistoricalLocation } from "./historical-locations";
+import { InsertDatastream, Datastream } from "./datasetreams";
+import { StaExpandParams, StaObject, StaSelectParams, InsertId } from "./sta-interface";
+import { InsertLocation, Location } from "./locations";
 
 export interface Thing extends StaObject {
     name?: string;
     description?: string;
     properties?: any;
-    'Locations@iot.navigationLink'?: string;
+    "Locations@iot.navigationLink"?: string;
     Locations?: Location[];
-    'Datastreams@iot.navigationLink'?: string;
+    "Datastreams@iot.navigationLink"?: string;
     Datastreams?: Datastream[];
-    'HistoricalLocations@iot.navigationLink'?: string;
+    "HistoricalLocations@iot.navigationLink"?: string;
     HistoricalLocations?: HistoricalLocation[];
 }
 

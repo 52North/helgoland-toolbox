@@ -1,16 +1,16 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { Category } from '../../model/dataset-api/category';
-import { Data, IDataEntry } from '../../model/dataset-api/data';
-import { Timeseries, TimeseriesData, TimeseriesExtras } from '../../model/dataset-api/dataset';
-import { Feature } from '../../model/dataset-api/feature';
-import { Offering } from '../../model/dataset-api/offering';
-import { Phenomenon } from '../../model/dataset-api/phenomenon';
-import { Procedure } from '../../model/dataset-api/procedure';
-import { Service } from '../../model/dataset-api/service';
-import { Station } from '../../model/dataset-api/station';
-import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from '../../model/internal/http-requests';
-import { Timespan } from '../../model/internal/timeInterval';
+import { Category } from "../../model/dataset-api/category";
+import { Data, IDataEntry } from "../../model/dataset-api/data";
+import { Timeseries, TimeseriesData, TimeseriesExtras } from "../../model/dataset-api/dataset";
+import { Feature } from "../../model/dataset-api/feature";
+import { Offering } from "../../model/dataset-api/offering";
+import { Phenomenon } from "../../model/dataset-api/phenomenon";
+import { Procedure } from "../../model/dataset-api/procedure";
+import { Service } from "../../model/dataset-api/service";
+import { Station } from "../../model/dataset-api/station";
+import { DataParameterFilter, HttpRequestOptions, ParameterFilter } from "../../model/internal/http-requests";
+import { Timespan } from "../../model/internal/timeInterval";
 
 export interface DatasetApiV1 {
 

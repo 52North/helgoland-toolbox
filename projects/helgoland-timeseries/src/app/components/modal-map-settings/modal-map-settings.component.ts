@@ -14,9 +14,9 @@ export interface MapConfig {
 }
 
 @Component({
-  selector: 'helgoland-modal-map-settings',
-  templateUrl: './modal-map-settings.component.html',
-  styleUrls: ['./modal-map-settings.component.scss'],
+  selector: "helgoland-modal-map-settings",
+  templateUrl: "./modal-map-settings.component.html",
+  styleUrls: ["./modal-map-settings.component.scss"],
   imports: [
     MatButtonModule,
     MatDialogModule,

@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
-import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector, Required } from '@helgoland/core';
-import { Feature, Map } from 'ol';
-import { unlistenByKey } from 'ol/events';
-import { click, pointerMove } from 'ol/events/condition';
-import { extend } from 'ol/extent';
-import { FeatureLike } from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import { Select } from 'ol/interaction.js';
-import VectorLayer from 'ol/layer/Vector';
-import { Cluster } from 'ol/source';
-import VectorSource from 'ol/source/Vector';
-import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
+import { Component, EventEmitter, Host, Input, Output } from "@angular/core";
+import { HelgolandParameterFilter, HelgolandPlatform, HelgolandServicesConnector, Required } from "@helgoland/core";
+import { Feature, Map } from "ol";
+import { unlistenByKey } from "ol/events";
+import { click, pointerMove } from "ol/events/condition";
+import { extend } from "ol/extent";
+import { FeatureLike } from "ol/Feature";
+import Point from "ol/geom/Point";
+import { Select } from "ol/interaction.js";
+import VectorLayer from "ol/layer/Vector";
+import { Cluster } from "ol/source";
+import VectorSource from "ol/source/Vector";
+import { Circle, Fill, Stroke, Style, Text } from "ol/style";
 
-import { OlBaseComponent } from '../../ol-base.component';
-import { OlMapService } from '../../services/map.service';
-import { OlMapId } from '../../services/mapid.service';
+import { OlBaseComponent } from "../../ol-base.component";
+import { OlMapService } from "../../services/map.service";
+import { OlMapId } from "../../services/mapid.service";
 
 /**
  * Component to display station based on the input parameters. The component must be embedded as seen in the example:
@@ -25,9 +25,9 @@ import { OlMapId } from '../../services/mapid.service';
  * </n52-ol-map>
  */
 @Component({
-    selector: 'n52-ol-station-selector-layer',
-    template: '',
-    standalone: true
+  selector: "n52-ol-station-selector-layer",
+  template: "",
+  standalone: true
 })
 export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
@@ -36,46 +36,46 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
    */
   @Input()
   @Required
-  serviceUrl!: string;
+    serviceUrl!: string;
 
   /**
    * The filter which should be used, while fetching the selection.
    */
   @Input()
-  filter: HelgolandParameterFilter | undefined;
+    filter: HelgolandParameterFilter | undefined;
 
   /**
    * Zoom to the stations after collected and displayed
    */
   @Input()
-  zoomToResult = true;
+    zoomToResult = true;
 
   /**
    * Cluster stations
    */
   @Input()
-  cluster = true;
+    cluster = true;
 
   /**
    * Inform, when a station is selected
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
+    onSelected: EventEmitter<HelgolandPlatform> = new EventEmitter<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onContentLoading: EventEmitter<boolean> = new EventEmitter();
+    onContentLoading: EventEmitter<boolean> = new EventEmitter();
 
   /**
    * Inform, when no stations are found
    */
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+    onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
 
   private map!: Map;
 
@@ -143,11 +143,11 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     const features: Feature[] = [];
     stations.forEach(st => {
       // TODO: add to service
-      if (st.geometry?.type === 'Point') {
+      if (st.geometry?.type === "Point") {
         const point = new Point(st.geometry.coordinates);
-        point.transform('EPSG:4326', this.map.getView().getProjection());
+        point.transform("EPSG:4326", this.map.getView().getProjection());
         const feature = new Feature(point);
-        feature.set('station', st, true);
+        feature.set("station", st, true);
         features.push(feature);
       }
     });
@@ -162,9 +162,9 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
         layers: [this.layer]
       });
 
-      hoverSelect.on('select', (evt => {
+      hoverSelect.on("select", (evt => {
         if (evt.selected.length >= 1) {
-          const temp = hoverSelect.getFeatures().on('remove', () => {
+          const temp = hoverSelect.getFeatures().on("remove", () => {
             unlistenByKey(temp);
           });
         }
@@ -179,12 +179,12 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
       style: feature => this.cluster ? this.styleClusterLayer(feature) : this.createMarkerStyle(),
       layers: [this.layer]
     });
-    clickSelect.on('select', (evt => {
+    clickSelect.on("select", (evt => {
       if (evt.selected.length >= 1) {
-        if (evt.selected[0].getProperties()['station']) {
-          this.onSelected.emit(evt.selected[0].getProperties()['station']);
+        if (evt.selected[0].getProperties()["station"]) {
+          this.onSelected.emit(evt.selected[0].getProperties()["station"]);
         } else {
-          const selectedFeatures = evt.selected[0].getProperties()['features'];
+          const selectedFeatures = evt.selected[0].getProperties()["features"];
           if (selectedFeatures.length > 1) {
             clickSelect.getFeatures().clear();
             setTimeout(() => {
@@ -200,7 +200,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private styleClusterLayer(feature: FeatureLike): Style | Style[] {
-    const size = feature.get('features').length;
+    const size = feature.get("features").length;
     if (size > 1) {
       return this.createClusterStyle(size);
     } else {
@@ -209,14 +209,14 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createClusterStyle(size: number) {
-    const color = size > 25 ? '248, 128, 0' : size > 8 ? '248, 192, 0' : '128, 192, 64';
+    const color = size > 25 ? "248, 128, 0" : size > 8 ? "248, 192, 0" : "128, 192, 64";
     const radius = Math.max(8, Math.min(size * 0.75, 20));
     return [
       new Style({
         image: new Circle({
           radius: radius + 2,
           stroke: new Stroke({
-            color: 'rgba(' + color + ',0.3)',
+            color: "rgba(" + color + ",0.3)",
             width: 4
           })
         })
@@ -225,13 +225,13 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
         image: new Circle({
           radius: radius,
           fill: new Fill({
-            color: 'rgba(' + color + ',0.6)'
+            color: "rgba(" + color + ",0.6)"
           })
         }),
         text: new Text({
           text: size.toString(),
           fill: new Fill({
-            color: '#000'
+            color: "#000"
           })
         })
       })
@@ -251,7 +251,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
       image: new Circle({
         radius: 6,
         fill: new Fill({
-          color: 'blue',
+          color: "blue",
         })
       })
     });

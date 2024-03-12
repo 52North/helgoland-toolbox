@@ -1,13 +1,13 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { HelgolandCoreModule, HTTP_SERVICE_INTERCEPTORS } from '@helgoland/core';
+import { ModuleWithProviders, NgModule } from "@angular/core";
+import { HelgolandCoreModule, HTTP_SERVICE_INTERCEPTORS } from "@helgoland/core";
 
-import { CacheConfig, CacheConfigService } from './config';
-import { LocalHttpCacheInterval } from './get-data-cache/local-http-cache-interval';
-import { LocalHttpCacheIntervalInterceptor } from './get-data-cache/local-http-cache-interval-interceptor';
-import { CachingInterceptor } from './http-get-cache/cache-interceptor';
-import { LocalHttpCache } from './http-get-cache/local-http-cache';
-import { LocalOngoingHttpCache } from './http-get-cache/local-ongoing-http-cache';
-import { HttpCache, HttpCacheInterval, OnGoingHttpCache } from './model';
+import { CacheConfig, CacheConfigService } from "./config";
+import { LocalHttpCacheInterval } from "./get-data-cache/local-http-cache-interval";
+import { LocalHttpCacheIntervalInterceptor } from "./get-data-cache/local-http-cache-interval-interceptor";
+import { CachingInterceptor } from "./http-get-cache/cache-interceptor";
+import { LocalHttpCache } from "./http-get-cache/local-http-cache";
+import { LocalOngoingHttpCache } from "./http-get-cache/local-ongoing-http-cache";
+import { HttpCache, HttpCacheInterval, OnGoingHttpCache } from "./model";
 
 const GET_DATA_CACHE_PROVIDERS = [
   {

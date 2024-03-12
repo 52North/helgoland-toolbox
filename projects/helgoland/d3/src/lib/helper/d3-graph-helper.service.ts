@@ -1,12 +1,12 @@
-import { DatasetOptions } from '@helgoland/core';
-import { Injectable } from '@angular/core';
-import { duration, unitOfTime } from 'moment';
+import { DatasetOptions } from "@helgoland/core";
+import { Injectable } from "@angular/core";
+import { duration, unitOfTime } from "moment";
 
-import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
-import { BarStyle, DatasetStyle, LineStyle } from '../d3-series-graph/models/series-graph-dataset';
+import { D3PointSymbolDrawerService } from "./d3-point-symbol-drawer.service";
+import { BarStyle, DatasetStyle, LineStyle } from "../d3-series-graph/models/series-graph-dataset";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class D3GraphHelperService {
 
@@ -26,7 +26,7 @@ export class D3GraphHelperService {
       w = dimensions.width;
       h = dimensions.height;
     } else {
-      console.log('error: getDimensions() ' + el + ' not found.');
+      console.log("error: getDimensions() " + el + " not found.");
     }
     return {
       w,
@@ -45,54 +45,54 @@ export class D3GraphHelperService {
    */
   public drawDatasetSign(svgElem: d3.Selection<SVGGElement, any, any, any>, style: DatasetStyle, xPos: number, yPos: number, selected: boolean) {
     if (style instanceof BarStyle) {
-      svgElem.append('rect')
-        .attr('class', 'y-axis-line')
+      svgElem.append("rect")
+        .attr("class", "y-axis-line")
         // .attr('id', 'axisdot-line-' + style. options.id)
-        .attr('stroke', style.baseColor)
-        .attr('fill', style.baseColor)
-        .style('fill-opacity', 0.5)
-        .attr('x', xPos - 3)
-        .attr('y', yPos - 5)
-        .attr('width', 6)
-        .attr('height', 10)
+        .attr("stroke", style.baseColor)
+        .attr("fill", style.baseColor)
+        .style("fill-opacity", 0.5)
+        .attr("x", xPos - 3)
+        .attr("y", yPos - 5)
+        .attr("width", 6)
+        .attr("height", 10)
       return;
     }
     if (style instanceof LineStyle) {
       if (style.lineWidth > 0) {
         const lineLength = 5;
-        svgElem.append('line')
-          .attr('class', 'y-axis-line')
+        svgElem.append("line")
+          .attr("class", "y-axis-line")
           // .attr('id', 'axisdot-line-' + options.id)
-          .attr('stroke', style.baseColor)
-          .attr('fill', style.baseColor)
-          .attr('x1', xPos - lineLength * 2)
-          .attr('y1', yPos)
-          .attr('x2', xPos + lineLength * 2)
-          .attr('y2', yPos)
-          .attr('stroke-width', style.lineWidth + (selected ? 2 : 0));
+          .attr("stroke", style.baseColor)
+          .attr("fill", style.baseColor)
+          .attr("x1", xPos - lineLength * 2)
+          .attr("y1", yPos)
+          .attr("x2", xPos + lineLength * 2)
+          .attr("y2", yPos)
+          .attr("stroke-width", style.lineWidth + (selected ? 2 : 0));
       }
       if (style.pointSymbol) {
         this.pointSymbolDrawer.drawSymbol(style.pointSymbol, style.baseColor, svgElem, selected, xPos, yPos);
       } else {
         if (style.pointRadius > 0) {
-          svgElem.append('circle')
-            .attr('class', 'y-axis-circle')
+          svgElem.append("circle")
+            .attr("class", "y-axis-circle")
             // .attr('id', 'axisdot-circle-' + options.id)
-            .attr('stroke', style.baseColor)
-            .attr('fill', style.baseColor)
-            .attr('cx', xPos)
-            .attr('cy', yPos)
-            .attr('r', style.pointRadius + (selected ? 2 : 0));
+            .attr("stroke", style.baseColor)
+            .attr("fill", style.baseColor)
+            .attr("cx", xPos)
+            .attr("cy", yPos)
+            .attr("r", style.pointRadius + (selected ? 2 : 0));
         }
       }
     }
   }
 
   public convertDatasetOptions(options: DatasetOptions): DatasetStyle {
-    if (options.type === 'line') {
+    if (options.type === "line") {
       return new LineStyle(options.color, options.pointRadius, options.lineWidth, options.pointSymbol, options.lineDashArray);
     }
-    if (options.type === 'bar') {
+    if (options.type === "bar") {
       const startOf = options.barStartOf as unitOfTime.StartOf;
       const period = duration(options.barPeriod);
       return new BarStyle(options.color, startOf, period, options.lineWidth, options.lineDashArray);
