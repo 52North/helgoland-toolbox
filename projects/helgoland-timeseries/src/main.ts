@@ -27,6 +27,9 @@ import { firstValueFrom, forkJoin, from, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { BasicAuthInformerImplService } from "../../helgoland-common/src/lib/services/basic-auth-informer-impl.service";
+import {
+  DatasetStaCustomConnectorProvider,
+} from "../../helgoland/core/src/lib/api-communication/connectors/sta-api-v1-connector/sta-api-custom-connector";
 import { AppComponent } from "./app/app.component";
 import { ROUTES } from "./app/app.consts";
 import { AppConfig, ConfigurationService } from "./app/services/configuration.service";
@@ -131,6 +134,7 @@ bootstrapApplication(AppComponent, {
     DatasetApiV2ConnectorProvider,
     DatasetApiV3ConnectorProvider,
     DatasetStaConnectorProvider,
+    DatasetStaCustomConnectorProvider,
     PegelonlineApiConnectorProvider
   ]
 })

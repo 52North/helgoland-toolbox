@@ -8,7 +8,7 @@ export interface Sensor extends StaObject {
     "Datastreams@iot.navigationLink"?: string;
 }
 
-export interface InsertSensor extends StaObject {
+export interface InsertSensor {
     name: string;
     description: string;
     encodingType: string;
