@@ -45,7 +45,7 @@ interface MapSelectionAppConfig extends AppConfig {
     MatSidenavModule,
     MatTooltipModule,
     ParameterListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

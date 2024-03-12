@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import {
     GeoCureGeoJSON,
     GeoCureGeoJSONOptions,
@@ -10,8 +10,8 @@ import {
     HelgolandMapViewModule,
     LayerMap,
     MapCache,
-} from '@helgoland/map';
-import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOptions } from 'leaflet';
+} from "@helgoland/map";
+import { circleMarker, LatLngBounds, LayerEvent, LeafletEvent, tileLayer, WMSOptions } from "leaflet";
 
 @Component({
     templateUrl: './map-view.component.html',

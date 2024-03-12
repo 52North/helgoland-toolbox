@@ -1,12 +1,12 @@
-import { Component, Inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { BlacklistedService, DatasetApi, DatasetType, HelgolandParameterFilter, HelgolandService } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { ServiceListSelectorComponent } from 'helgoland-common';
+import { Component, Inject } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { BlacklistedService, DatasetApi, DatasetType, HelgolandParameterFilter, HelgolandService } from "@helgoland/core";
+import { TranslateModule } from "@ngx-translate/core";
+import { ServiceListSelectorComponent } from "helgoland-common";
 
-import { ConfigurationService } from '../../services/configuration.service';
+import { ConfigurationService } from "../../services/configuration.service";
 
 export interface MapConfig {
   cluster: boolean;
@@ -22,7 +22,7 @@ export interface MapConfig {
     MatDialogModule,
     MatSlideToggleModule,
     ServiceListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

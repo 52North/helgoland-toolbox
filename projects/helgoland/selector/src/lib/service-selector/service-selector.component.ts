@@ -3,7 +3,7 @@ import { BlacklistedService, DatasetApi, HelgolandParameterFilter, HelgolandServ
 
 import { ServiceSelectorService } from './service-selector.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 interface ExtendedHelgolandService extends HelgolandService {
     protected?: boolean;
@@ -17,7 +17,7 @@ interface ExtendedHelgolandService extends HelgolandService {
     templateUrl: './service-selector.component.html',
     styleUrls: ['./service-selector.component.scss'],
     standalone: true,
-    imports: [NgIf, NgFor, NgClass, TranslateModule]
+    imports: [NgClass, TranslateModule]
 })
 export class ServiceSelectorComponent implements OnInit {
 

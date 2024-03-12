@@ -8,7 +8,7 @@ import {
     Required,
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf, NgFor, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 
 export interface MultiServiceFilter {
     url: string;
@@ -33,7 +33,7 @@ export enum MultiServiceFilterEndpoint {
     selector: 'n52-multi-service-filter-selector',
     templateUrl: './multi-service-filter-selector.component.html',
     standalone: true,
-    imports: [NgIf, NgFor, NgStyle]
+    imports: [NgStyle]
 })
 export class MultiServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 

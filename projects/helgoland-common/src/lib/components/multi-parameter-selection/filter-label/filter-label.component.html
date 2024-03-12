@@ -1,23 +1,39 @@
-<span [ngSwitch]="filter">
-  <span *ngSwitchCase="'category'">
+<span>
+  @switch (filter) {
+  @case ('category') {
+  <span>
     {{'list-selection.filter.category' | translate}}
   </span>
-  <span *ngSwitchCase="'feature'">
+  }
+  @case ('feature') {
+  <span>
     {{'list-selection.filter.feature' | translate}}
   </span>
-  <span *ngSwitchCase="'phenomenon'">
+  }
+  @case ('phenomenon') {
+  <span>
     {{'list-selection.filter.phenomenon' | translate}}
   </span>
-  <span *ngSwitchCase="'procedure'">
+  }
+  @case ('procedure') {
+  <span>
     {{'list-selection.filter.procedure' | translate}}
   </span>
-  <span *ngSwitchCase="'timeseries'">
+  }
+  @case ('timeseries') {
+  <span>
     {{'list-selection.filter.timeseries' | translate}}
   </span>
-  <span *ngSwitchCase="'provider'">
+  }
+  @case ('provider') {
+  <span>
     {{'list-selection.filter.provider' | translate}}
   </span>
-  <span *ngSwitchDefault>
+  }
+  @default {
+  <span>
     {{filter}}
   </span>
+  }
+  }
 </span>

@@ -23,7 +23,7 @@ interface Symbol {
     MatFormFieldModule,
     MatSelectModule,
     MatSliderModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

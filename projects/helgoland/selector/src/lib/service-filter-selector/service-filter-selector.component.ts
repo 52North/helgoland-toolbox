@@ -8,7 +8,7 @@ import {
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -17,7 +17,7 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
     selector: 'n52-service-filter-selector',
     templateUrl: './service-filter-selector.component.html',
     standalone: true,
-    imports: [NgIf, NgFor, NgClass, HelgolandLabelMapperModule]
+    imports: [NgClass, HelgolandLabelMapperModule]
 })
 export class ServiceFilterSelectorComponent extends LanguageChangNotifier implements OnChanges {
 

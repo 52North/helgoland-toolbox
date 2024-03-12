@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Settings, SettingsService } from '@helgoland/core';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from "@angular/common";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { Settings, SettingsService } from "@helgoland/core";
 
 @Component({
-    selector: 'n52-refresh-button',
-    templateUrl: './refresh-button.component.html',
-    standalone: true,
-    imports: [NgClass, NgIf]
+  selector: 'n52-refresh-button',
+  templateUrl: './refresh-button.component.html',
+  standalone: true,
+  imports: [NgClass]
 })
 export class RefreshButtonComponent implements OnChanges, OnInit {
 

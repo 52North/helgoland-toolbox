@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import {
     ColorService,
     DatasetOptions,
@@ -8,13 +8,13 @@ import {
     HelgolandServicesConnector,
     InternalIdHandler,
     Timespan,
-} from '@helgoland/core';
-import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from '@helgoland/d3';
-import { HelgolandDatasetlistModule } from '@helgoland/depiction';
-import { HelgolandMapViewModule } from '@helgoland/map';
-import { GeoJsonObject, LineString, Point } from 'geojson';
+} from "@helgoland/core";
+import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from "@helgoland/d3";
+import { HelgolandDatasetlistModule } from "@helgoland/depiction";
+import { HelgolandMapViewModule } from "@helgoland/map";
+import { GeoJsonObject, LineString, Point } from "geojson";
 
-import { StyleModificationComponent } from '../../components/style-modification/style-modification.component';
+import { StyleModificationComponent } from "../../components/style-modification/style-modification.component";
 
 @Component({
     templateUrl: './trajectory.component.html',

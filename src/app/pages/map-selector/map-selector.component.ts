@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { HelgolandParameterFilter, HelgolandPlatform, Phenomenon, Timeseries } from '@helgoland/core';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { HelgolandParameterFilter, HelgolandPlatform, Phenomenon, Timeseries } from "@helgoland/core";
 import {
     GeoSearchOptions,
     HelgolandMapControlModule,
@@ -9,9 +9,9 @@ import {
     LayerMap,
     MapCache,
     MarkerSelectorGenerator,
-} from '@helgoland/map';
-import { HelgolandSelectorModule } from '@helgoland/selector';
-import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, WMSOptions } from 'leaflet';
+} from "@helgoland/map";
+import { HelgolandSelectorModule } from "@helgoland/selector";
+import { CircleMarker, circleMarker, FitBoundsOptions, geoJSON, icon, Layer, Marker, tileLayer, WMSOptions } from "leaflet";
 
 Marker.prototype.options.icon = icon({
     iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -82,7 +82,6 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
     styleUrls: ['./map-selector.component.css'],
     imports: [
         HelgolandSelectorModule,
-        // HelgolandMapModule,
         CommonModule,
         HelgolandMapSelectorModule,
         HelgolandMapControlModule

@@ -1,5 +1,5 @@
-import { Component, HostBinding, Input } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Component, HostBinding, Input } from "@angular/core";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @Component({
   selector: 'helgoland-loading-overlay-progress-bar',

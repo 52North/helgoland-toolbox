@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
-import { ColorService, DatasetOptions, Timespan } from '@helgoland/core';
-import { HelgolandD3Module } from '@helgoland/d3';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
+import { ColorService, DatasetOptions, Timespan } from "@helgoland/core";
+import { HelgolandD3Module } from "@helgoland/d3";
 
-import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
+import { NoDataEntryComponent } from "./no-data-entry/no-data-entry.component";
 
 @Component({
   selector: 'n52-diagram-export',

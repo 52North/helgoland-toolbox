@@ -1,16 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule, MatDateRangePicker } from '@angular/material/datepicker';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Required, Time, Timespan } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup } from "@angular/forms";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDatepickerModule, MatDateRangePicker } from "@angular/material/datepicker";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { DefinedTimespan, DefinedTimespanService, HelgolandCoreModule, Required, Time, Timespan } from "@helgoland/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'helgoland-general-time-selection',
@@ -28,8 +28,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatMomentDateModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   standalone: true
 })
 export class GeneralTimeSelectionComponent {

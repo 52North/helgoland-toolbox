@@ -20,7 +20,7 @@ import { Required } from '../../../../../../helgoland/core/src/public-api';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

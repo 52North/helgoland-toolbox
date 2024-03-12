@@ -1,16 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Required, TzDatePipe } from '@helgoland/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Required, TzDatePipe } from "@helgoland/core";
+import { Subscription } from "rxjs";
 
-import { FacetSearchElement, FacetSearchService } from '../../facet-search-model';
-import { NgFor, NgIf } from '@angular/common';
+import { FacetSearchElement, FacetSearchService } from "../../facet-search-model";
 
 @Component({
-    selector: 'n52-result-list',
-    templateUrl: './result-list.component.html',
-    styleUrls: ['./result-list.component.scss'],
-    standalone: true,
-    imports: [NgFor, NgIf, TzDatePipe]
+  selector: 'n52-result-list',
+  templateUrl: './result-list.component.html',
+  styleUrls: ['./result-list.component.scss'],
+  standalone: true,
+  imports: [TzDatePipe]
 })
 export class ResultListComponent implements OnInit, OnDestroy {
 

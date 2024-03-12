@@ -1,6 +1,10 @@
-<div *ngIf="loading > 0">
-    <span>loading...</span>
+@if (loading > 0) {
+<div>
+  <span>loading...</span>
 </div>
-<div *ngFor="let item of items" (click)="onSelectItem(item)" [ngStyle]="{'font-weight': item.selected ? 'bold': 'normal'}">
-    {{item.id}} - {{item.label}}
+}
+@for (item of items; track item) {
+<div (click)="onSelectItem(item)" [ngStyle]="{'font-weight': item.selected ? 'bold': 'normal'}">
+  {{item.id}} - {{item.label}}
 </div>
+}

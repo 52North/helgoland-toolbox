@@ -32,17 +32,21 @@ import { D3HoveringService } from "../helper/hovering/d3-hovering-service";
 import { D3SimpleHoveringService } from "../helper/hovering/d3-simple-hovering.service";
 import { RangeCalculationsService } from "../helper/range-calculations.service";
 import { DataEntry, YAxis, YAxisSettings } from "../model/d3-general";
+import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
+import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";
+import { D3GraphHoverPointComponent } from "./controls/d3-graph-hover-point/d3-graph-hover-point.component";
+import {
+    D3GraphOverviewSelectionComponent,
+} from "./controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
+import {
+    D3GraphPanZoomInteractionComponent,
+} from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
+import { D3YAxisModifierComponent } from "./controls/d3-y-axis-modifier/d3-y-axis-modifier.component";
 import { D3GraphInterface } from "./d3-graph.interface";
 import { D3GraphExtent, D3GraphObserver } from "./d3-series-graph-control";
 import { HighlightOutput } from "./models/d3-highlight";
 import { HoveringStyle } from "./models/d3-plot-options";
 import { BarStyle, GraphDataEntry, LineStyle, SeriesGraphDataset } from "./models/series-graph-dataset";
-import { D3GraphCopyrightComponent } from "./controls/d3-graph-copyright/d3-graph-copyright.component";
-import { D3GraphPanZoomInteractionComponent } from "./controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component";
-import { D3GraphHoverLineComponent } from "./controls/d3-graph-hover-line/d3-graph-hover-line.component";
-import { D3GraphHoverPointComponent } from "./controls/d3-graph-hover-point/d3-graph-hover-point.component";
-import { D3GraphOverviewSelectionComponent } from "./controls/d3-graph-overview-selection/d3-graph-overview-selection.component";
-import { D3YAxisModifierComponent } from "./controls/d3-y-axis-modifier/d3-y-axis-modifier.component";
 
 const TICKS_COUNT_YAXIS = 5;
 

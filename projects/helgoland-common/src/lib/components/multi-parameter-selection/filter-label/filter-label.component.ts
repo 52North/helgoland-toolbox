@@ -1,8 +1,8 @@
-import { TranslateModule } from '@ngx-translate/core';
-import { Component, Input } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Component, Input } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { ParameterType } from '../model';
-import { CommonModule } from '@angular/common';
+import { ParameterType } from "../model";
 
 
 @Component({

@@ -1,20 +1,29 @@
-<span [ngSwitch]="parameterType">
-  <span *ngSwitchCase="'provider'">
+<span>
+  @switch (parameterType) {
+  @case ('provider') {
+  <span>
     {{'list-selection.parameter-type.provider' | translate}}
   </span>
-  <span *ngSwitchCase="'platform'">
-    {{'list-selection.parameter-type.platform' | translate}}
-  </span>
-  <span *ngSwitchCase="'offering'">
+  }
+  @case ('offering') {
+  <span>
     {{'list-selection.parameter-type.offering' | translate}}
   </span>
-  <span *ngSwitchCase="'phenomenon'">
+  }
+  @case ('phenomenon') {
+  <span>
     {{'list-selection.parameter-type.phenomenon' | translate}}
   </span>
-  <span *ngSwitchCase="'feature'">
+  }
+  @case ('feature') {
+  <span>
     {{'list-selection.parameter-type.feature' | translate}}
   </span>
-  <span *ngSwitchDefault>
+  }
+  @default {
+  <span>
     '{{parameterType}}' not implemented
   </span>
+  }
+  }
 </span>

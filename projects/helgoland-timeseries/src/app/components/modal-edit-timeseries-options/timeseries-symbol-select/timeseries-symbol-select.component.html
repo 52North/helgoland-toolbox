@@ -2,10 +2,11 @@
   <mat-form-field appearance="fill">
     <mat-label>{{ 'timeseries-symbol-select.symbole-selection' | translate }}</mat-label>
     <mat-select [(ngModel)]="selectedSymbol" (selectionChange)="adjustSymbol()">
-      <mat-option [value]="option.value" *ngFor="let option of symbols">{{ option.viewValue }}</mat-option>
+      @for (option of symbols; track option) {
+      <mat-option [value]="option.value">{{ option.viewValue }}</mat-option>
+      }
     </mat-select>
   </mat-form-field>
-
   <div>
     {{ 'timeseries-symbol-select.symbole-size' | translate }}
   </div>

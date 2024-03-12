@@ -15,7 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     MatProgressBarModule,
     TranslateModule,
     CommonModule
-  ],
+],
   standalone: true
 })
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {

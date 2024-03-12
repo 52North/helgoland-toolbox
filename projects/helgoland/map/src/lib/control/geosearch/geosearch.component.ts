@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import * as L from 'leaflet';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import * as L from "leaflet";
 
-import { GeoSearch, GeoSearchOptions, GeoSearchResult } from '../../base/geosearch/geosearch';
-import { MapCache } from '../../base/map-cache.service';
-import { MapControlComponent } from '../map-control-component';
-import { NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { GeoSearch, GeoSearchOptions, GeoSearchResult } from "../../base/geosearch/geosearch";
+import { MapCache } from "../../base/map-cache.service";
+import { MapControlComponent } from "../map-control-component";
 
 @Component({
     selector: 'n52-geosearch-control',
     templateUrl: './geosearch.component.html',
     standalone: true,
-    imports: [FormsModule, NgIf]
+    imports: [FormsModule]
 })
 export class GeosearchControlComponent extends MapControlComponent {
 

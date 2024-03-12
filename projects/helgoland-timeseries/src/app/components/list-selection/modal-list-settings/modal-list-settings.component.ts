@@ -19,7 +19,7 @@ export interface ListConfig {
     MatButtonModule,
     MatDialogModule,
     ServiceListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

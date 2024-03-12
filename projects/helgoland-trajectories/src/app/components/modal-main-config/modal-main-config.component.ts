@@ -22,7 +22,7 @@ import { ConfigurationService } from './../../services/configuration.service';
     MatButtonModule,
     MatDialogModule,
     TranslateModule,
-    VersionInfoComponent,
+    VersionInfoComponent
   ],
   standalone: true
 })

@@ -12,7 +12,6 @@ import { ColorPickerModule, ColorPickerService } from "ngx-color-picker";
 import { ConfigurationService } from "./../../services/configuration.service";
 import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/timeseries-symbol-select.component";
 
-
 @Component({
   selector: 'helgoland-modal-edit-timeseries-options',
   templateUrl: './modal-edit-timeseries-options.component.html',
@@ -26,7 +25,7 @@ import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/time
     MatSlideToggleModule,
     MatSliderModule,
     TimeseriesSymbolSelectComponent,
-    TranslateModule,
+    TranslateModule
   ],
   providers: [ColorPickerService],
   standalone: true

@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatListModule, MatSelectionListChange } from '@angular/material/list';
-import { HelgolandDataset, HelgolandServicesConnector } from '@helgoland/core';
-import { MultiServiceFilterSelectorComponent } from '@helgoland/selector';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { MatListModule, MatSelectionListChange } from "@angular/material/list";
+import { HelgolandDataset, HelgolandServicesConnector } from "@helgoland/core";
+import { MultiServiceFilterSelectorComponent } from "@helgoland/selector";
+import { TranslateService } from "@ngx-translate/core";
 
-import { TimeseriesService } from './../../services/timeseries-service.service';
+import { TimeseriesService } from "./../../services/timeseries-service.service";
 
 @Component({
   selector: 'helgoland-timeseries-list-selector',

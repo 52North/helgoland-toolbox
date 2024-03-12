@@ -1,11 +1,17 @@
-<div *ngIf="trajectory">
-  <span *ngIf="trajectory.parameters.platform">
+@if (trajectory) {
+<div>
+  @if (trajectory.parameters.platform) {
+  <span>
     <span>{{'main-view.header.mobile-platform' | translate}}: </span>
     <span>{{trajectory.parameters.platform.label}}</span>
     <span> - </span>
   </span>
-  <span *ngIf="trajectory.parameters.feature">
+  }
+  @if (trajectory.parameters.feature) {
+  <span>
     <span>{{'main-view.header.path' | translate}}: </span>
     <span>{{trajectory.parameters.feature.label}}</span>
   </span>
+  }
 </div>
+}

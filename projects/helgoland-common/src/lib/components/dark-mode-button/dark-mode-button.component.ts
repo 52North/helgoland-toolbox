@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, OnInit } from "@angular/core";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { LayoutModeService } from '../../services/layout-mode.service';
+import { LayoutModeService } from "../../services/layout-mode.service";
 
 @Component({
   selector: 'helgoland-common-dark-mode-button',

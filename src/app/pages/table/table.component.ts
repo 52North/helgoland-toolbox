@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { DatasetOptions, Timespan } from '@helgoland/core';
-import { HelgolandDatasetTableModule } from '@helgoland/depiction';
-import { HelgolandTimeModule } from '@helgoland/time';
+import { Component } from "@angular/core";
+import { DatasetOptions, Timespan } from "@helgoland/core";
+import { HelgolandDatasetTableModule } from "@helgoland/depiction";
+import { HelgolandTimeModule } from "@helgoland/time";
 
 @Component({
     templateUrl: './table.component.html',

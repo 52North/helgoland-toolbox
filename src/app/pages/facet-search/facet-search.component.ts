@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { MatDatepickerInputEvent, MatDatepickerModule } from "@angular/material/datepicker";
 import {
   ApiV3InterfaceService,
   DatasetType,
@@ -8,7 +8,7 @@ import {
   HelgolandTimeseries,
   Timeseries,
   Timespan,
-} from '@helgoland/core';
+} from "@helgoland/core";
 import {
   convertToFacetEntry,
   FacetSearchElement,
@@ -17,10 +17,10 @@ import {
   HelgolandFacetSearchModule,
   ParameterFacetSort,
   ParameterFacetType,
-} from '@helgoland/facet-search';
-import { MapCache } from '@helgoland/map';
-import { TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+} from "@helgoland/facet-search";
+import { MapCache } from "@helgoland/map";
+import { TranslateService } from "@ngx-translate/core";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: 'n52-facet-search',

@@ -26,7 +26,7 @@ interface EditableFavorite extends Favorite {
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    EditLabelComponent,
+    EditLabelComponent
   ],
   standalone: true
 })

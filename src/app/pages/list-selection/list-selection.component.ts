@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { DatasetType, FilteredProvider, HelgolandDataset, HelgolandParameterFilter } from '@helgoland/core';
-import { HelgolandSelectorModule, ListSelectorParameter, MultiServiceFilterEndpoint } from '@helgoland/selector';
+import { Component } from "@angular/core";
+import { DatasetType, FilteredProvider, HelgolandDataset, HelgolandParameterFilter } from "@helgoland/core";
+import { HelgolandSelectorModule, ListSelectorParameter, MultiServiceFilterEndpoint } from "@helgoland/selector";
 
 @Component({
     templateUrl: './list-selection.component.html',

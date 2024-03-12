@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { HelgolandSelectorModule } from '@helgoland/selector';
+import { Component } from "@angular/core";
+import { HelgolandSelectorModule } from "@helgoland/selector";
 
 @Component({
     templateUrl: './service-filter-selector.component.html',

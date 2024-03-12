@@ -1,12 +1,18 @@
 <div>{{activePanel}}</div>
-<div *ngFor="let param of parameters; let i = index">
+@for (param of parameters; track param; let i = $index) {
+<div>
   <h3>
     <span>{{param.header}}</span>
-    <span *ngIf="param.headerAddition">-</span>
+    @if (param.headerAddition) {
+    <span>-</span>
+    }
     <span>{{param.headerAddition}}</span>
   </h3>
-  <div *ngIf="!param.isDisabled">
+  @if (!param.isDisabled) {
+  <div>
     <n52-multi-service-filter-selector [endpoint]="param.type" [filterList]="param.filterList"
       (onItemSelected)="itemSelected($event, i)"></n52-multi-service-filter-selector>
   </div>
+  }
 </div>
+}

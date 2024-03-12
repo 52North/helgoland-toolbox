@@ -55,7 +55,8 @@
       <n52-parameter-facet [facetSearchService]="facetSearch" [type]="offeringType"
         [textualFilter]="offeringAutocomplete"></n52-parameter-facet>
     </div>
-    <div class="facet" *ngIf="selectedStart && selectedEnd" style="display: flex; flex-direction: row; flex: 0 0 auto;">
+    @if (selectedStart && selectedEnd) {
+    <div class="facet" style="display: flex; flex-direction: row; flex: 0 0 auto;">
       <input matInput [matDatepicker]="pickerFrom" [value]="selectedStart" (dateChange)="setStart($event)">
       <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
       <mat-datepicker #pickerFrom></mat-datepicker>
@@ -63,6 +64,7 @@
       <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
       <mat-datepicker #pickerTo></mat-datepicker>
     </div>
+    }
     <button mat-button [disabled]="resetAllDisabled" (click)="resetAllFacets()">reset all facets</button>
   </div>
   <div class="results">
@@ -78,11 +80,16 @@
       </div>
     </div>
     <div class="result-content">
-      <n52-result-list *ngIf="!showMap" [facetSearchService]="facetSearch" (selected)="onSelectedEntry($event)">
+      @if (!showMap) {
+      <n52-result-list [facetSearchService]="facetSearch" (selected)="onSelectedEntry($event)">
       </n52-result-list>
-      <n52-result-map *ngIf="showMap" [facetSearchService]="facetSearch" [cluster]="true" [aggregateToStations]="true"
-        [autoZoomToResults]="false" (selectedEntry)="onSelectedEntry($event)" (selectedFeature)="onSelectedFeature($event)">
+      }
+      @if (showMap) {
+      <n52-result-map [facetSearchService]="facetSearch" [cluster]="true" [aggregateToStations]="true"
+        [autoZoomToResults]="false" (selectedEntry)="onSelectedEntry($event)"
+        (selectedFeature)="onSelectedFeature($event)">
       </n52-result-map>
+      }
     </div>
   </div>
 </div>

@@ -1,17 +1,28 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DatasetFilter, DatasetType, HelgolandLocatedProfileData, HelgolandProfile, HelgolandServicesConnector, InternalDatasetId, InternalIdHandler, TimedDatasetOptions, Timespan, TzDatePipe } from '@helgoland/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NgClass, NgStyle } from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+    DatasetFilter,
+    DatasetType,
+    HelgolandLocatedProfileData,
+    HelgolandProfile,
+    HelgolandServicesConnector,
+    InternalDatasetId,
+    InternalIdHandler,
+    TimedDatasetOptions,
+    Timespan,
+    TzDatePipe,
+} from "@helgoland/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
-import { ListEntryComponent } from '../list-entry.component';
-import { LabelMapperComponent } from '../../label-mapper/label-mapper.component';
-import { NgIf, NgClass, NgFor, NgStyle } from '@angular/common';
+import { LabelMapperComponent } from "../../label-mapper/label-mapper.component";
+import { ListEntryComponent } from "../list-entry.component";
 
 @Component({
     selector: 'n52-profile-entry',
     templateUrl: './profile-entry.component.html',
     styleUrls: ['./profile-entry.component.scss'],
     standalone: true,
-    imports: [NgIf, NgClass, LabelMapperComponent, NgFor, NgStyle, TranslateModule, TzDatePipe]
+    imports: [NgClass, LabelMapperComponent, NgStyle, TranslateModule, TzDatePipe]
 })
 export class ProfileEntryComponent extends ListEntryComponent {
 

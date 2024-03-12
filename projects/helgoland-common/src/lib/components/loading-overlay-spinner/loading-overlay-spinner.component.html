@@ -1,4 +1,6 @@
 <div class="panel">
   <mat-spinner></mat-spinner>
-  <div *ngIf="loadingHint">{{loadingHint}}</div>
+  @if (loadingHint) {
+  <div>{{loadingHint}}</div>
+  }
 </div>

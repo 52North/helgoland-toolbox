@@ -1,11 +1,11 @@
-import { MatButtonModule } from '@angular/material/button';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, Input } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { Clipboard } from "@angular/cdk/clipboard";
+import { Component, Input } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'helgoland-share-button',

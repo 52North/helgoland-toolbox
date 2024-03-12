@@ -54,7 +54,7 @@ import { DiagramViewPermalinkService } from "./diagram-view-permalink.service";
     ModalFavoriteListButtonComponent,
     ModalMainConfigButtonComponent,
     ShareButtonComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })

@@ -1,8 +1,12 @@
-<div *ngFor="let entry of entries" (click)="timeseriesSelected(entry)">
+@for (entry of entries; track entry) {
+<div (click)="timeseriesSelected(entry)">
   <div>{{entry?.label}}</div>
-  <div class="small" *ngIf="entry.firstValue && entry.lastValue">
+  @if (entry.firstValue && entry.lastValue) {
+  <div class="small">
     <span>{{entry.firstValue.timestamp | tzDate: 'L LT z'}}</span>
     <span>-</span>
     <span>{{entry.lastValue.timestamp | tzDate: 'L LT z'}}</span>
   </div>
+  }
 </div>
+}

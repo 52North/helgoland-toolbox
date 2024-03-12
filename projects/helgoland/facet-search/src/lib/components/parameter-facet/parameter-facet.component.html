@@ -1,4 +1,7 @@
-<div *ngFor="let param of parameterList | matchLabel: textualFilter"
-  [ngStyle]="{'font-weight': param.selected ? 'bold' : 'normal'}" (click)="toggleFacet(param)">
-  <span *ngIf="param.count">{{param.label}} ({{param.count}})</span>
+@for (param of parameterList | matchLabel: textualFilter; track param) {
+<div [ngStyle]="{'font-weight': param.selected ? 'bold' : 'normal'}" (click)="toggleFacet(param)">
+  @if (param.count) {
+  <span>{{param.label}} ({{param.count}})</span>
+  }
 </div>
+}

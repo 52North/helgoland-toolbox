@@ -1,20 +1,28 @@
-<div class="item" *ngFor="let timeseries of phenomenonMatchedList" (click)="toggle(timeseries)">
-  <div *ngIf="counter">
+@for (timeseries of phenomenonMatchedList; track timeseries) {
+<div class="item" (click)="toggle(timeseries)">
+  @if (counter) {
+  <div>
     {{counter}} timeseries are loading...
   </div>
+  }
   <div [ngClass]="{'selected': timeseries.selected}">
     <div>
       <n52-label-mapper [label]="timeseries.parameters.phenomenon?.label"></n52-label-mapper>
     </div>
     <n52-label-mapper [label]="timeseries.parameters.procedure?.label"></n52-label-mapper>
-    <span
-      *ngIf="timeseries.parameters.category?.label && timeseries.parameters.category?.label !== timeseries.parameters.phenomenon?.label">
+    @if (timeseries.parameters.category?.label && timeseries.parameters.category?.label !==
+    timeseries.parameters.phenomenon?.label) {
+    <span>
       ({{timeseries.parameters.category?.label}})
     </span>
-    <div class="additionalInfo" *ngIf="timeseries.lastValue">
+    }
+    @if (timeseries.lastValue) {
+    <div class="additionalInfo">
       <span>{{timeseries.lastValue.value}}</span>
       <span>{{timeseries.uom}}</span>
       <span> ({{timeseries.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
     </div>
+    }
   </div>
 </div>
+}

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { LocalStorage } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { LocalStorage } from "@helgoland/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'helgoland-clear-storage-button',
@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./clear-storage-button.component.scss'],
   imports: [
     TranslateModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   standalone: true
 })

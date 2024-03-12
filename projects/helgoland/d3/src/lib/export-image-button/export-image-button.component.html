@@ -1,4 +1,6 @@
 <button (click)="exportImage()">
-    <span>Export</span>
-    <span *ngIf="loading"> - loading...</span>
+  <span>Export</span>
+  @if (loading) {
+  <span> - loading...</span>
+  }
 </button>

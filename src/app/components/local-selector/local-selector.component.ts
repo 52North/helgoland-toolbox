@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MatRadioModule } from '@angular/material/radio';
-import { LocalSelectorComponent } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { MatRadioModule } from "@angular/material/radio";
+import { LocalSelectorComponent } from "@helgoland/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'n52-lang-selector',

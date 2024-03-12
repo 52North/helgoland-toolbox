@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component } from "@angular/core";
+import { HelgolandCoreModule } from "@helgoland/core";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { versions } from './../../../../../../versions';
-import { HelgolandCoreModule } from '@helgoland/core';
+import { versions } from "./../../../../../../versions";
 
 @Component({
   selector: 'helgoland-common-version-info',

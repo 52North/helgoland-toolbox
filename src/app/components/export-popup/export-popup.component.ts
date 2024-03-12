@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from '@helgoland/core';
-import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
+import { CommonModule } from "@angular/common";
+import { Component, Inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from "@helgoland/core";
+import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from "@helgoland/depiction";
 
 @Component({
   selector: 'n52-export-popup',

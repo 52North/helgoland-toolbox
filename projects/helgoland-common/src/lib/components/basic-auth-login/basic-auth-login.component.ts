@@ -1,9 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { Component, Inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
   selector: 'helgoland-basic-auth-login',
@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule
   ],
   standalone: true
 })

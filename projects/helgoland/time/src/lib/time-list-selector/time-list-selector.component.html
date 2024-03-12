@@ -1,3 +1,5 @@
-<div class="selector-entry" *ngFor="let time of timeList" (click)="selectTime(time)">
+@for (time of timeList; track time) {
+<div class="selector-entry" (click)="selectTime(time)">
   <span>{{time | tzDate: 'L LT z'}}</span>
 </div>
+}

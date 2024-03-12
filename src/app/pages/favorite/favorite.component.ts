@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { DatasetOptions, DatasetType, HelgolandServicesConnector, Timespan } from '@helgoland/core';
-import { HelgolandD3Module } from '@helgoland/d3';
-import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from '@helgoland/favorite';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { DatasetOptions, DatasetType, HelgolandServicesConnector, Timespan } from "@helgoland/core";
+import { HelgolandD3Module } from "@helgoland/d3";
+import { FavoriteService, JsonFavoriteExporterService, SingleFavorite } from "@helgoland/favorite";
 
 @Component({
   templateUrl: './favorite.component.html',

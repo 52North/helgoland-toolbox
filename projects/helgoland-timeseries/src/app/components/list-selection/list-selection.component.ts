@@ -34,7 +34,7 @@ import { ListConfig, ModalListSettingsComponent } from "./modal-list-settings/mo
     MatExpansionModule,
     ParameterListSelectorComponent,
     TimeseriesListSelectorComponent,
-    TranslateModule,
+    TranslateModule
   ],
   standalone: true
 })
@@ -75,7 +75,7 @@ export class ListSelectionComponent implements OnInit {
       const dialogRef = this.dialog.open(ModalListSettingsComponent, {
         data: conf
       });
-  
+
       dialogRef.afterClosed().subscribe((newConf: ListConfig) => {
         if (newConf) {
           if (this.selectedService!.id !== newConf.selectedService.id || this.selectedService!.apiUrl !== newConf.selectedService.apiUrl) {

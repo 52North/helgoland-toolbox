@@ -1,21 +1,27 @@
-<div class="legendItem" *ngIf="dataset" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
+@if (dataset) {
+<div class="legendItem" style="position: relative;" [ngClass]="{'selected': selected}" (click)="toggleSelection()">
   <div class="legendItemheader">
     <div class="legendItemLabel">
       <n52-label-mapper label="{{dataset.parameters.platform?.label}}"></n52-label-mapper>
     </div>
     <div class="small">
       <n52-label-mapper label="{{dataset.parameters.phenomenon?.label}}"></n52-label-mapper>
-      <span *ngIf="dataset?.uom">[
+      @if (dataset.uom) {
+      <span>[
         <n52-label-mapper label="{{dataset.uom}}"></n52-label-mapper>]</span>
+      }
     </div>
     <div class="small">
       <n52-label-mapper label="{{dataset.parameters.procedure?.label}}"></n52-label-mapper>
     </div>
-    <div class="small" *ngIf="dataset.parameters.category?.label !== dataset.parameters.phenomenon?.label">
+    @if (dataset.parameters.category?.label !== dataset.parameters.phenomenon?.label) {
+    <div class="small">
       <n52-label-mapper label="{{dataset.parameters.category?.label}}"></n52-label-mapper>
     </div>
+    }
   </div>
-  <div *ngFor="let item of datasetOptions">
+  @for (item of datasetOptions; track item) {
+  <div>
     <div>
       <span [ngStyle]="{'color': item.color}">{{item.timestamp | tzDate: 'L LT z'}}</span>
       <span class="fa" [ngClass]="{'fa-eye-slash': item.visible, 'fa-eye': !item.visible}"
@@ -28,9 +34,13 @@
       <span class="fa fa-times" (click)="removeDatasetOptions(item); $event.stopPropagation();"
         title="{{'profiles.legend.delete-subentry' | translate}}"></span>
     </div>
-    <div (click)="openInCombiView(item); $event.stopPropagation();" *ngIf="dataset?.isMobile" class="toCombiView">
+    @if (dataset.isMobile) {
+    <div (click)="openInCombiView(item); $event.stopPropagation();" class="toCombiView">
       <span class="fa fa-arrow-right"></span>
       <span>{{'profiles.legend.go-to-combi-view' | translate}}</span>
     </div>
+    }
   </div>
+  }
 </div>
+}

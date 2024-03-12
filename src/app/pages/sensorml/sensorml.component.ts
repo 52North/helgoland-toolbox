@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { AbstractProcess, SensorMLXmlService } from "@helgoland/sensorml";
 
 @Component({
   selector: 'n52-sensorml',

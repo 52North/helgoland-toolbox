@@ -1,3 +1,5 @@
-<div *ngIf="!hasData">
-    {{dataset?.label}} has no data in the selected timeframe.
+@if (!hasData) {
+<div>
+  {{dataset?.label}} has no data in the selected timeframe.
 </div>
+}
