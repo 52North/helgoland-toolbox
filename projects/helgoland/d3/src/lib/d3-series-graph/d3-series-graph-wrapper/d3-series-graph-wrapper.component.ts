@@ -237,7 +237,7 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
         const yaxis = this.getAxisSettings(options);
         const selected = this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
-          categoryLabel: dataset.parameters.category?.label || "",
+          categoryLabel: dataset.parameters.category?.map(e => e.label),
           phenomenonLabel: dataset.parameters.phenomenon?.label || "",
           platformLabel: dataset.platform.label,
           procedureLabel: dataset.parameters.procedure?.label || "",

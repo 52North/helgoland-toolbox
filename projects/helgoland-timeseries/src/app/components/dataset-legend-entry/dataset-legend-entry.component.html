@@ -22,9 +22,9 @@
   <div *ngIf="!error && dataset">
     <div class="small-label" *ngIf="dataset.description.procedureLabel || dataset.description.categoryLabel">
       <n52-label-mapper label="{{dataset.description.procedureLabel}}"></n52-label-mapper>
-      <span *ngIf="dataset.description.categoryLabel !== dataset.description.phenomenonLabel">
-        - <n52-label-mapper label="{{dataset.description.categoryLabel}}"></n52-label-mapper>
-      </span>
+      @if (dataset.description.categoryLabel) {
+        <span> ({{dataset.description.categoryLabel.join(', ')}})</span>
+      }
     </div>
     <div class="controls">
       <button mat-icon-button (click)="toggleSelection(); $event.stopPropagation()"

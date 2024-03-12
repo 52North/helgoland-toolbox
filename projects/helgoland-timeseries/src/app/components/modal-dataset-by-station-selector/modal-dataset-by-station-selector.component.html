@@ -15,9 +15,9 @@
         </div>
         <div matListItemLine>
           <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
-          @if (ds.parameters.category?.label && ds.parameters.category?.label !== ds.parameters.phenomenon?.label) {
+          @if (ds.parameters.category) {
           <span>
-            ({{ds.parameters.category?.label}})
+            ({{getCategoryLabel(ds.parameters.category)}})
           </span>
           }
         </div>
@@ -50,9 +50,9 @@
             </div>
             <div matListItemLine>
               <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
-              @if (ds.parameters.category?.label && ds.parameters.category?.label !== ds.parameters.phenomenon?.label) {
+              @for (item of ds.parameters.category; track item) {
               <span>
-                ({{ds.parameters.category?.label}})
+                ({{item.label}})
               </span>
               }
             </div>

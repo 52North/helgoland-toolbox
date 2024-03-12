@@ -51,6 +51,7 @@ export interface DatastreamSelectParams extends StaSelectParams {
     Sensor?: boolean;
     ObservedProperty?: boolean;
     Observations?: boolean;
+    properties?: boolean;
 }
 
 export interface DatastreamExpandParams extends StaExpandParams {

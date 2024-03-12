@@ -22,7 +22,7 @@ export class ParameterConstellation {
     public feature?: Feature,
     public procedure?: Parameter,
     public phenomenon?: Parameter,
-    public category?: Parameter
+    public category?: Parameter[]
   ) { }
 
 }

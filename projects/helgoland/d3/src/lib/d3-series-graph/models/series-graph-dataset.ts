@@ -127,12 +127,10 @@ export interface DatasetDescription {
     // TODO: make optional?
     procedureLabel: string;
     // TODO: make optional?
-    categoryLabel: string;
+    categoryLabel?: string[];
     // TODO: make optional?
     featureLabel: string;
-    // TODO: make optional?
     firstValue?: FirstLastValue;
-    // TODO: make optional?
     lastValue?: FirstLastValue;
 }
 

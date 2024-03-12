@@ -56,8 +56,8 @@ export class DummyDatasetsService {
         uom: "rnd",
         phenomenonLabel: "Zahlen zwischne 0 und 10",
         platformLabel: "null",
+        categoryLabel: ["test", "horst"],
         procedureLabel: "null",
-        categoryLabel: "null",
         featureLabel: "null"
       }
     )

@@ -28,7 +28,6 @@ export class StockDatasetService {
         phenomenonLabel: "EUR/USD",
         platformLabel: "",
         procedureLabel: "",
-        categoryLabel: "",
         featureLabel: ""
       }
     )

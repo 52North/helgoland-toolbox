@@ -69,7 +69,7 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
       this.platformLabel = this.dataset.platform.label;
       this.phenomenonLabel = this.dataset.parameters.phenomenon?.label;
       this.procedureLabel = this.dataset.parameters.procedure?.label;
-      this.categoryLabel = this.dataset.parameters.category?.label;
+      this.categoryLabel = this.dataset.parameters.category?.map(e => e.label).join(", ");
       this.uom = this.dataset.uom;
     }
   }

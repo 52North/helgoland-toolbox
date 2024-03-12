@@ -45,7 +45,9 @@ class HoveringTestService extends D3SimpleHoveringService {
       .style("pointer-events", "none")
       .style("fill", "black");
     textContainer.append("text").attr("dy", "1em").attr("alignment-baseline", "text-before-edge").text(dataset.description.phenomenonLabel);
-    textContainer.append("text").attr("dy", "2em").attr("alignment-baseline", "text-before-edge").text(dataset.description.categoryLabel);
+    if (dataset.description.categoryLabel) {
+      textContainer.append("text").attr("dy", "2em").attr("alignment-baseline", "text-before-edge").text(dataset.description.categoryLabel.join(", "));
+    }
   }
 
 }

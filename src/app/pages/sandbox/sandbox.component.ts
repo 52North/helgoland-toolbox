@@ -66,7 +66,7 @@ export class SandboxComponent implements OnInit {
     const style = new LineStyle("red", 3, 3);
     const yaxis = new AxisSettings();
     const description: DatasetDescription = {
-      categoryLabel: "category",
+      categoryLabel: ["category"],
       firstValue: value,
       lastValue: value,
       phenomenonLabel: "phenomenon",
@@ -110,7 +110,7 @@ export class SandboxComponent implements OnInit {
       const style = new LineStyle("green", 3, 3);
       const yaxis = new AxisSettings();
       const description: DatasetDescription = {
-        categoryLabel: ds.parameters.category ? ds.parameters.category.label : "",
+        categoryLabel: ds.parameters.category ? ds.parameters.category.map(e => e.label) : [""],
         firstValue: ds.firstValue,
         lastValue: ds.lastValue,
         phenomenonLabel: ds.parameters.phenomenon ? ds.parameters.phenomenon.label : "",

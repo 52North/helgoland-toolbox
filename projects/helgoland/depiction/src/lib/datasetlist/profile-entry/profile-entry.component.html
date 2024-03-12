@@ -14,9 +14,9 @@
     <div class="small">
       <n52-label-mapper label="{{dataset.parameters.procedure?.label}}"></n52-label-mapper>
     </div>
-    @if (dataset.parameters.category?.label !== dataset.parameters.phenomenon?.label) {
+    @for (item of dataset.parameters.category; track item) {
     <div class="small">
-      <n52-label-mapper label="{{dataset.parameters.category?.label}}"></n52-label-mapper>
+      <n52-label-mapper label="{{item.label}}"></n52-label-mapper>
     </div>
     }
   </div>

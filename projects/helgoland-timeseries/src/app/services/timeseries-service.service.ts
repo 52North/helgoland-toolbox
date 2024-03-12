@@ -235,7 +235,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
           phenomenonLabel: ts.parameters.phenomenon?.label || "",
           platformLabel: ts.platform.label,
           procedureLabel: ts.parameters.procedure?.label || "",
-          categoryLabel: ts.parameters.category?.label || "",
+          categoryLabel: ts.parameters.category?.map(e => e.label),
           featureLabel: ts.parameters.feature?.label || "",
           firstValue: ts.firstValue,
           lastValue: ts.lastValue
