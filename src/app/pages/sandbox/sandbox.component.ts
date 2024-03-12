@@ -111,8 +111,8 @@ export class SandboxComponent implements OnInit {
       const yaxis = new AxisSettings();
       const description: DatasetDescription = {
         categoryLabel: ds.parameters.category ? ds.parameters.category.label : "",
-        firstValue: ds.firstValue ? ds.firstValue : new FirstLastValue(),
-        lastValue: ds.lastValue ? ds.lastValue : new FirstLastValue(),
+        firstValue: ds.firstValue,
+        lastValue: ds.lastValue,
         phenomenonLabel: ds.parameters.phenomenon ? ds.parameters.phenomenon.label : "",
         platformLabel: ds.platform.label,
         procedureLabel: ds.parameters.procedure ? ds.parameters.procedure.label : "",

@@ -58,8 +58,6 @@ export class DummyDatasetsService {
         platformLabel: "null",
         procedureLabel: "null",
         categoryLabel: "null",
-        firstValue: new FirstLastValue(),
-        lastValue: new FirstLastValue(),
         featureLabel: "null"
       }
     )

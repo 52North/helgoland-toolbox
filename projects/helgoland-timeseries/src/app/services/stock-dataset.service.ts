@@ -29,8 +29,6 @@ export class StockDatasetService {
         platformLabel: "",
         procedureLabel: "",
         categoryLabel: "",
-        firstValue: new FirstLastValue(),
-        lastValue: new FirstLastValue(),
         featureLabel: ""
       }
     )

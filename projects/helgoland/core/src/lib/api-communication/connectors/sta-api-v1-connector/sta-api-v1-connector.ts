@@ -259,12 +259,8 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     let firstLast: FirstLastValue | undefined;
     if (obs?.length === 1) {
       const { phenomenonTime, result } = obs[0];
-      firstLast = new FirstLastValue();
-      if (phenomenonTime) {
-        firstLast.timestamp = new Date(phenomenonTime).getTime();
-      }
-      if (typeof result === "number") {
-        firstLast.value = result;
+      if (phenomenonTime && typeof result === "number") {
+        firstLast = new FirstLastValue(new Date(phenomenonTime).getTime(), result);
       }
     }
     return firstLast;

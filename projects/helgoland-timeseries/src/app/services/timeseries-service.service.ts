@@ -237,8 +237,8 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
           procedureLabel: ts.parameters.procedure?.label || "",
           categoryLabel: ts.parameters.category?.label || "",
           featureLabel: ts.parameters.feature?.label || "",
-          firstValue: ts.firstValue || new FirstLastValue(),
-          lastValue: ts.lastValue || new FirstLastValue()
+          firstValue: ts.firstValue,
+          lastValue: ts.lastValue
         }
       )
       this.setState(dataset.id, style, yaxis, selected, visible);

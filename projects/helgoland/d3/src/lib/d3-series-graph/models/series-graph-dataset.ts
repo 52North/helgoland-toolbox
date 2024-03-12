@@ -131,9 +131,9 @@ export interface DatasetDescription {
     // TODO: make optional?
     featureLabel: string;
     // TODO: make optional?
-    firstValue: FirstLastValue;
+    firstValue?: FirstLastValue;
     // TODO: make optional?
-    lastValue: FirstLastValue;
+    lastValue?: FirstLastValue;
 }
 
 export class DatasetChild {

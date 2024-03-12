@@ -244,8 +244,8 @@ export class D3SeriesGraphWrapperComponent extends DatasetPresenterComponent<Dat
           procedureLabel: dataset.parameters.procedure?.label || "",
           featureLabel: dataset.parameters.feature?.label || "",
           uom: dataset.uom,
-          firstValue: dataset.firstValue || new FirstLastValue(),
-          lastValue: dataset.lastValue || new FirstLastValue()
+          firstValue: dataset.firstValue,
+          lastValue: dataset.lastValue
         }
         dsEntry = new SeriesGraphDataset(dataset.internalId, style, yaxis, options.visible, selected, description);
         dataset.referenceValues.forEach(ref => {
