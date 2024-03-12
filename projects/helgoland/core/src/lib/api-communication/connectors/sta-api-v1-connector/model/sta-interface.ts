@@ -23,7 +23,10 @@ export enum StaEndpoint {
 
 export interface StaObject {
   "@iot.selfLink"?: string;
-  "@iot.id"?: string;
+  "@iot.id": string;
+  properties?: {
+    [key: string]: any;
+  }
 }
 
 export interface InsertId {
@@ -31,7 +34,7 @@ export interface InsertId {
 }
 
 export interface StaSelectParams {
-  [key:string]:any;
+  [key: string]: any;
 }
 
 export interface StaValueListResponse<T extends StaObject> {
@@ -40,8 +43,8 @@ export interface StaValueListResponse<T extends StaObject> {
   value: T[];
 }
 
-export interface StaExpandParams { 
-  [key:string]:any;
+export interface StaExpandParams {
+  [key: string]: any;
 }
 
 export interface StaFilter<S extends StaSelectParams, E extends StaExpandParams> {

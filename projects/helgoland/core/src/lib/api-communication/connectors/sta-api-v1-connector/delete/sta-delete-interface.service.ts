@@ -46,7 +46,7 @@ export class StaDeleteInterfaceService implements StaDeleteInterface {
   protected createRequestUrl(apiUrl: string, endpoint: string, id?: string) {
     // TODO: Check whether apiUrl ends with slash
     if (id !== null && id !== undefined) {
-      return `${apiUrl}${endpoint}('${id}')`;
+      return `${apiUrl}${endpoint}(${id})`;
     } else {
       return `${apiUrl}${endpoint}`;
     }

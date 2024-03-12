@@ -5,37 +5,40 @@ export interface HelgolandData { }
 
 export class HelgolandTimeseriesData implements HelgolandData {
 
-  referenceValues: ReferenceValues<TimeValueTuple> = {};
-  valueBeforeTimespan: TimeValueTuple | undefined;
-  valueAfterTimespan: TimeValueTuple | undefined;
-
   constructor(
-        public values: TimeValueTuple[],
+    public values: TimeValueTuple[],
+    public referenceValues: ReferenceValues<TimeValueTuple> = {},
+    public valueBeforeTimespan?: TimeValueTuple,
+    public valueAfterTimespan?: TimeValueTuple
   ) { }
+
 }
 
 export class HelgolandTrajectoryData implements HelgolandData {
 
   constructor(
-        public values: LocatedTimeValueEntry[]
+    public values: LocatedTimeValueEntry[]
   ) { }
+
 }
 
 export class HelgolandProfileData implements HelgolandData {
 
   constructor(
-        public values: ProfileDataEntry[]
+    public values: ProfileDataEntry[]
   ) { }
+
 }
 
 export class HelgolandLocatedProfileData implements HelgolandData {
 
   constructor(
-        public values: LocatedProfileDataEntry[]
+    public values: LocatedProfileDataEntry[]
   ) { }
+
 }
 
 export interface HelgolandDataFilter {
-    expanded?: boolean;
-    generalize?: boolean;
+  expanded?: boolean;
+  generalize?: boolean;
 }
