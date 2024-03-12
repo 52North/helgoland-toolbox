@@ -2,8 +2,8 @@
   "name": "@helgoland/time",
   "version": "15.0.2",
   "dependencies": {
-    "@angular/common": "^15.0.0 || ^16.0.0",
-    "@angular/core": "^15.0.0 || ^16.0.0",
+    "@angular/common": "^16.0.0 || ^17.0.0",
+    "@angular/core": "^16.0.0 || ^17.0.0",
     "@types/geojson": "^7946.0.10",
     "moment": "^2.29.4",
     "tslib": "^2.1.0"
