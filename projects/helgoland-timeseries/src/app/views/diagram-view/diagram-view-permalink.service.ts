@@ -37,6 +37,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
   }
 
   private handleParams(params: Params): Observable<boolean> {
+    const valid: Observable<boolean>[] = [];
     if (params[PARAM_IDS]) {
       this.graphDatasetsSrvc.deleteAllDatasets();
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
@@ -54,7 +55,7 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
       if (timespan) { this.graphDatasetsSrvc.timespan = timespan; }
     }
-    return of(true);
+    return of(true)
   }
 
   protected generatePermalink(): string {
