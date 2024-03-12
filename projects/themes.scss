@@ -9,11 +9,11 @@
 @include mat.core();
 
 // for npm roboto-fontface package (to load local files)
-$roboto-font-path: "~roboto-fontface/fonts" !default;
+$roboto-font-path: "roboto-fontface/fonts" !default;
 @import 'node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
 
 // // for npm material-icons package (to load local files)
-$material-icons-font-path: '~material-icons/iconfont/';
+$material-icons-font-path: 'material-icons/iconfont/';
 @import 'material-icons/iconfont/material-icons.scss';
 
 $fontConfig: (display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
