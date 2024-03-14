@@ -286,10 +286,10 @@ export class D3SeriesGraphWrapperComponent
           this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
           categoryLabel: dataset.parameters.category?.map((e) => e.label),
-          phenomenonLabel: dataset.parameters.phenomenon?.label || '',
+          phenomenonLabel: dataset.parameters.phenomenon?.label,
           platformLabel: dataset.platform.label,
-          procedureLabel: dataset.parameters.procedure?.label || '',
-          featureLabel: dataset.parameters.feature?.label || '',
+          procedureLabel: dataset.parameters.procedure?.label,
+          featureLabel: dataset.parameters.feature?.label,
           uom: dataset.uom,
           firstValue: dataset.firstValue,
           lastValue: dataset.lastValue,

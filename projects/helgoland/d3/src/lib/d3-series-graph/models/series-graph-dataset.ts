@@ -117,16 +117,11 @@ export interface GraphDataEntry {
 
 export interface DatasetDescription {
   uom: string;
-  // TODO: make optional?
-  phenomenonLabel: string;
-  // TODO: make optional?
-  platformLabel: string;
-  // TODO: make optional?
-  procedureLabel: string;
-  // TODO: make optional?
+  phenomenonLabel?: string;
+  platformLabel?: string;
+  procedureLabel?: string;
   categoryLabel?: string[];
-  // TODO: make optional?
-  featureLabel: string;
+  featureLabel?: string;
   firstValue?: FirstLastValue;
   lastValue?: FirstLastValue;
 }

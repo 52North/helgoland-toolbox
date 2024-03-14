@@ -5,9 +5,11 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <div class="title" [ngClass]="{ noData: !hasData }" *ngIf="!error">
-        <n52-label-mapper
-          label="{{ dataset.description.phenomenonLabel }}"
-        ></n52-label-mapper>
+        @if (dataset.description.phenomenonLabel) {
+          <n52-label-mapper
+            label="{{ dataset.description.phenomenonLabel }}"
+          ></n52-label-mapper>
+        }
         <span *ngIf="dataset.description.uom">
           <span>
             [<n52-label-mapper
@@ -16,7 +18,9 @@
             >]
           </span>
         </span>
-        <div>{{ dataset.description.platformLabel }}</div>
+        @if (dataset.description.procedureLabel) {
+          <div>{{ dataset.description.platformLabel }}</div>
+        }
       </div>
       <div class="title error" *ngIf="error">
         Error occured, while loading {{ dataset.id }}

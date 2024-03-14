@@ -7,7 +7,6 @@ import {
 } from '@helgoland/d3';
 
 import { DatasetsService } from './graph-datasets.service';
-import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
 
 @Injectable({
   providedIn: 'root',
@@ -64,10 +63,7 @@ export class DummyDatasetsService {
       {
         uom: 'rnd',
         phenomenonLabel: 'Zahlen zwischne 0 und 10',
-        platformLabel: 'null',
-        categoryLabel: ['test', 'horst'],
-        procedureLabel: 'null',
-        featureLabel: 'null',
+        categoryLabel: ['random', '0 and 10'],
       },
     );
   }
