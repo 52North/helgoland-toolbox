@@ -1,91 +1,89 @@
 <h1 mat-dialog-title>
   {{ "modal-edit-timeseries-options.title" | translate }}
 </h1>
-<mat-dialog-content *ngIf="data.dataset">
-  <!-- <div>
-    <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
-      {{ 'modal-edit-timeseries-options.generalizeData' | translate }}
-    </mat-slide-toggle>
-  </div> -->
+@if (data.dataset) {
+  <mat-dialog-content>
+    <!-- <div>
+      <mat-slide-toggle [(ngModel)]="options.generalize" color="primary">
+        {{ 'modal-edit-timeseries-options.generalizeData' | translate }}
+      </mat-slide-toggle>
+    </div> -->
 
-  <div>
-    <mat-slide-toggle
-      [ngModel]="data.dataset.yAxis.zeroBased"
-      (change)="setZeroBased($event)"
-      color="primary"
-    >
-      {{ "modal-edit-timeseries-options.null-based" | translate }}
-    </mat-slide-toggle>
-  </div>
-  <div style="margin: 10px 0">
-    {{ "modal-edit-timeseries-options.adjust-color" | translate }}
-    <button
-      mat-raised-button
-      [colorPicker]="data.dataset.style.baseColor"
-      (colorPickerSelect)="confirmColor($event)"
-      [cpOKButton]="true"
-      [cpOKButtonText]="
-        'modal-edit-timeseries-options.adjust-color-confirm-button' | translate
-      "
-      [cpOKButtonClass]="
-        'mat-focus-indicator mat-raised-button mat-button-base'
-      "
-      [ngStyle]="{ 'background-color': data.dataset.style.baseColor }"
-    >
-      &nbsp;
-    </button>
-  </div>
-
-  <ng-container
-    *ngIf="
-      config.configuration?.supportTimeseriesSymbols && isLineStyle() && loaded
-    "
-  >
-    <helgoland-timeseries-symbol-select
-      [lineStyle]="asLineStyle()"
-      (styleChanged)="setLineStyle($event)"
-    >
-    </helgoland-timeseries-symbol-select>
-  </ng-container>
-
-  <ng-container
-    *ngIf="!config.configuration?.supportTimeseriesSymbols && loaded"
-  >
     <div>
-      {{ "modal-edit-timeseries-options.point-radius" | translate }}
+      <mat-slide-toggle
+        [ngModel]="data.dataset.yAxis.zeroBased"
+        (change)="setZeroBased($event)"
+        color="primary"
+      >
+        {{ "modal-edit-timeseries-options.null-based" | translate }}
+      </mat-slide-toggle>
     </div>
-    <div style="display: flex">
-      <mat-slider style="flex: 1" color="primary" [min]="1" [max]="5">
-        <input
-          [value]="asLineStyle().pointRadius"
-          (valueChange)="setPointRadius($event)"
-          matSliderThumb
-        />
-      </mat-slider>
+    <div style="margin: 10px 0">
+      {{ "modal-edit-timeseries-options.adjust-color" | translate }}
+      <button
+        mat-raised-button
+        [colorPicker]="data.dataset.style.baseColor"
+        (colorPickerSelect)="confirmColor($event)"
+        [cpOKButton]="true"
+        [cpOKButtonText]="
+          'modal-edit-timeseries-options.adjust-color-confirm-button'
+            | translate
+        "
+        [cpOKButtonClass]="
+          'mat-focus-indicator mat-raised-button mat-button-base'
+        "
+        [ngStyle]="{ 'background-color': data.dataset.style.baseColor }"
+      >
+        &nbsp;
+      </button>
     </div>
-  </ng-container>
 
-  <!-- <div>
-    {{ 'modal-edit-timeseries-options.line-width' | translate }}
-  </div>
-  <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
-    [(ngModel)]="options.lineWidth">
-  </mat-slider> -->
-  <div *ngIf="loaded">
-    <div>
-      {{ "modal-edit-timeseries-options.line-width" | translate }}
+    @if (
+      config.configuration.supportTimeseriesSymbols && isLineStyle() && loaded
+    ) {
+      <helgoland-timeseries-symbol-select
+        [lineStyle]="asLineStyle()"
+        (styleChanged)="setLineStyle($event)"
+      />
+    }
+
+    @if (!config.configuration.supportTimeseriesSymbols && loaded) {
+      <div>
+        {{ "modal-edit-timeseries-options.point-radius" | translate }}
+      </div>
+      <div style="display: flex">
+        <mat-slider style="flex: 1" color="primary" [min]="1" [max]="5">
+          <input
+            [value]="asLineStyle().pointRadius"
+            (valueChange)="setPointRadius($event)"
+            matSliderThumb
+          />
+        </mat-slider>
+      </div>
+    }
+
+    <!-- <div>
+      {{ 'modal-edit-timeseries-options.line-width' | translate }}
     </div>
-    <div style="display: flex">
-      <mat-slider color="primary" min="1" max="5" step="1" style="flex: 1">
-        <input
-          [value]="asLineStyle().lineWidth"
-          (valueChange)="setLineWidth($event)"
-          matSliderThumb
-        />
-      </mat-slider>
-    </div>
-  </div>
-</mat-dialog-content>
+    <mat-slider class="example-margin" color="primary" [min]="1" [max]="5" [thumbLabel]="true" tickInterval="1"
+      [(ngModel)]="options.lineWidth">
+    </mat-slider> -->
+    @if (loaded) {
+      <div>
+        {{ "modal-edit-timeseries-options.line-width" | translate }}
+      </div>
+      <div style="display: flex">
+        <mat-slider color="primary" min="1" max="5" step="1" style="flex: 1">
+          <input
+            [value]="asLineStyle().lineWidth"
+            (valueChange)="setLineWidth($event)"
+            matSliderThumb
+          />
+        </mat-slider>
+      </div>
+    }
+  </mat-dialog-content>
+}
 <div mat-dialog-actions>
   <div style="flex: 1"></div>
   <button mat-raised-button mat-dialog-close cdkFocusInitial>
