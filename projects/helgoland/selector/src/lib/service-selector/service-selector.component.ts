@@ -5,10 +5,10 @@ import {
   HelgolandParameterFilter,
   HelgolandService,
 } from '@helgoland/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ServiceSelectorService } from './service-selector.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 interface ExtendedHelgolandService extends HelgolandService {
   protected?: boolean;
@@ -22,7 +22,7 @@ interface ExtendedHelgolandService extends HelgolandService {
   templateUrl: './service-selector.component.html',
   styleUrls: ['./service-selector.component.scss'],
   standalone: true,
-  imports: [NgClass, TranslateModule],
+  imports: [CommonModule, TranslateModule],
 })
 export class ServiceSelectorComponent implements OnInit {
   @Input()

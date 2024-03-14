@@ -28,9 +28,13 @@ interface Symbol {
   standalone: true,
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
-  @Input() lineStyle: LineStyle | undefined;
+  // <<<<<<< HEAD
+  @Input({ required: true }) lineStyle: LineStyle | undefined;
 
   @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
+  // =======
+  //   @Input({ required: true }) options!: DatasetOptions;
+  // >>>>>>> 00252b782fb5fc2c23fb8c28596a26f0603e3757
 
   symbols: Symbol[] = [
     {
