@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { AbstractAllowedValues } from "./AbstractAllowedValues";
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { AbstractAllowedValues } from './AbstractAllowedValues';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class AbstractNumericAllowedValues extends AbstractAllowedValues {
-    @DisplayName("Significant figures")
-      significantFigures: number;
+  @DisplayName('Significant figures')
+  significantFigures: number;
 
-    override toString() {
-      return "Abstract numeric allowed values";
-    }
+  override toString() {
+    return 'Abstract numeric allowed values';
+  }
 }

@@ -1,16 +1,13 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { HelgolandMapModule } from "../base/map.module";
-import { LayerOpacitySliderComponent } from "./layer-opacity-slider/layer-opacity-slider.component";
-import { LayerVisibleTogglerComponent } from "./layer-visible-toggler/layer-visible-toggler.component";
+import { HelgolandMapModule } from '../base/map.module';
+import { LayerOpacitySliderComponent } from './layer-opacity-slider/layer-opacity-slider.component';
+import { LayerVisibleTogglerComponent } from './layer-visible-toggler/layer-visible-toggler.component';
 
-const COMPONENTS = [
-  LayerVisibleTogglerComponent,
-  LayerOpacitySliderComponent,
-];
+const COMPONENTS = [LayerVisibleTogglerComponent, LayerOpacitySliderComponent];
 
 /**
  * The layer controls module includes the following functionality:
@@ -22,11 +19,9 @@ const COMPONENTS = [
     FormsModule,
     HelgolandCoreModule,
     HelgolandMapModule,
-    COMPONENTS
+    COMPONENTS,
   ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: []
+  exports: [COMPONENTS],
+  providers: [],
 })
-export class HelgolandLayerControlModule { }
+export class HelgolandLayerControlModule {}

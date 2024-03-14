@@ -1,15 +1,15 @@
 // @ts-nocheck
-import { SweAnyNumerical } from "./SweAnyNumerical";
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { SweAnyNumerical } from './SweAnyNumerical';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class SweCoordinate {
-    @DisplayName("Name")
-      name: string;
+  @DisplayName('Name')
+  name: string;
 
-    @DisplayName("Coordinate")
-      coordinate: SweAnyNumerical;
+  @DisplayName('Coordinate')
+  coordinate: SweAnyNumerical;
 
-    toString() {
-      return this.name || "SWE coordinate";
-    }
+  toString() {
+    return this.name || 'SWE coordinate';
+  }
 }

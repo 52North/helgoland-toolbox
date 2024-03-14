@@ -1,12 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Observable, of, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
 
 /**
  * Service to hold the corresponding graph id
  */
 @Injectable()
 export class D3GraphId {
-
   private id: string | undefined;
 
   private subject: Subject<string> = new Subject();

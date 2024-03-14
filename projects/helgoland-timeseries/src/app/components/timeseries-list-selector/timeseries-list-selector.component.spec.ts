@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { MatListModule } from "@angular/material/list";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatListModule } from '@angular/material/list';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { TimeseriesListSelectorComponent } from "./timeseries-list-selector.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { TimeseriesListSelectorComponent } from './timeseries-list-selector.component';
 
-describe("TimeseriesListSelectorComponent", () => {
+describe('TimeseriesListSelectorComponent', () => {
   let component: TimeseriesListSelectorComponent;
   let fixture: ComponentFixture<TimeseriesListSelectorComponent>;
 
@@ -15,8 +15,8 @@ describe("TimeseriesListSelectorComponent", () => {
         HelgolandCoreModule,
         TranslateTestingModule,
         MatListModule,
-        TimeseriesListSelectorComponent
-      ]
+        TimeseriesListSelectorComponent,
+      ],
     }).compileComponents();
   });
 
@@ -26,7 +26,7 @@ describe("TimeseriesListSelectorComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

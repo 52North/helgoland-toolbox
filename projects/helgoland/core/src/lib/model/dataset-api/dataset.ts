@@ -1,7 +1,7 @@
-import { DatasetTypes, PlatformTypes } from "./enums";
-import { Feature } from "./feature";
-import { Parameter } from "./parameter";
-import { Station } from "./station";
+import { DatasetTypes, PlatformTypes } from './enums';
+import { Feature } from './feature';
+import { Parameter } from './parameter';
+import { Station } from './station';
 
 export interface IDataset extends Parameter {
   url: string;
@@ -15,37 +15,31 @@ export interface IDataset extends Parameter {
 }
 
 export class ParameterConstellation {
-
   constructor(
     public service?: Parameter,
     public offering?: Parameter,
     public feature?: Feature,
     public procedure?: Parameter,
     public phenomenon?: Parameter,
-    public category?: Parameter[]
-  ) { }
-
+    public category?: Parameter[],
+  ) {}
 }
 
 export class FirstLastValue {
-
   constructor(
     public timestamp: number,
-    public value: number
-  ) { }
-
+    public value: number,
+  ) {}
 }
 
 export class ReferenceValue {
-
   constructor(
     public referenceValueId: string,
     public label: string,
     public lastValue?: FirstLastValue,
     public color?: string,
-    public visible?: boolean
-  ) { }
-
+    public visible?: boolean,
+  ) {}
 }
 
 export interface RenderingHints {
@@ -56,7 +50,7 @@ export interface RenderingHints {
 }
 
 export interface LineRenderingHints extends RenderingHints {
-  chartType: "line";
+  chartType: 'line';
   properties: {
     color: string;
     width: string;
@@ -65,7 +59,7 @@ export interface LineRenderingHints extends RenderingHints {
 }
 
 export interface BarRenderingHints {
-  chartType: "bar";
+  chartType: 'bar';
   properties: {
     color: string;
     width: string;
@@ -78,7 +72,6 @@ export class DatasetParameterConstellation extends ParameterConstellation {
 }
 
 export class Dataset implements IDataset {
-
   public seriesParameters?: DatasetParameterConstellation;
 
   constructor(
@@ -93,13 +86,11 @@ export class Dataset implements IDataset {
     public datasetType: DatasetTypes,
     public platformType: PlatformTypes,
     public parameters: DatasetParameterConstellation,
-    public renderingHints: RenderingHints
-  ) { }
-
+    public renderingHints: RenderingHints,
+  ) {}
 }
 
 export class Timeseries implements IDataset {
-
   public hasData = false;
   public statusIntervals?: StatusInterval[];
 
@@ -114,9 +105,8 @@ export class Timeseries implements IDataset {
     public referenceValues: ReferenceValue[],
     public station: Station,
     public parameters: ParameterConstellation,
-    public renderingHints: RenderingHints
-  ) { }
-
+    public renderingHints: RenderingHints,
+  ) {}
 }
 
 export interface TimeseriesExtras {
@@ -136,11 +126,9 @@ export interface PlatformParameter extends Parameter {
 }
 
 export class TimeseriesData {
-
   constructor(
     public id: string,
     public url: string,
-    public data: FirstLastValue[]
-  ) { }
-
+    public data: FirstLastValue[],
+  ) {}
 }

@@ -1,1 +1,1 @@
-export type SweByteEncoding = "base64" | "raw";
+export type SweByteEncoding = 'base64' | 'raw';

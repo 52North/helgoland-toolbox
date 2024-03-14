@@ -3,20 +3,20 @@
 <button (click)="requestPublications()">Request Publications</button>
 <button (click)="requestNotifications()">Request Notifications</button>
 @if (loading) {
-<div>loading...</div>
+  <div>loading...</div>
 }
 @if (requestError) {
-<div>{{requestError}}</div>
+  <div>{{ requestError }}</div>
 }
 @if (eventResults) {
-<pre>{{eventResults|json}}</pre>
+  <pre>{{ eventResults | json }}</pre>
 }
 @if (subscriptionResults) {
-<pre>{{subscriptionResults|json}}</pre>
+  <pre>{{ subscriptionResults | json }}</pre>
 }
 @if (publicationResults) {
-<pre>{{publicationResults|json}}</pre>
+  <pre>{{ publicationResults | json }}</pre>
 }
 @if (notificationResults) {
-<pre>{{notificationResults|json}}</pre>
+  <pre>{{ notificationResults | json }}</pre>
 }

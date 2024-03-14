@@ -1,5 +1,3 @@
-import { Parameter } from "./parameter";
+import { Parameter } from './parameter';
 
-export interface Category extends Parameter {
-
-}
+export interface Category extends Parameter {}

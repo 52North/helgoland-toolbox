@@ -35,8 +35,8 @@
     (onTimespanSelected)="selectedTimespan = $event"></n52-timespan-button>
 </p> -->
 @if (selectedTimespan) {
-<div>
-  Selected timespan: {{ selectedTimespan.from | tzDate : 'L LT z' }} -
-  {{ selectedTimespan.to | tzDate : 'L LT z' }}
-</div>
+  <div>
+    Selected timespan: {{ selectedTimespan.from | tzDate: "L LT z" }} -
+    {{ selectedTimespan.to | tzDate: "L LT z" }}
+  </div>
 }

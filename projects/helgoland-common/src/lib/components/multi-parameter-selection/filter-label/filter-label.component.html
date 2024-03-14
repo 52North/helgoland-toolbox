@@ -1,39 +1,39 @@
 <span>
   @switch (filter) {
-  @case ('category') {
-  <span>
-    {{'list-selection.filter.category' | translate}}
-  </span>
-  }
-  @case ('feature') {
-  <span>
-    {{'list-selection.filter.feature' | translate}}
-  </span>
-  }
-  @case ('phenomenon') {
-  <span>
-    {{'list-selection.filter.phenomenon' | translate}}
-  </span>
-  }
-  @case ('procedure') {
-  <span>
-    {{'list-selection.filter.procedure' | translate}}
-  </span>
-  }
-  @case ('timeseries') {
-  <span>
-    {{'list-selection.filter.timeseries' | translate}}
-  </span>
-  }
-  @case ('provider') {
-  <span>
-    {{'list-selection.filter.provider' | translate}}
-  </span>
-  }
-  @default {
-  <span>
-    {{filter}}
-  </span>
-  }
+    @case ("category") {
+      <span>
+        {{ "list-selection.filter.category" | translate }}
+      </span>
+    }
+    @case ("feature") {
+      <span>
+        {{ "list-selection.filter.feature" | translate }}
+      </span>
+    }
+    @case ("phenomenon") {
+      <span>
+        {{ "list-selection.filter.phenomenon" | translate }}
+      </span>
+    }
+    @case ("procedure") {
+      <span>
+        {{ "list-selection.filter.procedure" | translate }}
+      </span>
+    }
+    @case ("timeseries") {
+      <span>
+        {{ "list-selection.filter.timeseries" | translate }}
+      </span>
+    }
+    @case ("provider") {
+      <span>
+        {{ "list-selection.filter.provider" | translate }}
+      </span>
+    }
+    @default {
+      <span>
+        {{ filter }}
+      </span>
+    }
   }
 </span>

@@ -1,8 +1,14 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { Map } from "ol";
-import BaseLayer from "ol/layer/Base";
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import { Map } from 'ol';
+import BaseLayer from 'ol/layer/Base';
 
-import { OlBaseComponent } from "../../ol-base.component";
+import { OlBaseComponent } from '../../ol-base.component';
 
 /**
  * Component to configure an additional layer to the map. The component must be embedded as seen in the example
@@ -13,12 +19,14 @@ import { OlBaseComponent } from "../../ol-base.component";
  * </n52-ol-map>
  */
 @Component({
-  selector: "n52-ol-layer",
-  template: "",
-  standalone: true
+  selector: 'n52-ol-layer',
+  template: '',
+  standalone: true,
 })
-export class OlLayerComponent extends OlBaseComponent implements AfterViewInit, OnChanges {
-
+export class OlLayerComponent
+  extends OlBaseComponent
+  implements AfterViewInit, OnChanges
+{
   /**
    * Configured layer
    */

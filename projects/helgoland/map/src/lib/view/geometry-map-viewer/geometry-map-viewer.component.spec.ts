@@ -1,18 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { MapCache } from "../../base/map-cache.service";
-import { GeometryMapViewerComponent } from "./geometry-map-viewer.component";
+import { MapCache } from '../../base/map-cache.service';
+import { GeometryMapViewerComponent } from './geometry-map-viewer.component';
 
-describe("GeometryMapViewerComponent", () => {
+describe('GeometryMapViewerComponent', () => {
   let component: GeometryMapViewerComponent;
   let fixture: ComponentFixture<GeometryMapViewerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [GeometryMapViewerComponent],
-      providers: [
-        MapCache
-      ]
+      providers: [MapCache],
     }).compileComponents();
   }));
 
@@ -22,7 +20,7 @@ describe("GeometryMapViewerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

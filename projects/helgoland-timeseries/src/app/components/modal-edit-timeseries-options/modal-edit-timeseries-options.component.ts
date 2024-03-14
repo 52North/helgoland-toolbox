@@ -1,21 +1,38 @@
-import { CommonModule } from "@angular/common";
-import { AfterContentInit, Component, EventEmitter, Inject } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatSliderModule } from "@angular/material/slider";
-import { AxisSettings, DatasetStyle, LineStyle, SeriesGraphDataset } from "@helgoland/d3";
-import { TranslateModule } from "@ngx-translate/core";
-import { ColorPickerModule, ColorPickerService } from "ngx-color-picker";
+import { CommonModule } from '@angular/common';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  Inject,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import {
+  MatSlideToggleChange,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import {
+  AxisSettings,
+  DatasetStyle,
+  LineStyle,
+  SeriesGraphDataset,
+} from '@helgoland/d3';
+import { TranslateModule } from '@ngx-translate/core';
+import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 
-import { ConfigurationService } from "./../../services/configuration.service";
-import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/timeseries-symbol-select.component";
+import { ConfigurationService } from './../../services/configuration.service';
+import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select/timeseries-symbol-select.component';
 
 @Component({
-  selector: "helgoland-modal-edit-timeseries-options",
-  templateUrl: "./modal-edit-timeseries-options.component.html",
-  styleUrls: ["./modal-edit-timeseries-options.component.scss"],
+  selector: 'helgoland-modal-edit-timeseries-options',
+  templateUrl: './modal-edit-timeseries-options.component.html',
+  styleUrls: ['./modal-edit-timeseries-options.component.scss'],
   imports: [
     CommonModule,
     ColorPickerModule,
@@ -25,13 +42,12 @@ import { TimeseriesSymbolSelectComponent } from "./timeseries-symbol-select/time
     MatSlideToggleModule,
     MatSliderModule,
     TimeseriesSymbolSelectComponent,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [ColorPickerService],
-  standalone: true
+  standalone: true,
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
-
   public adjustedColor: string | undefined;
 
   private style: DatasetStyle;
@@ -40,11 +56,12 @@ export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
 
   constructor(
     public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {
-      dataset: SeriesGraphDataset,
-      handler: EventEmitter<void>
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      dataset: SeriesGraphDataset;
+      handler: EventEmitter<void>;
     },
-    public config: ConfigurationService
+    public config: ConfigurationService,
   ) {
     this.style = this.data.dataset?.style;
     this.yaxis = this.data.dataset?.yAxis;
@@ -59,7 +76,7 @@ export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    setTimeout(() => this.loaded = true, 100);
+    setTimeout(() => (this.loaded = true), 100);
   }
 
   confirmColor(color: string) {
@@ -88,5 +105,4 @@ export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
     this.style.lineWidth = val;
     this.data.dataset.setStyle(this.style);
   }
-
 }

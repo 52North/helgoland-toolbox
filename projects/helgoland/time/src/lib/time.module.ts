@@ -1,20 +1,20 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { PredefinedTimespanSelectorComponent } from "./predefined-timespan-selector/predefined-timespan-selector.component";
-import { TimeListSelectorComponent } from "./time-list-selector/time-list-selector.component";
-import { TimespanButtonComponent } from "./timespan-button/timespan-button.component";
-import { TimespanShiftSelectorComponent } from "./timespan-shift-selector/timespan-shift-selector.component";
-import { AutoUpdateTimespanComponent } from "./auto-update-timespan/auto-update-timespan.component";
+import { PredefinedTimespanSelectorComponent } from './predefined-timespan-selector/predefined-timespan-selector.component';
+import { TimeListSelectorComponent } from './time-list-selector/time-list-selector.component';
+import { TimespanButtonComponent } from './timespan-button/timespan-button.component';
+import { TimespanShiftSelectorComponent } from './timespan-shift-selector/timespan-shift-selector.component';
+import { AutoUpdateTimespanComponent } from './auto-update-timespan/auto-update-timespan.component';
 
 const COMPONENTS = [
   PredefinedTimespanSelectorComponent,
   TimeListSelectorComponent,
   TimespanShiftSelectorComponent,
   TimespanButtonComponent,
-  AutoUpdateTimespanComponent
+  AutoUpdateTimespanComponent,
 ];
 
 /**
@@ -22,14 +22,7 @@ const COMPONENTS = [
  * - different time controls to manipulate a timestamp or timeinterval
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HelgolandCoreModule,
-    COMPONENTS
-  ],
-  exports: [
-    COMPONENTS
-  ]
+  imports: [CommonModule, FormsModule, HelgolandCoreModule, COMPONENTS],
+  exports: [COMPONENTS],
 })
-export class HelgolandTimeModule { }
+export class HelgolandTimeModule {}

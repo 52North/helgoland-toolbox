@@ -1,6 +1,6 @@
-import { Resolver } from "./Resolver";
-import { NAMESPACES } from "./Namespaces";
-import { PREFIXES } from "./Prefixes";
+import { Resolver } from './Resolver';
+import { NAMESPACES } from './Namespaces';
+import { PREFIXES } from './Prefixes';
 
 export class SensorMLNamespaceResolver implements Resolver {
   private _prefixToNamespace: { [key: string]: string };
@@ -14,7 +14,7 @@ export class SensorMLNamespaceResolver implements Resolver {
       [PREFIXES.SML]: NAMESPACES.SML,
       [PREFIXES.XSI]: NAMESPACES.XSI,
       [PREFIXES.SWE]: NAMESPACES.SWE,
-      [PREFIXES.XLINK]: NAMESPACES.XLINK
+      [PREFIXES.XLINK]: NAMESPACES.XLINK,
     };
     this._namespaceToPrefix = {
       [NAMESPACES.GCO]: PREFIXES.GCO,
@@ -23,7 +23,7 @@ export class SensorMLNamespaceResolver implements Resolver {
       [NAMESPACES.SML]: PREFIXES.SML,
       [NAMESPACES.XSI]: PREFIXES.XSI,
       [NAMESPACES.SWE]: PREFIXES.SWE,
-      [NAMESPACES.XLINK]: PREFIXES.XLINK
+      [NAMESPACES.XLINK]: PREFIXES.XLINK,
     };
   }
 

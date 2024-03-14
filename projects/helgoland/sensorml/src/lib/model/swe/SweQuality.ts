@@ -1,7 +1,7 @@
-import { SweQuantity } from "./SweQuantity";
-import { SweQuantityRange } from "./SweQuantityRange";
-import { SweCategory } from "./SweCategory";
-import { SweText } from "./SweText";
+import { SweQuantity } from './SweQuantity';
+import { SweQuantityRange } from './SweQuantityRange';
+import { SweCategory } from './SweCategory';
+import { SweText } from './SweText';
 
 /**
  * Provides an indication of the reliability of the parent component value in

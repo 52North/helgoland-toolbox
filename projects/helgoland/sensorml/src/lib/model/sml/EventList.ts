@@ -1,23 +1,23 @@
-import { AbstractMetadataList } from "./AbstractMetadataList";
-import { Event } from "./Event";
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { AbstractMetadataList } from './AbstractMetadataList';
+import { Event } from './Event';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class EventList extends AbstractMetadataList {
-    @DisplayName("Events")
-      events: Event[] = [];
+  @DisplayName('Events')
+  events: Event[] = [];
 
-    override toString() {
-      return "Event list";
-    }
+  override toString() {
+    return 'Event list';
+  }
 
-    getLabel() {
-      return this.toString();
-    }
+  getLabel() {
+    return this.toString();
+  }
 
-    getValue() {
-      if (this.events.length > 0) {
-        return this.events.join(", ");
-      }
-      return undefined;
+  getValue() {
+    if (this.events.length > 0) {
+      return this.events.join(', ');
     }
+    return undefined;
+  }
 }

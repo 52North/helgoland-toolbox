@@ -1,21 +1,20 @@
-import { HttpClientModule } from "@angular/common/http";
-import { inject, TestBed } from "@angular/core/testing";
+import { HttpClientModule } from '@angular/common/http';
+import { inject, TestBed } from '@angular/core/testing';
 
-import { StatusCheckService } from "./status-check.service";
+import { StatusCheckService } from './status-check.service';
 
-describe("StatusCheckService", () => {
-
+describe('StatusCheckService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [
-        StatusCheckService
-      ]
+      providers: [StatusCheckService],
     });
   });
 
-  it("should be created", inject([StatusCheckService], (service: StatusCheckService) => {
-    expect(service).toBeTruthy();
-  }));
-
+  it('should be created', inject(
+    [StatusCheckService],
+    (service: StatusCheckService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

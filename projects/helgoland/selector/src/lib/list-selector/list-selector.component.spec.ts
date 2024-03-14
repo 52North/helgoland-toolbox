@@ -1,7 +1,7 @@
-import { HttpClientModule } from "@angular/common/http";
-import { SimpleChange } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCachingModule } from "@helgoland/caching";
+import { HttpClientModule } from '@angular/common/http';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
   DatasetApiV1ConnectorProvider,
@@ -12,19 +12,19 @@ import {
   HelgolandCoreModule,
   PlatformTypes,
   SplittedDataDatasetApiInterface,
-} from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
+} from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
-import { SettingsServiceTestingProvider } from "../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import {
   MultiServiceFilterEndpoint,
   MultiServiceFilterSelectorComponent,
-} from "../multi-service-filter-selector/multi-service-filter-selector.component";
-import { ListSelectorComponent } from "./list-selector.component";
-import { ListSelectorService } from "./list-selector.service";
+} from '../multi-service-filter-selector/multi-service-filter-selector.component';
+import { ListSelectorComponent } from './list-selector.component';
+import { ListSelectorService } from './list-selector.service';
 
-describe("ListSelectorComponent", () => {
+describe('ListSelectorComponent', () => {
   let component: ListSelectorComponent;
   let fixture: ComponentFixture<ListSelectorComponent>;
 
@@ -36,12 +36,9 @@ describe("ListSelectorComponent", () => {
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         ListSelectorComponent,
-        MultiServiceFilterSelectorComponent
+        MultiServiceFilterSelectorComponent,
       ],
-      providers: [
-        ListSelectorService,
-        SettingsServiceTestingProvider
-      ]
+      providers: [ListSelectorService, SettingsServiceTestingProvider],
     }).compileComponents();
   }));
 
@@ -51,12 +48,12 @@ describe("ListSelectorComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
 
-describe("ListSelectorComponent", () => {
+describe('ListSelectorComponent', () => {
   let component: ListSelectorComponent;
   let fixture: ComponentFixture<ListSelectorComponent>;
   let fixtureInterval: number;
@@ -70,61 +67,70 @@ describe("ListSelectorComponent", () => {
         TranslateTestingModule,
         HelgolandCachingModule,
         ListSelectorComponent,
-        MultiServiceFilterSelectorComponent
+        MultiServiceFilterSelectorComponent,
       ],
       providers: [
         {
           provide: DatasetApiInterface,
-          useClass: SplittedDataDatasetApiInterface
+          useClass: SplittedDataDatasetApiInterface,
         },
         DatasetApiV1ConnectorProvider,
         DatasetApiV2ConnectorProvider,
         DatasetApiV3ConnectorProvider,
         DatasetStaConnectorProvider,
         ListSelectorService,
-        SettingsServiceTestingProvider
-      ]
+        SettingsServiceTestingProvider,
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ListSelectorComponent);
     component = fixture.componentInstance;
-    component.selectorId = "test-id";
+    component.selectorId = 'test-id';
     component.providerList = [
-      { id: "1", url: "https://fluggs.wupperverband.de/sws5/api/", filter: {} }
+      { id: '1', url: 'https://fluggs.wupperverband.de/sws5/api/', filter: {} },
     ];
     component.filter = {
       type: DatasetType.Timeseries,
-      platformType: PlatformTypes.mobile
+      platformType: PlatformTypes.mobile,
     };
     component.parameters = [
       {
         type: MultiServiceFilterEndpoint.category,
-        header: "Category",
-        filterList: []
-      }, {
+        header: 'Category',
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.feature,
-        header: "Feature",
-        filterList: []
-      }, {
+        header: 'Feature',
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.phenomenon,
-        header: "Phenomenon",
-        filterList: []
-      }, {
+        header: 'Phenomenon',
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.procedure,
-        header: "Procedure",
-        filterList: []
-      }
+        header: 'Procedure',
+        filterList: [],
+      },
     ];
     component.ngOnChanges({
-      "providerList": new SimpleChange(null, component.providerList, true)
+      providerList: new SimpleChange(null, component.providerList, true),
     });
-    component.onDatasetSelection.subscribe(datasets => console.log(datasets));
-    fixtureInterval = window.setInterval(() => fixture["_isDestroyed"] ? clearInterval(fixtureInterval) : fixture.detectChanges(), 100);
+    component.onDatasetSelection.subscribe((datasets) => console.log(datasets));
+    fixtureInterval = window.setInterval(
+      () =>
+        fixture['_isDestroyed']
+          ? clearInterval(fixtureInterval)
+          : fixture.detectChanges(),
+      100,
+    );
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

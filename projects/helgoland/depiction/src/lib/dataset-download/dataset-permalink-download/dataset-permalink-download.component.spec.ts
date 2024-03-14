@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { SettingsServiceTestingProvider } from "../../../../../../testing/settings.testing";
-import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
-import { DatasetPermalinkDownloadComponent } from "./dataset-permalink-download.component";
+import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download.component';
 
-describe("DatasetPermalinkDownloadComponent", () => {
+describe('DatasetPermalinkDownloadComponent', () => {
   let component: DatasetPermalinkDownloadComponent;
   let fixture: ComponentFixture<DatasetPermalinkDownloadComponent>;
 
@@ -14,11 +14,9 @@ describe("DatasetPermalinkDownloadComponent", () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        DatasetPermalinkDownloadComponent
+        DatasetPermalinkDownloadComponent,
       ],
-      providers: [
-        SettingsServiceTestingProvider
-      ]
+      providers: [SettingsServiceTestingProvider],
     }).compileComponents();
   }));
 
@@ -28,7 +26,7 @@ describe("DatasetPermalinkDownloadComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,6 +1,6 @@
-import { PlatformTypes } from "./../../../model/dataset-api/enums";
-import { Timespan } from "./../../../model/internal/timeInterval";
-import { DatasetType } from "./dataset";
+import { PlatformTypes } from './../../../model/dataset-api/enums';
+import { Timespan } from './../../../model/internal/timeInterval';
+import { DatasetType } from './dataset';
 
 export class HelgolandParameterFilter {
   phenomenon?: string;
@@ -17,8 +17,8 @@ export class HelgolandParameterFilter {
 }
 
 export interface HelgolandCsvExportLinkParams {
-    timespan?: Timespan;
-    generalize?: boolean;
-    lang?: string;
-    zip?: boolean;
+  timespan?: Timespan;
+  generalize?: boolean;
+  lang?: string;
+  zip?: boolean;
 }

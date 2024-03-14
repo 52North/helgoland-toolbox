@@ -1,18 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { MapCache } from "../../base/map-cache.service";
-import { ZoomControlComponent } from "./zoom.component";
+import { MapCache } from '../../base/map-cache.service';
+import { ZoomControlComponent } from './zoom.component';
 
-describe("ZoomControlComponent", () => {
+describe('ZoomControlComponent', () => {
   let component: ZoomControlComponent;
   let fixture: ComponentFixture<ZoomControlComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ZoomControlComponent],
-      providers: [
-        MapCache
-      ]
+      providers: [MapCache],
     }).compileComponents();
   }));
 
@@ -22,7 +20,7 @@ describe("ZoomControlComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-import { Injectable, Optional } from "@angular/core";
+import { Injectable, Optional } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
@@ -12,7 +12,7 @@ import {
   LocalStorage,
   SumValuesService,
   Time,
-} from "@helgoland/core";
+} from '@helgoland/core';
 import {
   AxisSettings,
   BarStyle,
@@ -23,31 +23,34 @@ import {
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
-} from "@helgoland/d3";
-import { TranslateService } from "@ngx-translate/core";
-import { Duration, duration, unitOfTime } from "moment";
+} from '@helgoland/d3';
+import { TranslateService } from '@ngx-translate/core';
+import { Duration, duration, unitOfTime } from 'moment';
 
-import { Favorite } from "./favorite.service";
-import { DatasetsService } from "./graph-datasets.service";
-import { DatasetFavoriteService, DatasetPermalinkService } from "./service-interfaces";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { NotifierService } from "./notifier.service";
+import { Favorite } from './favorite.service';
+import { DatasetsService } from './graph-datasets.service';
+import {
+  DatasetFavoriteService,
+  DatasetPermalinkService,
+} from './service-interfaces';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { NotifierService } from './notifier.service';
 
-const TIMESERIES_STATE_LOCALSTORAGE = "timeseries-state";
-const TIMESERIES_FAVORITES_LOCALSTORAGE = "timeseries-favorites";
+const TIMESERIES_STATE_LOCALSTORAGE = 'timeseries-state';
+const TIMESERIES_FAVORITES_LOCALSTORAGE = 'timeseries-favorites';
 
-const FAVORITE_PREFIX = "ts_fav_";
+const FAVORITE_PREFIX = 'ts_fav_';
 interface SaveState {
-  style: DatasetStyle,
-  yaxis: AxisSettings,
-  selected: boolean,
-  visible: boolean
+  style: DatasetStyle;
+  yaxis: AxisSettings;
+  selected: boolean;
+  visible: boolean;
 }
 
 interface FavoriteSaveState {
-  favorite: Favorite,
-  style: DatasetStyle,
-  yAxis: AxisSettings
+  favorite: Favorite;
+  style: DatasetStyle;
+  yAxis: AxisSettings;
 }
 
 export abstract class TimeseriesService {
@@ -57,16 +60,17 @@ export abstract class TimeseriesService {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
-export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalinkService, DatasetFavoriteService {
-
+export class TimeseriesServiceImpl
+  implements TimeseriesService, DatasetPermalinkService, DatasetFavoriteService
+{
   private state: {
-    [key: string]: SaveState
-  } = {}
+    [key: string]: SaveState;
+  } = {};
   private favorites: {
-    [key: string]: FavoriteSaveState
-  } = {}
+    [key: string]: FavoriteSaveState;
+  } = {};
   private datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
   private presenterOptions = {
@@ -74,8 +78,8 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     requestBeforeAfterValues: false,
     showReferenceValues: true,
     generalizeAllways: true,
-    timespanBufferFactor: 0.2
-  }
+    timespanBufferFactor: 0.2,
+  };
 
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
@@ -85,11 +89,16 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     protected colorService: ColorService,
     protected translate: TranslateService,
     protected graphDatasetsSrvc: DatasetsService,
-    @Optional() protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
+    @Optional()
+    protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
     protected notifier: NotifierService,
     protected la: LiveAnnouncer,
   ) {
-    this.graphDatasetsSrvc.timespanChanged.subscribe(() => this.datasetMap.forEach((dataset) => this.loadDatasetData(dataset.internalId)))
+    this.graphDatasetsSrvc.timespanChanged.subscribe(() =>
+      this.datasetMap.forEach((dataset) =>
+        this.loadDatasetData(dataset.internalId),
+      ),
+    );
     this.loadFavorites();
   }
 
@@ -115,20 +124,20 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   getPermaIds(): string[] {
     const dsIds = Array.from(this.datasetMap.keys());
-    return dsIds.map(e => `ts_${e}`);
+    return dsIds.map((e) => `ts_${e}`);
   }
 
   validatePermaIds(ids: string[]) {
-    ids.forEach(id => {
-      if (id.startsWith("ts_")) {
+    ids.forEach((id) => {
+      if (id.startsWith('ts_')) {
         id = id.substring(3);
         this.addDataset(id);
       }
-    })
+    });
   }
 
   canHandleDatasetAsFavorite(id: string): boolean {
-    return (id.startsWith(FAVORITE_PREFIX) || this.datasetMap.has(id))
+    return id.startsWith(FAVORITE_PREFIX) || this.datasetMap.has(id);
   }
 
   isFavorite(id: string): boolean {
@@ -152,11 +161,11 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
       favorite: {
         id: this.createFavoriteID(ds.id),
         label: `${ds.description.phenomenonLabel} @ ${ds.description.platformLabel} (${ds.description.procedureLabel})`,
-        description: ds.description
+        description: ds.description,
       },
       style: ds.style,
-      yAxis: ds.yAxis
-    }
+      yAxis: ds.yAxis,
+    };
     this.favorites[this.createFavoriteID(ds.id)] = favState;
     this.saveFavorites();
     return favState.favorite;
@@ -187,7 +196,8 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   }
 
   private loadFavorites(): void {
-    this.favorites = this.localStorage.load(TIMESERIES_FAVORITES_LOCALSTORAGE) || {};
+    this.favorites =
+      this.localStorage.load(TIMESERIES_FAVORITES_LOCALSTORAGE) || {};
   }
 
   private saveFavorites(): void {
@@ -206,19 +216,39 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   }
 
   protected saveState(): void {
-    this.localStorage.save(TIMESERIES_STATE_LOCALSTORAGE, this.state)
+    this.localStorage.save(TIMESERIES_STATE_LOCALSTORAGE, this.state);
   }
 
-  protected addDatasetbyId(id: string, style?: DatasetStyle, axis?: AxisSettings, visible?: boolean, selected?: boolean): void {
-    this.servicesConnector.getDataset(id, { locale: this.translate.currentLang, type: DatasetType.Timeseries }).subscribe({
-      next: res => this.loadAddedDataset(res, style, axis, visible, selected),
-      error: error => this.errorHandler.handleDatasetLoadError(error)
-    });
+  protected addDatasetbyId(
+    id: string,
+    style?: DatasetStyle,
+    axis?: AxisSettings,
+    visible?: boolean,
+    selected?: boolean,
+  ): void {
+    this.servicesConnector
+      .getDataset(id, {
+        locale: this.translate.currentLang,
+        type: DatasetType.Timeseries,
+      })
+      .subscribe({
+        next: (res) =>
+          this.loadAddedDataset(res, style, axis, visible, selected),
+        error: (error) => this.errorHandler.handleDatasetLoadError(error),
+      });
   }
 
-  protected loadAddedDataset(ts: HelgolandDataset, dsStyle?: DatasetStyle, dsAxis?: AxisSettings, visible = true, selected = false): void {
+  protected loadAddedDataset(
+    ts: HelgolandDataset,
+    dsStyle?: DatasetStyle,
+    dsAxis?: AxisSettings,
+    visible = true,
+    selected = false,
+  ): void {
     if (ts instanceof HelgolandTimeseries) {
-      const message = `${this.translate.instant("events.add-timeseries")}: ${ts.label}`;
+      const message = `${this.translate.instant('events.add-timeseries')}: ${
+        ts.label
+      }`;
       this.la.announce(message);
       this.notifier.notify(message);
       this.datasetMap.set(ts.internalId, ts);
@@ -232,29 +262,35 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         selected,
         {
           uom: ts.uom,
-          phenomenonLabel: ts.parameters.phenomenon?.label || "",
+          phenomenonLabel: ts.parameters.phenomenon?.label || '',
           platformLabel: ts.platform.label,
-          procedureLabel: ts.parameters.procedure?.label || "",
-          categoryLabel: ts.parameters.category?.map(e => e.label),
-          featureLabel: ts.parameters.feature?.label || "",
+          procedureLabel: ts.parameters.procedure?.label || '',
+          categoryLabel: ts.parameters.category?.map((e) => e.label),
+          featureLabel: ts.parameters.feature?.label || '',
           firstValue: ts.firstValue,
-          lastValue: ts.lastValue
-        }
-      )
+          lastValue: ts.lastValue,
+        },
+      );
       this.setState(dataset.id, style, yaxis, selected, visible);
       this.saveState();
       this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
-      dataset.deleteEvent.subscribe(ds => {
+      dataset.deleteEvent.subscribe((ds) => {
         this.datasetMap.delete(ds.id);
         delete this.state[ds.id];
         this.saveState();
       });
-      dataset.stateChangeEvent.subscribe(ds => {
+      dataset.stateChangeEvent.subscribe((ds) => {
         this.setState(ds.id, ds.style, ds.yAxis, ds.selected, ds.visible);
         this.saveState();
       });
-      ts.referenceValues?.forEach(ref => {
-        const child = new DatasetChild(ref.referenceValueId, ref.label, ref.visible || false, [], this.colorService.getColor());
+      ts.referenceValues?.forEach((ref) => {
+        const child = new DatasetChild(
+          ref.referenceValueId,
+          ref.label,
+          ref.visible || false,
+          [],
+          this.colorService.getColor(),
+        );
         dataset.addChild(child);
       });
       this.loadDatasetData(ts.internalId);
@@ -265,7 +301,7 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   private createYAxis(ds: HelgolandTimeseries): AxisSettings {
     const axisSettings = new AxisSettings();
-    if (ds.renderingHints?.chartType === "bar") {
+    if (ds.renderingHints?.chartType === 'bar') {
       axisSettings.range = { min: 0 };
     }
     return axisSettings;
@@ -274,10 +310,14 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
   private createStyle(ds: HelgolandTimeseries): DatasetStyle {
     if (ds.renderingHints && ds.renderingHints.chartType) {
       switch (ds.renderingHints.chartType) {
-        case "line":
-          return this.handleLineRenderingHints(ds.renderingHints as LineRenderingHints);
-        case "bar":
-          return this.handleBarRenderingHints(ds.renderingHints as BarRenderingHints);
+        case 'line':
+          return this.handleLineRenderingHints(
+            ds.renderingHints as LineRenderingHints,
+          );
+        case 'bar':
+          return this.handleBarRenderingHints(
+            ds.renderingHints as BarRenderingHints,
+          );
       }
     }
     return new LineStyle(this.colorService.getColor(), 2, 2);
@@ -285,17 +325,37 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   private getStyleOfObject(style: any): DatasetStyle {
     if (style.period) {
-      return new BarStyle(style.baseColor, style.startOf, duration(style.period), style.lineWidth, style.lineDashArray);
+      return new BarStyle(
+        style.baseColor,
+        style.startOf,
+        duration(style.period),
+        style.lineWidth,
+        style.lineDashArray,
+      );
     } else {
-      return new LineStyle(style.baseColor, style.pointRadius, style.lineWidth, style.pointSymbol, style.lineDashArray);
+      return new LineStyle(
+        style.baseColor,
+        style.pointRadius,
+        style.lineWidth,
+        style.pointSymbol,
+        style.lineDashArray,
+      );
     }
   }
 
   private getYAxisOfObject(yaxis: AxisSettings): AxisSettings {
-    return new AxisSettings(yaxis.showSymbolOnAxis, yaxis.separate, yaxis.zeroBased, yaxis.autoRangeSelection, yaxis.range);
+    return new AxisSettings(
+      yaxis.showSymbolOnAxis,
+      yaxis.separate,
+      yaxis.zeroBased,
+      yaxis.autoRangeSelection,
+      yaxis.range,
+    );
   }
 
-  protected handleLineRenderingHints(lineHints: LineRenderingHints): DatasetStyle {
+  protected handleLineRenderingHints(
+    lineHints: LineRenderingHints,
+  ): DatasetStyle {
     const color = lineHints.properties?.color || this.colorService.getColor();
     let lineWidth = 2;
     if (lineHints && lineHints.properties.width) {
@@ -306,32 +366,38 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
 
   protected handleBarRenderingHints(barHints: BarRenderingHints): DatasetStyle {
     let lineWidth = 2;
-    let startOf: unitOfTime.StartOf = "day";
-    let period: Duration = duration("P1D");
+    let startOf: unitOfTime.StartOf = 'day';
+    let period: Duration = duration('P1D');
     if (barHints && barHints.properties.width) {
       lineWidth = Math.round(parseFloat(barHints.properties.width));
     }
     const color = barHints.properties?.color || this.colorService.getColor();
     if (barHints && barHints.properties.interval) {
-      if (barHints.properties.interval === "byDay") {
-        period = duration("P1D");
-        startOf = "day";
+      if (barHints.properties.interval === 'byDay') {
+        period = duration('P1D');
+        startOf = 'day';
       }
-      if (barHints.properties.interval === "byHour") {
-        period = duration("PT1H");
-        startOf = "hour";
+      if (barHints.properties.interval === 'byHour') {
+        period = duration('PT1H');
+        startOf = 'hour';
       }
     }
     return new BarStyle(color, startOf, period, lineWidth);
   }
 
-  private setState(id: string, style: DatasetStyle, yaxis: AxisSettings, selected: boolean, visible: boolean) {
+  private setState(
+    id: string,
+    style: DatasetStyle,
+    yaxis: AxisSettings,
+    selected: boolean,
+    visible: boolean,
+  ) {
     const dsState: SaveState = {
       style: style,
       yaxis: yaxis,
       selected: selected,
-      visible: visible
-    }
+      visible: visible,
+    };
     this.state[id] = dsState;
   }
 
@@ -340,20 +406,35 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     const dataset = this.datasetMap.get(id);
     if (this.graphDatasetsSrvc.timespan && dataset) {
       this.graphDatasetsSrvc.setDataLoading(id, true);
-      if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
-        && dataset.firstValue
-        && dataset.lastValue
-        && !this.timeSrvc.overlaps(this.graphDatasetsSrvc.timespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+      if (
+        this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered &&
+        dataset.firstValue &&
+        dataset.lastValue &&
+        !this.timeSrvc.overlaps(
+          this.graphDatasetsSrvc.timespan,
+          dataset.firstValue.timestamp,
+          dataset.lastValue.timestamp,
+        )
+      ) {
         this.prepareData(dataset, new HelgolandTimeseriesData([]));
       } else {
-        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.timespan, this.presenterOptions.timespanBufferFactor, duration(1, "day").asMilliseconds());
-        this.servicesConnector.getDatasetData(dataset, buffer, {
-          expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
-          generalize: this.presenterOptions.generalizeAllways
-        }).subscribe({
-          next: (result) => this.prepareData(dataset, result),
-          error: (error) => this.errorHandler.handleDataLoadError(error, dataset)
-        });
+        const buffer = this.timeSrvc.getBufferedTimespan(
+          this.graphDatasetsSrvc.timespan,
+          this.presenterOptions.timespanBufferFactor,
+          duration(1, 'day').asMilliseconds(),
+        );
+        this.servicesConnector
+          .getDatasetData(dataset, buffer, {
+            expanded:
+              this.presenterOptions.showReferenceValues ||
+              this.presenterOptions.requestBeforeAfterValues,
+            generalize: this.presenterOptions.generalizeAllways,
+          })
+          .subscribe({
+            next: (result) => this.prepareData(dataset, result),
+            error: (error) =>
+              this.errorHandler.handleDataLoadError(error, dataset),
+          });
       }
     }
   }
@@ -363,29 +444,51 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
       const dataset = this.datasetMap.get(id);
       if (!dataset) return;
       this.graphDatasetsSrvc.setOverviewDataLoading(id, true);
-      if (this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered
-        && dataset.firstValue
-        && dataset.lastValue
-        && !this.timeSrvc.overlaps(this.graphDatasetsSrvc.overviewTimespan, dataset.firstValue.timestamp, dataset.lastValue.timestamp)) {
+      if (
+        this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered &&
+        dataset.firstValue &&
+        dataset.lastValue &&
+        !this.timeSrvc.overlaps(
+          this.graphDatasetsSrvc.overviewTimespan,
+          dataset.firstValue.timestamp,
+          dataset.lastValue.timestamp,
+        )
+      ) {
         this.prepareOverviewData(dataset, new HelgolandTimeseriesData([]));
       } else {
-        const buffer = this.timeSrvc.getBufferedTimespan(this.graphDatasetsSrvc.overviewTimespan, this.presenterOptions.timespanBufferFactor, duration(1, "day").asMilliseconds());
-        this.servicesConnector.getDatasetData(dataset, buffer, {
-          expanded: this.presenterOptions.showReferenceValues || this.presenterOptions.requestBeforeAfterValues,
-          generalize: true
-        }).subscribe({
-          next: (result) => this.prepareOverviewData(dataset, result),
-          error: (error) => this.errorHandler.handleDataLoadError(error, dataset)
-        });
+        const buffer = this.timeSrvc.getBufferedTimespan(
+          this.graphDatasetsSrvc.overviewTimespan,
+          this.presenterOptions.timespanBufferFactor,
+          duration(1, 'day').asMilliseconds(),
+        );
+        this.servicesConnector
+          .getDatasetData(dataset, buffer, {
+            expanded:
+              this.presenterOptions.showReferenceValues ||
+              this.presenterOptions.requestBeforeAfterValues,
+            generalize: true,
+          })
+          .subscribe({
+            next: (result) => this.prepareOverviewData(dataset, result),
+            error: (error) =>
+              this.errorHandler.handleDataLoadError(error, dataset),
+          });
       }
     }
   }
 
-  private prepareData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
+  private prepareData(
+    dataset: HelgolandTimeseries,
+    rawdata: HelgolandTimeseriesData,
+  ): void {
     if (rawdata instanceof HelgolandTimeseriesData) {
       // add surrounding entries to the set
-      if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
-      if (rawdata.valueAfterTimespan) { rawdata.values.push(rawdata.valueAfterTimespan); }
+      if (rawdata.valueBeforeTimespan) {
+        rawdata.values.unshift(rawdata.valueBeforeTimespan);
+      }
+      if (rawdata.valueAfterTimespan) {
+        rawdata.values.push(rawdata.valueAfterTimespan);
+      }
 
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
@@ -400,7 +503,10 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         rawdata.values = this.sumValues.sum(startOf, period, rawdata.values);
       }
 
-      const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
+      const data = rawdata.values.map((e) => ({
+        timestamp: e[0],
+        value: e[1],
+      }));
 
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
       this.addReferenceValueDatasets(ds, rawdata);
@@ -409,9 +515,12 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     }
   }
 
-  private addReferenceValueDatasets(ds: SeriesGraphDataset, rawdata: HelgolandTimeseriesData) {
+  private addReferenceValueDatasets(
+    ds: SeriesGraphDataset,
+    rawdata: HelgolandTimeseriesData,
+  ) {
     if (ds.children && ds.children.length) {
-      ds.children.forEach(child => {
+      ds.children.forEach((child) => {
         const refVals = rawdata.referenceValues[child.id];
         if (refVals) {
           child.setData(this.createReferenceValueData(rawdata, child.id));
@@ -420,7 +529,10 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     }
   }
 
-  private createReferenceValueData(data: HelgolandTimeseriesData, refId: string): GraphDataEntry[] {
+  private createReferenceValueData(
+    data: HelgolandTimeseriesData,
+    refId: string,
+  ): GraphDataEntry[] {
     let refValues = data.referenceValues[refId] as any;
     if (!(refValues instanceof Array)) {
       if (refValues.valueBeforeTimespan) {
@@ -434,11 +546,18 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
     return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
   }
 
-  private prepareOverviewData(dataset: HelgolandTimeseries, rawdata: HelgolandTimeseriesData): void {
+  private prepareOverviewData(
+    dataset: HelgolandTimeseries,
+    rawdata: HelgolandTimeseriesData,
+  ): void {
     if (rawdata instanceof HelgolandTimeseriesData) {
       // add surrounding entries to the set
-      if (rawdata.valueBeforeTimespan) { rawdata.values.unshift(rawdata.valueBeforeTimespan); }
-      if (rawdata.valueAfterTimespan) { rawdata.values.push(rawdata.valueAfterTimespan); }
+      if (rawdata.valueBeforeTimespan) {
+        rawdata.values.unshift(rawdata.valueBeforeTimespan);
+      }
+      if (rawdata.valueAfterTimespan) {
+        rawdata.values.push(rawdata.valueAfterTimespan);
+      }
 
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
@@ -453,12 +572,16 @@ export class TimeseriesServiceImpl implements TimeseriesService, DatasetPermalin
         rawdata.values = this.sumValues.sum(startOf, period, rawdata.values);
       }
 
-      const data = rawdata.values.map(e => ({ timestamp: e[0], value: e[1] }));
+      const data = rawdata.values.map((e) => ({
+        timestamp: e[0],
+        value: e[1],
+      }));
 
-      const ds = this.graphDatasetsSrvc.getOverviewDatasetEntry(dataset.internalId);
+      const ds = this.graphDatasetsSrvc.getOverviewDatasetEntry(
+        dataset.internalId,
+      );
       ds.setData(data);
       ds.setDataLoading(false);
     }
   }
-
 }

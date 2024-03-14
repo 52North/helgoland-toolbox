@@ -1,6 +1,6 @@
-import { PresenterMessageType } from "./presenter-message-type";
+import { PresenterMessageType } from './presenter-message-type';
 
 export interface PresenterMessage {
-    type: PresenterMessageType;
-    message: string;
+  type: PresenterMessageType;
+  message: string;
 }

@@ -1,29 +1,44 @@
 <mat-menu #addtsMenu="matMenu">
   <button mat-menu-item (click)="openMapSelection()">
-    {{'diagram-view.add-timeseries.map' | translate}}
+    {{ "diagram-view.add-timeseries.map" | translate }}
   </button>
   <button mat-menu-item (click)="openListSelection()">
-    {{'diagram-view.add-timeseries.list' | translate}}
+    {{ "diagram-view.add-timeseries.list" | translate }}
   </button>
 </mat-menu>
 
 <mat-sidenav-container class="container">
-
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" position="start"
-    autoFocus="false">
+  <mat-sidenav
+    #snav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+    position="start"
+    autoFocus="false"
+  >
     <div class="menu-wrapper">
-
       <div class="legend">
-        <button class="legend-menu-button" *ngIf="mobileQuery.matches" mat-icon-button (click)="snav.toggle()">
+        <button
+          class="legend-menu-button"
+          *ngIf="mobileQuery.matches"
+          mat-icon-button
+          (click)="snav.toggle()"
+        >
           <mat-icon>menu</mat-icon>
         </button>
         <div class="entries">
           <mat-accordion [multi]="true">
             <div *ngFor="let dataset of graphDatasetsSrvc.datasets">
-              <helgoland-dataset-legend-entry [dataset]="dataset" [timeInterval]="graphDatasetsSrvc.timespan" [selected]="false"
-              (selectDate)="jumpToDate($event)" (datasetDeleted)="this.graphDatasetsSrvc.deleteDataset(dataset.id, true)">
-            </helgoland-dataset-legend-entry>
-            <!-- <helgoland-legend-entry [dataset]="dataset.timeseries" [selected]="isSelected(id)"
+              <helgoland-dataset-legend-entry
+                [dataset]="dataset"
+                [timeInterval]="graphDatasetsSrvc.timespan"
+                [selected]="false"
+                (selectDate)="jumpToDate($event)"
+                (datasetDeleted)="
+                  this.graphDatasetsSrvc.deleteDataset(dataset.id, true)
+                "
+              >
+              </helgoland-dataset-legend-entry>
+              <!-- <helgoland-legend-entry [dataset]="dataset.timeseries" [selected]="isSelected(id)"
               [datasetOptions]="datasetOptions.get(id)" [timeInterval]="graphDatasetsSrvc.timespan"
               (onDeleteDataset)="deleteTimeseries(id)" (onSelectDataset)="selectTimeseries($event, id)"
               (onSelectDate)="jumpToDate($event)" (onUpdateOptions)="updateOptions($event, id)"
@@ -36,25 +51,47 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <helgoland-modal-main-config-button></helgoland-modal-main-config-button>
-          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasetsSelected()"
+          <button
+            mat-icon-button
+            *ngIf="graphDatasetsSrvc.datasetsSelected()"
             (click)="this.graphDatasetsSrvc.clearSelections()"
-            attr.aria-label="{{'diagram-view.clear-selection.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.clear-selection.tooltip' | translate}}">
+            attr.aria-label="{{
+              'diagram-view.clear-selection.tooltip' | translate
+            }}"
+            matTooltip="{{
+              'diagram-view.clear-selection.tooltip' | translate
+            }}"
+          >
             <mat-icon color="accent">remove_done</mat-icon>
           </button>
-          <div style="flex:1;"></div>
-          <button mat-icon-button *ngIf="graphDatasetsSrvc.datasets.length"
+          <div style="flex: 1"></div>
+          <button
+            mat-icon-button
+            *ngIf="graphDatasetsSrvc.datasets.length"
             (click)="this.graphDatasetsSrvc.deleteAllDatasets()"
-            attr.aria-label="{{'diagram-view.remove-legend-entries.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.remove-legend-entries.tooltip' | translate}}">
+            attr.aria-label="{{
+              'diagram-view.remove-legend-entries.tooltip' | translate
+            }}"
+            matTooltip="{{
+              'diagram-view.remove-legend-entries.tooltip' | translate
+            }}"
+          >
             <mat-icon>clear</mat-icon>
           </button>
-          <helgoland-share-button [generatedUrlFunction]="permalinkSrvc.createPermalink"></helgoland-share-button>
-          <helgoland-modal-favorite-list-button style="margin-right: 10px;">
+          <helgoland-share-button
+            [generatedUrlFunction]="permalinkSrvc.createPermalink"
+          ></helgoland-share-button>
+          <helgoland-modal-favorite-list-button style="margin-right: 10px">
           </helgoland-modal-favorite-list-button>
-          <button mat-mini-fab [matMenuTriggerFor]="addtsMenu" color="accent"
-            attr.aria-label="{{'diagram-view.add-button.tooltip' | translate}}"
-            matTooltip="{{'diagram-view.add-button.tooltip' | translate}}">
+          <button
+            mat-mini-fab
+            [matMenuTriggerFor]="addtsMenu"
+            color="accent"
+            attr.aria-label="{{
+              'diagram-view.add-button.tooltip' | translate
+            }}"
+            matTooltip="{{ 'diagram-view.add-button.tooltip' | translate }}"
+          >
             <mat-icon>add</mat-icon>
           </button>
         </mat-toolbar-row>
@@ -63,57 +100,87 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
-    <button class="legend-button" mat-mini-fab color="none" *ngIf="mobileQuery.matches" (click)="snav.toggle()">
+    <button
+      class="legend-button"
+      mat-mini-fab
+      color="none"
+      *ngIf="mobileQuery.matches"
+      (click)="snav.toggle()"
+    >
       <mat-icon>menu</mat-icon>
     </button>
 
     <div *ngIf="graphDatasetsSrvc.datasets.length === 0" class="no-timeseries">
-      {{'diagram-view.no-timeseries.hint' | translate}}
+      {{ "diagram-view.no-timeseries.hint" | translate }}
       <div>
         <button mat-button (click)="openMapSelection()">
-          {{'diagram-view.add-timeseries.map' | translate}}
+          {{ "diagram-view.add-timeseries.map" | translate }}
         </button>
       </div>
       <div>
         <button mat-button (click)="openListSelection()">
-          {{'diagram-view.add-timeseries.list' | translate}}
+          {{ "diagram-view.add-timeseries.list" | translate }}
         </button>
       </div>
     </div>
 
     <div *ngIf="graphDatasetsSrvc.datasets.length" class="diagrams">
       <div class="diagram">
+        <helgoland-loading-overlay-progress-bar
+          *ngIf="diagramLoading"
+        ></helgoland-loading-overlay-progress-bar>
 
-        <helgoland-loading-overlay-progress-bar *ngIf="diagramLoading"></helgoland-loading-overlay-progress-bar>
-
-        <button class="local-settings-button" mat-mini-fab color="none" (click)="openDiagramSettings()"
-          matTooltip="{{'diagram-view.open-diagram-settings' | translate}}"
-          attr.aria-label="{{'diagram-view.open-diagram-settings' | translate}}">
+        <button
+          class="local-settings-button"
+          mat-mini-fab
+          color="none"
+          (click)="openDiagramSettings()"
+          matTooltip="{{ 'diagram-view.open-diagram-settings' | translate }}"
+          attr.aria-label="{{
+            'diagram-view.open-diagram-settings' | translate
+          }}"
+        >
           <mat-icon>query_stats</mat-icon>
         </button>
 
-        <n52-d3-series-graph #graph [datasets]="graphDatasetsSrvc.datasets" [timespan]="graphDatasetsSrvc.timespan"
-          [graphOptions]="graphOptions" (timespanChanged)="graphDatasetsSrvc.timespan = $event">
+        <n52-d3-series-graph
+          #graph
+          [datasets]="graphDatasetsSrvc.datasets"
+          [timespan]="graphDatasetsSrvc.timespan"
+          [graphOptions]="graphOptions"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event"
+        >
         </n52-d3-series-graph>
       </div>
 
       <div>
-        <helgoland-general-time-selection [timespan]="graphDatasetsSrvc.timespan"
-          (timespanChanged)="graphDatasetsSrvc.timespan = $event">
+        <helgoland-general-time-selection
+          [timespan]="graphDatasetsSrvc.timespan"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event"
+        >
         </helgoland-general-time-selection>
       </div>
 
-      <div class="overview-diagram desktop-only" *ngIf="diagramConfig.overviewVisible">
-        <helgoland-loading-overlay-progress-bar *ngIf="overviewLoading"></helgoland-loading-overlay-progress-bar>
-        <n52-d3-series-graph #overview [datasets]="graphDatasetsSrvc.overviewDatasets"
-          [timespan]="graphDatasetsSrvc.overviewTimespan" [graphOptions]="overviewOptions"
-          (timespanChanged)="graphDatasetsSrvc.timespan = $event">
-          <n52-d3-graph-overview-selection [selectionTimeInterval]="graphDatasetsSrvc.timespan">
+      <div
+        class="overview-diagram desktop-only"
+        *ngIf="diagramConfig.overviewVisible"
+      >
+        <helgoland-loading-overlay-progress-bar
+          *ngIf="overviewLoading"
+        ></helgoland-loading-overlay-progress-bar>
+        <n52-d3-series-graph
+          #overview
+          [datasets]="graphDatasetsSrvc.overviewDatasets"
+          [timespan]="graphDatasetsSrvc.overviewTimespan"
+          [graphOptions]="overviewOptions"
+          (timespanChanged)="graphDatasetsSrvc.timespan = $event"
+        >
+          <n52-d3-graph-overview-selection
+            [selectionTimeInterval]="graphDatasetsSrvc.timespan"
+          >
           </n52-d3-graph-overview-selection>
         </n52-d3-series-graph>
       </div>
     </div>
-
   </mat-sidenav-content>
-
 </mat-sidenav-container>

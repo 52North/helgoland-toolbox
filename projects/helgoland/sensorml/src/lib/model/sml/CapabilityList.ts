@@ -1,24 +1,23 @@
-import { AbstractNamedMetadataList } from "./AbstractNamedMetadataList";
-import { Capability } from "./Capability";
-import { DisplayName } from "../../common/decorators/DisplayName";
-
+import { AbstractNamedMetadataList } from './AbstractNamedMetadataList';
+import { Capability } from './Capability';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class CapabilityList extends AbstractNamedMetadataList {
-    @DisplayName("Capabilities")
-      capabilities: Capability[] = [];
+  @DisplayName('Capabilities')
+  capabilities: Capability[] = [];
 
-    override toString() {
-      return super.toString("Capability list");
-    }
+  override toString() {
+    return super.toString('Capability list');
+  }
 
-    getLabel() {
-      return this.toString();
-    }
+  getLabel() {
+    return this.toString();
+  }
 
-    getValue() {
-      if (this.capabilities.length > 0) {
-        return this.capabilities.join(", ");
-      }
-      return undefined;
+  getValue() {
+    if (this.capabilities.length > 0) {
+      return this.capabilities.join(', ');
     }
+    return undefined;
+  }
 }

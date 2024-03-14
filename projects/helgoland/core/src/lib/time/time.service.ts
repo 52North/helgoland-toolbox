@@ -1,16 +1,17 @@
-import { Injectable } from "@angular/core";
-import { plainToClass } from "class-transformer";
-import moment, { duration, MomentInputObject } from "moment";
+import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
+import moment, { duration, MomentInputObject } from 'moment';
 
-import { LocalStorage } from "../local-storage/local-storage.service";
-import { BufferedTime, TimeInterval, Timespan } from "../model/internal/timeInterval";
+import { LocalStorage } from '../local-storage/local-storage.service';
+import {
+  BufferedTime,
+  TimeInterval,
+  Timespan,
+} from '../model/internal/timeInterval';
 
 @Injectable()
 export class Time {
-
-  constructor(
-        protected localStorage: LocalStorage
-  ) { }
+  constructor(protected localStorage: LocalStorage) {}
 
   public centerTimespan(timespan: Timespan, date: Date): Timespan {
     const halfduration = this.getDuration(timespan).asMilliseconds() / 2;
@@ -19,7 +20,10 @@ export class Time {
     return new Timespan(from, to);
   }
 
-  public centerTimespanWithDuration(timespan: Timespan, d: moment.Duration): Timespan {
+  public centerTimespanWithDuration(
+    timespan: Timespan,
+    d: moment.Duration,
+  ): Timespan {
     const half = d.asMilliseconds() / 2;
     const center = this.getCenterOfTimespan(timespan);
     return new Timespan(center - half, center + half);
@@ -29,7 +33,11 @@ export class Time {
     return timespan.from + (timespan.to - timespan.from) / 2;
   }
 
-  public createByDurationWithEnd(d: moment.Duration, end: number | Date, endOf?: moment.unitOfTime.StartOf): Timespan {
+  public createByDurationWithEnd(
+    d: moment.Duration,
+    end: number | Date,
+    endOf?: moment.unitOfTime.StartOf,
+  ): Timespan {
     const mEnd = moment(end);
     if (endOf) {
       mEnd.endOf(endOf);
@@ -53,17 +61,21 @@ export class Time {
   }
 
   /**
-     * Increase timespan by custom interval
-     * @param timespan
-     * @param interval
-     */
+   * Increase timespan by custom interval
+   * @param timespan
+   * @param interval
+   */
   public stepForwardCustom(timespan: Timespan, interval: number): Timespan {
     const from = moment(timespan.from).add(interval).unix() * 1000;
     const to = moment(timespan.to).add(interval).unix() * 1000;
     return new Timespan(from, to);
   }
 
-  public overlaps(timeInterval: TimeInterval, from: number, to: number): boolean {
+  public overlaps(
+    timeInterval: TimeInterval,
+    from: number,
+    to: number,
+  ): boolean {
     const timespan = this.createTimespanOfInterval(timeInterval);
     if (timespan.from <= to && timespan.to >= from) {
       return true;
@@ -85,10 +97,14 @@ export class Time {
       const to = moment(timeInterval.timestamp).add(d).unix() * 1000;
       return new Timespan(from, to);
     }
-    throw new Error("Wrong time interval!");
+    throw new Error('Wrong time interval!');
   }
 
-  public getBufferedTimespan(timespan: Timespan, factor: number, maxBufferInMs?: number): Timespan {
+  public getBufferedTimespan(
+    timespan: Timespan,
+    factor: number,
+    maxBufferInMs?: number,
+  ): Timespan {
     const durationMillis = this.getDuration(timespan).asMilliseconds();
     let buffer = durationMillis * factor;
     if (maxBufferInMs && buffer > maxBufferInMs) {
@@ -113,20 +129,23 @@ export class Time {
 
   public initTimespan(): Timespan {
     const now = new Date();
-    const start = moment(now).startOf("day").unix() * 1000;
-    const end = moment(now).endOf("day").unix() * 1000;
+    const start = moment(now).startOf('day').unix() * 1000;
+    const end = moment(now).endOf('day').unix() * 1000;
     return new Timespan(start, end);
   }
 
-  public generateTimespan(defaultTimeseriesTimeduration: MomentInputObject, align: "start" | "center" | "end"): Timespan {
+  public generateTimespan(
+    defaultTimeseriesTimeduration: MomentInputObject,
+    align: 'start' | 'center' | 'end',
+  ): Timespan {
     const now = new Date();
     const d = duration(defaultTimeseriesTimeduration);
     switch (align) {
-      case "start":
+      case 'start':
         return new Timespan(now.getTime(), now.getTime() + d.asMilliseconds());
-      case "end":
+      case 'end':
         return new Timespan(now.getTime() - d.asMilliseconds(), now.getTime());
-      case "center":
+      case 'center':
       default:
         const half = d.asMilliseconds() / 2;
         return new Timespan(now.getTime() - half, now.getTime() + half);
@@ -138,5 +157,4 @@ export class Time {
     const to = moment(timespan.to);
     return moment.duration(to.diff(from));
   }
-
 }

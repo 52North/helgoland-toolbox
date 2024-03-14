@@ -1,41 +1,62 @@
-<h1 mat-dialog-title>{{ 'diagram-config.title' | translate }}</h1>
+<h1 mat-dialog-title>{{ "diagram-config.title" | translate }}</h1>
 
 <mat-dialog-content>
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.yaxisVisible" color="primary"
-      (change)="diagramConfig.yaxisVisible = $event.checked">
-      {{ 'diagram-config.yaxis-visible' | translate }}
+    <mat-slide-toggle
+      [checked]="diagramConfig.yaxisVisible"
+      color="primary"
+      (change)="diagramConfig.yaxisVisible = $event.checked"
+    >
+      {{ "diagram-config.yaxis-visible" | translate }}
     </mat-slide-toggle>
   </p>
 
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.yaxisModifier" color="primary"
-      (change)="diagramConfig.yaxisModifier = $event.checked">
-      {{ 'diagram-config.yaxis-modifier-visible' | translate }}
+    <mat-slide-toggle
+      [checked]="diagramConfig.yaxisModifier"
+      color="primary"
+      (change)="diagramConfig.yaxisModifier = $event.checked"
+    >
+      {{ "diagram-config.yaxis-modifier-visible" | translate }}
     </mat-slide-toggle>
   </p>
 
   <p>
-    <mat-slide-toggle [checked]="diagramConfig.overviewVisible" color="primary"
-      (change)="diagramConfig.overviewVisible = $event.checked">
-      {{ 'diagram-config.overview-visible' | translate }}
+    <mat-slide-toggle
+      [checked]="diagramConfig.overviewVisible"
+      color="primary"
+      (change)="diagramConfig.overviewVisible = $event.checked"
+    >
+      {{ "diagram-config.overview-visible" | translate }}
     </mat-slide-toggle>
   </p>
 
   <p>
     <span>
-      {{ 'diagram-config.hoverstyle' | translate }}
+      {{ "diagram-config.hoverstyle" | translate }}
     </span>
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="diagramConfig.hoverstyle"
-      (change)="diagramConfig.hoverstyle = $event.value">
-      <mat-button-toggle value="none">{{ 'diagram-config.hoverstyle.none' | translate }}</mat-button-toggle>
-      <mat-button-toggle value="point">{{ 'diagram-config.hoverstyle.point' | translate }}</mat-button-toggle>
-      <mat-button-toggle value="line">{{ 'diagram-config.hoverstyle.line' | translate }}</mat-button-toggle>
+    <mat-button-toggle-group
+      name="fontStyle"
+      aria-label="Font Style"
+      [value]="diagramConfig.hoverstyle"
+      (change)="diagramConfig.hoverstyle = $event.value"
+    >
+      <mat-button-toggle value="none">{{
+        "diagram-config.hoverstyle.none" | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="point">{{
+        "diagram-config.hoverstyle.point" | translate
+      }}</mat-button-toggle>
+      <mat-button-toggle value="line">{{
+        "diagram-config.hoverstyle.line" | translate
+      }}</mat-button-toggle>
     </mat-button-toggle-group>
   </p>
 </mat-dialog-content>
 
 <div mat-dialog-actions>
   <div style="flex: 1"></div>
-  <button mat-raised-button [mat-dialog-close]="diagramConfig" cdkFocusInitial>{{'controls.ok' | translate}}</button>
+  <button mat-raised-button [mat-dialog-close]="diagramConfig" cdkFocusInitial>
+    {{ "controls.ok" | translate }}
+  </button>
 </div>

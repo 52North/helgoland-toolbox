@@ -1,77 +1,96 @@
-<h1 mat-dialog-title>{{station.label}}</h1>
+<h1 mat-dialog-title>{{ station.label }}</h1>
 <mat-dialog-content>
   <p>
-    {{ 'dataset-by-station.hint' | translate }}
+    {{ "dataset-by-station.hint" | translate }}
   </p>
   @if (counter) {
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   }
   <div class="full-height">
     <mat-selection-list (selectionChange)="adjustSelection($event)">
       @for (ds of phenomenonMatchedList; track ds) {
-      <mat-list-option color="primary" [value]="ds" [selected]="ds.selected">
-        <div matListItemTitle>
-          <n52-label-mapper [label]="ds.parameters.phenomenon?.label"></n52-label-mapper>
-        </div>
-        <div matListItemLine>
-          <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
-          @if (ds.parameters.category) {
-          <span>
-            ({{getCategoryLabel(ds.parameters.category)}})
-          </span>
+        <mat-list-option color="primary" [value]="ds" [selected]="ds.selected">
+          <div matListItemTitle>
+            <n52-label-mapper
+              [label]="ds.parameters.phenomenon?.label"
+            ></n52-label-mapper>
+          </div>
+          <div matListItemLine>
+            <n52-label-mapper
+              [label]="ds.parameters.procedure?.label"
+            ></n52-label-mapper>
+            @if (ds.parameters.category) {
+              <span> ({{ getCategoryLabel(ds.parameters.category) }}) </span>
+            }
+          </div>
+          @if (ds.lastValue) {
+            <div matListItemLine>
+              <span>{{ ds.lastValue.value }}</span>
+              <span>{{ ds.uom }}</span>
+              <span>
+                ({{
+                  ds.lastValue.timestamp
+                    | tzDate: "L LT z" : null : translateSrvc.currentLang
+                }})</span
+              >
+            </div>
           }
-        </div>
-        @if (ds.lastValue) {
-        <div matListItemLine>
-          <span>{{ds.lastValue.value}}</span>
-          <span>{{ds.uom}}</span>
-          <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
-        </div>
-        }
-      </mat-list-option>
+        </mat-list-option>
       }
     </mat-selection-list>
     @if (othersList.length > 0) {
-    <mat-divider> </mat-divider>
+      <mat-divider> </mat-divider>
     }
     @if (othersList.length > 0) {
-    <mat-accordion>
-      <mat-expansion-panel class="mat-elevation-z0">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ 'dataset-by-station.show-additional-datasets' | translate }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-selection-list color="primary" (selectionChange)="adjustSelection($event)">
-          @for (ds of othersList; track ds) {
-          <mat-list-option [value]="ds" [selected]="ds.selected">
-            <div matListItemTitle>
-              <n52-label-mapper [label]="ds.parameters.phenomenon?.label"></n52-label-mapper>
-            </div>
-            <div matListItemLine>
-              <n52-label-mapper [label]="ds.parameters.procedure?.label"></n52-label-mapper>
-              @for (item of ds.parameters.category; track item) {
-              <span>
-                ({{item.label}})
-              </span>
-              }
-            </div>
-            @if (ds.lastValue) {
-            <div matListItemLine>
-              <span>{{ds.lastValue.value}}</span>
-              <span>{{ds.uom}}</span>
-              <span> ({{ds.lastValue.timestamp| tzDate: 'L LT z' : null : translateSrvc.currentLang}})</span>
-            </div>
+      <mat-accordion>
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ "dataset-by-station.show-additional-datasets" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list
+            color="primary"
+            (selectionChange)="adjustSelection($event)"
+          >
+            @for (ds of othersList; track ds) {
+              <mat-list-option [value]="ds" [selected]="ds.selected">
+                <div matListItemTitle>
+                  <n52-label-mapper
+                    [label]="ds.parameters.phenomenon?.label"
+                  ></n52-label-mapper>
+                </div>
+                <div matListItemLine>
+                  <n52-label-mapper
+                    [label]="ds.parameters.procedure?.label"
+                  ></n52-label-mapper>
+                  @for (item of ds.parameters.category; track item) {
+                    <span> ({{ item.label }}) </span>
+                  }
+                </div>
+                @if (ds.lastValue) {
+                  <div matListItemLine>
+                    <span>{{ ds.lastValue.value }}</span>
+                    <span>{{ ds.uom }}</span>
+                    <span>
+                      ({{
+                        ds.lastValue.timestamp
+                          | tzDate: "L LT z" : null : translateSrvc.currentLang
+                      }})</span
+                    >
+                  </div>
+                }
+              </mat-list-option>
             }
-          </mat-list-option>
-          }
-        </mat-selection-list>
-      </mat-expansion-panel>
-    </mat-accordion>
+          </mat-selection-list>
+        </mat-expansion-panel>
+      </mat-accordion>
     }
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div style="flex: 1"></div>
-  <button mat-raised-button mat-dialog-close>{{'controls.close' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>
+    {{ "controls.close" | translate }}
+  </button>
 </mat-dialog-actions>

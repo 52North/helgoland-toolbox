@@ -1,22 +1,29 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Timespan, TimezoneService } from "@helgoland/core";
-import * as d3 from "d3";
-import { Delaunay } from "d3-delaunay";
-import moment from "moment";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Timespan, TimezoneService } from '@helgoland/core';
+import * as d3 from 'd3';
+import { Delaunay } from 'd3-delaunay';
+import moment from 'moment';
 
-import { D3GraphHelperService } from "../../../helper/d3-graph-helper.service";
-import { D3GraphId } from "../../../helper/d3-graph-id.service";
-import { D3Graphs } from "../../../helper/d3-graphs.service";
-import { D3PointSymbolDrawerService } from "../../../helper/d3-point-symbol-drawer.service";
-import { D3HoveringService } from "../../../helper/hovering/d3-hovering-service";
-import { D3SimpleHoveringService } from "../../../helper/hovering/d3-simple-hovering.service";
-import { DataEntry } from "../../../model/d3-general";
-import { HighlightOutput } from "../../models/d3-highlight";
-import { BarStyle, SeriesGraphDataset, LineStyle } from "../../models/series-graph-dataset";
-import { D3GraphInterface } from "../../d3-graph.interface";
-import { D3GraphExtent, D3SeriesGraphControl } from "../../d3-series-graph-control";
-import { HoveringElement } from "./../../../helper/hovering/d3-hovering-service";
-import { HighlightValue } from "../../models/d3-highlight";
+import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
+import { D3GraphId } from '../../../helper/d3-graph-id.service';
+import { D3Graphs } from '../../../helper/d3-graphs.service';
+import { D3PointSymbolDrawerService } from '../../../helper/d3-point-symbol-drawer.service';
+import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service';
+import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
+import { DataEntry } from '../../../model/d3-general';
+import { HighlightOutput } from '../../models/d3-highlight';
+import {
+  BarStyle,
+  SeriesGraphDataset,
+  LineStyle,
+} from '../../models/series-graph-dataset';
+import { D3GraphInterface } from '../../d3-graph.interface';
+import {
+  D3GraphExtent,
+  D3SeriesGraphControl,
+} from '../../d3-series-graph-control';
+import { HoveringElement } from './../../../helper/hovering/d3-hovering-service';
+import { HighlightValue } from '../../models/d3-highlight';
 
 const MAXIMUM_POINT_DISTANCE = 10;
 
@@ -31,17 +38,18 @@ interface BarHoverElement extends HoveredElement {
 }
 
 @Component({
-  selector: "n52-d3-graph-hover-point",
-  template: "",
-  styleUrls: ["./d3-graph-hover-point.component.scss"],
-  standalone: true
+  selector: 'n52-d3-graph-hover-point',
+  template: '',
+  styleUrls: ['./d3-graph-hover-point.component.scss'],
+  standalone: true,
 })
 export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
-
-  @Input() public hoveringService: D3HoveringService = new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+  @Input() public hoveringService: D3HoveringService =
+    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> = new EventEmitter();
+  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
+    new EventEmitter();
 
   protected d3Graph: D3GraphInterface | undefined;
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
@@ -59,7 +67,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     protected override graphs: D3Graphs,
     protected override graphHelper: D3GraphHelperService,
     protected timezoneSrvc: TimezoneService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService
+    protected pointSymbolDrawer: D3PointSymbolDrawerService,
   ) {
     super(graphId, graphs, graphHelper);
   }
@@ -74,10 +82,10 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     graphExtent: D3GraphExtent,
     datasets: SeriesGraphDataset[],
     graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan
+    timespan: Timespan,
   ) {
     if (!this.drawLayer && this.d3Graph) {
-      this.drawLayer = this.d3Graph.getDrawingLayer("hovering-point-layer");
+      this.drawLayer = this.d3Graph.getDrawingLayer('hovering-point-layer');
       if (this.hoveringService) {
         this.hoveringService.initPointHovering(this.drawLayer);
       }
@@ -125,7 +133,10 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
         this.highlightPoint(nearestPoint);
       } else {
         const time = this.graphExtent.xScale.invert(pos.x).getTime();
-        const nearestBar = this.findNearestBar(time, this.graphExtent.height - pos.y);
+        const nearestBar = this.findNearestBar(
+          time,
+          this.graphExtent.height - pos.y,
+        );
         if (nearestBar.length) {
           this.highlightBars(nearestBar, event);
         }
@@ -135,39 +146,49 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
-    this.hoveringService.showPointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, nearestPoint.selection);
-    if (this.previousPoint.dataEntry.xDiagCoord && this.previousPoint.dataEntry.yDiagCoord) {
+    this.hoveringService.showPointHovering(
+      this.previousPoint.dataEntry,
+      this.previousPoint.dataset,
+      nearestPoint.selection,
+    );
+    if (
+      this.previousPoint.dataEntry.xDiagCoord &&
+      this.previousPoint.dataEntry.yDiagCoord
+    ) {
       this.hoveringService.positioningPointHovering(
         this.previousPoint.dataEntry.xDiagCoord,
         this.previousPoint.dataEntry.yDiagCoord,
         this.previousPoint.dataset.style.baseColor,
-        this.background
+        this.background,
       );
     }
 
     const ids: Map<string, HighlightValue> = new Map();
     ids.set(this.previousPoint.dataset.id, {
       timestamp: this.previousPoint.dataEntry.timestamp,
-      value: this.previousPoint.dataEntry.value
+      value: this.previousPoint.dataEntry.value,
     });
 
     this.onHighlightChanged.emit({
       timestamp: this.previousPoint.dataEntry.timestamp,
-      ids: ids
+      ids: ids,
     });
   }
 
-  protected highlightBars(nearestBars: BarHoverElement[], event: MouseEvent): void {
+  protected highlightBars(
+    nearestBars: BarHoverElement[],
+    event: MouseEvent,
+  ): void {
     const elements: HoveringElement[] = [];
     // add hovering tooltip to array
-    nearestBars.forEach(nearestBar => {
+    nearestBars.forEach((nearestBar) => {
       this.previousBars.push(nearestBar);
-      nearestBar.previousOpacity = nearestBar.selection.style("fill-opacity");
+      nearestBar.previousOpacity = nearestBar.selection.style('fill-opacity');
       elements.push({
         dataEntry: nearestBar.dataEntry,
         entry: nearestBar.dataset,
-        element: nearestBar.selection
-      })
+        element: nearestBar.selection,
+      });
       // this.hoveringService.showPointHovering(nearestBar.dataEntry, nearestBar.internalEntry, dataset, nearestBar.selection);
       // centered on bar
       // const barX = Number.parseFloat(nearestBar.selection.attr('x'));
@@ -178,25 +199,37 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
       // const y = barY + barHeight / 2;
 
       // mouse position
-      nearestBar.selection.style("fill-opacity", "0.6");
+      nearestBar.selection.style('fill-opacity', '0.6');
     });
     const pos = this.getCurrentMousePosition(event);
     if (pos) {
-      this.hoveringService.showTooltip(elements, { x: pos.x, y: pos.y, background: this.background });
+      this.hoveringService.showTooltip(elements, {
+        x: pos.x,
+        y: pos.y,
+        background: this.background,
+      });
     }
   }
 
   protected unhighlight() {
     if (this.previousPoint) {
-      this.hoveringService.hidePointHovering(this.previousPoint.dataEntry, this.previousPoint.dataset, this.previousPoint.selection);
+      this.hoveringService.hidePointHovering(
+        this.previousPoint.dataEntry,
+        this.previousPoint.dataset,
+        this.previousPoint.selection,
+      );
       this.previousPoint = undefined;
     }
     if (this.previousBars.length) {
       for (let i = this.previousBars.length - 1; i >= 0; i--) {
         const bar = this.previousBars[i];
-        this.hoveringService.hidePointHovering(bar.dataEntry, bar.dataset, bar.selection);
+        this.hoveringService.hidePointHovering(
+          bar.dataEntry,
+          bar.dataset,
+          bar.selection,
+        );
         if (bar.previousOpacity !== undefined) {
-          bar.selection.style("fill-opacity", bar.previousOpacity);
+          bar.selection.style('fill-opacity', bar.previousOpacity);
         }
         this.previousBars.splice(i, 1);
       }
@@ -210,18 +243,27 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
     this.datasets?.forEach((ds, i) => {
       if (ds.style instanceof LineStyle && ds.visible) {
-        const delaunay = Delaunay.from(ds.data, d => d.xDiagCoord!, d => d.yDiagCoord!);
+        const delaunay = Delaunay.from(
+          ds.data,
+          (d) => d.xDiagCoord!,
+          (d) => d.yDiagCoord!,
+        );
         const idx = delaunay.find(x, y);
 
         if (idx != null && !isNaN(idx) && this.graphLayer) {
           const datum = ds.data[idx] as DataEntry;
-          const distance = this.distance(datum.xDiagCoord!, datum.yDiagCoord!, x, y);
+          const distance = this.distance(
+            datum.xDiagCoord!,
+            datum.yDiagCoord!,
+            x,
+            y,
+          );
           if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
             const id = `dot-${datum.timestamp}-${i}`;
             nearest = {
               selection: this.graphLayer.select(`#${id}`),
               dataset: ds,
-              dataEntry: datum
+              dataEntry: datum,
             };
             nearestDist = distance;
           }
@@ -236,16 +278,18 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     this.datasets?.every((ds, i) => {
       if (ds.style instanceof BarStyle) {
         const shiftedTime = moment(time).subtract(ds.style.period).valueOf();
-        const idx = ds.data.findIndex(d => d.timestamp > shiftedTime);
+        const idx = ds.data.findIndex((d) => d.timestamp > shiftedTime);
         if (idx > -1 && ds.data[idx] && this.graphLayer) {
           const id = `bar-${ds.data[idx].timestamp}-${i}`;
           const match = this.graphLayer.select(`#${id}`);
-          const barHeight = match.attr("height") && Number.parseFloat(match.attr("height")) || 0;
+          const barHeight =
+            (match.attr('height') && Number.parseFloat(match.attr('height'))) ||
+            0;
           if (barHeight > height) {
             nearest.push({
               selection: match,
               dataset: ds,
-              dataEntry: ds.data[idx]
+              dataEntry: ds.data[idx],
             });
             return true;
           }
@@ -256,7 +300,9 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     return nearest;
   }
 
-  protected getCurrentMousePosition(event?: MouseEvent): { x: number, y: number } | undefined {
+  protected getCurrentMousePosition(
+    event?: MouseEvent,
+  ): { x: number; y: number } | undefined {
     if (this.graphExtent) {
       const [x, y] = d3.pointer(event);
       return { x: x + this.graphExtent.leftOffset, y };
@@ -269,5 +315,4 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     const b = py - my;
     return Math.sqrt(a * a + b * b);
   }
-
 }

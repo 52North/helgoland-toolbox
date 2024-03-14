@@ -1,15 +1,15 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { HelgolandTimeModule } from "./time.module";
+import { HelgolandTimeModule } from './time.module';
 
-describe("TimeModule", () => {
+describe('TimeModule', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandTimeModule],
     }).compileComponents();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(HelgolandTimeModule).toBeDefined();
   });
 });

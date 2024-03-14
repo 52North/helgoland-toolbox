@@ -1,15 +1,15 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { HelgolandOpenLayersModule } from "./open-layers.module";
+import { HelgolandOpenLayersModule } from './open-layers.module';
 
-describe("OpenLayersModule", () => {
+describe('OpenLayersModule', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HelgolandOpenLayersModule],
     }).compileComponents();
   }));
 
-  it("should create", () => {
+  it('should create', () => {
     expect(HelgolandOpenLayersModule).toBeDefined();
   });
 });

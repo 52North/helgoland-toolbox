@@ -1,34 +1,33 @@
-import { EventEmitter } from "@angular/core";
-import { FirstLastValue, MinMaxRange, PointSymbol } from "@helgoland/core";
-import { Duration, duration, unitOfTime } from "moment";
+import { EventEmitter } from '@angular/core';
+import { FirstLastValue, MinMaxRange, PointSymbol } from '@helgoland/core';
+import { Duration, duration, unitOfTime } from 'moment';
 
 export abstract class DatasetStyle {
   constructor(
-        public baseColor: string,
-        public lineWidth: number
-  ) { }
+    public baseColor: string,
+    public lineWidth: number,
+  ) {}
 
-    abstract clone(): DatasetStyle;
+  abstract clone(): DatasetStyle;
 }
 
 export class LineStyle extends DatasetStyle {
-
   /**
-     *Creates an instance of LineStyle.
-     * @param {string} baseColor 
-     * @param {number} [pointRadius=0] radius of graphpoint
-     * @param {number} [lineWidth=1] width of graphline
-     * @param {PointSymbol} [pointSymbol] 
-     * @param {(number | number[])} [lineDashArray] dasharray to structure the line or bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
-     */
+   *Creates an instance of LineStyle.
+   * @param {string} baseColor
+   * @param {number} [pointRadius=0] radius of graphpoint
+   * @param {number} [lineWidth=1] width of graphline
+   * @param {PointSymbol} [pointSymbol]
+   * @param {(number | number[])} [lineDashArray] dasharray to structure the line or bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+   */
   constructor(
-        public override baseColor: string,
-        public pointRadius: number = 0,
-        public override lineWidth: number = 1,
-        public pointSymbol?: PointSymbol,
-        public lineDashArray?: number | number[],
-        public pointBorderColor: string = baseColor,
-        public pointBorderWidth: number = 1
+    public override baseColor: string,
+    public pointRadius: number = 0,
+    public override lineWidth: number = 1,
+    public pointSymbol?: PointSymbol,
+    public lineDashArray?: number | number[],
+    public pointBorderColor: string = baseColor,
+    public pointBorderWidth: number = 1,
   ) {
     super(baseColor, lineWidth);
   }
@@ -41,28 +40,27 @@ export class LineStyle extends DatasetStyle {
       this.pointSymbol,
       this.lineDashArray,
       this.pointBorderColor,
-      this.pointBorderWidth
-    )
+      this.pointBorderWidth,
+    );
   }
 }
 
 export class BarStyle extends DatasetStyle {
-
   /**
-     *Creates an instance of BarStyle.
-     * @param {string} baseColor
-     * @param {string} [barStartOf='hour'] the start of, where to start with the bar chart. See also: https://momentjs.com/docs/#/manipulating/start-of/
-     * @param {string} [barPeriod='PT1H'] period of the bars defined as moment.duration. See also: https://momentjs.com/docs/#/durations/ default is 'PT1H' which means one hour duration
-     * @param {number} [lineWidth=1] width of bar border line
-     * @param {(number | number[])} [lineDashArray] dasharray to structure bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
-     * @memberof BarStyle
-     */
+   *Creates an instance of BarStyle.
+   * @param {string} baseColor
+   * @param {string} [barStartOf='hour'] the start of, where to start with the bar chart. See also: https://momentjs.com/docs/#/manipulating/start-of/
+   * @param {string} [barPeriod='PT1H'] period of the bars defined as moment.duration. See also: https://momentjs.com/docs/#/durations/ default is 'PT1H' which means one hour duration
+   * @param {number} [lineWidth=1] width of bar border line
+   * @param {(number | number[])} [lineDashArray] dasharray to structure bar chart border. See also here: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray
+   * @memberof BarStyle
+   */
   constructor(
-        public override baseColor: string,
-        public startOf: unitOfTime.StartOf = "hour",
-        public period: Duration = duration("PT1H"),
-        public override lineWidth: number = 1,
-        public lineDashArray?: number | number[],
+    public override baseColor: string,
+    public startOf: unitOfTime.StartOf = 'hour',
+    public period: Duration = duration('PT1H'),
+    public override lineWidth: number = 1,
+    public lineDashArray?: number | number[],
   ) {
     super(baseColor, lineWidth);
   }
@@ -73,28 +71,27 @@ export class BarStyle extends DatasetStyle {
       this.startOf,
       this.period,
       this.lineWidth,
-      this.lineDashArray
-    )
+      this.lineDashArray,
+    );
   }
 }
 
 export class AxisSettings {
-
   /**
-     * Creates an instance of AxisSettings.
-     * @param {string} label Y-Axis label if no link to an existing dataset is given
-     * @param {boolean} [separate=false] separate y axis of datasets with same unit
-     * @param {boolean} [zeroBased=false] align graph that zero y axis is visible
-     * @param {boolean} [autoRangeSelection=false] auto zoom when range selection
-     * @param {MinMaxRange} [range] min and max range of y axis
-     */
+   * Creates an instance of AxisSettings.
+   * @param {string} label Y-Axis label if no link to an existing dataset is given
+   * @param {boolean} [separate=false] separate y axis of datasets with same unit
+   * @param {boolean} [zeroBased=false] align graph that zero y axis is visible
+   * @param {boolean} [autoRangeSelection=false] auto zoom when range selection
+   * @param {MinMaxRange} [range] min and max range of y axis
+   */
   constructor(
-        public showSymbolOnAxis: boolean = true,
-        public separate: boolean = false,
-        public zeroBased: boolean = false,
-        public autoRangeSelection: boolean = false,
-        public range?: MinMaxRange
-  ) { }
+    public showSymbolOnAxis: boolean = true,
+    public separate: boolean = false,
+    public zeroBased: boolean = false,
+    public autoRangeSelection: boolean = false,
+    public range?: MinMaxRange,
+  ) {}
 
   clone(): AxisSettings {
     return new AxisSettings(
@@ -102,7 +99,7 @@ export class AxisSettings {
       this.separate,
       this.zeroBased,
       this.autoRangeSelection,
-      this.range
+      this.range,
     );
   }
 }
@@ -111,40 +108,39 @@ export class AxisSettings {
  * Additional data entry tuple
  */
 export interface GraphDataEntry {
-    timestamp: number;
-    value: number;
-    highlight?: boolean;
-    xDiagCoord?: number;
-    yDiagCoord?: number;
+  timestamp: number;
+  value: number;
+  highlight?: boolean;
+  xDiagCoord?: number;
+  yDiagCoord?: number;
 }
 
 export interface DatasetDescription {
-    uom: string,
-    // TODO: make optional?
-    phenomenonLabel: string;
-    // TODO: make optional?
-    platformLabel: string;
-    // TODO: make optional?
-    procedureLabel: string;
-    // TODO: make optional?
-    categoryLabel?: string[];
-    // TODO: make optional?
-    featureLabel: string;
-    firstValue?: FirstLastValue;
-    lastValue?: FirstLastValue;
+  uom: string;
+  // TODO: make optional?
+  phenomenonLabel: string;
+  // TODO: make optional?
+  platformLabel: string;
+  // TODO: make optional?
+  procedureLabel: string;
+  // TODO: make optional?
+  categoryLabel?: string[];
+  // TODO: make optional?
+  featureLabel: string;
+  firstValue?: FirstLastValue;
+  lastValue?: FirstLastValue;
 }
 
 export class DatasetChild {
-
   public stateChangeEvent: EventEmitter<void> = new EventEmitter(); // TODO: use Observable
 
   constructor(
-        private _id: string,
-        private _label: string,
-        private _visible: boolean,
-        private _data: GraphDataEntry[],
-        private _color: string
-  ) { }
+    private _id: string,
+    private _label: string,
+    private _visible: boolean,
+    private _data: GraphDataEntry[],
+    private _color: string,
+  ) {}
 
   public get id(): string {
     return this._id;
@@ -180,28 +176,27 @@ export class DatasetChild {
   public get label(): string {
     return this._label;
   }
-
 }
 
 export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
-
   private _data: GraphDataEntry[] = [];
   private _dataLoading: boolean = false;
 
   private _children: DatasetChild[] = [];
 
-  public stateChangeEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
+  public stateChangeEvent: EventEmitter<SeriesGraphDataset> =
+    new EventEmitter();
   public dataChangeEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
   public deleteEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
 
   constructor(
-        private _id: string,
-        private _style: T,
-        private _yaxis: AxisSettings,
-        private _visible: boolean,
-        private _selected: boolean,
-        private _description: DatasetDescription
-  ) { }
+    private _id: string,
+    private _style: T,
+    private _yaxis: AxisSettings,
+    private _visible: boolean,
+    private _selected: boolean,
+    private _description: DatasetDescription,
+  ) {}
 
   clone(): SeriesGraphDataset {
     return new SeriesGraphDataset(
@@ -218,8 +213,8 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         phenomenonLabel: this.description.phenomenonLabel,
         platformLabel: this.description.platformLabel,
         procedureLabel: this.description.procedureLabel,
-        uom: this.description.uom
-      }
+        uom: this.description.uom,
+      },
     );
   }
 
@@ -312,11 +307,11 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
   }
 
   hasChild(child: DatasetChild): boolean {
-    return this._children.findIndex(e => e.id === child.id) >= 0;
+    return this._children.findIndex((e) => e.id === child.id) >= 0;
   }
 
   removeChild(child: DatasetChild) {
-    const idx = this._children.findIndex(e => e.id === child.id);
+    const idx = this._children.findIndex((e) => e.id === child.id);
     if (idx >= 0) {
       delete this._children[idx];
     }

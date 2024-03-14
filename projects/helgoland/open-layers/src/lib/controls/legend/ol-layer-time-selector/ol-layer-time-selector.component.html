@@ -1,10 +1,14 @@
 @if (loading) {
-<span>loading ...</span>
+  <span>loading ...</span>
 }
 @if (!loading) {
-<select [ngModel]="currentTime" [compareWith]="compareFn" (ngModelChange)="onSelect($event)">
-  @for (time of timeDimensions; track time) {
-  <option [ngValue]="time">{{time | tzDate: 'L LT z'}}</option>
-  }
-</select>
+  <select
+    [ngModel]="currentTime"
+    [compareWith]="compareFn"
+    (ngModelChange)="onSelect($event)"
+  >
+    @for (time of timeDimensions; track time) {
+      <option [ngValue]="time">{{ time | tzDate: "L LT z" }}</option>
+    }
+  </select>
 }

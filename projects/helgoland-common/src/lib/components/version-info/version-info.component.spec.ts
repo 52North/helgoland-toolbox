@@ -1,11 +1,11 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "./../../../../../testing/translate.testing.module";
-import { VersionInfoComponent } from "./version-info.component";
+import { TranslateTestingModule } from './../../../../../testing/translate.testing.module';
+import { VersionInfoComponent } from './version-info.component';
 
-describe("VersionInfoComponent", () => {
+describe('VersionInfoComponent', () => {
   let component: VersionInfoComponent;
   let fixture: ComponentFixture<VersionInfoComponent>;
 
@@ -15,10 +15,9 @@ describe("VersionInfoComponent", () => {
         TranslateTestingModule,
         HelgolandCoreModule,
         HttpClientModule,
-        VersionInfoComponent
-      ]
-    })
-      .compileComponents();
+        VersionInfoComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -27,7 +26,7 @@ describe("VersionInfoComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

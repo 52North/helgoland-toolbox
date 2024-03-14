@@ -1,15 +1,18 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed, inject } from '@angular/core/testing';
 
-import { ListSelectorService } from "./list-selector.service";
+import { ListSelectorService } from './list-selector.service';
 
-describe("ListSelectorService", () => {
+describe('ListSelectorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ListSelectorService]
+      providers: [ListSelectorService],
     });
   });
 
-  it("should be created", inject([ListSelectorService], (service: ListSelectorService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [ListSelectorService],
+    (service: ListSelectorService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

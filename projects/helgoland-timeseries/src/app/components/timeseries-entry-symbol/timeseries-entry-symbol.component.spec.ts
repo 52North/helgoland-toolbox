@@ -1,15 +1,15 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { TimeseriesEntrySymbolComponent } from "./timeseries-entry-symbol.component";
+import { TimeseriesEntrySymbolComponent } from './timeseries-entry-symbol.component';
 
-describe("TimeseriesEntrySymbolComponent", () => {
+describe('TimeseriesEntrySymbolComponent', () => {
   let component: TimeseriesEntrySymbolComponent;
   let fixture: ComponentFixture<TimeseriesEntrySymbolComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TimeseriesEntrySymbolComponent]
+      imports: [TimeseriesEntrySymbolComponent],
     }).compileComponents();
   }));
 
@@ -19,7 +19,7 @@ describe("TimeseriesEntrySymbolComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

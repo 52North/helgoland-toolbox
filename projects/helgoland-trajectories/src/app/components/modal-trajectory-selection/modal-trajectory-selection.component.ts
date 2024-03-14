@@ -1,9 +1,9 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatExpansionModule } from "@angular/material/expansion";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import {
   DatasetApi,
   DatasetType,
@@ -11,25 +11,28 @@ import {
   HelgolandService,
   HelgolandServicesConnector,
   Parameter,
-} from "@helgoland/core";
-import { MultiServiceFilter, MultiServiceFilterEndpoint } from "@helgoland/selector";
-import { TranslateModule } from "@ngx-translate/core";
+} from '@helgoland/core';
+import {
+  MultiServiceFilter,
+  MultiServiceFilterEndpoint,
+} from '@helgoland/selector';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   LoadingOverlayProgressBarComponent,
   ParameterListEntry,
   ParameterListSelectorComponent,
   ParameterType,
   ServiceListSelectorComponent,
-} from "helgoland-common";
+} from 'helgoland-common';
 
-import { ConfigurationService } from "./../../services/configuration.service";
-import { TrajectoriesService } from "./../../services/trajectories.service";
-import { ParameterTypeLabelComponent } from "./parameter-type-label/parameter-type-label.component";
+import { ConfigurationService } from './../../services/configuration.service';
+import { TrajectoriesService } from './../../services/trajectories.service';
+import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-type-label.component';
 
 @Component({
-  selector: "helgoland-trajectories-modal-trajectory-selection",
-  templateUrl: "./modal-trajectory-selection.component.html",
-  styleUrls: ["./modal-trajectory-selection.component.scss"],
+  selector: 'helgoland-trajectories-modal-trajectory-selection',
+  templateUrl: './modal-trajectory-selection.component.html',
+  styleUrls: ['./modal-trajectory-selection.component.scss'],
   imports: [
     CommonModule,
     LoadingOverlayProgressBarComponent,
@@ -40,13 +43,13 @@ import { ParameterTypeLabelComponent } from "./parameter-type-label/parameter-ty
     ParameterListSelectorComponent,
     ParameterTypeLabelComponent,
     ServiceListSelectorComponent,
-    TranslateModule
+    TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
-
-  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
+  public datasetApis: DatasetApi[] =
+    this.configSrvc.configuration?.datasetApis || [];
 
   public datasetsLoading: boolean | undefined;
 
@@ -54,8 +57,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   public providerFilter: HelgolandParameterFilter = {
     type: DatasetType.Trajectory,
-    expanded: true
-  }
+    expanded: true,
+  };
 
   public filterEnpoints = MultiServiceFilterEndpoint;
 
@@ -63,15 +66,15 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
     private configSrvc: ConfigurationService,
     private servicesConnector: HelgolandServicesConnector,
-    private trajectorySrvc: TrajectoriesService
-  ) { }
+    private trajectorySrvc: TrajectoriesService,
+  ) {}
 
   ngOnInit(): void {
     this.filterList.push({
       selectedFilter: ParameterType.PROVIDER,
       expanded: true,
       possibleFilters: [],
-      apiFilter: []
+      apiFilter: [],
     });
   }
 
@@ -83,13 +86,15 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     this.filterList.push({
       expanded: true,
       possibleFilters: [ParameterType.OFFERING, ParameterType.PHENOMENON],
-      apiFilter: [{
-        url: service.apiUrl,
-        filter: {
-          service: service.id,
-          type: DatasetType.Trajectory
-        }
-      }]
+      apiFilter: [
+        {
+          url: service.apiUrl,
+          filter: {
+            service: service.id,
+            type: DatasetType.Trajectory,
+          },
+        },
+      ],
     });
   }
 
@@ -111,7 +116,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     filter.expanded = false;
 
     // find entry and clear following
-    const fi = this.filterList.findIndex(e => e === filter);
+    const fi = this.filterList.findIndex((e) => e === filter);
     this.filterList.splice(fi + 1);
 
     // add new Entry
@@ -132,13 +137,16 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     const possibleFilters = [ParameterType.OFFERING, ParameterType.PHENOMENON];
 
     // only allow feature filter, if previously offering or phenomenon are selected
-    const previousFilter = this.filterList.map(e => e.selectedFilter);
-    if ((previousFilter.indexOf(ParameterType.OFFERING) > -1 || previousFilter.indexOf(ParameterType.PHENOMENON) > -1)) {
+    const previousFilter = this.filterList.map((e) => e.selectedFilter);
+    if (
+      previousFilter.indexOf(ParameterType.OFFERING) > -1 ||
+      previousFilter.indexOf(ParameterType.PHENOMENON) > -1
+    ) {
       possibleFilters.push(ParameterType.FEATURE);
     }
     for (let index = 0; index < this.filterList.length; index++) {
       const f = this.filterList[index].selectedFilter;
-      const idx = possibleFilters.findIndex(e => e === f);
+      const idx = possibleFilters.findIndex((e) => e === f);
       if (idx >= 0) {
         possibleFilters.splice(idx, 1);
       }
@@ -147,7 +155,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       expanded: true,
       possibleFilters,
       apiFilter,
-      selectedFilter: possibleFilters.length === 1 ? possibleFilters[0] : undefined
+      selectedFilter:
+        possibleFilters.length === 1 ? possibleFilters[0] : undefined,
     });
   }
 
@@ -156,13 +165,12 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     const dsFilter = filter.apiFilter[0].filter!;
     dsFilter.feature = item.id;
     this.datasetsLoading = true;
-    this.servicesConnector.getDatasets(url, dsFilter).subscribe(res => {
+    this.servicesConnector.getDatasets(url, dsFilter).subscribe((res) => {
       if (res.length > 0) {
         this.trajectorySrvc.mainTrajectoryId = res[0].internalId;
         this.dialogRef.close();
       }
       this.datasetsLoading = false;
-    })
+    });
   }
-
 }

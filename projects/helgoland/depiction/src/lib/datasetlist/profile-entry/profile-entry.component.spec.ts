@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule, SettingsService } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule, SettingsService } from '@helgoland/core';
 
-import { LabelMapperComponent } from "../../label-mapper/label-mapper.component";
-import { LabelMapperService } from "../../label-mapper/label-mapper.service";
-import { DatasetApiInterfaceTesting } from "../../../../../../testing/dataset-api-interface.testing";
-import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
-import { ProfileEntryComponent } from "./profile-entry.component";
+import { LabelMapperComponent } from '../../label-mapper/label-mapper.component';
+import { LabelMapperService } from '../../label-mapper/label-mapper.service';
+import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { ProfileEntryComponent } from './profile-entry.component';
 
-describe("ProfileEntryComponent", () => {
+describe('ProfileEntryComponent', () => {
   let component: ProfileEntryComponent;
   let fixture: ComponentFixture<ProfileEntryComponent>;
 
@@ -17,25 +17,24 @@ describe("ProfileEntryComponent", () => {
         HelgolandCoreModule,
         TranslateTestingModule,
         ProfileEntryComponent,
-        LabelMapperComponent
+        LabelMapperComponent,
       ],
       providers: [
         DatasetApiInterfaceTesting,
         LabelMapperService,
-        SettingsService
-      ]
+        SettingsService,
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileEntryComponent);
     component = fixture.componentInstance;
-    component.datasetId = "temp__temp";
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

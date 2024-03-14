@@ -1,6 +1,6 @@
-import { Injectable, Optional } from "@angular/core";
-import { Timespan } from "@helgoland/core";
-import { Observable, ReplaySubject } from "rxjs";
+import { Injectable, Optional } from '@angular/core';
+import { Timespan } from '@helgoland/core';
+import { Observable, ReplaySubject } from 'rxjs';
 
 import {
   FacetParameter,
@@ -9,7 +9,7 @@ import {
   FacetSearchService,
   ParameterFacetSort,
   ParameterFacetType,
-} from "./facet-search-model";
+} from './facet-search-model';
 
 @Injectable()
 export class FacetSearchConfig {
@@ -18,8 +18,8 @@ export class FacetSearchConfig {
 
 @Injectable()
 export class FacetSearchServiceImpl implements FacetSearchService {
-
-  protected onResultsChanged: ReplaySubject<FacetSearchElement[]> = new ReplaySubject(1);
+  protected onResultsChanged: ReplaySubject<FacetSearchElement[]> =
+    new ReplaySubject(1);
 
   protected facets: Map<ParameterFacetType, FacetParameter> = new Map();
 
@@ -31,10 +31,10 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected nullable = false;
 
-  constructor(
-    @Optional() config?: FacetSearchConfig
-  ) {
-    if (config && config.showZeroValues) { this.nullable = config.showZeroValues; }
+  constructor(@Optional() config?: FacetSearchConfig) {
+    if (config && config.showZeroValues) {
+      this.nullable = config.showZeroValues;
+    }
   }
 
   public setEntries(ts: FacetSearchElement[]) {
@@ -46,36 +46,69 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return this.onResultsChanged.asObservable();
   }
 
-  public getParameterList(type: ParameterFacetType, sort: ParameterFacetSort): FacetParameter[] {
+  public getParameterList(
+    type: ParameterFacetType,
+    sort: ParameterFacetSort,
+  ): FacetParameter[] {
     let params: FacetParameter[] = [];
     if (this.filteredEntries) {
       switch (type) {
         case ParameterFacetType.category:
-          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.category); }
-          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.category, e.category));
+          if (this.nullable) {
+            params = this.createEmptyParamList(ParameterFacetType.category);
+          }
+          this.filteredEntries.forEach((e) =>
+            this.addParameter(params, ParameterFacetType.category, e.category),
+          );
           break;
         case ParameterFacetType.feature:
-          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.feature); }
-          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.feature, e.feature));
+          if (this.nullable) {
+            params = this.createEmptyParamList(ParameterFacetType.feature);
+          }
+          this.filteredEntries.forEach((e) =>
+            this.addParameter(params, ParameterFacetType.feature, e.feature),
+          );
           break;
         case ParameterFacetType.offering:
-          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.offering); }
-          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.offering, e.offering));
+          if (this.nullable) {
+            params = this.createEmptyParamList(ParameterFacetType.offering);
+          }
+          this.filteredEntries.forEach((e) =>
+            this.addParameter(params, ParameterFacetType.offering, e.offering),
+          );
           break;
         case ParameterFacetType.phenomenon:
-          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.phenomenon); }
-          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.phenomenon, e.phenomenon));
+          if (this.nullable) {
+            params = this.createEmptyParamList(ParameterFacetType.phenomenon);
+          }
+          this.filteredEntries.forEach((e) =>
+            this.addParameter(
+              params,
+              ParameterFacetType.phenomenon,
+              e.phenomenon,
+            ),
+          );
           break;
         case ParameterFacetType.procedure:
-          if (this.nullable) { params = this.createEmptyParamList(ParameterFacetType.procedure); }
-          this.filteredEntries.forEach(e => this.addParameter(params, ParameterFacetType.procedure, e.procedure));
+          if (this.nullable) {
+            params = this.createEmptyParamList(ParameterFacetType.procedure);
+          }
+          this.filteredEntries.forEach((e) =>
+            this.addParameter(
+              params,
+              ParameterFacetType.procedure,
+              e.procedure,
+            ),
+          );
           break;
       }
     }
     return this.sortParameters(params, sort);
   }
 
-  public getSelectedParameter(type: ParameterFacetType): FacetParameter | undefined {
+  public getSelectedParameter(
+    type: ParameterFacetType,
+  ): FacetParameter | undefined {
     if (this.facets.has(type)) {
       return this.facets.get(type);
     }
@@ -122,14 +155,20 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     this.setFilteredEntries();
   }
 
-  protected createTimespan(entries: FacetSearchElement[]): Timespan | undefined {
+  protected createTimespan(
+    entries: FacetSearchElement[],
+  ): Timespan | undefined {
     let timespan: Timespan | undefined = undefined;
     if (entries.length > 0) {
       timespan = { from: Infinity, to: 0 };
-      entries.forEach(e => {
+      entries.forEach((e) => {
         if (e.firstValue && e.lastValue) {
-          if (e.firstValue.timestamp < timespan!.from) { timespan!.from = e.firstValue.timestamp; }
-          if (e.lastValue.timestamp > timespan!.to) { timespan!.to = e.lastValue.timestamp; }
+          if (e.firstValue.timestamp < timespan!.from) {
+            timespan!.from = e.firstValue.timestamp;
+          }
+          if (e.lastValue.timestamp > timespan!.to) {
+            timespan!.to = e.lastValue.timestamp;
+          }
         }
       });
     }
@@ -138,14 +177,31 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected setFilteredEntries() {
     if (this.facets.size > 0 || this.selectedTimespan) {
-      this.filteredEntries = this.entries.filter(e => {
-        const matchCategory = e.category ? this.checkFacet(ParameterFacetType.category, e.category.id) : true;
-        const matchFeature = e.feature ? this.checkFacet(ParameterFacetType.feature, e.feature.id) : true;
-        const matchOffering = e.offering ? this.checkFacet(ParameterFacetType.offering, e.offering.id) : true;
-        const matchPhenomenon = e.phenomenon ? this.checkFacet(ParameterFacetType.phenomenon, e.phenomenon.id) : true;
-        const matchProcedure = e.procedure ? this.checkFacet(ParameterFacetType.procedure, e.procedure.id) : true;
+      this.filteredEntries = this.entries.filter((e) => {
+        const matchCategory = e.category
+          ? this.checkFacet(ParameterFacetType.category, e.category.id)
+          : true;
+        const matchFeature = e.feature
+          ? this.checkFacet(ParameterFacetType.feature, e.feature.id)
+          : true;
+        const matchOffering = e.offering
+          ? this.checkFacet(ParameterFacetType.offering, e.offering.id)
+          : true;
+        const matchPhenomenon = e.phenomenon
+          ? this.checkFacet(ParameterFacetType.phenomenon, e.phenomenon.id)
+          : true;
+        const matchProcedure = e.procedure
+          ? this.checkFacet(ParameterFacetType.procedure, e.procedure.id)
+          : true;
         const matchTimespan = this.checkTimespan(e);
-        return matchCategory && matchFeature && matchOffering && matchPhenomenon && matchProcedure && matchTimespan;
+        return (
+          matchCategory &&
+          matchFeature &&
+          matchOffering &&
+          matchPhenomenon &&
+          matchProcedure &&
+          matchTimespan
+        );
       });
     } else {
       this.filteredEntries = this.entries;
@@ -157,8 +213,14 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected checkTimespan(ts: FacetSearchElement): boolean {
     if (this.selectedTimespan) {
-      const checkfrom = ts.lastValue && ts.lastValue.timestamp ? this.selectedTimespan.from <= ts.lastValue.timestamp : true;
-      const checkTo = ts.firstValue && ts.firstValue.timestamp ? this.selectedTimespan.to >= ts.firstValue.timestamp : true;
+      const checkfrom =
+        ts.lastValue && ts.lastValue.timestamp
+          ? this.selectedTimespan.from <= ts.lastValue.timestamp
+          : true;
+      const checkTo =
+        ts.firstValue && ts.firstValue.timestamp
+          ? this.selectedTimespan.to >= ts.firstValue.timestamp
+          : true;
       return checkfrom && checkTo;
     }
     return true;
@@ -171,8 +233,13 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return true;
   }
 
-  protected sortParameters(list: FacetParameter[], sort: ParameterFacetSort): FacetParameter[] {
-    if (sort === null || sort === ParameterFacetSort.none) { return list; }
+  protected sortParameters(
+    list: FacetParameter[],
+    sort: ParameterFacetSort,
+  ): FacetParameter[] {
+    if (sort === null || sort === ParameterFacetSort.none) {
+      return list;
+    }
     list.sort((a, b) => {
       switch (sort) {
         case ParameterFacetSort.ascCount:
@@ -188,9 +255,13 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return list;
   }
 
-  protected addParameter(list: FacetParameter[], type: ParameterFacetType, entry?: FacetSearchElementParameter) {
+  protected addParameter(
+    list: FacetParameter[],
+    type: ParameterFacetType,
+    entry?: FacetSearchElementParameter,
+  ) {
     if (entry) {
-      const existing = list.find(e => e.label === entry.label);
+      const existing = list.find((e) => e.label === entry.label);
       if (existing) {
         existing.count += 1;
       } else {
@@ -198,7 +269,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
           id: entry.id,
           label: entry.label,
           count: 1,
-          selected: this.checkSelection(type, entry.id)
+          selected: this.checkSelection(type, entry.id),
         });
       }
     }
@@ -206,14 +277,14 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected createEmptyParamList(type: ParameterFacetType): FacetParameter[] {
     const params: FacetParameter[] = [];
-    this.entries.forEach(ts => {
+    this.entries.forEach((ts) => {
       const elem = ts[type];
-      if (elem && !params.find(e => e.label === elem.label)) {
+      if (elem && !params.find((e) => e.label === elem.label)) {
         params.push({
           id: elem.id,
           label: elem.label,
           count: 0,
-          selected: this.checkSelection(type, elem.id)
+          selected: this.checkSelection(type, elem.id),
         });
       }
     });
@@ -223,5 +294,4 @@ export class FacetSearchServiceImpl implements FacetSearchService {
   protected checkSelection(type: ParameterFacetType, id: string): boolean {
     return this.facets.has(type) && this.facets.get(type)!.id === id;
   }
-
 }

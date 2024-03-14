@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { BoolTogglerComponent } from "./bool-toggler.component";
+import { BoolTogglerComponent } from './bool-toggler.component';
 
-describe("BoolTogglerComponent", () => {
+describe('BoolTogglerComponent', () => {
   let component: BoolTogglerComponent;
   let fixture: ComponentFixture<BoolTogglerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [BoolTogglerComponent]
-    })
-      .compileComponents();
+      imports: [BoolTogglerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe("BoolTogglerComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

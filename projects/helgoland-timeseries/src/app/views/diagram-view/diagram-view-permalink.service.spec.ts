@@ -1,11 +1,11 @@
-import { TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DiagramViewPermalinkService } from "./diagram-view-permalink.service";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
 
-describe("DiagramViewPermalinkService", () => {
+describe('DiagramViewPermalinkService', () => {
   let service: DiagramViewPermalinkService;
 
   beforeEach(() => {
@@ -13,13 +13,13 @@ describe("DiagramViewPermalinkService", () => {
       imports: [
         HelgolandCoreModule,
         RouterTestingModule,
-        TranslateTestingModule
-      ]
+        TranslateTestingModule,
+      ],
     });
     service = TestBed.inject(DiagramViewPermalinkService);
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

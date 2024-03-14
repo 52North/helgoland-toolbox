@@ -1,23 +1,19 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { TranslateModule } from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { HelgolandLabelMapperModule } from "../label-mapper/label-mapper.module";
-import { ProfileEntryComponent } from "./profile-entry/profile-entry.component";
-import {
-  ConfigurableTimeseriesEntryComponent,
-} from "./timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component";
-import {
-  FirstLatestTimeseriesEntryComponent,
-} from "./timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component";
-import { SimpleTimeseriesEntryComponent } from "./timeseries/simple-timeseries-entry/simple-timeseries-entry.component";
+import { HelgolandLabelMapperModule } from '../label-mapper/label-mapper.module';
+import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
+import { ConfigurableTimeseriesEntryComponent } from './timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component';
+import { FirstLatestTimeseriesEntryComponent } from './timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component';
+import { SimpleTimeseriesEntryComponent } from './timeseries/simple-timeseries-entry/simple-timeseries-entry.component';
 import {
   ReferenceValueColorCache,
   TimeseriesEntryComponent,
-} from "./timeseries/timeseries-entry/timeseries-entry.component";
-import { TrajectoryEntryComponent } from "./trajectory-entry/trajectory-entry.component";
+} from './timeseries/timeseries-entry/timeseries-entry.component';
+import { TrajectoryEntryComponent } from './trajectory-entry/trajectory-entry.component';
 
 const COMPONENTS = [
   TimeseriesEntryComponent,
@@ -25,7 +21,7 @@ const COMPONENTS = [
   SimpleTimeseriesEntryComponent,
   FirstLatestTimeseriesEntryComponent,
   ProfileEntryComponent,
-  TrajectoryEntryComponent
+  TrajectoryEntryComponent,
 ];
 
 /**
@@ -39,14 +35,9 @@ const COMPONENTS = [
     HelgolandCoreModule,
     HelgolandLabelMapperModule,
     FormsModule,
-    COMPONENTS
+    COMPONENTS,
   ],
-  exports: [
-    COMPONENTS
-  ],
-  providers: [
-    ReferenceValueColorCache
-  ]
+  exports: [COMPONENTS],
+  providers: [ReferenceValueColorCache],
 })
-export class HelgolandDatasetlistModule {
-}
+export class HelgolandDatasetlistModule {}

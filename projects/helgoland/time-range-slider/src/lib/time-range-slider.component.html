@@ -1,20 +1,20 @@
 <div class="time-range-slider" [hidden]="!timeList">
   <div class="slider-container">
     <div class="left-start">
-      <span>{{start | tzDate : 'L LT z'}}</span>
+      <span>{{ start | tzDate: "L LT z" }}</span>
     </div>
     <div class="center">
       <input id="slider" type="text" />
     </div>
     <div class="right-end">
-      <span>{{end | tzDate : 'L LT z'}}</span>
+      <span>{{ end | tzDate: "L LT z" }}</span>
     </div>
   </div>
   @if (selectionStart) {
-  <div class="selection">
-    <span>{{selectionStart | tzDate : 'L LT z'}}</span>
-    <span> - </span>
-    <span>{{selectionEnd | tzDate : 'L LT z'}}</span>
-  </div>
+    <div class="selection">
+      <span>{{ selectionStart | tzDate: "L LT z" }}</span>
+      <span> - </span>
+      <span>{{ selectionEnd | tzDate: "L LT z" }}</span>
+    </div>
   }
 </div>

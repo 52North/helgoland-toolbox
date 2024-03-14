@@ -1,21 +1,18 @@
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { TestBed } from "@angular/core/testing";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 
-import { PhysicalSystem } from "../model/sml";
-import { SensorMLXmlService } from "./SensorMLXmlService";
-import { XPathDocument } from "./xml/XPathDocument";
+import { PhysicalSystem } from '../model/sml';
+import { SensorMLXmlService } from './SensorMLXmlService';
+import { XPathDocument } from './xml/XPathDocument';
 
-describe("SensorMLXmlService", () => {
-
+describe('SensorMLXmlService', () => {
   const service = new SensorMLXmlService();
 
   let http: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule
-      ]
+      imports: [HttpClientModule],
     });
     http = TestBed.inject(HttpClient);
   });
@@ -78,10 +75,9 @@ describe("SensorMLXmlService", () => {
   //     });
   // });
 
-  it("should serialize the document", () => {
+  it('should serialize the document', () => {
     const ps = new PhysicalSystem();
     const doc = XPathDocument.parse(service.serialize(ps));
-    expect(doc.eval("/sml:PhysicalSystem")).not.toBeNull();
+    expect(doc.eval('/sml:PhysicalSystem')).not.toBeNull();
   });
-
 });

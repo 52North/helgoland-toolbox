@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule, Timespan } from "@helgoland/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule, Timespan } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { TimespanShiftSelectorComponent } from "./timespan-shift-selector.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { TimespanShiftSelectorComponent } from './timespan-shift-selector.component';
 
-describe("TimespanShiftSelectorComponent", () => {
+describe('TimespanShiftSelectorComponent', () => {
   let component: TimespanShiftSelectorComponent;
   let fixture: ComponentFixture<TimespanShiftSelectorComponent>;
 
@@ -13,19 +13,22 @@ describe("TimespanShiftSelectorComponent", () => {
       imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        TimespanShiftSelectorComponent
-      ]
+        TimespanShiftSelectorComponent,
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimespanShiftSelectorComponent);
     component = fixture.componentInstance;
-    component.timespan = new Timespan(new Date().getTime() - 10000000, new Date().getTime());
+    component.timespan = new Timespan(
+      new Date().getTime() - 10000000,
+      new Date().getTime(),
+    );
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

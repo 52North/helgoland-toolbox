@@ -1,13 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HelgolandService } from "@helgoland/core";
+import { Injectable } from '@angular/core';
+import { HelgolandService } from '@helgoland/core';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class MapSelectionStateService {
-
   selectedService?: HelgolandService;
 
   selectedPhenomenonId?: string;
-
 }

@@ -1,15 +1,18 @@
-import { Injectable } from "@angular/core";
-import { PointSymbol, PointSymbolType } from "@helgoland/core";
-import * as d3 from "d3";
+import { Injectable } from '@angular/core';
+import { PointSymbol, PointSymbolType } from '@helgoland/core';
+import * as d3 from 'd3';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class D3PointSymbolDrawerService {
-
   private symbolScaleFactor = 1.75;
 
-  getSymbolPath(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
+  getSymbolPath(
+    pointSymbol: PointSymbol,
+    selected: boolean,
+    additionalSize: number,
+  ) {
     let symbolType: d3.SymbolType | undefined = undefined;
     switch (pointSymbol.type) {
       case PointSymbolType.cross:
@@ -31,45 +34,59 @@ export class D3PointSymbolDrawerService {
         symbolType = d3.symbolWye;
         break;
       default:
-        throw new Error("could not find a matching point symbol");
+        throw new Error('could not find a matching point symbol');
     }
-    return d3.symbol().type(symbolType).size(this.calculateSymbolSize(pointSymbol, selected, additionalSize))();
+    return d3
+      .symbol()
+      .type(symbolType)
+      .size(this.calculateSymbolSize(pointSymbol, selected, additionalSize))();
   }
 
-  drawSymbol(pointSymbol: PointSymbol, color: string, drawPane: d3.Selection<SVGGElement, any, any, any>, selected: boolean, xPos: number, yPos: number) {
+  drawSymbol(
+    pointSymbol: PointSymbol,
+    color: string,
+    drawPane: d3.Selection<SVGGElement, any, any, any>,
+    selected: boolean,
+    xPos: number,
+    yPos: number,
+  ) {
     const symbolPath = this.getSymbolPath(pointSymbol, selected, 1);
     if (symbolPath) {
-      drawPane.append("path")
-        .attr("class", "y-axis-circle")
-      // .attr('id', 'axisdot-circle-' + options.internalId)
-        .attr("transform", (d) => `translate(${xPos},${yPos})`)
-        .attr("stroke", color)
-        .attr("fill", color)
-        .attr("d", symbolPath);
+      drawPane
+        .append('path')
+        .attr('class', 'y-axis-circle')
+        // .attr('id', 'axisdot-circle-' + options.internalId)
+        .attr('transform', (d) => `translate(${xPos},${yPos})`)
+        .attr('stroke', color)
+        .attr('fill', color)
+        .attr('d', symbolPath);
     }
   }
 
   showHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {
-    const tr = symbolElem.attr("transform");
+    const tr = symbolElem.attr('transform');
     const scaleTerm = `scale(${this.symbolScaleFactor})`;
     if (tr.indexOf(scaleTerm) < 0) {
-      symbolElem.attr("transform", `${tr} scale(${this.symbolScaleFactor})`);
+      symbolElem.attr('transform', `${tr} scale(${this.symbolScaleFactor})`);
     }
   }
 
   hideHovering(symbolElem: d3.Selection<d3.BaseType, any, any, any>) {
-    let tr = symbolElem.attr("transform");
+    let tr = symbolElem.attr('transform');
     const scaleTerm = `scale(${this.symbolScaleFactor})`;
-    tr = tr.replace(scaleTerm, "");
-    symbolElem.attr("transform", `${tr}`);
+    tr = tr.replace(scaleTerm, '');
+    symbolElem.attr('transform', `${tr}`);
   }
 
-  private calculateSymbolSize(pointSymbol: PointSymbol, selected: boolean, additionalSize: number) {
+  private calculateSymbolSize(
+    pointSymbol: PointSymbol,
+    selected: boolean,
+    additionalSize: number,
+  ) {
     if (selected) {
       return (pointSymbol.size + additionalSize) * 15;
     } else {
       return pointSymbol.size * 15;
     }
   }
-
 }

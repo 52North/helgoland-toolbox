@@ -1,15 +1,15 @@
 @if (loading) {
-<div>
-  loading...
-</div>
+  <div>loading...</div>
 }
 @if (!loading && items.length === 0) {
-<div>
-  no results found
-</div>
+  <div>no results found</div>
 }
 @for (item of items; track item) {
-<div class="selector-entry" (click)="onSelectItem(item)" [ngClass]="{'selected': selectionId === item.id}">
-  <n52-label-mapper label="{{item.label}}"></n52-label-mapper>
-</div>
+  <div
+    class="selector-entry"
+    (click)="onSelectItem(item)"
+    [ngClass]="{ selected: selectionId === item.id }"
+  >
+    <n52-label-mapper label="{{ item.label }}"></n52-label-mapper>
+  </div>
 }

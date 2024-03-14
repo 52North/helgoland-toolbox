@@ -1,26 +1,33 @@
-import { CommonModule } from "@angular/common";
-import { Component, Inject } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from "@helgoland/core";
-import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from "@helgoland/depiction";
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  HelgolandCoreModule,
+  HelgolandTimeseries,
+  Timespan,
+} from '@helgoland/core';
+import {
+  DownloadType,
+  ExportOptions,
+  HelgolandDatasetDownloadModule,
+} from '@helgoland/depiction';
 
 @Component({
-  selector: "n52-export-popup",
-  templateUrl: "./export-popup.component.html",
-  styleUrls: ["./export-popup.component.css"],
+  selector: 'n52-export-popup',
+  templateUrl: './export-popup.component.html',
+  styleUrls: ['./export-popup.component.css'],
   imports: [
     HelgolandDatasetDownloadModule,
     MatDatepickerModule,
     FormsModule,
     HelgolandCoreModule,
-    CommonModule
+    CommonModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ExportPopupComponent {
-
   public exportOptions!: ExportOptions;
   public inputId: string;
   public loading = false;
@@ -35,7 +42,7 @@ export class ExportPopupComponent {
     public dialogRef: MatDialogRef<ExportPopupComponent>,
 
     @Inject(MAT_DIALOG_DATA)
-    public data: { id: string, timespan: Timespan }
+    public data: { id: string; timespan: Timespan },
   ) {
     this.inputId = data.id;
 
@@ -57,7 +64,7 @@ export class ExportPopupComponent {
     if (this.selectedStart && this.selectedEnd) {
       this.exportOptions = {
         downloadType: dwType,
-        timeperiod: new Timespan(this.selectedStart, this.selectedEnd)
+        timeperiod: new Timespan(this.selectedStart, this.selectedEnd),
       };
     }
   }
@@ -86,7 +93,6 @@ export class ExportPopupComponent {
   }
 
   public onClose(): void {
-    this.dialogRef.close("closes");
+    this.dialogRef.close('closes');
   }
-
 }

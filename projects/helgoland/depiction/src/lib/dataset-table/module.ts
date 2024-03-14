@@ -1,20 +1,18 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { TranslateModule } from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { DatasetTableComponent } from "./dataset-table.component";
+import { DatasetTableComponent } from './dataset-table.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     HelgolandCoreModule,
-    DatasetTableComponent
+    DatasetTableComponent,
   ],
-  exports: [
-    DatasetTableComponent
-  ],
-  providers: []
+  exports: [DatasetTableComponent],
+  providers: [],
 })
-export class HelgolandDatasetTableModule { }
+export class HelgolandDatasetTableModule {}

@@ -1,9 +1,9 @@
-import { inject, TestBed } from "@angular/core/testing";
+import { inject, TestBed } from '@angular/core/testing';
 
-import { MapHandlerService } from "./map-handler.service";
-import { HelgolandMapModule } from "./map.module";
+import { MapHandlerService } from './map-handler.service';
+import { HelgolandMapModule } from './map.module';
 
-describe("Service: MapHandler", () => {
+describe('Service: MapHandler', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [],
@@ -11,7 +11,7 @@ describe("Service: MapHandler", () => {
     });
   });
 
-  it("should ...", inject([MapHandlerService], (service: MapHandlerService) => {
+  it('should ...', inject([MapHandlerService], (service: MapHandlerService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,5 +1,5 @@
-import { ParameterConstellation, Timeseries } from "./dataset";
-import { Parameter } from "./parameter";
+import { ParameterConstellation, Timeseries } from './dataset';
+import { Parameter } from './parameter';
 
 export class Station implements Parameter {
   public id!: string;
@@ -9,9 +9,9 @@ export class Station implements Parameter {
 }
 
 export interface StationProperties extends Parameter {
-    timeseries: TimeseriesCollection | Timeseries;
+  timeseries: TimeseriesCollection | Timeseries;
 }
 
 export class TimeseriesCollection {
-    [key: string]: ParameterConstellation;
+  [key: string]: ParameterConstellation;
 }

@@ -1,5 +1,5 @@
 @for (time of timeList; track time) {
-<div class="selector-entry" (click)="selectTime(time)">
-  <span>{{time | tzDate: 'L LT z'}}</span>
-</div>
+  <div class="selector-entry" (click)="selectTime(time)">
+    <span>{{ time | tzDate: "L LT z" }}</span>
+  </div>
 }

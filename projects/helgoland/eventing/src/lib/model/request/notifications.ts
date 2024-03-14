@@ -1,5 +1,5 @@
-import { EventingFilter } from "./common";
+import { EventingFilter } from './common';
 
 export interface NotificationFilter extends EventingFilter {
-    publications?: string[];
+  publications?: string[];
 }

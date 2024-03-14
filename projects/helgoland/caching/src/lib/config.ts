@@ -1,20 +1,22 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 
 /**
  * Configuration for the HelgolandCachingModule
  */
 export interface CacheConfig {
-    /**
-     * Duration in milliseconds, how long equal request will be cached until refresh
-     */
-    cachingDurationInMilliseconds?: number;
+  /**
+   * Duration in milliseconds, how long equal request will be cached until refresh
+   */
+  cachingDurationInMilliseconds?: number;
 
-    /**
-     * Activates the getData cache
-     */
-    getDataCacheActive?: boolean;
+  /**
+   * Activates the getData cache
+   */
+  getDataCacheActive?: boolean;
 
-    logging?: boolean;
+  logging?: boolean;
 }
 
-export const CacheConfigService = new InjectionToken<CacheConfig>("CacheConfigService");
+export const CacheConfigService = new InjectionToken<CacheConfig>(
+  'CacheConfigService',
+);

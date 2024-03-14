@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { HelgolandFavoriteModule } from "@helgoland/favorite";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { HelgolandFavoriteModule } from '@helgoland/favorite';
 
-import { TranslateTestingModule } from "../../../../../../testing/translate.testing.module";
-import { EditLabelComponent } from "../../edit-label/edit-label.component";
-import { ModalFavoriteListComponent } from "./modal-favorite-list.component";
+import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { EditLabelComponent } from '../../edit-label/edit-label.component';
+import { ModalFavoriteListComponent } from './modal-favorite-list.component';
 
-describe("ModalFavoriteListComponent", () => {
+describe('ModalFavoriteListComponent', () => {
   let component: ModalFavoriteListComponent;
   let fixture: ComponentFixture<ModalFavoriteListComponent>;
 
@@ -25,8 +25,8 @@ describe("ModalFavoriteListComponent", () => {
         MatIconModule,
         TranslateTestingModule,
         ModalFavoriteListComponent,
-        EditLabelComponent
-      ]
+        EditLabelComponent,
+      ],
     }).compileComponents();
   });
 
@@ -36,7 +36,7 @@ describe("ModalFavoriteListComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

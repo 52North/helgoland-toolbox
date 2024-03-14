@@ -1,16 +1,16 @@
 // @ts-nocheck
-import { AbstractMetadataList } from "./AbstractMetadataList";
-import { DisplayName } from "../../common/decorators/DisplayName";
+import { AbstractMetadataList } from './AbstractMetadataList';
+import { DisplayName } from '../../common/decorators/DisplayName';
 
 export abstract class AbstractNamedMetadataList extends AbstractMetadataList {
-    @DisplayName("Name")
-      name: string;
+  @DisplayName('Name')
+  name: string;
 
-    override toString(fallbackName = "Abstract named metadata list") {
-      if (this.name && this.name.length) {
-        return this.name;
-      }
-
-      return fallbackName;
+  override toString(fallbackName = 'Abstract named metadata list') {
+    if (this.name && this.name.length) {
+      return this.name;
     }
+
+    return fallbackName;
+  }
 }

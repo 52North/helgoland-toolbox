@@ -1,30 +1,27 @@
-import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class LayoutModeService {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document
-  ) { }
-
-  private readonly dmClass = "dark-theme";
+  private readonly dmClass = 'dark-theme';
 
   /**
    * Toggles the dark mode and returns if dark mode is currently active as boolean.
-   * 
+   *
    * @returns {boolean} dark mode is active
    */
   toggleDarkMode(): boolean {
-    const classList = this.document.body.classList
+    const classList = this.document.body.classList;
     if (classList.contains(this.dmClass)) {
-      classList.remove(this.dmClass)
-      return false
+      classList.remove(this.dmClass);
+      return false;
     } else {
-      classList.add(this.dmClass)
-      return true
+      classList.add(this.dmClass);
+      return true;
     }
   }
 
@@ -36,5 +33,4 @@ export class LayoutModeService {
   isDarkModeActive(): boolean {
     return this.document.body.classList.contains(this.dmClass);
   }
-
 }

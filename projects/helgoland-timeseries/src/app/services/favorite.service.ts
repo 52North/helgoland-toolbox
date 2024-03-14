@@ -1,26 +1,32 @@
-import { Inject, Injectable, Optional } from "@angular/core";
-import { DatasetDescription, SeriesGraphDataset } from "@helgoland/d3";
-import { BehaviorSubject } from "rxjs";
+import { Inject, Injectable, Optional } from '@angular/core';
+import { DatasetDescription, SeriesGraphDataset } from '@helgoland/d3';
+import { BehaviorSubject } from 'rxjs';
 
-import { DATASET_FAVORITE_SERVICE_INJECTION, DatasetFavoriteService } from "./service-interfaces";
+import {
+  DATASET_FAVORITE_SERVICE_INJECTION,
+  DatasetFavoriteService,
+} from './service-interfaces';
 
 export interface Favorite {
   id: string;
   label: string;
-  description: DatasetDescription
+  description: DatasetDescription;
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class FavoriteService {
-
   public countChange: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(
-    @Optional() @Inject(DATASET_FAVORITE_SERVICE_INJECTION) private favoriteServices: DatasetFavoriteService[] | null = []
+    @Optional()
+    @Inject(DATASET_FAVORITE_SERVICE_INJECTION)
+    private favoriteServices: DatasetFavoriteService[] | null = [],
   ) {
-    if (this.favoriteServices === null) { this.favoriteServices = [] }
+    if (this.favoriteServices === null) {
+      this.favoriteServices = [];
+    }
     this.updateFavCount();
   }
 
@@ -44,7 +50,7 @@ export class FavoriteService {
 
   getFavorites(): Favorite[] {
     const favorites: Favorite[] = [];
-    this.favoriteServices?.map(srv => favorites.push(...srv.getFavorites()));
+    this.favoriteServices?.map((srv) => favorites.push(...srv.getFavorites()));
     return favorites;
   }
 
@@ -62,7 +68,6 @@ export class FavoriteService {
   }
 
   private findService(id: string) {
-    return this.favoriteServices?.find(e => e.canHandleDatasetAsFavorite(id));
+    return this.favoriteServices?.find((e) => e.canHandleDatasetAsFavorite(id));
   }
-
 }

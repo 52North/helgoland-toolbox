@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { HttpService } from "@helgoland/core";
-import WMSCapabilities from "ol/format/WMSCapabilities";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HttpService } from '@helgoland/core';
+import WMSCapabilities from 'ol/format/WMSCapabilities';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface InternalWMSLayer {
   Name: string;
@@ -16,7 +16,7 @@ interface InternalWMSLayer {
   }[];
   BoundingBox: {
     crs: string;
-    extent: number[]
+    extent: number[];
   }[];
   Style: {
     Abstract: string;
@@ -26,7 +26,7 @@ interface InternalWMSLayer {
       Format: string;
       OnlineResource: string;
       size: number[];
-    }[]
+    }[];
   }[];
   EX_GeographicBoundingBox: number[];
 }
@@ -45,13 +45,10 @@ const WMS_CAPABILITIES_REQUEST_EXPIRATION = 1000 * 60 * 5;
  * Handler for WMS capabilities
  */
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class WmsCapabilitiesService {
-
-  constructor(
-    private http: HttpService
-  ) { }
+  constructor(private http: HttpService) {}
 
   /**
    * Returns the layer title of the capabilities as observable
@@ -62,7 +59,7 @@ export class WmsCapabilitiesService {
    */
   public getTitle(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
-      map(layer => layer?.Title ? layer.Title : "no layer title")
+      map((layer) => (layer?.Title ? layer.Title : 'no layer title')),
     );
   }
 
@@ -75,7 +72,7 @@ export class WmsCapabilitiesService {
    */
   public getAbstract(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
-      map(layer => layer?.Abstract ? layer.Abstract : "no layer abstract")
+      map((layer) => (layer?.Abstract ? layer.Abstract : 'no layer abstract')),
     );
   }
 
@@ -86,16 +83,21 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns
    */
-  public getTimeDimensionArray(layerName: string, wmsurl: string): Observable<Date[]> {
-    return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
-      if (layer) {
-        const timeDimension = layer.Dimension.find(e => e.name = "time");
-        if (timeDimension) {
-          return this.createTimeList(timeDimension);
+  public getTimeDimensionArray(
+    layerName: string,
+    wmsurl: string,
+  ): Observable<Date[]> {
+    return this.getLayerInfo(layerName, wmsurl).pipe(
+      map((layer) => {
+        if (layer) {
+          const timeDimension = layer.Dimension.find((e) => (e.name = 'time'));
+          if (timeDimension) {
+            return this.createTimeList(timeDimension);
+          }
         }
-      }
-      return [];
-    }));
+        return [];
+      }),
+    );
   }
 
   /**
@@ -106,11 +108,16 @@ export class WmsCapabilitiesService {
    * @returns
    */
   public getLegendUrl(layerName: string, wmsurl: string): Observable<string> {
-    return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
-      let legendUrl = "";
-      if (layer) layer.Style.forEach(s => s.LegendURL.forEach(l => legendUrl = l.OnlineResource));
-      return legendUrl;
-    }));
+    return this.getLayerInfo(layerName, wmsurl).pipe(
+      map((layer) => {
+        let legendUrl = '';
+        if (layer)
+          layer.Style.forEach((s) =>
+            s.LegendURL.forEach((l) => (legendUrl = l.OnlineResource)),
+          );
+        return legendUrl;
+      }),
+    );
   }
 
   /**
@@ -120,21 +127,26 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns
    */
-  public getDefaultTimeDimension(layerName: string, wmsurl: string): Observable<Date | undefined> {
-    return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
-      if (layer) {
-        const timeDimension = layer.Dimension.find(e => e.name = "time");
-        if (timeDimension && timeDimension.default) {
-          if (timeDimension.default === "current") {
-            const timeList = this.createTimeList(timeDimension);
-            return this.findNearestTimestamp(timeList, new Date());
-          } else {
-            return new Date(timeDimension.default);
+  public getDefaultTimeDimension(
+    layerName: string,
+    wmsurl: string,
+  ): Observable<Date | undefined> {
+    return this.getLayerInfo(layerName, wmsurl).pipe(
+      map((layer) => {
+        if (layer) {
+          const timeDimension = layer.Dimension.find((e) => (e.name = 'time'));
+          if (timeDimension && timeDimension.default) {
+            if (timeDimension.default === 'current') {
+              const timeList = this.createTimeList(timeDimension);
+              return this.findNearestTimestamp(timeList, new Date());
+            } else {
+              return new Date(timeDimension.default);
+            }
           }
         }
-      }
-      return undefined;
-    }));
+        return undefined;
+      }),
+    );
   }
 
   /**
@@ -145,24 +157,35 @@ export class WmsCapabilitiesService {
    * @param epsgCode
    * @returns
    */
-  public getExtent(layerName: string, wmsurl: string, epsgCode: string): Observable<{ crs: string, extent: number[] } | undefined> {
-    return this.getLayerInfo(layerName, wmsurl).pipe(map(layer => {
-      if (layer) {
-        const match = layer.BoundingBox.find(e => e.crs === epsgCode);
-        if (match) {
-          return this.fixExtent(match.crs, match.extent);
-        } else {
-          if (layer.BoundingBox.length > 0) {
-            return this.fixExtent(layer.BoundingBox[0].crs, layer.BoundingBox[0].extent);
+  public getExtent(
+    layerName: string,
+    wmsurl: string,
+    epsgCode: string,
+  ): Observable<{ crs: string; extent: number[] } | undefined> {
+    return this.getLayerInfo(layerName, wmsurl).pipe(
+      map((layer) => {
+        if (layer) {
+          const match = layer.BoundingBox.find((e) => e.crs === epsgCode);
+          if (match) {
+            return this.fixExtent(match.crs, match.extent);
+          } else {
+            if (layer.BoundingBox.length > 0) {
+              return this.fixExtent(
+                layer.BoundingBox[0].crs,
+                layer.BoundingBox[0].extent,
+              );
+            }
           }
         }
-      }
-      return undefined;
-    }));
+        return undefined;
+      }),
+    );
   }
 
   public getLayerTree(wmsurl: string): Observable<WMSLayer> {
-    return this.getCapabilities(wmsurl).pipe(map(res => this.createLayer(res.Capability.Layer)));
+    return this.getCapabilities(wmsurl).pipe(
+      map((res) => this.createLayer(res.Capability.Layer)),
+    );
   }
 
   /**
@@ -170,8 +193,8 @@ export class WmsCapabilitiesService {
    */
   public cleanUpWMSUrl(url: string): string {
     let wmsRequesturl = url;
-    if (wmsRequesturl.indexOf("?") !== -1) {
-      wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf("?"));
+    if (wmsRequesturl.indexOf('?') !== -1) {
+      wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf('?'));
     }
     return wmsRequesturl;
   }
@@ -181,18 +204,30 @@ export class WmsCapabilitiesService {
       name: layer.Name,
       title: layer.Title,
       abstract: layer.Abstract,
-      childLayer: layer.Layer ? layer.Layer.map(l => this.createLayer(l)) : []
+      childLayer: layer.Layer
+        ? layer.Layer.map((l) => this.createLayer(l))
+        : [],
     };
   }
 
   private getCapabilities(url: string): Observable<any> {
-    const wmsRequesturl = this.cleanUpWMSUrl(url) + "?request=GetCapabilities&service=wms&version=1.3.0";
-    return this.http.client({ expirationAtMs: new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION }).get(wmsRequesturl, { responseType: "text" })
-      .pipe(map(res => new WMSCapabilities().read(res)));
+    const wmsRequesturl =
+      this.cleanUpWMSUrl(url) +
+      '?request=GetCapabilities&service=wms&version=1.3.0';
+    return this.http
+      .client({
+        expirationAtMs:
+          new Date().getTime() + WMS_CAPABILITIES_REQUEST_EXPIRATION,
+      })
+      .get(wmsRequesturl, { responseType: 'text' })
+      .pipe(map((res) => new WMSCapabilities().read(res)));
   }
 
-  private findLayerByName(name: string, layerList: InternalWMSLayer[]): InternalWMSLayer | undefined {
-    let layer = layerList.find(e => e.Name === name);
+  private findLayerByName(
+    name: string,
+    layerList: InternalWMSLayer[],
+  ): InternalWMSLayer | undefined {
+    let layer = layerList.find((e) => e.Name === name);
     if (layer) {
       return layer;
     } else {
@@ -209,14 +244,22 @@ export class WmsCapabilitiesService {
     // throw new Error(`Did not found layer for name ${name}`);
   }
 
-  private getLayerInfo(layerName: string, url: string): Observable<InternalWMSLayer | undefined> {
+  private getLayerInfo(
+    layerName: string,
+    url: string,
+  ): Observable<InternalWMSLayer | undefined> {
     return this.getCapabilities(url).pipe(
-      map(caps => this.findLayerByName(layerName, caps.Capability.Layer.Layer))
+      map((caps) =>
+        this.findLayerByName(layerName, caps.Capability.Layer.Layer),
+      ),
     );
   }
 
-  private fixExtent(crs: string, extent: number[]): { crs: string, extent: number[] } {
-    if (crs === "EPSG:4326") {
+  private fixExtent(
+    crs: string,
+    extent: number[],
+  ): { crs: string; extent: number[] } {
+    if (crs === 'EPSG:4326') {
       const fixExtent = [extent[1], extent[0], extent[3], extent[2]];
       return { crs, extent: fixExtent };
     } else {
@@ -224,13 +267,17 @@ export class WmsCapabilitiesService {
     }
   }
 
-  private createTimeList(timeDimension: { name: string; default: string; values: string; }): Date[] {
-    return timeDimension.values.split(",").map(e => new Date(e));
+  private createTimeList(timeDimension: {
+    name: string;
+    default: string;
+    values: string;
+  }): Date[] {
+    return timeDimension.values.split(',').map((e) => new Date(e));
   }
 
   private findNearestTimestamp(timeList: Date[], stamp: Date): Date {
     let bestDate = timeList.length;
-    let bestDiff = -(new Date(0, 0, 0)).valueOf();
+    let bestDiff = -new Date(0, 0, 0).valueOf();
     let currDiff = 0;
     for (let i = 0; i < timeList.length; ++i) {
       currDiff = Math.abs(timeList[i].valueOf() - stamp.valueOf());

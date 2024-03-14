@@ -1,7 +1,6 @@
-import { Settings } from "../model/settings/settings";
+import { Settings } from '../model/settings/settings';
 
 export abstract class SettingsService<T extends Settings> {
-
   private settings: T;
 
   constructor() {
@@ -16,5 +15,4 @@ export abstract class SettingsService<T extends Settings> {
   protected setSettings(settings: T) {
     this.settings = settings;
   }
-
 }

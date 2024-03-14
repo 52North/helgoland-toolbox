@@ -1,5 +1,5 @@
-import { NgClass } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { NgClass } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   DatasetType,
   HelgolandDataset,
@@ -7,23 +7,22 @@ import {
   HelgolandServicesConnector,
   HelgolandTimeseries,
   TzDatePipe,
-} from "@helgoland/core";
-import { HelgolandLabelMapperModule } from "@helgoland/depiction";
-import { TranslateService } from "@ngx-translate/core";
+} from '@helgoland/core';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { TranslateService } from '@ngx-translate/core';
 
 export class SelectableDataset extends HelgolandTimeseries {
   public selected = false;
 }
 
 @Component({
-  selector: "n52-dataset-by-station-selector",
-  templateUrl: "./dataset-by-station-selector.component.html",
-  styleUrls: ["./dataset-by-station-selector.component.scss"],
+  selector: 'n52-dataset-by-station-selector',
+  templateUrl: './dataset-by-station-selector.component.html',
+  styleUrls: ['./dataset-by-station-selector.component.scss'],
   standalone: true,
-  imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe]
+  imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe],
 })
 export class DatasetByStationSelectorComponent implements OnInit {
-
   @Input({ required: true })
   public station!: HelgolandPlatform;
 
@@ -38,7 +37,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectionChanged: EventEmitter<HelgolandDataset[]> = new EventEmitter<HelgolandDataset[]>();
+  public onSelectionChanged: EventEmitter<HelgolandDataset[]> =
+    new EventEmitter<HelgolandDataset[]>();
 
   public phenomenonMatchedList: SelectableDataset[] = [];
   public othersList: SelectableDataset[] = [];
@@ -47,21 +47,30 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
-    public translateSrvc: TranslateService
-  ) { }
+    public translateSrvc: TranslateService,
+  ) {}
 
   public ngOnInit() {
-    this.servicesConnector.getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
+    this.servicesConnector
+      .getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
       .subscribe((station) => {
         this.station = station;
         this.counter = 0;
-        this.station.datasetIds.forEach(id => {
+        this.station.datasetIds.forEach((id) => {
           this.counter++;
-          this.servicesConnector.getDataset({ id: id, url: this.url }, { type: DatasetType.Timeseries })
+          this.servicesConnector
+            .getDataset(
+              { id: id, url: this.url },
+              { type: DatasetType.Timeseries },
+            )
             .subscribe({
-              next: result => this.prepareResult(result as SelectableDataset, this.defaultSelected),
-              error: error => console.error(error),
-              complete: () => this.counter--
+              next: (result) =>
+                this.prepareResult(
+                  result as SelectableDataset,
+                  this.defaultSelected,
+                ),
+              error: (error) => console.error(error),
+              complete: () => this.counter--,
             });
         });
       });
@@ -87,8 +96,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
   }
 
   private updateSelection() {
-    const selection = this.phenomenonMatchedList.filter((entry) => entry.selected);
+    const selection = this.phenomenonMatchedList.filter(
+      (entry) => entry.selected,
+    );
     this.onSelectionChanged.emit(selection);
   }
-
 }

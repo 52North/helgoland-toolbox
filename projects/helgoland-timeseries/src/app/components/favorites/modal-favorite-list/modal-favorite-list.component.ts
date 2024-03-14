@@ -1,23 +1,23 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatIconModule } from "@angular/material/icon";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { TranslateModule } from "@ngx-translate/core";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { EditLabelComponent } from "../../edit-label/edit-label.component";
-import { Favorite, FavoriteService } from "../../../services/favorite.service";
+import { EditLabelComponent } from '../../edit-label/edit-label.component';
+import { Favorite, FavoriteService } from '../../../services/favorite.service';
 
 interface EditableFavorite extends Favorite {
   editMode: boolean;
 }
 
 @Component({
-  selector: "helgoland-modal-favorite-list",
-  templateUrl: "./modal-favorite-list.component.html",
-  styleUrls: ["./modal-favorite-list.component.scss"],
+  selector: 'helgoland-modal-favorite-list',
+  templateUrl: './modal-favorite-list.component.html',
+  styleUrls: ['./modal-favorite-list.component.scss'],
   imports: [
     TranslateModule,
     CommonModule,
@@ -26,17 +26,14 @@ interface EditableFavorite extends Favorite {
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    EditLabelComponent
+    EditLabelComponent,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalFavoriteListComponent implements OnInit {
-
   public singles: EditableFavorite[] = [];
 
-  constructor(
-    public favoriteSrvc: FavoriteService
-  ) { }
+  constructor(public favoriteSrvc: FavoriteService) {}
 
   ngOnInit(): void {
     this.setFavorites();
@@ -56,7 +53,9 @@ export class ModalFavoriteListComponent implements OnInit {
   }
 
   private setFavorites() {
-    this.singles = this.favoriteSrvc.getFavorites().map(e => this.createEditableFavorite(e))
+    this.singles = this.favoriteSrvc
+      .getFavorites()
+      .map((e) => this.createEditableFavorite(e));
   }
 
   private createEditableFavorite(fav: Favorite) {

@@ -1,15 +1,18 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { TestBed, inject } from '@angular/core/testing';
 
-import { FacetSearchServiceImpl } from "./facet-search.service";
+import { FacetSearchServiceImpl } from './facet-search.service';
 
-describe("FacetSearchServiceImpl", () => {
+describe('FacetSearchServiceImpl', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FacetSearchServiceImpl]
+      providers: [FacetSearchServiceImpl],
     });
   });
 
-  it("should be created", inject([FacetSearchServiceImpl], (service: FacetSearchServiceImpl) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [FacetSearchServiceImpl],
+    (service: FacetSearchServiceImpl) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

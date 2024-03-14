@@ -1,32 +1,37 @@
-import { Injectable } from "@angular/core";
-import { AxisSettings, DatasetChild, LineStyle, SeriesGraphDataset } from "@helgoland/d3";
+import { Injectable } from '@angular/core';
+import {
+  AxisSettings,
+  DatasetChild,
+  LineStyle,
+  SeriesGraphDataset,
+} from '@helgoland/d3';
 
-import { DatasetsService } from "./graph-datasets.service";
-import { FirstLastValue } from "../../../../helgoland/core/src/public-api";
+import { DatasetsService } from './graph-datasets.service';
+import { FirstLastValue } from '../../../../helgoland/core/src/public-api';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class DummyDatasetsService {
-  datasetId: string = "123";
+  datasetId: string = '123';
 
-  constructor(
-    protected graphDatasetsSrvc: DatasetsService,
-  ) {
-    const dummyDataset = this.createNewDataset("blue");
+  constructor(protected graphDatasetsSrvc: DatasetsService) {
+    const dummyDataset = this.createNewDataset('blue');
     const child = new DatasetChild(
       this.datasetId,
-      "ChildData",
+      'ChildData',
       false,
-      [{
-        value: 1.2,
-        timestamp: new Date().getTime() - (360 * 1000)
-      },
-      {
-        value: 1.8,
-        timestamp: new Date().getTime() + (360 * 1000)
-      }],
-      "green"
+      [
+        {
+          value: 1.2,
+          timestamp: new Date().getTime() - 360 * 1000,
+        },
+        {
+          value: 1.8,
+          timestamp: new Date().getTime() + 360 * 1000,
+        },
+      ],
+      'green',
     );
     dummyDataset.addChild(child);
     this.graphDatasetsSrvc.addOrUpdateDataset(dummyDataset);
@@ -37,8 +42,12 @@ export class DummyDatasetsService {
   private addNewValue() {
     const timestamp = new Date().getTime() + 1;
     const value = this.createValue();
-    this.graphDatasetsSrvc.getDatasetEntry(this.datasetId).addNewData(timestamp, value, true);
-    this.graphDatasetsSrvc.getOverviewDatasetEntry(this.datasetId).addNewData(timestamp, value, false);
+    this.graphDatasetsSrvc
+      .getDatasetEntry(this.datasetId)
+      .addNewData(timestamp, value, true);
+    this.graphDatasetsSrvc
+      .getOverviewDatasetEntry(this.datasetId)
+      .addNewData(timestamp, value, false);
   }
 
   private createValue(): number {
@@ -53,14 +62,13 @@ export class DummyDatasetsService {
       true,
       false,
       {
-        uom: "rnd",
-        phenomenonLabel: "Zahlen zwischne 0 und 10",
-        platformLabel: "null",
-        categoryLabel: ["test", "horst"],
-        procedureLabel: "null",
-        featureLabel: "null"
-      }
-    )
+        uom: 'rnd',
+        phenomenonLabel: 'Zahlen zwischne 0 und 10',
+        platformLabel: 'null',
+        categoryLabel: ['test', 'horst'],
+        procedureLabel: 'null',
+        featureLabel: 'null',
+      },
+    );
   }
-
 }

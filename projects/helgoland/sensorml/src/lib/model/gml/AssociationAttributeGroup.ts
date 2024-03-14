@@ -4,6 +4,6 @@
  * reference in a uniform manner in GML.
  */
 export interface AssociationAttributeGroup {
-    href: string;
-    title: string;
+  href: string;
+  title: string;
 }

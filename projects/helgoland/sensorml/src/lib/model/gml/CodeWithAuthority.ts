@@ -1,4 +1,4 @@
-import { CodeType } from "./CodeType";
+import { CodeType } from './CodeType';
 
 /**
  * gml:CodeWithAuthorityType requires that the codeSpace attribute is provided
@@ -10,6 +10,6 @@ export class CodeWithAuthority extends CodeType {
   }
 
   override toString() {
-    return "Code with authority";
+    return 'Code with authority';
   }
 }

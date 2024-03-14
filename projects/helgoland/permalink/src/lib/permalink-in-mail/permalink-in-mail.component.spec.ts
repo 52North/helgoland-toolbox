@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { PermalinkInMailComponent } from "./permalink-in-mail.component";
+import { PermalinkInMailComponent } from './permalink-in-mail.component';
 
-describe("PermalinkInMailComponent", () => {
+describe('PermalinkInMailComponent', () => {
   let component: PermalinkInMailComponent;
   let fixture: ComponentFixture<PermalinkInMailComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [PermalinkInMailComponent]
+      imports: [PermalinkInMailComponent],
     }).compileComponents();
   }));
 
@@ -18,7 +18,7 @@ describe("PermalinkInMailComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,12 +1,9 @@
 // @ts-nocheck
-import {
-  AbstractProcess
-} from "../../model/sml";
-import { SensorMLDecoder } from "./SensorMLDecoder";
-import { BidiMap } from "../dynamicGUI/BidiMap";
+import { AbstractProcess } from '../../model/sml';
+import { SensorMLDecoder } from './SensorMLDecoder';
+import { BidiMap } from '../dynamicGUI/BidiMap';
 
 export class SensorMLDocumentDecoder {
-
   private decoder = new SensorMLDecoder();
   private _profileIDMap: BidiMap;
 
@@ -20,5 +17,4 @@ export class SensorMLDocumentDecoder {
   public decode(document: Document): AbstractProcess {
     return this.decoder.decodeElement(document.documentElement);
   }
-
 }

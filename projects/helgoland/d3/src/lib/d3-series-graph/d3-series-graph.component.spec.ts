@@ -1,21 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { HelgolandCoreModule } from "@helgoland/core";
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HelgolandCoreModule } from '@helgoland/core';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 
-import { D3SeriesGraphComponent } from "./d3-series-graph.component";
+import { D3SeriesGraphComponent } from './d3-series-graph.component';
 
 /* tslint:disable:no-unused-variable */
-describe("D3SeriesGraphComponent", () => {
+describe('D3SeriesGraphComponent', () => {
   let component: D3SeriesGraphComponent;
   let fixture: ComponentFixture<D3SeriesGraphComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      declarations: [D3SeriesGraphComponent]
+      imports: [HelgolandCoreModule, TranslateTestingModule],
+      declarations: [D3SeriesGraphComponent],
     }).compileComponents();
   }));
 
@@ -25,7 +22,7 @@ describe("D3SeriesGraphComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

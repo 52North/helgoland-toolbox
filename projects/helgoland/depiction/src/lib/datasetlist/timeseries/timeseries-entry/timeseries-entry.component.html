@@ -1,82 +1,117 @@
-<div class="legendItem" style="position: relative;" [ngStyle]="{'border-color': datasetOptions.color}"
-  [ngClass]="{'selected': selected}" (click)="toggleSelection()">
+<div
+  class="legendItem"
+  style="position: relative"
+  [ngStyle]="{ 'border-color': datasetOptions.color }"
+  [ngClass]="{ selected: selected }"
+  (click)="toggleSelection()"
+>
   @if (loading) {
-  <div class="loading-overlay" [ngStyle]="{'background-color': datasetOptions.color}">
-    <div class="fa fa-refresh fa-spin fa-3x fa-fw"></div>
-  </div>
+    <div
+      class="loading-overlay"
+      [ngStyle]="{ 'background-color': datasetOptions.color }"
+    >
+      <div class="fa fa-refresh fa-spin fa-3x fa-fw"></div>
+    </div>
   }
   <div>
-    <div class="legendItemheader" [ngClass]="{'highlight': highlight}">
-      <div class="legendItemLabel" [ngStyle]="{'color': datasetOptions.color}">
-        <n52-label-mapper label="{{platformLabel}}"></n52-label-mapper>
+    <div class="legendItemheader" [ngClass]="{ highlight: highlight }">
+      <div class="legendItemLabel" [ngStyle]="{ color: datasetOptions.color }">
+        <n52-label-mapper label="{{ platformLabel }}"></n52-label-mapper>
         <!-- <n52-favorite-toggler [dataset]="dataset"></n52-favorite-toggler> -->
       </div>
       @if (!hasData) {
-      <div class="noDataWarning firstLastEntry">
-        <div>
-          <span class="fa fa-exclamation-triangle red"></span>
-          <span class="small-label">Keine Daten verfügbar</span>
+        <div class="noDataWarning firstLastEntry">
+          <div>
+            <span class="fa fa-exclamation-triangle red"></span>
+            <span class="small-label">Keine Daten verfügbar</span>
+          </div>
+          <div
+            class="additionalLegendEntry"
+            (click)="jumpToLastTimeStamp(); $event.stopPropagation()"
+          >
+            <span class="fa fa-chevron-right"></span>
+            <span class="small-label">Springe zur letzten Messung</span>
+          </div>
         </div>
-        <div class="additionalLegendEntry" (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
-          <span class="fa fa-chevron-right"></span>
-          <span class="small-label">Springe zur letzten Messung</span>
-        </div>
-      </div>
       }
       <div class="small-label">
-        <n52-label-mapper label="{{phenomenonLabel}}"></n52-label-mapper>
+        <n52-label-mapper label="{{ phenomenonLabel }}"></n52-label-mapper>
         @if (uom) {
-        <span>
-          <span>[</span>
-          <n52-label-mapper label="{{uom}}"></n52-label-mapper>
-          <span>]</span>
-        </span>
+          <span>
+            <span>[</span>
+            <n52-label-mapper label="{{ uom }}"></n52-label-mapper>
+            <span>]</span>
+          </span>
         }
       </div>
       <div class="small-label">
-        <n52-label-mapper label="{{procedureLabel}}"></n52-label-mapper>
+        <n52-label-mapper label="{{ procedureLabel }}"></n52-label-mapper>
       </div>
       @if (categoryLabel !== phenomenonLabel) {
-      <div class="small-label">
-        <n52-label-mapper label="{{categoryLabel}}"></n52-label-mapper>
-      </div>
+        <div class="small-label">
+          <n52-label-mapper label="{{ categoryLabel }}"></n52-label-mapper>
+        </div>
       }
     </div>
     <div class="legendicons">
-      <button (click)="toggleInformation(); $event.stopPropagation();">info</button>
-      <button (click)="toggleVisibility(); $event.stopPropagation();">visible</button>
-      <button (click)="showGeometry(); $event.stopPropagation();">location</button>
-      <button (click)="editDatasetOptions(); $event.stopPropagation();"
-        [ngStyle]="{color: datasetOptions.color}">edit</button>
-      <button (click)="removeDataset(); $event.stopPropagation();">delete</button>
+      <button (click)="toggleInformation(); $event.stopPropagation()">
+        info
+      </button>
+      <button (click)="toggleVisibility(); $event.stopPropagation()">
+        visible
+      </button>
+      <button (click)="showGeometry(); $event.stopPropagation()">
+        location
+      </button>
+      <button
+        (click)="editDatasetOptions(); $event.stopPropagation()"
+        [ngStyle]="{ color: datasetOptions.color }"
+      >
+        edit
+      </button>
+      <button (click)="removeDataset(); $event.stopPropagation()">
+        delete
+      </button>
     </div>
     @if (informationVisible) {
-    <div class="collapseLegendEntry small-label">
-      @if (firstValue) {
-      <div class="firstLastEntry additionalLegendEntry" (click)="jumpToFirstTimeStamp(); $event.stopPropagation();">
-        <span>Erster Wert bei</span>
-        <span>{{firstValue.timestamp| tzDate: 'L LT z'}}</span>
-        <span class="hidden-medium">({{firstValue.value}} {{uom}})</span>
-      </div>
-      }
-      @if (lastValue) {
-      <div class="firstLastEntry additionalLegendEntry" (click)="jumpToLastTimeStamp(); $event.stopPropagation();">
-        <span>Letzter Wert bei</span>
-        <span>{{lastValue.timestamp| tzDate: 'L LT z'}}</span>
-        <span class="hidden-medium">({{lastValue.value}} {{uom}})</span>
-      </div>
-      }
-      @if (dataset) {
-      <div>
-        @for (ref of dataset.referenceValues; track ref) {
-        <div class="additionalLegendEntry" (click)="toggleReferenceValue(ref); $event.stopPropagation();"
-          [ngClass]="{'selected': ref.visible}" [ngStyle]="{color: ref.color}">
-          <span>{{ref.label}}</span>
-        </div>
+      <div class="collapseLegendEntry small-label">
+        @if (firstValue) {
+          <div
+            class="firstLastEntry additionalLegendEntry"
+            (click)="jumpToFirstTimeStamp(); $event.stopPropagation()"
+          >
+            <span>Erster Wert bei</span>
+            <span>{{ firstValue.timestamp | tzDate: "L LT z" }}</span>
+            <span class="hidden-medium"
+              >({{ firstValue.value }} {{ uom }})</span
+            >
+          </div>
+        }
+        @if (lastValue) {
+          <div
+            class="firstLastEntry additionalLegendEntry"
+            (click)="jumpToLastTimeStamp(); $event.stopPropagation()"
+          >
+            <span>Letzter Wert bei</span>
+            <span>{{ lastValue.timestamp | tzDate: "L LT z" }}</span>
+            <span class="hidden-medium">({{ lastValue.value }} {{ uom }})</span>
+          </div>
+        }
+        @if (dataset) {
+          <div>
+            @for (ref of dataset.referenceValues; track ref) {
+              <div
+                class="additionalLegendEntry"
+                (click)="toggleReferenceValue(ref); $event.stopPropagation()"
+                [ngClass]="{ selected: ref.visible }"
+                [ngStyle]="{ color: ref.color }"
+              >
+                <span>{{ ref.label }}</span>
+              </div>
+            }
+          </div>
         }
       </div>
-      }
-    </div>
     }
   </div>
 </div>

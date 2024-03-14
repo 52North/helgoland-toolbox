@@ -1,1 +1,1 @@
-export type SweByteOrder = "bigEndian" | "littleEndian";
+export type SweByteOrder = 'bigEndian' | 'littleEndian';

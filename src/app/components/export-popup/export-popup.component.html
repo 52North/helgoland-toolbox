@@ -1,32 +1,48 @@
 <h1 mat-dialog-title>Download Dataset</h1>
 @if (dataset) {
-<div mat-dialog-content ng-if="disabled">
-  Measure Parameter - {{dataset.parameters.phenomenon?.label}}
-  <br>
-  Unit - {{dataset.uom}}
-  <br>
-  First Value - {{dataset.firstValue!.timestamp | tzDate: 'L'}} - {{dataset.firstValue!.value}}
-  <br>
-  Last Value - {{dataset.lastValue!.timestamp | tzDate: 'L'}} - {{dataset.lastValue!.value}}
-  <br>
-  <input matInput [matDatepicker]="pickerFrom" placeholder="Choose from" ng-model-options="{timezone: 'utc'}"
-    [(ngModel)]="selectedStart">
-  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-  <mat-datepicker #pickerFrom></mat-datepicker>
-  <br>
-  <input matInput [matDatepicker]="pickerTo" placeholder="Choose to" [(ngModel)]="selectedEnd"
-    ng-model-options="{timezone: 'utc'}">
-  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-  <mat-datepicker #pickerTo></mat-datepicker>
-  <br>
-  loading: {{loading}}
-</div>
+  <div mat-dialog-content ng-if="disabled">
+    Measure Parameter - {{ dataset.parameters.phenomenon?.label }}
+    <br />
+    Unit - {{ dataset.uom }}
+    <br />
+    First Value - {{ dataset.firstValue!.timestamp | tzDate: "L" }} -
+    {{ dataset.firstValue!.value }}
+    <br />
+    Last Value - {{ dataset.lastValue!.timestamp | tzDate: "L" }} -
+    {{ dataset.lastValue!.value }}
+    <br />
+    <input
+      matInput
+      [matDatepicker]="pickerFrom"
+      placeholder="Choose from"
+      ng-model-options="{timezone: 'utc'}"
+      [(ngModel)]="selectedStart"
+    />
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+    <br />
+    <input
+      matInput
+      [matDatepicker]="pickerTo"
+      placeholder="Choose to"
+      [(ngModel)]="selectedEnd"
+      ng-model-options="{timezone: 'utc'}"
+    />
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+    <br />
+    loading: {{ loading }}
+  </div>
 }
-<n52-dataset-export [inputId]="inputId" [exportOptions]="exportOptions" (onMetadataChange)="onMetadata($event)"
-  (onLoadingChange)="onLoading($event)"></n52-dataset-export>
-<div mat-dialog-actions style="float: left;">
+<n52-dataset-export
+  [inputId]="inputId"
+  [exportOptions]="exportOptions"
+  (onMetadataChange)="onMetadata($event)"
+  (onLoadingChange)="onLoading($event)"
+></n52-dataset-export>
+<div mat-dialog-actions style="float: left">
   <button mat-button (click)="onCSVDownload()">CSV</button>
 </div>
-<div mat-dialog-actions style="float: right;">
+<div mat-dialog-actions style="float: right">
   <button mat-button (click)="onClose()">Close</button>
 </div>

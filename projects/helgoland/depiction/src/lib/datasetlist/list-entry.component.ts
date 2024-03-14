@@ -1,7 +1,14 @@
-import { Directive, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { InternalDatasetId, InternalIdHandler } from "@helgoland/core";
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
-import { Subscription } from "rxjs";
+import {
+  Directive,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 /**
  * Represents an abstract dataset entry for a list, which has the following functions:
@@ -11,7 +18,6 @@ import { Subscription } from "rxjs";
  */
 @Directive()
 export abstract class ListEntryComponent implements OnInit, OnDestroy {
-
   @Input({ required: true })
   public datasetId!: string;
 
@@ -34,13 +40,16 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
 
   constructor(
     protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService
-  ) { }
+    protected translateSrvc: TranslateService,
+  ) {}
 
   public ngOnInit(): void {
     this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
     this.loadDataset(this.internalId, this.translateSrvc.currentLang);
-    this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => this.onLanguageChanged(langChangeEvent));
+    this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe(
+      (langChangeEvent: LangChangeEvent) =>
+        this.onLanguageChanged(langChangeEvent),
+    );
   }
 
   public ngOnDestroy(): void {
@@ -62,6 +71,8 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected abstract loadDataset(internalId: InternalDatasetId, locale?: string): void;
-
+  protected abstract loadDataset(
+    internalId: InternalDatasetId,
+    locale?: string,
+  ): void;
 }

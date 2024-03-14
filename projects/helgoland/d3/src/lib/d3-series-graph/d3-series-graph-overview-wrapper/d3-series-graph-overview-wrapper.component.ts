@@ -8,23 +8,22 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
-} from "@angular/core";
-import { DatasetOptions, Time, TimeInterval, Timespan } from "@helgoland/core";
+} from '@angular/core';
+import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
-import { D3PlotOptions } from "../models/d3-plot-options";
-import { D3SeriesGraphWrapperComponent } from "../d3-series-graph-wrapper/d3-series-graph-wrapper.component";
+import { D3PlotOptions } from '../models/d3-plot-options';
+import { D3SeriesGraphWrapperComponent } from '../d3-series-graph-wrapper/d3-series-graph-wrapper.component';
 
 @Component({
-  selector: "n52-d3-series-graph-overview-wrapper",
-  templateUrl: "./d3-series-graph-overview-wrapper.component.html",
-  styleUrls: ["./d3-series-graph-overview-wrapper.component.scss"],
-  imports: [
-    D3SeriesGraphWrapperComponent
-  ],
-  standalone: true
+  selector: 'n52-d3-series-graph-overview-wrapper',
+  templateUrl: './d3-series-graph-overview-wrapper.component.html',
+  styleUrls: ['./d3-series-graph-overview-wrapper.component.scss'],
+  imports: [D3SeriesGraphWrapperComponent],
+  standalone: true,
 })
-export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterViewInit, OnDestroy {
-
+export class D3SeriesGraphOverviewWrapperComponent
+  implements OnChanges, AfterViewInit, OnDestroy
+{
   @Input({ required: true })
   public datasetIds!: string[];
 
@@ -62,14 +61,14 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
 
   constructor(
     protected timeSrvc: Time,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
   ) {
     if (this.presenterOptions) {
       this.presenterOptions.overview = true;
     } else {
       this.presenterOptions = {
         overview: true,
-        yaxis: false
+        yaxis: false,
       };
     }
   }
@@ -81,7 +80,7 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes["timeInterval"] && this.init) {
+    if (changes['timeInterval'] && this.init) {
       this.calculateOverviewRange();
     }
   }
@@ -102,7 +101,10 @@ export class D3SeriesGraphOverviewWrapperComponent implements OnChanges, AfterVi
     const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
     this.timespan = timespan;
     if (this.timespan) {
-      this.overviewTimespan = this.timeSrvc.getBufferedTimespan(timespan, this.rangefactor);
+      this.overviewTimespan = this.timeSrvc.getBufferedTimespan(
+        timespan,
+        this.rangefactor,
+      );
     }
   }
 }

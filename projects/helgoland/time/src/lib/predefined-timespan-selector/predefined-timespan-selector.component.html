@@ -1,9 +1,12 @@
 @for (item of parsedTimespanPresets; track item) {
-<span>
-  <button (click)="timespanChanged(item)" [ngClass]="{'seperator-after-this-item': item.seperatorAfterThisItem}"
-    class="btn btn-sm btn-default">
-    {{item.label}}
-  </button>
-  <br>
-</span>
+  <span>
+    <button
+      (click)="timespanChanged(item)"
+      [ngClass]="{ 'seperator-after-this-item': item.seperatorAfterThisItem }"
+      class="btn btn-sm btn-default"
+    >
+      {{ item.label }}
+    </button>
+    <br />
+  </span>
 }

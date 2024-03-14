@@ -1,7 +1,7 @@
-import { CommonModule } from "@angular/common";
-import { HttpErrorResponse } from "@angular/common/http";
-import { Component } from "@angular/core";
-import { BasicAuthServiceMaintainer } from "@helgoland/auth";
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   EventFilter,
   EventingApiService,
@@ -12,19 +12,16 @@ import {
   PublicationResults,
   SubscriptionFilter,
   SubscriptionResults,
-} from "@helgoland/eventing";
+} from '@helgoland/eventing';
 
 @Component({
-  templateUrl: "./eventing.component.html",
-  styleUrls: ["./eventing.component.css"],
-  imports: [
-    CommonModule
-  ],
-  standalone: true
+  templateUrl: './eventing.component.html',
+  styleUrls: ['./eventing.component.css'],
+  imports: [CommonModule],
+  standalone: true,
 })
 export class EventingComponent {
-
-  private readonly url = "";
+  private readonly url = '';
 
   public loading: boolean = false;
 
@@ -40,7 +37,7 @@ export class EventingComponent {
 
   constructor(
     private basicAuthServices: BasicAuthServiceMaintainer,
-    private eventingApi: EventingApiService
+    private eventingApi: EventingApiService,
   ) {
     this.basicAuthServices.registerService(this.url);
   }
@@ -51,12 +48,12 @@ export class EventingComponent {
       limit: 10,
       offset: 5,
       expanded: true,
-      latest: true
+      latest: true,
     };
     this.eventingApi.getEvents(this.url, params).subscribe({
-      next: (res) => this.eventResults = res,
-      error: (error: HttpErrorResponse) => this.requestError = error.message,
-      complete: () => this.loading = false
+      next: (res) => (this.eventResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
     });
   }
 
@@ -64,9 +61,9 @@ export class EventingComponent {
     this.startloading();
     const params: SubscriptionFilter = { limit: 1 };
     this.eventingApi.getSubscriptions(this.url, params).subscribe({
-      next: (res) => this.subscriptionResults = res,
-      error: (error: HttpErrorResponse) => this.requestError = error.message,
-      complete: () => this.loading = false
+      next: (res) => (this.subscriptionResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
     });
   }
 
@@ -74,23 +71,26 @@ export class EventingComponent {
     this.startloading();
     const params: PublicationFilter = { limit: 1 };
     this.eventingApi.getPublications(this.url, params).subscribe({
-      next: res => this.publicationResults = res,
+      next: (res) => (this.publicationResults = res),
       error: this.showError(),
-      complete: () => this.loading = false
+      complete: () => (this.loading = false),
     });
   }
 
   private showError(): (error: any) => void {
-    return (error: HttpErrorResponse) => this.requestError = error.message;
+    return (error: HttpErrorResponse) => (this.requestError = error.message);
   }
 
   public requestNotifications() {
     this.startloading();
-    const params: NotificationFilter = { limit: 10, publications: ["80", "81"] };
+    const params: NotificationFilter = {
+      limit: 10,
+      publications: ['80', '81'],
+    };
     this.eventingApi.getNotifications(this.url, params).subscribe({
-      next: res => this.notificationResults = res,
-      error: (error: HttpErrorResponse) => this.requestError = error.message,
-      complete: () => this.loading = false
+      next: (res) => (this.notificationResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
     });
   }
 
@@ -99,5 +99,4 @@ export class EventingComponent {
     this.eventResults = undefined;
     this.subscriptionResults = undefined;
   }
-
 }

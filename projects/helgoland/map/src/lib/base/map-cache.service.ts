@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
-import * as L from "leaflet";
+import { Injectable } from '@angular/core';
+import * as L from 'leaflet';
 
 @Injectable()
 export class MapCache {
-
   private mapCache: Map<string, any> = new Map<string, any>();
 
   public getMap(id: string): L.Map {
@@ -21,5 +20,4 @@ export class MapCache {
   public deleteMap(id: string): boolean {
     return this.mapCache.delete(id);
   }
-
 }

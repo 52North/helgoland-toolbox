@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { HelgolandMapSelectorModule } from "@helgoland/map";
+import { Component, OnInit } from '@angular/core';
+import { HelgolandMapSelectorModule } from '@helgoland/map';
 import {
   ColorService,
   DatasetType,
@@ -9,7 +9,7 @@ import {
   HelgolandServicesConnector,
   HelgolandTimeseries,
   Timespan,
-} from "@helgoland/core";
+} from '@helgoland/core';
 import {
   AxisSettings,
   D3Copyright,
@@ -19,78 +19,82 @@ import {
   HoveringStyle,
   LineStyle,
   SeriesGraphDataset,
-} from "@helgoland/d3";
+} from '@helgoland/d3';
 
 @Component({
-  templateUrl: "./sandbox.component.html",
-  styleUrls: ["./sandbox.component.scss"],
-  imports: [
-    HelgolandMapSelectorModule,
-    HelgolandD3Module
-  ],
-  standalone: true
+  templateUrl: './sandbox.component.html',
+  styleUrls: ['./sandbox.component.scss'],
+  imports: [HelgolandMapSelectorModule, HelgolandD3Module],
+  standalone: true,
 })
 export class SandboxComponent implements OnInit {
-
   public datasets: SeriesGraphDataset[] = [];
-  public timespan: Timespan = this.definedTsSrvc.getInterval(DefinedTimespan.TODAY);
+  public timespan: Timespan = this.definedTsSrvc.getInterval(
+    DefinedTimespan.TODAY,
+  );
 
   public copyright: D3Copyright = {
-    label: "52north",
-    positionX: "right",
-    positionY: "bottom",
-    link: "http://52north.org"
-  }
+    label: '52north',
+    positionX: 'right',
+    positionY: 'bottom',
+    link: 'http://52north.org',
+  };
 
   public plotOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
     timeRangeLabel: {
-      show: true
+      show: true,
     },
-    yaxisModifier: true
-  }
+    yaxisModifier: true,
+  };
 
   constructor(
-        private servicesConnector: HelgolandServicesConnector,
-        private definedTsSrvc: DefinedTimespanService,
-        private colorSrvc: ColorService
-  ) { }
+    private servicesConnector: HelgolandServicesConnector,
+    private definedTsSrvc: DefinedTimespanService,
+    private colorSrvc: ColorService,
+  ) {}
 
   public ngOnInit(): void {
     // this.setNewTimespan();
     const value = {
       timestamp: new Date().getTime(),
-      value: this.createValue()
-    }
-    const style = new LineStyle("red", 3, 3);
+      value: this.createValue(),
+    };
+    const style = new LineStyle('red', 3, 3);
     const yaxis = new AxisSettings();
     const description: DatasetDescription = {
-      categoryLabel: ["category"],
+      categoryLabel: ['category'],
       firstValue: value,
       lastValue: value,
-      phenomenonLabel: "phenomenon",
-      platformLabel: "platform",
-      procedureLabel: "procedure",
-      featureLabel: "feature",
-      uom: "random"
-    }
+      phenomenonLabel: 'phenomenon',
+      platformLabel: 'platform',
+      procedureLabel: 'procedure',
+      featureLabel: 'feature',
+      uom: 'random',
+    };
 
-    this.datasets = [new SeriesGraphDataset("temp", style, yaxis, true, false, description)]
+    this.datasets = [
+      new SeriesGraphDataset('temp', style, yaxis, true, false, description),
+    ];
     this.loadDataset();
   }
 
   public loadDataset() {
-    const id = "https://fluggs.wupperverband.de/sws5/api/__26";
-    this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries }).subscribe(ds => {
-      this.loadDatasetData(ds, id);
-    });
+    const id = 'https://fluggs.wupperverband.de/sws5/api/__26';
+    this.servicesConnector
+      .getDataset(id, { type: DatasetType.Timeseries })
+      .subscribe((ds) => {
+        this.loadDatasetData(ds, id);
+      });
   }
 
   public changePlotOptions() {
     this.plotOptions.showTimeLabel = !this.plotOptions.showTimeLabel;
     if (this.plotOptions.hoverStyle) {
-      this.plotOptions.hoverStyle = this.getHoveringStyle(this.plotOptions.hoverStyle);
+      this.plotOptions.hoverStyle = this.getHoveringStyle(
+        this.plotOptions.hoverStyle,
+      );
     }
   }
 
@@ -106,37 +110,56 @@ export class SandboxComponent implements OnInit {
   }
 
   private loadDatasetData(ds: HelgolandTimeseries, id: string) {
-    this.servicesConnector.getDatasetData(ds, this.timespan).subscribe(data => {
-      const style = new LineStyle("green", 3, 3);
-      const yaxis = new AxisSettings();
-      const description: DatasetDescription = {
-        categoryLabel: ds.parameters.category ? ds.parameters.category.map(e => e.label) : [""],
-        firstValue: ds.firstValue,
-        lastValue: ds.lastValue,
-        phenomenonLabel: ds.parameters.phenomenon ? ds.parameters.phenomenon.label : "",
-        platformLabel: ds.platform.label,
-        procedureLabel: ds.parameters.procedure ? ds.parameters.procedure.label : "",
-        featureLabel: ds.parameters.feature ? ds.parameters.feature.label : "",
-        uom: ds.uom
-      }
-      const datasetData = new SeriesGraphDataset(id, style, yaxis, true, false, description);
-      datasetData.setData(data.values.map(e => {
-        return {
-          timestamp: e[0],
-          value: e[1]
+    this.servicesConnector
+      .getDatasetData(ds, this.timespan)
+      .subscribe((data) => {
+        const style = new LineStyle('green', 3, 3);
+        const yaxis = new AxisSettings();
+        const description: DatasetDescription = {
+          categoryLabel: ds.parameters.category
+            ? ds.parameters.category.map((e) => e.label)
+            : [''],
+          firstValue: ds.firstValue,
+          lastValue: ds.lastValue,
+          phenomenonLabel: ds.parameters.phenomenon
+            ? ds.parameters.phenomenon.label
+            : '',
+          platformLabel: ds.platform.label,
+          procedureLabel: ds.parameters.procedure
+            ? ds.parameters.procedure.label
+            : '',
+          featureLabel: ds.parameters.feature
+            ? ds.parameters.feature.label
+            : '',
+          uom: ds.uom,
         };
-      }));
-      const idx = this.datasets.findIndex(e => e.id === id);
-      if (idx >= 0) {
-        this.datasets[idx] = datasetData;
-      } else {
-        this.datasets.push(datasetData);
-      }
-    });
+        const datasetData = new SeriesGraphDataset(
+          id,
+          style,
+          yaxis,
+          true,
+          false,
+          description,
+        );
+        datasetData.setData(
+          data.values.map((e) => {
+            return {
+              timestamp: e[0],
+              value: e[1],
+            };
+          }),
+        );
+        const idx = this.datasets.findIndex((e) => e.id === id);
+        if (idx >= 0) {
+          this.datasets[idx] = datasetData;
+        } else {
+          this.datasets.push(datasetData);
+        }
+      });
   }
 
   public addNewValue() {
-    this.datasets[0].addNewData(new Date().getTime(), this.createValue())
+    this.datasets[0].addNewData(new Date().getTime(), this.createValue());
   }
 
   public zoomTimeframe() {
@@ -147,7 +170,7 @@ export class SandboxComponent implements OnInit {
   }
 
   public changeStyle() {
-    this.datasets.forEach(e => {
+    this.datasets.forEach((e) => {
       const style = e.style;
       style.baseColor = this.colorSrvc.getColor();
       e.setStyle(style);

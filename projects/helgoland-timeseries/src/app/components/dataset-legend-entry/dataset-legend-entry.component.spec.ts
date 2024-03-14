@@ -1,12 +1,12 @@
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { MatDialogModule } from "@angular/material/dialog";
-import { HelgolandCoreModule } from "@helgoland/core";
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HelgolandCoreModule } from '@helgoland/core';
 
-import { TranslateTestingModule } from "../../../../../testing/translate.testing.module";
-import { DatasetLegendEntryComponent } from "./dataset-legend-entry.component";
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { DatasetLegendEntryComponent } from './dataset-legend-entry.component';
 
-describe("DatasetLegendEntryComponent", () => {
+describe('DatasetLegendEntryComponent', () => {
   let component: DatasetLegendEntryComponent;
   let fixture: ComponentFixture<DatasetLegendEntryComponent>;
 
@@ -17,8 +17,8 @@ describe("DatasetLegendEntryComponent", () => {
         TranslateTestingModule,
         HelgolandCoreModule,
         HttpClientModule,
-        MatDialogModule
-      ]
+        MatDialogModule,
+      ],
     }).compileComponents();
   }));
 
@@ -28,7 +28,7 @@ describe("DatasetLegendEntryComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

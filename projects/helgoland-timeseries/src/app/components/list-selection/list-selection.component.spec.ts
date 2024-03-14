@@ -1,17 +1,16 @@
 /* tslint:disable:no-unused-variable */
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { ListSelectionComponent } from "./list-selection.component";
+import { ListSelectionComponent } from './list-selection.component';
 
-describe("ListSelectionComponent", () => {
+describe('ListSelectionComponent', () => {
   let component: ListSelectionComponent;
   let fixture: ComponentFixture<ListSelectionComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ListSelectionComponent]
-    })
-      .compileComponents();
+      imports: [ListSelectionComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,7 +19,7 @@ describe("ListSelectionComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

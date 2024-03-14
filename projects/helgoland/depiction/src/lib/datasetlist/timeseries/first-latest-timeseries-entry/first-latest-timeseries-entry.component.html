@@ -1,8 +1,12 @@
-<span>{{procedureLabel}} - {{platformLabel}}</span>
-<span>Has Data: {{hasData}}</span>
+<span>{{ procedureLabel }} - {{ platformLabel }}</span>
+<span>Has Data: {{ hasData }}</span>
 @if (firstValue) {
-<button (click)="jumpToFirstTimeStamp()">{{firstValue.value}} - {{firstValue.timestamp | tzDate: 'L LT z'}}</button>
+  <button (click)="jumpToFirstTimeStamp()">
+    {{ firstValue.value }} - {{ firstValue.timestamp | tzDate: "L LT z" }}
+  </button>
 }
 @if (lastValue) {
-<button (click)="jumpToLastTimeStamp()">{{lastValue.value}} - {{lastValue.timestamp | tzDate: 'L LT z'}}</button>
+  <button (click)="jumpToLastTimeStamp()">
+    {{ lastValue.value }} - {{ lastValue.timestamp | tzDate: "L LT z" }}
+  </button>
 }

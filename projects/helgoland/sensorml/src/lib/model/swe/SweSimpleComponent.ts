@@ -1,5 +1,5 @@
-import { SweAnyScalar } from "./SweAnyScalar";
-import { SweAnyRange } from "./SweAnyRange";
+import { SweAnyScalar } from './SweAnyScalar';
+import { SweAnyRange } from './SweAnyRange';
 
 /**
  * Re-usable group providing a choice of simple data components

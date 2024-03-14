@@ -1,9 +1,6 @@
-export abstract class TimeInterval {
-
-}
+export abstract class TimeInterval {}
 
 export class Timespan extends TimeInterval {
-
   public from: number;
 
   public to: number;
@@ -13,17 +10,13 @@ export class Timespan extends TimeInterval {
     this.from = from instanceof Date ? from.valueOf() : from;
     this.to = to ? (to instanceof Date ? to.valueOf() : to) : this.from;
   }
-
 }
 
 export class BufferedTime extends TimeInterval {
   public timestamp: Date;
   public bufferInterval: number;
 
-  constructor(
-    timestamp: Date,
-    bufferInterval: number
-  ) {
+  constructor(timestamp: Date, bufferInterval: number) {
     super();
     this.timestamp = timestamp;
     this.bufferInterval = bufferInterval;
