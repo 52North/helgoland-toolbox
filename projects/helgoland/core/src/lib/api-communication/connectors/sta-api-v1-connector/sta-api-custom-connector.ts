@@ -214,16 +214,11 @@ export class StaApiCustomConnector extends StaApiV1Connector {
   ): ParameterConstellation {
     const params = super.createTsParameter(ds, thing);
     // use tags instead of categories
-    if (
-      ds.properties?.['tags'] &&
-      typeof ds.properties?.['tags'] === 'string'
-    ) {
-      const categories: Category[] = ds.properties['tags']
-        .split(',')
-        .map((e: string) => ({
-          id: e,
-          label: e.replace('#', '').charAt(0).toUpperCase() + e.slice(2),
-        }));
+    if (ds.properties?.['tags'] && ds.properties?.['tags'] instanceof Array) {
+      const categories: Category[] = ds.properties['tags'].map((e: string) => ({
+        id: e,
+        label: e,
+      }));
       params.category = categories;
     } else {
       params.category = [];
@@ -246,11 +241,9 @@ export class StaApiCustomConnector extends StaApiV1Connector {
           res.value.forEach((e) => {
             if (
               e.properties?.['tags'] &&
-              typeof e.properties?.['tags'] === 'string'
+              e.properties?.['tags'] instanceof Array
             ) {
-              e.properties['tags'].split(',').forEach((t) => {
-                tags.add(t);
-              });
+              e.properties['tags'].forEach((t) => tags.add(t));
             }
           });
           return Array.from(tags).map((e) => ({
