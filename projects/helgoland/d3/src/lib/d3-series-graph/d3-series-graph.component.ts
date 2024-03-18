@@ -1269,14 +1269,20 @@ export class D3SeriesGraphComponent
     yScaleBase: d3.ScaleLinear<number, number>,
   ) {
     const pointRadius = this.calculatePointRadius(ds);
-    0;
+    const data = ds.data.filter((d) => {
+      return (
+        !isNaN(d.value) &&
+        this.timespan!.from <= d.timestamp &&
+        this.timespan!.to >= d.timestamp
+      );
+    });
 
     // create graph line
     const line = this.createLine(this.xScaleBase!, yScaleBase);
     // draw line
     this.graphBody
       .append('svg:path')
-      .datum(ds.data)
+      .datum(data)
       .attr('class', 'line')
       .attr('fill', 'none')
       .attr('stroke-dasharray', ds.style.lineDashArray)
@@ -1288,7 +1294,7 @@ export class D3SeriesGraphComponent
     if (ds.style.pointSymbol) {
       this.graphBody
         .selectAll('.symbol')
-        .data(ds.data.filter((d) => !isNaN(d.value)))
+        .data(data)
         .enter()
         .append('path')
         .attr('id', (d: GraphDataEntry) => 'dot-' + d.timestamp + '-' + idx)
@@ -1310,7 +1316,7 @@ export class D3SeriesGraphComponent
     } else {
       this.graphBody
         .selectAll('.graphDots')
-        .data(ds.data.filter((d) => !isNaN(d.value)))
+        .data(data)
         .enter()
         .append('circle')
         .attr('class', 'graphDots')
@@ -1324,7 +1330,7 @@ export class D3SeriesGraphComponent
       this.graphBody
         .selectAll('.highlightDots')
         .data(
-          ds.data
+          data
             .filter((d) => !isNaN(d.value) && d.highlight)
             .map((d) => {
               d.highlight = false;
