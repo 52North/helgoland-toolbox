@@ -40,6 +40,9 @@ export class D3GraphOverviewSelectionComponent
   protected completeTimespan: Timespan | undefined;
   protected graphExtent: D3GraphExtent | undefined;
 
+  private previousTimespan: Timespan | undefined;
+  private previousGraphExtent: D3GraphExtent | undefined;
+
   constructor(
     protected override graphId: D3GraphId,
     protected override graphs: D3Graphs,
@@ -65,21 +68,37 @@ export class D3GraphOverviewSelectionComponent
     graph: d3.Selection<SVGSVGElement, any, any, any>,
     timespan: Timespan,
   ) {
-    if (!this.drawLayer && this.graphComp) {
-      this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
+    if (
+      this.timespanChanged(timespan) ||
+      this.graphExtentChanged(graphExtent)
+    ) {
+      this.previousTimespan = timespan;
+      this.previousGraphExtent = graphExtent;
+      if (!this.drawLayer && this.graphComp) {
+        this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
+      }
+
+      this.completeTimespan = timespan;
+      this.graphExtent = graphExtent;
+
+      this.drawOverviewSelection();
     }
-
-    this.completeTimespan = timespan;
-    this.graphExtent = graphExtent;
-
-    this.drawOverviewSelection();
   }
 
-  public override cleanUp() {
-    if (this.drawLayer) {
-      this.drawLayer.remove();
-      this.drawLayer = undefined;
-    }
+  private graphExtentChanged(graphExtent: D3GraphExtent): boolean {
+    const changed =
+      this.previousGraphExtent?.width !== graphExtent.width ||
+      this.previousGraphExtent.height !== graphExtent.height;
+    changed && console.log(`Extent changed`);
+    return changed;
+  }
+
+  private timespanChanged(timespan: Timespan) {
+    const changed =
+      this.previousTimespan?.from !== timespan.from ||
+      this.previousTimespan?.to !== timespan.to;
+    changed && console.log(`Timespan changed`);
+    return changed;
   }
 
   protected drawOverviewSelection() {
