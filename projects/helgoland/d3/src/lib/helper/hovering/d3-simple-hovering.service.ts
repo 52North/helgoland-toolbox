@@ -94,10 +94,9 @@ export class D3SimpleHoveringService extends D3HoveringService {
         .style('stroke', color)
         .style('stroke-width', '1px')
         .style('pointer-events', 'none');
-      const textContainer = this.tooltipContainer.append('g');
       this.positionTooltipContainer(x, y);
       this.positionTooltip(
-        textContainer,
+        this.highlightText,
         this.highlightRect,
         this.leftSidedTooltip(background, x),
         0,
@@ -106,8 +105,6 @@ export class D3SimpleHoveringService extends D3HoveringService {
   }
 
   public showTooltip(elements: HoveringElement[], position: HoverPosition) {
-    // TODO: what the hell
-    // this.createTooltipContainer();
     if (this.anchorElem) {
       this.tooltipContainer = this.anchorElem.append('g');
       this.positionTooltipContainer(position.x, position.y);
