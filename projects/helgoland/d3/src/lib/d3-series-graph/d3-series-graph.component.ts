@@ -272,10 +272,7 @@ export class D3SeriesGraphComponent
       this.redrawCompleteGraph();
     });
     const events: DatasetEventSubscriptions = {
-      state: ds.stateChangeEvent.subscribe(() => {
-        // TODO: maybe calculate new data
-        return this.redrawCompleteGraph();
-      }),
+      state: ds.stateChangeEvent.subscribe(() => this.redrawCompleteGraph()),
       data: dataSubscription,
     };
     this.subscriptions.set(ds.id, events);
@@ -1183,8 +1180,7 @@ export class D3SeriesGraphComponent
     const selection = !axis.selected;
     axis.ids.forEach((id) => {
       const entry = this.datasets.find((e) => e.id === id);
-      // TODO: maybe with update false
-      entry?.setSelected(selection);
+      entry?.setSelected(selection, false);
     });
     this.redrawGraph();
     const list = this.datasets.filter((e) => e.selected).map((e) => e.id);

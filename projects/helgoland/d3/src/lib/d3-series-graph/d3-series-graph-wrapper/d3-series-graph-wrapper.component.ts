@@ -15,7 +15,6 @@ import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetType,
-  FirstLastValue,
   HelgolandDataset,
   HelgolandServicesConnector,
   HelgolandTimeseries,

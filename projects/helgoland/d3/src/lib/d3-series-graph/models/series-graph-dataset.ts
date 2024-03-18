@@ -1,6 +1,6 @@
-import { EventEmitter } from '@angular/core';
 import { FirstLastValue, MinMaxRange, PointSymbol } from '@helgoland/core';
 import { Duration, duration, unitOfTime } from 'moment';
+import { Subject } from 'rxjs';
 
 export abstract class DatasetStyle {
   constructor(
@@ -127,7 +127,7 @@ export interface DatasetDescription {
 }
 
 export class DatasetChild {
-  public stateChangeEvent: EventEmitter<void> = new EventEmitter(); // TODO: use Observable
+  public stateChangeEvent: Subject<void> = new Subject();
 
   constructor(
     private _id: string,
@@ -148,7 +148,7 @@ export class DatasetChild {
   public setVisible(v: boolean, update = true) {
     this._visible = v;
     if (update) {
-      this.stateChangeEvent.emit();
+      this.stateChangeEvent.next();
     }
   }
 
@@ -179,10 +179,9 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   private _children: DatasetChild[] = [];
 
-  public stateChangeEvent: EventEmitter<SeriesGraphDataset> =
-    new EventEmitter();
-  public dataChangeEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
-  public deleteEvent: EventEmitter<SeriesGraphDataset> = new EventEmitter();
+  public stateChangeEvent: Subject<SeriesGraphDataset> = new Subject();
+  public dataChangeEvent: Subject<SeriesGraphDataset> = new Subject();
+  public deleteEvent: Subject<SeriesGraphDataset> = new Subject();
 
   constructor(
     private _id: string,
@@ -227,7 +226,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   setSelected(selected: boolean, update = true) {
     this._selected = selected;
-    update && this.stateChangeEvent.emit(this);
+    update && this.stateChangeEvent.next(this);
   }
 
   get visible(): boolean {
@@ -236,7 +235,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   setVisible(visible: boolean, update = true) {
     this._visible = visible;
-    update && this.stateChangeEvent.emit(this);
+    update && this.stateChangeEvent.next(this);
   }
 
   get style(): T {
@@ -245,7 +244,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   setStyle(style: T, update = true) {
     this._style = style;
-    update && this.stateChangeEvent.emit(this);
+    update && this.stateChangeEvent.next(this);
   }
 
   get yAxis(): AxisSettings {
@@ -254,7 +253,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   setYAxis(yaxis: AxisSettings, update = true) {
     this._yaxis = yaxis;
-    update && this.stateChangeEvent.emit(this);
+    update && this.stateChangeEvent.next(this);
   }
 
   get id(): string {
@@ -271,7 +270,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   setData(data: GraphDataEntry[]) {
     this._data = data;
-    this.dataChangeEvent.emit(this);
+    this.dataChangeEvent.next(this);
   }
 
   hasData(): boolean {
@@ -281,11 +280,11 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
   addNewData(timestamp: number, value: number, highlight?: boolean) {
     this._data.push({ timestamp, value, highlight });
     this.description.lastValue = { timestamp, value };
-    this.dataChangeEvent.emit(this);
+    this.dataChangeEvent.next(this);
   }
 
   deleted(): void {
-    this.deleteEvent.emit(this);
+    this.deleteEvent.next(this);
   }
 
   get children(): DatasetChild[] {
@@ -295,7 +294,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
   addChild(child: DatasetChild) {
     if (!this.hasChild(child)) {
       this._children.push(child);
-      child.stateChangeEvent.subscribe(() => this.stateChangeEvent.emit(this));
+      child.stateChangeEvent.subscribe(() => this.stateChangeEvent.next(this));
     } else {
       console.error(`A child with the id ${child.id} still exists`);
     }
