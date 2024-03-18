@@ -191,7 +191,7 @@ export class TimeseriesServiceImpl
   }
 
   removeFavorite(id: string) {
-    delete this.favorites[this.createFavoriteID(id)];
+    delete this.favorites[id];
     this.saveFavorites();
   }
 
