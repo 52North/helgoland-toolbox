@@ -1,16 +1,17 @@
 import { InjectionToken } from '@angular/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
+import { Observable } from 'rxjs';
 
 import { Favorite } from './favorite.service';
 
-export interface DatasetPermalinkService {
-  noPermalink(): void;
+export interface DatasetStateService {
+  loadCachedDatasets(): Observable<boolean>;
   getPermaIds(): string[];
   validatePermaIds(ids: string[]): void;
 }
 
-export const DATASET_PERMALINK_SERVICE_INJECTION =
-  new InjectionToken<DatasetPermalinkService>('DATASET_PERMALINK_SERVICE');
+export const DATASET_STATE_SERVICE_INJECTION =
+  new InjectionToken<DatasetStateService>('DATASET_STATE_SERVICE');
 
 export interface DatasetFavoriteService {
   addFavoriteToDiagram(fav: Favorite): void;

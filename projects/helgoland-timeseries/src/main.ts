@@ -42,9 +42,10 @@ import {
   AppConfig,
   ConfigurationService,
 } from './app/services/configuration.service';
+import { DummyDatasetsService } from './app/services/dummy-datasets.service';
 import {
   DATASET_FAVORITE_SERVICE_INJECTION,
-  DATASET_PERMALINK_SERVICE_INJECTION,
+  DATASET_STATE_SERVICE_INJECTION,
 } from './app/services/service-interfaces';
 import {
   TimeseriesService,
@@ -141,13 +142,23 @@ bootstrapApplication(AppComponent, {
       useClass: TimeseriesServiceImpl,
     },
     {
-      provide: DATASET_PERMALINK_SERVICE_INJECTION,
+      provide: DATASET_STATE_SERVICE_INJECTION,
       useExisting: TimeseriesService,
       multi: true,
     },
     {
       provide: DATASET_FAVORITE_SERVICE_INJECTION,
       useExisting: TimeseriesService,
+      multi: true,
+    },
+    {
+      provide: DATASET_STATE_SERVICE_INJECTION,
+      useExisting: DummyDatasetsService,
+      multi: true,
+    },
+    {
+      provide: DATASET_FAVORITE_SERVICE_INJECTION,
+      useExisting: DummyDatasetsService,
       multi: true,
     },
     {

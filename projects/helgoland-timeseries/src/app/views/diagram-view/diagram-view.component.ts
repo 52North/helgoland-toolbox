@@ -36,7 +36,7 @@ import { GeneralTimeSelectionComponent } from '../../components/time/general-tim
 import { ModalMainConfigButtonComponent } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { AppRouterService } from './../../services/app-router.service';
 import { DatasetsService } from './../../services/graph-datasets.service';
-import { DiagramViewPermalinkService } from './diagram-view-permalink.service';
+import { DiagramViewInitStateService } from './diagram-view-permalink.service';
 
 @Component({
   selector: 'helgoland-diagram-view',
@@ -98,7 +98,7 @@ export class DiagramViewComponent implements OnInit {
     private media: MediaMatcher,
     private dialog: MatDialog,
     public appRouter: AppRouterService,
-    public permalinkSrvc: DiagramViewPermalinkService,
+    public initStateService: DiagramViewInitStateService,
     private time: Time,
     public graphDatasetsSrvc: DatasetsService,
   ) {
@@ -115,13 +115,12 @@ export class DiagramViewComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.permalinkSrvc.validatePeramlink();
-    this.permalinkSrvc.validatePeramlink().subscribe((res) => {
-      if (!this.graphDatasetsSrvc.hasDatasets()) {
+    // TODO: fix initalization
+    this.initStateService.preloadDatasets().subscribe((loadDs) => {
+      if (!loadDs) {
         this.openMapSelection();
       }
     });
-    // TODO: fix initalization
     // this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     //   this.setDatasets();
 

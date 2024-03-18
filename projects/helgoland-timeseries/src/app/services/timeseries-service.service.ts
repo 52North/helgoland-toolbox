@@ -1,9 +1,9 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Injectable, Optional } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
   DatasetType,
-  FirstLastValue,
   HelgolandDataset,
   HelgolandServicesConnector,
   HelgolandTimeseries,
@@ -26,15 +26,15 @@ import {
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
+import { Observable, of } from 'rxjs';
 
 import { Favorite } from './favorite.service';
 import { DatasetsService } from './graph-datasets.service';
+import { NotifierService } from './notifier.service';
 import {
   DatasetFavoriteService,
-  DatasetPermalinkService,
+  DatasetStateService,
 } from './service-interfaces';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { NotifierService } from './notifier.service';
 
 const TIMESERIES_STATE_LOCALSTORAGE = 'timeseries-state';
 const TIMESERIES_FAVORITES_LOCALSTORAGE = 'timeseries-favorites';
@@ -63,7 +63,7 @@ export abstract class TimeseriesService {
   providedIn: 'root',
 })
 export class TimeseriesServiceImpl
-  implements TimeseriesService, DatasetPermalinkService, DatasetFavoriteService
+  implements TimeseriesService, DatasetStateService, DatasetFavoriteService
 {
   private state: {
     [key: string]: SaveState;
@@ -118,8 +118,8 @@ export class TimeseriesServiceImpl
     this.graphDatasetsSrvc.deleteDataset(id, true);
   }
 
-  noPermalink() {
-    this.loadState();
+  loadCachedDatasets(): Observable<boolean> {
+    return of(this.loadState());
   }
 
   getPermaIds(): string[] {
@@ -204,7 +204,8 @@ export class TimeseriesServiceImpl
     this.localStorage.save(TIMESERIES_FAVORITES_LOCALSTORAGE, this.favorites);
   }
 
-  protected loadState(): void {
+  protected loadState(): boolean {
+    let foundState = false;
     this.state = this.localStorage.load(TIMESERIES_STATE_LOCALSTORAGE) || {};
     for (const key in this.state) {
       const visible = this.state[key].visible;
@@ -212,7 +213,9 @@ export class TimeseriesServiceImpl
       const style = this.getStyleOfObject(this.state[key].style);
       const axis = this.getYAxisOfObject(this.state[key].yaxis);
       this.addDatasetbyId(key, style, axis, visible, selected);
+      foundState = true;
     }
+    return foundState;
   }
 
   protected saveState(): void {

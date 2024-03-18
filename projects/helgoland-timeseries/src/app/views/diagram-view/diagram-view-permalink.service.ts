@@ -5,13 +5,12 @@ import {
   DefinedTimespanService,
   Timespan,
 } from '@helgoland/core';
-import { PermalinkService } from '@helgoland/permalink';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import {
-  DATASET_PERMALINK_SERVICE_INJECTION,
-  DatasetPermalinkService,
+  DATASET_STATE_SERVICE_INJECTION,
+  DatasetStateService,
 } from '../../services/service-interfaces';
 import { DatasetsService } from './../../services/graph-datasets.service';
 
@@ -24,35 +23,45 @@ const PARAM_DEFINED_TIME = 'defined_time';
 @Injectable({
   providedIn: 'root',
 })
-export class DiagramViewPermalinkService extends PermalinkService<void> {
+export class DiagramViewInitStateService {
   constructor(
     private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService,
     @Optional()
-    @Inject(DATASET_PERMALINK_SERVICE_INJECTION)
-    private permalinkServices: DatasetPermalinkService[] | undefined,
+    @Inject(DATASET_STATE_SERVICE_INJECTION)
+    private datasetStateServices: DatasetStateService[] | undefined,
   ) {
-    super();
-    if (this.permalinkServices === null) {
-      this.permalinkServices = [];
+    if (this.datasetStateServices === null) {
+      this.datasetStateServices = [];
     }
   }
 
-  public validatePeramlink(): Observable<void> {
+  public preloadDatasets(): Observable<boolean> {
     return this.activatedRoute.queryParams.pipe(
       mergeMap((params) => this.handleParams(params)),
-      map((bla) => void 0),
     );
   }
 
   private handleParams(params: Params): Observable<boolean> {
-    const valid: Observable<boolean>[] = [];
+    this.handleTimeParam(params);
     if (params[PARAM_IDS]) {
       this.graphDatasetsSrvc.deleteAllDatasets();
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
-      this.permalinkServices?.forEach((pls) => pls.validatePermaIds(ids));
+      this.datasetStateServices?.forEach((pls) => pls.validatePermaIds(ids));
+      return of(false);
+    } else {
+      const loadDatasets = this.datasetStateServices?.map((pls) =>
+        pls.loadCachedDatasets(),
+      );
+      if (loadDatasets) {
+        return forkJoin(loadDatasets).pipe(map((res) => res.some((r) => r)));
+      }
+      return of(false);
     }
+  }
+
+  private handleTimeParam(params: Params) {
     if (params[PARAM_TIME]) {
       const time = (params[PARAM_TIME] as string).split(TIME_SEPERATOR);
       if (time.length === 2) {
@@ -67,19 +76,13 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
         this.graphDatasetsSrvc.timespan = timespan;
       }
     }
-    return of(true);
-    // if (valid.length) {
-    //   return forkJoin(valid).pipe(map(() => true));
-    // } else {
-    //   return of(true);
-    // };
   }
 
-  protected generatePermalink(): string {
+  public generatePermalink = () => {
     let paramUrl = '';
     if (this.graphDatasetsSrvc.hasDatasets()) {
       const ids: string[] = [];
-      this.permalinkServices?.forEach((pls) => {
+      this.datasetStateServices?.forEach((pls) => {
         pls.getPermaIds().forEach((id) => ids.push(id));
       });
       const id = ids.join(ID_SEPERATOR);
@@ -99,5 +102,14 @@ export class DiagramViewPermalinkService extends PermalinkService<void> {
       }
     }
     return paramUrl;
+  };
+
+  protected createBaseUrl() {
+    const url = window.location.href;
+    if (url.indexOf('?') !== -1) {
+      return url.substring(0, url.indexOf('?'));
+    } else {
+      return url;
+    }
   }
 }
