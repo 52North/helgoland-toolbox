@@ -24,6 +24,7 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
       const dialogRef = this.dialog.open(BasicAuthLoginComponent, {
         width: '400px',
         data: url,
+        disableClose: true,
       });
 
       dialogRef.afterClosed().subscribe((res) => {
