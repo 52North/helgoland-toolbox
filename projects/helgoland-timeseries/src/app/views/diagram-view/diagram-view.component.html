@@ -28,6 +28,18 @@
         }
         <div class="entries">
           <mat-accordion [multi]="true">
+            @for (
+              loadItem of graphDatasetsSrvc.loadingDatasets;
+              track loadItem
+            ) {
+              <mat-expansion-panel [disabled]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+            }
             @for (dataset of graphDatasetsSrvc.datasets; track dataset) {
               <helgoland-dataset-legend-entry
                 [dataset]="dataset"

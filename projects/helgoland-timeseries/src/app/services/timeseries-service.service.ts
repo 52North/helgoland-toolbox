@@ -90,7 +90,7 @@ export class TimeseriesServiceImpl
     protected translate: TranslateService,
     protected graphDatasetsSrvc: DatasetsService,
     @Optional()
-    protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
+    protected errorHandler: D3SeriesGraphErrorHandler,
     protected notifier: NotifierService,
     protected la: LiveAnnouncer,
   ) {
@@ -99,6 +99,9 @@ export class TimeseriesServiceImpl
         this.loadDatasetData(dataset.internalId),
       ),
     );
+    if (!errorHandler) {
+      this.errorHandler = new D3SeriesSimpleGraphErrorHandler();
+    }
     this.loadFavorites();
   }
 
@@ -229,6 +232,7 @@ export class TimeseriesServiceImpl
     visible?: boolean,
     selected?: boolean,
   ): void {
+    this.graphDatasetsSrvc.startLoadingDataset(id);
     this.servicesConnector
       .getDataset(id, {
         locale: this.translate.currentLang,
@@ -237,7 +241,10 @@ export class TimeseriesServiceImpl
       .subscribe({
         next: (res) =>
           this.loadAddedDataset(res, style, axis, visible, selected),
-        error: (error) => this.errorHandler.handleDatasetLoadError(error),
+        error: (error) => {
+          this.graphDatasetsSrvc.stopLoadingDataset(id);
+          return this.errorHandler.handleDatasetLoadError(error);
+        },
       });
   }
 

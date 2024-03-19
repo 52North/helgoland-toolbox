@@ -86,19 +86,17 @@ export class D3GraphOverviewSelectionComponent
   }
 
   private graphExtentChanged(graphExtent: D3GraphExtent): boolean {
-    const changed =
+    return (
       this.previousGraphExtent?.width !== graphExtent.width ||
-      this.previousGraphExtent.height !== graphExtent.height;
-    changed && console.log(`Extent changed`);
-    return changed;
+      this.previousGraphExtent.height !== graphExtent.height
+    );
   }
 
   private timespanChanged(timespan: Timespan) {
-    const changed =
+    return (
       this.previousTimespan?.from !== timespan.from ||
-      this.previousTimespan?.to !== timespan.to;
-    changed && console.log(`Timespan changed`);
-    return changed;
+      this.previousTimespan?.to !== timespan.to
+    );
   }
 
   protected drawOverviewSelection() {

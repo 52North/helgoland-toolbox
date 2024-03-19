@@ -11,6 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -54,6 +55,7 @@ import { DiagramViewInitStateService } from './diagram-view-permalink.service';
     MatExpansionModule,
     MatIconModule,
     MatMenuModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatToolbarModule,
     MatTooltipModule,

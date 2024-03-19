@@ -19,6 +19,8 @@ export class DatasetsService {
 
   public overviewDatasets: SeriesGraphDataset[] = [];
 
+  private _loadingDatasets: Set<string> = new Set();
+
   private _timespan: Timespan = this.initTimespan();
 
   constructor(
@@ -37,6 +39,10 @@ export class DatasetsService {
 
   get overviewTimespan(): Timespan {
     return this.timeSrvc.getBufferedTimespan(this._timespan, 2);
+  }
+
+  get loadingDatasets(): string[] {
+    return Array.from(this._loadingDatasets);
   }
 
   set timespan(ts: Timespan) {
@@ -63,7 +69,16 @@ export class DatasetsService {
     return this.getDatasetEntryIndex(id) >= 0;
   }
 
+  startLoadingDataset(id: string): void {
+    this._loadingDatasets.add(id);
+  }
+
+  stopLoadingDataset(id: string) {
+    this._loadingDatasets.delete(id);
+  }
+
   addOrUpdateDataset(dataset: SeriesGraphDataset) {
+    this.stopLoadingDataset(dataset.id);
     const datasetIdx = this.getDatasetEntryIndex(dataset.id);
     const overviewDs = dataset.clone();
     dataset.stateChangeEvent.subscribe((state) => {
