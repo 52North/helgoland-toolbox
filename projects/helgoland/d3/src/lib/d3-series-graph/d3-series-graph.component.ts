@@ -1265,13 +1265,7 @@ export class D3SeriesGraphComponent
     yScaleBase: d3.ScaleLinear<number, number>,
   ) {
     const pointRadius = this.calculatePointRadius(ds);
-    const data = ds.data.filter((d) => {
-      return (
-        !isNaN(d.value) &&
-        this.timespan!.from <= d.timestamp &&
-        this.timespan!.to >= d.timestamp
-      );
-    });
+    const data = ds.data.filter((d) => !isNaN(d.value));
 
     // create graph line
     const line = this.createLine(this.xScaleBase!, yScaleBase);
@@ -1394,15 +1388,16 @@ export class D3SeriesGraphComponent
   ) {
     return d3
       .line<DataEntry>()
-      .defined((d) => {
-        return !isNaN(d.timestamp) && !isNaN(d.value);
-      })
+      .defined((d) => !isNaN(d.timestamp) && !isNaN(d.value))
       .x((d) => {
-        d.xDiagCoord = xScaleBase(d.timestamp) as number;
+        d.xDiagCoord = xScaleBase(d.timestamp);
         return d.xDiagCoord;
       })
       .y((d) => {
-        d.yDiagCoord = yScaleBase(d.value) as number;
+        d.yDiagCoord = yScaleBase(d.value);
+        if (isNaN(d.yDiagCoord)) {
+          return 0;
+        }
         return d.yDiagCoord;
       })
       .curve(d3.curveLinear);
