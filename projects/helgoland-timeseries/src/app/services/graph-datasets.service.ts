@@ -21,6 +21,13 @@ export class DatasetsService {
 
   private _loadingDatasets: Set<string> = new Set();
 
+  private _loadingData: Set<string> = new Set();
+  public loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
+
+  private _loadingOverviewData: Set<string> = new Set();
+  public loadingOverviewDataChanged: EventEmitter<Set<string>> =
+    new EventEmitter();
+
   private _timespan: Timespan = this.initTimespan();
 
   constructor(
@@ -97,10 +104,22 @@ export class DatasetsService {
 
   setDataLoading(id: string, loading: boolean) {
     this.getDatasetEntry(id).setDataLoading(loading);
+    if (loading) {
+      this._loadingData.add(id);
+    } else {
+      this._loadingData.delete(id);
+    }
+    this.loadingDataChanged.next(this._loadingData);
   }
 
   setOverviewDataLoading(id: string, loading: boolean) {
     this.getOverviewDatasetEntry(id).setDataLoading(loading);
+    if (loading) {
+      this._loadingOverviewData.add(id);
+    } else {
+      this._loadingOverviewData.delete(id);
+    }
+    this.loadingOverviewDataChanged.next(this._loadingOverviewData);
   }
 
   deleteDataset(id: string, notify: boolean) {

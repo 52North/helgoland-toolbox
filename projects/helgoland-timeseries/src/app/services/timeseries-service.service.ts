@@ -521,7 +521,7 @@ export class TimeseriesServiceImpl
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
       this.addReferenceValueDatasets(ds, rawdata);
       ds.setData(data);
-      ds.setDataLoading(false);
+      this.graphDatasetsSrvc.setDataLoading(ds.id, false);
     }
   }
 
@@ -591,7 +591,7 @@ export class TimeseriesServiceImpl
         dataset.internalId,
       );
       ds.setData(data);
-      ds.setDataLoading(false);
+      this.graphDatasetsSrvc.setOverviewDataLoading(ds.id, false);
     }
   }
 }

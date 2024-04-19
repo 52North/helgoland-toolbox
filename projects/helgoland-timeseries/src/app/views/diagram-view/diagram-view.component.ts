@@ -123,6 +123,14 @@ export class DiagramViewComponent implements OnInit {
         this.openMapSelection();
       }
     });
+
+    this.graphDatasetsSrvc.loadingDataChanged.subscribe(
+      (ld) => (this.diagramLoading = ld.size > 0),
+    );
+
+    this.graphDatasetsSrvc.loadingOverviewDataChanged.subscribe(
+      (ld) => (this.overviewLoading = ld.size > 0),
+    );
     // this.timeseries.datasetIdsChanged.subscribe(list => this.setDatasets());
     //   this.setDatasets();
 
@@ -138,14 +146,6 @@ export class DiagramViewComponent implements OnInit {
 
     // public setSelected(selectedIds: string[]) {
     //   this.selectedIds = selectedIds;
-  }
-
-  onDiagramLoading(loading: boolean) {
-    setTimeout(() => (this.diagramLoading = loading));
-  }
-
-  onOverviewLoading(loading: boolean) {
-    setTimeout(() => (this.overviewLoading = loading));
   }
 
   openDiagramSettings() {
