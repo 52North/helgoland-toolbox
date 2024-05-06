@@ -4,6 +4,7 @@ import { Time, Timespan, TimezoneService } from '@helgoland/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
+import { Subject } from 'rxjs';
 
 import { NotifierService } from './notifier.service';
 
@@ -16,6 +17,8 @@ export class DatasetsService {
   public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
   public datasets: SeriesGraphDataset[] = [];
+  public datasetAdded: Subject<string> = new Subject();
+  public datasetRemoved: Subject<string> = new Subject();
 
   public overviewDatasets: SeriesGraphDataset[] = [];
 
@@ -98,6 +101,7 @@ export class DatasetsService {
       this.overviewDatasets[datasetIdx] = overviewDs;
     } else {
       this.datasets.push(dataset);
+      this.datasetAdded.next(dataset.id);
       this.overviewDatasets.push(overviewDs);
     }
   }
@@ -132,6 +136,7 @@ export class DatasetsService {
     dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
     this.datasets.splice(idx, 1);
+    this.datasetRemoved.next(dataset.id);
     const ovDataset = this.getOverviewDatasetEntry(id);
     ovDataset.deleted();
     this.overviewDatasets.splice(idx, 1);

@@ -15,9 +15,9 @@
       (menuOpened)="onMenuOpen(picker)"
       class="desktop-only"
     >
-      {{ timespan.from | tzDate: "L LT z" }}
+      {{ timespan.from | tzDate }}
       &nbsp;&ndash;&nbsp;
-      {{ timespan.to | tzDate: "L LT z" }}
+      {{ timespan.to | tzDate }}
     </button>
     <button
       mat-button
@@ -25,8 +25,8 @@
       (menuOpened)="onMenuOpen(picker)"
       class="mobile-only"
     >
-      <div>{{ timespan.from | tzDate: "L LT z" }}</div>
-      <div>{{ timespan.to | tzDate: "L LT z" }}</div>
+      <div>{{ timespan.from | tzDate }}</div>
+      <div>{{ timespan.to | tzDate }}</div>
     </button>
     <button
       mat-icon-button

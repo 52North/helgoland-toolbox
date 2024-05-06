@@ -130,10 +130,7 @@
             {{ "diagram-view.legend.entry.first-value-at" | translate }}:
           </span>
           <span>
-            {{
-              dataset.description.firstValue.timestamp
-                | date: "short" : undefined : translateSrvc.currentLang
-            }}
+            {{ dataset.description.firstValue.timestamp | tzDate }}
           </span>
           <span>
             ({{ dataset.description.firstValue.value }}
@@ -150,10 +147,7 @@
             {{ "diagram-view.legend.entry.last-value-at" | translate }}:
           </span>
           <span>
-            {{
-              dataset.description.lastValue.timestamp
-                | date: "short" : undefined : translateSrvc.currentLang
-            }}
+            {{ dataset.description.lastValue.timestamp | tzDate }}
           </span>
           <span>
             ({{ dataset.description.lastValue.value }}

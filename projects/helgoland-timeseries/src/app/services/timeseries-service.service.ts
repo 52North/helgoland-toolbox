@@ -56,6 +56,7 @@ interface FavoriteSaveState {
 export abstract class TimeseriesService {
   abstract addDataset(internalId: string): void;
   abstract hasDataset(id: string): boolean;
+  abstract getDataset(internalId: string): HelgolandTimeseries | undefined;
   abstract removeDataset(id: string): void;
 }
 
@@ -103,6 +104,10 @@ export class TimeseriesServiceImpl
       this.errorHandler = new D3SeriesSimpleGraphErrorHandler();
     }
     this.loadFavorites();
+  }
+
+  getDataset(internalId: string): HelgolandTimeseries | undefined {
+    return this.datasetMap.get(internalId);
   }
 
   public async addDataset(internalId: string) {

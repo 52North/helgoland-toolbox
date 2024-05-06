@@ -1,3 +1,5 @@
+import 'moment/locale/de';
+
 import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';

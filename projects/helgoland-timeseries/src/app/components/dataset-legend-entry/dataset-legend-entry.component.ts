@@ -13,7 +13,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Time, TimeInterval } from '@helgoland/core';
+import { HelgolandCoreModule, Time, TimeInterval } from '@helgoland/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -28,17 +28,18 @@ import { TimeseriesEntrySymbolComponent } from '../timeseries-entry-symbol/times
   templateUrl: './dataset-legend-entry.component.html',
   styleUrls: ['./dataset-legend-entry.component.scss'],
   imports: [
-    LoadingOverlayProgressBarComponent,
-    MatSlideToggleModule,
     CommonModule,
+    FavoriteToggleButtonComponent,
+    HelgolandLabelMapperModule,
+    HelgolandCoreModule,
+    LoadingOverlayProgressBarComponent,
+    MatButtonModule,
+    MatExpansionModule,
     MatIconModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     TimeseriesEntrySymbolComponent,
     TranslateModule,
-    FavoriteToggleButtonComponent,
-    MatExpansionModule,
-    MatButtonModule,
-    HelgolandLabelMapperModule,
   ],
   standalone: true,
 })
