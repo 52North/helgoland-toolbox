@@ -4,5 +4,7 @@
   matTooltip="{{ 'favorite-list-button.tooltip' | translate }}"
   attr.aria-label="{{ 'favorite-list-button.tooltip' | translate }}"
 >
-  <mat-icon [matBadge]="favoriteSrvc.countChange | async">star</mat-icon>
+  <mat-icon [matBadge]="favoriteSrvc.countChange | async" aria-hidden="false"
+    >star</mat-icon
+  >
 </button>
