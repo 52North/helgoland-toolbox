@@ -418,17 +418,18 @@ export class TimeseriesServiceImpl
 
   private loadDatasetData(id: string) {
     this.loadOverviewData(id);
+    const graphDS = this.graphDatasetsSrvc.getDatasetEntry(id);
     const dataset = this.datasetMap.get(id);
-    if (this.graphDatasetsSrvc.timespan && dataset) {
+    if (this.graphDatasetsSrvc.timespan && dataset && graphDS) {
       this.graphDatasetsSrvc.setDataLoading(id, true);
       if (
         this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered &&
-        dataset.firstValue &&
-        dataset.lastValue &&
+        graphDS.description.firstValue &&
+        graphDS.description.lastValue &&
         !this.timeSrvc.overlaps(
           this.graphDatasetsSrvc.timespan,
-          dataset.firstValue.timestamp,
-          dataset.lastValue.timestamp,
+          graphDS.description.firstValue.timestamp,
+          graphDS.description.lastValue.timestamp,
         )
       ) {
         this.prepareData(dataset, new HelgolandTimeseriesData([]));
@@ -456,17 +457,18 @@ export class TimeseriesServiceImpl
 
   private loadOverviewData(id: string) {
     if (this.graphDatasetsSrvc.overviewTimespan) {
+      const graphDS = this.graphDatasetsSrvc.getDatasetEntry(id);
       const dataset = this.datasetMap.get(id);
-      if (!dataset) return;
+      if (!dataset || !graphDS) return;
       this.graphDatasetsSrvc.setOverviewDataLoading(id, true);
       if (
         this.presenterOptions.sendDataRequestOnlyIfDatasetTimespanCovered &&
-        dataset.firstValue &&
-        dataset.lastValue &&
+        graphDS.description.firstValue &&
+        graphDS.description.lastValue &&
         !this.timeSrvc.overlaps(
           this.graphDatasetsSrvc.overviewTimespan,
-          dataset.firstValue.timestamp,
-          dataset.lastValue.timestamp,
+          graphDS.description.firstValue.timestamp,
+          graphDS.description.lastValue.timestamp,
         )
       ) {
         this.prepareOverviewData(dataset, new HelgolandTimeseriesData([]));
