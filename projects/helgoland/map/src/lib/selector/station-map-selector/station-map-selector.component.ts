@@ -220,6 +220,7 @@ export class StationMapSelectorComponent
         this.onContentLoading.emit(false);
       },
       error: (error) => {
+        console.error(error);
         map.setView([0, 0], 1);
         this.onContentLoading.emit(false);
       },
