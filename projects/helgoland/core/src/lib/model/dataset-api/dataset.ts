@@ -28,7 +28,7 @@ export class ParameterConstellation {
 export class FirstLastValue {
   constructor(
     public timestamp: number,
-    public value: number,
+    public value?: number,
   ) {}
 }
 

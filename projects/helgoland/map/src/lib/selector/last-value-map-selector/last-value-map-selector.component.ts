@@ -159,6 +159,7 @@ export class LastValueMapSelectorComponent
         if (extras.statusIntervals) {
           if (
             ts.lastValue &&
+            ts.lastValue.value &&
             ts.lastValue.timestamp >
               new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration
           ) {

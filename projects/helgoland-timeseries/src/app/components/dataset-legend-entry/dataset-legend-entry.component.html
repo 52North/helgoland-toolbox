@@ -132,10 +132,12 @@
           <span>
             {{ dataset.description.firstValue.timestamp | tzDate }}
           </span>
-          <span>
-            ({{ dataset.description.firstValue.value }}
-            {{ dataset.description.uom }})
-          </span>
+          @if (dataset.description.firstValue.value) {
+            <span>
+              ({{ dataset.description.firstValue.value }}
+              {{ dataset.description.uom }})
+            </span>
+          }
         </div>
       }
       @if (dataset.description.lastValue) {
@@ -149,10 +151,12 @@
           <span>
             {{ dataset.description.lastValue.timestamp | tzDate }}
           </span>
-          <span>
-            ({{ dataset.description.lastValue.value }}
-            {{ dataset.description.uom }})
-          </span>
+          @if (dataset.description.lastValue.value) {
+            <span>
+              ({{ dataset.description.lastValue.value }}
+              {{ dataset.description.uom }})
+            </span>
+          }
         </div>
       }
       @if (dataset.children.length > 0) {

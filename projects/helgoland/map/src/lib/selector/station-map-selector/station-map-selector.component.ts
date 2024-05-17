@@ -99,6 +99,7 @@ export class StationMapSelectorComponent
               if (extras.statusIntervals) {
                 if (
                   ts.lastValue?.timestamp &&
+                  ts.lastValue.value &&
                   ts.lastValue.timestamp >
                     new Date().getTime() -
                       this.ignoreStatusIntervalIfBeforeDuration
