@@ -32,6 +32,10 @@ export class D3SimpleHoveringService extends D3HoveringService {
     | d3.Selection<SVGGElement, any, any, any>
     | undefined;
 
+  // padding to mouseposition
+  private textPadding = 15;
+  private rectPadding = 2;
+
   constructor(
     protected timezoneSrvc: TimezoneService,
     protected pointSymbolDrawer: D3PointSymbolDrawerService,
@@ -136,21 +140,18 @@ export class D3SimpleHoveringService extends D3HoveringService {
     onLeftSide: boolean,
     itemCounter: number,
   ) {
-    // padding to mouseposition
-    const textPadding = 15;
-    const rectPadding = 2;
     const rectW: number = this.graphHelper.getDimensions(text.node()).w;
     const rectH: number = this.graphHelper.getDimensions(text.node()).h;
     // positioning text
-    const textX = onLeftSide ? 0 + textPadding : -rectW - textPadding;
-    const textY = rectPadding;
+    const textX = onLeftSide ? 0 + this.textPadding : -rectW - this.textPadding;
+    const textY = this.rectPadding;
     text.attr('transform', `translate(${textX}, ${textY})`);
     // positioning rect
-    const rectX = textX - rectPadding;
+    const rectX = textX - this.rectPadding;
     const rectY = 0;
     rect
-      .attr('width', rectW + 2 * rectPadding)
-      .attr('height', rectH + 2 * rectPadding)
+      .attr('width', rectW + 2 * this.rectPadding)
+      .attr('height', rectH + 2 * this.rectPadding)
       .attr('transform', `translate(${rectX}, ${rectY})`);
   }
 
@@ -179,13 +180,16 @@ export class D3SimpleHoveringService extends D3HoveringService {
         : d.value;
     textContainer
       .append('text')
+      .attr(
+        'transform',
+        `translate(${0}, ${this.textPadding - this.rectPadding})`,
+      )
       .text(
         `${stringedValue} ${
           entry.description.uom
         } ${this.timezoneSrvc.formatTzDate(d.timestamp)}`,
       )
       .attr('class', 'mouseHoverDotLabel')
-      .attr('alignment-baseline', 'text-before-edge')
       .style('pointer-events', 'none')
       .style('fill', 'black');
   }
