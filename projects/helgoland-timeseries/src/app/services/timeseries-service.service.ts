@@ -125,16 +125,64 @@ export class TimeseriesServiceImpl
 
   getPermaId(ds: SeriesGraphDataset): string | undefined {
     const match = this.datasetMap.get(ds.id);
-    return match ? `ts_${match.internalId}` : undefined;
+    if (match) {
+      return this.encodeState(ds);
+    } else {
+      return undefined;
+    }
   }
 
-  validatePermaId(id: string): boolean {
-    if (id.startsWith('ts_')) {
-      id = id.substring(3);
-      this.addDataset(id);
+  private encodeState(ds: SeriesGraphDataset): string {
+    const selected = ds.selected ? 't' : 'f';
+    const visible = ds.visible ? 't' : 'f';
+    const seperateYAxis = ds.yAxis.separate ? 't' : 'f';
+    let style;
+    if (ds.style instanceof LineStyle) {
+      const styleArr = [
+        ds.style.baseColor,
+        ds.style.lineWidth,
+        ds.style.pointRadius,
+        ds.style.pointSymbol,
+      ];
+      style = JSON.stringify(styleArr);
+    }
+    return `ts_${ds.id}|${selected}|${visible}|${seperateYAxis}|${style}`;
+  }
+
+  private decodeState(str: string) {
+    if (str.startsWith('ts_')) {
+      str = str.substring(3);
+      const [idStr, selectedStr, visibleStr, seperateYaxisStr, styleArrayStr] =
+        str.split('|');
+      let selected = undefined;
+      if (selectedStr === 'f' || selectedStr === 't') {
+        selected = selectedStr === 't';
+      }
+      let visible = undefined;
+      if (visibleStr === 'f' || visibleStr === 't') {
+        visible = visibleStr === 't';
+      }
+      let axis = undefined;
+      if (seperateYaxisStr === 'f' || seperateYaxisStr === 't') {
+        axis = new AxisSettings();
+        axis.separate = seperateYaxisStr === 't';
+      }
+      let style = undefined;
+      if (styleArrayStr) {
+        const styleArr = JSON.parse(styleArrayStr);
+        if (styleArr instanceof Array) {
+          const [baseColor, lineWidth, pointRadius, pointSymbol] = styleArr;
+          style = new LineStyle(baseColor, pointRadius, lineWidth, pointSymbol);
+        }
+      }
+      this.addDatasetbyId(idStr, style, axis, visible, selected);
       return true;
     }
     return false;
+  }
+
+  validatePermaId(id: string): boolean {
+    return this.decodeState(id);
   }
 
   canHandleDatasetAsFavorite(id: string): boolean {
