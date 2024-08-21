@@ -7,8 +7,16 @@ import moment from 'moment';
 import { Subject } from 'rxjs';
 
 import { NotifierService } from './notifier.service';
+import { StorageService } from './storage-service.service';
 
 const TIME_CACHE_PARAM = 'timeseriesTime';
+
+export class LoadingDataset {
+  constructor(private _id: string) {}
+  get id(): string {
+    return this._id;
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +24,11 @@ const TIME_CACHE_PARAM = 'timeseriesTime';
 export class DatasetsService {
   public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
-  public datasets: SeriesGraphDataset[] = [];
+  private _datasets: (SeriesGraphDataset | LoadingDataset)[] = [];
   public datasetAdded: Subject<string> = new Subject();
   public datasetRemoved: Subject<string> = new Subject();
 
   public overviewDatasets: SeriesGraphDataset[] = [];
-
-  private _loadingDatasets: Set<string> = new Set();
 
   private _loadingData: Set<string> = new Set();
   public loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
@@ -39,6 +45,7 @@ export class DatasetsService {
     protected la: LiveAnnouncer,
     protected timezoneSrvc: TimezoneService,
     protected notifier: NotifierService,
+    protected storageSrvc: StorageService,
   ) {
     this.initTimespan();
   }
@@ -51,8 +58,15 @@ export class DatasetsService {
     return this.timeSrvc.getBufferedTimespan(this._timespan, 2);
   }
 
-  get loadingDatasets(): string[] {
-    return Array.from(this._loadingDatasets);
+  get datasets(): SeriesGraphDataset[] {
+    const datasets = this._datasets.filter(
+      (ds) => ds instanceof SeriesGraphDataset,
+    );
+    return datasets as SeriesGraphDataset[];
+  }
+
+  get allDatasets(): (SeriesGraphDataset | LoadingDataset)[] {
+    return this._datasets;
   }
 
   set timespan(ts: Timespan) {
@@ -68,11 +82,11 @@ export class DatasetsService {
   }
 
   getDatasetCount(): number {
-    return this.datasets.length;
+    return this._datasets.length;
   }
 
   hasDatasets(): boolean {
-    return this.datasets.length > 0;
+    return this._datasets.length > 0;
   }
 
   hasDataset(id: string): boolean {
@@ -80,15 +94,17 @@ export class DatasetsService {
   }
 
   startLoadingDataset(id: string): void {
-    this._loadingDatasets.add(id);
+    this.storageSrvc.saveDataset(id);
+    this._datasets.push(new LoadingDataset(id));
   }
 
-  stopLoadingDataset(id: string) {
-    this._loadingDatasets.delete(id);
+  stopLoadingDatasetOnError(id: string) {
+    const datasetIdx = this.getDatasetEntryIndex(id);
+    this._datasets.splice(datasetIdx, 1);
+    this.storageSrvc.removeDataset(id);
   }
 
   addOrUpdateDataset(dataset: SeriesGraphDataset) {
-    this.stopLoadingDataset(dataset.id);
     const datasetIdx = this.getDatasetEntryIndex(dataset.id);
     const overviewDs = dataset.clone();
     dataset.stateChangeEvent.subscribe((state) => {
@@ -97,10 +113,12 @@ export class DatasetsService {
       overviewDs.setStyle(dataset.style.clone());
     });
     if (datasetIdx >= 0) {
-      this.datasets[datasetIdx] = dataset;
+      this._datasets[datasetIdx] = dataset;
+      this.storageSrvc.saveDataset(dataset.id);
       this.overviewDatasets[datasetIdx] = overviewDs;
     } else {
-      this.datasets.push(dataset);
+      this._datasets.push(dataset);
+      this.storageSrvc.saveDataset(dataset.id);
       this.datasetAdded.next(dataset.id);
       this.overviewDatasets.push(overviewDs);
     }
@@ -135,7 +153,8 @@ export class DatasetsService {
     }
     dataset.deleted();
     const idx = this.getDatasetEntryIndex(dataset.id);
-    this.datasets.splice(idx, 1);
+    this._datasets.splice(idx, 1);
+    this.storageSrvc.removeDataset(dataset.id);
     this.datasetRemoved.next(dataset.id);
     const ovDataset = this.getOverviewDatasetEntry(id);
     ovDataset.deleted();
@@ -143,7 +162,7 @@ export class DatasetsService {
   }
 
   deleteAllDatasets() {
-    this.datasets
+    this._datasets
       .map((e) => e.id)
       .forEach((id) => this.deleteDataset(id, false));
     this.la.announce(this.translate.instant('events.all-timeseries-removed'));
@@ -153,11 +172,15 @@ export class DatasetsService {
   }
 
   datasetsSelected(): boolean {
-    return this.datasets.some((e) => e.selected);
+    return this._datasets.some(
+      (e) => e instanceof SeriesGraphDataset && e.selected,
+    );
   }
 
   clearSelections() {
-    this.datasets.forEach((e) => e.setSelected(false));
+    this._datasets.forEach(
+      (e) => e instanceof SeriesGraphDataset && e.setSelected(false),
+    );
   }
 
   private initTimespan() {
@@ -172,17 +195,19 @@ export class DatasetsService {
   }
 
   private getDatasetEntryIndex(id: string): number {
-    return this.datasets.findIndex((e) => e.id === id);
+    return this._datasets.findIndex((e) => e.id === id);
   }
 
   getDatasetEntry(dsId: string): SeriesGraphDataset {
-    const dataset = this.datasets.find((e) => e.id === dsId);
-    if (dataset) return dataset;
+    const dataset = this._datasets.find((e) => e.id === dsId);
+    if (dataset instanceof SeriesGraphDataset) return dataset;
     throw new Error(`No dataset found for ${dsId}`);
   }
 
   getOverviewDatasetEntry(dsId: string): SeriesGraphDataset {
-    const dataset = this.overviewDatasets.find((e) => e.id === dsId);
+    const dataset = this.overviewDatasets.find(
+      (e) => e !== undefined && e.id === dsId,
+    );
     if (dataset) return dataset;
     throw new Error(`No dataset found for ${dsId}`);
   }

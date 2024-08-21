@@ -18,8 +18,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Time } from '@helgoland/core';
 import {
   D3SeriesGraphOptions,
+  DatasetStyle,
   HelgolandD3Module,
   HoveringStyle,
+  SeriesGraphDataset,
 } from '@helgoland/d3';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -36,7 +38,10 @@ import {
 import { GeneralTimeSelectionComponent } from '../../components/time/general-time-selection/general-time-selection.component';
 import { ModalMainConfigButtonComponent } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { AppRouterService } from './../../services/app-router.service';
-import { DatasetsService } from './../../services/graph-datasets.service';
+import {
+  DatasetsService,
+  LoadingDataset,
+} from './../../services/graph-datasets.service';
 import { DiagramViewInitStateService } from './diagram-view-permalink.service';
 
 @Component({
@@ -117,7 +122,6 @@ export class DiagramViewComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    // TODO: fix initalization
     this.initStateService.preloadDatasets().subscribe((loadDs) => {
       if (!loadDs) {
         this.openMapSelection();
@@ -146,6 +150,12 @@ export class DiagramViewComponent implements OnInit {
 
     // public setSelected(selectedIds: string[]) {
     //   this.selectedIds = selectedIds;
+  }
+
+  isLoading(
+    dataset: SeriesGraphDataset<DatasetStyle> | LoadingDataset,
+  ): dataset is LoadingDataset {
+    return dataset instanceof LoadingDataset;
   }
 
   openDiagramSettings() {

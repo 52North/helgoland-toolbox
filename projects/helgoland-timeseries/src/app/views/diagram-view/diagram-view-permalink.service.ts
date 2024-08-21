@@ -5,13 +5,14 @@ import {
   DefinedTimespanService,
   Timespan,
 } from '@helgoland/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import {
   DATASET_STATE_SERVICE_INJECTION,
   DatasetStateService,
 } from '../../services/service-interfaces';
+import { StorageService } from '../../services/storage-service.service';
 import { DatasetsService } from './../../services/graph-datasets.service';
 
 const PARAM_IDS = 'ids';
@@ -28,6 +29,7 @@ export class DiagramViewInitStateService {
     private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService,
+    private storageSrvc: StorageService,
     @Optional()
     @Inject(DATASET_STATE_SERVICE_INJECTION)
     private datasetStateServices: DatasetStateService[] | undefined,
@@ -48,16 +50,29 @@ export class DiagramViewInitStateService {
     if (params[PARAM_IDS]) {
       this.graphDatasetsSrvc.deleteAllDatasets();
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
-      this.datasetStateServices?.forEach((pls) => pls.validatePermaIds(ids));
-      return of(false);
+      let foundOne = false;
+      ids.forEach((id) => {
+        this.datasetStateServices?.some((dss) => {
+          const handled = dss.validatePermaId(id);
+          if (handled) {
+            foundOne = true;
+          }
+        });
+      });
+      this.removeQueryParam(PARAM_IDS);
+      return of(foundOne);
     } else {
-      const loadDatasets = this.datasetStateServices?.map((pls) =>
-        pls.loadCachedDatasets(),
-      );
-      if (loadDatasets) {
-        return forkJoin(loadDatasets).pipe(map((res) => res.some((r) => r)));
-      }
-      return of(false);
+      const ids = this.storageSrvc.loadOrder();
+      let foundOne = false;
+      ids?.forEach((id) => {
+        this.datasetStateServices?.some((dss) => {
+          const handled = dss.handleStoredDs(id);
+          if (handled) {
+            foundOne = true;
+          }
+        });
+      });
+      return of(foundOne);
     }
   }
 
@@ -69,6 +84,7 @@ export class DiagramViewInitStateService {
         const end = parseInt(time[1], 10);
         this.graphDatasetsSrvc.timespan = new Timespan(start, end);
       }
+      this.removeQueryParam(PARAM_TIME);
     } else if (params[PARAM_DEFINED_TIME]) {
       const definedTime = params[PARAM_DEFINED_TIME] as DefinedTimespan;
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
@@ -78,12 +94,23 @@ export class DiagramViewInitStateService {
     }
   }
 
+  private removeQueryParam(param: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(param);
+    history.replaceState(history.state, '', url.href);
+  }
+
   public generatePermalink = () => {
     let paramUrl = '';
     if (this.graphDatasetsSrvc.hasDatasets()) {
       const ids: string[] = [];
-      this.datasetStateServices?.forEach((pls) => {
-        pls.getPermaIds().forEach((id) => ids.push(id));
+      this.graphDatasetsSrvc.datasets.forEach((ds) => {
+        this.datasetStateServices?.forEach((dss) => {
+          const permaId = dss.getPermaId(ds);
+          if (permaId !== undefined) {
+            ids.push(permaId);
+          }
+        });
       });
       const id = ids.join(ID_SEPERATOR);
       paramUrl =

@@ -238,14 +238,18 @@ export class D3SeriesGraphComponent
     const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets);
     if (graphDatasetsChanges && this.datasets && this.graph) {
       graphDatasetsChanges.forEachAddedItem((addedItem) => {
-        if (addedItem.item.hasData()) {
-          this.redrawCompleteGraph();
+        if (addedItem.item instanceof SeriesGraphDataset) {
+          if (addedItem.item.hasData()) {
+            this.redrawCompleteGraph();
+          }
+          this.subscribeEvents(addedItem.item);
         }
-        return this.subscribeEvents(addedItem.item);
       });
       graphDatasetsChanges.forEachRemovedItem((removedItem) => {
         this.redrawCompleteGraph();
-        return this.unsubscribeEvents(removedItem.item);
+        if (removedItem.item instanceof SeriesGraphDataset) {
+          this.unsubscribeEvents(removedItem.item);
+        }
       });
     }
 

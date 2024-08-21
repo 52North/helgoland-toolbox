@@ -7,7 +7,6 @@ import {
   LineStyle,
   SeriesGraphDataset,
 } from '@helgoland/d3';
-import { Observable, of } from 'rxjs';
 
 import { Favorite } from './favorite.service';
 import { DatasetsService } from './graph-datasets.service';
@@ -97,21 +96,22 @@ export class DummyDatasetsService
     this.localStorage.save(DUMMY_DATASET_LOCAL_STORAGE_KEY, true);
   }
 
-  /** init state methods */
-  loadCachedDatasets(): Observable<boolean> {
+  handleStoredDs(dsId: string): boolean {
     const cached = this.localStorage.load(DUMMY_DATASET_LOCAL_STORAGE_KEY);
-    if (cached) {
+    if (dsId === DATASET_ID && cached) {
       this.addRandomDataset();
+      return true;
     }
-    return of(cached === true);
+    return false;
   }
 
-  getPermaIds(): string[] {
-    // throw new Error('Method not implemented.');
-    return [];
+  getPermaId(ds: SeriesGraphDataset): string | undefined {
+    return undefined;
   }
 
-  validatePermaIds(ids: string[]): void {}
+  validatePermaId(id: string): boolean {
+    return false;
+  }
 
   /** asdf methods */
   addFavoriteToDiagram(fav: Favorite): void {

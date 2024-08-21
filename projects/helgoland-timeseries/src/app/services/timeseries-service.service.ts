@@ -26,7 +26,6 @@ import {
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
-import { Observable, of } from 'rxjs';
 
 import { Favorite } from './favorite.service';
 import { DatasetsService } from './graph-datasets.service';
@@ -66,9 +65,7 @@ export abstract class TimeseriesService {
 export class TimeseriesServiceImpl
   implements TimeseriesService, DatasetStateService, DatasetFavoriteService
 {
-  private state: {
-    [key: string]: SaveState;
-  } = {};
+  private state = new Map<string, SaveState>();
   private favorites: {
     [key: string]: FavoriteSaveState;
   } = {};
@@ -126,22 +123,18 @@ export class TimeseriesServiceImpl
     this.graphDatasetsSrvc.deleteDataset(id, true);
   }
 
-  loadCachedDatasets(): Observable<boolean> {
-    return of(this.loadState());
+  getPermaId(ds: SeriesGraphDataset): string | undefined {
+    const match = this.datasetMap.get(ds.id);
+    return match ? `ts_${match.internalId}` : undefined;
   }
 
-  getPermaIds(): string[] {
-    const dsIds = Array.from(this.datasetMap.keys());
-    return dsIds.map((e) => `ts_${e}`);
-  }
-
-  validatePermaIds(ids: string[]) {
-    ids.forEach((id) => {
-      if (id.startsWith('ts_')) {
-        id = id.substring(3);
-        this.addDataset(id);
-      }
-    });
+  validatePermaId(id: string): boolean {
+    if (id.startsWith('ts_')) {
+      id = id.substring(3);
+      this.addDataset(id);
+      return true;
+    }
+    return false;
   }
 
   canHandleDatasetAsFavorite(id: string): boolean {
@@ -212,22 +205,31 @@ export class TimeseriesServiceImpl
     this.localStorage.save(TIMESERIES_FAVORITES_LOCALSTORAGE, this.favorites);
   }
 
-  protected loadState(): boolean {
-    let foundState = false;
-    this.state = this.localStorage.load(TIMESERIES_STATE_LOCALSTORAGE) || {};
-    for (const key in this.state) {
-      const visible = this.state[key].visible;
-      const selected = this.state[key].selected;
-      const style = this.getStyleOfObject(this.state[key].style);
-      const axis = this.getYAxisOfObject(this.state[key].yaxis);
-      this.addDatasetbyId(key, style, axis, visible, selected);
-      foundState = true;
-    }
-    return foundState;
+  protected saveState(): void {
+    this.localStorage.save(
+      TIMESERIES_STATE_LOCALSTORAGE,
+      Array.from(this.state),
+    );
   }
 
-  protected saveState(): void {
-    this.localStorage.save(TIMESERIES_STATE_LOCALSTORAGE, this.state);
+  handleStoredDs(dsId: string): boolean {
+    const state: Array<[id: string, state: any]> =
+      this.localStorage.load(TIMESERIES_STATE_LOCALSTORAGE) || [];
+    const match = state.find((e) => e[0] === dsId);
+    if (match && match[1]) {
+      try {
+        const visible = match[1].visible;
+        const selected = match[1].selected;
+        const style = this.getStyleOfObject(match[1].style);
+        const axis = this.getYAxisOfObject(match[1].yaxis);
+        this.addDatasetbyId(dsId, style, axis, visible, selected);
+        return true;
+      } catch (error) {
+        console.warn(`Could not parse styles for entry with id ${dsId}`);
+        return false;
+      }
+    }
+    return false;
   }
 
   protected addDatasetbyId(
@@ -247,7 +249,7 @@ export class TimeseriesServiceImpl
         next: (res) =>
           this.loadAddedDataset(res, style, axis, visible, selected),
         error: (error) => {
-          this.graphDatasetsSrvc.stopLoadingDataset(id);
+          this.graphDatasetsSrvc.stopLoadingDatasetOnError(id);
           return this.errorHandler.handleDatasetLoadError(error);
         },
       });
@@ -291,7 +293,7 @@ export class TimeseriesServiceImpl
       this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
       dataset.deleteEvent.subscribe((ds) => {
         this.datasetMap.delete(ds.id);
-        delete this.state[ds.id];
+        this.state.delete(ds.id);
         this.saveState();
       });
       dataset.stateChangeEvent.subscribe((ds) => {
@@ -413,7 +415,7 @@ export class TimeseriesServiceImpl
       selected: selected,
       visible: visible,
     };
-    this.state[id] = dsState;
+    this.state.set(id, dsState);
   }
 
   private loadDatasetData(id: string) {
@@ -510,8 +512,8 @@ export class TimeseriesServiceImpl
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
       // sum values for bar chart visualization
-      if (this.state[dataset.internalId].style instanceof BarStyle) {
-        const style = this.state[dataset.internalId].style as BarStyle;
+      const style = this.state.get(dataset.internalId)?.style;
+      if (style && style instanceof BarStyle) {
         const startOf = style.startOf as unitOfTime.StartOf;
         const period = duration(style.period);
         if (period.asMilliseconds() === 0) {
@@ -579,8 +581,8 @@ export class TimeseriesServiceImpl
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
       // sum values for bar chart visualization
-      if (this.state[dataset.internalId].style instanceof BarStyle) {
-        const style = this.state[dataset.internalId].style as BarStyle;
+      const style = this.state.get(dataset.internalId);
+      if (style instanceof BarStyle) {
         const startOf = style.startOf as unitOfTime.StartOf;
         const period = duration(style.period);
         if (period.asMilliseconds() === 0) {

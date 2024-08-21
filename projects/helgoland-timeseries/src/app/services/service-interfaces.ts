@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { Favorite } from './favorite.service';
 
 export interface DatasetStateService {
-  loadCachedDatasets(): Observable<boolean>;
-  getPermaIds(): string[];
-  validatePermaIds(ids: string[]): void;
+  getPermaId(ds: SeriesGraphDataset): string | undefined;
+  validatePermaId(id: string): boolean;
+  handleStoredDs(dsId: string): boolean;
 }
 
 export const DATASET_STATE_SERVICE_INJECTION =
