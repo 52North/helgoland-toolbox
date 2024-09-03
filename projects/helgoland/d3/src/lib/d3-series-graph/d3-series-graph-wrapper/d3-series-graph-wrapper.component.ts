@@ -34,6 +34,7 @@ import {
   D3SeriesSimpleGraphErrorHandler,
 } from '../../d3-timeseries-graph/d3-series-graph-error-handler.service';
 import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
+import { D3GraphId } from '../../helper/d3-graph-id.service';
 import { D3PointSymbolDrawerService } from '../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
@@ -57,6 +58,7 @@ import {
   selector: 'n52-d3-series-graph-wrapper',
   templateUrl: './d3-series-graph-wrapper.component.html',
   styleUrls: ['./d3-series-graph-wrapper.component.scss'],
+  providers: [D3GraphId],
   imports: [
     D3GraphCopyrightComponent,
     D3GraphOverviewSelectionComponent,
