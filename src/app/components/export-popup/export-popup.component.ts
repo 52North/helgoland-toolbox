@@ -56,6 +56,10 @@ export class ExportPopupComponent {
     this.onDownload(DownloadType.CSV);
   }
 
+  onXSLXDownload() {
+    this.onDownload(DownloadType.XLSX);
+  }
+
   /**
    * Function that triggers the download of the data based on the specified parameters.
    * @param dwType {string} typy of the download file (csv or xlsx)

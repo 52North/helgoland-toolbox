@@ -86,6 +86,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typescript-logging": "^0.6.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "zone.js": "0.14.2"
   },
   "devDependencies": {
@@ -97,7 +98,6 @@
     "@angular-eslint/template-parser": "17.3.0",
     "@angular/cli": "^17.3.5",
     "@angular/compiler-cli": "^17.3.5",
-    "@vendure/ngx-translate-extract": "^9.0.0",
     "@compodoc/compodoc": "^1.1.19",
     "@types/d3": "^7.4.0",
     "@types/d3-delaunay": "^6.0.1",
@@ -111,6 +111,7 @@
     "@types/ol": "^5.3.5",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@vendure/ngx-translate-extract": "^9.0.0",
     "archiver": "^5.3.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",

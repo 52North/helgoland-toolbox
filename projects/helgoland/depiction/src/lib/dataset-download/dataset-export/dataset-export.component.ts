@@ -18,6 +18,7 @@ import {
   Timespan,
 } from '@helgoland/core';
 import moment from 'moment';
+import { utils, WorkBook, WorkSheet, writeFile } from 'xlsx';
 
 type xlsxExport = any[][];
 
@@ -31,6 +32,7 @@ export interface ExportOptions {
 
 export enum DownloadType {
   CSV = 'csv',
+  XLSX = 'xlsx',
 }
 
 @Component({
@@ -180,17 +182,17 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     this.downloadData(exportData, dwType);
   }
 
-  // private downloadData(data: xlsxExport, dwType: DownloadType): void {
-  //   console.log('Downloading data ...');
-  //   /* generate worksheet */
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-  //   /* generate workbook and add the worksheet */
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  //   /* save to file depending on download type */
-  //   this.fileName += '.' + dwType;
-  //   XLSX.writeFile(wb, this.fileName);
-  // }
+  private downloadData(data: xlsxExport, dwType: DownloadType): void {
+    console.log('Downloading data ...');
+    /* generate worksheet */
+    const ws: WorkSheet = utils.aoa_to_sheet(data);
+    /* generate workbook and add the worksheet */
+    const wb: WorkBook = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file depending on download type */
+    this.fileName += '.' + dwType;
+    writeFile(wb, this.fileName);
+  }
 
   private onError(error: Error): void {
     console.log('Loading data - error:');
